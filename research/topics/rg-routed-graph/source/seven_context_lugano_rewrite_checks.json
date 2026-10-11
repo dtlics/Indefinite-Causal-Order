@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "mode": "base",
+      "complete_forward_choice_count": 8,
+      "complete_reverse_choice_count": 64,
+      "consistent_sections": 8,
+      "nodes": 15,
+      "green_edges": 14,
+      "red_edges": 36,
+      "solid_edges": 0,
+      "weak_loops_pass": true,
+      "cyclic_components": [
+        {
+          "nodes": [
+            [
+              "L",
+              0,
+              0
+            ],
+            [
+              "L",
+              1,
+              0
+            ],
+            [
+              "L",
+              2,
+              0
+            ]
+          ],
+          "edge_colors": [
+            "red"
+          ],
+          "weak": true
+        }
+      ],
+      "native_branches": "source M8, hub C^8; each original lab is one M2+M2 vertex"
+    },
+    {
+      "mode": "scalar_bypass",
+      "complete_forward_choice_count": 8,
+      "complete_reverse_choice_count": 64,
+      "consistent_sections": 8,
+      "nodes": 38,
+      "green_edges": 37,
+      "red_edges": 105,
+      "solid_edges": 0,
+      "weak_loops_pass": true,
+      "cyclic_components": [
+        {
+          "nodes": [
+            [
+              "L",
+              0,
+              0
+            ],
+            [
+              "L",
+              1,
+              0
+            ],
+            [
+              "L",
+              2,
+              0
+            ]
+          ],
+          "edge_colors": [
+            "red"
+          ],
+          "weak": true
+        }
+      ],
+      "native_branches": "source M8, hub C^8, labs (M2+M2)^3; splitter C^8, record C^7, merger C^8"
+    },
+    {
+      "mode": "quantum_subdivision",
+      "complete_forward_choice_count": 8,
+      "complete_reverse_choice_count": 64,
+      "consistent_sections": 8,
+      "nodes": 21,
+      "green_edges": 20,
+      "red_edges": 48,
+      "solid_edges": 6,
+      "weak_loops_pass": false,
+      "cyclic_components": [
+        {
+          "nodes": [
+            [
+              "A",
+              0,
+              0
+            ],
+            [
+              "A",
+              1,
+              0
+            ],
+            [
+              "A",
+              2,
+              0
+            ],
+            [
+              "B",
+              0,
+              0
+            ],
+            [
+              "B",
+              1,
+              0
+            ],
+            [
+              "B",
+              2,
+              0
+            ]
+          ],
+          "edge_colors": [
+            "red",
+            "solid"
+          ],
+          "weak": false
+        }
+      ],
+      "native_branches": "source M8, hub C^8; each lab is two separate M2+M2 vertices connected by dimension2 sectors"
+    }
+  ],
+  "positive_construction": "An actually present scalar edge label can be coarsened into one C^7 phase vertex with a residual-index bypass, preserving the full choice domains and weak loops in this host.",
+  "negative_calibration": "Serially subdividing the recurrent M2 lab branches preserves the complete tensor through matrix multiplication but this naive graph gains solid/red cycles.",
+  "scope": "Exact calibration on the reversed Lugano host only. No automatic scalar-record realization or graph rewrite for the quartet follows."
+}

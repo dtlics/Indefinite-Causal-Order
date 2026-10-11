@@ -1,0 +1,561 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=black]{hyperref}
+\hypersetup{pdftitle={Extensible causality without causal separability},pdfauthor={},pdfsubject={An explicit bipartite process and an ancilla-uniform causal model}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\I}{\mathbb I}
+\newcommand{\ket}[1]{\lvert#1\rangle}
+\newcommand{\bra}[1]{\langle#1\rvert}
+\newcommand{\rep}[2]{\mathcal R_{#1}(#2)}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\Ain}{\widetilde A_I}
+\newcommand{\Bin}{\widetilde B_I}
+\title{Extensible causality without causal separability}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+\begin{abstract}
+An explicit rational bipartite process with input and output dimensions $(4,2,4,2)$ is causally nonseparable, yet every finite shared-state extension and every finite family of joint local instruments produces causal classical correlations. The process uses two independent classical input flags and a four-qubit seed with coefficient $3/5$. A lifted witness has expectation $-1/5$. For arbitrary ancillary states and instruments, positive response maps bound the seed perturbation by a quantum mismatch probability. A squared-distance inequality supplies covers for every outcome rectangle; a finite max-flow construction converts these covers into a causal decomposition with equal, setting-independent order weights. The minimum added white-noise ratio required for causal separability is $1/5$, equivalent to a white-noise fraction of $1/6$.
+\end{abstract}
+
+\section{Definitions and precise statement}
+
+All Hilbert spaces and all classical alphabets in this document are finite. Alice has an input space and an output space, and Bob has an input space and an output space. A local instrument is a finite collection of completely positive maps whose sum is trace preserving. For a map $\mathcal M$, use the transposed Choi operator
+\[
+ M=\left[\sum_{i,j}\ket i\bra j\otimes\mathcal M(\ket i\bra j)\right]^{\mathsf T},
+\]
+where the transpose acts on the entire matrix in fixed product bases. An instrument event has $M\succeq0$, and a complete channel satisfies $\Tr_{A_O}M=\I_{A_I}$. The analogous identity holds for Bob. Tensor factors will always be placed on their named systems.
+
+A normalized bipartite process matrix $W$ is positive semidefinite and gives normalized probabilities by
+\begin{equation}\label{eq:born}
+ p(a,b\mid x,y)=\Tr\bigl[W(M_{a\mid x}\otimes N_{b\mid y})\bigr]
+\end{equation}
+for every pair of local instruments, also when arbitrary finite shared ancillary input states are supplied. The process trace is $d_{A_O}d_{B_O}$ in this convention. A process compatible with $A\prec B$ permits no signaling from Bob to Alice. It is invariant under replacing Bob's output by the maximally mixed operator; the opposite order has the analogous Alice-output invariance. A process is \emph{causally separable} if it is a convex mixture of normalized valid processes of these two orders.
+
+A classical behavior is \emph{causal} if it can be written as
+\begin{equation}\label{eq:causal}
+ p=q\,p^{A\prec B}+(1-q)\,p^{B\prec A},\qquad 0\le q\le1,
+\end{equation}
+where $q$ is independent of the actual settings $x,y$, and
+\begin{align*}
+ \sum_b p^{A\prec B}(a,b\mid x,y)&=p_A(a\mid x),\\
+ \sum_a p^{B\prec A}(a,b\mid x,y)&=p_B(b\mid y).
+\end{align*}
+The two ordered behaviors and the weight may depend on the complete chosen instrument family. They need not arise from a decomposition of the quantum process.
+
+A process is \emph{extensibly causal} if every extension by a shared ancillary state gives causal behaviors for all local instruments. This is the bipartite specialization of OG16, Definition~III.2; Definition~III.3 instead defines extensible \emph{causal separability} \cite{OG16}. The distinction between causal models and their stability under shared-state extension is also discussed in FAB16, Sections~III and~VI \cite{FAB16}.
+
+\begin{theorem}\label{thm:main}
+There is a fixed rational, positive-definite bipartite process $W$, defined in \eqref{eq:W}, with local dimensions
+\[
+ (d_{\Ain},d_{A_O},d_{\Bin},d_{B_O})=(4,2,4,2),
+\]
+which is not causally separable and has the following property. For every pair of finite ancillary spaces $R_A,R_B$, every state $\rho$ on $R_A\otimes R_B$ independent of the free settings, every finite choice of settings and outcomes, and every pair of local instrument families acting jointly on $\Ain R_A$ and $\Bin R_B$, the behavior
+\[
+ p_\rho(a,b\mid x,y)
+ =\Tr\bigl[(W\otimes\rho)(\widetilde M_{a\mid x}\otimes
+      \widetilde N_{b\mid y})\bigr]
+\]
+admits \eqref{eq:causal} with $q=1/2$. The mixture is defined for the entire experiment, simultaneously for all its setting pairs. Thus
+\[
+ \mathrm{EC}_{AB}\setminus\mathrm{CS}_{AB}\ne\varnothing.
+\]
+\end{theorem}
+
+The ancillary dimensions have no common upper bound. Local instruments may depend arbitrarily on their own setting and act jointly on all locally available input systems. The construction uses two parties, ordinary classical settings, and no success-conditioned postselection.
+
+\section{The rational process and its spectrum}\label{sec:process}
+
+On four qubits in tensor order $A_I,A_O,B_I,B_O$, define
+\begin{equation}\label{eq:seed}
+ A=Z\otimes Z\otimes Z\otimes\I,
+ \qquad B=X\otimes\I\otimes Z\otimes Z,
+ \qquad V=\frac{\I_{16}+\frac35(A+B)}4,
+ \qquad \Omega=\frac{\I_{16}}4,
+\end{equation}
+where $X=\bigl(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\bigr)$ and
+$Z=\operatorname{diag}(1,-1)$. Add one flag qubit $F_A$ to Alice's input and one flag qubit $F_B$ to Bob's input. Thus $\Ain=F_A\otimes A_I$ and $\Bin=F_B\otimes B_I$. Write $P_{fg}=\ket{fg}\bra{fg}_{F_AF_B}$. The flags in the following formula are inserted into their respective input spaces:
+\begin{equation}\label{eq:W}
+ \boxed{\displaystyle
+ W=\frac14 P_{11}\otimes V
+   +\frac14(P_{00}+P_{01}+P_{10})\otimes\Omega
+   =\frac{\I_{64}}{16}+\frac{3}{80}P_{11}\otimes(A+B).}
+\end{equation}
+The fine tensor order is
+\begin{equation}\label{eq:basis}
+ F_A,A_I,A_O,F_B,B_I,B_O.
+\end{equation}
+The four flag blocks have equal weights, and the two recorded flags are independent and uniform. The flags are received inputs, not extra free settings.
+
+Here is an entrywise specification, if a literal rational matrix is desired. For bits $f,i,o,g,j,r$, let
+\[
+ k=32f+16i+8o+4g+2j+r,\qquad k'=k\mathbin{\mathrm{xor}}16.
+\]
+The only nonzero entries in column $k$ of $80W$ are
+\begin{equation}\label{eq:entries}
+ (80W)_{k,k}=5+3fg(-1)^{i+o+j},
+ \qquad
+ (80W)_{k',k}=3fg(-1)^{j+r}.
+\end{equation}
+This fixes all entries without approximation.
+
+\subsection{Positivity and normalization}
+
+The Pauli terms satisfy
+\[
+ A^2=B^2=\I_{16},\qquad AB=-BA,
+ \qquad (A+B)^2=2\I_{16},\qquad \Tr(A+B)=0.
+\]
+Consequently $A+B$ has eigenvalues $\pm\sqrt2$, each with multiplicity eight. The spectrum of $W$ is therefore
+\begin{center}
+\begin{tabular}{@{}cc@{}}
+\toprule
+Eigenvalue & Multiplicity\\
+\midrule
+$(5-3\sqrt2)/80$ & $8$\\[2pt]
+$(5+3\sqrt2)/80$ & $8$\\[2pt]
+$1/16$ & $48$\\
+\bottomrule
+\end{tabular}
+\end{center}
+All eigenvalues are strictly positive because $25>18$. They sum to $4$, which is the required trace $d_{A_O}d_{B_O}$.
+
+For completeness, let $\mathcal R_S$ be output or subsystem replacement:
+\[
+ \rep{S}{T}=\frac{\I_S}{d_S}\otimes\Tr_S T,
+\]
+with the tensor factors returned to their original positions. The standard bipartite process subspace is given by
+\begin{align}
+ \rep{\Bin B_O}{W}&=\rep{A_O\Bin B_O}{W},\label{eq:process1}\\
+ \rep{\Ain A_O}{W}&=\rep{\Ain A_OB_O}{W},\label{eq:process2}\\
+ W&=\rep{A_O}{W}+\rep{B_O}{W}-\rep{A_OB_O}{W}.
+ \label{eq:process3}
+\end{align}
+The identity term in \eqref{eq:W} satisfies these equalities. The $P_{11}\otimes A$ term has zero trace over $B_I$ and over $A_O$, and is unchanged by $B_O$ replacement. The $P_{11}\otimes B$ term has zero trace over $A_I$ and over $B_O$, and is unchanged by $A_O$ replacement. Each term therefore satisfies \eqref{eq:process1}--\eqref{eq:process3}. In particular,
+\begin{equation}\label{eq:white}
+ \rep{A_OB_O}{W}=\frac{\I_{64}}{16}=:\Omega_F.
+\end{equation}
+Together with positivity and trace $4$, these identities verify process validity. Direct normalization under arbitrary ancillary extensions is also visible from the complete-channel response identities in Section~\ref{sec:maps}.
+
+\section{A causal nonseparability witness}\label{sec:witness}
+
+Define
+\begin{equation}\label{eq:witness}
+ S=\I_{16}-A-B,\qquad S_F=P_{11}\otimes S.
+\end{equation}
+The two relevant output replacements are
+\begin{equation}\label{eq:witness-replacements}
+ \rep{B_O}{S_F}=P_{11}\otimes(\I_{16}-A)\succeq0,
+ \qquad
+ \rep{A_O}{S_F}=P_{11}\otimes(\I_{16}-B)\succeq0.
+\end{equation}
+Indeed, $A$ and $B$ are Hermitian unitaries, so $\I-A$ and $\I-B$ are positive semidefinite.
+
+Replacement is self-adjoint for the trace inner product. For any positive valid process $U$ of order $A\prec B$, output invariance gives
+\[
+ \Tr(S_FU)=\Tr\bigl[\rep{B_O}{S_F}\,U\bigr]\ge0.
+\]
+For a process of order $B\prec A$, use the other replacement. Thus $S_F$ has nonnegative expectation on every causally separable process.
+
+By Pauli orthogonality, $\Tr A=\Tr B=\Tr(AB)=0$ and
+$\Tr A^2=\Tr B^2=16$. Hence
+\begin{equation}\label{eq:negative}
+ \Tr(WS_F)=\frac1{16}\Tr\left[
+     \left(\I+\frac35(A+B)\right)(\I-A-B)\right]
+ =1-\frac65=-\frac15.
+\end{equation}
+Therefore $W$ is causally nonseparable. No inference about order after conditioning on a flag is needed for this witness argument.
+
+\section{Arbitrary instruments and their response maps}\label{sec:maps}
+
+Fix arbitrary finite $R_A,R_B$, an arbitrary state $\rho$ on their product, and arbitrary complete local instrument families in Theorem~\ref{thm:main}. Since $W$ is diagonal in each local input flag, pinching each instrument in that flag leaves all probabilities unchanged. For example, replace Alice's Choi event by
+\[
+ \sum_{f=0}^1(\ket f\bra f\otimes\I)\,
+ \widetilde M_{a\mid x}\,(\ket f\bra f\otimes\I).
+\]
+Refine Alice's output to $(f,a)$ and Bob's to $(g,b)$. The diagonal blocks
+$M^f_{a\mid x}=\bra f\widetilde M_{a\mid x}\ket f$ act on $A_I R_A A_O$ and
+$N^g_{b\mid y}=\bra g\widetilde N_{b\mid y}\ket g$ act on $B_I R_B B_O$.
+Compression preserves positivity. Compressing the full channel's output-trace identity also shows that, for each fixed flag and setting, these blocks are complete instruments:
+\[
+ \Tr_{A_O}\sum_aM^f_{a\mid x}=\I_{A_I R_A},
+ \qquad
+ \Tr_{B_O}\sum_bN^g_{b\mid y}=\I_{B_I R_B}.
+\]
+The refined behavior will be shown causal. Summing over the two locally reported flags then gives a causal decomposition of the original behavior. All outcomes remain in the statistics.
+
+For an aggregate CP event $M$ of one such instrument, meaning a sum over any subset of its outcomes, define a Hermitian linear response map by
+\begin{equation}\label{eq:response}
+ \Phi_M(T)=\frac12\Tr_{A_I A_O}\bigl[(T\otimes\I_{R_A})M\bigr].
+\end{equation}
+Here $T$ acts on $A_I A_O$; in the product in \eqref{eq:response}, $M$ is reordered from $A_I R_A A_O$ to $A_I A_O R_A$. Define $\Psi_N$ analogously for Bob. These maps are positive: for $T\succeq0$, cyclicity within the traced subsystem gives
+\[
+ \Phi_M(T)=\frac12\Tr_{A_I A_O}
+ \bigl[(\sqrt T\otimes\I)M(\sqrt T\otimes\I)\bigr]\succeq0.
+\]
+Only positivity and linearity are used below.
+
+Write
+\begin{equation}\label{eq:effects}
+ E=\Phi_M(\I),\qquad F=\Psi_N(\I).
+\end{equation}
+The actual channel containing $M$ obeys
+$0\preceq\Tr_{A_O}M\preceq\I_{A_I R_A}$, whence
+$0\preceq E\preceq\I_{R_A}$. Similarly $0\preceq F\preceq\I_{R_B}$.
+For every complete channel $C$ and every traceless input operator $H$,
+\begin{equation}\label{eq:complete}
+ \Phi_C(\I)=\I_{R_A},\qquad
+ \Phi_C(H\otimes\I_{A_O})
+ =\frac12\Tr_{A_I}\bigl[(H\otimes\I)\Tr_{A_O}C\bigr]=0.
+\end{equation}
+Thus each instrument yields a genuine POVM on the ancillary space:
+\[
+ E^f_{a\mid x}=\Phi_{M^f_{a\mid x}}(\I),\qquad
+ F^g_{b\mid y}=\Psi_{N^g_{b\mid y}}(\I).
+\]
+There is no assumption that different instruments yield compatible POVMs.
+
+For the white process $\Omega=\I_{16}/4$, the event and marginal probabilities are
+\begin{align}
+ q(M,N)&=\Tr[\rho(E\otimes F)],\label{eq:q}\\
+ a(M)&=\Tr[\rho(E\otimes\I)],\qquad
+ b(N)=\Tr[\rho(\I\otimes F)].\label{eq:ab}
+\end{align}
+The factors $1/2$ in both response maps produce exactly the factor $1/4$ in $\Omega$.
+
+\section{Bounding the directional perturbation}\label{sec:perturbation}
+
+Let $M,N$ be arbitrary aggregate events in the active flag-$1$ blocks. Define
+\begin{align*}
+ L_A&=\Phi_M(Z\otimes Z),& R_A^{\mathrm{op}}&=\Phi_M(X\otimes\I),\\
+ R_B^{\mathrm{op}}&=\Psi_N(Z\otimes\I),& L_B&=\Psi_N(Z\otimes Z).
+\end{align*}
+The superscript distinguishes the operators $R_A^{\mathrm{op}},R_B^{\mathrm{op}}$ from the ancillary spaces. Expanding \eqref{eq:seed} gives the exact difference
+\begin{equation}\label{eq:delta}
+ \delta:=p_V(M,N)-q(M,N)
+ =\frac35\Tr\bigl[\rho(L_A\otimes R_B^{\mathrm{op}}
+                     +R_A^{\mathrm{op}}\otimes L_B)\bigr].
+\end{equation}
+Because every Pauli operator used here lies between $-\I$ and $\I$, positivity of the response maps implies
+\begin{equation}\label{eq:localbounds}
+ -E\preceq L_A\preceq E,\qquad -F\preceq L_B\preceq F.
+\end{equation}
+There are stronger, complementary bounds for the input-only images. Complete $M$ to its actual channel $C=M+M_c$. Equation~\eqref{eq:complete} gives
+\[
+ \Phi_{M_c}(X\otimes\I)=-R_A^{\mathrm{op}},\qquad
+ \Phi_{M_c}(\I)=\I-E.
+\]
+Apply positivity to the complementary event $M_c$ to obtain
+\begin{equation}\label{eq:complementbounds}
+ -(\I-E)\preceq R_A^{\mathrm{op}}\preceq\I-E,
+ \qquad
+ -(\I-F)\preceq R_B^{\mathrm{op}}\preceq\I-F.
+\end{equation}
+The second statement follows from Bob's actual channel completion and $\Tr Z=0$.
+
+\begin{lemma}[Tensor order bound]\label{lem:tensor}
+If $H,K\succeq0$ and $-H\preceq L\preceq H$, $-K\preceq R\preceq K$, then
+\[
+ -H\otimes K\preceq L\otimes R\preceq H\otimes K.
+\]
+\end{lemma}
+\begin{proof}
+The upper inequality follows from the positive-sum identity
+\[
+ H\otimes K-L\otimes R
+ =\frac12\bigl[(H+L)\otimes(K-R)+(H-L)\otimes(K+R)\bigr].
+\]
+Replace $R$ by $-R$ for the lower inequality. All factors on the right are positive; no inverse or nonsingularity assumption is needed.
+\end{proof}
+
+Apply Lemma~\ref{lem:tensor} to \eqref{eq:localbounds} and \eqref{eq:complementbounds}. Equation~\eqref{eq:delta} yields
+\begin{equation}\label{eq:delta-bound}
+ \delta\le\frac35\Tr\bigl[\rho\bigl(E\otimes(\I-F)
+                              +(\I-E)\otimes F\bigr)\bigr].
+\end{equation}
+This estimate is uniform in the state, ancillary dimensions, and aggregate events. For two complete channels, the input-only images vanish by \eqref{eq:complete}, so the same expansion gives $p_V(C,D)=1$. Each flag block is therefore normalized under an arbitrary shared-state extension as claimed in Section~\ref{sec:process}.
+
+\section{A quantum mismatch inequality}\label{sec:mismatch}
+
+\begin{lemma}\label{lem:mismatch}
+For any shared state $\rho$ and any effects
+$0\preceq E_0,E_1\preceq\I$ and $0\preceq F_0,F_1\preceq\I$, define
+\begin{equation}\label{eq:mismatch}
+ m_{fg}=\Tr\bigl[\rho\bigl(E_f\otimes(\I-F_g)
+                              +(\I-E_f)\otimes F_g\bigr)\bigr],
+ \qquad f,g\in\{0,1\}.
+\end{equation}
+Then
+\begin{equation}\label{eq:mismatch-ineq}
+ m_{11}\le3(m_{10}+m_{00}+m_{01}),\qquad
+ \frac12\sum_{f,g}m_{fg}\ge\frac23m_{11}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+All effects can be dilated using a fixed local embedding into a doubled space. Explicitly, the operator
+\[
+ P(E)=\begin{pmatrix}
+ E&\sqrt{E(\I-E)}\\
+ \sqrt{E(\I-E)}&\I-E
+ \end{pmatrix}
+\]
+is an orthogonal projector on $R_A\oplus R_A$, and its compression by the isometry $J_Av=(v,0)$ is $E$. Use this same embedding for both $E_0$ and $E_1$, with projectors $P_0,P_1$. Use the corresponding construction for Bob, with $J_B$ and $Q_0,Q_1$. The embedded state preserves all local marginals and cross-party joint probabilities, since
+\[
+ (J_A\otimes J_B)^*(P_f\otimes Q_g)(J_A\otimes J_B)=E_f\otimes F_g.
+\]
+Purify the embedded state to $\ket\psi$; all operators below act as identity on the purifying system.
+
+Set $U_f=2P_f-\I$ and $V_g=2Q_g-\I$. They are Hermitian unitaries. Define unit vectors
+\[
+ u_f=(U_f\otimes\I)\ket\psi,\qquad
+ v_g=(\I\otimes V_g)\ket\psi.
+\]
+Cross-party operators commute, so their product has a real expectation, and
+\[
+ \|u_f-v_g\|^2
+ =2-2\langle\psi|U_f\otimes V_g|\psi\rangle
+ =4m_{fg}.
+\]
+Now write
+\[
+ u_1-v_1=(u_1-v_0)+(v_0-u_0)+(u_0-v_1).
+\]
+For any three vectors $r,s,t$, Cauchy--Schwarz gives
+$\|r+s+t\|^2\le3(\|r\|^2+\|s\|^2+\|t\|^2)$.
+It follows that
+$4m_{11}\le12(m_{10}+m_{00}+m_{01})$.
+Adding $m_{11}$ to the resulting lower bound on the other three mismatches gives the second inequality in \eqref{eq:mismatch-ineq}.
+\end{proof}
+
+The local projectors need not commute. This proof does not impose a joint classical distribution on the two incompatible local measurements.
+
+\section{Every outcome rectangle has a marginal cover}\label{sec:covers}
+
+For the entire fixed refined experiment, choose the nonnegative functions
+\begin{equation}\label{eq:covers}
+ \alpha(f,a\mid x)=\frac14\Tr[\rho(E^f_{a\mid x}\otimes\I)],
+ \qquad
+ \beta(g,b\mid y)=\frac14\Tr[\rho(\I\otimes F^g_{b\mid y})].
+\end{equation}
+POVM normalization implies, for every $x,y$,
+\begin{equation}\label{eq:cover-totals}
+ \sum_{f,a}\alpha(f,a\mid x)=\frac12,
+ \qquad
+ \sum_{g,b}\beta(g,b\mid y)=\frac12.
+\end{equation}
+These are classical candidate first-party marginals. Their definition does not require any quantum realization of the eventual causal components.
+
+Fix arbitrary settings $x,y$ and arbitrary subsets $\mathcal U,\mathcal V$ of Alice's and Bob's refined output alphabets. Within each flag block, define the aggregate events
+\[
+ M_f=\sum_{a:(f,a)\in\mathcal U}M^f_{a\mid x},\qquad
+ N_g=\sum_{b:(g,b)\in\mathcal V}N^g_{b\mid y}.
+\]
+Empty sums are zero. Put
+\begin{align*}
+ E_f&=\Phi_{M_f}(\I),&F_g&=\Psi_{N_g}(\I),\\
+ q_{fg}&=\Tr[\rho(E_f\otimes F_g)],&
+ a_f&=\Tr[\rho(E_f\otimes\I)],\qquad
+ b_g=\Tr[\rho(\I\otimes F_g)].
+\end{align*}
+For these effects, \eqref{eq:mismatch} says $m_{fg}=a_f+b_g-2q_{fg}$.
+
+Only the $11$ block uses $V$. Thus the refined rectangle probability is exactly
+\begin{equation}\label{eq:rectangle-p}
+ p_F(\mathcal U\times\mathcal V\mid x,y)
+ =\frac14\bigl[q_{00}+q_{01}+q_{10}+p_V(M_1,N_1)\bigr].
+\end{equation}
+On the other hand, its available cover mass is
+\begin{equation}\label{eq:rectangle-cover}
+ \alpha(\mathcal U\mid x)+\beta(\mathcal V\mid y)
+ =\frac14(a_0+a_1+b_0+b_1).
+\end{equation}
+Let $\delta=p_V(M_1,N_1)-q_{11}$. Subtracting \eqref{eq:rectangle-p} from \eqref{eq:rectangle-cover} and multiplying by four gives
+\begin{align}
+ &4\bigl[\alpha(\mathcal U\mid x)+\beta(\mathcal V\mid y)
+              -p_F(\mathcal U\times\mathcal V\mid x,y)\bigr]
+ \nonumber\\
+ &\qquad=a_0+a_1+b_0+b_1-\sum_{f,g}q_{fg}-\delta
+       =\frac12\sum_{f,g}m_{fg}-\delta\nonumber\\
+ &\qquad\ge\left(\frac23-\frac35\right)m_{11}
+       =\frac1{15}m_{11}\ge0.\label{eq:allcovers}
+\end{align}
+The first lower bound uses Lemma~\ref{lem:mismatch} and \eqref{eq:delta-bound}. Since all settings and all subsets were arbitrary, \eqref{eq:allcovers} proves the cover inequality for \emph{every} outcome rectangle, including empty and full rectangles, for every setting pair of the experiment.
+
+\section{From covers to a causal model}\label{sec:flow}
+
+\begin{lemma}[Finite rectangle-cover criterion]\label{lem:flow}
+A normalized finite behavior $p(a,b\mid x,y)$ is causal if and only if there exist nonnegative functions $\alpha(a\mid x),\beta(b\mid y)$ and a number $q\in[0,1]$ such that
+\[
+ \sum_a\alpha(a\mid x)=q,\qquad
+ \sum_b\beta(b\mid y)=1-q
+\]
+for every $x,y$, and, for every pair of outcome subsets $U,V$,
+\begin{equation}\label{eq:covercriterion}
+ \sum_{a\in U,\ b\in V}p(a,b\mid x,y)
+ \le\sum_{a\in U}\alpha(a\mid x)+\sum_{b\in V}\beta(b\mid y).
+\end{equation}
+\end{lemma}
+\begin{proof}
+For necessity, start from \eqref{eq:causal}. Take
+$\alpha=q p_A$ and $\beta=(1-q)p_B$, using the first-party marginals of the two orders. The $A\prec B$ rectangle probability is at most its Alice marginal, and the $B\prec A$ rectangle probability is at most its Bob marginal. Adding the two bounds proves \eqref{eq:covercriterion}.
+
+For sufficiency, fix one setting pair $x,y$. Suppress these settings in the following network. It has a source $s$, one cell node $c_{ab}$ for each outcome pair, one row node $r_a$, one column node $k_b$, and a sink $t$. Its edges and capacities are
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+Edge & Capacity\\
+\midrule
+$s\longrightarrow c_{ab}$ & $p(a,b\mid x,y)$\\
+$c_{ab}\longrightarrow r_a$ & $2$\\
+$c_{ab}\longrightarrow k_b$ & $2$\\
+$r_a\longrightarrow t$ & $\alpha(a\mid x)$\\
+$k_b\longrightarrow t$ & $\beta(b\mid y)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The total capacity out of $s$ and the total capacity into $t$ are both $1$.
+
+Consider any source--sink cut. If a cell-to-row or cell-to-column edge crosses the cut, its capacity is already at least $2$, hence at least $1$. Otherwise let $U$ be the rows on the source side and $V$ the columns on the source side. Every cell on the source side must then have both its row in $U$ and its column in $V$. If $C$ is the set of such cells, $C\subseteq U\times V$. The cut capacity is
+\begin{align*}
+ 1-\sum_{(a,b)\in C}p(a,b\mid x,y)
+     +\alpha(U\mid x)+\beta(V\mid y)
+ &\ge 1-p(U\times V\mid x,y)
+     +\alpha(U\mid x)+\beta(V\mid y)\\
+ &\ge1,
+\end{align*}
+by \eqref{eq:covercriterion}. The minimum cut is therefore at least $1$, and the max-flow/min-cut theorem supplies a flow of value $1$.
+
+Since both the total source capacity and the total sink capacity equal $1$, every source edge and every sink edge is saturated. Let $h_{ab}^{xy}$ be the flow from $c_{ab}$ to its row, and $k_{ab}^{xy}$ the flow from that cell to its column. Flow conservation and saturation give
+\begin{equation}\label{eq:flow-identities}
+ h_{ab}^{xy}+k_{ab}^{xy}=p(a,b\mid x,y),\qquad
+ \sum_bh_{ab}^{xy}=\alpha(a\mid x),\qquad
+ \sum_ak_{ab}^{xy}=\beta(b\mid y).
+\end{equation}
+Construct such a flow independently for every setting pair. The prescribed row marginal is the same for all $y$, and the prescribed column marginal is the same for all $x$. Hence, when $0<q<1$,
+\[
+ p^{A\prec B}(a,b\mid x,y)=h_{ab}^{xy}/q,
+ \qquad
+ p^{B\prec A}(a,b\mid x,y)=k_{ab}^{xy}/(1-q)
+\]
+are normalized behaviors with the required no-backward-signaling marginals. Their mixture is $p$. If $q=0$ or $q=1$, omit the zero-weight component; the other component already gives the required causal behavior.
+\end{proof}
+
+Apply Lemma~\ref{lem:flow} to \eqref{eq:covers}--\eqref{eq:allcovers}. Equation~\eqref{eq:cover-totals} fixes $q=1/2$. This produces a causal decomposition of the refined behavior for the entire instrument family. Local coarse-graining over $f$ and $g$ preserves each no-backward-signaling condition, so it produces the same equal-weight causal decomposition for the original behavior.
+
+The spaces $R_A,R_B$, state $\rho$, alphabets, and complete instrument families were arbitrary. This establishes extensible causality, while Section~\ref{sec:witness} establishes causal nonseparability. The proof of Theorem~\ref{thm:main} is complete.
+
+\section{Exact white-noise robustness}\label{sec:robustness}
+
+Use the specific white process $\Omega_F=\I_{64}/16$ from \eqref{eq:white}, and define the added-noise ratio by
+\begin{equation}\label{eq:robustness-def}
+ \widehat W_\lambda=\frac{W+\lambda\Omega_F}{1+\lambda},
+ \qquad \lambda\ge0.
+\end{equation}
+The witness has $\Tr(\Omega_FS_F)=1$, so
+\[
+ \Tr(\widehat W_\lambda S_F)=\frac{-1/5+\lambda}{1+\lambda}.
+\]
+Thus $\widehat W_\lambda$ cannot be causally separable for $\lambda<1/5$.
+
+At $\lambda=1/5$, the coefficient $3/5$ in the active seed becomes $1/2$ while the other three flag blocks remain white. The active seed has the explicit decomposition
+\begin{equation}\label{eq:thresholdseed}
+ \frac{\I_{16}+\frac12(A+B)}4
+ =\frac12\frac{\I_{16}+A}{4}
+  +\frac12\frac{\I_{16}+B}{4}.
+\end{equation}
+The two summands are normalized positive processes of orders $A\prec B$ and $B\prec A$, respectively. In particular, putting
+\begin{align*}
+ U_A&=\frac14P_{11}\otimes\frac{\I_{16}+A}{4}
+       +\frac14(P_{00}+P_{01}+P_{10})\otimes\Omega,\\
+ U_B&=\frac14P_{11}\otimes\frac{\I_{16}+B}{4}
+       +\frac14(P_{00}+P_{01}+P_{10})\otimes\Omega,
+\end{align*}
+gives normalized valid processes in the two respective orders and
+$\widehat W_{1/5}=(U_A+U_B)/2$.
+Any larger $\lambda$ adds further causally separable white noise, so the minimum added-noise ratio is exactly
+\begin{equation}\label{eq:robustness-result}
+ \boxed{\lambda_{\min}=\frac15.}
+\end{equation}
+The actual fraction of white noise in the normalized mixture at this threshold is
+\[
+ \frac{\lambda_{\min}}{1+\lambda_{\min}}=\frac16,
+ \qquad
+ \widehat W_{1/5}=\frac56W+\frac16\Omega_F.
+\]
+These two numerical values use different conventions: $1/5$ is a noise-to-original ratio, while $1/6$ is a mixture fraction.
+
+
+\section{Parameter family and its exact threshold}\label{sec:family}
+The same construction and proof apply with $3/5$ replaced throughout by
+$t$ for every $1/2<t\le2/3$. Define
+\[
+ V_t=[\I_{16}+t(A+B)]/4,\qquad
+ W_t=\tfrac14P_{11}\otimes V_t+
+      \tfrac14(P_{00}+P_{01}+P_{10})\otimes\Omega.
+\]
+The seed is positive for $0\le t\le1/\sqrt2$, because $A+B$ has
+eigenvalues $\pm\sqrt2$. The process-subspace verification in
+Section~\ref{sec:process} is linear and remains valid. The witness expectation
+is $1-2t$, so causal nonseparability holds throughout $t>1/2$.
+The response-map argument gives $\delta\le t m_{11}$, and the same covers obey
+\[
+4(\text{cover}-\text{rectangle})\ge(2/3-t)m_{11}\ge0.
+\]
+The max-flow proof therefore supplies extensible causality for the whole stated
+interval, including its upper endpoint. No restriction on the finite ancillary
+dimension, alphabet, or coherent local instruments is introduced.
+
+White-noise mixing sends $W_t$ to $W_{t/(1+\lambda)}$. The witness excludes
+causal separability when $\lambda<2t-1$, and the ordered decomposition at
+parameter $1/2$ in Section~\ref{sec:robustness} attains that threshold. Thus
+the exact added-noise ratio for this family is $\lambda_{\min}=2t-1$;
+the corresponding white-noise fraction is $(2t-1)/(2t)$.
+
+\section{Scope and reproducibility}\label{sec:scope}
+
+The rational entry formula \eqref{eq:entries}, the spectrum, the three process-subspace equalities, and the witness replacements supply exact finite-dimensional checks of the example. The causal-model proof is analytical: it applies to every allowed ancillary dimension and every finite experiment, rather than inferring a universal claim from a finite collection of inequality tests.
+
+The response maps describe actual quantum probabilities under white noise. They do not impose affinity, noncontextuality, or a quantum-process realization on the classical ordered components constructed by max flow. Those components may depend on the full instrument family, as permitted in the definition of a causal behavior. The flags are retained as outcomes during the construction and then summed out; no runs are discarded.
+
+The conclusion concerns the ordinary bipartite process-matrix scenario and arbitrary shared quantum states. It makes no claim about physical circuit realizability, tests with trusted quantum referee inputs, additional parties, or tensor-stable causality under multiple copies.
+
+The extension is precisely $W\otimes\rho$, with $\rho$ independent of free
+settings. Correlating an extension with the received process inputs or treating
+received flags as extra free settings changes the problem. The classical
+components need not be affine or quantum-realizable. In the fully transposed
+Choi convention used here, the ancillary contraction is exactly
+$\Tr[\rho(E\otimes F)]$; no extra ancillary partial transpose is inserted.
+The mismatch proof uses noncommuting local projectors: the stronger classical
+triangle bound with coefficient one is not available.
+
+\paragraph{Validation note.}
+Separate mathematical and scope audits found no gap in the stated argument. Exact matrix checks and an independent executable implementation agree with the proof; the latter also checked 262,144 outcome rectangles and 64 causal allocations. These finite tests check implementation and conventions; the analytical proof supplies the universal quantifiers. This validation is not external peer review or proof-assistant verification.
+
+\begin{thebibliography}{9}
+\bibitem[OG16]{OG16}
+O.~Oreshkov and C.~Giarmatzi,
+\emph{Causal and causally separable processes},
+New Journal of Physics \textbf{18}, 093020 (2016).
+\href{https://doi.org/10.1088/1367-2630/18/9/093020}{doi:10.1088/1367-2630/18/9/093020}.
+\href{https://arxiv.org/abs/1506.05449v3}{\mbox{arXiv:1506.05449v3}}.
+See Definition~III.1, Definitions~III.2--III.3, and Section~III.5.
+
+\bibitem[FAB16]{FAB16}
+A.~Feix, M.~Ara\'ujo, and \v{C}.~Brukner,
+\emph{Causally nonseparable processes admitting a causal model},
+New Journal of Physics \textbf{18}, 083040 (2016).
+\href{https://doi.org/10.1088/1367-2630/18/8/083040}{doi:10.1088/1367-2630/18/8/083040}.
+\href{https://arxiv.org/abs/1604.03391v3}{\mbox{arXiv:1604.03391v3}}.
+See Sections~II--III and~VI for the process convention, causal models, and shared-state extensions.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,23 @@
+name: Repository checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  structure-and-certificates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check result ownership and navigation
+        run: python scripts/validate_repo.py
+      - name: Package the canonical Overleaf source
+        run: python scripts/package_overleaf.py
+      - name: Replay exact finite certificates
+        run: python proofs/lean/certificates/verify_all.py
+      - name: Save the Overleaf export
+        uses: actions/upload-artifact@v4
+        with:
+          name: overleaf
+          path: dist/overleaf.zip

@@ -1,0 +1,253 @@
+{
+  "status": "MODULAR_DISCOVERY_ONLY",
+  "mask": 3,
+  "mode": "imag",
+  "prime": 1000003,
+  "retained_mixed_rank": 4088,
+  "pair_columns": 8,
+  "independent_residual_forms": 2,
+  "pairs": [
+    {
+      "left": {
+        "mask": 1,
+        "kind": "real",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          4,
+          0,
+          1
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "imag",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          3,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "left": {
+        "mask": 1,
+        "kind": "real",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          4,
+          0,
+          1
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "imag",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          19,
+          "denominator",
+          2
+        ]
+      }
+    },
+    {
+      "left": {
+        "mask": 1,
+        "kind": "real",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          16,
+          "denominator",
+          4
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "imag",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          3,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "left": {
+        "mask": 1,
+        "kind": "real",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          16,
+          "denominator",
+          4
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "imag",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          19,
+          "denominator",
+          2
+        ]
+      }
+    },
+    {
+      "left": {
+        "mask": 1,
+        "kind": "imag",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          4,
+          0,
+          1
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "real",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          3,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "left": {
+        "mask": 1,
+        "kind": "imag",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          4,
+          0,
+          1
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "real",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          18,
+          "denominator",
+          2
+        ]
+      }
+    },
+    {
+      "left": {
+        "mask": 1,
+        "kind": "imag",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          17,
+          "denominator",
+          4
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "real",
+        "typed_basis_index": 8,
+        "label": [
+          "serial",
+          3,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "left": {
+        "mask": 1,
+        "kind": "imag",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          17,
+          "denominator",
+          4
+        ]
+      },
+      "right": {
+        "mask": 2,
+        "kind": "real",
+        "typed_basis_index": 9,
+        "label": [
+          "extra",
+          18,
+          "denominator",
+          2
+        ]
+      }
+    }
+  ],
+  "forms": [
+    {
+      "word_key": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "boundary_entry": [
+        8,
+        1
+      ],
+      "pivot": 3,
+      "residual_coefficients": [
+        0,
+        0,
+        0,
+        999999,
+        0,
+        0,
+        0,
+        999999
+      ]
+    },
+    {
+      "word_key": [
+        0,
+        0,
+        1,
+        4
+      ],
+      "boundary_entry": [
+        8,
+        1
+      ],
+      "pivot": 7,
+      "residual_coefficients": [
+        0,
+        0,
+        0,
+        999999,
+        0,
+        0,
+        0,
+        4
+      ]
+    }
+  ],
+  "seconds": 1.4328386783599854,
+  "scope": "Finite-field discovery of host-wide mixed-word forms; exact rational certification required."
+}

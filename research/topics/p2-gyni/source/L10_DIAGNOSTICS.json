@@ -1,0 +1,56 @@
+{
+  "kind": "NONCERTIFIED_FLOATING_DIAGNOSTICS",
+  "date": "2026-10-01",
+  "level": "unconstrained universal coset L10",
+  "termination": "300-second limit",
+  "iterations": 26805,
+  "last": {
+    "iteration": 26805,
+    "tester_score_raw_PSD": 0.6221663049677824,
+    "tester_affine_residual": 4.527788571724081e-09,
+    "tester_affine_min_eigenvalue": -6.334070324835157e-10,
+    "tester_repaired_value_float": 0.6221663047135151,
+    "completion_NS_scale_raw": 0.6221746799392069,
+    "completion_NS_slack_min_eigenvalue": -9.133724806023319e-08,
+    "completion_repaired_scale_float": 0.6223515088514515,
+    "DR_residual": 1.3373361052167558e-06,
+    "complementarity_Hraw_Q": 1.4585601143336375e-12,
+    "finite_relaxation_float_gap": 0.00018520413793643442
+  },
+  "flatness": {
+    "ordinary_word_level": 10,
+    "ordinary_word_count": 21,
+    "ordinary_tester_score": null,
+    "aggregate_M00": 1.0000000000027744,
+    "aggregate_smallest_eigenvalues": [
+      0.0009878262826078239,
+      0.03225478947801359,
+      0.04117280578875722,
+      0.2534543614137488,
+      0.33102645300924227
+    ],
+    "normalized_six_angle_annihilator_scalar": 0.000988128547296443,
+    "full_annihilator_A_residual": 0.0232746699113834,
+    "full_annihilator_B_residual": 0.023274669911383498,
+    "scope": "Floating diagnostics only; small values are not exact rank or flatness proofs."
+  },
+  "post_diagnostics": {
+    "scope": "Floating terminal diagnostics except the explicitly integer overlap check; no certificates or attained optimum claimed.",
+    "level": 10,
+    "checkpoint_iteration": 26805,
+    "ordinary_adjoint_score": 0.6221663049677824,
+    "coset_score": 0.6221663049677824,
+    "score_preservation_error": 0.0,
+    "ordinary_tester_affine_residual": 4.373782610945257e-09,
+    "coset_tester_affine_residual": 4.527788571724081e-09,
+    "coset_affine_tester_residual": 5.72492542668319e-15,
+    "raw_completion_NS_residual": 1.3373284404881245e-06,
+    "projected_completion_NS_residual": 3.5736570936726225e-18,
+    "six_angle_normalization_contraction_error": 4.440892098500626e-16,
+    "initial_ordinary_tester_affine_residual": 2.909040506272668e-14,
+    "integer_coset_overlap_orthogonality": true,
+    "all_42_nonidentity_overlap_rows_retained": true,
+    "no_support_or_annihilator_constraint_imposed": true
+  },
+  "scope": "No exact bound, physical reconstruction, attainment, nonattainment, or infeasibility conclusion. No optimization launched for this package."
+}

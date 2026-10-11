@@ -1,0 +1,345 @@
+{
+  "status": "PASS",
+  "verified_prime": 1000003,
+  "total_rational_tangent_basis_dimension": 583,
+  "exact_total_form_rank": 2,
+  "signature": [
+    1,
+    1
+  ],
+  "radical_dimension": 581,
+  "blocks": [
+    {
+      "mask": 0,
+      "kind": "real",
+      "basis_dimension": 172,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 2,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 778752
+    },
+    {
+      "mask": 0,
+      "kind": "imag",
+      "basis_dimension": 129,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 8192
+    },
+    {
+      "mask": 1,
+      "kind": "real",
+      "basis_dimension": 10,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 1,
+      "kind": "imag",
+      "basis_dimension": 10,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 2,
+      "kind": "real",
+      "basis_dimension": 10,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 2,
+      "kind": "imag",
+      "basis_dimension": 10,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 3,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 3,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 4,
+      "kind": "real",
+      "basis_dimension": 17,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 18432
+    },
+    {
+      "mask": 4,
+      "kind": "imag",
+      "basis_dimension": 17,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 18432
+    },
+    {
+      "mask": 5,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 5,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 6,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 6,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 7,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 7,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 8,
+      "kind": "real",
+      "basis_dimension": 14,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 8,
+      "kind": "imag",
+      "basis_dimension": 14,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 9,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 9,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 10,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 10,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 11,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 11,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 12,
+      "kind": "real",
+      "basis_dimension": 10,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 12,
+      "kind": "imag",
+      "basis_dimension": 10,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 13,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 13,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 14,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 14,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 15,
+      "kind": "real",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    },
+    {
+      "mask": 15,
+      "kind": "imag",
+      "basis_dimension": 8,
+      "basis_independent_mod_prime": true,
+      "every_reconstructed_tangent_rank_row_annihilates_basis_exactly": true,
+      "exact_bilinear_rank": 0,
+      "explicit_ell_m_factorization_verified": true,
+      "integer_bilinear_bound": 2048
+    }
+  ],
+  "anchor_functionals_C4": [
+    1,
+    0
+  ],
+  "anchor_functionals_C5": [
+    0,
+    1
+  ],
+  "anchor_omega_C4_C5": 1,
+  "mixed_XOR_typing": "Selected equal-output words require equal XOR masks on both coefficient factors.",
+  "mixed_real_imaginary_typing": "Their products are purely imaginary and are killed by the real dual functional.",
+  "scope": "Exact bilinear identity on the entire complete real tangent space; the host consequence requires the common-baseline mixed-derivative argument reviewed in the accompanying note."
+}

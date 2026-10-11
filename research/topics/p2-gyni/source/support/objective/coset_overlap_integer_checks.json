@@ -1,0 +1,59 @@
+{
+  "status": "PASSED_EXACT_INTEGER",
+  "cases": [
+    {
+      "L": 1,
+      "rows": 6,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 2,
+      "rows": 10,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 3,
+      "rows": 14,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 4,
+      "rows": 18,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 5,
+      "rows": 22,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 6,
+      "rows": 26,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 7,
+      "rows": 30,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 8,
+      "rows": 34,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    },
+    {
+      "L": 9,
+      "rows": 38,
+      "integer_orthogonality": true,
+      "minimum_row_weight": 2
+    }
+  ]
+}

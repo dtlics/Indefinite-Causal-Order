@@ -1,0 +1,345 @@
+{
+  "status": "PASS",
+  "quartet_complement_order_witnesses": [
+    {
+      "proposed_unbranched_query": 1,
+      "other_native_query": 2,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "6",
+          "nonzero_entry": [
+            1,
+            4,
+            "1/2"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            0,
+            12,
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 1,
+      "other_native_query": 3,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "8",
+          "nonzero_entry": [
+            4,
+            14,
+            "2"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            0,
+            9,
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 1,
+      "other_native_query": 4,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "8",
+          "nonzero_entry": [
+            12,
+            5,
+            "1"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            0,
+            9,
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 2,
+      "other_native_query": 1,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "8",
+          "nonzero_entry": [
+            0,
+            12,
+            "1"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "12",
+          "nonzero_entry": [
+            0,
+            5,
+            "-1/2"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 2,
+      "other_native_query": 3,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "8",
+          "nonzero_entry": [
+            4,
+            2,
+            "2"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "12",
+          "nonzero_entry": [
+            1,
+            7,
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 2,
+      "other_native_query": 4,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "8",
+          "nonzero_entry": [
+            12,
+            9,
+            "1"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "12",
+          "nonzero_entry": [
+            0,
+            5,
+            "-1"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 3,
+      "other_native_query": 1,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16/3",
+          "nonzero_entry": [
+            0,
+            8,
+            "-1/3"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            4,
+            14,
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 3,
+      "other_native_query": 2,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "4",
+          "nonzero_entry": [
+            1,
+            7,
+            "1"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            0,
+            6,
+            "-2"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 3,
+      "other_native_query": 4,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "Y",
+          "j_matrix": "X",
+          "defect_HS_squared": "8",
+          "nonzero_entry": [
+            12,
+            13,
+            "I"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            4,
+            7,
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 4,
+      "other_native_query": 1,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16/3",
+          "nonzero_entry": [
+            0,
+            8,
+            "-1/3"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            4,
+            13,
+            "-1"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 4,
+      "other_native_query": 2,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "4",
+          "nonzero_entry": [
+            1,
+            4,
+            "1"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            8,
+            13,
+            "-1"
+          ]
+        }
+      ]
+    },
+    {
+      "proposed_unbranched_query": 4,
+      "other_native_query": 3,
+      "witnesses": [
+        {
+          "uniform_order_on_complement": "i_before_j",
+          "i_matrix": "X",
+          "j_matrix": "X",
+          "defect_HS_squared": "8",
+          "nonzero_entry": [
+            4,
+            7,
+            "2"
+          ]
+        },
+        {
+          "uniform_order_on_complement": "j_before_i",
+          "i_matrix": "X",
+          "j_matrix": "Y",
+          "defect_HS_squared": "16",
+          "nonzero_entry": [
+            12,
+            13,
+            "2*I"
+          ]
+        }
+      ]
+    }
+  ],
+  "total_exact_defects": 24,
+  "switch_branch_central_comparison_identity": true,
+  "quartet_consequence_conditional_on_graph_lemma": "Every original query has a nonzero active native ideal. Therefore all four original query vertices have at least two reachable branches, and Q3=E3,Q4=E4.",
+  "scope": "The exact matrices certify the algebraic contradiction. The graph implication and its pinning/end-extraction proof require the accompanying theorem review."
+}

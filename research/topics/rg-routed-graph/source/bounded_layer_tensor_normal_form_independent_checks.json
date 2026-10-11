@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "aggregate_patterns": 36,
+  "ordinary_nonunitary_BA_checks": 72,
+  "noncommuting_private_qubit_BA_and_unitarity_checks": 36,
+  "original_source_branches_max": 10,
+  "retained_layers_max": 7,
+  "retained_branch_incidences_loose_max": 224,
+  "complex_coefficients_per_layer_loose_bound": "256*257^32",
+  "real_layer_coefficients_total_loose_bound": "3584*257^32",
+  "recurrent_exchange_dimension_bound": 68719476736,
+  "scope": "Exact finite calibrations only; neither a graph realization nor a finite complete-unitarity ancilla cutoff."
+}

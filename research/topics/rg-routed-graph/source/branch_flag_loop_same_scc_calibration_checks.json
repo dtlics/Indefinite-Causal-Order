@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "boundary_dimension": 128,
+  "old": {
+    "refined": false,
+    "sections": 64,
+    "forward_complete_choices": 2048,
+    "reverse_complete_choices": 64,
+    "green_edges": 250,
+    "red_edges": 46,
+    "solid_edges": 4,
+    "recurrent_SCC_size": 8,
+    "recurrent_color": "green",
+    "weak_loops_pass": true
+  },
+  "refined": {
+    "refined": true,
+    "sections": 64,
+    "forward_complete_choices": 8192,
+    "reverse_complete_choices": 64,
+    "green_edges": 294,
+    "red_edges": 52,
+    "solid_edges": 4,
+    "recurrent_SCC_size": 10,
+    "recurrent_color": "green",
+    "weak_loops_pass": true
+  },
+  "all_recipient_and_selected_branches_in_same_SCC": true,
+  "coarse_event_forward_independent_of_entire_recipient_vector": true,
+  "reverse_independence_automatic_no_internal_red": true,
+  "selected_vector_projection_identity": true,
+  "individual_green_influences_still_present": 4,
+  "native_recipient_algebra_before": "M2+M2",
+  "native_recipient_algebra_after": "M2+M2+M2+M2",
+  "time_reversal": {
+    "recurrent_color": "red",
+    "old_forward": 64,
+    "new_forward": 64,
+    "old_reverse": 2048,
+    "new_reverse": 8192,
+    "weak_loops_pass": true
+  },
+  "scope": "Exact valid same-SCC coarse-event flag-copying calibration. It verifies the event-level independence theorem; no quartets, arbitrary intra-SCC events, or general graph deletion are claimed."
+}

@@ -1,0 +1,13 @@
+{
+  "exit_code": 0,
+  "declarations": 32,
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "unexpected_axioms": [],
+  "audit_sha256": "029c73607e6a94caa1322e56e254b5a25b83d503834905e869eb616f50126b80",
+  "log_sha256": "033c03bd589d43f5929aa3f656b0b815b243fc6216d9ef281292f409581a813a",
+  "kernel_seconds": 49.4222823
+}

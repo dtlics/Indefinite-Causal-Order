@@ -1,0 +1,22 @@
+{
+  "status": "integer_only_replay_pass",
+  "angles_rational_cos_sin": [
+    [
+      "15/17",
+      "8/17"
+    ],
+    [
+      "8/17",
+      "15/17"
+    ]
+  ],
+  "full_physical_lower": "41466694494597/66827490688000",
+  "full_physical_lower_decimal": 0.6205035393023225,
+  "normalized_row_column_clique_upper": "6183/10000",
+  "normalized_row_column_clique_upper_decimal": 0.6183,
+  "strict_gap": "736285011033/334137453440000",
+  "strict_gap_decimal": 0.002203539302322517,
+  "physical_positive_blocks": 16,
+  "positive_clique_slacks": 64,
+  "scope": "Same exact two-angle support. Excludes a common row/column clique lift preserving full normalization and at least this GYNI score; does not exclude arbitrary finite-angle optimizer replacement."
+}

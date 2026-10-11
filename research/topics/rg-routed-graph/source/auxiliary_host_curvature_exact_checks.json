@@ -1,0 +1,6634 @@
+{
+  "status": "EXACT_THIRTEEN_NECESSARY_FORMS",
+  "forms": [
+    {
+      "number": 0,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "boundary_entry": [
+            8,
+            1
+          ],
+          "weight": 2
+        }
+      ],
+      "row_count": 4,
+      "maximum_weight": 3,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            167,
+            168,
+            169
+          ],
+          "matrix": [
+            [
+              0,
+              128,
+              16
+            ],
+            [
+              128,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "32",
+          "linear_factors": [
+            {
+              "167": "1"
+            },
+            {
+              "168": "8",
+              "169": "1"
+            }
+          ],
+          "integer_bound": 1946880
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 20480
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 46080
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 46080
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 5120
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 5120
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            2
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            6
+          ],
+          "weight": 1
+        }
+      ],
+      "row_count": 2,
+      "maximum_weight": 1,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            164,
+            165,
+            168,
+            169,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              -192,
+              -24,
+              0
+            ],
+            [
+              0,
+              0,
+              64,
+              8,
+              0
+            ],
+            [
+              -192,
+              64,
+              128,
+              8,
+              -64
+            ],
+            [
+              -24,
+              8,
+              8,
+              0,
+              -8
+            ],
+            [
+              0,
+              0,
+              -64,
+              -8,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "-16",
+          "linear_factors": [
+            {
+              "168": "8",
+              "169": "1"
+            },
+            {
+              "164": "3",
+              "165": "-1",
+              "168": "-1",
+              "170": "1"
+            }
+          ],
+          "integer_bound": 389376
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 9216
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 9216
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            0
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            6
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            0,
+            6
+          ],
+          "weight": 1
+        }
+      ],
+      "row_count": 4,
+      "maximum_weight": 1,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            161,
+            162,
+            163,
+            164,
+            168,
+            169,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              128,
+              16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -128,
+              -16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -128,
+              -16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -256,
+              -32,
+              0
+            ],
+            [
+              128,
+              -128,
+              -128,
+              -256,
+              2048,
+              128,
+              768
+            ],
+            [
+              16,
+              -16,
+              -16,
+              -32,
+              128,
+              0,
+              96
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              768,
+              96,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "32",
+          "linear_factors": [
+            {
+              "168": "8",
+              "169": "1"
+            },
+            {
+              "161": "1",
+              "162": "-1",
+              "163": "-1",
+              "164": "-2",
+              "168": "8",
+              "170": "6"
+            }
+          ],
+          "integer_bound": 778752
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 8192
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 18432
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 18432
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 2048
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 2048
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            1
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            8
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            3,
+            6
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            1,
+            6
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            8,
+            6
+          ],
+          "weight": 2
+        }
+      ],
+      "row_count": 6,
+      "maximum_weight": 2,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            161,
+            162,
+            164,
+            168,
+            169,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              0,
+              -128,
+              -16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              128,
+              16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              256,
+              32,
+              0
+            ],
+            [
+              -128,
+              128,
+              256,
+              0,
+              0,
+              256
+            ],
+            [
+              -16,
+              16,
+              32,
+              0,
+              0,
+              32
+            ],
+            [
+              0,
+              0,
+              0,
+              256,
+              32,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "-32",
+          "linear_factors": [
+            {
+              "168": "8",
+              "169": "1"
+            },
+            {
+              "161": "1",
+              "162": "-1",
+              "164": "-2",
+              "170": "-2"
+            }
+          ],
+          "integer_bound": 1557504
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 16384
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 36864
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 36864
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            10
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            11
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            10
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            11
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            10
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            11
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            10
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            11
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            10
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            11
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            10
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            11
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            10,
+            13
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            11,
+            13
+          ],
+          "weight": 4
+        }
+      ],
+      "row_count": 14,
+      "maximum_weight": 4,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            161,
+            162,
+            164,
+            165,
+            167,
+            168,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              64,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -64,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              64,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -64,
+              0,
+              0
+            ],
+            [
+              64,
+              -64,
+              64,
+              -64,
+              0,
+              -64,
+              -64
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -64,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -64,
+              0,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "128",
+          "linear_factors": [
+            {
+              "167": "1"
+            },
+            {
+              "161": "1",
+              "162": "-1",
+              "164": "1",
+              "165": "-1",
+              "168": "-1",
+              "170": "-1"
+            }
+          ],
+          "integer_bound": 5451264
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 57344
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 129024
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 129024
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 14336
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 14336
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            14,
+            14
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            9
+          ],
+          "weight": 10
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            12,
+            12
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            14,
+            12
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "boundary_entry": [
+            12,
+            12
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            8,
+            9
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            9,
+            12
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            2,
+            1
+          ],
+          "boundary_entry": [
+            9,
+            12
+          ],
+          "weight": 8
+        }
+      ],
+      "row_count": 10,
+      "maximum_weight": 10,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            163,
+            167,
+            168,
+            169,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              128,
+              0,
+              0,
+              0
+            ],
+            [
+              128,
+              0,
+              -1280,
+              -32,
+              -1024
+            ],
+            [
+              0,
+              -1280,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              -32,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              -1024,
+              0,
+              0,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "64",
+          "linear_factors": [
+            {
+              "167": "1"
+            },
+            {
+              "163": "4",
+              "168": "-40",
+              "169": "-1",
+              "170": "-32"
+            }
+          ],
+          "integer_bound": 7592832
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 79872
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 179712
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 179712
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 19968
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 19968
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            9
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            10
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            10
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            10
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            0
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            0
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            0
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            9
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            10
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            10
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            10
+          ],
+          "weight": -6
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            0
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            0
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            0
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            13
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            10,
+            13
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            13
+          ],
+          "weight": 4
+        }
+      ],
+      "row_count": 21,
+      "maximum_weight": 8,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            164,
+            165,
+            167,
+            168,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              -192,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              64,
+              0,
+              0
+            ],
+            [
+              -192,
+              64,
+              0,
+              64,
+              -64
+            ],
+            [
+              0,
+              0,
+              64,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              -64,
+              0,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "-128",
+          "linear_factors": [
+            {
+              "167": "1"
+            },
+            {
+              "164": "3",
+              "165": "-1",
+              "168": "-1",
+              "170": "1"
+            }
+          ],
+          "integer_bound": 10902528
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 114688
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 258048
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 258048
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 28672
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 28672
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            6
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            6
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            3,
+            6
+          ],
+          "weight": 1
+        }
+      ],
+      "row_count": 6,
+      "maximum_weight": 1,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            159,
+            160,
+            163,
+            164,
+            168,
+            169,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              -128,
+              -16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              128,
+              16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              128,
+              16,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              256,
+              32,
+              0
+            ],
+            [
+              -128,
+              128,
+              128,
+              256,
+              -2048,
+              -128,
+              -768
+            ],
+            [
+              -16,
+              16,
+              16,
+              32,
+              -128,
+              0,
+              -96
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -768,
+              -96,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "-32",
+          "linear_factors": [
+            {
+              "168": "8",
+              "169": "1"
+            },
+            {
+              "159": "1",
+              "160": "-1",
+              "163": "-1",
+              "164": "-2",
+              "168": "8",
+              "170": "6"
+            }
+          ],
+          "integer_bound": 1168128
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 12288
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 27648
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 27648
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 3072
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 3072
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "dual_rows": [
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            4,
+            4
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            4,
+            6
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            4,
+            5
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            6,
+            5
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            4,
+            12
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            4,
+            14
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            5,
+            12
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            5,
+            14
+          ],
+          "weight": 1
+        }
+      ],
+      "row_count": 8,
+      "maximum_weight": 1,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            160,
+            162,
+            168,
+            169
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              -128,
+              -16
+            ],
+            [
+              0,
+              0,
+              128,
+              16
+            ],
+            [
+              -128,
+              128,
+              0,
+              0
+            ],
+            [
+              -16,
+              16,
+              0,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "-32",
+          "linear_factors": [
+            {
+              "168": "8",
+              "169": "1"
+            },
+            {
+              "160": "1",
+              "162": "-1"
+            }
+          ],
+          "integer_bound": 1557504
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 16384
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 36864
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 36864
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "dual_rows": [
+        {
+          "word_key": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            5,
+            7
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            7,
+            13
+          ],
+          "weight": 1
+        }
+      ],
+      "row_count": 2,
+      "maximum_weight": 1,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            160,
+            162,
+            167
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              16
+            ],
+            [
+              0,
+              0,
+              -16
+            ],
+            [
+              16,
+              -16,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "32",
+          "linear_factors": [
+            {
+              "167": "1"
+            },
+            {
+              "160": "1",
+              "162": "-1"
+            }
+          ],
+          "integer_bound": 389376
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 4096
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 9216
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 9216
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 1024
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 1024
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            2
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            8
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            9
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            9
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            2
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            2
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            0
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            2,
+            4
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            4
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            4,
+            5
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            5,
+            6
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            2
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            4,
+            5
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            2
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            9
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            2
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            2,
+            8
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            2
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            2
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            8
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            4
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            6
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            4
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            4
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            4
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            5,
+            12
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            12
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            2,
+            12
+          ],
+          "weight": 4
+        }
+      ],
+      "row_count": 48,
+      "maximum_weight": 8,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            151,
+            153,
+            164,
+            165,
+            168,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              192,
+              -64,
+              -64,
+              64
+            ],
+            [
+              0,
+              0,
+              -192,
+              64,
+              64,
+              -64
+            ],
+            [
+              192,
+              -192,
+              -192,
+              -64,
+              128,
+              -128
+            ],
+            [
+              -64,
+              64,
+              -64,
+              64,
+              0,
+              0
+            ],
+            [
+              -64,
+              64,
+              128,
+              0,
+              -64,
+              64
+            ],
+            [
+              64,
+              -64,
+              -128,
+              0,
+              64,
+              -64
+            ]
+          ],
+          "diagonal_polynomial_factor": "64",
+          "linear_factors": [
+            {
+              "164": "3",
+              "165": "-1",
+              "168": "-1",
+              "170": "1"
+            },
+            {
+              "151": "2",
+              "153": "-2",
+              "164": "-1",
+              "165": "-1",
+              "168": "1",
+              "170": "-1"
+            }
+          ],
+          "integer_bound": 28035072
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 294912
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 663552
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 663552
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 73728
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 73728
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            0
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            1
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            8
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            9
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            9
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            0
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            2
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": 6
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            0
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            1
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            0
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            1
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            4
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            2,
+            4
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            4
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            4
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            4,
+            5
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            5,
+            5
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            5,
+            6
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            5,
+            7
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            0
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            2
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            4,
+            4
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            4,
+            5
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            0
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            0
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            1
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            4,
+            5
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            9
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            0
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            2
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            8
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            3
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            0
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": 6
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            2
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            2
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            2
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            0
+          ],
+          "weight": 3
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": -3
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            0
+          ],
+          "weight": 1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            1
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "boundary_entry": [
+            2,
+            3
+          ],
+          "weight": -1
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            8
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            8
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            1
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            8
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            4
+          ],
+          "weight": -16
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            6
+          ],
+          "weight": 16
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            7
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            4
+          ],
+          "weight": 2
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            4
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            4
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            4
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            4
+          ],
+          "weight": -2
+        },
+        {
+          "word_key": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            4
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            5,
+            12
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            5,
+            12
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            0,
+            12
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            12
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            2,
+            12
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            1
+          ],
+          "boundary_entry": [
+            3,
+            12
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            0,
+            12
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            1,
+            12
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            0,
+            3
+          ],
+          "boundary_entry": [
+            3,
+            12
+          ],
+          "weight": 4
+        }
+      ],
+      "row_count": 106,
+      "maximum_weight": 16,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            151,
+            153,
+            163,
+            164,
+            165,
+            168,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              128,
+              192,
+              -64,
+              -1088,
+              -960
+            ],
+            [
+              0,
+              0,
+              -128,
+              -192,
+              64,
+              1088,
+              960
+            ],
+            [
+              128,
+              -128,
+              0,
+              -64,
+              -64,
+              64,
+              -64
+            ],
+            [
+              192,
+              -192,
+              -64,
+              -192,
+              -64,
+              640,
+              384
+            ],
+            [
+              -64,
+              64,
+              -64,
+              -64,
+              64,
+              512,
+              512
+            ],
+            [
+              -1088,
+              1088,
+              64,
+              640,
+              512,
+              -1088,
+              64
+            ],
+            [
+              -960,
+              960,
+              -64,
+              384,
+              512,
+              64,
+              960
+            ]
+          ],
+          "diagonal_polynomial_factor": "64",
+          "linear_factors": [
+            {
+              "163": "2",
+              "164": "3",
+              "165": "-1",
+              "168": "-17",
+              "170": "-15"
+            },
+            {
+              "151": "2",
+              "153": "-2",
+              "164": "-1",
+              "165": "-1",
+              "168": "1",
+              "170": "-1"
+            }
+          ],
+          "integer_bound": 72813312
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 765952
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 1723392
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 1723392
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 191488
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 191488
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "dual_rows": [
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": -28
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": -14
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            9
+          ],
+          "weight": -42
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            10
+          ],
+          "weight": -44
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            5,
+            5
+          ],
+          "weight": 12
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            5,
+            13
+          ],
+          "weight": 12
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            8
+          ],
+          "weight": -7
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            9
+          ],
+          "weight": -14
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            10
+          ],
+          "weight": -22
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            9
+          ],
+          "weight": -7
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            10
+          ],
+          "weight": -22
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            12,
+            14
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            13,
+            13
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": -16
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": -12
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            5,
+            14
+          ],
+          "weight": 12
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            12,
+            12
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            13,
+            14
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": 14
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            1
+          ],
+          "weight": 7
+        },
+        {
+          "word_key": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            1
+          ],
+          "weight": 7
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": -16
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            10
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            3
+          ],
+          "weight": 4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            8
+          ],
+          "weight": -4
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            9
+          ],
+          "weight": 24
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            10
+          ],
+          "weight": 22
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            10
+          ],
+          "weight": 30
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            8
+          ],
+          "weight": -12
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            1
+          ],
+          "weight": -14
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            1
+          ],
+          "weight": -7
+        },
+        {
+          "word_key": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "boundary_entry": [
+            9,
+            1
+          ],
+          "weight": 21
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            8,
+            13
+          ],
+          "weight": -32
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            10,
+            5
+          ],
+          "weight": 48
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            10,
+            13
+          ],
+          "weight": -8
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            1,
+            1
+          ],
+          "boundary_entry": [
+            1,
+            12
+          ],
+          "weight": 16
+        },
+        {
+          "word_key": [
+            0,
+            2,
+            3,
+            0
+          ],
+          "boundary_entry": [
+            1,
+            13
+          ],
+          "weight": -28
+        },
+        {
+          "word_key": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            0,
+            3
+          ],
+          "weight": 8
+        },
+        {
+          "word_key": [
+            2,
+            0,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            1
+          ],
+          "weight": -28
+        },
+        {
+          "word_key": [
+            2,
+            1,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            9
+          ],
+          "weight": -24
+        },
+        {
+          "word_key": [
+            2,
+            2,
+            1,
+            0
+          ],
+          "boundary_entry": [
+            3,
+            13
+          ],
+          "weight": 32
+        }
+      ],
+      "row_count": 42,
+      "maximum_weight": 48,
+      "annihilates_every_complex_mixed_coefficient": true,
+      "forms": [
+        {
+          "typed_block": "0_real",
+          "rank": 2,
+          "basis_indices": [
+            159,
+            160,
+            164,
+            165,
+            167,
+            168,
+            170
+          ],
+          "matrix": [
+            [
+              0,
+              0,
+              0,
+              0,
+              512,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -512,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -64,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -320,
+              0,
+              0
+            ],
+            [
+              512,
+              -512,
+              -64,
+              -320,
+              0,
+              -320,
+              -704
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -320,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              -704,
+              0,
+              0
+            ]
+          ],
+          "diagonal_polynomial_factor": "128",
+          "linear_factors": [
+            {
+              "167": "1"
+            },
+            {
+              "159": "8",
+              "160": "-8",
+              "164": "-1",
+              "165": "-5",
+              "168": "-5",
+              "170": "-11"
+            }
+          ],
+          "integer_bound": 137449728
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0,
+          "integer_bound": 1445888
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0,
+          "integer_bound": 3253248
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0,
+          "integer_bound": 3253248
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0,
+          "integer_bound": 361472
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0,
+          "integer_bound": 361472
+        }
+      ]
+    }
+  ],
+  "full_tangent_dimension": 583,
+  "scope": "Each of thirteen exact rank-two forms vanishes on the full auxiliary tangent span of every single host. No claim here of completeness of these forms or sufficiency for a host."
+}

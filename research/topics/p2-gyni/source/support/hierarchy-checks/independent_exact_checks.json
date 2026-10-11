@@ -1,0 +1,292 @@
+{
+  "verdict": "passed",
+  "arithmetic": "Exact integers, rational polynomial coefficients, symbolic identities; no numerical solver or author imports",
+  "encoder_and_probe_cases": [
+    {
+      "M": 1,
+      "source_order": 6,
+      "max_local_degree": 3,
+      "probe_order": 18,
+      "distinct_overlap_words": 17
+    },
+    {
+      "M": 2,
+      "source_order": 10,
+      "max_local_degree": 7,
+      "probe_order": 34,
+      "distinct_overlap_words": 33
+    },
+    {
+      "M": 3,
+      "source_order": 14,
+      "max_local_degree": 11,
+      "probe_order": 50,
+      "distinct_overlap_words": 49
+    },
+    {
+      "M": 4,
+      "source_order": 18,
+      "max_local_degree": 15,
+      "probe_order": 66,
+      "distinct_overlap_words": 65
+    },
+    {
+      "M": 5,
+      "source_order": 22,
+      "max_local_degree": 19,
+      "probe_order": 82,
+      "distinct_overlap_words": 81
+    },
+    {
+      "M": 6,
+      "source_order": 26,
+      "max_local_degree": 23,
+      "probe_order": 98,
+      "distinct_overlap_words": 97
+    },
+    {
+      "M": 7,
+      "source_order": 30,
+      "max_local_degree": 27,
+      "probe_order": 114,
+      "distinct_overlap_words": 113
+    },
+    {
+      "M": 8,
+      "source_order": 34,
+      "max_local_degree": 31,
+      "probe_order": 130,
+      "distinct_overlap_words": 129
+    },
+    {
+      "M": 9,
+      "source_order": 38,
+      "max_local_degree": 35,
+      "probe_order": 146,
+      "distinct_overlap_words": 145
+    },
+    {
+      "M": 10,
+      "source_order": 42,
+      "max_local_degree": 39,
+      "probe_order": 162,
+      "distinct_overlap_words": 161
+    },
+    {
+      "M": 11,
+      "source_order": 46,
+      "max_local_degree": 43,
+      "probe_order": 178,
+      "distinct_overlap_words": 177
+    },
+    {
+      "M": 12,
+      "source_order": 50,
+      "max_local_degree": 47,
+      "probe_order": 194,
+      "distinct_overlap_words": 193
+    },
+    {
+      "M": 13,
+      "source_order": 54,
+      "max_local_degree": 51,
+      "probe_order": 210,
+      "distinct_overlap_words": 209
+    },
+    {
+      "M": 14,
+      "source_order": 58,
+      "max_local_degree": 55,
+      "probe_order": 226,
+      "distinct_overlap_words": 225
+    },
+    {
+      "M": 15,
+      "source_order": 62,
+      "max_local_degree": 59,
+      "probe_order": 242,
+      "distinct_overlap_words": 241
+    },
+    {
+      "M": 16,
+      "source_order": 66,
+      "max_local_degree": 63,
+      "probe_order": 258,
+      "distinct_overlap_words": 257
+    },
+    {
+      "M": 17,
+      "source_order": 70,
+      "max_local_degree": 67,
+      "probe_order": 274,
+      "distinct_overlap_words": 273
+    },
+    {
+      "M": 18,
+      "source_order": 74,
+      "max_local_degree": 71,
+      "probe_order": 290,
+      "distinct_overlap_words": 289
+    },
+    {
+      "M": 19,
+      "source_order": 78,
+      "max_local_degree": 75,
+      "probe_order": 306,
+      "distinct_overlap_words": 305
+    },
+    {
+      "M": 20,
+      "source_order": 82,
+      "max_local_degree": 79,
+      "probe_order": 322,
+      "distinct_overlap_words": 321
+    },
+    {
+      "M": 21,
+      "source_order": 86,
+      "max_local_degree": 83,
+      "probe_order": 338,
+      "distinct_overlap_words": 337
+    },
+    {
+      "M": 22,
+      "source_order": 90,
+      "max_local_degree": 87,
+      "probe_order": 354,
+      "distinct_overlap_words": 353
+    },
+    {
+      "M": 23,
+      "source_order": 94,
+      "max_local_degree": 91,
+      "probe_order": 370,
+      "distinct_overlap_words": 369
+    },
+    {
+      "M": 24,
+      "source_order": 98,
+      "max_local_degree": 95,
+      "probe_order": 386,
+      "distinct_overlap_words": 385
+    },
+    {
+      "M": 25,
+      "source_order": 102,
+      "max_local_degree": 99,
+      "probe_order": 402,
+      "distinct_overlap_words": 401
+    },
+    {
+      "M": 26,
+      "source_order": 106,
+      "max_local_degree": 103,
+      "probe_order": 418,
+      "distinct_overlap_words": 417
+    },
+    {
+      "M": 27,
+      "source_order": 110,
+      "max_local_degree": 107,
+      "probe_order": 434,
+      "distinct_overlap_words": 433
+    },
+    {
+      "M": 28,
+      "source_order": 114,
+      "max_local_degree": 111,
+      "probe_order": 450,
+      "distinct_overlap_words": 449
+    },
+    {
+      "M": 29,
+      "source_order": 118,
+      "max_local_degree": 115,
+      "probe_order": 466,
+      "distinct_overlap_words": 465
+    },
+    {
+      "M": 30,
+      "source_order": 122,
+      "max_local_degree": 119,
+      "probe_order": 482,
+      "distinct_overlap_words": 481
+    },
+    {
+      "M": 31,
+      "source_order": 126,
+      "max_local_degree": 123,
+      "probe_order": 498,
+      "distinct_overlap_words": 497
+    },
+    {
+      "M": 32,
+      "source_order": 130,
+      "max_local_degree": 127,
+      "probe_order": 514,
+      "distinct_overlap_words": 513
+    },
+    {
+      "M": 33,
+      "source_order": 134,
+      "max_local_degree": 131,
+      "probe_order": 530,
+      "distinct_overlap_words": 529
+    },
+    {
+      "M": 34,
+      "source_order": 138,
+      "max_local_degree": 135,
+      "probe_order": 546,
+      "distinct_overlap_words": 545
+    },
+    {
+      "M": 35,
+      "source_order": 142,
+      "max_local_degree": 139,
+      "probe_order": 562,
+      "distinct_overlap_words": 561
+    },
+    {
+      "M": 36,
+      "source_order": 146,
+      "max_local_degree": 143,
+      "probe_order": 578,
+      "distinct_overlap_words": 577
+    },
+    {
+      "M": 37,
+      "source_order": 150,
+      "max_local_degree": 147,
+      "probe_order": 594,
+      "distinct_overlap_words": 593
+    },
+    {
+      "M": 38,
+      "source_order": 154,
+      "max_local_degree": 151,
+      "probe_order": 610,
+      "distinct_overlap_words": 609
+    },
+    {
+      "M": 39,
+      "source_order": 158,
+      "max_local_degree": 155,
+      "probe_order": 626,
+      "distinct_overlap_words": 625
+    },
+    {
+      "M": 40,
+      "source_order": 162,
+      "max_local_degree": 159,
+      "probe_order": 642,
+      "distinct_overlap_words": 641
+    }
+  ],
+  "error_sos": {
+    "scale": "delta**2*(delta**2 - 8*delta + 24)/64",
+    "excess_below_3delta2_over8": "-delta**3*(delta - 8)/64",
+    "diagonal_minus_rank_one": "Verified exact sum over pairs for every flag"
+  },
+  "scope": "Finite checks of all structural formulas up to M=40; general analytic proof is in audit.md"
+}

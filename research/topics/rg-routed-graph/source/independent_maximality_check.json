@@ -1,0 +1,90 @@
+[
+  {
+    "query": 3,
+    "bits": [
+      0,
+      0
+    ],
+    "pair_dimension": 10,
+    "X_dimension": 2,
+    "test_count": 6,
+    "target_match": true
+  },
+  {
+    "query": 3,
+    "bits": [
+      0,
+      1
+    ],
+    "pair_dimension": 13,
+    "X_dimension": 2,
+    "test_count": 2,
+    "target_match": true
+  },
+  {
+    "query": 3,
+    "bits": [
+      1,
+      0
+    ],
+    "pair_dimension": 10,
+    "X_dimension": 2,
+    "test_count": 6,
+    "target_match": true
+  },
+  {
+    "query": 3,
+    "bits": [
+      1,
+      1
+    ],
+    "pair_dimension": 6,
+    "X_dimension": 2,
+    "test_count": 8,
+    "target_match": true
+  },
+  {
+    "query": 4,
+    "bits": [
+      0,
+      0
+    ],
+    "pair_dimension": 6,
+    "X_dimension": 2,
+    "test_count": 12,
+    "target_match": true
+  },
+  {
+    "query": 4,
+    "bits": [
+      0,
+      1
+    ],
+    "pair_dimension": 12,
+    "X_dimension": 2,
+    "test_count": 2,
+    "target_match": true
+  },
+  {
+    "query": 4,
+    "bits": [
+      1,
+      0
+    ],
+    "pair_dimension": 6,
+    "X_dimension": 2,
+    "test_count": 12,
+    "target_match": true
+  },
+  {
+    "query": 4,
+    "bits": [
+      1,
+      1
+    ],
+    "pair_dimension": 12,
+    "X_dimension": 2,
+    "test_count": 2,
+    "target_match": true
+  }
+]

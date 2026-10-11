@@ -1,0 +1,78 @@
+{
+  "query1": [
+    {
+      "bits": [
+        0,
+        0,
+        0
+      ],
+      "relative_algebra_dimension": 5,
+      "all_comparisons_annihilate_serial_support": true
+    },
+    {
+      "bits": [
+        0,
+        0,
+        1
+      ],
+      "relative_algebra_dimension": 5,
+      "all_comparisons_annihilate_serial_support": true
+    },
+    {
+      "bits": [
+        0,
+        1,
+        0
+      ],
+      "relative_algebra_dimension": 5,
+      "all_comparisons_annihilate_serial_support": true
+    },
+    {
+      "bits": [
+        0,
+        1,
+        1
+      ],
+      "relative_algebra_dimension": 5,
+      "all_comparisons_annihilate_serial_support": true
+    },
+    {
+      "bits": [
+        1,
+        0,
+        0
+      ],
+      "relative_algebra_dimension": 2,
+      "all_comparisons_annihilate_serial_support": true
+    },
+    {
+      "bits": [
+        1,
+        0,
+        1
+      ],
+      "relative_algebra_dimension": 2,
+      "all_comparisons_annihilate_serial_support": true
+    },
+    {
+      "bits": [
+        1,
+        1,
+        0
+      ],
+      "relative_algebra_dimension": 2,
+      "all_comparisons_annihilate_serial_support": true
+    },
+    {
+      "bits": [
+        1,
+        1,
+        1
+      ],
+      "relative_algebra_dimension": 2,
+      "all_comparisons_annihilate_serial_support": true
+    }
+  ],
+  "query2_all_comparisons_annihilate_S2": true,
+  "four_serial_supports_pairwise_orthogonal": true
+}

@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "boundary_dimension": 8,
+  "before_recovery_exchange_dimension": 512,
+  "before_recovery_joint_marked_nonzero_entries": 128,
+  "full_matrix_unit_intertwiners_checked": 12,
+  "after_recovery_exchange_dimension": 64,
+  "same_vertex_winner_sibling_recovery_exact": true,
+  "module_results": [
+    {
+      "marked_losing_vertices": [
+        0
+      ],
+      "native_dimension_product": 2,
+      "module_dimension": 8,
+      "fully_closed_origin_marker_rank": 6
+    },
+    {
+      "marked_losing_vertices": [
+        1
+      ],
+      "native_dimension_product": 2,
+      "module_dimension": 8,
+      "fully_closed_origin_marker_rank": 6
+    },
+    {
+      "marked_losing_vertices": [
+        2
+      ],
+      "native_dimension_product": 2,
+      "module_dimension": 8,
+      "fully_closed_origin_marker_rank": 6
+    },
+    {
+      "marked_losing_vertices": [
+        0,
+        1
+      ],
+      "native_dimension_product": 4,
+      "module_dimension": 8,
+      "fully_closed_origin_marker_rank": 4
+    },
+    {
+      "marked_losing_vertices": [
+        0,
+        2
+      ],
+      "native_dimension_product": 4,
+      "module_dimension": 8,
+      "fully_closed_origin_marker_rank": 4
+    },
+    {
+      "marked_losing_vertices": [
+        1,
+        2
+      ],
+      "native_dimension_product": 4,
+      "module_dimension": 8,
+      "fully_closed_origin_marker_rank": 4
+    },
+    {
+      "marked_losing_vertices": [
+        0,
+        1,
+        2
+      ],
+      "native_dimension_product": 8,
+      "module_dimension": 8,
+      "fully_closed_origin_marker_rank": 2
+    }
+  ],
+  "product_saturates_boundary_for_three_branches": true,
+  "joint_origin_marker_rank_not_divisible_by_product": true,
+  "scope": "Exact red-Lugano exchange/module calibration. General product bound is proved algebraically in the accompanying note."
+}

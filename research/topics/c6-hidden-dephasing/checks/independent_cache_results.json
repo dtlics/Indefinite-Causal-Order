@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "arithmetic": "exact SymPy",
+  "cases": [
+    {
+      "test": "cache Kraus completeness with retrieval and birth",
+      "d": 2,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "invariant quantum-reference conditional block and occupation identities",
+      "d": 2,
+      "k": 3,
+      "reference": 2,
+      "status": "PASS"
+    },
+    {
+      "test": "invariant quantum-reference conditional block and occupation identities",
+      "d": 2,
+      "k": 4,
+      "reference": 2,
+      "status": "PASS"
+    },
+    {
+      "test": "invariant quantum-reference conditional block and occupation identities",
+      "d": 3,
+      "k": 3,
+      "reference": 2,
+      "status": "PASS"
+    }
+  ]
+}

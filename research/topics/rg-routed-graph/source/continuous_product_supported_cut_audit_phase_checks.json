@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "independently_recomputed_integer_rows": 221,
+  "prime_verified": 1000003,
+  "constraint_rank_mod_prime": 221,
+  "displayed_generator_rank_mod_prime": 35,
+  "all_retained_rows_annihilate_all_generators_exactly": true,
+  "all_four_serial_carrier_identities_checked_with_generic_complex_query_entries": true,
+  "continuous_complete_phase_space_dimension": 35,
+  "sufficiency_source": "Orthogonal carrier/image argument audited, including private ancillas"
+}

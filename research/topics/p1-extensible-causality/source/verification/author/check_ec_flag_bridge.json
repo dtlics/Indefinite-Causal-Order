@@ -1,0 +1,50 @@
+{
+  "numerical_checks": {
+    "max_direct_contraction_error": 2.220446049250313e-16,
+    "max_flag_coherence_refinement_error": 2.7755575615628914e-17,
+    "max_directed_formula_error": 4.4350356008915973e-16,
+    "minimum_operator_direction_slack": -6.18199606379734e-16,
+    "minimum_rectangle_slack": -6.661338147750939e-16,
+    "minimum_graph_slack": -3.7007434154171886e-16,
+    "maximum_graph_bound_residual": 2.220446049250313e-15,
+    "cases": 3200
+  },
+  "exact_checks": {
+    "anticommutator_zero": true,
+    "pauli_squares_identity": true,
+    "seed_trace": "4",
+    "flagged_witness_value": "-1/5",
+    "t": "3/5",
+    "causal_bridge_margin": "2/3 - 3/5 = 1/15",
+    "flagged_dimensions": [
+      4,
+      2,
+      4,
+      2
+    ],
+    "flagged_spectrum": {
+      "(5 - 3*sqrt(2))/80": 8,
+      "(5 + 3*sqrt(2))/80": 8,
+      "1/16": 48
+    },
+    "ancilla_dimensions_checked": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        2
+      ]
+    ],
+    "role": "Finite algebra and contraction checks supplement the dimension-uniform analytical theorem"
+  }
+}

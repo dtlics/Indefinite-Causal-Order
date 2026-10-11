@@ -1,0 +1,252 @@
+Paper-to-Lean theorem map
+========================
+
+Manuscript: An exponential quantum-switch advantage for commuting channels.
+Audit: 32 selected endpoints; 1,603 ICO and 48 unchanged QIT source modules.
+
+All names below are fully qualified Lean declaration names. File paths are
+relative to this source package. Paper theorem numbers may change; the LaTeX
+labels are stable cross-references.
+
+SAME versus MUB: the main quantum-switch separation (C6)
+-------------------------------------------------------
+Paper: thm:c6; sec:model; sec:c6-proof; lem:c6-comparison;
+eq:c6-comparison; sec:c6-recording.
+Modules: ICO/C6OperationalDecision.lean; ICO/C6SharedPairBound.lean;
+ICO/C6RawWeightedEndpoint.lean.
+Selected endpoints:
+  ICO.C6OperationalDecision.same_mub_query_lower_bound
+  ICO.C6OperationalDecision.mixed_tree_comparison
+  ICO.C6OperationalDecision.adaptive_pair_distance
+  ICO.C6OperationalDecision.adaptive_pair_distance_explicit
+  ICO.C6OperationalDecision.same_mub_distance
+  ICO.C6SharedPairBound.shared_haar_pair
+  ICO.C6RawWeightedEndpoint.rawDensity_weighted
+
+For d=2^n, n>=1, every ordinary finite adaptive total-budget strategy correct
+with probability at least 2/3 on every SAME/MUB promised pair requires
+q>d^(1/16)/100. Input states may be mixed, memory may be arbitrarily large and
+entangled, query choices may depend on classical outcomes, and stopping may
+be adaptive. SAME means equality of the two nonselective dephasing channels;
+MUB means their underlying bases are mutually unbiased. The lower endpoint
+only needs correctness on coincident-basis SAME witnesses and all MUB pairs;
+correctness on every promised pair implies these hypotheses.
+
+The comparison uses one fixed Haar unitary U shared by both devices throughout
+the run: (Delta_U,Delta_(U H)). The relative unitary H can be arbitrary. For
+q>=1 and 4q<=d, two such priors have actual normalized output trace distance at
+most
+
+  18(2q)(2q+1)/d^(1/8) + 2 F(q,d) + 14q delta(2q,d)
+    + 2 B(q,d) + 8q(q-1)/d,
+
+where
+  F(q,d) = sum_{i=0}^{q-1} sqrt(2(2i+1)/(d-2i)),
+  delta(t,d) = sqrt(2t(t+1)/d) + t/d,
+  B(q,d) = sum_{i=1}^{q-1}
+    [sqrt((2i-1)/(d-i+1)) + sqrt(2i/(d-i))].
+
+The 8q(q-1)/d term includes the proved uniform-sector cache allowance
+6q(q-1)/d. The checked scalar endpoint uses 215/10000 when
+1<=q<=d^(1/16)/100. The manuscript also gives a sharper elementary estimate
+212/10000; the formal numerical endpoint intentionally uses the weaker
+215/10000. Both suffice for the stated strict query lower bound.
+
+shared_haar_pair proves the physical comparison without a recording-oracle,
+support, covariance, or cache-comparison premise. rawDensity_weighted is the
+exact semantic bridge from actual raw recording trajectories to the weighted
+cache, retaining both measurement-outcome and retrieval/birth histories until
+the weights can be erased. Its cutoff and dimension conditions are discharged
+in the selected physical endpoint. The protocol-tail type-level length is
+independent of the number n of executed calls; the compiled q+1-call circuit
+uses its tail of type-level length q at time n=q+1.
+
+Four-use quantum-switch upper bound
+-----------------------------------
+Paper: thm:c6; eq:basis-visibility.
+Modules: ICO/C6SwitchTest.lean; ICO/C6SwitchSameChannel.lean.
+Endpoints:
+  ICO.C6SwitchTest.four_mub_error
+  ICO.C6SwitchSameChannel.same_channel_four_accepts
+
+Four independent switch uses, each with one call to each channel, accept SAME
+with probability one, including different basis descriptions of the same
+channel. They accept MUB with probability at most 81/256<1/3 for d>=2. Thus the
+cost is four switch uses, or eight elementary channel calls. The actual Born
+experiment and product distribution are checked. This is a specialization of
+the known switched-interference experiment, not a new switching architecture.
+
+Phase-averaged OTOC and channel commutation
+------------------------------------------
+Paper: sec:connections; eq:otoc; cor:otoc.
+Modules: ICO/C6OTOC.lean; ICO/C6OTOCCommutator.lean;
+ICO/C6OTOCChannelBoundary.lean; ICO/C6OTOCEstimator.lean;
+ICO/C6OperationalDecision.lean.
+Endpoints:
+  ICO.C6OTOC.phaseOTOC_eq_interference
+  ICO.C6OTOC.phaseOTOC_born
+  ICO.C6OTOCCommutator.phaseOTOC_complement
+  ICO.C6OTOCChannelBoundary.mub_channels_commute
+  ICO.C6OTOCChannelBoundary.same_channels_commute
+  ICO.C6OTOCEstimator.switch_estimation
+  ICO.C6OTOCEstimator.call_count
+  ICO.C6OperationalDecision.otoc_query_lower_bound
+
+For the explicit finite clock-phase ensemble indexed by ZMod d, averaging the
+normalized real unitary commutator OTOC equals the channel interference value.
+The clock twirl itself is proved to implement the literal dephasing channel;
+the overlap identity is not assumed. One minus this value equals the ensemble
+mean squared Hilbert-Schmidt commutator divided by 2d. MUB channel compositions
+both equal the depolarizing map, and SAME channel compositions also commute.
+The statistic therefore concerns Kraus-product interference, not failure of
+the two channel superoperators to commute.
+
+The actual switch estimator uses ceil(4/epsilon^2) repetitions and estimates
+the OTOC to additive epsilon>0 with error probability <1/3; its elementary
+channel-call count is <8/epsilon^2+2. For any fixed 0<epsilon<1/4, ordinary
+channel-access estimation with success >=2/3 on the promise requires
+q>d^(1/16)/100 for d=2^n, n>=1. The formal lower endpoint allows arbitrary finite
+POVM output and real-valued estimates, arbitrary mixed input, and adaptive
+quantum memory. No hidden U or U-dagger oracle is supplied to the estimator.
+
+Conditional keyed-family transfer
+---------------------------------
+Paper: sec:connections; eq:pru.
+Module: ICO/C6OperationalDecision.lean.
+Endpoints:
+  ICO.C6OperationalDecision.keyed_relation_advantage
+  ICO.C6OperationalDecision.keyed_zero_advantage
+
+The finite keyed theorem assumes exactly two explicit differences between
+actual keyed and Haar acceptance probabilities, bounded by epsilon_0 and
+epsilon_1. For q>=1 and 4q<=d, the keyed SAME/MUB acceptance gap is bounded by
+epsilon_0 + uniformError(q,d,d^(1/16)) + epsilon_1. The Haar term is proved,
+not a premise. With zero queries the keyed acceptance gap is exactly zero.
+No pseudorandom-unitary existence, efficiency, or asymptotic security claim is
+postulated as an axiom. Obtaining negligible epsilon_i from an inverse-secure
+unitary-oracle PRU uses the explicit efficient U-dagger/copy/U implementation,
+with two hidden-unitary calls per channel query and known relative-basis gates.
+Those computational assumptions remain external and are stated in the paper.
+Quantum-switch access is a different resource from ordinary U,U-dagger access;
+the transfer is not a break of standard PRU security.
+
+Exact universal simulation (P3)
+------------------------------
+Paper: thm:exact-simulation; sec:exact; finite certificate in sec:certificate
+and lem:exact-obstruction.
+Module: ICO/BoundedSwitchObstruction.lean
+Endpoint: ICO.BoundedSwitchObstruction.no_bounded_circuit
+
+For d>=2, every finite adaptive BudgetQueryTree with one total finite call budget
+fails to realize the universal switch on all pairs of d-dimensional channels.
+The statement includes arbitrary finite nonempty private memory. RealizesSwitch
+is equality of actual channel maps on all finite complete Kraus families.
+The checked endpoint already forbids exact simulation with input control fixed
+to |+> and retained at output, for every target input. Therefore an arbitrary-
+control universal simulator is impossible by preparing |+> before it. The
+input-control quantifier is not part of no_bounded_circuit itself.
+Its proof connects the actual ordinary circuit to polarization and the exact
+qubit causal-support certificate. It does not assume the semantic reduction.
+
+Approximate universal simulation (C4)
+------------------------------------
+Paper: thm:simulation-summary; sec:approximation; eq:tradeoff-intro.
+Module: ICO/C4FullSwitchTheorem.lean
+Endpoints:
+  ICO.C4PhysicalEnsemble.exists_full_switch_error_bound
+  ICO.C4PhysicalEnsemble.full_switch_fixed_accuracy_constant
+  ICO.C4PhysicalEnsemble.full_switch_one_over_48
+
+The first theorem supplies actual uniform-unitary-mixture channels on which a
+given q-total-query finite adaptive circuit's error for the standard full-control
+switch is at least 1/2 - 13r^2/(3d) - q(q-1)/(2r), with paper r=Lean r+1.
+The metric is half the diamond norm (Channel.diamondTraceDistance).
+The second proves Omega_epsilon(d^(1/4)) total calls for every fixed epsilon<1/2.
+The third gives the explicit paper consequence: d>=64 and uniform error<=1/48
+imply d<4096 q^4. The proof includes actual normalized Choi witnesses, Haar
+moments, adaptive selected-pair extraction, and the total-query collision bound.
+
+Dimension-independent switched testing upper bound (prior-work protocol)
+-----------------------------------------------------------------------
+Paper: thm:testing; sec:robust (the known interference test).
+Module: ICO/SwitchExperiment.lean
+Endpoints:
+  ICO.SwitchExperiment.switch_eighty_high_error
+  ICO.SwitchExperiment.switch_eighty_low_error
+
+For any two finite complete Kraus families, the actual switched mixed-input state
+and actual X-control measurement have plus probability (1+interference)/2.
+Eighty independent experiments, accepting high when at least 60 plus outcomes
+occur, have error <1/3 for interference>=2/3 or interference<=1/3 respectively.
+This checks the physical experiment and the sampling rule, not just an abstract
+Bernoulli estimate. The manuscript credits the estimator to prior work.
+
+Haar recording comparison used by C5
+------------------------------------
+Modules: ICO/MHHaarRecordingComparison.lean; ICO/MHProtocolHaarRecording.lean
+Endpoints:
+  ICO.MHHaarRecordingComparison.frequency_visible_distance
+  ICO.MHProtocolHaarRecording.protocol_haar_recording
+
+The generic signed protocol comparison has actual normalized trace distance
+<=9t(t+1)/R between the product-Haar-averaged physical frequency oracle output and
+the literal recording oracle's visible output, where d=R^8, R>=1, 2t<=d, t<d.
+Known isometries may be rectangular, and public/private-copy memory varies at
+every step. All moment, domain, inverse-query, support, covariance, norm-loss,
+continuity, and overlap estimates are discharged in the theorem.
+
+The protocol specialization uses the literal hidden-outcome rank-one measurement
+implementation U^dagger/copy/U, two unitary queries per measurement-channel call.
+For n channel calls and 4n<=d it gives 9(2n)(2n+1)/d^(1/8), comparing the actual
+Haar-basis protocol density with the literal recording trajectory. The hidden
+measurement label is private throughout, and final erasure is proved explicitly.
+
+C5 adaptive fixed-basis indistinguishability
+-------------------------------------------
+Archival C5 comparison retained in the proof package. The former labels
+thm:basis, sec:hidden-basis and eq:distance refer to the earlier manuscript,
+not sections or numbered statements in the current C6-led paper.
+Module: ICO/OrdinaryHaarStates.lean
+Endpoint: ICO.OrdinaryHaarStates.adaptive_haar_distance
+
+For arbitrary mixed input State, actual finite adaptive total-query-budget tree,
+q>=1 and 2q<d, the actual output averaged over one fixed hidden Haar basis is
+within normalized trace distance
+
+  18(2q)(2q+1)/d^(1/8) + 4q/sqrt(d-2q) + q^2/d
+
+of the same circuit with each call replaced by the depolarizing channel. There
+is no supplied transcript, overlap, or recording comparison premise. The exact
+fractional-power denominators agree with the archival C5 statement; this is not only a version
+conditional on an auxiliary eighth- or sixteenth-root parameter. The physical
+Haar-recording estimate also has a separately proved full-range trivial branch.
+Additional selected endpoints retained from that proof are
+ICO.OrdinaryHaarIndistinguishability.protocol_haar_recording_full and
+ICO.OrdinaryHaarIndistinguishability.circuit_haar_bound.
+
+C5 ordinary-query testing lower bound
+-------------------------------------
+Paper: thm:testing; sec:robust (constant-gap interference testing).
+Module: ICO/C5Decision.lean
+Endpoints:
+  ICO.C5Decision.main_lower_bound
+  ICO.C5Decision.measurement_only_lower_bound
+
+For an arbitrary actual BinaryHypothesisTest applied to the output of an actual
+q-total-query adaptive tree on an arbitrary mixed State input, correctness on
+the hard promised families implies q > d^(1/16)/100. The main witness family
+uses coincident hidden-basis measurement channels versus depolarizing channels.
+The measurement-only lower bound applies to any algorithm correct on every
+promised pair of rank-one nonselective measurements, for d>=4. The formal
+endpoint needs correctness on all coincident-basis high witnesses and every
+measurement pair with interference<=1/3; correctness on all promised pairs
+implies those premises. Independent Haar bases are a hard distribution used
+inside the proof, not a promise or restriction on the input pair. Measurement
+outcomes are inaccessible to the algorithm; arbitrary known operations, quantum
+memory, adaptive classical branches, and early stopping remain allowed.
+
+The endpoints require only the stated test correctness probabilities on actual
+channels. They do not assume SingleHaarBound, a trace-distance estimate, the
+Ma-Huang theorem, or an abstract causal-order inequality. Those physical and
+analytic inputs are discharged by the included proof chain. The real power
+d^(1/16) appears directly; no auxiliary-radius premise remains.

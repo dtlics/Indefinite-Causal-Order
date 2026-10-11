@@ -1,0 +1,26 @@
+{
+  "past": {
+    "first_derivative_constraint_rank": 46,
+    "first_derivative_solution_dimension": 10,
+    "component_image_dimensions": [
+      4,
+      4,
+      1,
+      1,
+      0
+    ],
+    "all_coefficients_rational": true
+  },
+  "future": {
+    "first_derivative_constraint_rank": 56,
+    "first_derivative_solution_dimension": 0,
+    "component_image_dimensions": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "all_coefficients_rational": true
+  }
+}

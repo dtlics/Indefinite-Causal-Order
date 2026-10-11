@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "arithmetic": "exact Python integers and rational fractions",
+  "basis_rows": 128,
+  "basis_columns": 25,
+  "symmetric_coordinates": 325,
+  "AB_dual_terms": 30,
+  "BA_dual_terms": 47,
+  "gauge_dual_terms": 73,
+  "identities_verified": 3,
+  "switch_coefficient": 1,
+  "noise_coefficients": [
+    0,
+    0,
+    0
+  ],
+  "seconds": 0.048424482345581055
+}

@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "exact_recomputed_witness_rows": 221,
+  "rank_mod_prime": 221,
+  "prime": 1000003,
+  "explicit_generator_rank": 35,
+  "phase_space_dimension": 35,
+  "serial_controls": [
+    {
+      "query": 2,
+      "source_columns_zero_based": [
+        2,
+        10
+      ],
+      "source_labels": [
+        "0001",
+        "0101"
+      ]
+    },
+    {
+      "query": 2,
+      "source_columns_zero_based": [
+        3,
+        13
+      ],
+      "source_labels": [
+        "11-+",
+        "10-+"
+      ]
+    },
+    {
+      "query": 3,
+      "source_columns_zero_based": [
+        4,
+        5
+      ],
+      "source_labels": [
+        "0100",
+        "0110"
+      ]
+    },
+    {
+      "query": 4,
+      "source_columns_zero_based": [
+        6,
+        7
+      ],
+      "source_labels": [
+        "11+0",
+        "11+1"
+      ]
+    }
+  ]
+}

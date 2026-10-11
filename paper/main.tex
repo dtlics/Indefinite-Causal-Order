@@ -1,0 +1,1383 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{booktabs,array,xcolor,tikz}
+\usepackage{flafter}
+\usetikzlibrary{arrows.meta,positioning,calc,fit}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\definecolor{navy}{HTML}{20354D}
+\definecolor{teal}{HTML}{087E8B}
+\definecolor{violet}{HTML}{7656A3}
+\definecolor{paleTeal}{HTML}{E5F3F3}
+\definecolor{paleViolet}{HTML}{EFEAF6}
+\definecolor{amber}{HTML}{B97718}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\C}{\mathbb C}
+\newcommand{\E}{\mathbb E}
+\newcommand{\I}{\mathbb I}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\TD}{\operatorname{TD}}
+\newcommand{\Ad}{\operatorname{Ad}}
+\newcommand{\Dom}{\operatorname{Dom}}
+\newcommand{\Img}{\operatorname{Im}}
+\newcommand{\ket}[1]{\lvert#1\rangle}
+\newcommand{\bra}[1]{\langle#1\rvert}
+\newcommand{\proj}[1]{\ket{#1}\!\bra{#1}}
+\newcommand{\vket}[1]{\lvert#1\rangle\!\rangle}
+\newcommand{\vbra}[1]{\langle\!\langle#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\SW}{\mathcal S}
+\newcommand{\QC}{\mathcal C}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\ind}[1]{\mathbf 1_{\{#1\}}}
+\newcommand{\reffig}[1]{Figure~\ref{#1}}
+\makeatletter
+\newenvironment{resulttable}{\par\medskip\noindent\begin{minipage}{\textwidth}\def\@captype{table}\centering}{\end{minipage}\par\medskip}
+\newenvironment{resultfigure}{\par\medskip\noindent\begin{minipage}{\textwidth}\def\@captype{figure}\centering}{\end{minipage}\par\medskip}
+\makeatother
+\hypersetup{pdftitle={An exponential quantum-switch advantage for commuting channels},pdfauthor={Dantong Li}}
+\title{An exponential quantum-switch advantage\\ for commuting channels}
+\author{Dantong Li\\\small Department of Computer Science, Yale University}
+\date{5 October 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Coherent control of channel order gives an exponential query advantage for
+learning the relation between two hidden measurement bases. The devices are
+fixed rank-one dephasing channels,
+promised to use either the same basis or mutually unbiased bases. In both
+cases their channel compositions commute. Four uses of the quantum switch
+distinguish the promises, whereas every ordinary adaptive quantum algorithm
+needs $\Omega(2^{n/16})$ calls on $n$ qubits, even with arbitrary quantum
+memory, classical adaptivity, and collective measurements. The switch test
+is known; the contribution is the ordinary-query lower bound for this exact
+promise. Its proof turns a shared Haar-unitary recording process into a
+trace-preserving label cache. Common-unitary invariance limits the information
+revealed by dephasing a retrieved label. We also prove an
+$\Omega_\epsilon(2^{n/4})$ lower bound for full-switch simulation at every fixed
+half-diamond error $\epsilon<1/2$, and exclude exact universal simulation with
+any finite budget.
+\end{abstract}
+
+\section{Introduction}
+
+Two measurement devices can erase very different information even when their
+channels commute. Measuring twice in the same basis preserves its classical
+information. Measuring in two mutually unbiased bases erases it completely.
+If the bases are hidden and the measurement outcomes are unavailable, how
+many calls are needed to tell these situations apart?
+
+We study this question for two fixed rank-one dephasing channels on $n$
+qubits. An ordinary quantum algorithm may query either device repeatedly,
+retain arbitrary entangled memory, and adapt its next call to its classical
+history. A quantum switch additionally places one call to each device in a
+coherent superposition of their two orders~\cite{chiribella2013}. Its control
+qubit retains interference between ordered Kraus products. The statistic
+and switch experiment of Gao et al.~\cite{gao2023} distinguish our two
+promises with four switch uses. We prove that an ordinary algorithm needs
+exponentially many channel calls. The difficulty lies in learning the hidden
+measurement geometry through irreversible access, despite unrestricted
+quantum memory.
+
+\subsection{Access model and results}\label{sec:model}
+
+\paragraph{Ordinary queries.}
+The inputs are two unknown, fixed, memoryless CPTP maps $A,B$ on $\C^d$.
+An ordinary strategy is a finite quantum circuit with classical control of
+query order (QC-CC)~\cite{wechs2021}. Each call applies either $A$ or $B$ to a
+designated subsystem, chosen using the classical history. Between calls the
+strategy may apply arbitrary known quantum instruments and retain any finite
+quantum memory; its final measurement may be collective. The query budget is
+the maximum total number of calls on any branch, including branches that stop
+early. Success is unconditional. The device supplies its input-output action;
+its environment, Kraus labels, measurement outcomes, and any hidden basis
+unitary or inverse remain inaccessible. Known processing may be coherently
+controlled, while selection of the unknown box is classical.
+
+\paragraph{The promise.}
+For an orthonormal basis $\mathcal B=(b_j)_{j=1}^d$, write
+\[
+ \Delta_{\mathcal B}(X)=\sum_j P_jXP_j,
+ \qquad P_j=\proj{b_j},\qquad \Omega(X)=I\Tr(X)/d.
+\]
+Two such devices satisfy \textnormal{\textsc{Same}} if their dephasing channels coincide,
+and \textnormal{\textsc{Mub}} if $|\langle b_j,c_k\rangle|^2=1/d$ for every $j,k$.
+Under \textnormal{\textsc{Same}}, either composition is $\Delta_{\mathcal B}$; under
+\textnormal{\textsc{Mub}}, either composition is $\Omega$. Thus the two channel
+superoperators commute under both promises (Figure~\ref{fig:geometry}).
+
+\begin{theorem}[Learning hidden measurement geometry]\label{thm:c6}
+Let $d=2^n$, $n\ge1$. Every ordinary strategy distinguishing \textnormal{\textsc{Same}}
+from \textnormal{\textsc{Mub}} with success at least $2/3$ on every promised pair uses
+more than $d^{1/16}/100$ channel calls. Four independent uses of the quantum
+switch suffice, with one-sided error at most $81/256<1/3$, using eight
+underlying channel calls.
+\end{theorem}
+
+The upper bound and interference extrema follow from~\cite{gao2023}.
+Our contribution is the lower bound against the ordinary competitor above.
+The exponent is exponential in the number of target qubits and is not claimed
+to be optimal. The hard prior samples one Haar unitary $U$ and reuses it at
+every call. In the two cases the device pairs are
+\begin{equation}\label{eq:c6-priors}
+ (\Delta_U,\Delta_U)
+ \quad\text{and}\quad
+ (\Delta_U,\Delta_{UH}),
+ \qquad H=H_2^{\otimes n}.
+\end{equation}
+Here $\Delta_U$ dephases in the columns of $U$, and $H$ is the known Walsh
+transform. Every sample satisfies the exact corresponding promise. Shared
+orientation is important: independently chosen random bases would not give
+the \textnormal{\textsc{Mub}} prior.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,
+ title/.style={font=\small\sffamily\bfseries,text=navy},
+ lab/.style={font=\small\sffamily,text=navy,align=center},
+ box/.style={draw=navy,rounded corners=2pt,minimum width=4.7cm,
+  minimum height=.65cm,font=\small,fill=white},
+ arr/.style={->,draw=navy,line width=.65pt}]
+ \node[title] at (2.5,2.45) {SAME HIDDEN BASIS};
+ \node[title] at (8.1,2.45) {MUTUALLY UNBIASED BASES};
+ \node[box,fill=paleTeal] (same) at (2.5,1.78)
+  {$\Delta_{\mathcal B}\Delta_{\mathcal B}=\Delta_{\mathcal B}$};
+ \node[box,fill=paleTeal] (mub) at (8.1,1.78)
+  {$\Delta_{\mathcal B}\Delta_{\mathcal C}=\Delta_{\mathcal C}\Delta_{\mathcal B}=\Omega$};
+ \node[box,fill=paleViolet] (sv) at (2.5,.1)
+  {switch visibility $v=1$};
+ \node[box,fill=paleViolet] (mv) at (8.1,.1)
+  {switch visibility $v=1/d$};
+ \draw[arr] (same.south)--(sv.north);
+ \draw[arr] (mub.south)--(mv.north);
+ \node[lab] at (5.3,-.8)
+  {Four switches reveal the relation. Ordinary learning costs $\Omega(d^{1/16})$ calls.};
+\end{tikzpicture}
+\caption{Under each promise the two channel maps commute under composition.
+The switch's control retains interference between Kraus products and reveals
+the measurement-basis relation. Both interfaces keep device outcomes private;
+ordinary access allows arbitrary quantum memory.}
+\label{fig:geometry}
+\end{figure}
+
+\paragraph{Testing and simulating the switch.}
+For Kraus families $(A_i),(B_j)$, the switch has operators
+\begin{equation}\label{eq:switch}
+ K_{ij}=\proj0\otimes B_jA_i+\proj1\otimes A_iB_j.
+\end{equation}
+This representation-independent channel acts on a control qubit and a target.
+One use makes one call to each box. Theorem~\ref{thm:c6} concerns one decision
+bit. A universal simulator must instead preserve the full control and target
+output on every input, including entanglement with a reference. For an
+ordinary simulator $\QC[A,B]$, define
+\begin{equation}\label{eq:simulation-error}
+ \operatorname{err}(\QC;d)=
+ \sup_{A,B\ \mathrm{CPTP}}\frac12\norm{\QC[A,B]-\SW[A,B]}_\diamond.
+\end{equation}
+
+\begin{theorem}[Approximate universal simulation]\label{thm:simulation-summary}
+For $d\ge2$, a simulator using at most $q$ total calls obeys, for every integer
+$r\ge1$,
+\begin{equation}\label{eq:tradeoff-intro}
+ \operatorname{err}(\QC;d)\ge
+ \frac12-\frac{13r^2}{3d}-\frac{q(q-1)}{2r}.
+\end{equation}
+Thus attaining fixed error $\epsilon<1/2$ requires
+$\Omega_\epsilon(d^{1/4})$ calls. Error at most $1/48$ requires
+$q>d^{1/4}/8$ when $d\ge64$.
+\end{theorem}
+
+\begin{theorem}[Exact universal simulation]\label{thm:exact-simulation}
+For every $d\ge2$, no ordinary circuit with any finite worst-case query
+budget implements $\SW[A,B]$ exactly for all CPTP maps $A,B$. This holds
+even with input control $\ket+$, arbitrary target input, and both output
+systems retained.
+\end{theorem}
+
+Approximate simulation has a finite-query upper bound, recalled in
+Section~\ref{sec:simulation}. The two simulation results address the stronger
+full-output task and use separate arguments. A robust interference-testing
+extension follows in Section~\ref{sec:robust}.
+
+\subsection{Related work and scope}
+
+The quantum switch separates coherent control of causal order from ordinary
+circuits~\cite{chiribella2013,wechs2021}. Early examples include unitary
+promise problems~\cite{araujo2014} and a communication-complexity
+separation~\cite{guerin2016}. The latter has a one-way baseline in a tripartite
+task visiting each laboratory once; the former's expected advantage was
+reduced by improved ordinary algorithms~\cite{renner2021}. Our problem uses
+irreversible channels and allows arbitrary ordinary quantum memory.
+The no-advantage reduction for repeated uses of one unitary
+in~\cite{abbott2024} relies on unitarity. Boolean queries with general
+indefinite-order supermaps~\cite{abbott2025} use a different oracle and a
+resource beyond the switch.
+
+Gao et al.~\cite{gao2023} give the interference statistic, its switch
+estimator, and its measurement-basis interpretation. We prove the ordinary
+lower bound for the exact relation in~\eqref{eq:c6-priors}. Providing
+measurement-outcome records changes the model: Appendix D
+of~\cite{gao2023} gives an ordinary estimation route with such records.
+Bavaresco et al.~\cite{bavaresco2025} study universal switch simulation,
+proving restricted exact lower bounds, excluding some small two-sided
+budgets, and analyzing approximation. Our simulation theorems address their
+two-sided cost conjecture and all-finite exact question.
+
+The lower bound builds on the forward/inverse Haar recording theorem of
+Ma and Huang~\cite{mahuang2025}. Our additional work turns its shared-unitary
+process into a channel cache and controls the information in that cache.
+These are oracle-query results;
+the information-theoretic hard prior does not itself assert an efficient
+construction of the Haar-random devices or a language-class separation.
+
+\section{Learning hidden measurement geometry}\label{sec:c6-proof}
+
+\subsection{The switch sees the relation directly}
+
+On input $\proj+\otimes I/d$, tracing out the target in~\eqref{eq:switch}
+gives Pauli-$X$ expectation
+\begin{equation}\label{eq:visibility}
+ v(A,B)=\frac1d\Re\sum_{i,j}\Tr(B_jA_iB_j^\dagger A_i^\dagger).
+\end{equation}
+This is the interference statistic of~\cite{gao2023}, with
+$1-v=\operatorname{NCOM}_{I/d}^2$. For rank-one measurement projectors,
+\begin{equation}\label{eq:basis-visibility}
+ v(\Delta_{\mathcal B},\Delta_{\mathcal C})
+ =\frac1d\sum_{j,k}|\langle b_j,c_k\rangle|^4.
+\end{equation}
+It equals $1$ under \textnormal{\textsc{Same}} and $1/d$ under \textnormal{\textsc{Mub}}. An $X$-basis
+minus outcome has probability $(1-v)/2$. Declare \textnormal{\textsc{Mub}} if any of four
+independent experiments gives minus, and \textnormal{\textsc{Same}} otherwise. A
+\textnormal{\textsc{Same}} instance never errs. A \textnormal{\textsc{Mub}} miss has probability
+$((1+1/d)/2)^4\le(3/4)^4=81/256$. This proves the known switch upper bound
+in the form required here.
+
+\subsection{A common hidden orientation defeats ordinary learning}
+
+Fix an ordinary $q$-query strategy, and let $\rho_0,\rho_1$ denote its final
+states averaged over the two priors~\eqref{eq:c6-priors}. We use
+$\TD(X,Y)=\norm{X-Y}_1/2$, also for positive subnormalized states.
+
+\begin{lemma}[Shared-basis indistinguishability]\label{lem:c6-comparison}
+If $q\ge1$, $2q<d$, and $4q\le d$, then
+\begin{equation}\label{eq:c6-comparison}
+\begin{split}
+ \TD(\rho_0,\rho_1)\le{}&
+ \frac{18(2q)(2q+1)}{d^{1/8}}
+ +2E(q,d)+14q\delta_{2q}\\
+ &+2B(q,d)+\frac{8q(q-1)}d,
+\end{split}
+\end{equation}
+where $E,B,\delta$ are the explicit recording, creation, and fresh-birth
+errors in Appendix~\ref{sec:c6-recording}. In particular, if
+$1\le q\le d^{1/16}/100$, the right side is at most $215/10000<1/3$.
+\end{lemma}
+
+The proof has two parts. First we replace the recording experiment by a
+physical, trace-preserving label cache, tracking every loss of probability.
+Then we compare both cache processes to the same invariant reference.
+The second part explains why quantum memory does not recover the hidden
+relative basis; the first justifies applying that explanation to the actual
+devices. We present both mechanisms below and give the quantitative
+recording details in Appendix~\ref{sec:c6-recording}.
+
+\paragraph{From shared Haar access to a label cache.}
+A physical dephasing call has the analytical representation
+$U^\dagger$, followed by known computational- or $H$-basis dephasing, followed
+by $U$. Box selection controls only this middle operation. Purifying known
+instruments and retaining their private environments gives a fixed
+alternating $2q$-query Haar experiment. Ma--Huang's theorem replaces it by
+a private recording process with half-trace error
+$9(2q)(2q+1)d^{-1/8}$ per hypothesis. This inverse access belongs to the
+analytical representation of the device.
+
+The recording process stores private left and right relations. Dephasing
+suppresses a forward step's return along an old relation. Replacing that
+step by creation costs $E(q,d)$. We normalize the bosonic creators to polar
+isometries; replacing the paired inverse/forward steps costs
+$7q\delta_{2q}$. On each retained outcome history the left labels lie in
+the span of earlier measurement vectors, and right labels lie in its
+complex-conjugate span. Restricting inverse births
+to the orthogonal complement of this span costs $B(q,d)$.
+
+Accepted births create particles in successive orthogonal right-label
+modes. Later operations preserve these mode occupations. Consequently,
+birth and retrieval alternatives have permanently orthogonal final records,
+so their private branch flags may be retained and eventually traced. After
+replacing right polar creation by raw creation, each orthogonal mode carries
+one inert image register. An exact product isometry permits tracing these
+images even when they are entangled with the learner. The resulting birth
+weight for an outcome vector $\psi_j$ is
+$\langle\psi_j|\Pi_{S^\perp}|\psi_j\rangle/d$, where $S$ is the retained
+history span. The missing weights sum to $\dim S/d$. Uniformizing them is a
+CP comparison on every history, with total error $O(q^2/d)$. Both birth and
+retrieval outcomes remain private and retained throughout this hybrid;
+only after every weight is uniform can the span history be erased.
+
+What remains is a CPTP cache on the left record, with private sectors
+$0\le r\le q$ and a common identity extension at $r=q$. Every query
+prefix has $r<q$. Let $F_r$ be polar creation from $r$ to $r+1$. Put
+$P_r=F_{r-1}F_{r-1}^\dagger$ for $r\ge1$, and $P_0=0$. A query splits as
+\begin{equation}\label{eq:c6-cache}
+\begin{aligned}
+ \mathcal R_{\Delta,r}(X)
+ &=F_{r-1}(\Delta\otimes\id)
+       (F_{r-1}^\dagger XF_{r-1})F_{r-1}^\dagger,\\
+ \mathcal B_r(X)
+ &=F_r\left[\frac Id\otimes\Tr_{\rm query}
+       ((I-P_r)X(I-P_r))\right]F_r^\dagger.
+\end{aligned}
+\end{equation}
+Retrieval stays in sector $r$ and is zero at $r=0$; birth enters $r+1$.
+Their trace effects are $P_r$ and $I-P_r$, so the sector-tagged sum is
+trace preserving on all states. The only basis dependence is the retrieved
+label's dephaser $\Delta$. Learner memory remains untouched.
+
+\begin{resultfigure}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,
+ box/.style={draw=navy,rounded corners=2pt,minimum height=.6cm,
+  minimum width=1.3cm,font=\small},
+ lab/.style={font=\small\sffamily,text=navy,align=center},
+ arr/.style={->,draw=navy,line width=.65pt}]
+ \node[lab,align=center] (in) at (0,-.25) {query, memory\\and $r$ private labels};
+ \node[box,fill=paleViolet] (decode) at (3,.7) {$F_{r-1}^\dagger$};
+ \node[box,fill=paleViolet] (dephase) at (5.8,.7) {$\Delta_b$};
+ \node[box,fill=paleViolet] (retrieve) at (8.6,.7) {$F_{r-1}$};
+ \node[lab] (rout) at (10.8,.7) {$r$ labels};
+ \node[box,fill=paleTeal] (project) at (3,-1.2) {$I-P_r$};
+ \node[box,fill=paleTeal,minimum width=1.9cm] (prepare) at (5.8,-1.2)
+  {$\frac Id\otimes\Tr_{\rm query}$};
+ \node[box,fill=paleTeal] (birth) at (8.6,-1.2) {$F_r$};
+ \node[lab] (bout) at (10.8,-1.2) {$r+1$ labels};
+ \draw[arr] (in.east)--(1.65,-.25)--(1.65,.7)--(decode.west);
+ \draw[arr] (in.east)--(1.65,-.25)--(1.65,-1.2)--(project.west);
+ \draw[arr] (decode)--(dephase);\draw[arr] (dephase)--(retrieve);
+ \draw[arr] (retrieve)--(rout);
+ \draw[arr] (project)--(prepare);\draw[arr] (prepare)--(birth);
+ \draw[arr] (birth)--(bout);
+ \node[lab,font=\scriptsize\sffamily] at (3,1.3) {RETRIEVE};
+ \node[lab,font=\scriptsize\sffamily] at (3,-1.82) {BIRTH};
+ \node[lab,font=\scriptsize\sffamily] at (5.8,1.4)
+  {only basis-dependent step};
+ \node[lab,font=\scriptsize\sffamily] at (5.8,-2.35)
+  {The common reference replaces $\Delta_b$ by $\Omega$ in retrieval.};
+\end{tikzpicture}
+\caption{A query in the trace-preserving label cache, shown for $r\ge1$.
+The private retrieval
+and birth sectors have trace effects $P_r$ and $I-P_r$. Known learner
+operations act on the query and memory between calls. The invariant-label
+lemma bounds information revealed by $\Delta_b$.}
+\label{fig:cache}
+\end{resultfigure}
+
+\paragraph{The information in an invariant label.}
+The following estimate is the quantitative heart of the cache comparison.
+The paired symmetric record embeds isometrically in the first-quantized
+label/image tensor space, whose common label rotations preserve this
+subspace. Images and arbitrary entangled side information are included in $Z$.
+
+\begin{lemma}[Dephasing invariant labels]\label{lem:invariant-label}
+Let $X\succeq0$ have trace $s$ on $k\ge1$ labels of dimension $d\ge2$ and
+a reference $Z$. Suppose $X$ is invariant under $T^{\otimes k}\otimes I_Z$
+for every unitary $T$. For any rank-one dephaser $\Delta$ on the first label,
+\begin{equation}\label{eq:invariant-label}
+ \norm{(\Delta\otimes\id)(X)-(\Omega\otimes\id)(X)}_1
+ \le\frac{6(k-1)}d\,s.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Take $s=1$ and the computational dephasing basis; covariance gives all
+other bases, and homogeneity restores $s$. The first marginal is $I/d$.
+Let $\sigma_j=d\bra jX\ket j$ be the conditional states of the other
+labels and $Z$, and let $\bar\sigma=d^{-1}\sum_j\sigma_j$.
+For $j\ne a$, let $P_{ja}$ forbid both values $j,a$ on every remaining
+label. Swapping these basis values acts identically on that subspace,
+so $P_{ja}\sigma_jP_{ja}=P_{ja}\sigma_aP_{ja}$.
+
+Diagonal-unitary invariance implies that $\sigma_j$ commutes with each
+total remaining-label occupation and hence with $P_{ja}$. Positivity
+therefore bounds $\norm{\sigma_j-\sigma_a}_1$ by the sum of the two masses
+outside this common compression. No coherent off-diagonal block is discarded.
+For a specified remaining label, common-unitary invariance of its two-label
+marginal gives conditional equality probability at most $2/(d+1)$:
+the equality projector twirls to $(I+\operatorname{SWAP})/(d+1)$.
+Every specified unequal value has conditional probability at most
+$1/(d-1)$. A union bound thus gives
+\[
+ \Tr((I-P_{ja})\sigma_j)
+ \le(k-1)\left(\frac2{d+1}+\frac1{d-1}\right),
+\]
+and likewise for $\sigma_a$. Average the pairwise bound over $a$, with
+the zero term $a=j$, to obtain
+\[
+ \norm{\sigma_j-\bar\sigma}_1
+ \le\frac{2(k-1)(3d-1)}{d(d+1)}\le\frac{6(k-1)}d.
+\]
+The dephased output blocks are orthogonal, so their trace norms add.
+This proves~\eqref{eq:invariant-label}. The argument keeps $Z$ throughout.
+\end{proof}
+
+Replace every retrieval dephaser in~\eqref{eq:c6-cache} by $\Omega$ to
+obtain a common reference process. Initially there are no labels.
+Known learner operations act only on the external query and memory, and
+polar creation is covariant under common rotation of all stored labels.
+Birth inserts $I/d$; reference retrieval depolarizes its decoded label.
+These facts inductively preserve common-unitary invariance in each private
+sector, including arbitrary memory correlations and classical box choice.
+
+In a reference-prefix retrieval, decoding transforms its $r$ stored
+labels into a query label and $r-1$ remaining labels. Apply
+Lemma~\ref{lem:invariant-label} to this positive decoded state and reencode.
+Using a uniform ambient budget $q$, the local full-trace cost is at most
+$6(q-1)/d$ times its mass. Telescope with reference prefixes and actual CPTP
+suffixes. Each cache differs from the reference by at most
+$3q(q-1)/d$ in half trace distance; the two caches differ by at most
+$6q(q-1)/d$. Adding the recording and cache-construction errors proves
+Lemma~\ref{lem:c6-comparison}.
+
+\paragraph{Concluding the lower bound.}
+If $1\le q\le d^{1/16}/100$, then $2q<d$ and $4q\le d$.
+Lemma~\ref{lem:c6-comparison} gives $\TD(\rho_0,\rho_1)<1/3$, so the
+best equal-prior success probability $(1+\TD)/2$ is less than $2/3$.
+Worst-case success $2/3$ would imply the same average success on these
+priors, a contradiction. Zero queries cannot distinguish the priors.
+This proves the ordinary lower bound for every $n\ge1$, including dimensions
+where the stated real-valued threshold is below one.
+
+\subsection{A robust testing consequence}\label{sec:robust}
+
+\begin{corollary}[Constant-gap interference testing]\label{thm:testing}
+Let $d=2^n$, $n\ge1$. Distinguishing $v(A,B)\ge2/3$ from $v(A,B)\le1/3$
+with success at least $2/3$ requires more than $d^{1/16}/100$ ordinary calls.
+Eighty switches, using 160 underlying calls, suffice. For $n\ge2$ the lower
+bound holds even when both inputs are hidden-outcome rank-one dephasers.
+\end{corollary}
+\begin{proof}
+For $n\ge2$, \textnormal{\textsc{Same}} and \textnormal{\textsc{Mub}} have visibilities $1$ and
+$1/d\le1/4$, so Theorem~\ref{thm:c6} gives the lower bound. At $n=1$,
+the threshold is below one; zero calls cannot distinguish two equal
+dephasers ($v=1$) from two depolarizers ($v=1/4$).
+For the upper bound, the switch's plus probability is $(1+v)/2$, at least
+$5/6$ or at most $2/3$. Thresholding its empirical frequency at $3/4$
+leaves margin $1/12$. For the estimator of~\cite{gao2023}, Hoeffding bounds
+the error by $e^{-m/72}<1/3$ at $m=80$.
+\end{proof}
+
+\section{The boundary of full-switch simulation}\label{sec:simulation}
+
+A universal simulator must preserve input-dependent control--target coherence,
+a stronger demand than the one-bit task of Theorem~\ref{thm:c6}.
+Theorems~\ref{thm:simulation-summary} and~\ref{thm:exact-simulation}
+follow from two additional mechanisms.
+
+\paragraph{Hidden-label collisions and reverse composition.}
+For approximation, choose fixed channels that are uniform mixtures of $r$
+independent Haar unitaries. Couple their hidden label streams to sampling
+without replacement. Before a label repeats, each selected pair of unknown
+unitaries is used at most once. Causal normalization bounds the coherence
+between their two compositions: a circuit that calls $U$ before $V$ cannot
+retain the switch's coherence with the reverse product $UV$. Positivity
+controls each selected instrument outcome through its completed parent
+comb, including arbitrary adaptive memory.
+
+A valid effect obtained from the compositions' Gram matrix detects this
+coherence gap on a fixed-plus control and target--reference Bell input.
+The nonorthogonality and collision penalties are $O(r^2/d)$ and $O(q^2/r)$.
+Balancing them gives $q=\Omega_\epsilon(d^{1/4})$ at fixed error
+$\epsilon<1/2$. Appendix~\ref{sec:approximation} gives the effect and
+tradeoff. A worst-case distance witness may depend on the sampled channels.
+
+\paragraph{Polarization and an exact support obstruction.}
+Suppose a finite-query simulator were exact on every pair of channels.
+Symmetrize its repeated query slots and polarize the resulting multilinear
+identity. This yields a circuit with one unknown call per channel that
+simulates a diluted switch with strictly positive switch coefficient.
+For qubits, positivity forces every ordered component into a
+25-dimensional universal Kraus support. An explicit rational functional
+vanishes on both causal components and on the gauge invisible to channel
+inputs, but is positive on every such diluted switch. A qubit embedding
+extends the contradiction to all dimensions $d\ge2$.
+Appendices~\ref{sec:exact} and~\ref{sec:certificate} supply the human proof
+and the independently replayable exact certificate.
+
+\paragraph{Finite approximation and open questions.}
+The deterministic processor of~\cite{pirandola2019}, using $M$ Choi
+programs per channel, has diamond error at most $2d(d-1)/M$.
+Slotwise contractivity gives the same half-diamond error for their switch,
+implemented with $2M$ program queries and coherent ordering of known processors:
+\[
+ Q_{\rm sim}(\epsilon,n)
+ \le2\left\lceil\frac{2d(d-1)}\epsilon\right\rceil,
+ \qquad 0<\epsilon<1.
+\]
+Neither exponent is claimed optimal. Sharper shared-unitary recording
+estimates may improve the testing bound; stronger causal coherence or
+collision arguments may improve simulation.
+
+
+\section{Discussion}\label{sec:discussion}
+
+The separation also yields a correlator-estimation result. The switch
+visibility equals an explicit phase-averaged out-of-time-ordered correlator
+of rotations diagonal in the two hidden bases. Estimating this average to
+any fixed additive error below $1/4$ therefore requires
+$\Omega(2^{n/16})$ ordinary channel calls, whereas
+$O(\epsilon^{-2})$ switch calls suffice for error $\epsilon$.
+The learner accesses only the associated dephasing channels.
+Appendix~\ref{sec:connections} gives the identity, estimation proof,
+and access assumptions.
+
+There is also a conditional implementation consequence. If an efficiently
+implementable keyed unitary family is pseudorandom against polynomial-time
+algorithms with both forward and inverse oracle access, replacing the Haar
+orientation by its keyed unitary gives efficient devices with the exact
+\textnormal{\textsc{Same}}/\textnormal{\textsc{Mub}} promise. Polynomial-time ordinary learners then
+have negligible distinguishing advantage, while four switches work for every
+key. Appendix~\ref{sec:connections} states the security assumptions and the
+two-hybrid reduction. This consequence concerns computational hardness for
+keyed devices; the information-theoretic query theorem uses the Haar prior.
+
+\clearpage
+\appendix
+
+\section{From the shared recording oracle to the cache}\label{sec:c6-recording}
+
+This appendix supplies the quantitative first part of
+Lemma~\ref{lem:c6-comparison}. Every private register remains inaccessible
+to the learner, and conditional states are never renormalized. The two
+experiments share the alternating inverse/forward pattern for the single
+Haar unitary in~\eqref{eq:c6-priors}. Known instruments can be purified,
+including their classical outputs; stopping can be padded by ignored calls.
+Thus the construction covers arbitrary adaptive finite quantum memory.
+
+\subsection{The imported recording estimate and forward deletion}
+
+We use Theorem 8, equation (9.5), of Ma--Huang,
+arXiv:2410.10116v3~\cite{mahuang2025}. For $t$ forward/inverse queries
+its recording process differs from the Haar process in half trace distance
+by at most $9t(t+1)d^{-1/8}$. Our wrapped dephasing experiment has $t=2q$;
+the theorem's size range is satisfied by $4q\le d$.
+The recording process may lose trace, which we keep throughout.
+
+Its private left and right registers have orthonormal bases of finite
+multisets $L,R$ of pairs $(x,y)\in[d]^2$. Labels are first coordinates;
+images are second coordinates. Let $A_+=V^L$, $B_+=V^R$ be the source
+insertion isometries:
+\begin{align}\label{eq:c6-source-creators}
+ A_+\ket{x,L,R}
+ &=\frac{\sum_{y\notin\Img(L\cup R)}
+    \ket{y,L\cup\{(x,y)\},R}}
+    {\sqrt{d-|\Img(L\cup R)|}},\\
+ B_+\ket{y,L,R}
+ &=\frac{\sum_{x\notin\Dom(L\cup R)}
+    \ket{x,L,R\cup\{(x,y)\}}}
+    {\sqrt{d-|\Dom(L\cup R)|}}.\nonumber
+\end{align}
+Set $P=A_+A_+^\dagger$, $Q=B_+B_+^\dagger$. The recording operator is
+\begin{equation}\label{eq:c6-recording-V}
+ V=A_+(I-Q)+(I-P)B_+^\dagger.
+\end{equation}
+The creators vanish outside their insertion domains. All used domains have
+positive denominators and these operators are contractions there.
+
+For a query unit vector $\psi$ and the projector $\Pi_{\le t}$ onto
+total relation degree at most $t<d$,
+\begin{equation}\label{eq:c6-delete-compression}
+ \norm{\bra\psi\Pi_{\le t}Q\Pi_{\le t}\ket\psi}_\infty
+ \le\frac{t}{d-t+1}.
+\end{equation}
+Indeed, put $C_\psi=(\bra\psi\otimes I)B_+\Pi_{\le t-1}$.
+Each output row has at most $t$ eligible predecessors, all with
+denominator at least $\sqrt{d-t+1}$. Cauchy--Schwarz in each row, followed
+by regrouping by input columns, gives
+$\norm{C_\psi z}^2\le t\norm z^2/(d-t+1)$.
+Only deletion of a pair with a fresh label is eligible, so its previous
+multiplicity is zero; no bosonic multiplicity is omitted.
+The compressed projector is $C_\psi C_\psi^\dagger$, proving the claim.
+
+A rank-one dephaser leaves the query separable from the old systems after
+tracing its fresh outcome purifier. By convexity,
+\eqref{eq:c6-delete-compression} bounds the expectation of $Q$ in that
+state, and also in any purification since $Q$ acts trivially on the fresh
+purifier. In~\eqref{eq:c6-recording-V}, the terms of
+$V-A_+=-A_+Q+(I-P)B_+^\dagger$ have orthogonal output ranges. Therefore
+\[
+ \norm{(V-A_+)\xi}^2
+ \le2\norm{Q\xi}^2
+ \le\frac{2t}{d-t+1}\norm\xi^2.
+\]
+At the $i$th forward step $t\le2i-1$. Replacing only the forward $V$ by
+$A_+$ gives per-hypothesis half-trace error
+\begin{equation}\label{eq:c6-E}
+ E(q,d)=\sum_{i=1}^q
+       \sqrt{\frac{2(2i-1)}{d-2i+2}}.
+\end{equation}
+We use the inequality
+$\TD(\proj u,\proj v)\le\norm{u-v}$ for vectors of norm at most one,
+and telescope products of contractions. Partial trace contracts the distance.
+
+\subsection{Actual polar creation and its support}
+
+With ordinary bosonic creators, including coefficients
+$\sqrt{m_{xy}+1}$, define
+\begin{equation}\label{eq:c6-raw-creators}
+ E_L=\frac1{\sqrt d}\sum_{x,y}\ket y\bra x\otimes a_{xy}^\dagger,
+ \qquad
+ E_R=\frac1{\sqrt d}\sum_{x,y}\ket x\bra y\otimes b_{xy}^\dagger.
+\end{equation}
+On $l$ left or $r$ right particles their Grams are
+\begin{align}\label{eq:c6-grams}
+ E_L^\dagger E_L&=I+\frac1d\sum_{a=1}^{l}
+                    \operatorname{SWAP}_{\mathrm{query},L_{X_a}},\\
+ E_R^\dagger E_R&=I+\frac1d\sum_{a=1}^{r}
+                    \operatorname{SWAP}_{\mathrm{query},R_{Y_a}}.\nonumber
+\end{align}
+Normal ordering gives the identity from the commutator; the remaining
+terms are the displayed swaps in the first-quantized tensor space. Their
+sum preserves the paired symmetric subspace; bounding it by the sum of
+the full-space swap norms gives, on degree at most $t<d$, Grams between
+$(1-t/d)I$ and $(1+t/d)I$.
+
+Let $F=E_L(E_L^\dagger E_L)^{-1/2}$ and
+$G=E_R(E_R^\dagger E_R)^{-1/2}$ on total degree at most $d-1$, and
+extend them by zero. They are isometries on this common domain and
+\[
+ \norm{F-E_L}_\infty,\ \norm{G-E_R}_\infty\le t/d
+\]
+on degree at most $t$. This follows by maximizing
+$|\sqrt\lambda-1|$ over $\lambda\in[1-t/d,1+t/d]$.
+Ma--Huang's Definition 37 and Claim 22, equation (10.25), bound the
+source-to-raw creators on the full multiset sector by
+$\sqrt{2t(t+1)/d}$. Hence source-to-polar error is at most
+\begin{equation}\label{eq:c6-delta}
+ \delta_t=\sqrt{\frac{2t(t+1)}d}+\frac td.
+\end{equation}
+Set $P_F=FF^\dagger$, $P_G=GG^\dagger$, and define
+\begin{equation}\label{eq:c6-polar-W}
+ W=F(I-P_G)+(I-P_F)G^\dagger.
+\end{equation}
+The two terms have orthogonal initial and final spaces, so $W,W^\dagger$
+are contractions. Expanding image projectors gives difference at most
+$2\delta_t$; expanding~\eqref{eq:c6-recording-V} and
+\eqref{eq:c6-polar-W} gives $6\delta_t$ for their operators and
+restricted adjoints. An annihilator on output degree $t$ uses the creator
+bound on input degree $t-1$; the restriction must be taken on the correct
+side of the adjoint. Replacing $V^\dagger,A_+$ by $W^\dagger,F$ therefore
+costs $7q\delta_{2q}$ per hypothesis.
+
+The label covariance used in the main text is exact. Rotating the incoming
+decoded query and all left labels by the same $T$ intertwines $E_L$ with
+$T$ on the output left labels, leaving the external query and images fixed.
+Its Gram and polar factor inherit this covariance. The right Gram in
+\eqref{eq:c6-grams} acts on images and the external query, so it commutes
+with all right-label occupations.
+
+Keep every private measurement outcome. On a history of length $s$, let
+$\psi_1,\ldots,\psi_s$ be its outcome vectors and put
+$S_s=\operatorname{span}\{\psi_1,\ldots,\psi_s\}$.
+Every left label lies in $S_s$, and every right label in $\overline{S_s}$.
+For the induction, $F^\dagger$ retrieves a left label while its polar
+factor swaps only the query and other left labels; their common subspace
+is preserved. Forward $F$ appends the measured outcome vector. Projecting
+the output query of $G$ onto $\psi$ appends right label $\bar\psi$,
+because its Gram is image-only. The $GG^\dagger F^\dagger$ term has the
+same support after this projection. These statements hold on coherent
+bosonic states with unrestricted image and learner registers.
+
+\subsection{Fresh inverse births and permanent flags}
+
+Let $S$ be a $k$-dimensional history span, let $P_S$ project the decoded
+query onto $S$, and let $B_S$ project all left labels onto $S$.
+Write $R_m$ for the right-particle-number cutoff at $m<d$. These are
+different projectors on different systems. The sharp query compression is
+\begin{equation}\label{eq:c6-right-compression}
+ \norm{P_S G R_m}_\infty
+ \le\sqrt{\frac{k+m}{d-m}}.
+\end{equation}
+Normal ordering bounds $E_R^\dagger P_SE_R$ on $m$ particles by
+$(k+m)I/d$: the commutator contributes $kI/d$, and the normally ordered
+part has $m$ projected terms of norm at most $1/d$.
+The Gram is bounded below by $(1-m/d)I$. Sandwich by its inverse square
+root and take square roots to obtain~\eqref{eq:c6-right-compression}.
+
+Before step $i$, take $S=S_{i-1}$ and replace $W^\dagger$ on
+its supported inputs by
+\begin{equation}\label{eq:c6-fresh-J}
+ J_S=F^\dagger+(I-P_S)G(I-P_F).
+\end{equation}
+Left-support preservation gives $F^\dagger B_S=P_SF^\dagger B_S$:
+retrieval's decoded query lies in $S$, while accepted birth lies in
+$S^\perp$. The input domains $P_F$ and $I-P_F$ are also orthogonal,
+so $J_SB_S$ is a globally contractive extension. The discarded terms are
+$P_GF^\dagger$ and $P_SG(I-P_F)$. If the incoming right number is $r$,
+the first term uses~\eqref{eq:c6-right-compression} at $r-1$ after
+annihilation; its norm is at most $\sqrt{(k+r-1)/(d-r+1)}$, and it
+vanishes at $r=0$. The second uses the bound at $r$ and costs at most
+$\sqrt{(k+r)/(d-r)}$. Since $k,r\le i-1$, their sum is at most
+\[
+ \sqrt{\frac{2i-3}{d-i+2}}
+ +\sqrt{\frac{2(i-1)}{d-i+1}}
+\]
+for $i\ge2$, with zero error at the vacuum step. The new process has the
+same support induction: outcome $\psi$ enlarges the span by at most that
+one vector. Telescoping supported fresh prefixes and original contractive
+suffixes gives per-hypothesis error
+\begin{equation}\label{eq:c6-B}
+ B(q,d)=\sum_{i=2}^q\left(
+       \sqrt{\frac{2i-3}{d-i+2}}
+       +\sqrt{\frac{2(i-1)}{d-i+1}}\right).
+\end{equation}
+
+The branch split in~\eqref{eq:c6-fresh-J} can be made private and classical
+because its record orthogonality persists. Fix a complete outcome history
+and set $T_s=\overline{S_s}$ and $E_s=T_s\cap T_{s-1}^{\perp}$.
+These subspaces are mutually orthogonal and have dimension zero or one.
+A nonzero accepted birth adds one right particle in $E_s$; retrieval adds
+none. Every later operation preserves its occupation $N_{E_s}$:
+left operations do not act on right labels, the right polar Gram is
+image-only, and later accepted labels are orthogonal to the accumulated
+span. Fresh-label projections commute with these occupations.
+Thus two branches first differing in a birth flag have different final
+occupations. Tracing the right record erases their cross terms exactly.
+One adapted orthonormal basis serves the complete fixed history, keeping
+the occupation coordinates fixed through all later steps. Instantaneous
+orthogonality alone would not prove permanent erasure.
+
+\subsection{Erasing inert images and uniformizing all histories}
+
+In the birth branch replace $G$ by $E_R$. On right-number $r$ this costs
+$r/d$, hence at most $q(q-1)/(2d)$ per hypothesis. The raw fresh step is
+still contractive, since on old right labels supported in $\overline S$,
+\begin{equation}\label{eq:c6-raw-fresh-gram}
+E_R^\dagger(I-P_S)_{\rm query}E_R=(1-k/d)I.
+\end{equation}
+Insert the projection onto old right labels in $\overline S$ before this
+raw step to obtain a contraction on all states. The projection fixes both
+the actual flagged prefixes and their accepted-mode cache encodings.
+The normal-ordered term vanishes for an accepted label orthogonal to all
+old labels; the commutator gives the scalar. Branch orthogonality persists.
+
+For the occupied fresh directions choose orthonormal vectors $v_s$ in
+their $E_s$. The canonical commutation relations prove that
+\begin{equation}\label{eq:c6-mode-product}
+ \bigotimes_s\ket{y_s}\ \longmapsto\
+       \prod_s b^\dagger(v_s,y_s)\ket{\mathrm{vac}}
+\end{equation}
+is an isometry: its inner products are
+$\prod_s\langle y_s'|y_s\rangle$. Fresh creation with outcome $\psi_j$
+appends the incoming external query as the new image and a right-label
+vector $\overline{(I-P_S)\psi_j}/\sqrt d$. All older images are unchanged.
+No later operator accesses these images after the polar factor has been
+removed. The isometry~\eqref{eq:c6-mode-product} therefore permits tracing
+them, including arbitrary entanglement with the learner.
+
+The reduced birth instrument on a history with span $S$ first compresses
+the input by $I-P_r$, discards the external query, prepares $\proj{\psi_j}$
+with weight $w_j/d$, and applies $F_r$, where
+\begin{equation}\label{eq:c6-weights}
+ w_j=\langle\psi_j|\Pi_{S^\perp}|\psi_j\rangle,
+ \qquad 0\le w_j\le1,\qquad
+ \sum_j(1-w_j)=\dim S.
+\end{equation}
+Retrieval retains its rank-one outcome $j$ as well. Both update the private
+history by appending the selected basis and outcome. This gives a literal
+CP trace-nonincreasing instrument for every positive cache input and every
+history, including histories absent from the original process. Its trace
+effects are $P_r$ for retrieval and $(1-\dim S/d)(I-P_r)$ for birth.
+
+Replacing all $w_j$ by one adds a CP instrument of trace at most
+$(\dim S/d)\Tr X$. Compare uniform CPTP prefixes with weighted
+trace-nonincreasing suffixes, retaining both kinds of outcomes throughout.
+At step $i$, $\dim S\le i-1$, so the full-trace cost sums to at most
+$q(q-1)/(2d)$. After every weight has been uniformized the operations no
+longer depend on $S$; summing the private outcome histories produces
+exactly the basis dephaser in retrieval and $I/d$ in birth. This is the
+cache~\eqref{eq:c6-cache}, with its private count sector and ordinary
+classical choice of the two boxes. Combined with the raw-creation
+replacement, a safe half-trace bound is $q(q-1)/d$ per hypothesis.
+
+At complete-step boundaries the original left and right counts agree and
+are at most $i-1$ before step $i$. Forward creation sees degree at most
+$2i-1$. Thus $2q<d$ makes the total-degree cutoff inactive throughout;
+removing inert right records changes neither the left polar Gram nor the
+active dynamics. The all-state CP extension above ensures that intermediate
+histories newly introduced by uniformization remain legal.
+
+\subsection{Constants and completion of the comparison}
+
+Per hypothesis, the error from the actual Haar-averaged experiment to the
+cache is bounded by
+\[
+ \frac{9(2q)(2q+1)}{d^{1/8}}
+ +E(q,d)+7q\delta_{2q}+B(q,d)+\frac{q(q-1)}d.
+\]
+Two such bounds and the $6q(q-1)/d$ cache comparison in the main text
+give~\eqref{eq:c6-comparison}. Every comparison uses contractions on
+retained purified records or CP trace-nonincreasing maps, ending with a
+CPTP cache. None conditions on a successful event or bounds the learner's
+memory dimension.
+
+For the explicit threshold write $d=R^{16}$ and suppose
+$1\le q\le R/100$. Then $R\ge100$, $4q\le d$, $2q<d$, and all denominators
+in~\eqref{eq:c6-E} and~\eqref{eq:c6-B} are at least $R^4$.
+The elementary majorants
+\[
+ E(q,d)\le\frac{2q^2}{R^2},\qquad
+ B(q,d)\le\frac{4q^2}{R^2},\qquad
+ \delta_{2q}\le\frac{6q}{R^2}
+\]
+follow by squaring each nonnegative radical bound. For example,
+$2(2i-1)\le(2q)^2$ and $d-2i+2\ge R^4$ bound each summand of $E$ by
+$2q/R^2$. Also $q^2/R^2\le10^{-4}$ and $d\ge R^2$. Substitution into
+\eqref{eq:c6-comparison} gives at most $212/10000$; the formal scalar
+endpoint uses the slightly looser $215/10000$. Both are below $1/3$.
+
+\section{Approximate full-switch simulation}\label{sec:approximation}
+
+\subsection{A causal reverse-composition bound}
+
+Write $\vket X=\sum_{a,b}X_{ab}\ket b\ket a$ for vectorization and
+$\ket X=\vket X/\sqrt d$ for its normalized version when $X$ is unitary.
+Let $\ket\Phi=d^{-1/2}\sum_a\ket a\ket a$ and $\Pi=\proj\Phi$.
+A two-slot causal comb is the positive Choi operator of a quantum circuit
+with one call to each unknown channel; its partial-trace constraints encode
+the order of those calls and allow arbitrary internal memory. We first quantify the
+cost of reversing two unknown unitary calls.
+
+\begin{lemma}[Causal reverse-composition bound]\label{lem:reverse}
+For independent Haar $U,V$, a positive $U$-before-$V$ comb of mass $p$ has
+average entanglement fidelity to $UV$ at most
+\begin{equation}\label{eq:bd}
+ p b_d,\qquad b_d=\left(\frac1d+\frac d{d^2-1}\right)^2.
+\end{equation}
+For a selected instrument outcome, $p$ is the mass of its completed parent comb.
+\end{lemma}
+\begin{proof}
+Use factors $P,a,b,c,e,f$, with $P$ the target input, $(a,b)$ the $U$ slot,
+$(c,e)$ the $V$ slot, and $f$ the output. Causality gives
+$\Tr_f C=C_2\otimes I_e$ and $\Tr_c C_2=C_1\otimes I_b$.
+Define the parent mass by $p=\Tr C/d^3$; the partial-trace equations give
+$\Tr C_2=pd^2$. Chronological calls to $U$ then $V$ implement $VU$, while
+the target $UV$ reverses this order. Put $\beta=(d^2-1)^{-1}$.
+The fourth-entry Haar identity~\cite{collins2006} gives
+\begin{align}\label{eq:frame}
+ M_U&=\E\bigl[(\vket{U^*}_{ab}\otimes\vket U_{xf})
+              (\vbra{U^*}_{ab}\otimes\vbra U_{xf})\bigr]\\
+ &=\Pi_{ax}\Pi_{bf}+\beta(I-\Pi_{ax})(I-\Pi_{bf})
+ \preceq\Pi_{ax}\Pi_{bf}+\beta I.\nonumber
+\end{align}
+The fidelity is $\Tr(C\Gamma)$, where $\Gamma=\E\proj{z_{U,V}}$ and
+$\ket{z_{U,V}}=d^{-1}\vket{U^*}_{ab}\otimes\vket{V^*}_{ce}\otimes\vket{UV}_{Pf}$,
+with the factors reordered as above.
+To form $\Gamma$, contract $M_U\otimes M_V$ with an unnormalized Bell bra
+on the two internal target wires, and multiply by $d^{-2}$. This positive
+contraction preserves the frame inequalities. The two Bell terms contribute
+$\Pi_{ae}/d$ on the internal wires; either mixed term contributes $I/d$;
+and two identity terms contribute $d$. The four resulting terms give
+\begin{align}\label{eq:envelope}
+ \Gamma\preceq d^{-3}\bigl(&\Pi_{Pc}\Pi_{ae}\Pi_{bf}
+ +\beta I_{Pace}\Pi_{bf}\\
+ &+\beta I_{abef}\Pi_{Pc}+d^2\beta^2 I\bigr).\nonumber
+\end{align}
+For the triple-Bell term, causality and positivity give
+\[
+\begin{aligned}
+ \Tr(C\Pi_{Pc}\Pi_{ae}\Pi_{bf})
+ &\le\Tr(C\Pi_{Pc}\Pi_{ae}I_{bf})\\
+ &=d^{-1}\Tr(C_2\Pi_{Pc}I_{ab})
+ \le d^{-1}\Tr C_2=pd.
+\end{aligned}
+\]
+The equality uses $\Tr_e\Pi_{ae}=I_a/d$ and the first causal equation.
+Each single-Bell term is at most $\Tr C=pd^3$. Substitution into
+\eqref{eq:envelope} gives $p(d^{-2}+2\beta+d^2\beta^2)=pb_d$.
+For instrument outcomes, use $0\preceq C_{\mathrm{out}}\preceq C$ and positivity
+of $\Gamma$. A selected outcome need not itself satisfy the parent comb's
+causal equations, and we do not renormalize it.
+\end{proof}
+
+Fix control input $\ket+$ and a maximally entangled target--reference input.
+If $\sigma(U,V)$ is the output of an at-most-one-use-each QC-CC in this
+experiment, its control coherence satisfies
+\begin{equation}\label{eq:coherence}
+ \left|\E\bra{VU}\sigma_{01}(U,V)\ket{UV}\right|\le\sqrt{b_d}.
+\end{equation}
+To see this, append missing calls on discarded registers. Group the
+instrument histories by the first selected oracle call. Everything before
+that call is known processing, so this choice is an oracle-independent
+preprocessing instrument. Each completed branch is a positive ordered comb,
+with arbitrary intervening memory; a selected final outcome is bounded by
+its completed parent. The parent masses $p_k$ sum to one and are independent
+of $U,V$. This ordered-component argument also applies to the exact proof.
+Positivity bounds a control off-diagonal element by the geometric mean of its
+diagonal elements. Average over Haar inputs and apply Cauchy--Schwarz to these
+two factors. Their average fidelities are at most $p_k$ and $p_kb_d$,
+respectively, by Lemma~\ref{lem:reverse}. Sum the resulting
+$p_k\sqrt{b_d}$ bounds.
+
+\subsection{Fixed mixtures, fresh labels, and a valid effect}
+
+We now prove Theorem~\ref{thm:simulation-summary}. If $q>r$, then
+$q(q-1)/(2r)\ge1$, so the right side of \eqref{eq:tradeoff-intro} is
+nonpositive and the claim is immediate. Assume henceforth $q\le r$.
+
+Sample independent Haar matrices $U_1,\ldots,U_r,V_1,\ldots,V_r$ once, and set
+$A=r^{-1}\sum_i\Ad(U_i)$, $B=r^{-1}\sum_j\Ad(V_j)$. Define
+\[
+ a_{ij}=\ket{V_jU_i},\quad b_{ij}=\ket{U_iV_j},\quad
+ s_{ij}=(\ket0a_{ij}+\ket1b_{ij})/\sqrt2.
+\]
+Collect these columns in $X,Y,Z$. On the fixed-plus control and
+target--reference Bell input, the switch's output is
+$\rho_S=ZZ^\dagger/r^2$. This is the normalized Choi state of the fixed-plus
+restriction, and is a valid probe for the full diamond-norm comparison. Define
+\begin{equation}\label{eq:effect}
+ W=ZZ^\dagger,\qquad L=\max(1,\norm W_\infty),\qquad E=W/L.
+\end{equation}
+The effect $0\preceq E\preceq I$ may depend on the channels in a worst-case
+distance bound.
+
+For $K=X,Y,Z$, the Gram matrices obey
+\begin{equation}\label{eq:gram}
+ \E\norm{K^\dagger K-I}_\infty\le r^2/d.
+\end{equation}
+Every off-diagonal Gram entry of $X$ or $Y$ has squared expectation $d^{-2}$:
+a shared unitary cancels inside the trace; otherwise a factor occurring once
+makes the product Haar. Thus the expected squared Frobenius norm is
+$(r^4-r^2)/d^2$. For $Z$, use
+$Z^\dagger Z=(X^\dagger X+Y^\dagger Y)/2$, then Cauchy--Schwarz.
+Set $G_Z=Z^\dagger Z$ and $\zeta=\norm{G_Z-I}_\infty$. Since
+$L\le1+\zeta$, $\Tr G_Z=r^2$, and $\Tr G_Z^2\ge r^2$,
+\[
+ \Tr(E\rho_S)=\frac{\Tr G_Z^2}{r^2L}
+ \ge\frac1{1+\zeta}\ge1-\zeta.
+\]
+Taking expectations and using \eqref{eq:gram} gives ideal acceptance at least
+$1-r^2/d$. Throughout, $\norm{\cdot}_\infty$ denotes the operator norm.
+
+An ordinary call samples an independent uniform mixture label, which remains
+hidden. Compare these streams with independent presampled permutations,
+revealing each label at most once internally. Coupling until the first repeat
+bounds the output trace distance by $\eta=q(q-1)/(2r)$, even with adaptive
+choices. This comparison does not condition on a successful transcript.
+The without-replacement device has memory and is used only in the analysis;
+the actual hard channels remain fixed and memoryless.
+
+Write $\rho_{\mathrm{fresh}}$ for the output with fresh labels. The raw
+witness has block form
+\[
+ W=\frac12\begin{pmatrix}XX^\dagger&XY^\dagger\\
+                          YX^\dagger&YY^\dagger\end{pmatrix}.
+\]
+Its diagonal contribution to $\Tr(W\rho_{\mathrm{fresh}})$ is at most
+$\tfrac12(1+\max\{\norm{X^\dagger X-I}_\infty,
+\norm{Y^\dagger Y-I}_\infty\})$, hence has mean at most $1/2+r^2/d$
+by \eqref{eq:gram}. Its cross contribution is
+$\Re\sum_{i,j}\bra{a_{ij}}(\rho_{\mathrm{fresh}})_{01}\ket{b_{ij}}$.
+
+For each selected pair, fix the presampled permutations and all matrices
+except $U_i,V_j$, without conditioning on the observed transcript. These two
+unitaries remain independent Haar and are each used at most once. All other
+matrices can be granted as known gates. Grouping histories by the first
+selected query gives the ordered components used in \eqref{eq:coherence}.
+Average the fixed data back in and sum over $i,j$: the mean cross contribution
+is at most $r^2\sqrt{b_d}\le7r^2/(3d)$.
+
+Apply this raw-witness bound to the fresh process, then use the valid effect
+$0\preceq E\preceq W$ and the collision coupling to obtain
+\[
+ \E\Tr(E\rho_{\mathrm{ordinary}})
+ \le\E\Tr(W\rho_{\mathrm{fresh}})+\eta
+ \le\frac12+\frac{10r^2}{3d}+\eta.
+\]
+For each fixed channel pair, a valid effect's acceptance gap lower-bounds the
+output trace distance on our probe. Subtracting from the ideal acceptance
+and averaging therefore proves that some fixed pair has error at least
+\eqref{eq:tradeoff-intro}. This proves Theorem~\ref{thm:simulation-summary}.
+The channel-dependent witness is permitted for this distance lower bound;
+it is not an oracle-independent test supplied to an algorithm.
+
+An explicit consequence is that uniform error at most $1/48$, with $d\ge64$,
+requires $q>d^{1/4}/8$. Indeed, if $q\ge1$ and $d\ge4096q^4$, choose $r=8q^2$.
+The Gram penalty is at most $13/192$ and the collision penalty at most $1/16$,
+so \eqref{eq:tradeoff-intro} gives error at least $71/192>1/48$.
+For $q=0$, choose $r=1$. For general fixed error $\epsilon<1/2$, choose $r$
+as a sufficiently small multiple of $\sqrt d$ and $q$ as a sufficiently small
+multiple of $d^{1/4}$.
+
+
+\section{The exact endpoint: no finite universal simulator}\label{sec:exact}
+
+We prove Theorem~\ref{thm:exact-simulation} first for qubits. Suppose an exact
+simulator uses at most $M$ calls to $A$ and $N$ to $B$. Append calls on
+discarded dummy registers so that $M,N\ge1$ and every branch has these
+budgets. Randomly relabel the same-type slots to make its multilinear map
+separately symmetric. Concretely, the $k$th call of each type receives its
+own slot channel, and the slot labels are randomized before the computation.
+This preserves classical adaptivity and multilinearity in every once-used
+slot. On repeated inputs, relabeling changes nothing. Equality with the switch
+on repeated channel inputs
+forces, for arbitrary CPTP lists,
+\begin{equation}\label{eq:polarization}
+ \QC_{\mathrm{sym}}(A_1,\ldots,A_M;B_1,\ldots,B_N)
+ =\frac1{MN}\sum_{i,j}\SW(A_i,B_j).
+\end{equation}
+For probability vectors $p,q$, substitute $\sum_i p_iA_i$ and
+$\sum_jq_jB_j$ in every respective slot. Homogenize the switch side by
+$(\sum p_i)^{M-1}(\sum q_j)^{N-1}$. Equality on the two simplices extends by
+homogeneity to positive cones, hence to a polynomial identity. The coefficient of $p_1\cdots p_Mq_1\cdots q_N$ is $M!N!\QC_{\mathrm{sym}}$
+on the left and $(M-1)!(N-1)!\sum_{i,j}\SW(A_i,B_j)$ on the right.
+Dividing gives \eqref{eq:polarization}.
+
+Place the unknown channels in one slot each and identities in every other
+slot. Absorb the known calls into the circuit. This gives a one-call-each
+simulator for
+\begin{align}\label{eq:dilution}
+ T_{\lambda,\mu}(A,B)={}&\lambda\mu\SW(A,B)
+ +\lambda(1-\mu)\SW(A,\id)\\
+ &+(1-\lambda)\mu\SW(\id,B)
+ +(1-\lambda)(1-\mu)\SW(\id,\id),\nonumber
+\end{align}
+with $\lambda=1/M>0$ and $\mu=1/N>0$.
+
+The remaining obstruction is qubit linear algebra. Fix the input control
+to $\ket+$ and use factors $P,A_I,A_O,B_I,B_O,F_c,F_t$, each a qubit.
+A Kraus vector of an ordered component is $v\in\C^{128}$ on these factors.
+Its vector link with unitary slots is
+\begin{equation}\label{eq:vector-link}
+ [\mathcal L(U,V)v]_{pct}
+ =\sum_{a_i,a_o,b_i,b_o}
+ v_{p,a_i,a_o,b_i,b_o,c,t}\,U_{a_o,a_i}V_{b_o,b_i}.
+\end{equation}
+There is no conjugation in this vector-link convention. Let $\mathcal H(U,V)$
+be the span of the vectorizations of $\ket+I$, $\ket+U$, $\ket+V$, and
+$(\ket0VU+\ket1UV)/\sqrt2$, with the factors ordered as in
+\eqref{eq:vector-link}. On unitary slots, the diluted target's Choi support
+is contained in this span.
+Define the universal support
+\[
+ \mathcal V=\{v:\mathcal L(U,V)v\in\mathcal H(U,V)
+                    \text{ for all qubit unitaries }U,V\}.
+\]
+The ordered-component argument above expresses the simulator as the sum of
+two positive causal combs. Only homogeneous causal constraints are needed;
+the initial order branch may depend on the input state.
+Positivity forces each of their Kraus vectors into
+$\mathcal V$. Indeed, for $w\perp\mathcal H(U,V)$, equality to the target gives
+$\sum_\alpha|\langle w,\mathcal L(U,V)v_\alpha\rangle|^2=0$.
+Every summand vanishes, so forbidden support cannot cancel between components.
+
+\begin{lemma}[Finite qubit obstruction]\label{lem:exact-obstruction}
+The support $\mathcal V$ is the range of an explicit full-column-rank integer
+matrix $E\in\mathbb Z^{128\times25}$. On real symmetric coordinate matrices
+$X\in\mathbb R^{25\times25}$, there is a linear functional $f$ with the
+following properties: it vanishes when $EXE^T$ satisfies either set of
+homogeneous ordered-comb constraints, and when $EXE^T$ lies in the CPTP gauge
+(the subspace invisible on channel inputs).
+For the canonical diluted target $C_T=EX_TE^T$, it has
+$f(X_T)=\lambda\mu/2$.
+\end{lemma}
+
+Appendix~\ref{sec:certificate} gives $E,f$, the target coordinates, and the
+exact certificate verification procedure. To apply the lemma, write the
+positive ordered components as $C_{AB}=EX_{AB}E^\dagger$ and
+$C_{BA}=EX_{BA}E^\dagger$. Full column rank of $E$ and support in its range
+ensure Hermitian positive coordinate matrices. Averaging with entrywise
+conjugates makes them real symmetric and preserves all constraints and equality
+to the real target.
+
+We must account for equality only on channel slots. For any subsystem $S$,
+write ${}_S C=(I_S/\dim S)\otimes\Tr_S C$, with the original wire order
+restored, and set $\Lambda_A=\id-{}_{A_O}+{}_{A_IA_O}$, similarly for $B$.
+Channel Choi matrices span the ranges of these projections. The kernel
+of $\Lambda_A\Lambda_B$ is the gauge invisible on CPTP slot products. Thus equality of the two supermaps is
+\[
+ \Lambda_A\Lambda_B\bigl(E(X_{AB}+X_{BA}-X_T)E^T\bigr)=0.
+\]
+The lemma gives $f(X_{AB})=f(X_{BA})=0$ from causality and
+$f(X_{AB}+X_{BA}-X_T)=0$ from the gauge. These imply $f(X_T)=0$,
+contradicting $\lambda\mu/2>0$.
+
+For higher dimensions, encode a qubit by an isometry $J:\C^2\to\C^d$ and use
+the known recovery map
+$R(\rho)=J^\dagger\rho J+\Tr[(I-JJ^\dagger)\rho]\proj0$.
+Extend a qubit channel by $A^\uparrow(\rho)=JA(R(\rho))J^\dagger$.
+Each extended call uses exactly one original call. On encoded targets the
+switch preserves the subspace and its control coherence, so a finite
+$d$-dimensional simulator would yield the excluded qubit simulator. This
+proves Theorem~\ref{thm:exact-simulation}.
+
+
+\section{The finite exact-simulation certificate}\label{sec:certificate}
+
+With rows $i=(p,a_i,a_o,b_i,b_o,c,t)\in\{0,1\}^7$, the integer matrix
+$E\in\mathbb Z^{128\times25}$ has the following nonzero entries:
+\begin{align*}
+ E_{i,8a_i+4a_o+2b_i+b_o}&=\ind{p=t},\\
+ E_{i,16+2b_i+b_o}&=\ind{p=a_i}\ind{a_o=t},\\
+ E_{i,20+2a_i+a_o}&=\ind{p=b_i}\ind{b_o=t},\\
+ E_{i,24}&=\ind{c=0}\ind{p=a_i}\ind{a_o=b_i}\ind{b_o=t}\\
+ &\quad+\ind{c=1}\ind{p=b_i}\ind{b_o=a_i}\ind{a_o=t}.
+\end{align*}
+The first 16 columns carry an identity target wire; the next two groups of
+four carry one oracle wire; the last carries the switch wire. Linking each
+column proves its membership in the required four-vector span for every
+unitary pair. To prove maximality, test 40 SU(2) pairs of the form
+\[
+ Q(w,x,y,z)=\frac1{\sqrt{w^2+x^2+y^2+z^2}}
+ \begin{pmatrix}w+\mathrm iz&y+\mathrm ix\\-y+\mathrm ix&w-\mathrm iz\end{pmatrix},
+\]
+where the integer coordinates lie in $\{-1,0,1\}$ and are not all zero.
+The selected 103 Gaussian-integer annihilator rows vanish on $E$.
+Stack them with 25 coordinate-extraction rows into a $128\times128$ matrix $G$;
+the resulting exact identity is $GE=(0,I_{25})^T$.
+A literal right inverse for $G$ modulo 5, under $\mathrm i\mapsto2$, certifies
+rank 128 in characteristic zero. Consequently the annihilator kernel is
+exactly the range of $E$, of dimension 25. The formal source records the gate
+list, all rows, and the modular inverse. The mathematical supplement also supplies these data for independent replay.
+
+For real symmetric $X\in\mathbb R^{25\times25}$, take
+\begin{align*}
+ f(X)={}&2X_{0,3}-4X_{0,16}+6X_{0,19}-2X_{2,18}-2X_{3,6}\\
+ &-2X_{3,19}-2X_{3,24}-2X_{4,7}-2X_{6,19}+X_{24,24}.
+\end{align*}
+The necessary homogeneous $A$-before-$B$ constraints are
+\begin{align*}
+ 2\Tr_F C-(\Tr_{B_OF}C)\otimes I_{B_O}&=0,\\
+ 2\Tr_{B_IB_OF}C-(\Tr_{A_OB_IB_OF}C)\otimes I_{A_O}&=0;
+\end{align*}
+the reverse order swaps the slots. No independent normalization of the first
+comb stage is required. Define trace-and-replace ${}_S$, and set
+$\Lambda_A=\id-{}_{A_O}+{}_{A_IA_O}$, with the analogous $\Lambda_B$.
+Their ranges are the linear spans of channel Choi matrices. The depolarizing Choi matrix lies in the relative interior of the CPTP
+affine space. Perturbing it in both directions along every output-trace-zero
+Hermitian direction shows that channel Choi matrices span this range.
+Thus equality on CPTP slot products is equivalent to equality after
+$\Lambda_A\Lambda_B$.
+
+The exact row identities express $f$ as a rational combination of 30
+$A$-before-$B$ rows, 47 reverse-order rows, and 73 rows of
+$16\Lambda_A\Lambda_B(EXE^T)$. Coordinates use
+$E_aE_b^T+E_bE_a^T$ for an off-diagonal variable. These identities establish
+all three vanishing claims directly by finite arithmetic. Complex components
+can be averaged with their conjugates because every constraint and target is
+real. The target's diagonal coordinates are
+\[
+ (X_T)_{kk}=\begin{cases}
+ (1-\lambda)(1-\mu)/8,&0\le k\le15,\\
+ \lambda(1-\mu)/4,&16\le k\le19,\\
+ (1-\lambda)\mu/4,&20\le k\le23,\\
+ \lambda\mu/2,&k=24.
+ \end{cases}
+\]
+Hence $f(X_T)=\lambda\mu/2$. The denominator factors reflect unused slots
+called on maximally mixed dummy inputs and the fixed input control.
+
+\paragraph{Independent certificate verification.}
+The supplement \texttt{exact-certificate.zip} contains complete gate,
+annihilator, inverse, and rational-coefficient data, with readable CSV views.
+Its \texttt{verify\_all.py} checks them using exact integer and rational
+arithmetic, without Lean or third-party Python packages. The checks are:
+\begin{enumerate}
+\item Reconstruct $E$, the 40 unitary pairs, and each linked annihilator row
+using \eqref{eq:vector-link}; verify annihilation of the four target vectors.
+\item Verify $RE=0$ for the 103-row annihilator matrix, $LE=I_{25}$ for the
+left inverse, and the supplied inverse of $G$ modulo 5. Together with column
+membership for every unitary pair, this proves $\mathcal V=\operatorname{ran}E$.
+\item Build the causal and gauge rows on the 325 symmetric coordinates.
+Verify the three rational row combinations equal $f$, and verify the target
+diagonal above. This proves every assertion of Lemma~\ref{lem:exact-obstruction}.
+\end{enumerate}
+
+
+\section{Correlator interpretation and conditional keyed devices}\label{sec:connections}
+
+\paragraph{An exact phase-averaged OTOC.}
+The visibility~\eqref{eq:basis-visibility} has an operator-algebra
+interpretation. Label each basis by $\mathbb Z_d$ and define private
+clock-phase unitaries
+$R_{\mathcal B}(t)=\sum_j e^{2\pi i tj/d}P_j$ and
+$R_{\mathcal C}(s)=\sum_k e^{2\pi i sk/d}Q_k$.
+Choose $t,s$ independently and uniformly in $\mathbb Z_d$.
+Character orthogonality gives $\E_t e^{2\pi i t(j-a)/d}=\delta_{ja}$.
+Expanding the four spectral sums and averaging gives
+\begin{equation}\label{eq:otoc}
+\begin{aligned}
+ v&=\E_{t,s}\Re\frac1d
+ \Tr(R_{\mathcal C}R_{\mathcal B}R_{\mathcal C}^\dagger R_{\mathcal B}^\dagger),\\
+ 1-v&=\frac1{2d}\E_{t,s}
+       \norm{[R_{\mathcal B},R_{\mathcal C}]}_{\rm HS}^2.
+\end{aligned}
+\end{equation}
+The surviving terms are $\Tr(Q_kP_jQ_kP_j)=|\langle b_j,c_k\rangle|^4$.
+Independent uniform continuous phases give the same identities.
+The phases are an analytical representation of the device; their values
+and coherent reversible implementations are unavailable to the learner.
+
+The complement $1-v$ is precisely the mutual averaged noncommutativity of
+the two maximal abelian operator algebras in Zanardi's
+formulation~\cite{zanardi2024}. His projection-channel/Choi-state protocol
+has swap expectations $1/d$ versus $1/d^2$ on our promises. That shrinking
+signal is consistent with an ordinary-query lower bound.
+
+\begin{corollary}[Estimating the channel-access OTOC]\label{cor:otoc}
+Fix $0<\epsilon<1/4$. Estimating the correlator in~\eqref{eq:otoc} to
+additive error $\epsilon$ with probability at least $2/3$ on every pair
+of hidden rank-one dephasing channels requires more than $d^{1/16}/100$
+ordinary calls for $d=2^n$, $n\ge1$. Switch access estimates it using
+$O(\epsilon^{-2})$ calls, independent of $d$.
+\end{corollary}
+\begin{proof}
+On \textnormal{\textsc{Same}} the value is $1$; on \textnormal{\textsc{Mub}} it is $1/d\le1/2$.
+Threshold an estimate at $3/4$. Every successful estimate determines the
+promise correctly, so Theorem~\ref{thm:c6} applies. For the upper bound,
+take $m=\lceil4/\epsilon^2\rceil$ independent switch $X$ measurements.
+Their empirical mean estimates $v$; Hoeffding's inequality bounds the
+failure probability by $2e^{-m\epsilon^2/2}\le2e^{-2}<1/3$.
+\end{proof}
+
+This is a phase-averaged infinite-temperature correlator, with no specified
+time evolution or local probes. Cotler, Schuster, and Mohseni~\cite{cotler2023}
+prove an OTOC query separation between forward-only and forward/inverse
+unitary access; their comparison excludes entanglement with externally
+controllable ancillary memory. Our learner has arbitrary quantum memory
+but queries irreversible measurement channels, and the additional resource
+is the switch. The two access models give distinct hardness statements.
+The complete-Pauli OTOC averages related to frame potentials by Roberts
+and Yoshida~\cite{roberts2017} concern ensemble moments. Our single phase
+average does not certify a unitary design or dynamical scrambling.
+
+\paragraph{Conditional keyed implementation.}
+Assume an efficiently implementable pseudorandom-unitary family $\{U_k\}$
+secure against both forward and inverse queries. It gives efficient
+hidden devices with the same exact promise for every key:
+$(\Delta_{U_k},\Delta_{U_k})$ versus
+$(\Delta_{U_k},\Delta_{U_kH})$. Each device applies $U_k^\dagger$,
+known dephasing, then $U_k$. A polynomial-time ordinary learner making $q$
+calls can be simulated with $2q$ forward/inverse unitary queries, controlling
+only the known middle map. Let $\varepsilon_0,\varepsilon_1$ be the
+pseudorandomness advantages of these two simulators. For $1\le q$ and $4q\le d$, let
+$g(q,d)$ be the Haar bound~\eqref{eq:c6-comparison}. For any binary learner output,
+two hybrids give
+\begin{equation}\label{eq:pru}
+ \left|\Pr_k[A(\Delta_{U_k},\Delta_{U_k})=1]
+       -\Pr_k[A(\Delta_{U_k},\Delta_{U_kH})=1]\right|
+\le\varepsilon_0+g(q,d)+\varepsilon_1.
+\end{equation}
+At $q=0$ the advantage is zero.
+For polynomial $q(n)$ this is negligible under inverse-secure
+pseudorandomness, while four switches still distinguish every key.
+Ma--Huang~\cite{mahuang2025} construct such families from quantum-secure
+one-way functions; the stronger constructions of~\cite{schuster2025} also suffice.
+Forward-only pseudorandomness~\cite{jiliusong2018} is insufficient for this
+simulation. Equation~\eqref{eq:pru} bounds polynomial-time learners; it makes
+no information-theoretic exponential claim for a finite keyed ensemble.
+The task tests device relations under both Haar and keyed orientation.
+
+\section{Formal verification}\label{sec:formal-status}
+The Lean 4.30 development covers arbitrary mixed inputs, finite adaptive
+memory, classical box choice, early stopping, and total query budgets,
+reusing Lean-QIT~\cite{leanqit2026}.
+It derives the \textnormal{\textsc{Same}}/\textnormal{\textsc{Mub}} lower bound from the actual
+recording-to-cache comparison, and checks the switch test, OTOC identities,
+estimator, and earlier simulation results.
+The keyed probability bound retains its security assumptions;
+asymptotic efficiency and cryptographic constructions are not formalized.
+All selected endpoints use only \texttt{propext}, \texttt{Classical.choice},
+and \texttt{Quot.sound}, with no admitted lemmas.
+The release supplies pinned libraries, checksums, theorem maps, axiom
+reports, rebuild scripts, and exact certificate replay, with separate
+records of source and kernel validation.
+
+
+\begin{thebibliography}{99}
+\small\raggedright\setlength{\itemsep}{2pt}
+\bibitem{gao2023} N. Gao, D. Li, A. Mishra, J. Yan, K. Simonov, and G. Chiribella.
+Measuring incompatibility and clustering quantum observables with a quantum
+switch. \emph{Physical Review Letters} 130, 170201 (2023).
+\href{https://arxiv.org/abs/2208.06210v4}{arXiv:2208.06210v4}.
+\bibitem{chiribella2013} G. Chiribella, G. M. D'Ariano, P. Perinotti, and B. Valiron.
+Quantum computations without definite causal structure.
+\emph{Physical Review A} 88, 022318 (2013).
+\href{https://arxiv.org/abs/0912.0195v4}{arXiv:0912.0195v4}.
+\bibitem{wechs2021} J. Wechs, H. Dourdent, A. A. Abbott, and C. Branciard.
+Quantum circuits with classical versus quantum control of causal order.
+\emph{PRX Quantum} 2, 030335 (2021).
+\href{https://arxiv.org/abs/2101.08796v3}{arXiv:2101.08796v3}.
+\bibitem{bavaresco2025} J. Bavaresco, H. Kristj\'ansson, M. Murao, T. Odake,
+M. T. Quintino, P. Taranto, and S. Yoshida.
+Simulating the quantum switch with quantum circuits is computationally hard.
+\emph{Nature Communications} 16, 10216 (2025).
+\href{https://arxiv.org/abs/2409.18202v2}{arXiv:2409.18202v2}.
+\bibitem{mahuang2025} F. Ma and H.-Y. Huang. How to Construct Random Unitaries.
+\emph{STOC} (2025). Theorem 8 in
+\href{https://arxiv.org/abs/2410.10116v3}{arXiv:2410.10116v3}.
+\bibitem{abbott2025} A. A. Abbott, M. Mhalla, and P. Pocreau.
+Classical and Quantum Query Complexity of Boolean Functions under Indefinite
+Causal Order. \emph{EPTCS} 426, 270--300 (2025).
+\href{https://arxiv.org/abs/2506.05187v2}{arXiv:2506.05187v2}.
+\bibitem{araujo2014} M. Ara\'ujo, F. Costa, and \v C. Brukner.
+Computational advantage from quantum-controlled ordering of gates.
+\emph{Physical Review Letters} 113, 250402 (2014).
+\href{https://arxiv.org/abs/1401.8127v5}{arXiv:1401.8127v5}.
+\bibitem{guerin2016} P. Allard Gu\'erin, A. Feix, M. Ara\'ujo, and \v C. Brukner.
+Exponential Communication Complexity Advantage from Quantum Superposition of
+the Direction of Communication. \emph{Physical Review Letters} 117, 100502 (2016).
+\href{https://arxiv.org/abs/1605.07372v2}{arXiv:1605.07372v2}.
+\bibitem{ebler2018} D. Ebler, S. Salek, and G. Chiribella.
+Enhanced Communication with the Assistance of Indefinite Causal Order.
+\emph{Physical Review Letters} 120, 120502 (2018).
+\href{https://arxiv.org/abs/1711.10165v2}{arXiv:1711.10165v2}.
+\bibitem{renner2021} M. J. Renner and \v C. Brukner.
+Reassessing the computational advantage of quantum-controlled ordering of gates.
+\emph{Physical Review Research} 3, 043012 (2021).
+\href{https://arxiv.org/abs/2102.11293v1}{arXiv:2102.11293v1}.
+\bibitem{abbott2024} A. A. Abbott, M. Mhalla, and P. Pocreau.
+Quantum Query Complexity of Boolean Functions under Indefinite Causal Order.
+\emph{Physical Review Research} 6, L032020 (2024).
+\href{https://arxiv.org/abs/2307.10285v3}{arXiv:2307.10285v3}.
+\bibitem{collins2006} B. Collins and P. \'Sniady.
+Integration with respect to the Haar measure on unitary, orthogonal and
+symplectic group. \emph{Communications in Mathematical Physics}
+264, 773--795 (2006).
+\href{https://arxiv.org/abs/math-ph/0402073v1}{arXiv:math-ph/0402073v1}.
+\bibitem{pirandola2019} S. Pirandola, R. Laurenza, C. Lupo, and J. L. Pereira.
+Fundamental limits to quantum channel discrimination.
+\emph{npj Quantum Information} 5, 50 (2019).
+\href{https://arxiv.org/abs/1803.02834v4}{arXiv:1803.02834v4}.
+\bibitem{zhuwang2026} C. Zhu and X. Wang.
+Quantum Channel Stein Theorem beyond Definite Causal Order.
+\href{https://arxiv.org/abs/2609.30268v1}{arXiv:2609.30268v1} (2026).
+\bibitem{leanqit2026} C. Zhu, Z. Tang, G. Zhen, Y. Cao, Y. Zhao, R. Chen,
+X. Zhao, L. Zhang, and X. Wang.
+Lean-QIT. Version 0.1.0 (2026).
+\href{https://github.com/QuAIR/Lean-QIT}{Software repository};
+\href{https://arxiv.org/abs/2607.09632}{arXiv:2607.09632}.
+\bibitem{zanardi2024} P. Zanardi.
+Mutual averaged non-commutativity of quantum operator algebras.
+\emph{Journal of Mathematical Physics} 65, 062202 (2024).
+\href{https://arxiv.org/abs/2312.14019v2}{arXiv:2312.14019v2}.
+\bibitem{cotler2023} J. Cotler, T. Schuster, and M. Mohseni.
+Information-theoretic Hardness of Out-of-time-order Correlators.
+\emph{Physical Review A} 108, 062608 (2023).
+\href{https://arxiv.org/abs/2208.02256v1}{arXiv:2208.02256v1}.
+\bibitem{roberts2017} D. A. Roberts and B. Yoshida.
+Chaos and complexity by design.
+\emph{Journal of High Energy Physics} 04, 121 (2017).
+\href{https://arxiv.org/abs/1610.04903v2}{arXiv:1610.04903v2}.
+\bibitem{schuster2025} T. Schuster, F. Ma, A. Lombardi, F. Brand\~ao,
+and H.-Y. Huang. Strong random unitaries and fast scrambling.
+\href{https://arxiv.org/abs/2509.26310v1}{arXiv:2509.26310v1} (2025).
+\bibitem{jiliusong2018} Z. Ji, Y.-K. Liu, and F. Song.
+Pseudorandom States, Non-Cloning Theorems and Quantum Money.
+\href{https://arxiv.org/abs/1711.00385v1}{arXiv:1711.00385v1} (2017).
+\end{thebibliography}
+\end{document}

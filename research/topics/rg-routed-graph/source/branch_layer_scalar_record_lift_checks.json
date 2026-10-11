@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "green_old": {
+    "refined": false,
+    "native_branches": 15,
+    "sections": 8,
+    "forward_choices": 64,
+    "reverse_choices": 8,
+    "green_edges": 36,
+    "red_edges": 14,
+    "solid_edges": 0,
+    "weak_loops_pass": true,
+    "new_record_algebra": null
+  },
+  "green_record_lift": {
+    "refined": true,
+    "native_branches": 19,
+    "sections": 8,
+    "forward_choices": 64,
+    "reverse_choices": 8,
+    "green_edges": 45,
+    "red_edges": 18,
+    "solid_edges": 0,
+    "weak_loops_pass": true,
+    "new_record_algebra": "C^4"
+  },
+  "all_old_choice_maps_and_edges_preserved": true,
+  "full_symbolic_marked_contraction": true,
+  "record_pattern_projection_ranks": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "red_time_reverse": {
+    "forward_choices": 8,
+    "reverse_choices": 64,
+    "record_before_red_SCC": true,
+    "weak_loops_pass": true
+  },
+  "scope": "Actual same-SCC scalar-record graph rewrite, calibrated on both colors; no quartet route or quantum M4 lift follows."
+}

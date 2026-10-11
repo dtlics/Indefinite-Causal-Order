@@ -1,0 +1,1897 @@
+{
+  "status": "PASS",
+  "basis_sha256": "17db0cf4012e9961d6242d15283ed0ec97d51dec424a2a33f5e8b8bd72fa46cd",
+  "basis_dimension": 583,
+  "basis_validation_reference": "auxiliary_host_compatibility_independent_audit_checks.json",
+  "duals": [
+    {
+      "number": 0,
+      "dual_rows": 4,
+      "combined_raw_terms": 64,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "32*a*b",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 1,
+      "dual_rows": 2,
+      "combined_raw_terms": 32,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "-16*b*c",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "dual_rows": 4,
+      "combined_raw_terms": 64,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "32*b*d - 32*b*e",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "dual_rows": 6,
+      "combined_raw_terms": 96,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "-32*b*d",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "dual_rows": 14,
+      "combined_raw_terms": 176,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "128*a*c + 128*a*d",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "dual_rows": 10,
+      "combined_raw_terms": 160,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "-64*a*b + 256*a*e",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "dual_rows": 21,
+      "combined_raw_terms": 264,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "-128*a*c",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "dual_rows": 6,
+      "combined_raw_terms": 64,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "-32*b*d + 32*b*e - 32*b*f",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "dual_rows": 8,
+      "combined_raw_terms": 128,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "-32*b*g",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "dual_rows": 2,
+      "combined_raw_terms": 32,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "32*a*g",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "dual_rows": 48,
+      "combined_raw_terms": 567,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "64*c*h",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "dual_rows": 106,
+      "combined_raw_terms": 1200,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "64*c*h + 128*e*h",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "dual_rows": 42,
+      "combined_raw_terms": 552,
+      "annihilates_arbitrary_complex_mixed_tensor": true,
+      "quotient_quadratic": "640*a*c + 1024*a*d + 1024*a*f",
+      "typed_blocks": [
+        {
+          "typed_block": "0_real",
+          "rank": 2
+        },
+        {
+          "typed_block": "0_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "1_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "2_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "3_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "4_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "5_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "6_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "7_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "8_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "9_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "10_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "11_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "12_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "13_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "14_imag",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_real",
+          "rank": 0
+        },
+        {
+          "typed_block": "15_imag",
+          "rank": 0
+        }
+      ]
+    }
+  ],
+  "form_span_dimension": 13,
+  "monomial_products": [
+    "ab",
+    "ac",
+    "ad",
+    "ae",
+    "af",
+    "ag",
+    "bc",
+    "bd",
+    "be",
+    "bf",
+    "bg",
+    "ch",
+    "eh"
+  ],
+  "common_radical_dimension": 575,
+  "maximal_simultaneously_isotropic_linear_spaces": [
+    {
+      "free_quotient_coordinates": "dfgh",
+      "dimension": 579
+    },
+    {
+      "free_quotient_coordinates": "cdefg",
+      "dimension": 580
+    },
+    {
+      "free_quotient_coordinates": "bh",
+      "dimension": 577
+    },
+    {
+      "free_quotient_coordinates": "ah",
+      "dimension": 577
+    }
+  ],
+  "coefficient_coordinates_exact": true,
+  "boundary_and_physical_query_tests": [
+    {
+      "direction": "past",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "future",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_0_left",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_0_right",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_1_left",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_1_right",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_2_left",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_2_right",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_3_left",
+      "all_eight_coordinates_zero": true
+    },
+    {
+      "direction": "query_3_right",
+      "all_eight_coordinates_zero": true
+    }
+  ],
+  "native_insertions": [
+    {
+      "query": 1,
+      "hermitian_matrix_basis_directions_verified": 16,
+      "nonzero_coordinates": [
+        "h"
+      ],
+      "h_formula": "Tr[Z1(S1-E1)H]/3"
+    },
+    {
+      "query": 2,
+      "hermitian_matrix_basis_directions_verified": 16,
+      "nonzero_coordinates": [],
+      "h_formula": "0"
+    },
+    {
+      "query": 3,
+      "hermitian_matrix_basis_directions_verified": 4,
+      "nonzero_coordinates": [],
+      "h_formula": "0"
+    },
+    {
+      "query": 4,
+      "hermitian_matrix_basis_directions_verified": 4,
+      "nonzero_coordinates": [],
+      "h_formula": "0"
+    }
+  ],
+  "native_q1_consequence": "An actual active Q1 not contained E1 supplies H=Z1 Q1 with h>0, hence every direction of the same augmented host tangent span has c=e=0.",
+  "scope": "Necessary host-wide constraints only; no claim all possible mixed obstructions have been found, no sufficiency or routed-host exclusion."
+}

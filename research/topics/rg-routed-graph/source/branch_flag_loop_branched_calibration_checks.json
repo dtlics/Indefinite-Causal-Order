@@ -1,0 +1,93 @@
+{
+  "status": "PASS",
+  "boundary_dimension": 32,
+  "old": {
+    "refined": false,
+    "native_recipient_algebra": "M2+M2",
+    "consistent_sections": 16,
+    "complete_forward_choices": 128,
+    "complete_reverse_choices": 16,
+    "green_edges": 38,
+    "red_edges": 16,
+    "solid_edges": 4,
+    "weak_loops_pass": true,
+    "cyclic_components": [
+      {
+        "nodes": [
+          [
+            "L",
+            0,
+            0
+          ],
+          [
+            "L",
+            1,
+            0
+          ],
+          [
+            "L",
+            2,
+            0
+          ]
+        ],
+        "colors": [
+          "green"
+        ]
+      }
+    ]
+  },
+  "refined": {
+    "refined": true,
+    "native_recipient_algebra": "M2+M2+M2+M2",
+    "consistent_sections": 16,
+    "complete_forward_choices": 512,
+    "complete_reverse_choices": 16,
+    "green_edges": 70,
+    "red_edges": 22,
+    "solid_edges": 4,
+    "weak_loops_pass": true,
+    "cyclic_components": [
+      {
+        "nodes": [
+          [
+            "L",
+            0,
+            0,
+            0
+          ],
+          [
+            "L",
+            0,
+            0,
+            1
+          ],
+          [
+            "L",
+            1,
+            0
+          ],
+          [
+            "L",
+            2,
+            0
+          ]
+        ],
+        "colors": [
+          "green"
+        ]
+      }
+    ]
+  },
+  "whole_recipient_choice_vector_projection_verified": true,
+  "all_four_refined_recipient_branches_reachable": true,
+  "exact_marked_contraction": true,
+  "time_reversal": {
+    "old_forward": 16,
+    "new_forward": 16,
+    "old_reverse": 128,
+    "new_reverse": 512,
+    "recurrent_color": "red",
+    "weak_loops_pass": true
+  },
+  "scope": "Branched-recipient refinement with recipient branches participating in a genuine Lugano SCC; actual route and finite exact contraction calibration, not a quartet host."
+}

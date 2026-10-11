@@ -1,0 +1,46 @@
+{
+  "result": "One irreducible projective surface, nine projective lines, one isolated point",
+  "surface": {
+    "equations": [
+      "b1=0",
+      "2*a0*c0*d1+a1*(c0-c1)*(d0+d1)=0"
+    ],
+    "complex_dimension": 2,
+    "linear_span_dimension": 7,
+    "all_orbit_minors_verified_modulo_surface_ideal": 1792
+  },
+  "projective_lines": [
+    "0*01",
+    "1*-+",
+    "0*10",
+    "1*+-",
+    "01*0",
+    "011*",
+    "11+*",
+    "11*-",
+    "*1+0"
+  ],
+  "all_line_orbit_minors_verified_identically": 16128,
+  "isolated_point": "-1-1",
+  "rational_grid": {
+    "tested": 1296,
+    "safe": 81,
+    "classification_mismatches": 0
+  },
+  "original_pauli_census_reproduced": 49,
+  "full_safe_variety_linear_span_dimension": 16,
+  "E2_active_families": [
+    "0*01",
+    "1*-+"
+  ],
+  "E2_active_reflection_unnormalized": [
+    "0b01 -> -(1b-+)/2",
+    "1b-+ -> -2*(0b01)"
+  ],
+  "E2_active_families_annihilated_by_E1_E3_E4": true,
+  "port3_changing_rays_overlap_squared": "1/2",
+  "port4_changing_rays_overlap_squared": "1/2",
+  "raw_normalization_and_symbolic_port3_port4_active_coefficients_verified": true,
+  "no_hub_result": "Every direct scalar orbit-table hub from a full safe product basis fails independent native validity, even with arbitrary complex local frames",
+  "scope": "Fixed dimension-16 boundary; complete independent original-qubit inclusions; the stated product-orbit-table architecture. No claim about arbitrary routed hosts."
+}

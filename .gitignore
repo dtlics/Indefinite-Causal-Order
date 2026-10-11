@@ -1,0 +1,12 @@
+_build/
+dist/
+__pycache__/
+*.pyc
+.lake/
+*.olean
+*.ilean
+*.aux
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+.DS_Store

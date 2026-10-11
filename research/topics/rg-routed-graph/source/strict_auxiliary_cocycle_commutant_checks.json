@@ -1,0 +1,11154 @@
+{
+  "status": "EXACT_RANK_LOWER_CERTIFICATES",
+  "results": [
+    {
+      "before_queries": [
+        2,
+        3,
+        4
+      ],
+      "last_query": 1,
+      "prime": 1000003,
+      "commutator_rank_lower_bound": 224,
+      "commutant_dimension_upper_bound": 32,
+      "contexts_scanned": 243,
+      "rank_rows": [
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            15,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            15,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            15,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            15,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            1,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            1,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            1,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            5,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            6,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            6,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            7,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            7,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            9,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            9,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            9,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            9,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            13,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            13,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            14,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            14,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            15,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "entry": [
+            15,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            1,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            5,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            6,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            6,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            7,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            7,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            12,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            13,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            13,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            14,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            14,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            15,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "entry": [
+            15,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            4,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            5,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            6,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            6,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            12,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            13,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            13,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            14,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "entry": [
+            14,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            5,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            13,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            13,
+            12
+          ]
+        }
+      ],
+      "seconds": 0.5381436347961426
+    },
+    {
+      "before_queries": [
+        1,
+        3,
+        4
+      ],
+      "last_query": 2,
+      "prime": 1000003,
+      "commutator_rank_lower_bound": 252,
+      "commutant_dimension_upper_bound": 4,
+      "contexts_scanned": 243,
+      "rank_rows": [
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            10,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            10,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            10,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            10,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            14,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            0,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            2,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            2,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            3,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            3,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            4,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            6,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            6,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            7,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            7,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            8,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            9,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            12,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            13,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "entry": [
+            13,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            0,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            2,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            2,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            3,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            3,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            4,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            6,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            6,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            7,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            7,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            8,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            9,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            12,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            12,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            13,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            3
+          ],
+          "entry": [
+            13,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            6,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            6,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            13,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            13,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            9,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            10,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            10,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            13,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            13,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            14,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "entry": [
+            14,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            2
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            2
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            2
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            2
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        }
+      ],
+      "seconds": 1.916292667388916
+    },
+    {
+      "before_queries": [
+        1,
+        2,
+        4
+      ],
+      "last_query": 3,
+      "prime": 1000003,
+      "commutator_rank_lower_bound": 224,
+      "commutant_dimension_upper_bound": 32,
+      "contexts_scanned": 243,
+      "rank_rows": [
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            0,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            0,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            0,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            2,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            2,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            2,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            2,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            4,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            5,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            6,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            7,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            14,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            14,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            14,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            14,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            0,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            1,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            2,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            3,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            3,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            4,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            5,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            6,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            6,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            7,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            7,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            10,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            10,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            11,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            11,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            13,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            13,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            15,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            15,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            1,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            3,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            12,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            14,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            14,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            10,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            10,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            11,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            11,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            12,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            13,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            13,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            14,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            15,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "entry": [
+            15,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            8,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            9,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            10,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            11,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            13,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "entry": [
+            15,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            8,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            9,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            10,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            10,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            11,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "entry": [
+            11,
+            10
+          ]
+        }
+      ],
+      "seconds": 0.5263156890869141
+    },
+    {
+      "before_queries": [
+        1,
+        2,
+        3
+      ],
+      "last_query": 4,
+      "prime": 1000003,
+      "commutator_rank_lower_bound": 224,
+      "commutant_dimension_upper_bound": 32,
+      "contexts_scanned": 243,
+      "rank_rows": [
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            6,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            6,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            6,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            6,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            7,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            7,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            7,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            7,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            10,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            10,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            10,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            10,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            11,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            11,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            11,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            11,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            12,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            13,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            14,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            15,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            6,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            7,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            8,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            10
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            9,
+            11
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            12,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            12
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            13
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            14
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            13,
+            15
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            6,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            6,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            7,
+            8
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            7,
+            9
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            8,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            0,
+            1,
+            2,
+            1
+          ],
+          "entry": [
+            9,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            2,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            3,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            4,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            6
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "entry": [
+            5,
+            7
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            0,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            1,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            2,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            4
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            3,
+            5
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            4,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "entry": [
+            5,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            0,
+            3
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            0
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            1
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            2
+          ]
+        },
+        {
+          "query_Pauli_indices": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "entry": [
+            1,
+            3
+          ]
+        }
+      ],
+      "seconds": 0.5371921062469482
+    }
+  ],
+  "scope": "If rank255, the known scalar kernel closes the characteristic-zero commutant dimension at1, excluding any nontrivial unital matrix auxiliary for that strict partition."
+}

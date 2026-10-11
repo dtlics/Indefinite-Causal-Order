@@ -1,0 +1,539 @@
+{
+  "verdict": "passed",
+  "arithmetic": "Exact words, integers and Laurent polynomials; no author code imports",
+  "cases": [
+    {
+      "N": 2,
+      "representatives": 4,
+      "interior_vertices": 2,
+      "max_lifted_degree": 2,
+      "claimed_degree": 3,
+      "fresh_probe_cyclic_order": 7,
+      "probe_word_count": 13
+    },
+    {
+      "N": 3,
+      "representatives": 6,
+      "interior_vertices": 4,
+      "max_lifted_degree": 4,
+      "claimed_degree": 5,
+      "fresh_probe_cyclic_order": 11,
+      "probe_word_count": 21
+    },
+    {
+      "N": 4,
+      "representatives": 8,
+      "interior_vertices": 6,
+      "max_lifted_degree": 6,
+      "claimed_degree": 7,
+      "fresh_probe_cyclic_order": 15,
+      "probe_word_count": 29
+    },
+    {
+      "N": 5,
+      "representatives": 10,
+      "interior_vertices": 8,
+      "max_lifted_degree": 8,
+      "claimed_degree": 9,
+      "fresh_probe_cyclic_order": 19,
+      "probe_word_count": 37
+    },
+    {
+      "N": 6,
+      "representatives": 12,
+      "interior_vertices": 10,
+      "max_lifted_degree": 10,
+      "claimed_degree": 11,
+      "fresh_probe_cyclic_order": 23,
+      "probe_word_count": 45
+    },
+    {
+      "N": 7,
+      "representatives": 14,
+      "interior_vertices": 12,
+      "max_lifted_degree": 12,
+      "claimed_degree": 13,
+      "fresh_probe_cyclic_order": 27,
+      "probe_word_count": 53
+    },
+    {
+      "N": 8,
+      "representatives": 16,
+      "interior_vertices": 14,
+      "max_lifted_degree": 14,
+      "claimed_degree": 15,
+      "fresh_probe_cyclic_order": 31,
+      "probe_word_count": 61
+    },
+    {
+      "N": 9,
+      "representatives": 18,
+      "interior_vertices": 16,
+      "max_lifted_degree": 16,
+      "claimed_degree": 17,
+      "fresh_probe_cyclic_order": 35,
+      "probe_word_count": 69
+    },
+    {
+      "N": 10,
+      "representatives": 20,
+      "interior_vertices": 18,
+      "max_lifted_degree": 18,
+      "claimed_degree": 19,
+      "fresh_probe_cyclic_order": 39,
+      "probe_word_count": 77
+    },
+    {
+      "N": 11,
+      "representatives": 22,
+      "interior_vertices": 20,
+      "max_lifted_degree": 20,
+      "claimed_degree": 21,
+      "fresh_probe_cyclic_order": 43,
+      "probe_word_count": 85
+    },
+    {
+      "N": 12,
+      "representatives": 24,
+      "interior_vertices": 22,
+      "max_lifted_degree": 22,
+      "claimed_degree": 23,
+      "fresh_probe_cyclic_order": 47,
+      "probe_word_count": 93
+    },
+    {
+      "N": 13,
+      "representatives": 26,
+      "interior_vertices": 24,
+      "max_lifted_degree": 24,
+      "claimed_degree": 25,
+      "fresh_probe_cyclic_order": 51,
+      "probe_word_count": 101
+    },
+    {
+      "N": 14,
+      "representatives": 28,
+      "interior_vertices": 26,
+      "max_lifted_degree": 26,
+      "claimed_degree": 27,
+      "fresh_probe_cyclic_order": 55,
+      "probe_word_count": 109
+    },
+    {
+      "N": 15,
+      "representatives": 30,
+      "interior_vertices": 28,
+      "max_lifted_degree": 28,
+      "claimed_degree": 29,
+      "fresh_probe_cyclic_order": 59,
+      "probe_word_count": 117
+    },
+    {
+      "N": 16,
+      "representatives": 32,
+      "interior_vertices": 30,
+      "max_lifted_degree": 30,
+      "claimed_degree": 31,
+      "fresh_probe_cyclic_order": 63,
+      "probe_word_count": 125
+    },
+    {
+      "N": 17,
+      "representatives": 34,
+      "interior_vertices": 32,
+      "max_lifted_degree": 32,
+      "claimed_degree": 33,
+      "fresh_probe_cyclic_order": 67,
+      "probe_word_count": 133
+    },
+    {
+      "N": 18,
+      "representatives": 36,
+      "interior_vertices": 34,
+      "max_lifted_degree": 34,
+      "claimed_degree": 35,
+      "fresh_probe_cyclic_order": 71,
+      "probe_word_count": 141
+    },
+    {
+      "N": 19,
+      "representatives": 38,
+      "interior_vertices": 36,
+      "max_lifted_degree": 36,
+      "claimed_degree": 37,
+      "fresh_probe_cyclic_order": 75,
+      "probe_word_count": 149
+    },
+    {
+      "N": 20,
+      "representatives": 40,
+      "interior_vertices": 38,
+      "max_lifted_degree": 38,
+      "claimed_degree": 39,
+      "fresh_probe_cyclic_order": 79,
+      "probe_word_count": 157
+    },
+    {
+      "N": 21,
+      "representatives": 42,
+      "interior_vertices": 40,
+      "max_lifted_degree": 40,
+      "claimed_degree": 41,
+      "fresh_probe_cyclic_order": 83,
+      "probe_word_count": 165
+    },
+    {
+      "N": 22,
+      "representatives": 44,
+      "interior_vertices": 42,
+      "max_lifted_degree": 42,
+      "claimed_degree": 43,
+      "fresh_probe_cyclic_order": 87,
+      "probe_word_count": 173
+    },
+    {
+      "N": 23,
+      "representatives": 46,
+      "interior_vertices": 44,
+      "max_lifted_degree": 44,
+      "claimed_degree": 45,
+      "fresh_probe_cyclic_order": 91,
+      "probe_word_count": 181
+    },
+    {
+      "N": 24,
+      "representatives": 48,
+      "interior_vertices": 46,
+      "max_lifted_degree": 46,
+      "claimed_degree": 47,
+      "fresh_probe_cyclic_order": 95,
+      "probe_word_count": 189
+    },
+    {
+      "N": 25,
+      "representatives": 50,
+      "interior_vertices": 48,
+      "max_lifted_degree": 48,
+      "claimed_degree": 49,
+      "fresh_probe_cyclic_order": 99,
+      "probe_word_count": 197
+    },
+    {
+      "N": 26,
+      "representatives": 52,
+      "interior_vertices": 50,
+      "max_lifted_degree": 50,
+      "claimed_degree": 51,
+      "fresh_probe_cyclic_order": 103,
+      "probe_word_count": 205
+    },
+    {
+      "N": 27,
+      "representatives": 54,
+      "interior_vertices": 52,
+      "max_lifted_degree": 52,
+      "claimed_degree": 53,
+      "fresh_probe_cyclic_order": 107,
+      "probe_word_count": 213
+    },
+    {
+      "N": 28,
+      "representatives": 56,
+      "interior_vertices": 54,
+      "max_lifted_degree": 54,
+      "claimed_degree": 55,
+      "fresh_probe_cyclic_order": 111,
+      "probe_word_count": 221
+    },
+    {
+      "N": 29,
+      "representatives": 58,
+      "interior_vertices": 56,
+      "max_lifted_degree": 56,
+      "claimed_degree": 57,
+      "fresh_probe_cyclic_order": 115,
+      "probe_word_count": 229
+    },
+    {
+      "N": 30,
+      "representatives": 60,
+      "interior_vertices": 58,
+      "max_lifted_degree": 58,
+      "claimed_degree": 59,
+      "fresh_probe_cyclic_order": 119,
+      "probe_word_count": 237
+    },
+    {
+      "N": 31,
+      "representatives": 62,
+      "interior_vertices": 60,
+      "max_lifted_degree": 60,
+      "claimed_degree": 61,
+      "fresh_probe_cyclic_order": 123,
+      "probe_word_count": 245
+    },
+    {
+      "N": 32,
+      "representatives": 64,
+      "interior_vertices": 62,
+      "max_lifted_degree": 62,
+      "claimed_degree": 63,
+      "fresh_probe_cyclic_order": 127,
+      "probe_word_count": 253
+    },
+    {
+      "N": 33,
+      "representatives": 66,
+      "interior_vertices": 64,
+      "max_lifted_degree": 64,
+      "claimed_degree": 65,
+      "fresh_probe_cyclic_order": 131,
+      "probe_word_count": 261
+    },
+    {
+      "N": 34,
+      "representatives": 68,
+      "interior_vertices": 66,
+      "max_lifted_degree": 66,
+      "claimed_degree": 67,
+      "fresh_probe_cyclic_order": 135,
+      "probe_word_count": 269
+    },
+    {
+      "N": 35,
+      "representatives": 70,
+      "interior_vertices": 68,
+      "max_lifted_degree": 68,
+      "claimed_degree": 69,
+      "fresh_probe_cyclic_order": 139,
+      "probe_word_count": 277
+    },
+    {
+      "N": 36,
+      "representatives": 72,
+      "interior_vertices": 70,
+      "max_lifted_degree": 70,
+      "claimed_degree": 71,
+      "fresh_probe_cyclic_order": 143,
+      "probe_word_count": 285
+    },
+    {
+      "N": 37,
+      "representatives": 74,
+      "interior_vertices": 72,
+      "max_lifted_degree": 72,
+      "claimed_degree": 73,
+      "fresh_probe_cyclic_order": 147,
+      "probe_word_count": 293
+    },
+    {
+      "N": 38,
+      "representatives": 76,
+      "interior_vertices": 74,
+      "max_lifted_degree": 74,
+      "claimed_degree": 75,
+      "fresh_probe_cyclic_order": 151,
+      "probe_word_count": 301
+    },
+    {
+      "N": 39,
+      "representatives": 78,
+      "interior_vertices": 76,
+      "max_lifted_degree": 76,
+      "claimed_degree": 77,
+      "fresh_probe_cyclic_order": 155,
+      "probe_word_count": 309
+    },
+    {
+      "N": 40,
+      "representatives": 80,
+      "interior_vertices": 78,
+      "max_lifted_degree": 78,
+      "claimed_degree": 79,
+      "fresh_probe_cyclic_order": 159,
+      "probe_word_count": 317
+    },
+    {
+      "N": 41,
+      "representatives": 82,
+      "interior_vertices": 80,
+      "max_lifted_degree": 80,
+      "claimed_degree": 81,
+      "fresh_probe_cyclic_order": 163,
+      "probe_word_count": 325
+    },
+    {
+      "N": 42,
+      "representatives": 84,
+      "interior_vertices": 82,
+      "max_lifted_degree": 82,
+      "claimed_degree": 83,
+      "fresh_probe_cyclic_order": 167,
+      "probe_word_count": 333
+    },
+    {
+      "N": 43,
+      "representatives": 86,
+      "interior_vertices": 84,
+      "max_lifted_degree": 84,
+      "claimed_degree": 85,
+      "fresh_probe_cyclic_order": 171,
+      "probe_word_count": 341
+    },
+    {
+      "N": 44,
+      "representatives": 88,
+      "interior_vertices": 86,
+      "max_lifted_degree": 86,
+      "claimed_degree": 87,
+      "fresh_probe_cyclic_order": 175,
+      "probe_word_count": 349
+    },
+    {
+      "N": 45,
+      "representatives": 90,
+      "interior_vertices": 88,
+      "max_lifted_degree": 88,
+      "claimed_degree": 89,
+      "fresh_probe_cyclic_order": 179,
+      "probe_word_count": 357
+    },
+    {
+      "N": 46,
+      "representatives": 92,
+      "interior_vertices": 90,
+      "max_lifted_degree": 90,
+      "claimed_degree": 91,
+      "fresh_probe_cyclic_order": 183,
+      "probe_word_count": 365
+    },
+    {
+      "N": 47,
+      "representatives": 94,
+      "interior_vertices": 92,
+      "max_lifted_degree": 92,
+      "claimed_degree": 93,
+      "fresh_probe_cyclic_order": 187,
+      "probe_word_count": 373
+    },
+    {
+      "N": 48,
+      "representatives": 96,
+      "interior_vertices": 94,
+      "max_lifted_degree": 94,
+      "claimed_degree": 95,
+      "fresh_probe_cyclic_order": 191,
+      "probe_word_count": 381
+    },
+    {
+      "N": 49,
+      "representatives": 98,
+      "interior_vertices": 96,
+      "max_lifted_degree": 96,
+      "claimed_degree": 97,
+      "fresh_probe_cyclic_order": 195,
+      "probe_word_count": 389
+    },
+    {
+      "N": 50,
+      "representatives": 100,
+      "interior_vertices": 98,
+      "max_lifted_degree": 98,
+      "claimed_degree": 99,
+      "fresh_probe_cyclic_order": 199,
+      "probe_word_count": 397
+    },
+    {
+      "N": 51,
+      "representatives": 102,
+      "interior_vertices": 100,
+      "max_lifted_degree": 100,
+      "claimed_degree": 101,
+      "fresh_probe_cyclic_order": 203,
+      "probe_word_count": 405
+    },
+    {
+      "N": 52,
+      "representatives": 104,
+      "interior_vertices": 102,
+      "max_lifted_degree": 102,
+      "claimed_degree": 103,
+      "fresh_probe_cyclic_order": 207,
+      "probe_word_count": 413
+    },
+    {
+      "N": 53,
+      "representatives": 106,
+      "interior_vertices": 104,
+      "max_lifted_degree": 104,
+      "claimed_degree": 105,
+      "fresh_probe_cyclic_order": 211,
+      "probe_word_count": 421
+    },
+    {
+      "N": 54,
+      "representatives": 108,
+      "interior_vertices": 106,
+      "max_lifted_degree": 106,
+      "claimed_degree": 107,
+      "fresh_probe_cyclic_order": 215,
+      "probe_word_count": 429
+    },
+    {
+      "N": 55,
+      "representatives": 110,
+      "interior_vertices": 108,
+      "max_lifted_degree": 108,
+      "claimed_degree": 109,
+      "fresh_probe_cyclic_order": 219,
+      "probe_word_count": 437
+    },
+    {
+      "N": 56,
+      "representatives": 112,
+      "interior_vertices": 110,
+      "max_lifted_degree": 110,
+      "claimed_degree": 111,
+      "fresh_probe_cyclic_order": 223,
+      "probe_word_count": 445
+    },
+    {
+      "N": 57,
+      "representatives": 114,
+      "interior_vertices": 112,
+      "max_lifted_degree": 112,
+      "claimed_degree": 113,
+      "fresh_probe_cyclic_order": 227,
+      "probe_word_count": 453
+    },
+    {
+      "N": 58,
+      "representatives": 116,
+      "interior_vertices": 114,
+      "max_lifted_degree": 114,
+      "claimed_degree": 115,
+      "fresh_probe_cyclic_order": 231,
+      "probe_word_count": 461
+    },
+    {
+      "N": 59,
+      "representatives": 118,
+      "interior_vertices": 116,
+      "max_lifted_degree": 116,
+      "claimed_degree": 117,
+      "fresh_probe_cyclic_order": 235,
+      "probe_word_count": 469
+    },
+    {
+      "N": 60,
+      "representatives": 120,
+      "interior_vertices": 118,
+      "max_lifted_degree": 118,
+      "claimed_degree": 119,
+      "fresh_probe_cyclic_order": 239,
+      "probe_word_count": 477
+    }
+  ],
+  "sine_recurrence": "Exact Laurent recurrence verified for j=1,...,80; z=exp(i*pi/(m+1)) gives the analytic sine eigenvector with zero endpoints",
+  "conclusion": "b_(2N-1) <= c_N sec^4(pi/(4N-2))"
+}

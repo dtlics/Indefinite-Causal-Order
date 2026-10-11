@@ -1,0 +1,146 @@
+[
+  {
+    "before": 1,
+    "after": 2,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "12",
+    "nonzero_entry": [
+      0,
+      5,
+      "-1/2"
+    ]
+  },
+  {
+    "before": 1,
+    "after": 3,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      4,
+      14,
+      "2"
+    ]
+  },
+  {
+    "before": 1,
+    "after": 4,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      4,
+      13,
+      "-1"
+    ]
+  },
+  {
+    "before": 2,
+    "after": 1,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      0,
+      12,
+      "1"
+    ]
+  },
+  {
+    "before": 2,
+    "after": 3,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      0,
+      6,
+      "-2"
+    ]
+  },
+  {
+    "before": 2,
+    "after": 4,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      8,
+      13,
+      "-1"
+    ]
+  },
+  {
+    "before": 3,
+    "after": 1,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      0,
+      9,
+      "1"
+    ]
+  },
+  {
+    "before": 3,
+    "after": 2,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "12",
+    "nonzero_entry": [
+      1,
+      7,
+      "1"
+    ]
+  },
+  {
+    "before": 3,
+    "after": 4,
+    "before_query": "Y",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      12,
+      13,
+      "2*I"
+    ]
+  },
+  {
+    "before": 4,
+    "after": 1,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      0,
+      9,
+      "1"
+    ]
+  },
+  {
+    "before": 4,
+    "after": 2,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "12",
+    "nonzero_entry": [
+      0,
+      5,
+      "-1"
+    ]
+  },
+  {
+    "before": 4,
+    "after": 3,
+    "before_query": "X",
+    "after_query": "X",
+    "defect_HS_squared": "16",
+    "nonzero_entry": [
+      4,
+      7,
+      "2"
+    ]
+  }
+]

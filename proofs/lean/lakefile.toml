@@ -1,0 +1,11 @@
+name = "icoProofs"
+defaultTargets = ["ICO"]
+
+[[require]]
+name = "QIT"
+path = "vendor/Lean-QIT"
+
+[[lean_lib]]
+name = "ICO"
+moreLeanArgs = ["-j1", "-s524288"]
+

@@ -1,0 +1,29 @@
+[
+  {
+    "candidate": "active identity",
+    "xor_mask": 0,
+    "mode": "real",
+    "nonzero_retained_modular_constraints": 0,
+    "first_defect": null
+  },
+  {
+    "candidate": "active X",
+    "xor_mask": 4,
+    "mode": "real",
+    "nonzero_retained_modular_constraints": 115,
+    "first_defect": [
+      2833,
+      1000001
+    ]
+  },
+  {
+    "candidate": "active Y/i",
+    "xor_mask": 4,
+    "mode": "imag",
+    "nonzero_retained_modular_constraints": 115,
+    "first_defect": [
+      2833,
+      1000001
+    ]
+  }
+]

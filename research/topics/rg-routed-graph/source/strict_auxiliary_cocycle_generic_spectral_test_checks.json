@@ -1,0 +1,659 @@
+{
+  "status": "EXACT_RATIONAL_SPECTRAL_TEST",
+  "quaternions": [
+    [
+      1,
+      2,
+      2,
+      4
+    ],
+    [
+      2,
+      1,
+      4,
+      2
+    ],
+    [
+      2,
+      4,
+      1,
+      2
+    ],
+    [
+      4,
+      2,
+      2,
+      1
+    ],
+    [
+      3,
+      4,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      4,
+      0
+    ],
+    [
+      3,
+      0,
+      0,
+      4
+    ]
+  ],
+  "results": [
+    {
+      "before_queries": [
+        2
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "15625",
+          "multiplicities": [
+            1,
+            4
+          ],
+          "factor_degrees": [
+            12,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": {
+        "quaternion_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "scale": "15625",
+        "squarefree_factors": [
+          {
+            "coefficients": [
+              "1",
+              "-88900",
+              "4320340450",
+              "-146495932112500",
+              "3824221059402519375",
+              "-80235873153455653125000",
+              "1380997261746373319335937500",
+              "-19588836219105384063720703125000",
+              "227941337788255177438259124755859375",
+              "-2131796385401685256510972976684570312500",
+              "15348932613790111645357683300971984863281250",
+              "-77108458507169075346610043197870254516601562500",
+              "211758236813575084767080625169910490512847900390625"
+            ],
+            "multiplicity": 1
+          },
+          {
+            "coefficients": [
+              "1",
+              "-15625"
+            ],
+            "multiplicity": 4
+          }
+        ]
+      }
+    },
+    {
+      "before_queries": [
+        2,
+        4
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            1,
+            8
+          ],
+          "factor_degrees": [
+            8,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": {
+        "quaternion_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "scale": "390625",
+        "squarefree_factors": [
+          {
+            "coefficients": [
+              "1",
+              "-898400 - 34816*I",
+              "619738077500 + 15639347200*I",
+              "-326850271384420000 - 2787567694080000*I",
+              "150325113014290527343750",
+              "-49873393460757446289062500000 + 425349074414062500000000000*I",
+              "14429401548113673925399780273437500 - 364131927490234375000000000000000*I",
+              "-3191757969034370034933090209960937500000 + 123691279441118240356445312500000000000*I",
+              "542101086242752217003726400434970855712890625"
+            ],
+            "multiplicity": 1
+          },
+          {
+            "coefficients": [
+              "1",
+              "-390625"
+            ],
+            "multiplicity": 8
+          }
+        ]
+      }
+    },
+    {
+      "before_queries": [
+        2,
+        3
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            1,
+            8
+          ],
+          "factor_degrees": [
+            8,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": {
+        "quaternion_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "scale": "390625",
+        "squarefree_factors": [
+          {
+            "coefficients": [
+              "1",
+              "-1541000 + 26112*I",
+              "1376000207900 - 20119296000*I",
+              "-838494250811875000 + 6267356625600000*I",
+              "379676525627712402343750",
+              "-127944069032573699951171875000 - 956322727294921875000000000*I",
+              "32037501407321542501449584960937500 + 468438863754272460937500000000000*I",
+              "-5474731779031571932137012481689453125000 - 92768459580838680267333984375000000000*I",
+              "542101086242752217003726400434970855712890625"
+            ],
+            "multiplicity": 1
+          },
+          {
+            "coefficients": [
+              "1",
+              "-390625"
+            ],
+            "multiplicity": 8
+          }
+        ]
+      }
+    },
+    {
+      "before_queries": [
+        2,
+        3,
+        4
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            4,
+            5,
+            6,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "15625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "scale": "625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": null
+    },
+    {
+      "before_queries": [
+        1,
+        3,
+        4
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "1250",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "scale": "1562500",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            4,
+            5,
+            6,
+            0
+          ],
+          "scale": "78125",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "scale": "31250",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": null
+    },
+    {
+      "before_queries": [
+        1,
+        2
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            1,
+            8
+          ],
+          "factor_degrees": [
+            8,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": {
+        "quaternion_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "scale": "390625",
+        "squarefree_factors": [
+          {
+            "coefficients": [
+              "1",
+              "-749632",
+              "681488901756",
+              "-317146318855000000",
+              "162480123176634277343750",
+              "-48392687813568115234375000000",
+              "15867149963881820440292358398437500",
+              "-2663227860466577112674713134765625000000",
+              "542101086242752217003726400434970855712890625"
+            ],
+            "multiplicity": 1
+          },
+          {
+            "coefficients": [
+              "1",
+              "-390625"
+            ],
+            "multiplicity": 8
+          }
+        ]
+      }
+    },
+    {
+      "before_queries": [
+        1,
+        2,
+        4
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            4,
+            5,
+            6,
+            0
+          ],
+          "scale": "1",
+          "multiplicities": [
+            16
+          ],
+          "factor_degrees": [
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": null
+    },
+    {
+      "before_queries": [
+        1,
+        2,
+        3
+      ],
+      "tests": [
+        {
+          "quaternion_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            4,
+            5,
+            6,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        },
+        {
+          "quaternion_indices": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "scale": "390625",
+          "multiplicities": [
+            2,
+            12
+          ],
+          "factor_degrees": [
+            2,
+            1
+          ]
+        }
+      ],
+      "odd_multiplicity_witness": null
+    }
+  ],
+  "scope": "Odd multiplicity excludes every nontrivial unital full-matrix auxiliary obeying this strict partition. No claim if absent."
+}

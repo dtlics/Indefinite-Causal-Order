@@ -1,0 +1,133 @@
+[
+  {
+    "direction": 0,
+    "rank": 4,
+    "eigenvalues": {
+      "4": 4,
+      "0": 12
+    }
+  },
+  {
+    "direction": 6,
+    "rank": 5,
+    "eigenvalues": {
+      "-1": 5,
+      "0": 11
+    }
+  },
+  {
+    "direction": 10,
+    "rank": 8,
+    "eigenvalues": {
+      "1": 2,
+      "-1": 2,
+      "1/2 - sqrt(5)/2": 1,
+      "1/2 + sqrt(5)/2": 1,
+      "-sqrt(5)/2 - 1/2": 1,
+      "-1/2 + sqrt(5)/2": 1,
+      "0": 8
+    }
+  },
+  {
+    "direction": 16,
+    "rank": 10,
+    "eigenvalues": {
+      "-1": 5,
+      "1": 5,
+      "0": 6
+    }
+  },
+  {
+    "direction": 17,
+    "rank": 10,
+    "eigenvalues": {
+      "-1": 5,
+      "1": 5,
+      "0": 6
+    }
+  },
+  {
+    "direction": 18,
+    "rank": 8,
+    "eigenvalues": {
+      "-2": 2,
+      "2": 2,
+      "0": 8,
+      "1/2 - sqrt(5)/2": 1,
+      "1/2 + sqrt(5)/2": 1,
+      "-sqrt(5)/2 - 1/2": 1,
+      "-1/2 + sqrt(5)/2": 1
+    }
+  },
+  {
+    "direction": 19,
+    "rank": 8,
+    "eigenvalues": {
+      "-2": 2,
+      "2": 2,
+      "0": 8,
+      "1/2 - sqrt(5)/2": 1,
+      "1/2 + sqrt(5)/2": 1,
+      "-sqrt(5)/2 - 1/2": 1,
+      "-1/2 + sqrt(5)/2": 1
+    }
+  },
+  {
+    "direction": 20,
+    "rank": 8,
+    "eigenvalues": {
+      "-sqrt(10)": 4,
+      "sqrt(10)": 4,
+      "0": 8
+    }
+  },
+  {
+    "direction": 21,
+    "rank": 8,
+    "eigenvalues": {
+      "-sqrt(2)": 4,
+      "sqrt(2)": 4,
+      "0": 8
+    }
+  },
+  {
+    "direction": 22,
+    "rank": 8,
+    "eigenvalues": {
+      "4": 2,
+      "-4": 2,
+      "-2*sqrt(2)": 2,
+      "2*sqrt(2)": 2,
+      "0": 8
+    }
+  },
+  {
+    "direction": 23,
+    "rank": 8,
+    "eigenvalues": {
+      "-sqrt(10)": 4,
+      "sqrt(10)": 4,
+      "0": 8
+    }
+  },
+  {
+    "direction": 24,
+    "rank": 8,
+    "eigenvalues": {
+      "-sqrt(2)": 4,
+      "sqrt(2)": 4,
+      "0": 8
+    }
+  },
+  {
+    "direction": 25,
+    "rank": 8,
+    "eigenvalues": {
+      "4": 2,
+      "-4": 2,
+      "-2*sqrt(2)": 2,
+      "2*sqrt(2)": 2,
+      "0": 8
+    }
+  }
+]

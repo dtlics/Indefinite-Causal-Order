@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "arithmetic": "exact SymPy",
+  "cases": [
+    {
+      "test": "creation Gram and occupation normalization",
+      "d": 2,
+      "r": 0,
+      "status": "PASS"
+    },
+    {
+      "test": "creation Gram and occupation normalization",
+      "d": 2,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "creation Gram and occupation normalization",
+      "d": 2,
+      "r": 2,
+      "status": "PASS"
+    },
+    {
+      "test": "creation Gram and occupation normalization",
+      "d": 3,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "polar isometry, right-label occupation preservation, fresh norm identity",
+      "d": 2,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "polar isometry, right-label occupation preservation, fresh norm identity",
+      "d": 3,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "complex and rational label equivariance and image projector",
+      "d": 2,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "fresh orthogonal birth factorization with inert old images",
+      "d": 2,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "fresh orthogonal birth factorization with inert old images",
+      "d": 3,
+      "r": 1,
+      "status": "PASS"
+    },
+    {
+      "test": "fresh orthogonal birth factorization with inert old images",
+      "d": 3,
+      "r": 2,
+      "status": "PASS"
+    }
+  ]
+}

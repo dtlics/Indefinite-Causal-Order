@@ -1,0 +1,56 @@
+[
+  {
+    "gates": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "defect_squared": 0.0
+  },
+  {
+    "gates": [
+      1,
+      1,
+      0,
+      0
+    ],
+    "defect_squared": 0.0
+  },
+  {
+    "gates": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "defect_squared": 0.0
+  },
+  {
+    "gates": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "defect_squared": 0.0
+  },
+  {
+    "gates": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "defect_squared": 0.0
+  },
+  {
+    "gates": [
+      1,
+      2,
+      3,
+      1
+    ],
+    "defect_squared": 0.0
+  }
+]

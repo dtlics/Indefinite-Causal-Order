@@ -1,0 +1,37 @@
+{
+  "sectors": [
+    {
+      "flags": [
+        0,
+        0
+      ],
+      "origin_trace": 9,
+      "nonzero_complete_projection_defect_keys": 26
+    },
+    {
+      "flags": [
+        0,
+        1
+      ],
+      "origin_trace": 3,
+      "nonzero_complete_projection_defect_keys": 26
+    },
+    {
+      "flags": [
+        1,
+        0
+      ],
+      "origin_trace": 2,
+      "nonzero_complete_projection_defect_keys": 25
+    },
+    {
+      "flags": [
+        1,
+        1
+      ],
+      "origin_trace": 2,
+      "nonzero_complete_projection_defect_keys": 25
+    }
+  ],
+  "meaning": "All four zero defects would prove a simultaneous complete four-sector phase extension; any nonzero defect rejects this direct joint mask construction."
+}

@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "arithmetic": "exact integers and rational fractions",
+  "paper_terms_in_1e_minus_4": {
+    "haar_pair": 108,
+    "twice_forward_error": 4,
+    "creator_error": 84,
+    "twice_birth_error": 8,
+    "raw_and_uniform_cache": 8
+  },
+  "paper_distance_majorant": "53/2500",
+  "formal_distance_majorant": "43/2000",
+  "formal_majorant_numerator_over_10000": 215,
+  "switch_elementary_channel_calls": 8,
+  "switch_error_upper_bound": "81/256",
+  "scope": "Arithmetic only, conditional on the analytic majorants in the paper and Lean; not an all-degree or physical-endpoint check."
+}

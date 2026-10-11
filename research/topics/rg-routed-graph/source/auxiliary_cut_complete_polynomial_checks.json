@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "coefficient_scale": 64,
+  "certified_absolute_integer_bound": 4294967360,
+  "matrix_terms_before_reduction": 3584,
+  "normal_word_keys": 771,
+  "nonzero_defect_keys": 0,
+  "first_bad": [],
+  "private_ancilla_scope": "Arbitrary independently sized ancillary operator blocks: uses only each original unitary block matrix U_i U_i*=I for i=1,2 and U_i*U_i=I for i=3,4."
+}

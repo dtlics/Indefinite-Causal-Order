@@ -1,0 +1,49 @@
+Pinned proof environment — C6 integrated release, 3 October 2026
+==============================================================
+
+Lean: leanprover/lean4:v4.30.0
+Compiler source commit: d024af099ca4bf2c86f649261ebf59565dc8c622
+Primary source: https://github.com/leanprover/lean4/tree/v4.30.0
+Checked environment: x86_64-w64-windows-gnu Release. Proof source is intended
+to be platform-independent; other operating systems have not been tested here.
+
+Mathlib: c5ea00351c28e24afc9f0f84379aa41082b1188f (v4.30.0)
+Primary source: https://github.com/leanprover-community/mathlib4/tree/c5ea00351c28e24afc9f0f84379aa41082b1188f
+Local working tree was clean when the release audit began.
+
+Lean-QIT: c1d59b133b56e3d79efb11ee46a728d290f761f5
+Primary source: https://github.com/QuAIR/Lean-QIT/tree/c1d59b133b56e3d79efb11ee46a728d290f761f5
+License: Apache-2.0. Local working tree was clean when the release audit began.
+The package vendors only the exact QIT source import closure needed by the paper
+endpoints, with byte-identical source files and original package metadata.
+There are no local compatibility patches to Lean-QIT or Mathlib.
+
+All additional Mathlib package revisions are locked in lake-manifest.json:
+plausible, LeanSearchClient, importGraph, proofwidgets, aesop, Qq, batteries, Cli.
+The rebuild scripts reuse the exact pinned Mathlib/package caches and compile
+every included ICO and QIT source. The delivered evidence is individual source
+compilation plus the combined trust-zero kernel audit; a second complete fresh
+1,651-source rebuild was not run. The archive contains neither dependency
+caches nor executable binaries. The selected closure has 1,603 ICO and 48
+unchanged QIT source modules, with 32 audited endpoint declarations.
+
+The paper-specific source initially developed against Lean 4.19 was ported into
+the ICO namespace under the above single Lean 4.30 environment. Those portability
+changes are part of the included proof source, not undocumented library patches.
+
+Trust boundary
+==============
+
+`#print axioms` computes transitive declaration dependencies, rather than merely
+searching the visible proof text. The accepted axiom set for every final endpoint
+is {propext, Classical.choice, Quot.sound}. This is stronger evidence than the
+source scan alone. The source scan independently rejects sorry, admit, custom
+axiom declarations, native_decide and unsafe tokens outside comments/strings.
+
+Finite exact certificates are checked with ordinary kernel-reduced decide and
+integer algebra. Haar moments, channel/comb semantics, adaptive query compilation,
+recording-oracle comparisons and norm bounds are proved from the included source
+and pinned mathematical foundations; they are not postulated as physical axioms.
+
+This file records dependency identity, not a claim to have separately re-proved
+Lean's implementation or the soundness of its standard logical axioms.

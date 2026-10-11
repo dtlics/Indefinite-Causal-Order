@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status_scope": "Current knowledge consolidated from the supplied research. Status qualifications distinguish proof records, exact certificates, conditional arguments and open problems. Repository checks are not independent proofs of every theorem.",
+  "topics": [
+    {
+      "id": "RG",
+      "slug": "rg-routed-graph",
+      "title": "Exact native routed-graph universality",
+      "status": "reported-complete",
+      "qualification": "Supplied counterexample proof with exact finite certificates; no Lean formalization recorded.",
+      "dossier": "topics/rg-routed-graph/README.md"
+    },
+    {
+      "id": "P1",
+      "slug": "p1-extensible-causality",
+      "title": "Extensible causality without causal separability",
+      "status": "reported-complete",
+      "qualification": "Supplied analytic separation proof and exact finite checks; no Lean formalization recorded.",
+      "dossier": "topics/p1-extensible-causality/README.md"
+    },
+    {
+      "id": "P2",
+      "slug": "p2-gyni",
+      "title": "Unrestricted bipartite GYNI optimum",
+      "status": "open",
+      "qualification": "Certified lower and upper bounds remain distinct; exact value and finite attainment unresolved.",
+      "dossier": "topics/p2-gyni/README.md"
+    },
+    {
+      "id": "P3",
+      "slug": "p3-exact-switch-simulation",
+      "title": "Exact universal quantum-switch simulation",
+      "status": "recorded-formal-endpoint",
+      "qualification": "Final supplied Lean package records the physical finite-budget impossibility endpoint.",
+      "dossier": "topics/p3-exact-switch-simulation/README.md"
+    },
+    {
+      "id": "C4",
+      "slug": "c4-approximate-switch-simulation",
+      "title": "Approximate full-switch simulation",
+      "status": "recorded-formal-endpoints",
+      "qualification": "Final supplied Lean package records the full-output error tradeoff and lower bounds.",
+      "dossier": "topics/c4-approximate-switch-simulation/README.md"
+    },
+    {
+      "id": "C5",
+      "slug": "c5-interference-testing",
+      "title": "Constant-gap channel-interference testing",
+      "status": "recorded-formal-endpoints",
+      "qualification": "Final supplied Lean package records ordinary-query lower bounds; distinct single-hidden-basis proof retained.",
+      "dossier": "topics/c5-interference-testing/README.md"
+    },
+    {
+      "id": "C6",
+      "slug": "c6-hidden-dephasing",
+      "title": "SAME/MUB hidden dephasing and OTOCs",
+      "status": "recorded-formal-endpoints",
+      "qualification": "Final supplied Lean package records shared-Haar physical, decision and OTOC endpoints; keyed transfer remains conditional.",
+      "dossier": "topics/c6-hidden-dephasing/README.md"
+    }
+  ]
+}

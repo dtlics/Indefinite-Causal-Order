@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "optional_completion": {
+    "dimension_base_memory": 16,
+    "private_dimensions_by_actual_vertex": [
+      2,
+      2
+    ],
+    "completed_unitary_identity_trials": 100,
+    "wrong_left_substitution_rejected_trials": 98,
+    "wrong_final_left_multiplication_rejected_trials": 98
+  },
+  "split_vertex": {
+    "same_vertex_A_branches": 3,
+    "same_vertex_B_branches": 5,
+    "private_dimension_at_shared_vertex": 2,
+    "independent_branch_factorization_trials": 50,
+    "shared_original_parameter_factorization_trials": 50,
+    "exact_incompatible_matrix_unit_products_zero": 3840,
+    "one_scalar_absent_event_represented_rank": 6
+  },
+  "scope": "Finite exact algebraic calibrations, not a routed-host construction"
+}

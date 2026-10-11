@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "arithmetic": "exact integers and rational fractions",
+  "support_shape": [
+    128,
+    25
+  ],
+  "linked_annihilator_rows": 103,
+  "left_inverse_identity": "L E = I_25",
+  "stacked_identity": "G E = vertical_stack(0_(103,25), I_25)",
+  "modular_inverse": "G(i -> 2) B = I_128 (mod 5)",
+  "characteristic_zero_rank": 128,
+  "forced_support_dimension": 25,
+  "distinct_gate_pairs": 40,
+  "seconds": 1.1863107681274414
+}

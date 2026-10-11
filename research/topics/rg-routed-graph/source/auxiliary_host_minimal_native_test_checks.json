@@ -1,0 +1,122 @@
+{
+  "status": "EXACT_MINIMAL_NATIVE_COORDINATES",
+  "results": [
+    {
+      "query": 1,
+      "Pauli": "X",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "59": "1/8"
+      }
+    },
+    {
+      "query": 1,
+      "Pauli": "Y",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "65": "-1/8"
+      }
+    },
+    {
+      "query": 1,
+      "Pauli": "Z",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "1": "1/4"
+      }
+    },
+    {
+      "query": 2,
+      "Pauli": "X",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "38": "1/8",
+        "39": "-1/16",
+        "40": "-1/16",
+        "41": "1/32"
+      }
+    },
+    {
+      "query": 2,
+      "Pauli": "Y",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "47": "-1/8",
+        "48": "1/16",
+        "49": "1/16",
+        "50": "-1/32"
+      }
+    },
+    {
+      "query": 2,
+      "Pauli": "Z",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "3": "1/4",
+        "4": "1/16",
+        "5": "-1/8"
+      }
+    },
+    {
+      "query": 3,
+      "Pauli": "X",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "34": "1/4"
+      }
+    },
+    {
+      "query": 3,
+      "Pauli": "Y",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "36": "-1/4"
+      }
+    },
+    {
+      "query": 3,
+      "Pauli": "Z",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "6": "1/2"
+      }
+    },
+    {
+      "query": 4,
+      "Pauli": "X",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "30": "1/8"
+      }
+    },
+    {
+      "query": 4,
+      "Pauli": "Y",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "32": "-1/8"
+      }
+    },
+    {
+      "query": 4,
+      "Pauli": "Z",
+      "common_radical": true,
+      "nonannihilating_forms": [],
+      "nonboundary_coordinates": {
+        "7": "1/4"
+      }
+    }
+  ],
+  "scope": "Genuine native directions at Q_i=E_i against all exact discovered forms; no topology sufficiency."
+}

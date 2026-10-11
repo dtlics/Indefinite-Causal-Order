@@ -1,0 +1,136 @@
+{
+  "original_query_context": [
+    "(3I+4iX)/5",
+    "I",
+    "I",
+    "I"
+  ],
+  "source_basis": [
+    "001-",
+    "10+0",
+    "0001",
+    "11-+",
+    "0100",
+    "0110",
+    "11+0",
+    "11+1",
+    "0000",
+    "001+",
+    "0101",
+    "0111",
+    "10+1",
+    "10-+",
+    "10--",
+    "11--"
+  ],
+  "unitarity_without_mask": true,
+  "individual_flag_masks": [
+    {
+      "basis_flag": 3,
+      "HS_squared_Gram_defect": "2304/625",
+      "entry_0_14": "12*sqrt(2)*I/25",
+      "nonzero_Gram_entries": [
+        [
+          0,
+          14,
+          "12*sqrt(2)*I/25"
+        ],
+        [
+          1,
+          8,
+          "12*sqrt(2)*I/25"
+        ],
+        [
+          2,
+          12,
+          "-12*sqrt(2)*I/25"
+        ],
+        [
+          8,
+          1,
+          "-12*sqrt(2)*I/25"
+        ],
+        [
+          9,
+          13,
+          "12*sqrt(2)*I/25"
+        ],
+        [
+          12,
+          2,
+          "12*sqrt(2)*I/25"
+        ],
+        [
+          13,
+          9,
+          "-12*sqrt(2)*I/25"
+        ],
+        [
+          14,
+          0,
+          "-12*sqrt(2)*I/25"
+        ]
+      ]
+    },
+    {
+      "basis_flag": 4,
+      "HS_squared_Gram_defect": "2304/625",
+      "entry_0_14": "-12*sqrt(2)*I/25",
+      "nonzero_Gram_entries": [
+        [
+          0,
+          14,
+          "-12*sqrt(2)*I/25"
+        ],
+        [
+          1,
+          8,
+          "-12*sqrt(2)*I/25"
+        ],
+        [
+          2,
+          12,
+          "12*sqrt(2)*I/25"
+        ],
+        [
+          8,
+          1,
+          "12*sqrt(2)*I/25"
+        ],
+        [
+          9,
+          13,
+          "-12*sqrt(2)*I/25"
+        ],
+        [
+          12,
+          2,
+          "-12*sqrt(2)*I/25"
+        ],
+        [
+          13,
+          9,
+          "12*sqrt(2)*I/25"
+        ],
+        [
+          14,
+          0,
+          "12*sqrt(2)*I/25"
+        ]
+      ]
+    }
+  ],
+  "joint_parity_mask_Gram_defect_HS2": "0",
+  "joint_parity_quarter_phase_Gram_defect_HS2": "0",
+  "parity_sign_is_row_column_factor": true,
+  "parity_depends_only_on_input": true,
+  "parity_one_input_words": [
+    "001-",
+    "10+0",
+    "11+0",
+    "11+1",
+    "001+",
+    "10+1"
+  ],
+  "scope": "Each explicit coefficient mask is forbidden for any otherwise valid full-filler routed host realizing this tensor; nonorthogonal encodings without this mask are not excluded."
+}

@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "fixed_point_assignments": 64,
+  "native_coefficients_checked": 512,
+  "active_flag_ranks": [
+    2,
+    2,
+    2
+  ],
+  "endpoint_grams": [
+    {
+      "query": 1,
+      "first_diagonal": [
+        8,
+        8,
+        0,
+        8,
+        8,
+        8,
+        0,
+        8
+      ],
+      "last_diagonal": [
+        4,
+        4,
+        12,
+        4,
+        4,
+        4,
+        12,
+        4
+      ],
+      "first_kernel_rank": 2,
+      "last_kernel_rank": 0
+    },
+    {
+      "query": 2,
+      "first_diagonal": [
+        8,
+        0,
+        8,
+        0,
+        8,
+        8,
+        8,
+        8
+      ],
+      "last_diagonal": [
+        4,
+        12,
+        4,
+        12,
+        4,
+        4,
+        4,
+        4
+      ],
+      "first_kernel_rank": 2,
+      "last_kernel_rank": 0
+    },
+    {
+      "query": 3,
+      "first_diagonal": [
+        8,
+        8,
+        8,
+        8,
+        0,
+        0,
+        8,
+        8
+      ],
+      "last_diagonal": [
+        4,
+        4,
+        4,
+        4,
+        12,
+        12,
+        4,
+        4
+      ],
+      "first_kernel_rank": 2,
+      "last_kernel_rank": 0
+    }
+  ],
+  "six_query_second_block_flag_difference_HS_squared": 4
+}

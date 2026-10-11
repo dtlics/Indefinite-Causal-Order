@@ -1,0 +1,11 @@
+{
+  "scope": "Exact structural checks, not an unrestricted GYNI value or finite-support theorem",
+  "physical_K2_normalization_pass": true,
+  "H_squared": 2,
+  "strict_positive_W": "eigenvalues (3 +/- 2 sqrt(2))/48",
+  "each_block_trace": 1,
+  "row_column_clique_witness_bound": 1,
+  "physical_witness_value": "4/3",
+  "matching_completion_pass": true,
+  "sharp_scalar_example_value": 2
+}

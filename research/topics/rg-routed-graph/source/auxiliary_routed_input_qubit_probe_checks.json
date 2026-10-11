@@ -1,0 +1,23 @@
+{
+  "single_aux_origin_tests": [
+    {
+      "Pauli": "X",
+      "Hermitian": true,
+      "square_identity": true,
+      "unitarity_defect_HS_squared": "0"
+    },
+    {
+      "Pauli": "Y",
+      "Hermitian": true,
+      "square_identity": true,
+      "unitarity_defect_HS_squared": "0"
+    },
+    {
+      "Pauli": "Z",
+      "Hermitian": true,
+      "square_identity": true,
+      "unitarity_defect_HS_squared": "0"
+    }
+  ],
+  "Pauli_product_XY_equals_iZ": true
+}

@@ -1,0 +1,114 @@
+{
+  "status": "PASS",
+  "witnesses": [
+    {
+      "before": 1,
+      "after": 2,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 1,
+      "after": 3,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 1,
+      "after": 4,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 2,
+      "after": 1,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 2,
+      "after": 3,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 2,
+      "after": 4,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 3,
+      "after": 1,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 3,
+      "after": 2,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 3,
+      "after": 4,
+      "queries": [
+        "Y",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 4,
+      "after": 1,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 4,
+      "after": 2,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    },
+    {
+      "before": 4,
+      "after": 3,
+      "queries": [
+        "X",
+        "X"
+      ],
+      "cocycle_minus_identity_rank": 4
+    }
+  ],
+  "consequence": "Once strict global auxiliary/original orientations give a partition and C in beta(M_d) prime, any proper partition forces d to divide4. Thus unital full M8 and M16 auxiliary slots with those orientations are boundary-only without a separate cocycle-removal lemma."
+}

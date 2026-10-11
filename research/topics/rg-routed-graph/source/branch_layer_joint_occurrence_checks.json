@@ -1,0 +1,133 @@
+{
+  "status": "PASS",
+  "complete_layer_patterns": [
+    {
+      "losing_status": [
+        0,
+        0,
+        0
+      ],
+      "rank": 0,
+      "sections": []
+    },
+    {
+      "losing_status": [
+        0,
+        0,
+        1
+      ],
+      "rank": 0,
+      "sections": []
+    },
+    {
+      "losing_status": [
+        0,
+        1,
+        0
+      ],
+      "rank": 0,
+      "sections": []
+    },
+    {
+      "losing_status": [
+        0,
+        1,
+        1
+      ],
+      "rank": 2,
+      "sections": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "losing_status": [
+        1,
+        0,
+        0
+      ],
+      "rank": 0,
+      "sections": []
+    },
+    {
+      "losing_status": [
+        1,
+        0,
+        1
+      ],
+      "rank": 2,
+      "sections": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "losing_status": [
+        1,
+        1,
+        0
+      ],
+      "rank": 2,
+      "sections": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "losing_status": [
+        1,
+        1,
+        1
+      ],
+      "rank": 2,
+      "sections": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "nonzero_pattern_count": 4,
+  "pair_losing_ranks": [
+    4,
+    4,
+    4
+  ],
+  "triple_losing_rank": 2,
+  "all_direct_edges_have_cooccurrence_witness": true,
+  "tested_green_and_red_edges": 50,
+  "minimal_quartet_active_products_zero": true,
+  "time_reverse_same_pattern_ranks": true,
+  "scope": "Exact calibrations; the all-context and all-allowed-active-ideal conclusions use the accompanying theorem and audited S_i orthogonality."
+}
