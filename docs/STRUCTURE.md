@@ -7,6 +7,7 @@
 | Topic-level current status | `research/status.json`; `research/README.md` has a generated table |
 | Open question or next research target | The owning topic README |
 | Selected paper exposition and bibliography | `paper/main.tex` |
+| Visual teaching guide (explanation, not a theorem owner) | `docs/guide.html` |
 | Paper-to-formal correspondence | `proofs/lean/THEOREMS.txt` |
 | Selected formal implementation | `proofs/lean/ICO/` and required `vendor/Lean-QIT/QIT/` |
 | Finite exact P3 data and replay | `proofs/lean/certificates/` |
