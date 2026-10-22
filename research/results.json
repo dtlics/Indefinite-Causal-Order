@@ -988,6 +988,36 @@
           "target": "C6-R02"
         }
       ]
+    },
+    {
+      "id": "NR-R01",
+      "topic": "NR",
+      "title": "Local-output-noise recovery against arbitrary ordinary mean-query receivers",
+      "canonical_path": "research/topics/nr-noisy-recovery/theorem.md#nr-r01"
+    },
+    {
+      "id": "NR-R02",
+      "topic": "NR",
+      "title": "Global replacement-noise gate-product recovery and exact finite certificates",
+      "canonical_path": "research/topics/nr-noisy-recovery/global-noise.md#nr-r02"
+    },
+    {
+      "id": "NR-R03",
+      "topic": "NR",
+      "title": "Obstruction to a uniform-frame local-noise guarantee",
+      "canonical_path": "research/topics/nr-noisy-recovery/obstructions.md#nr-r03"
+    },
+    {
+      "id": "NR-R04",
+      "topic": "NR",
+      "title": "Exact unknown-unitary implementation is impossible from full-support noisy queries",
+      "canonical_path": "research/topics/nr-noisy-recovery/obstructions.md#nr-r04"
+    },
+    {
+      "id": "NR-R05",
+      "topic": "NR",
+      "title": "Destructive rejection and finite offline-program limits",
+      "canonical_path": "research/topics/nr-noisy-recovery/obstructions.md#nr-r05"
     }
   ]
 }

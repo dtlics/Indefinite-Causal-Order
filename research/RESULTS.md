@@ -164,3 +164,13 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | C6-R05 | [Conditional keyed-family transfer](../proofs/lean/THEOREMS.txt) | Conditional keyed-family transfer |
 | C6-R06 | [Absolute coefficient-mass obstruction](../research/topics/c6-hidden-dephasing/README.md) | c6-r06 |
 | C6-R07 | [Limits of creation-only decoupling and early erasure](../research/topics/c6-hidden-dephasing/README.md) | c6-r07 |
+
+## NR — Noisy physical recovery with expected-query bounds
+
+| ID | Result owner | Location within source |
+| --- | --- | --- |
+| NR-R01 | [Local-output-noise recovery against arbitrary ordinary mean-query receivers](../research/topics/nr-noisy-recovery/theorem.md#nr-r01) |  |
+| NR-R02 | [Global replacement-noise gate-product recovery and exact finite certificates](../research/topics/nr-noisy-recovery/global-noise.md#nr-r02) |  |
+| NR-R03 | [Obstruction to a uniform-frame local-noise guarantee](../research/topics/nr-noisy-recovery/obstructions.md#nr-r03) |  |
+| NR-R04 | [Exact unknown-unitary implementation is impossible from full-support noisy queries](../research/topics/nr-noisy-recovery/obstructions.md#nr-r04) |  |
+| NR-R05 | [Destructive rejection and finite offline-program limits](../research/topics/nr-noisy-recovery/obstructions.md#nr-r05) |  |

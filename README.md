@@ -1,12 +1,13 @@
 # Indefinite causal order
 
-The current research on quantum-switch advantages, causal structure, and the limits of ordinary quantum queries. The repository contains the paper **An exponential quantum-switch advantage for commuting channels**, its proof code, and the results, limitations, and open problems from seven research directions.
+The current research on quantum-switch advantages, causal structure, and the limits of ordinary quantum queries. The repository contains the paper **An exponential quantum-switch advantage for commuting channels**, its proof code, and the results, limitations, and open problems from eight research directions.
 
 | Read or change… | Canonical location |
 | --- | --- |
 | Paper and Overleaf export | [paper/](paper/README.md) |
 | Research directions and current status | [Research map](research/README.md) |
 | A particular result, obstruction, or conditional theorem | [Result index](research/RESULTS.md) |
+| Noisy physical recovery and its expected-query comparison | [Recovery topic](research/topics/nr-noisy-recovery/README.md) |
 | Selected formal theorem statements and hypotheses | [Theorem map](proofs/lean/THEOREMS.txt) |
 | Lean proofs and exact finite certificates | [Proof project](proofs/lean/README.md) |
 | Literature context and access-model distinctions | [References](references/README.md) |
@@ -26,7 +27,9 @@ scripts/        Consistency checks and generated indexes/exports
 
 Each result has one canonical owner. The result index and topic READMEs provide navigation; they do not maintain alternate theorem statements. Stronger results incorporate superseded checkpoints where their assumptions permit it. Distinct restrictions, counterexamples, conditional criteria, and unresolved gaps remain explicit. The same result's manuscript exposition, formal implementation, and certificate are linked as representations of that result.
 
-This is an initialization of the current state of knowledge. Earlier checkpoint collections, repeated reviews, old drafts, and packaging history are not part of the repository. Future revisions belong in ordinary Git commits to these same files.
+The recovery topic contains an analytic physical-output theorem, its exact replay dependencies, and scoped obstructions. It is separate from the manuscript's existing simulation and decision results and has not been formalized in Lean.
+
+Checkpoint collections, repeated reviews, old drafts, and packaging history are not part of the repository. Revisions belong in ordinary Git commits to the canonical files.
 
 ## Use
 
@@ -34,6 +37,7 @@ Python 3.10+ is sufficient for repository checks, packaging, and the standalone 
 
 ```sh
 python scripts/validate_repo.py
+python -S research/topics/nr-noisy-recovery/checks/run_all.py
 python scripts/package_overleaf.py
 ```
 

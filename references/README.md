@@ -2,6 +2,8 @@
 
 The [paper](../paper/main.tex) owns the bibliography for its claims. The distinctions below summarize the source study that informs the current research; they do not claim an exhaustive priority review. Download attempts, presentation checkpoints, downloaded source trees, and duplicate literature summaries are not maintained.
 
+The physical recovery topic owns its distinct [literature comparison](../research/topics/nr-noisy-recovery/references.md), including parity filtering, unknown-process filtration, local output noise, and finite random-circuit frames. Its expected-query result is separate from the paper's commuting-channel decision theorem.
+
 ## Oracle models and prior switch advantages
 
 | Work | What it contributes here | Boundary to preserve |

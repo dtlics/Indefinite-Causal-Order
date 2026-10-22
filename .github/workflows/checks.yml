@@ -16,6 +16,15 @@ jobs:
         run: python scripts/package_overleaf.py
       - name: Replay exact finite certificates
         run: python proofs/lean/certificates/verify_all.py
+      - name: Replay noisy-recovery certificates and check current evidence
+        run: python -S research/topics/nr-noisy-recovery/checks/run_all.py
+      - name: Save recovery verification
+        uses: actions/upload-artifact@v4
+        with:
+          name: noisy-recovery-verification
+          path: |
+            _build/noisy-recovery/report.json
+            _build/noisy-recovery/logs/
       - name: Save the Overleaf export
         uses: actions/upload-artifact@v4
         with:
