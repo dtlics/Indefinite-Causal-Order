@@ -299,6 +299,21 @@ needs enough bright modes, its own symmetry-respecting comparison and the
 complete ordinary reflection/routing baselines. These conclusions concern
 the stated models, rather than all superconducting switches.
 
+The [passive-converter matching test](backaction.md#nr-r19-passive-converter)
+separately treats lossless on-resonance stationary scattering with unequal
+external linewidths;
+complete conversion requires matching every linewidth-normalized singular
+mode. A timed closed-system exchange has a different pulse condition.
+The [equal-power Bragg-scattering screen](backaction.md#nr-r19-bragg-rank)
+also shows why many frequency modes alone do not supply the required
+converter: its single interaction has only one inter-band bright mode
+for the stated physical band split. Extra couplings, different pumps or
+encodings require their actual propagator. The next device test must
+measure the complete arbitrary-input conversion and reflected/noise ports,
+then establish the second station's special correlation and full routed
+interface. These matching guards do not certify finite bandwidth or a
+native task advantage.
+
 There is a named optical testbed with a longer-lived oscillator:
 [Spinnler et al.](https://doi.org/10.1038/s41467-024-53882-2) couple a quantum
 dot to a phononic-crystal mode with frequency $1.466\,\mathrm{GHz}$,
@@ -701,7 +716,13 @@ response, rather than substituting a dephasing rate for a two-history overlap.
 
 The [Raman exchange screen](communication.md#nr-r11-raman-swap) adds
 same-helper ordinary ideal Bell-generation, remote-SWAP and detuned-serial
-baselines. Stronger [local-memory constructions](communication.md#nr-r11-raman-local-ancillas)
+baselines. The [native-port analysis](communication.md#nr-r11-raman-route)
+gives conditional temporal-helper routes and a comparator on the same
+reconfigurable graph. Both physical counterpropagating photon ports must
+be preserved; an independent helper does not fit those two simultaneous
+inputs without extra modes. Rejected paths, loop extinction, temporal-code
+leakage, component loss and actual slot-conditioned stationarity remain
+charged. Stronger [local-memory constructions](communication.md#nr-r11-raman-local-ancillas)
 use one extra stationary qubit at each node, one preserved photonic helper
 degree, local coherent subspace filters and complete photon readout. No
 entanglement is initially shared between nodes. They beat the stipulated
@@ -720,11 +741,12 @@ realized by the physical Raman modes.
 
 A separate [passive photon-filter construction](communication.md#nr-r11-raman-passive-filter)
 gives a coefficient-independent ordinary Bell output with one photonic
-helper and no extra retained stationary qubits. Its four-mode contraction
-uses additional vacuum loss ports, two orthogonal photon heralds and a
-coherent local spin filter. Their apparatus, failures and reset costs
-remain charged. This is an achievable alternative within the declared
-processor family, rather than a general ordinary optimum.
+helper and no extra retained stationary qubits. A four-level flying helper
+strengthens the two-level-helper construction, using eight joint photonic
+modes, a passive contraction, four readouts and a coherent local spin
+filter. Additional vacuum rejection ports, mode preservation, apparatus,
+failed photons and resets remain charged. These are achievable processor
+families; arbitrary adaptive photon/spin controls still require comparison.
 
 The [balanced-cavity frontier](communication.md#nr-r11-raman-cavity-frontier)
 retains complex bright, dark and spectator amplitudes. In its declared
@@ -748,6 +770,22 @@ and mean completion time, including every lost launch, failed filter,
 memory reset and successful hand-off. A source wait or a nominal query count
 alone settles none of those comparisons. No native rate advantage is yet
 established.
+
+The [phase-reference analysis](communication.md#nr-r11-raman-phase-reference)
+distinguishes arbitrary scalar node phases from the physical Raman,
+spin-frame and route phases. Coefficient-independent ordinary serial
+filters already tolerate the scalar phases; they do not erase unknown
+Raman frames. Reciprocal return propagation also does not automatically
+conjugate a fluctuating path phase. The remaining comparison must use
+retarded physical routes, a causal pilot/accepted-record model and the
+admitted ordinary alternatives. Under its matched-kernel hypotheses, an
+ordinary flag has the same normalized Raman/spectral response as the
+switched-minus output, at lower yield. Double-herald methods require their
+actual cycling-emission ports. Verify the
+joint phase-noise correlations and within-route stability at the actual
+signal and pilot times, then charge source duty, rejected records and
+reset in the delivered-Bell rate. No measured matched SPRINT route, joint
+phase-noise model or resulting native rate advantage has been established.
 
 The finite two-frequency candidate has failed this stronger ordinary
 screen: checks at each node remove all cross-bin jumps, including two

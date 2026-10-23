@@ -215,6 +215,14 @@ particle-hole-symmetry, rank-one commutator and bandwidth identities.
 Its fixed-dressing family obstruction and device mapping are analytic.
 Those results constrain the stated Majorana/converter models and do not
 extend the full-Haar certificate to a symmetry-restricted physical prior.
+The passive-converter replay reconstructs full exact scattering matrices,
+unequal-linewidth matching and mismatch examples. Its Bragg-scattering
+checks verify finite rank-one transfer, phase and trace identities for the
+specified equal-power model. General family arguments and source-to-device
+mapping remain analytic. Detuning, internal loss, conjugate-mode gain,
+finite bandwidth, drift and alternative interactions require their full
+instruments; measured coherent-tone mode counts alone do not certify the
+unknown quantum coupler family or a task advantage.
 These checks do not constitute a measured instrument, a new
 fault-tolerance threshold or an architecture advantage.
 
@@ -238,8 +246,27 @@ kernel without an all-switch comparison for noncommuting coefficients.
 The passive-filter variant requires no extra retained stationary qubits.
 Its exact $\mathbb Q(\sqrt2)$ replay checks the optical contraction,
 orthogonal heralds, coherent local-filter effect, normalization and
-coefficient cancellation. Additional vacuum loss ports and filter apparatus
-are physical costs; the construction supplies no global ordinary bound.
+coefficient cancellation. A stronger four-level flying-helper construction
+has a complete exact $\mathbb Q(\sqrt2,\sqrt3)$ contraction/readout/filter
+and Bell-output replay at a fixed parameter point; optimization within its
+family is analytic. Extra photonic modes, vacuum rejection ports and
+filter apparatus are physical costs. Neither construction supplies a
+global ordinary bound.
+The Raman phase-covariance, reciprocal-port and route/double-herald
+replays check full finite accepted vectors, source normalization,
+Raman/spin-frame transformations and static phase/time guards. The
+continuum retarded kernels, physical joint phase spectra, causal pilot
+filtering, accepted-record conditioning and source/duty ledger remain
+analytic arguments or measured inputs. Scalar node-phase cancellation
+does not establish unknown Raman-frame immunity; the double-herald
+identity does not compile cycling emission from an arbitrary Raman SWAP.
+No measured matched physical route or delivered-rate advantage is certified.
+The temporal-helper port replay checks discrete coupler unitarity,
+exit/tail accounting, selected order words and complete formal codec
+entries, including a same-graph ordinary configuration. The mode-count
+obstruction and universal route/code arguments remain analytic; physical
+slot stationarity, pulse tails, loss, phase control and reset remain
+device requirements.
 The balanced-cavity frontier has exact polynomial and nominal-substitution
 checks; its continuous detuning/design proof and narrow-pulse limit remain
 analytic. Physical frequency-mode symmetry, accepted/lost ports, local

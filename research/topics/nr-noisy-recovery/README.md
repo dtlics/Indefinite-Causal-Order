@@ -156,6 +156,10 @@ comparison including calibration, clean memory, delays and routing loss.
 Its Andreev-reflection screen excludes the specified single-Majorana
 realization and requires a separate analysis for symmetry-restricted
 converters; the full unknown-coupler prior cannot be imported into them.
+The [passive-converter](backaction.md#nr-r19-passive-converter) and
+[Bragg-rank](backaction.md#nr-r19-bragg-rank) guards further require full
+mode matching and the actual physical input/output band split before
+treating a multimode device as that oracle pair.
 The [scattering result](communication.md#nr-r11) now includes unequal-rate
 and photon-preserving bath-record comparisons. Conditional spectral
 filtering, pair-preserving readout and ordinary delayed/reused paths must
@@ -177,7 +181,18 @@ with within-attempt stationarity established; a bare transfer-probability
 gap or a restricted product-spin bound does not answer it.
 A [passive-filter alternative](communication.md#nr-r11-raman-passive-filter)
 also gives a robust ordinary Bell output without extra retained stationary
-qubits; its vacuum loss ports and coherent local filter remain priced.
+qubits. A four-level flying helper strengthens this achievable family;
+its extra optical modes, vacuum loss ports and coherent local filter remain
+priced, without an unrestricted optimality claim.
+The [native-port analysis](communication.md#nr-r11-raman-route) constructs
+conditional temporal-helper routes and a same-graph ordinary comparator;
+physical code preservation, rejected paths and loop/pulse guards still
+require a measured instrument.
+The [phase-reference result](communication.md#nr-r11-raman-phase-reference)
+separates scalar-phase immunity from physical Raman/spin/route phases.
+Its next test requires measured causal signal/pilot correlations and
+retarded route instruments, with ordinary alternatives and all source,
+herald and reset costs included.
 The [alignment benchmark](alignment.md) separates a strict two-call
 advantage from measurement-record access, ordinary reuse and control
 backgrounds. Its calibrated one-memory ordinary construction at shrinking

@@ -1370,6 +1370,164 @@ Complete polarization/path Bell readout on one photon has an
 That validates the operation class, while its compatibility with the
 actual SPRINT port encoding remains an additional implementation task.
 
+<a id="nr-r11-raman-route"></a>
+
+### Native Raman ports need a routed temporal helper
+
+Use one complete bidirectional SPRINT station per node. The physical
+photon qubit $P$ is the pair of counterpropagating modes, not an extra
+polarization qubit. A Raman flip reverses propagation and changes the
+resident ground state. At each physical fibre end an actual three-port
+circulator can present a separate incoming and outgoing travelling mode.
+Label the left-end input/right-end output $P=0$ and the right-end
+input/left-end output $P=1$. Connecting the corresponding outgoing rails
+to the next station's incoming rails then preserves the complete
+logical $P$ channel, including a Raman reversal; sending only a forward
+rail would not do this. There are two such circulators per station,
+with their insertion loss, nonreciprocal bias, vacuum/loss ports and
+mode-dependent phases included. This is a proposed adapter, not a
+claim that the [Rb experiment](https://arxiv.org/pdf/1711.10974),
+Methods pp.8--10, used lossless circulators: its Methods use
+97:3 beam splitters as functional circulators, attenuating the input
+and transmitting most of the output.
+
+There is a sharp dimension obstruction to a simultaneous spatial
+helper extension. Four orthogonal $Q\otimes P$ input modes cannot all
+enter two physical station input modes by a lossless isometry while
+the environment and unused ports carry no $Q$ information. A $2\times4$
+single-particle matrix has rank at most two, whereas an isometry would
+require its Gram matrix to be $I_4$. Additional temporal, frequency or
+polarization modes, a retained memory, or active routing into retained
+orthogonal slots is therefore required for an independent helper.
+Heralded rejection alone cannot make a uniform four-dimensional
+embedding: $J^\dagger J=cI_4$ is impossible for any $2\times4$ matrix
+and $c>0$. A restricted heralded processor is a different code.
+Circulators separate directions;
+they do not remove this dimension count.
+
+Here is a concrete passive, heralded construction with additional time
+modes. Put A and B in a directed external ring. At each station and
+for each $P$ rail, a two-input/two-output lossless coupler has
+
+$$
+\begin{pmatrix}N_j\\D_j\end{pmatrix}
+=\begin{pmatrix}\sqrt k&\sqrt{1-k}\\
+\sqrt{1-k}&-\sqrt k\end{pmatrix}
+\begin{pmatrix}S_j\\C_j\end{pmatrix}.
+\tag{RT1}
+$$
+
+$N_j$ feeds the circulator adapter and station $j$; both station output
+$P$ rails feed the corresponding circulating rails $C_{\bar j}$ at
+the other station. $S_j$ is the initial injection rail and is vacuum
+thereafter. $D_j$ is an extraction/readout rail. Prepare the independent
+order helper by injecting $Q=0$ through $S_A$ or $Q=1$ through $S_B$,
+with the same photon $P$ state. The initial injections occur at the same
+clock, in different stations. At A, the two helper components encounter
+the station in slots $0$ and $L$; B has the opposite assignment.
+Each station thus has two $P$ modes in each of two distinct time slots,
+rather than four simultaneous modes.
+
+Reject extraction before the two-query window. Accept only the first
+round-trip extraction: an A-injected photon visits A then B and exits
+through $D_A$ before a third visit; a B-injected photon visits B then A
+and exits through $D_B$. Equal link delays and a common final extraction
+clock make the two retained routes interfere. Their accepted amplitude
+is $-k\sqrt{1-k}$, giving the complete selected map
+
+$$
+K_2=-k\sqrt{1-k}\left(
+ |0\rangle_{Q'}\langle0|_Q\otimes T_BT_A
++|1\rangle_{Q'}\langle1|_Q\otimes T_AT_B\right).
+\tag{RT2}
+$$
+
+Here $Q'$ is the extraction-station label, and the two $P$ rails are
+both retained. The routing factor is $k^2(1-k)\le4/27$, maximized at
+$k=2/3$. Initial reflection, one-query extraction, later round trips,
+unused source inputs and loss outputs are actual rejected records.
+If one waits for passive loop extinction, the tail must be bounded
+before reset or the next launch. A detector gate alone does not remove
+the circulating amplitude. Circulator/propagation/detection loss further
+multiplies this factor. For contraction-valued nodes, after $N$
+completed post-visit coupler decisions the remaining circulating
+one-photon weight is at most
+$k(1-k)^N$. A finite failure-cycle guard therefore needs a declared
+tail error or an actual dump operation. The $4/27$ number is the
+optimum of this symmetric coupler construction, not a universal
+passive-routing bound.
+
+RT2 requires equality of the actual slot-conditioned accepted
+instruments, not just equal marginal CPTP maps. In general it is
+$T_B^{L}T_A^{0}$ versus $T_A^{L}T_B^{0}$. Classical drift, free spin
+precession and photon-preserving bath records must be retained. In an
+ideal one-photon radiative model, any unguided emission loses the sole
+photon and cannot enter the final click; the accepted bath is vacuum.
+Pure dephasing or an unobserved frequency/time record can instead label
+the occupied slot and reduce route coherence. No guard proves those
+records absent. Finite pulses need disjoint slots with separately
+certified node/route tails and coherent retained spins through the
+whole attempt. Matching marginal station transfer functions is not
+sufficient.
+
+Each successful history goes once around the complete external ring.
+Consequently scalar link phases enter both as $e^{i(\chi_{AB}+\chi_{BA})}$,
+and static whole-node factors enter both as $e^{i(\theta_A+\theta_B)}$.
+They are common global factors. Source-to-injection and extraction-to-
+readout differential phases still need reciprocal matching or a phase
+reference. Mode-dependent link matrices do not commute through a Raman
+station; they must be retained or calibrated as real port-frame
+corrections. A global counterpropagating Sagnac input that swaps the
+station's $P$ labels instead of using these complete adapters generally
+queries different local operations and is not RT2.
+
+**An achievable ordinary processor on the same two-port station access.**
+For definite A-then-B order, encode $Q$ in two input time bins at A and
+send both physical $P$ outputs toward B through the same adapter access.
+The passive RP1 contraction needs four optical modes between the nodes.
+It can be supplied conservatively by a passive temporal decoder,
+an ordinary four-rail unitary dilation of $V$, and a passive temporal
+encoder before B. After B use another decoder for the complete four-
+mode photon readout. Each decoder's central accepted clock maps the two
+time bins into two spatial helper rails with amplitude $1/\sqrt2$;
+the encoder merges two delayed helper rails into the two physical
+$P$ inputs with amplitude $1/\sqrt2$ in its selected port. This gives
+an extra adapter factor $1/8$ in probability, besides the intrinsic RP1
+filter success and all path loss. If the ring coupler ratios are locked
+to the switch setting, its actual injection/extraction factor also
+applies. If the same static couplers can be reconfigured, the stronger
+ordinary choice is $k_A=1,k_B=0$ with all source bins injected at A:
+injection into A, continuation through B, and extraction before a third
+A visit then each have amplitude one. This gives deterministic ordinary
+A-then-B routing on the same complete physical $P$ ports, before the
+helper-codec, node and component losses. Such static configuration is
+not photon-controlled routing. A
+prepared two-time-bin source can avoid an additional initial encoder.
+An active temporal mode converter can improve this factor, but its
+controls, losses and timing are additional resources.
+
+Leakage timing must be designed, not silently discarded inside the
+processor. For example, let the input bins be separated by $\Delta$.
+The first decoder leaves unwanted components shifted by $\pm\Delta$
+around its central clock in the same processor rails. Choose the
+output-bin separation $4\Delta$, and the final decoder delay $4\Delta$.
+Those unwanted components cannot then coincide with the final central
+accepted clock. All window separations require the pulse/tail guards.
+Choose the ring flight slots longer than the complete processor window
+and guard; match the central link delays in the two configurations.
+Later round trips must not overlap an accepted codec window.
+This constructs an ordinary comparator, not an optimum over passive
+temporal networks. The extra processor paths can be placed in a known
+configurable link branch, with its direct bypass available to either
+protocol; switching that configuration is not controlled by an unknown
+photon state. The node adapters, available path graph, complete
+readout, memory and rejected ports are shared and charged explicitly.
+
+Neither construction supplies a free $\mathrm{id}_Q$ at the native
+station. Both must demonstrate coherent slot access, the relevant
+stationarity interval, the full physical phase frame, source/reset
+cost and complete output instrument before a finite-rate comparison.
+
 <a id="nr-r11-raman-passive-filter"></a>
 
 ### A passive photon filter gives a coefficient-independent ordinary Bell pair
@@ -1456,6 +1614,104 @@ $W=\sqrt6V$, and readouts $\sqrt3f,\sqrt3g$; their net physical
 factor is $1/6$. The coefficient $1/3$ in (RP3) includes all these
 factors. No sharp bound for adaptive, lossy, higher-mode ordinary
 processors is inferred from this construction.
+
+**Four helper levels strengthen the ordinary achievable coefficient.**
+Let $h_0,h_1,h_2,h_3$ be orthonormal levels of a preserved flying helper,
+so the joint photon code has eight modes. Put $q=1-p$ and prepare
+
+$$
+|\psi_4\rangle=\sqrt p|0,h_0\rangle+\sqrt q|1,h_1\rangle,
+\quad
+|a_4\rangle=\frac{|0,h_0\rangle+|1,h_1\rangle}{\sqrt2},
+\quad
+|b_4\rangle=\sqrt s|0,h_2\rangle+\sqrt{1-s}|1,h_3\rangle.
+$$
+
+The intermediate photon contraction $V_4$ has only three nonzero columns:
+
+$$
+V_4|0,h_0\rangle=\sqrt q|b_4\rangle,\qquad
+V_4|1,h_1\rangle=-\sqrt p|b_4\rangle,\qquad
+V_4|0,h_1\rangle=|a_4\rangle.
+\tag{RP4}
+$$
+
+For $|\xi\rangle=\sqrt q|0,h_0\rangle-\sqrt p|1,h_1\rangle$,
+$V_4^\dagger V_4=|\xi\rangle\langle\xi|
++|0,h_1\rangle\langle0,h_1|$ is a projector, proving that
+$V_4$ has a passive unitary dilation with rejected output ports.
+Moreover $V_4|\psi_4\rangle=0$, so the identity and single-B terms
+vanish. The single-A term has photon support in
+$\operatorname{span}\{a_4,b_4\}$.
+
+The following four photon vectors are orthonormal and orthogonal to that
+support:
+
+$$
+\begin{aligned}
+|r_{00}\rangle&=\sqrt{1-s}|0,h_2\rangle-\sqrt s|1,h_3\rangle,
+&|r_{01}\rangle&=|0,h_3\rangle,\\
+|r_{10}\rangle&=(|0,h_0\rangle-|1,h_1\rangle)/\sqrt2,
+&|r_{11}\rangle&=|0,h_1\rangle.
+\end{aligned}
+$$
+
+Projecting the double-SWAP output onto their span gives exactly
+
+$$
+b_Ab_B\left[
+\sqrt{pqs(1-s)}|r_{00}\rangle|00\rangle
++\sqrt{pq(1-s)}|r_{01}\rangle|01\rangle
++\frac{\sqrt q}{2}|r_{10}\rangle|10\rangle
++\sqrt{q/2}|r_{11}\rangle|11\rangle\right].
+\tag{RP5}
+$$
+
+Choose $p(1-s)=1/4$, with $1/4\le p<1$, and read the four photon
+outcomes $(r_{00}\pm r_{11})/\sqrt2$ and
+$(r_{01}\pm r_{10})/\sqrt2$. The latter two already give Bell states.
+For the former two, the local A filter
+$\operatorname{diag}(1,\sqrt{s/2})$ balances the retained amplitudes;
+its complementary effect is $\operatorname{diag}(0,1-s/2)$.
+All four successes have known Pauli frames. The two even outcomes
+contribute $qs/2$ and the two odd outcomes contribute $q/2$, giving
+
+$$
+p_{\rm four\ levels}
+=(1-p)\left(1-\frac1{8p}\right)|b_Ab_B|^2.
+\tag{RP6}
+$$
+
+The derivative of the coefficient is $-1+1/(8p^2)$, so this family is
+maximized at $p=1/(2\sqrt2)$, $s=1-1/\sqrt2$, with coefficient
+$9/8-1/\sqrt2\simeq0.417893$. The rational setting
+$p=1/3,s=1/4$ gives $5/12$. Thus extra flying helper levels improve
+the two-level construction without initial stationary ancillas.
+This remains an achievable coefficient below the switched-minus
+coefficient $1/2$, and supplies no ordinary optimality claim.
+
+The [four-level replay](checks/architecture/raman_multimode_helper.py)
+checks the full $p=1/3,s=1/4$ instrument in
+$\mathbb Q(\sqrt2,\sqrt3)$: source normalization, the contraction and
+its rejected complement, four orthonormal readouts, the twelve zero
+heralded identity/single-node branches, all four filtered Bell outputs,
+and local-filter success/failure effects. In the double-SWAP branch,
+processor rejection, photon-readout rejection, spin-filter rejection
+and Bell success have respective probabilities
+$1/9,13/72,7/24,5/12$, summing to one. The parameter-family optimum
+and its physical access assumptions remain analytic.
+
+The larger photon code, rejected ports, complete joint readout and local
+spin filter must be preserved by the actual node and priced. This needs
+the physical extension $T_j\otimes I_H$ on all eight joint modes;
+the two-level temporal codec above does not by itself implement it.
+Arbitrary
+processors that do not annihilate the source between nodes, adaptive
+local filtering and timed spin pulses that conjugate the node differently
+for early and late photon bins remain separate ordinary comparisons.
+Their costs and actual vacuum extension must be included before an
+upper bound on all ordinary protocols can be claimed.
+
 
 <a id="nr-r11-raman-local-ancillas"></a>
 
@@ -1963,23 +2219,737 @@ with additional path loss. These measurements do not specify a
 two-node Bell cycle or a heralded ideal one-photon source. Its pulse
 length is not the complete $d_k$.
 
-**Charge phase references rather than assuming them.** If actual nodes
-carry fresh unknown global phases
-$T_A=e^{i\theta_A}T$, $T_B=e^{i\theta_B}T$, both switch histories acquire
-$\theta_A+\theta_B$, whereas the one-node Bell phase contains
-$\theta_A-\theta_B$. Averaging the latter can make its state separable.
-Then $p_1=q$ is not a known perfect-Bell yield until an actual pilot,
-reference or erasure protocol is included. Conversely, local Raman-leg
-phases generally survive the switch too: for
-$W_\phi|10\rangle=e^{i\phi}|01\rangle$ and
-$W_\phi|01\rangle=e^{-i\phi}|10\rangle$, its Bell terms retain
-$\phi_A-\phi_B$. The physical fluctuation must be identified; a generic
-unknown phase is not automatically a common global node factor.
-Source scarcity or phase drift remains a possible target only after the
-complete mode, routing, reference, reset and ordinary repeated-photon
-interfaces are established. These conditional yield identities do not
-establish a native architecture advantage.
+The complete [phase-reference comparison](#nr-r11-raman-phase-reference)
+below retains physical Raman legs, reciprocal event times, shared pilots
+and the ordinary coefficient filters; scalar channel phases alone do not
+establish a physical reference saving.
 
+<a id="nr-r11-raman-phase-reference"></a>
+
+### Raman phase references require a complete port and spin instrument
+
+Reciprocal propagation can suppress a specified physical phase process.
+It does not remove every Raman or spin-frame phase, and scalar node
+phases also cancel in the ordinary two-node filters above. The following
+instrument identities distinguish those cases while retaining the actual
+frequency, time, pilot and spin records. They supply a finite comparison
+once the device kernels and noise law are measured; they do not establish
+a device rate advantage from a choice of channel phase convention.
+
+**Physical phases and arbitrary frame changes.** Let $P$ be the collected
+photon mode, $Q$ an independent helper when present, and $j=A,B$ the
+retained ground-state memories. On a short, flat accepted interaction,
+write
+
+$$
+\begin{aligned}
+T_j(t)&=e^{i\gamma_j(t)}
+ \left[a_j(t)I+b_j(t)W_j(\phi_j(t))\right],\\
+W_j(\phi)&=D_j(\phi)F_{Pj}D_j(\phi)^\dagger,
+\qquad D_j(\phi)=|0\rangle\langle0|
+                  +e^{i\phi}|1\rangle\langle1|.
+\end{aligned}
+\tag{PR1}
+$$
+
+Here $F$ is SWAP. Consequently $W_j|1,0\rangle
+=e^{i\phi}|0,1\rangle$, $W_j|0,1\rangle
+=e^{-i\phi}|1,0\rangle$, and the equal-bit states are unchanged.
+The Raman-leg phase $\phi_j$ is defined relative to the actual input,
+output and spin-control frames. A scalar $\gamma_j$ is physical only
+relative to a specified vacuum/bypass path or other coherent reference.
+All rejected optical and loss rows remain part of the complete
+instrument. Equation (PR1) is a flat limit, requiring negligible variation
+of the stated coefficients and phases across the pulse.
+
+Frame covariance holds more generally than this SWAP family. For any
+unitary changes $G_{\rm in},G_{\rm out}$ of the full prepared/readout
+registers, including photon ports, memories and any retained reference,
+transform
+
+$$
+\rho'=G_{\rm in}\rho G_{\rm in}^\dagger,\qquad
+K'_{d,e}=G_{\rm out}K_{d,e}G_{\rm in}^\dagger,\qquad
+M'_d=G_{\rm out}M_dG_{\rm out}^\dagger.
+$$
+
+Direct substitution and cyclicity of trace give
+$\operatorname{Tr}(M'_dK'_{d,e}\rho'K_{d,e}'{}^\dagger)
+=\operatorname{Tr}(M_dK_{d,e}\rho K_{d,e}^\dagger)$, term by term in
+the actual records. The output state and the declared Bell target
+transform by the same $G_{\rm out}$, so their fidelity also remains
+unchanged. This proves covariance for arbitrary input states entangled
+with a reference, rather than only the product-state examples below.
+For a time-dependent frame $G(t)$, the propagator becomes
+$G(t_{\rm out})U(t_{\rm out},t_{\rm in})G(t_{\rm in})^\dagger$ and
+the Hamiltonian becomes $GHG^\dagger+i\dot G G^\dagger$.
+In particular $G=D_j(\theta(t))$ changes the spin splitting to
+$\Omega_j-\dot\theta$ while the instantaneous Raman phase becomes
+$\phi_j+\theta$. Preparation and readout phases change with it.
+Varying only $\phi_j$ while holding those physical operations fixed
+describes a different experiment, rather than a basis change.
+
+A unitary relabelling of unobserved Kraus records likewise leaves
+$\sum_eK_{d,e}\rho K_{d,e}^\dagger$ unchanged. Coherent optical routing
+instead uses a specified dilation, including its vacuum action. Changing
+only an occupied-path phase while retaining a fixed vacuum phase can
+change that physical dilation. It cannot be introduced as an arbitrary
+Kraus gauge and then counted as measured device noise.
+
+**Finite-dwell Raman kernel and the spin clock.** Let $\Omega_j(u)$ be
+the local splitting, $t_R$ the Raman emission time and $T_m$ the time of
+spin use. The collected Raman amplitude has the causal form
+
+$$
+\mathcal R_j(t_D,T_m)=
+\int dt_R\,dt_{\rm in}\,
+ G_{{\rm out},j}(t_D,t_R)
+ B_j(t_R,t_{\rm in};\lambda)u_{{\rm in},j}(t_{\rm in})
+ \exp\!\left[-i\int_{t_R}^{T_m}\Omega_j(u)\,du\right].
+\tag{PR2}
+$$
+
+The incident and outgoing kernels retain the source phase, physical
+carriers, directed propagation, collected port and detector mode.
+$B_j$ is the full causal node response: it retains absorption and
+emission times, cavity/excited-state dwell, and both coupling-leg phases.
+Only in the flat instantaneous limit does it reduce to
+$b_j(t_R)e^{i\phi_j(t_R)}\delta(t_R-t_{\rm in})$. Elastic and spectator
+kernels, each lost optical mode and each detector/environment record
+must be included alongside (PR2). Sequential kernels compose in their
+actual physical order.
+
+For static energy-matched carriers
+$\omega_{\rm in}=\omega_R+\Omega$, the instantaneous carrier factors
+obey the exact identity
+
+$$
+e^{-i\omega_{\rm in}t_R}
+e^{-i\omega_R(t_D-t_R)}
+e^{-i\Omega(T_m-t_R)}
+=e^{-i\omega_Rt_D-i\Omega T_m}.
+\tag{PR3}
+$$
+
+The $t_R$ coefficient is $-\omega_{\rm in}+\omega_R+\Omega=0$.
+This proves why a Raman frequency shift without its spin evolution can
+create a spurious early/late phase. A stationary finite-dwell transfer
+function enforces the same total-energy balance while retaining its
+actual response phase and envelope. Unequal or fluctuating splittings,
+physical leg phases and unresolved photon records still leave residuals.
+The [Stockill et al. primary supplement, phase-reference analysis](https://eprints.whiterose.ac.uk/id/eprint/119392/7/PRL_Supplemental.pdf)
+explicitly retains excitation, Raman-photon and Larmor timing in the
+remote-spin phase. A reported detector time permits only the corresponding
+recorded spin-frame correction.
+
+**Reciprocal retarded propagation.** In a reciprocal nondispersive guide
+of length $L$ and group speed $v$, let $n(x,t)$ be a real index
+fluctuation with the deterministic carrier phase removed. For a photon
+launched at $t$,
+
+$$
+\varphi_\omega^+(t)=\frac\omega c\int_0^L n(x,t+x/v)\,dx,
+\qquad
+\varphi_\omega^-(t)=\frac\omega c\int_0^L n(x,t+(L-x)/v)\,dx.
+\tag{PR4}
+$$
+
+Both directions acquire $e^{+i\varphi}$. Reversing propagation does
+not complex-conjugate the dynamical phase. For frozen reciprocal noise,
+$\varphi^+=\varphi^-$, so a round trip adds twice the phase. A
+*difference between interfering traversals* can cancel it. With angular
+noise frequency $\nu$, equal-time counterpropagation has distributed
+filter
+$Y_\omega(x,\nu)=(\omega/c)
+[e^{-i\nu x/v}-e^{-i\nu(L-x)/v}]$. A localized fluctuation is therefore
+sampled at two times separated by $(L-2x)/v$ and generally survives.
+A spatially uniform $n(x,t)=n(t)$ is a special exact cancellation:
+both integrals cover the same time interval. Stationarity or equal
+marginal spectra alone does not identify either situation. Dispersive
+media require the measured frequency-dependent propagation and its
+cross spectrum.
+
+**Four histories of the two-order route.** Initialize $PAB=100$, prepare
+the independent order helper in plus, and select $P=0$ and helper
+$X$ outcome $\epsilon\in\{+1,-1\}$. The memory coefficients are
+
+$$
+\begin{aligned}
+u_{A,\epsilon}
+ &=\frac12\left[
+ \mathcal S_B^{\rm late}\circ\mathcal L_R^+
+                       \circ\mathcal R_A^{\rm early}
+ +\epsilon\mathcal R_A^{\rm late}\circ\mathcal L_{\rm in}^-
+                       \circ\mathcal E_B^{\rm early}\right],\\
+u_{B,\epsilon}
+ &=\frac12\left[
+ \mathcal R_B^{\rm late}\circ\mathcal L_{\rm in}^+
+                       \circ\mathcal E_A^{\rm early}
+ +\epsilon\mathcal S_A^{\rm late}\circ\mathcal L_R^-
+                       \circ\mathcal R_B^{\rm early}\right].
+\end{aligned}
+\tag{PR5}
+$$
+
+$\mathcal E,\mathcal S,\mathcal R$ denote the active-elastic,
+spectator and Raman kernels. Each term is its actual ordered integral,
+with external input/output/helper paths and the applicable spin-evolution
+intervals retained; the notation does not permit commutation of kernels.
+The first term of $u_A$ flips early A and subsequently encounters
+spectator B. Its second term is elastic early B followed by late Raman A.
+The two $u_B$ terms give the other two histories. Each amplitude carries
+its own retained frequency and time record. A spin density matrix is
+formed only after their actual measurement overlaps have been included.
+
+There is also an accepted-record guard before Raman phases are
+considered. For fixed scalar node coefficients and otherwise global
+route phases $\Phi_{AB},\Phi_{BA}$, direct expansion of the two ordered
+node products gives the helper-minus coefficients
+
+$$
+\begin{aligned}
+c_{10}&=\frac{e^{i\phi_A}b_A}{2}
+ \left[e^{i\Phi_{AB}}s_B-e^{i\Phi_{BA}}a_B\right],\\
+c_{01}&=\frac{e^{i\phi_B}b_B}{2}
+ \left[e^{i\Phi_{AB}}a_A-e^{i\Phi_{BA}}s_A\right],\\
+c_{P1}&=\frac{a_Aa_B}{2}
+ \left[e^{i\Phi_{AB}}-e^{i\Phi_{BA}}\right],
+\qquad s_j=a_j+b_j.
+\end{aligned}
+$$
+
+The first two multiply $|0,10\rangle$ and $|0,01\rangle$.
+The third multiplies $|1,00\rangle$: these are the elastic-elastic
+histories in opposite routes. Unknown route phase invalidates calling the entire
+minus flag a Bell output. Selecting $P=0$ rejects that component, but
+the remaining Raman amplitudes must still satisfy the population and
+phase conditions below.
+
+In the restricted frozen, identical-node, compensated-spin-frame limit,
+put $\mathcal R_j=b e^{i\rho_j}$, $\mathcal E=a$ and
+$\mathcal S=s=a+b$, and match the external arms. Then
+
+$$
+\begin{aligned}
+u_{A,\epsilon}&=\frac{b e^{i\rho_A}}2
+ \left[s e^{i\varphi_R^+}
+                  +\epsilon a e^{i\varphi_{\rm in}^-}\right],\\
+u_{B,\epsilon}&=\frac{b e^{i\rho_B}}2
+ \left[a e^{i\varphi_{\rm in}^+}
+                  +\epsilon s e^{i\varphi_R^-}\right].
+\end{aligned}
+\tag{PR6}
+$$
+
+If the link is frozen and reciprocal at **each physical carrier**,
+$\varphi_\omega^+=\varphi_\omega^-$, substitution gives
+$u_{A,\epsilon}e^{-i\rho_A}
+=\epsilon u_{B,\epsilon}e^{-i\rho_B}$. Thus each nonzero flag is a
+Bell state after its known sign and relative spin-frame correction,
+even when $\omega_R\ne\omega_{\rm in}$. The relative
+$\rho_A-\rho_B$ remains. With $a\ne0$, time-dependent directional
+differences can change the two magnitudes as well as their phase; one
+scalar visibility does not then describe the complete instrument.
+Factoring $\rho_j$ across early and late events requires the static
+compensated limit justified by (PR2)--(PR3), rather than stationarity
+alone.
+
+**Ordinary shared paths and echo.** A coherent which-node route has
+one-Raman amplitudes $b_AC_A/2$ and $\epsilon b_BC_B/2$ at its two
+path-erasure outcomes. $C_j$ contains the full source-to-node phase,
+Raman leg, outgoing Raman propagation and spin frame at a common time.
+Its correction uses the same available pilot and detector records.
+If an actual geometry places conversion before or after a shared segment,
+and both alternatives traverse that segment in the same direction at
+the same retarded times, its differential phase is
+$\varphi_R-\varphi_{\rm in}$. Under the additional common
+nondispersive-index model, this is proportional to
+$\omega_R-\omega_{\rm in}$ rather than optical $\omega$.
+Selective bypasses, conversion ports, group delays and external arms
+must implement those histories. An inline Raman reflector which sends
+the photon away at the first node supplies a which-node geometry, not
+two completed opposite-order node calls.
+
+**Ordinary double heralding needs temporal stability, not an absolute phase.**
+An explicit stronger echo identity uses the spin-preserving single-click
+operator $L_k=c_{A,k}n_A+s_kc_{B,k}n_B$, where
+$n_j=|1\rangle\langle1|$ and the recorded detector sign is $s_k=\pm1$.
+This is a cycling-emission instrument, not a compilation from one balanced
+Raman SWAP call. Define the physical local pulse axis by
+$X_j(\eta_j)|0\rangle=e^{i\eta_j}|1\rangle$ and
+$X_j(\eta_j)|1\rangle=e^{-i\eta_j}|0\rangle$.
+Multiplying the three operators gives
+
+$$
+\begin{aligned}
+K&=L_2X_A(\eta_A)X_B(\eta_B)L_1\\
+ &=s_2c_{A,1}c_{B,2}e^{-i(\eta_A-\eta_B)}
+           |01\rangle\langle10|\\
+ &\quad+s_1c_{B,1}c_{A,2}e^{i(\eta_A-\eta_B)}
+           |10\rangle\langle01|.
+\end{aligned}
+\tag{PR7}
+$$
+
+Indeed $L_1$ annihilates $00$, while the intermediate flips take $11$
+to $00$, which $L_2$ annihilates. On $10$, the first click contributes
+$c_{A,1}$, the flips contribute $e^{-i(\eta_A-\eta_B)}$, and the second
+click contributes $s_2c_{B,2}$; the other odd input gives the second term.
+For a product source with local preparation phases $\chi_A,\chi_B$,
+the relative output phase, apart from the recorded sign, is
+
+$$
+\arg\frac{c_{B,1}c_{A,2}}{c_{A,1}c_{B,2}}
++\chi_B-\chi_A+2\eta_A-2\eta_B.
+$$
+
+If each unknown complex node amplitude is unchanged between rounds,
+both terms contain $c_Ac_B$. Static node/path offsets cancel, while
+the local preparation and pulse axes remain explicit. With
+$c_{j,k}=r_{j,k}e^{i\varphi_{j,k}}$, the residual optical phase is
+$(\varphi_{A,2}-\varphi_{A,1})-(\varphi_{B,2}-\varphi_{B,1})$.
+Its temporal filter is $1-e^{-i\nu T}$, rather than zero for arbitrary
+drift. Unequal envelopes at different click times can also unbalance
+the magnitudes. All actual click, missed-photon, relaxation and failed
+round records must be included in the physical completion.
+
+[Barrett and Kok, PRA **71**, 060310(R) (2005)](https://doi.org/10.1103/PhysRevA.71.060310)
+([full source](https://arxiv.org/pdf/quant-ph/0408040)) provide the
+ordinary physical architecture: two excitation/detection rounds, spin
+flips and relaxation waits, with ideal matched-emitter success
+$\eta^2/2$. This supplies a competitor when its cycling transitions,
+two emitted/detected photons and complete wait/control costs are
+available. Loss, unobserved mode distinction and memory decoherence
+retain their actual consequences; those resources are not inferred
+from the single-photon Raman interface.
+
+
+**Scalar-phase closure and actual Raman-leg covariance.** In either
+ordinary coefficient filter above, every interfering logical term has
+the same fixed chronological node encounters. It therefore receives
+the common factor $e^{i[\gamma_A(t_A)+\gamma_B(t_B)]}$. That factor
+cancels from the accepted density operator even for phases fresh on
+each attempt. Conditional on the remaining common-frame and helper-port
+premises, the achievable yields remain $|b_Ab_B|^2/3$ for the photon
+filter at $p=1/2$ and $9|b_Ab_B|^2/16$ for the local-ancilla filter.
+This is not yield dominance over all switch flags: $1/3$ is below the
+minus-only coefficient $1/2$, while $9/16$ prices extra local memories.
+
+The two-order route instead compares
+$\gamma_A(t)+\gamma_B(t+\tau)$ with
+$\gamma_B(t)+\gamma_A(t+\tau)$. Their difference has filter
+$(1-e^{-i\nu\tau})(\gamma_A-\gamma_B)$. Frozen values cancel;
+general temporal variation does not. Scalar node noise therefore cannot
+establish that only a switch prepares a known Bell pair, once these
+ordinary two-node instruments are available.
+
+For true Raman-leg phases, memory rotations commute with every photon
+processor. Since $AB=00$ is unchanged by the input rotations,
+$T_B(\phi_B)VT_A(\phi_A)|\psi\rangle_{PQ}|00\rangle_{AB}
+=D_AD_B T_B(0)VT_A(0)|\psi\rangle_{PQ}|00\rangle_{AB}$.
+The same covariance holds through the photon readouts and the fixed
+diagonal local filter. Applying it to (RP2) at $p=1/2$ proves the exact
+unnormalized kept vectors
+
+$$
+\begin{aligned}
+|\chi_f\rangle&=\frac{b_Ab_B}{3}
+ \left(e^{i\phi_B}|01\rangle+e^{i\phi_A}|10\rangle\right),\\
+|\chi_g\rangle&=\frac{b_Ab_B}{3\sqrt2}
+ \left(|00\rangle+e^{i(\phi_A+\phi_B)}|11\rangle\right).
+\end{aligned}
+\tag{PR8}
+$$
+
+Their norms are $2|b_Ab_B|^2/9$ and $|b_Ab_B|^2/9$.
+A scalar $\gamma$ contributes only a global factor. The first flag
+sees the Raman **difference**, while the second sees the **sum**.
+Independent uniform leg phases destroy their known-frame Bell
+coherences; common leg noise preserves $f$, and opposite leg noise
+preserves $g$. Neither branch is universally reference-free. The frozen
+switch's one-excitation flags likewise retain the Raman difference,
+with further early/late sensitivity in the general kernel model.
+
+This comparison can be strengthened to a complete spectral-state
+identity. For matched routes and a common preserved spectral coordinate
+$\nu$, let the two accepted node maps have arbitrary scalar
+$a_j(\nu),b_j(\nu),\phi_j(\nu)$ in (PR1). The switched-minus coefficient
+on $|10\rangle$ is
+$b_A(s_B-a_B)e^{i\phi_A}/2=b_Ab_Be^{i\phi_A}/2$, and that on
+$|01\rangle$ is
+$b_B(a_A-s_A)e^{i\phi_B}/2=-b_Ab_Be^{i\phi_B}/2$.
+Here $s_j=a_j+b_j$ pointwise and the elastic-elastic terms cancel.
+Comparison with (PR8) gives
+
+$$
+Z_B|\chi_f(\nu)\rangle
+ =\frac23|\psi_{S,-}(\nu)\rangle.
+$$
+
+This equality survives coherent integration of any input spectral
+envelope with its retained photon/reference coordinate. Partial trace
+and a common stochastic or pilot-record average therefore give
+$\sigma_{f,\mathrm{corrected}}=4\sigma_{S,-}/9$.
+For each nonzero outcome, the normalized reduced memory states have
+identical Raman phase and spectral response, while their probabilities
+have ratio $4/9$. This supplies a lower-yield ordinary comparator;
+it does not assert that either state is a perfect Bell pair for arbitrary
+$\nu$ dependence. It requires matched physical Raman codes, routes and
+record kernels. Arbitrary noncommuting auxiliary kernels or unrelated
+order-dependent propagation do not satisfy this scalar spectral proof.
+In the same (RP1)--(RP2) family the $f$ flag alone has coefficient
+$2p(1-p)/(1+p)^2$, with derivative $2(1-3p)/(1+p)^3$.
+Thus $p=1/3$ gives $|b_Ab_B|^2/4$ and the same pointwise normalized
+spectral/phase state after its known correction: half the matched
+switch-minus probability, with rejected photon outcomes still charged.
+
+For local-ancilla inputs, use
+$(D_j^\dagger\otimes I)|\Phi^+\rangle_{jj'}
+=(I\otimes D_{j'}^\dagger)|\Phi^+\rangle_{jj'}$.
+Moving the input rotations to the otherwise untouched ancillas proves
+that the **uncorrected** photon-outcome branch is
+
+$$
+\begin{aligned}
+|v_m(\phi_A,\phi_B)\rangle
+ &=G(\phi_A,\phi_B)|v_m(0,0)\rangle,\\
+G&=(D_A\otimes D_{A'}^\dagger)
+                 \otimes(D_B\otimes D_{B'}^\dagger).
+\end{aligned}
+\tag{PR9}
+$$
+
+After the known photon-outcome correction $C_m$ on A, the rotation on
+the corrected zero-phase branch is
+$(C_mD_AC_m^\dagger\otimes D_{A'}^\dagger)
+\otimes(D_B\otimes D_{B'}^\dagger)$. The required fixed Pauli-Bell
+projections and decodes do not all commute with those rotations.
+Consequently Raman phase noise requires averaging this complete rotated
+instrument, rather than granting the scalar yield $9/16$ as known-frame
+Bell delivery. Supplying or estimating the missing frame restores the
+stated construction with its actual cost.
+
+The photon processor and helper also require their physical code.
+Arbitrary passive mixing within a degenerate rail/polarization space
+does not supply rotations between nondegenerate frequency bins.
+Such a rotation needs an actual converter/modulator or equivalent
+resource, with its pump phase, loss and duration. A common-path circuit
+label does not supply that transformation.
+
+**All-record noise law and causal pilots.** Let $\lambda$ be the full
+physical noise history, $r$ the observed pilot record, $d$ the detector
+record including its reported time, and $e$ any unobserved optical,
+detector or bath record. With the source launch conditioned as declared,
+the accepted unnormalized state is the completely positive map
+
+$$
+\sigma_{k,d,r}(\rho)=
+\int p(d\lambda,r)\sum_e
+ K_{k,d,e}[\lambda]\rho K_{k,d,e}[\lambda]^\dagger.
+\tag{PR10}
+$$
+
+The $K$ are constructed from the actual ports, kernels, filters and
+memories. Recorded spin-frame feedback applies a specified
+$U_k(d,r)$ to (PR10). No-click, rejected-port, pilot-rejection,
+filter-failure and reset flags complete the experiment; their weights
+are not renormalized into success. For a history expansion, each cross
+term retains the actual unobserved-record overlap and conditional
+characteristic functional
+$\mathbb E[e^{i(\Phi_h-\Phi_{h'})}\mid r]$.
+This formulation remains valid for non-Gaussian stationary noise.
+A PSD alone is insufficient: a static random sign $\pm\sigma$ and
+a static Gaussian with variance $\sigma^2$ have identical covariance
+and PSD, but unit-weight coherences $\cos\sigma$ and
+$e^{-\sigma^2/2}$.
+
+For linear phase functionals of a jointly Gaussian stationary vector
+$x(t)$, use the two-sided cross spectrum with convention
+$\mathbb E[x(t)x(t')^\mathsf T]
+=\int S_x(\nu)e^{-i\nu(t-t')}d\nu/(2\pi)$.
+If $Y$ is the history-difference filter, then
+
+$$
+V=\int_{-\infty}^{\infty}\frac{d\nu}{2\pi}
+       Y(\nu)S_x(\nu)Y(\nu)^\dagger,
+\qquad |\mu|=e^{-V/2}.
+\tag{PR11}
+$$
+
+This follows by evaluating the variance of the linear functional and
+then the Gaussian characteristic function. Shared-path, correlated-node
+and spin/reference cross spectra must be retained. For distributed
+guide noise the integrand includes the spatial double integral with
+the retarded filters of (PR4). Independent-spectrum replacements can
+destroy the very common-path cancellation being tested. If amplitudes
+vary between histories, (PR10) remains necessary; (PR11) alone does not
+describe the accepted state.
+
+For a finite available Gaussian pilot vector $m$ with independent
+measurement-noise covariance $N$, the Schur complement of its joint
+Gaussian covariance gives the conditional residual phase variance
+
+$$
+V_{\rm res}=V_{\delta\delta}
+ -V_{\delta m}(V_{mm}+N)^{-1}V_{m\delta}.
+\tag{PR12}
+$$
+
+Only samples available before spin use belong to $m$. Waiting for later
+samples adds storage noise and latency. For stationary pilots
+$y=H*x+\eta$ and a specified causal linear correction $W$, the
+residual spectrum is
+$(Y-WH)S_x(Y-WH)^\dagger+WS_\eta W^\dagger$.
+Pointwise unconstrained Wiener minimization generally gives an acausal
+smoothing bound, rather than a realizable controller. The pilot model
+must also include its backaction and quantum-window leakage or establish
+their negligible contribution.
+
+Equation (PR12) is a Gaussian **pilot-conditioned** covariance. Applying
+it directly to an accepted branch additionally requires the actual
+accepted-record law to remain jointly Gaussian, or acceptance weights
+independent of the phase variables. A detuning-dependent herald can
+reweight a Gaussian prior into a non-Gaussian accepted law. In that
+case the full amplitudes and records in (PR10) determine the coherence.
+
+**Time records, Bell qualification and renewal rate.** For an odd-parity
+branch, write the pilot-conditioned unnormalized entries as
+$P_A=\mathbb E[|u_A|^2\mid r]$,
+$P_B=\mathbb E[|u_B|^2\mid r]$, and
+$C=\mathbb E[u_Au_B^*\langle e_B|e_A\rangle\mid r]$,
+with all actual unobserved records summed or integrated. Then
+
+$$
+\begin{aligned}
+\sigma&=P_A|10\rangle\langle10|+P_B|01\rangle\langle01|
+       +C|10\rangle\langle01|+C^*|01\rangle\langle10|,\\
+F_{\rm best\ phase}&=\frac12+\frac{|C|}{P_A+P_B}.
+\end{aligned}
+\tag{PR13}
+$$
+
+The second line follows by maximizing the phase of a normalized Bell
+target against the off-diagonal entry. The recorded spin correction
+removes the conditional argument of $C$; $C=0$ supplies no phase
+estimate. This is a Bell-state overlap, not a unitary balancing of
+unequal populations. For balanced weights and Gaussian phase alone in
+the actual accepted law,
+$F=(1+e^{-V_{\rm res}/2})/2$, so $F_*>1/2$ requires
+$V_{\rm res}\le-2\log(2F_*-1)$.
+
+For Raman bands separated by $\Delta$, temporal intensity $w(t)$,
+and detector response $h(\tau|t)$, keep
+$w_\tau=\int h(\tau|t)w(t)dt$ and
+$z_\tau=\int h(\tau|t)w(t)e^{i\Delta t}dt$ in the corresponding
+diagonal and coherence entries. Ideal true-time detection can allow a
+known spin correction; an unobserved frequency-sensitive detector record
+can prevent it. A Gaussian timing-jitter multiplier requires the actual
+pulse and response assumptions, rather than the carrier separation alone.
+
+At one common delivered-fidelity threshold $F_*$, the unconditioned
+qualified yield and sustained delivery rate are
+
+$$
+y_k=Q_k\sum_d\int dr\,
+ \mathbf1\{F_{k,d,r}\ge F_*\}\operatorname{Tr}\sigma_{k,d,r},
+\qquad
+R_k=\frac{y_k}{\mathbb E[\text{complete cycle duration }k]}.
+\tag{PR14}
+$$
+
+Here $Q_k$ is a separately declared independent launch probability only
+when (PR10) is conditioned on that launch. If source probability or its
+noise correlations are already inside the instrument, include them
+there once and omit the extra factor. The rate is the renewal-reward
+rate for regenerative cycles; stationary ergodic cycle records with
+finite means give the same long-run reward/time ratio. It does not
+assert a geometric first-success law for correlated attempts.
+
+Complete duration includes unsuccessful source triggers, rejected photons
+and filters, detector timeouts, pilot duty, feedforward/storage, reset and
+success handoff. Signal photons, pilot photons, conversion pumps and
+memory/controller energy are separately measured resource axes. Every
+physically compatible comparator receives the same available pilot
+record, causal correction class and qualification rule. An ordinary
+common-path, echo or frequency-erasure construction enters only with
+its actual ports and complete costs. These identities therefore require
+a measured multi-port instrument comparison before either route can be
+assigned a physical phase-reference advantage.
+
+**Shelving can rephase a specified local optical fluctuation.**
+[Uysal and Thompson, PRA **110**, 052606 (2024)](https://doi.org/10.1103/PhysRevA.110.052606)
+([primary full text](https://arxiv.org/html/2406.06497)) propose an
+ordinary correction using a shelving transition whose spectral diffusion
+is correlated with the emitting transition. In its two-photon protocol,
+put $\Delta\tau=\tau_2-\tau_1$; the accumulated phase changes as
+
+$$
+\begin{aligned}
+\phi_T&=-(\omega_2-\omega_1)\Delta\tau
+         -(\omega_{L,2}-\omega_{L,1})T,\\
+\phi_{T,\rm rephased}
+       &=-(\omega_{L,2}-\omega_{L,1})(T+\Delta\tau).
+\end{aligned}
+\tag{PR15}
+$$
+
+Holding the appropriate emitter for $|\Delta\tau|$ removes its
+quasistatic unknown frequency error. Coherent optical/spin pulses,
+a sufficiently long-lived correlated shelving level, timing and
+storage are real resources; shelving decay and control errors remain.
+The single-photon variant retains a static differential path phase,
+whereas the two-photon variant cancels it under the stated stability
+premises. These are the source's Hamiltonian-model statements.
+
+For arbitrary local pulse phase $\chi_j(t)$, an excitation/de-excitation
+pair contributes
+$e^{-i\chi_j(t_a)}e^{i\chi_j(t_b)}
+=e^{i[\chi_j(t_b)-\chi_j(t_a)]}$. Thus constant local offsets cancel
+but temporal increments need a measured law and consistent local spin
+axes. Extending the argument to a quantum bath additionally requires
+matching the final conditional bath states up to scalar phase on the
+actual bath input. Equal classical mean phases do not erase a which-node
+bath record.
+
+**A measured ordinary shared-spatial-link bus has a different native gate.**
+[Daiss et al., Science **371**, 614–617 (2021)](https://doi.org/10.1126/science.abe3150)
+([full paper and supplement](https://arxiv.org/pdf/2103.13095))
+successively reflect a polarization ancilla from two Rb-cavity modules
+linked by 60 m of fibre, then herald by polarization detection and
+apply local feedforward. They approximate the photon with a weak
+coherent pulse. Its cycling conditional-phase gate differs from balanced
+SPRINT. In the ideal circuit a scalar phase on the shared spatial link
+multiplies the full polarization state and cancels from the heralded
+memory density matrix; this is an inference from the circuit, not a
+measured immunity to every optical fluctuation. Differential polarization
+phase, birefringence, local Raman-control axes, cavity locks and detuning
+still matter. Global carrier-phase stabilization is therefore not an
+inherent cost of every ordinary one-photon bus. A claimed saving must
+measure the differential phase of the actual competing geometries.
+
+**Measured phase-control ledger.**
+
+**Quantum-dot Raman entanglement.**
+[Stockill et al., PRL 119, 010503 (2017)](https://doi.org/10.1103/PhysRevLett.119.010503),
+[full paper](https://arxiv.org/pdf/1702.03422), and its [full supplement](https://eprints.whiterose.ac.uk/id/eprint/119392/7/PRL_Supplemental.pdf),
+pp.2–4 and Fig.S1, specifies a same-path 956 nm reference, approximately
+1.5 million detected counts/s per QD, continuous feedback through a piezo
+and electro-optic modulator, suppression through about 1.5 kHz, integrated
+noise-power reduction 260 and residual phase FWHM 6.8 degrees. There is
+no reported pilot duty interruption; launched pilot power is not supplied.
+The supplement also attributes extra visibility loss
+to local electrical detuning, estimated at 300–500 MHz FWHM, despite the
+path lock. Its phase-data analysis rejects intervals failing resonance
+or phase criteria; it does not provide an all-clock rate with free control.
+
+Its actual measured spin/tomography phase is
+
+    Δφ = ωR(t1A−t1B) + ωB(t2A−t2B)
+         + ωLarmor(t3A−t3B).
+
+The first and second delays refer to excitation and detected Raman
+propagation; the third fixes the local spin-rotation frame. The source
+requires t2A+t3A=t2B+t3B to identify the Rayleigh reference phase with
+the entangled-state phase. This is a multi-frequency, time-referenced
+interferometer, not two independent scalar Kraus phases.
+
+**A faster drifting multi-emitter interface.**
+[Ruskuc et al., Nature (2025)](https://doi.org/10.1038/s41586-024-08537-z),
+[complete public Methods and supplement](https://arxiv.org/html/2402.16224v2),
+Methods B and Extended Data Fig.5, measure a path-phase correlation time
+of approximately 282 μs. They use a 10 μs, 987.9 nm heterodyne probe,
+with AOM phase compensation on every entanglement attempt. A separate
+validation uses a 30 μs delay and 984.5 nm probe. The residual phase
+standard deviation is 0.037×2π rad. The published correlation measurement
+and noise spectra do not specify launched pilot power or isolate the
+entire stabilization fraction of the full reset cycle. Separately, optical
+spectral diffusion has correlation time 1.42±0.04 ms. Their ordinary
+protocol uses the detected photon time in dynamic rephasing and local
+feedforward; a 500 ns acceptance window gives readout-error-corrected
+remote-pair fidelity 0.723±0.007 at 3.1 Hz. These are different temporal noise components
+with a demonstrated ordinary correction, not evidence for a native
+partial-SWAP or Sagnac switch interface on those devices.
+
+**Deployed-fibre reference control.**
+[Stolk et al., arXiv:2408.12464v1](https://arxiv.org/html/2408.12464)
+characterize the phase-control system used for an NV link with 25 km of
+deployed fibre. Their local, fast and global loops have approximately
+3 kHz, 220 kHz and 50 Hz bandwidths. Noise includes local mechanical
+resonances at 100–1000 Hz, deployed-fibre vibration up to about 5 kHz,
+and laser/pump phase noise to 50 kHz. Operation has 2.5 μs dark periods
+every 10 μs, rather than continuous pilots during quantum windows.
+Frequency-offset stabilization and signal fields also need a correction
+from measured fibre-length variation. Attributing all fringe-contrast
+loss to Gaussian phase noise gives an inferred 35.5 degrees RMS;
+the long-term setpoint spread after the
+length correction is below 4 degrees over ten hours. Those two numbers
+describe different fluctuations and are not interchangeable. The source
+explicitly observes that time-bin protocols need phase stability over
+the bin separation, often below 500 ns, rather than the full experiment.
+Supplement Table S1 gives stabilization powers about 5 μW at the local
+photodiode and 30 nW at the midpoint, plus about 5 mW reference power
+there; these have different optical boundaries and costs.
+
+**A measured low-power reference alternative.**
+[Jabir et al., Optica 12, 570–576 (2025)](https://doi.org/10.1364/OPTICA.540759),
+[full primary paper](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=959105),
+demonstrate displacement-assisted photon-counting stabilization over a
+120 km deployed loop. Its probe-window rate is about 650,000 detected
+photons/s (83 fW at the receiver), with a 50% payload duty cycle and probe windows
+10–150 μs depending on link configuration. Their out-of-loop PSD
+integrated from 1 Hz to the measured upper bandwidth gives 140 mrad
+RMS for the deployed loop and 110 mrad for a 100 km spool. This is a
+phase-reference experiment, not a remote-memory Bell generator. Receiver
+power is not launched pilot power or total pump/control energy. The paper
+states that underlying numerical data are not publicly available, so
+these integrated values cannot reconstruct an arbitrary alternative
+route's filter-function integral.
+
+These sources establish a real control cost and real residual noise.
+They do not establish that the same noise acts identically on a proposed
+SPRINT route, or that a reverse-order interferometer removes every
+measured component. Published PSD plots, their integrated RMS values and
+one correlation time do not specify the joint multi-port spectral matrix
+needed to compare two different physical routes.
+
+**What the exact checks and the remaining device test establish.**
+The [phase-covariance replay](checks/architecture/verify_raman_phase_covariance.py)
+checks 64 complete passive branch vectors, 64 norm identities and 128
+complete six-qubit local-ancilla branches, including 2,048 coefficients.
+The [reciprocal-port replay](checks/architecture/verify_raman_reciprocal_ports.py)
+checks 72 complete directional branches, 48 static reciprocal Bell-frame
+identities, three energy/time identities and three guards distinguishing
+reverse propagation from phase conjugation. The
+[route and double-herald replay](checks/architecture/verify_raman_route_and_echo_phases.py)
+checks 2,000 full route-phase vectors, 900 unmatched-route nonzero-$P=1$
+guards and 1,024 full double-herald vectors with a normalized spin source
+and contractive click branches. These finite exact checks support the
+displayed identities. General frame covariance, continuous causal kernels,
+distributed-noise integrals and physical access are analytic premises;
+device spectra, joint records, timing and energy are measured inputs.
+
+A decisive device comparison fixes two actual nodes, both photon-code
+ports, an independent order helper and the delivered spin-control frame.
+Measure the joint signal/pilot process on each directed segment and each
+code frequency; separate propagation, cavity/atom detuning, Raman-leg,
+conversion-pump, helper and spin noise. Retain cross spectra and actual
+event-time separations, testing Gaussian and stationary approximations
+rather than transferring one platform's RMS phase into another's gate.
+Apply the same available causal pilot and detection records in (PR10) to
+the two-order route, which-node/common-path route, ordinary photon filter,
+and admitted local-memory concentration or double-herald/rephasing
+instrument. Preserve the retuned-cavity comparator whenever that control
+is available. Compare (PR14) at the same fidelity threshold with every
+rejected launch, pilot interval, filter, herald timeout, storage/reset
+and hand-off charged.
+
+The measured references above establish real control costs and useful
+ordinary corrections. They do not supply a matching SPRINT two-order
+router, its joint multi-port signal/pilot noise law, or a complete matched
+rate/energy comparison. Scalar node phases already cancel in ordinary
+serial filters; true Raman-leg and time-dependent propagation noise
+require the full instrument. No device-backed native phase-reference
+saving follows from these sources alone.
 
 The drift premise itself needs measured support. For example,
 [Kuhlmann et al.](https://arxiv.org/html/1301.6381v1) resolve charge and

@@ -967,6 +967,148 @@ explicitly has generally different bright-pair couplings. Adiabatic or
 composite pulse constructions can change this constant-coupling screen,
 but need full-input propagators, durations and ordinary controls.
 
+<a id="nr-r19-passive-converter"></a>
+
+**Stationary passive conversion has a weighted matching condition.**
+The timed Hamiltonian in (NC3) is not a traveling-wave scattering
+matrix. For a separate, on-resonance Markov model take two equal
+$d$-mode manifolds, number-preserving coupling
+$K=(\begin{smallmatrix}0&J^\dagger\\J&0\end{smallmatrix})$, positive
+diagonal external linewidths
+$\Gamma=\operatorname{diag}(\Gamma_L,\Gamma_R)$, no internal loss,
+no detuning and no conjugate-mode amplification terms. Use the
+input/output convention
+
+$$
+\dot a=-(\Gamma/2+iK)a+\sqrt\Gamma\,b_{\rm in},\qquad
+b_{\rm out}=b_{\rm in}-\sqrt\Gamma\,a.
+\tag{SC1}
+$$
+
+These assumptions are a passive specialization of the
+[coupled-mode input/output formalism of Naaman and Aumentado,
+PRX Quantum **3**, 020201 (2022), §§II.1–II.3](https://arxiv.org/html/2109.11628).
+They exclude the internal dissipative and sum-frequency/conjugate
+couplings included in that general treatment. At steady state set
+$C=\Gamma_R^{-1/2}J\Gamma_L^{-1/2}$ and
+$\widetilde K=(\begin{smallmatrix}0&C^\dagger\\C&0\end{smallmatrix})$.
+Factoring
+$\Gamma/2+iK=\sqrt\Gamma(I/2+i\widetilde K)\sqrt\Gamma$ gives
+
+$$
+S=I-\sqrt\Gamma(\Gamma/2+iK)^{-1}\sqrt\Gamma
+ =I-(I/2+i\widetilde K)^{-1}.
+\tag{SC2}
+$$
+
+Write $C=L\operatorname{diag}(s_j)R^\dagger$, $s_j\ge0$.
+Conjugation by $\operatorname{diag}(R,L)$ reduces $\widetilde K$ to
+independent $s_jX$ blocks. Inverting $I/2+is_jX$ yields
+
+$$
+S_j=\begin{pmatrix}r_j&it_j\\it_j&r_j\end{pmatrix},\qquad
+r_j=\frac{s_j^2-1/4}{s_j^2+1/4},\quad
+t_j=\frac{s_j}{s_j^2+1/4},\quad r_j^2+t_j^2=1.
+\tag{SC3}
+$$
+
+The same-band blocks vanish on **every** input iff every $s_j=1/2$,
+equivalently
+
+$$
+J^\dagger\Gamma_R^{-1}J=\Gamma_L/4.
+\tag{SC4}
+$$
+
+In that case $S=iA(LR^\dagger)$; its common $i$ is irrelevant on the
+fixed one-excitation channel. Thus the unweighted J need not have a
+flat spectrum when external linewidths differ. With equal linewidth
+$\kappa$, (SC4) becomes $J^\dagger J=(\kappa/2)^2I$. For dimensionless
+singular values $(1/2,1,3/2)$, (SC3) instead gives reflection
+$(0,3/5,4/5)$ and conversion $(1,4/5,3/5)$: the worst singular input
+converts with probability $9/25$, and their uniform mean is $2/3$.
+Changing the unknown internal frame does not remove this reflection.
+These are single-station acceptance tests, not bounds on every recovery
+protocol. Finite bandwidth, internal loss, active pumps and temporal
+drift require their complete scattering/noise instruments.
+
+For example, the primary
+[41-mode microwave-comb experiment of Bock et al., Physical Review
+Applied **24**, 014027 (2025), §§II–III](https://arxiv.org/html/2501.09453)
+uses a mode vector containing both $a_m$ and $a_m^*$ and low- and
+high-frequency pumps. Its measured coherent-tone scattering therefore
+does not by mode count alone certify a passive full exchange on two
+three-mode single-photon manifolds, or the correlated second station
+in (34). Ordinary pump-programmed nonreciprocal routing and amplifier
+backaction control remain meaningful device tasks with different
+Gaussian input/output comparators.
+
+<a id="nr-r19-bragg-rank"></a>
+
+**Equal-power N-way Bragg scattering has only one inter-band bright mode.**
+[Oliver et al., *N-Way Frequency Beamsplitter for Quantum Photonics*,
+§II and Supplement §1](https://arxiv.org/html/2405.02453)
+give an all-to-all BS-FWM propagation generator with off-diagonal
+entries proportional to $A_i^*A_j$ and demonstrate three-frequency
+multiphoton interference. Consider its ideal constant, undepleted,
+equal-power pumps, common effective nonlinearity, negligible residual
+phase mismatch, and no loss. If $A_j=a e^{i\theta_j}$, define
+$w_j=e^{-i\theta_j}/\sqrt N$ and the dimensionless interaction length
+$\phi=2\gamma a^2L$. The generator is
+$\phi(N|w\rangle\langle w|-I)$, so its propagator is exactly
+
+$$
+V_N=e^{-i\phi}\left[I+(e^{iN\phi}-1)|w\rangle\langle w|\right].
+\tag{BF1}
+$$
+
+The common phase can be suppressed when discussing a fixed
+one-photon channel. For a physical split into two disjoint $d$-frequency
+bands, $N=2d$, let $w_0,w_1$ be the components in those bands.
+The transfer block is
+
+$$
+(V_N)_{10}=e^{-i\phi}(e^{iN\phi}-1)|w_1\rangle\langle w_0|,
+\quad \operatorname{rank}(V_N)_{10}\le1.
+\tag{BF2}
+$$
+
+Both $\|w_0\|^2=\|w_1\|^2=1/2$, so $d-1$ independent inputs in
+each band are dark to inter-band transfer. No $d>1$ instance of this
+single interaction is the full exchange (34). Each physical frequency
+input transfers probability
+$|e^{iN\phi}-1|^2/(4d)\le1/d$ to the opposite band. Thus in the
+ideal six-frequency extension the maximum is $1/3$ per frequency
+input, although the collective bright input can transfer completely.
+This is a deduction about the model, not a measured six-mode efficiency.
+Arbitrary pre/post unitaries acting separately within the two bands
+preserve the rank obstruction; the per-frequency bound refers to the
+displayed frequency basis, not arbitrary such pre-mixing.
+
+There is also a common-encoding obstruction: (BF1) has eigenvalues
+$e^{-i\phi}$ with multiplicity $N-1$ and $e^{i(N-1)\phi}$ once, hence
+$|\operatorname{Tr}V_N|=|N-1+e^{iN\phi}|\ge N-2>0$ for $N>2$.
+An odd exchange has zero trace, so a common unitary basis change and
+common scalar phase cannot turn this family into (34). Unequal
+input/output phase legs can change that spectral argument; diagonal
+legs in the physical frequency bands still preserve the rank bound.
+Unequal pump powers, additional phase mismatch, independently
+engineered pair couplings, multiple interactions, encodings that mix
+the two physical bands differently at input and output, or ancillas
+require a new propagator and are not excluded here.
+
+At $N\phi=\pi\pmod{2\pi}$, (BF1) instead gives the rank-one reflection
+$I-2|w\rangle\langle w|$ up to its common scalar phase. If an actual
+band-selective version supplies the executable M used to synthesize B,
+the ordinary wrapper (NC1) applies; compensation of an address-relative
+scalar phase must also be priced. Algebraic factorization alone does
+not expose that control in a sealed device. The
+[exact finite converter checks](checks/architecture/native_converter_guards.py)
+replay unequal-linewidth (SC2)–(SC4), the mismatch example and the
+six-frequency rank-one case. Their universal derivations and the
+primary device assumptions remain analytic; no native advantage or
+ordinary optimum follows.
+
 **Stationary settings and reciprocal optical ports are distinct interfaces.**
 If the physical order helper coherently selects two coupling settings on
 the same stationary register, its supplied selector is subject to the

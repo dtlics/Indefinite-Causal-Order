@@ -30,6 +30,7 @@ from verify_dispatch import (
     normalized_choi, require_tp_choi, flag_embed,
 )
 from verify_fault_simulation import multiply, conjugate
+from native_converter_guards import run_checks as native_converter_checks
 
 
 def measure_block(unitary, d, phase, sign):
@@ -736,6 +737,7 @@ def main():
                       "exchange_backaction": exchange,
                       "odd_couplers": odd_couplers,
                       "andreev_native_interface": andreev_native,
+                      "passive_native_converter_guards": native_converter_checks(),
                       "scope": "NR-R14/NR-R19 exact finite full-instrument, exchange norm-factor, scalar polynomial, odd-coupler and Andreev-interface replay; universal proofs, access and physical-cost statements remain analytic.",
                       "counterexample": example}, sort_keys=True))
 

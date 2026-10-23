@@ -164,9 +164,31 @@ comparison is not extended to arbitrary noncommuting field coefficients.
 The [passive-filter replay](../communication.md#nr-r11-raman-passive-filter)
 uses exact Gaussian rationals extended by $\sqrt2$ to check its optical
 contraction, orthogonal heralds, local-filter effect, normalization and
-canceled/retained terms. It supports an achievable family member, with
-vacuum loss ports and local filter apparatus charged; it is not a sharp
-bound for adaptive or larger-mode ordinary processors.
+canceled/retained terms. The stronger four-level-helper member is checked
+over $\mathbb Q(\sqrt2,\sqrt3)$, including its full photon contraction,
+four readouts and Bell outputs. Its family optimization is analytic.
+Vacuum rejection ports, extra modes and local filter apparatus remain
+charged; these achievable constructions are not a sharp bound for adaptive
+or larger-mode ordinary processors.
+
+The four-level flying-helper replay is
+[raman_multimode_helper.py](architecture/raman_multimode_helper.py).
+The communication job also includes
+[phase-covariant instruments](architecture/verify_raman_phase_covariance.py),
+[reciprocal-port guards](architecture/verify_raman_reciprocal_ports.py) and
+[route/double-herald phase checks](architecture/verify_raman_route_and_echo_phases.py).
+They check complete finite output vectors, normalized source/readout
+branches and phase-frame identities. General retarded-kernel, joint
+phase-spectrum, causal-pilot and accepted-record laws remain analytic or
+measured physical inputs. No unknown Raman-frame immunity, compilation of
+cycling emission from a Raman SWAP, or measured source-limited advantage
+is certified.
+
+The [native-port replay](architecture/raman_port_routes.py) checks exact
+ring couplers, complete exit/tail weights, selected node-order words and
+formal temporal-code routing entries. Full code/slot stationarity,
+component phases/loss, pulse guards, resets and physical port availability
+remain hypotheses; no route-family optimum or hardware rate is certified.
 
 The [balanced-cavity checks](../communication.md#nr-r11-raman-cavity-frontier)
 verify exact polynomial frontier identities and rational nominal model
@@ -183,6 +205,14 @@ It is neither an all-protocol converse for the noisy extension nor an audit
 of an unexamined published platform supplement. The NR-R19 Andreev checks
 likewise support the specified signature, symmetry, observable and bandwidth
 identities; they are not a general superconducting-switch impossibility.
+The backaction job's
+[native-converter guards](architecture/native_converter_guards.py) check
+complete Gaussian-rational scattering inversions, unequal-linewidth
+normalization/matching, mismatch probabilities and finite Bragg-transfer
+rank/phase identities. Universal matching/rank arguments and the cited
+device premises remain analytic. The model excludes unaccounted internal
+loss, gain, detuning, bandwidth and drift; the replay is not a quantum
+device characterization or an ordinary-recovery optimum.
 
 The [alignment benchmark](../alignment.md) proves its all-ordinary strict
 two-call local limit analytically using the replayed causal witnesses and

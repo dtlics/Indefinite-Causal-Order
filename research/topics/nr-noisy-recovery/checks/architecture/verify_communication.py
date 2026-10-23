@@ -17,6 +17,11 @@ from verify_fault_simulation import (
 )
 
 from raman_baselines import verify_raman_stronger_baselines
+from raman_multimode_helper import verify_raman_multimode_helper
+from verify_raman_phase_covariance import verify_raman_phase_covariance
+from verify_raman_reciprocal_ports import verify_reciprocal_raman_ports
+from verify_raman_route_and_echo_phases import verify_raman_route_and_echo_phases
+from raman_port_routes import verify_raman_port_routes
 
 if not __debug__:
     raise RuntimeError("Exact communication checks require assertions; do not use -O.")
@@ -1030,6 +1035,11 @@ def main():
         "chiral_parity_examples":chiral_parity_examples(),
         "raman_sprint_examples":raman_sprint_examples(),
         "raman_stronger_baselines":verify_raman_stronger_baselines(),
+        "raman_multimode_helper":verify_raman_multimode_helper(),
+        "raman_phase_covariance":verify_raman_phase_covariance(),
+        "raman_reciprocal_ports":verify_reciprocal_raman_ports(),
+        "raman_route_and_echo_phases":verify_raman_route_and_echo_phases(),
+        "raman_port_routes":verify_raman_port_routes(),
         "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and random-receiver phase/normalized-bus isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 
