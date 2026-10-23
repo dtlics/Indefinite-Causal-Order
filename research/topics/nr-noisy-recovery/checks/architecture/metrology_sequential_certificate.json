@@ -1,0 +1,52 @@
+{
+  "schema": "metrology-ad-two-query-dual-v1",
+  "decay_probability": "2/5",
+  "exposure_time": "1",
+  "queries": 2,
+  "local_working_point": "0",
+  "QFI_upper": "64/25",
+  "h_diagonal": [
+    "-220013/1000000",
+    "109123/250000",
+    "196381/250000",
+    "1"
+  ],
+  "Q": [
+    [
+      "19999/20000",
+      "0",
+      "0",
+      "-67663233/10000000000"
+    ],
+    [
+      "0",
+      "372619/3125000",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "1/20000",
+      "0"
+    ],
+    [
+      "-67663233/10000000000",
+      "0",
+      "0",
+      "2752381/3125000"
+    ]
+  ],
+  "provenance": {
+    "framework": "Liu, Hu, Yuan and Yang, Phys. Rev. Lett. 130, 070803 (2023), Appendix E.2 sequential dual",
+    "paper": "https://arxiv.org/abs/2203.09758",
+    "author_code": "https://github.com/qiushi-liu/strategies_in_metrology",
+    "author_commit": "07748a4e94d7b29dc888d2cbf41d0b0f421c58dc",
+    "author_code_license": "MIT",
+    "author_source_sha256": {
+      "comb.py": "62930a8dcab9a2a99a0918348a67dcd6417591d157bbb4a7f84aee0935e002dd",
+      "sequential.py": "0875975bdcfc3061792520ccc0dfc513df81fbe5d2d7bb32875fb51d14b5ac7f"
+    },
+    "witness_generation": "Rounded a Clarabel solution and mixed Q with identity. Discovery is not trusted; the independent verifier rebuilds every LMI entry and certifies positivity exactly."
+  }
+}

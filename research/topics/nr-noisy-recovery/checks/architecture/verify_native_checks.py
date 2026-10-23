@@ -9,11 +9,16 @@ analytic inputs, not certified by these finite examples. No files are written.
 from fractions import Fraction as F
 from itertools import product
 import json
+import sys
+
+if not __debug__:
+    raise RuntimeError("Run exact native checks without -O.")
+sys.dont_write_bytecode = True
 
 from verify_fault_simulation import (
     ZERO, ONE, require, gaussian, add, multiply, conjugate, times,
     zeros, identity, adjoint, matmul, tensor, vectorize, inner,
-    pauli_basis, rational_rotation,
+    pauli_basis, rational_rotation, add_outer,
 )
 
 
@@ -321,14 +326,155 @@ def replay_qutrit_router():
     return comparisons
 
 
+def native_choi(kraus):
+    """Full normalized Choi, including a possibly rectangular output."""
+    input_dimension = len(kraus[0][1][0])
+    length = len(kraus[0][1])*input_dimension
+    result = zeros(length, length)
+    for weight, k in kraus:
+        if weight:
+            add_outer(result, vectorize(k), weight/input_dimension)
+    return result
+
+
+def require_tp_native_choi(j, input_dimension, output_dimension):
+    marginal = zeros(input_dimension, input_dimension)
+    for r, c, o in product(range(input_dimension), range(input_dimension), range(output_dimension)):
+        marginal[r][c] = add(marginal[r][c],
+            j[o+output_dimension*r][o+output_dimension*c])
+    require(marginal == scaled(identity(input_dimension), F(1, input_dimension)),
+            "Self-channel full-control Choi is not TP.")
+
+
+def echo_arm_pair(u, z, bits, switched):
+    # bits=(a1,a2,b1,b2) are pre-existing classical potential-slot faults.
+    a1, a2, b1, b2 = bits
+    first = lambda bit: matmul(z, u) if bit else u
+    if switched:
+        return matmul(first(b2), first(a1)), matmul(first(a2), first(b1))
+    return matmul(first(a2), first(a1)), matmul(first(b2), first(b1))
+
+
+def full_control_kraus(first, second):
+    # Control-plus input isometry is [first;second]/sqrt(2); keep the
+    # square-root factor outside as a probability weight in native_choi.
+    return [list(row) for row in first]+[list(row) for row in second]
+
+
+def self_channel_examples(n):
+    basis = pauli_basis(n)
+    d = 2**n
+    yield identity(d)
+    yield basis[1]  # anticommutes with the chosen full Z string
+    rotation = matmul(rational_rotation(basis[1], 3, 4, 5),
+                      rational_rotation(basis[-1], 5, 12, 13))
+    if n == 2:
+        rotation = matmul(rotation, rational_rotation(basis[4], 8, 15, 17))
+    yield rotation
+
+
+def replay_self_channel_routes():
+    metric_cases, instrument_cases = 0, 0
+    for n in [1, 2]:
+        d = 2**n
+        z = pauli_basis(n)[-1]
+        require(z == adjoint(z) and matmul(z, z) == identity(d) and trace(z) == ZERO,
+                "Fault generator is not a traceless Hermitian involution.")
+        for u in self_channel_examples(n):
+            require(matmul(adjoint(u), u) == identity(d), "Self-channel example is not unitary.")
+            target = matmul(u, u)
+            target_choi = native_choi([(F(1), target)])
+            r_gaussian = times(trace(matmul(matmul(matmul(adjoint(u), z), u), z)), F(1, d))
+            require(r_gaussian[1] == 0, "Target error overlap is not real.")
+            r = r_gaussian[0]
+            require(-1 <= r <= 1, "Target error overlap is outside its norm bound.")
+            # Check every quasistatic fault event by its COMPLETE accepted
+            # Bell Choi, including cases where the plus probability is zero.
+            event = {}
+            for a, b in product([0, 1], repeat=2):
+                bits = (a, a, b, b)
+                results = []
+                for switched in [True, False]:
+                    first, second = echo_arm_pair(u, z, bits, switched)
+                    accepted = scaled(plus(first, second), F(1, 2))
+                    j = native_choi([(F(1), accepted)])
+                    p = trace(j)
+                    q = inner(vectorize(target_choi), vectorize(j))
+                    expected_p = F(1) if a == b else (1+r)/2
+                    expected_q = (F(1) if a == b == 0 else r*r if a == b else
+                                  F(0) if switched else (1+r)**2/4)
+                    require((p, q) == (gaussian(expected_p), gaussian(expected_q)),
+                            "Self-channel quasistatic event Choi metrics failed.")
+                    relative = matmul(adjoint(target), accepted)
+                    require(pq([(F(1), relative)]) == (expected_p, expected_q),
+                            "Self-channel Choi and relative-Kraus Bell metrics disagree.")
+                    results.append((expected_p, expected_q, j))
+                event[a, b] = results
+            for epsilon in [F(0), F(1, 10), F(1, 2), F(9, 10), F(1)]:
+                js, jo = zeros(d*d, d*d), zeros(d*d, d*d)
+                for a, b in product([0, 1], repeat=2):
+                    weight = (epsilon if a else 1-epsilon)*(epsilon if b else 1-epsilon)
+                    js = plus(js, scaled(event[a, b][0][2], weight))
+                    jo = plus(jo, scaled(event[a, b][1][2], weight))
+                p = 1-epsilon*(1-epsilon)*(1-r)
+                qs = (1-epsilon)**2+epsilon**2*r*r
+                qo = qs+epsilon*(1-epsilon)*(1+r)**2/2
+                require(trace(js) == trace(jo) == gaussian(p), "Self-channel mixture yields differ.")
+                require(inner(vectorize(target_choi), vectorize(js)) == gaussian(qs),
+                        "Switched quasistatic Bell weight failed.")
+                require(inner(vectorize(target_choi), vectorize(jo)) == gaussian(qo),
+                        "Ordinary quasistatic Bell weight failed.")
+                require(2*(qo-qs) == epsilon*(1-epsilon)*(1+r)**2 >= 0,
+                        "Pointwise exact ordinary Bell-score dominance failed.")
+                metric_cases += 1
+            # The iid claim is stronger: the ENTIRE output control/data
+            # channel is equal, with arbitrary passive references, not just
+            # the above Bell overlap or one control measurement.
+            for epsilon in [F(0), F(1, 10), F(1, 2), F(1)]:
+                switched, ordinary = [], []
+                for bits in product([0, 1], repeat=4):
+                    a1, a2, b1, b2 = bits
+                    permuted = (a1, b2, b1, a2)  # swap the LATE station bits
+                    weight = epsilon**sum(bits)*(1-epsilon)**(4-sum(bits))
+                    s0, s1 = echo_arm_pair(u, z, bits, True)
+                    o0, o1 = echo_arm_pair(u, z, bits, False)
+                    permuted0, permuted1 = echo_arm_pair(u, z, permuted, False)
+                    require((s0, s1) == (permuted0, permuted1), "Iid bit bijection failed.")
+                    # Even before averaging, S differs from O by the SAME
+                    # left unitary on both control branches. Every payload's
+                    # control readout probabilities therefore agree.
+                    common = z if a2 != b2 else identity(d)
+                    require(s0 == matmul(common, o0) and s1 == matmul(common, o1),
+                            "Common hidden output-Pauli relation failed.")
+                    switched.append((weight/2, full_control_kraus(s0, s1)))
+                    ordinary.append((weight/2, full_control_kraus(o0, o1)))
+                js, jo = native_choi(switched), native_choi(ordinary)
+                require(js == jo, "Iid full control/data Choi equality failed.")
+                require_tp_native_choi(js, d, 2*d)
+                instrument_cases += 1
+    # The amplitude-level vacuum premise cannot be inferred from Ad_U:
+    # stations I and iI have identical occupied channels, but ordinary
+    # same-station arms I and -I interfere differently from switch iI,iI.
+    i = identity(2)
+    ip = [[multiply(gaussian(0, 1), value) for value in row] for row in i]
+    switch_plus = scaled(plus(matmul(ip, i), matmul(i, ip)), F(1, 2))
+    ordinary_plus = scaled(plus(matmul(i, i), matmul(ip, ip)), F(1, 2))
+    require(pq([(F(1), switch_plus)])[0] == 1 and pq([(F(1), ordinary_plus)])[0] == 0,
+            "Vacuum-relative occupied-phase caveat failed.")
+    return metric_cases, instrument_cases
+
+
 def main():
     pcs_cases = replay_pcs()
     read_cases = replay_read_oracles()
     router_cases = replay_qutrit_router()
+    self_metric_cases, self_instrument_cases = replay_self_channel_routes()
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
         "qutrit_router_flagged_kraus_identities": router_cases,
+        "self_channel_quasistatic_full_choi_metric_cases": self_metric_cases,
+        "self_channel_iid_full_control_choi_cases": self_instrument_cases,
         "scope": "Finite replay; general projection, costs and physical hypotheses are analytic.",
     }, sort_keys=True))
 

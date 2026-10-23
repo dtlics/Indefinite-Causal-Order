@@ -340,8 +340,6 @@ database size nor a deep native query alone excludes a cheap ordinary
 check. A hardware comparison must include connectivity, helper memory,
 router loss and latency, plus the desired physical-output metric.
 
-<a id="nr-r07"></a>
-
 ### Qutrit-router address checks do not require a Clifford payload
 
 The logical router in
@@ -391,6 +389,130 @@ coherent address mixing, a bit flip, diagonal phase noise and nonunital
 $2\to1$ leakage. It also checks the one-postcheck projection and absence
 of a diagonal-phase alarm. These operator equalities imply complete-channel
 equalities on the tested examples; the general algebra is given above.
+
+### Matched noisy copies admit an ordinary same-order path comparator
+
+An unknown many-body matrix is not enough to establish a self-switch
+protection advantage. Consider two matched stations $A,B$, each implementing
+the same unknown unitary $U$ on a $d$-dimensional payload. An occupied visit
+has error $Z^eU$, where $Z=Z^\dagger$, $Z^2=I$, $\operatorname{Tr}Z=0$ and
+$e\in\{0,1\}$. Specify the **amplitude-level** empty-port extension as
+
+$$
+\widehat V_e=|\mathrm{vac}\rangle\langle\mathrm{vac}|\oplus Z^eU.
+$$
+
+The classical fault bits are pre-existing potential-slot variables,
+unaffected by whether the payload occupies that port. Empty visits leave no
+additional occupancy or timing record. The station implementations have
+aligned occupied/vacuum phases. These are physical premises: the same
+occupied CPTP channel and an unchanged vacuum density matrix alone do not
+specify the required coherence.
+
+With two time windows, write the four bits as $(a_1,a_2,b_1,b_2)$. The switch
+routes through $A$ then $B$ or $B$ then $A$. An ordinary coherent path
+instead visits $A$ twice or $B$ twice, using fixed chronological order.
+Both use two occupied native visits per payload and one retained path
+control; their branch unitaries are
+
+$$
+\begin{array}{ll}
+S_0=Z^{b_2}UZ^{a_1}U,&S_1=Z^{a_2}UZ^{b_1}U,\\
+O_0=Z^{a_2}UZ^{a_1}U,&O_1=Z^{b_2}UZ^{b_1}U.
+\end{array}
+\tag{N1}
+$$
+
+For independent identically distributed clock bits, exchanging $a_2,b_2$
+preserves the probability law and maps the entire ordinary controlled
+unitary $\operatorname{diag}(O_0,O_1)$ to
+$\operatorname{diag}(S_0,S_1)$. Averaging therefore gives **identical full
+control/payload channels**, before any control readout. Every instrument,
+external-reference output and later utility then agrees. Independence is
+a sufficient condition; the proof only requires the stated late-slot
+exchange symmetry of the complete classical noise law.
+
+There is also a useful exact correlated example. Suppose each station's
+bit is quasistatic across its two windows, $a_1=a_2=a$ and $b_1=b_2=b$,
+with independent station bits of probability $\epsilon$. The target is
+$W=U^2$. Prepare the path control in $+$ and retain only its $X=+$ output,
+so the accepted operators are $(S_0+S_1)/2$ and $(O_0+O_1)/2$. Define
+
+$$
+r=\frac1d\operatorname{Tr}(U^\dagger ZUZ)\in[-1,1].
+$$
+
+It is real because it is the trace inner product of the Hermitian operators
+$Z$ and $U^\dagger ZU$, and the bound follows from their Hilbert–Schmidt
+norms. Use the full target-$W$ Bell metrics $p,q$ defined above. Direct
+multiplication gives the following complete event table:
+
+| Station faults | Common $p_+$ | Switch $q_+$ | Ordinary $q_+$ |
+| --- | ---: | ---: | ---: |
+| Neither | $1$ | $1$ | $1$ |
+| Both | $1$ | $r^2$ | $r^2$ |
+| Exactly one | $(1+r)/2$ | $0$ | $(1+r)^2/4$ |
+
+For the last row, the ordinary operator is
+$[(ZU)^2+U^2]/2$, whose normalized target trace is $(1+r)/2$.
+The switch operator is $[UZU+ZU^2]/2$; both summands have zero target
+trace because $\operatorname{Tr}Z=0$. Their acceptance probabilities
+are equal. More strongly, for each four-bit realization in (N1),
+
+$$
+S_c=Z^{a_2\mathbin\oplus b_2}O_c\quad(c=0,1).
+\tag{N2}
+$$
+
+Thus both plus and minus acceptance **effects** agree for every input,
+not only for the Bell experiment. Their conditional payloads need not
+agree in the correlated model, because the common output Pauli is hidden.
+
+Weighting the table by $(1-\epsilon)^2$, $\epsilon^2$ and
+$2\epsilon(1-\epsilon)$ gives exactly
+
+$$
+\begin{aligned}
+p_{\rm O}&=p_{\rm S}=1-\epsilon(1-\epsilon)(1-r),\\
+q_{\rm S}&=(1-\epsilon)^2+\epsilon^2r^2,\\
+q_{\rm O}-q_{\rm S}&=\tfrac12\epsilon(1-\epsilon)(1+r)^2,\\
+\mathsf S_{\rm O}-\mathsf S_{\rm S}
+ &=\epsilon(1-\epsilon)(1+r)^2\ge0.
+\end{aligned}
+\tag{N3}
+$$
+
+This holds for **every** $U$ and $\epsilon\in[0,1]$, without learning $U$
+or taking a Haar average. At the same Bell yield, ordinary routing also
+has no lower conditional Bell overlap $q/p$ when $p>0$. The conclusion
+concerns this plus-port target-$U^2$ metric and signed reward. It is not
+CP-map dominance, a diamond-distance comparison, a statement for every
+payload fidelity, or an optimization over both flagged outputs and
+feedback. Arbitrary quantum baths, nonclassical noise and unmatched
+stations need their own analysis.
+
+The access and cost boundaries matter. The ordinary path needs two return
+visits to a chosen station; an abstract budget of one call to each named
+box is a different constraint. Both routes must price their actual vacuum
+loops, losses, timing, coherent control and resets. A processor without
+those empty-port/return modes does not inherit this photonic-style
+comparator automatically, and a switch does not receive such routing free.
+Even $A=I$, $B=iI$ have identical occupied channels but give switch arms
+$iI,iI$ and ordinary arms $I,-I$; their control interference differs.
+Relative station phases, occupancy records or fresh unknown phase drift
+cannot be omitted from the native model.
+
+Ordinary coherent-path protection is established prior, including the
+[black-box gate error filtration of Lee et al.](https://arxiv.org/html/2210.10733v2),
+which does not require learning the protected operation. Equations
+(N1)–(N3) are an explicit model screen, not a claim of mechanism priority
+or a general hardware-cost advantage. The native checker replays thirty
+exact quasistatic full-Bell-Choi metric cases and twenty-four independent-
+clock full-control/payload Choi equalities at $d=2,4$, including commuting,
+anticommuting and non-Clifford examples. It also checks the relative-vacuum
+phase counterexample; the general proofs are the algebra above.
+
+<a id="nr-r07"></a>
 
 ## NR-R07 — The efficient finite-frame family admits polynomial-query reused calibration
 

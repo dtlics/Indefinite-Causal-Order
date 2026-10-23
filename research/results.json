@@ -1064,7 +1064,7 @@
     {
       "id": "NR-R11",
       "topic": "NR",
-      "title": "Elastic local-node instruments have no extra order syndrome",
+      "title": "Commuting accepted cavity and two-photon scattering instruments",
       "canonical_path": "research/topics/nr-noisy-recovery/communication.md#nr-r11"
     },
     {
@@ -1084,6 +1084,12 @@
       "topic": "NR",
       "title": "Shared-bath calibration transfer and exact ordinary echo/instrument baselines",
       "canonical_path": "research/topics/nr-noisy-recovery/backaction.md#nr-r14"
+    },
+    {
+      "id": "NR-R15",
+      "topic": "NR",
+      "title": "Noisy phase calibration: certified two-call benchmark and native-memory boundary",
+      "canonical_path": "research/topics/nr-noisy-recovery/metrology.md#nr-r15"
     }
   ]
 }

@@ -76,4 +76,17 @@ switch sampling or architecture advantage. The application assessment's
 photonic and phononic resource comparisons are primary-source screens,
 not hardware experiments or new security proofs.
 
+The [phase-calibration benchmark](../research/topics/nr-noisy-recovery/metrology.md)
+has an exact feasible dual witness for all ordinary hard-two-query
+independent-channel strategies. Its checker reconstructs every LMI entry,
+encloses the radicals by rational intervals and verifies a complete exact
+LDL factorization. The direct weak-duality argument and all-input
+switch optimization remain analytic. Achievable readout, retained-memory
+echo and longer ordinary feedback comparisons delimit the benchmark;
+no expected-cost, sustained calibration-rate or native-device advantage
+is inferred. Same-unitary physical-path checks also distinguish
+quasistatic coins from independent clock noise. The two-photon continuum
+commutation proof in NR-R11 uses a common scattering basis and is analytic,
+without a claimed frequency-grid certificate or hardware fit.
+
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

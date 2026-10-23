@@ -59,7 +59,7 @@ JOBS = (
     ("architecture-communication", "architecture/verify_communication.py", (),
      "Exact full-Choi absorbing-loss and noisy-control-wire identities, tight qubit activation and elastic-node examples; capacity/stopping proofs analytic."),
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
-     "Exact finite native-layer Pauli-check and read-only classical-bit-oracle comparison examples; hardware gate faults and general proofs analytic."),
+     "Exact finite native-layer, classical-bit-oracle and qutrit address checks, plus same-unitary quasistatic Bell scores and iid-clock full Choi comparisons; physical routing costs analytic."),
     ("architecture-dispatch", "architecture/verify_dispatch.py", (),
      "Exact full flagged-Choi dispatch, event-head/clock/reuse models, temporal phase-path equivalences and three/four-call routing; Gaussian fronts and physical costs analytic."),
     ("architecture-dispatch-baselines", "architecture/verify_dispatch_baselines.py", (),
@@ -68,6 +68,8 @@ JOBS = (
      "Exact full-address Choi identities for ordinary measurement-uncomputation and balanced-switch garbage erasure; finite instances, no optimized architecture frontier."),
     ("architecture-backaction", "architecture/verify_backaction.py", (),
      "Exact full flagged-Choi echo/switch examples, held-out memory and ordinary record contrasts, and polynomial Ramsey/storage counterexamples; all-dimension instrument proofs and hardware access remain analytic."),
+    ("architecture-metrology", "architecture/verify_metrology.py", (),
+     "Exact two-query adaptive phase/AD dual feasibility, achievable full-output Fisher information and visibility/erasure arithmetic, ordinary memory/rate boundaries; process and hardware arguments remain analytic."),
 )
 
 

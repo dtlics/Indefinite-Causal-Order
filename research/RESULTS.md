@@ -179,7 +179,8 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R08 | [Accessible measurement records and syndrome-sector baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08) |  |
 | NR-R09 | [Absorbing optical loss is serial erasure plus a receiver-preparable flag](../research/topics/nr-noisy-recovery/communication.md#nr-r09) |  |
 | NR-R10 | [Entanglement-breaking slot, control-quality wire simulation and stopping bounds](../research/topics/nr-noisy-recovery/communication.md#nr-r10) |  |
-| NR-R11 | [Elastic local-node instruments have no extra order syndrome](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
+| NR-R11 | [Commuting accepted cavity and two-photon scattering instruments](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
 | NR-R12 | [Exact coherent dispatch with a dephased counter and bounded-query boundary](../research/topics/nr-noisy-recovery/dispatch.md#nr-r12) |  |
 | NR-R13 | [Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound](../research/topics/nr-noisy-recovery/native-lookups.md#nr-r13) |  |
 | NR-R14 | [Shared-bath calibration transfer and exact ordinary echo/instrument baselines](../research/topics/nr-noisy-recovery/backaction.md#nr-r14) |  |
+| NR-R15 | [Noisy phase calibration: certified two-call benchmark and native-memory boundary](../research/topics/nr-noisy-recovery/metrology.md#nr-r15) |  |

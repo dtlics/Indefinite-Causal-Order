@@ -21,10 +21,11 @@ and from learning a scalar channel property.
 | NR-R08 | Accessible measurement records and syndrome-sector baselines | [Measurement baselines](architecture-baselines.md#nr-r08) |
 | NR-R09 | Absorbing optical loss is serial erasure plus a receiver-preparable flag | [Loss equivalence](communication.md#nr-r09) |
 | NR-R10 | Entanglement-breaking slot, control-quality wire simulation and stopping bounds | [Communication resource bounds](communication.md#nr-r10) |
-| NR-R11 | Elastic local-node instruments have no extra order syndrome | [Cavity-instrument screen](communication.md#nr-r11) |
+| NR-R11 | Commuting accepted cavity and two-photon scattering instruments | [Scattering-instrument screens](communication.md#nr-r11) |
 | NR-R12 | Exact coherent dispatch with a dephased counter and bounded-query boundary | [Conditional dispatch result](dispatch.md#nr-r12) |
 | NR-R13 | Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound | [Composite lookup screen](native-lookups.md#nr-r13) |
 | NR-R14 | Shared-bath calibration transfer and exact ordinary echo/instrument baselines | [Bath-backaction screen](backaction.md#nr-r14) |
+| NR-R15 | Noisy phase calibration: certified two-call benchmark and native-memory boundary | [Metrology benchmark](metrology.md#nr-r15) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -88,6 +89,10 @@ ordinary chronological implementation. Predicting a useful held-out
 memory decision at lower total cost remains the next test, with ordinary
 phase-resolved echo, retained records and direct schedule calibration
 included.
+The [phase-calibration benchmark](metrology.md) independently certifies a
+known finite-query switch advantage, but preserves its hard two-call scope.
+Longer ordinary rounds, emitted timing records and coherent bath reuse
+change that comparison. A native calibration-rate advantage remains open.
 Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.

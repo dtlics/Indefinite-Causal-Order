@@ -2,7 +2,7 @@
 
 [Architecture assessment](architecture.md) · [Local baselines](architecture-baselines.md) · [References](references.md) · [Checks](checks/README.md)
 
-These finite-dimensional results distinguish an abstract switch placement from a physical network cut. Local operations, classical communication (LOCC), encoding, quantum memory, distillation and rejected attempts belong in the comparator. A usable control wire across a cut is an additional communication resource; an abstract provider-owned order control does not automatically supply that wire. The proofs below are analytic, with finite identities replayed by the linked checks. They have not been formalized in Lean, and no priority claim is made.
+These results distinguish an abstract switch placement from a physical network cut. Local operations, classical communication (LOCC), encoding, quantum memory, distillation and rejected attempts belong in the comparator. A usable control wire across a cut is an additional communication resource; an abstract provider-owned order control does not automatically supply that wire. The proofs below are analytic, with finite identities replayed by the linked checks. The continuum scattering argument uses the cited spectral representation and is not a finite replay. They have not been formalized in Lean, and no priority claim is made.
 
 <a id="nr-r09"></a>
 
@@ -238,7 +238,7 @@ Control coherence as a communication resource has prior thermodynamic treatment,
 
 <a id="nr-r11"></a>
 
-## NR-R11 — Elastic local-node instruments have no extra order syndrome
+## NR-R11 — Commuting accepted cavity and two-photon scattering instruments
 
 Let a photon bus have a common set of orthogonal mode projectors $T_h$.
 Two stations with independent slot environments act on disjoint matter
@@ -287,11 +287,162 @@ the microscopic model. The demonstrated architecture already uses
 photon/time-delay-interferometer heralds; those records belong in the
 ordinary comparison.
 
+### Two-photon survivor scattering in a common continuum basis
+
+Nonlinear scattering need not preserve each photon's frequency, so it
+cannot generally be replaced by a passive single-particle matrix. There
+is nevertheless a common-basis closure for a specified two-level-emitter
+model. Use linearized waveguide dispersion, so propagation between
+stations contributes only a scalar phase at fixed total energy. The two
+order routes have the same propagation phase and matched output modes;
+no additional relative-frequency phase or mode transformation is inserted.
+Consider a ground-state Markov emitter with coupling rate
+$\Gamma>0$ into the monitored forward direction, total radiative decay
+$\kappa\ge\Gamma$, and resonance $\Omega$. Accept only the sector in which
+both input photons remain in that direction and the emitter returns to
+its ground state. Other radiative ports are lost and cannot feed back
+into this or another station. There is no phonon dephasing or other
+photon-preserving bath record. The resulting accepted field operator is
+the single Kraus operator $K_{\Omega,\kappa}$ on the complete two-photon
+wavepacket space, rather than a fitted single-mode phase.
+
+The complete extended/bound Bethe basis originates in
+[Shen and Fan](https://doi.org/10.1103/PhysRevA.76.062709).
+The loss-dependent scattering amplitudes in
+[Mahmoodian et al., supplementary Eqs. S2–S5](https://arxiv.org/html/1803.02428v3)
+give the following spectral description. At fixed **physical** total
+photon frequency $E$, the relative-coordinate basis is the spectral
+basis of the self-adjoint half-line operator
+
+$$
+H_\Gamma=-\frac{d^2}{dy^2},\qquad
+\psi'(0)=-\frac\Gamma2\psi(0),\qquad y\ge0.
+\tag{10}
+$$
+
+Its continuum eigenfunctions are proportional to
+$2u\cos(uy)-\Gamma\sin(uy)$, with eigenvalue $u^2\ge0$.
+Its single bound eigenfunction is proportional to $e^{-\Gamma y/2}$,
+with eigenvalue $-\Gamma^2/4$. Let $P_\Gamma(d\lambda)$ be its continuum
+spectral measure and $P_{\Gamma,B}$ its bound-state projector. These
+projectors depend on the monitored rate $\Gamma$, not the emitter
+resonance or total radiative loss. Write
+
+$$
+x=E/2-\Omega,\qquad z=x+i\kappa/2.
+$$
+
+The scattering representation is
+
+$$
+\begin{aligned}
+K_{\Omega,\kappa}(E)
+&=\int_{[0,\infty)}
+ \frac{(z-i\Gamma)^2-\lambda}{z^2-\lambda}\,
+ P_\Gamma(d\lambda)
+ +b_{\Omega,\kappa}(E)P_{\Gamma,B},\\
+b_{\Omega,\kappa}(E)
+&=\frac{x+i(\kappa-3\Gamma)/2}
+ {x+i(\kappa+\Gamma)/2}.
+\end{aligned}
+\tag{11}
+$$
+
+To match the physical eigenvalues, the one-photon amplitude is
+$t_\Omega(k)=1-i\Gamma/(k-\Omega+i\kappa/2)$.
+The continuum fraction in (11), at $\lambda=u^2$, is exactly
+$t_\Omega(E/2+u)t_\Omega(E/2-u)$.
+Substitution of $\lambda=-\Gamma^2/4$ into that fraction and cancellation
+gives the bound eigenvalue $b$ in (11), equal to the published bound-state
+amplitude. The uncancelled fraction has an isolated $0/0$ on the bound
+state when $x=0$ and $\kappa=\Gamma$; (11) defines it by its cancelled
+continuous limit. Its denominator is nonzero for $\Gamma>0$. All
+eigenvalues have modulus at most one when $\kappa\ge\Gamma$, so these
+are bounded accepted contractions. At $\Gamma=0$ the interaction is
+absent and commutation is immediate.
+
+This also explains the shared generator: away from the removable bound
+pole, (11) is the functional calculus
+
+$$
+K_{\Omega,\kappa}(E)
+=I+(-2i\Gamma z-\Gamma^2)(z^2-H_\Gamma)^{-1},
+\tag{12}
+$$
+
+with the bound value extended as above. Changing the carrier reference
+multiplies the two-photon coordinate wavefunction by
+$e^{2i\Omega x_c}$ and relabels the center-of-mass frequency. Once the
+physical $E$ is fixed, it leaves the relative projectors in (11)
+unchanged. Consequently two stations with the **same monitored coupling**
+$\Gamma$, arbitrary resonances $\Omega_A,\Omega_B$, and even different
+total radiative rates $\kappa_A,\kappa_B\ge\Gamma$ are diagonal in the
+same complete spectral resolution:
+
+$$
+[K_{\Omega_A,\kappa_A}(E),K_{\Omega_B,\kappa_B}(E)]=0.
+\tag{13}
+$$
+
+Both commute with total energy. Direct integration over $E$ proves the
+operator identity on arbitrary normalizable two-photon inputs, including
+coherences between different total energies and entanglement with a
+reference. The isolated bound-pole case is covered by the same cancelled
+spectral value or by continuity. This is a consequence of the published
+scattering basis; it is not a SWITCH theorem asserted by that source.
+
+Conditional on two-photon survival, each station has the one accepted
+Kraus operator just described: its unmonitored radiative environment is
+in vacuum. Thus the controlled accepted product is exactly
+
+$$
+|0\rangle\langle0|_C\otimes K_BK_A
++|1\rangle\langle1|_C\otimes K_AK_B
+=I_C\otimes K_BK_A.
+\tag{14}
+$$
+
+Its full accepted control–field–reference instrument equals ordinary
+serial scattering. With independent initial $C=+$ and an $X$ readout,
+the minus probability is zero and the plus probability is the ordinary
+two-photon survival probability. That probability can depend on the
+input wavepacket; the subnormalized identity (14) preserves it rather
+than dividing it away. Any common later spectral selection or readout
+retains the equality. The rejected one-photon/vacuum instruments have
+not been identified, and all rejected launches still count. Destructive
+two-photon coincidence detection verifies a terminal sampling event;
+it does not supply a nondestructive success flag for a reusable gate.
+
+For one isolated bidirectional emitter, the monitored rate is
+$\Gamma=\Gamma_R$, while
+$\kappa=\Gamma_R+\Gamma_L+\Gamma_{\rm other}$; treating backward output
+as loss is the single-emitter port mapping used in that source. It does
+not permit coherent reflection back through another emitter. Equal total
+linewidth alone is insufficient when monitored couplings differ.
+
+The [Nielsen et al. nonlinear processor](https://doi.org/10.1038/s41467-025-66205-w)
+is a relevant primitive, using one quantum dot and programmable temporal
+linear optics. Its reported effective nonlinear phase combines spectral
+overlap with phase, rather than characterizing a single-mode-preserving
+gate. The scattering screen above concerns the bare no-phonon accepted
+two-forward-photon operators. It is **not** a proof for that whole
+processor with its interleaved Mach–Zehnder operations, phonon dephasing,
+or its coincidence-normalized efficiencies. In particular, pulse bandwidth
+is an input choice, not by itself a second scattering operator.
+
+### Scope beyond the common-basis instruments
+
 Mode-changing scattering, unresolved frequency dynamics, multiphoton
 events, order-dependent arrival times and a shared bath can violate (9).
 For example, a bus-bin flip before one station's contraction generally
-breaks commutation. A nonzero signal in such a different model still
-needs to improve stored Bell-pair yield after ordinary filtering and
-routing costs. The finite replay verifies an elastic state-carving
-example and a bin-flip counterexample; it is not a fitted model or a
-claim that every experimental error is elastic.
+breaks commutation. Equations (10)–(14) close a particular nonlinear
+two-photon case despite individual-frequency redistribution; they do not
+close unequal monitored couplings, group-velocity dispersion or other
+relative-frequency phases, frequency-dependent mode mixing,
+photon-preserving phonon records, other internal levels or coherent
+bidirectional feedback. A proposed effect from those terms needs its full
+instrument and an actual improvement after ordinary tuning, spectral/timing
+filtering, routing and rejected-attempt costs. The finite replay verifies
+an elastic state-carving example and a bin-flip counterexample; the
+continuum closure is the analytic spectral proof above, not a fitted
+experimental model or a discretized verification.

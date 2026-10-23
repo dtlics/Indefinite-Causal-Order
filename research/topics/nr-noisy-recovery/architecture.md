@@ -52,6 +52,17 @@ sequence data for multiple gate-set properties. Local or sparse model fitting
 can also be appropriate when its assumptions fit the device. Calibration
 data and computation must be amortized across subsequent settings and jobs.
 
+The [phase-calibration benchmark NR-R15](metrology.md) checks a stronger
+positive starting point: a known switch protocol exceeds every ordinary
+strategy restricted to two independent phase/amplitude-damping queries.
+An exact dual certificate supports that comparison. It still does not
+give an unrestricted calibration rate: an explicit three-query ordinary
+feedback round beats the plain two-call switch's information per query, and randomized
+launches beat it at mean cost two. A retained cold bath also admits an
+ordinary two-visit echo that beats the independent-slot switch. The next
+comparison must therefore use actual reset, timing, return and interrogation
+rules rather than import a hard two-query bound as a throughput theorem.
+
 A switch minus probability measures Kraus-commutator information, which need
 not equal a useful scheduling quantity. Commuting channel superoperators can
 produce a nonzero signal. Weak coherent errors can produce a fourth-order
@@ -375,6 +386,22 @@ Both use Pauli and syndrome tracking; any correction needed to return an
 untracked physical output must still be implemented and costed. These are
 counts for the displayed protocols, not an optimal architecture bound.
 
+Unknown analogue internals do not automatically prevent ordinary checks.
+If a known implementable involution commutes with the ideal Hamiltonian,
+the same before/after check in NR-R06 preserves its full evolution and
+tests arbitrary interval faults without learning that evolution. Its
+controlled helper and readout costs remain real. Short-time coherent
+order symmetrization must also be compared with randomized ordering and
+ordinary symmetric splitting, including available half-duration controls.
+[Vrajitoarea et al.](https://arxiv.org/abs/2602.06108) demonstrate genuine
+quantum-controlled many-body dynamics and a many-body echo, but do not
+supply two opaque switchable many-body modules. Similarly,
+[Kraft et al.](https://doi.org/10.1103/s96t-n8tx) learn Hamiltonian and
+dissipative parameters on trapped-ion hardware: their long-time validation
+uses classical simulation, while their measurement-only bounds concern
+short times. Large Hilbert-space dimension alone is not a calibration
+lower bound for these structured generators.
+
 A separate conditional construction concerns coherent subroutine dispatch
 through a dephased program register. The
 [quantum control machine](https://arxiv.org/abs/2304.15000) motivates coherent
@@ -481,3 +508,36 @@ switch claim cannot follow from granting it a clean known symmetry or a
 coherent vacuum port absent from the ordinary hardware. A surviving task
 must also beat direct compiled control, conditional uncomputation and reuse.
 No present screen establishes that advantage.
+
+### Nonlinear photonic evolution: the next complete-instrument test
+
+A repeated passive photonic operation is not enough to supply an expensive
+quantum workload. For a known single-particle mode matrix $M$, compute and
+compile $M^2$ into one freely programmable mesh. Second quantization obeys
+$\Gamma(M)^2=\Gamma(M^2)$ on every photon-number sector: both sides transform
+each creation operator by $M^2$ and preserve vacuum. Thus an exponentially
+large multiphoton Fock space does not invalidate this shortcut. A
+[20-mode universal processor](https://doi.org/10.22331/q-2023-08-01-1071)
+is a concrete instance of the programmable interface; actual programming,
+calibration drift and compilation errors must be included.
+
+[Nielsen et al.](https://doi.org/10.1038/s41467-025-66205-w) provide a more
+substantive next model: two-photon nonlinear scattering interleaved with
+programmable linear optics, used for anharmonic molecular dynamics.
+Nonlinearity removes the passive matrix-squaring shortcut. The published
+platform has one quantum dot, however, and its measured nonlinear response
+includes spectral-mode distortion. A fitted nonlinear fringe phase is not
+by itself a reusable controlled-phase channel. Two matched independent
+modules and an order router cannot be assumed from that experiment.
+
+The next calculation must retain the joint two-photon frequency kernel,
+emitter/phonon records and all loss outcomes. First apply the
+[accepted-scattering commutation screen in NR-R11](communication.md#nr-r11)
+to any proposed bare detuning-only pair. For a pair outside that screen,
+compare direct pulse/detuning optimization, spectral-mode selection and
+ordinary coherent checks on the same output. Specify how the order flag
+is read while preserving both computational photons; coincidence data
+after destructive detection is not a delivered quantum gate. A useful
+endpoint is a declared two-photon state or logical gate fidelity per
+launch and per unit time, with source, routing, selection and reset costs.
+This is an instrument-construction target, not an established advantage.
