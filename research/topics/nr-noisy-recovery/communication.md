@@ -812,6 +812,262 @@ the microscopic model. The demonstrated architecture already uses
 photon/time-delay-interferometer heralds; those records belong in the
 ordinary comparison.
 
+<a id="nr-r11-retained-spin-parity"></a>
+
+### Retaining spin memories requires the ordinary parity and photon-bus comparison
+
+Spin entanglement is a useful architecture endpoint beyond an outgoing
+photon correlation. It already has an ordinary chiral-waveguide comparator:
+[Mahmoodian, Lodahl and Sørensen](https://doi.org/10.1103/PhysRevLett.117.240501)
+([complete one/two-click instrument](https://arxiv.org/html/1602.07054v2))
+place one spin-bearing emitter in each Mach--Zehnder arm and use photon
+detection to measure parity. Their gate figures are theoretical estimates,
+with coupling, detuning, finite-pulse and incoherent-scattering assumptions;
+they are not a demonstrated gate between the present two dots. That
+separate-arm layout is also different from the inline waveguide pair.
+
+The elementary operator comparison is explicit. In the elastic,
+spin-conserving narrowband model, let spin $0$ be optically dark and
+spin $1$ have monitored transmission $t_j$. Put
+$D_0=\operatorname{diag}(1,t_0)\otimes I$ and
+$D_1=I\otimes\operatorname{diag}(1,t_1)$. A balanced MZI gives the
+unnormalized detector Kraus operators
+
+$$
+K_+=(D_0+D_1)/2,\qquad K_-=(D_0-D_1)/2.
+\tag{SP1}
+$$
+
+These act on every spin/reference input. Their total effect is
+$(D_0^\dagger D_0+D_1^\dagger D_1)/2$. For independent arm-local
+spin-preserving loss, Kraus operators
+$\ell_j|1\rangle\langle1|_j/\sqrt2$, with
+$|\ell_j|^2=1-|t_j|^2$, complete this effect to identity. Accessible
+reflected ports should instead be kept as additional outcomes. A no-click
+event can disturb an unknown spin state; heralded failure is not a free
+nondestructive retry. Preparing and resetting known spins after failed
+Bell-pair generation has its actual cost.
+
+Let $P_e=(I+Z_0Z_1)/2$, $P_o=(I-Z_0Z_1)/2$. At $t_0=t_1=-1$,
+$K_+=Z_0P_e$ and $K_-=Z_0P_o$. A known local $Z_0$ therefore gives
+the complete parity instrument. On $|++\rangle$ either click supplies a
+Bell state, with known local frame and probability $1/2$.
+
+There is a stronger ordinary filter for unequal transmissions. Write
+$F=X_0X_1$, retain equal-detector two-click events, and restore the spin
+frame after the second click. Direct multiplication gives
+
+$$
+\begin{aligned}
+L_s&=FK_sFK_s,\\
+L_+&=tP_e+aP_o,\qquad L_-=-bP_o,\\
+t&=(t_0+t_1)/2,\quad
+a=(1+t_0)(1+t_1)/4,\quad b=(1-t_0)(1-t_1)/4.
+\end{aligned}
+\tag{SP2}
+$$
+
+For example, the even diagonal entries of $K_+$ are $1$ and
+$(t_0+t_1)/2$, while its odd entries are $(1+t_1)/2$ and
+$(1+t_0)/2$. Conjugation by $F$ exchanges complementary entries,
+giving (SP2). The minus entries on $|00\rangle,|11\rangle$ multiply
+to zero; the two odd products are the same $-b$. Thus the retained minus
+branch is an exact odd-parity projector up to a scalar, even for unknown
+unequal **stationary** $t_j$. The plus branch's incorrect-parity weight
+is proportional to $|a|^2$, fourth order in small $1+t_j$ amplitudes.
+No estimate of the two matrices is needed for this algebraic cancellation.
+
+This comparator uses two photon launches and successful detections, two
+local spin flips between them, and either two final flips or an explicitly
+permitted Pauli frame. Each photon occupies one interferometer arm and
+one emitter interaction; it does not traverse both emitters in series.
+Different-detector events and loss are charged failures. Sources, detector
+efficiency/dark counts, readout, spin initialization, waiting time and reset
+enter a delivered-pair rate. They cannot be replaced by conditional
+fidelity alone.
+
+The stationarity and narrowband premises matter. For finite pulses the
+actual Kraus operator is $FK_s(\omega_2)FK_s(\omega_1)$, with the photon
+spectra and any bath records retained until their stated measurement.
+The two odd amplitudes in the minus branch become
+$-(1-t_0(\omega_2))(1-t_1(\omega_1))/4$ and
+$-(1-t_1(\omega_2))(1-t_0(\omega_1))/4$. They need not agree.
+Pure dephasing, Raman transitions and unfiltered inelastic photons need
+their complete environment-labelled instrument. The cited proposal
+already examines such imperfections; fitting one complex transmission
+does not prove they are absent.
+
+**A counterpropagating quarter-phase pair is the known photon-spin bus.**
+There is a nontrivial retained-spin state even when the transmitted photon
+alone is a poor endpoint. Assume, as an additional native model, that a
+single frequency supplies complementary directional spin phases
+$D_j^R=\operatorname{diag}(t_j,1)$ and
+$D_j^L=\operatorname{diag}(1,t_j)$, with no reflected or inelastic field.
+After matching the two paths, the clockwise and counterclockwise spin
+operators are
+
+$$
+D_R=\operatorname{diag}(t_1t_2,t_1,t_2,1),\qquad
+D_L=\operatorname{diag}(1,t_2,t_1,t_1t_2).
+\tag{SP3}
+$$
+
+Their measured path Kraus operators $(D_R\pm D_L)/2$ are
+
+$$
+K_+=uP_e+vP_o,\qquad K_-=wZ_0P_e+zZ_0P_o,
+\quad
+(u,v,w,z)=\tfrac12(1+t_1t_2,t_1+t_2,t_1t_2-1,t_1-t_2).
+\tag{SP4}
+$$
+
+For identical lossless $t=e^{i\theta}$, the minus click on $|++\rangle$
+is a Bell state with probability $\sin^2\theta/2$. At $t=i$, the two
+Kraus operators are $iP_o$ and $-Z_0P_e$: both clicks give Bell states
+with known corrections. At $t=-1$ the minus branch vanishes and the
+common product $Z_0Z_1$ does not entangle $|++\rangle$. The quarter-phase
+example therefore cannot be dismissed by the resonant $\pi$-phase case.
+
+Its mechanism, however, is already a fixed-order photon-spin protocol.
+For lossless $t_j=e^{i\theta_j}$ and a photon logical basis $R,L$,
+a single station's full operation is
+$V_j=P_R\otimes D_j^R+P_L\otimes D_j^L$. It is, up to basis relabeling,
+
+$$
+V_j=\exp\!\left[i\theta_j
+ (P_R\otimes|0\rangle\langle0|_j+
+  P_L\otimes|1\rangle\langle1|_j)\right].
+\tag{SP5}
+$$
+
+The $V_j$ commute because they are diagonal in the same photon basis
+and act on distinct spins. A separate order register controlling their
+permutation therefore factors out; the useful direction register is the
+photon bus, not an order flag for these full operators. Their fixed-order product is
+$P_R\otimes D_R+P_L\otimes D_L$, exactly the complete path/spin operator
+behind (SP3)--(SP4). A photon in $|+\rangle$, two such interactions in
+ordinary chronological order and final $X$ readout thus realize the same
+flagged instrument. This is an operator identity, not a comparison of
+selected state fidelities. The ordinary quarter-phase entangler appears
+explicitly in [Hu et al., PRB **78**, 085307 (2008)](https://doi.org/10.1103/PhysRevB.78.085307),
+§III, equations (6)--(10),
+([published full text](https://api.research-repository.uwa.edu.au/ws/portalfiles/portal/89223500/Final_version_Giant_optical_Faraday.pdf));
+its two sequential cavity reflections have the same ideal spin-photon
+phase operator and both detector outcomes create spin entanglement.
+
+The fixed-order circuit requires the **actual full logical-photon port**
+of each station, such as its two polarization components or a locally
+routed pair of directions. An inline device with only outside access does
+not automatically permit two independent local direction loops or a
+same-order rail. Their extra connections, delays, mode matching and loss
+must be compared with the whole-loop Sagnac route. Likewise the two
+separate-arm MZI is not a free reconfiguration of the inline pair.
+These identities establish neither a universal hardware no-go nor a
+new spin-entanglement mechanism. Any remaining benefit would be a
+quantified native routing/noise advantage over these existing ordinary
+instruments.
+
+There is also a comparator on the **same forward inline rail**, provided
+coherent spin flips and time-bin access are actually available. Let
+$F=X_1X_2$, so $FD_RF=D_L$ in (SP3). Prepare one photon in coherent early
+and late bins. Both bins traverse the same physical order $1\to2$.
+Apply each local spin $X_j$ after the early bin has scattered and before
+the late bin reaches that spin, then apply it again after the late bin
+has scattered. In the ideal separated-window model the complete operator
+is
+
+$$
+\begin{aligned}
+E&=P_e^{C}\otimes D_R+P_l^{C}\otimes I,\qquad
+L=P_e^{C}\otimes I+P_l^{C}\otimes D_R,\\
+(I_C\otimes F)L(I_C\otimes F)E
+ &=P_e^{C}\otimes D_R+P_l^{C}\otimes FD_RF
+  =P_e^{C}\otimes D_R+P_l^{C}\otimes D_L.
+\end{aligned}
+\tag{SP6}
+$$
+
+The early history is $FFD_R=D_R$; the late one is $FD_RF=D_L$.
+Thus no photon-controlled spin flip or separately addressable local loop
+is required. Relabeling the time-bin qubit as the direction qubit and
+performing its $X$ measurement reproduces (SP4) on every spin/reference
+input. The same identity holds for arbitrary frequency superpositions
+when $FD_R(\omega)F=D_L(\omega)$ throughout their support and complete
+elastic wavepackets lie in the stipulated windows. Actual single-dot
+[time-bin scattering with intermediate spin echo](https://doi.org/10.1038/s41534-023-00717-5)
+is an ordinary implementation precedent; it does not demonstrate the
+required two-dot complementary instrument.
+
+The comparator pays two local $\pi$ pulses per spin, time-bin separation,
+spin/helper coherence, and the actual time-bin readout. A passive balanced
+unbalanced-path analyzer retains the desired interference only in its
+central time window, with probability $1/2$; its side windows are charged
+outcomes in the ideal lossless case (loss further reduces delivered yield).
+Complete deterministic time-bin $X$ readout requires additional
+active routing or mode conversion with its own loss and latency. There
+are four nominal module-window opportunities but only two occupied
+interactions in each photon history. This uses the native vacuum/idle
+extension and is not an opaque two-query simulator.
+
+Nor does (SP6) identify every noisy bath history. In the Sagnac route,
+the two order histories swap which spin is visited earlier; the ordinary
+early/late construction shifts both visits in the same temporal direction.
+Spin precession, finite scattering tails, pulse disturbance, inelastic
+records and a persistent bath therefore need their complete actual
+instrument and a matching or error bound. The ideal operator identity
+does not silently translate those records into the same state. Any useful
+Sagnac advantage must survive this priced same-rail comparator as well
+as the available MZI and fixed-order photon-bus alternatives.
+
+A second strong ordinary comparison needs only an external coherent
+bypass of the entire inline pair. If native Stark tuning and coupling
+permit the resonant elastic $t_1=t_2=-1$ endpoint, its forward operator
+is $D_R=Z_1Z_2$. Interference of that same-order rail with the bypass
+then gives $(I\pm Z_1Z_2)/2$, the exact all-outcome parity measurement
+and both Bell outputs from $|++\rangle$ with one photon. This needs
+the actual reference path, beam splitters, phase stabilization, matching
+delays and their losses, but no access between the two dots. Stark
+tunability alone does not guarantee unitary $\pi$ transmission: finite
+coupling efficiency, linewidth and inelastic output must be included.
+Neither this conditional graph nor the time-bin method grants the
+ordinary comparator a free bypass or noiseless spin pulses.
+
+The complementary phases in (SP3) are themselves a device hypothesis.
+Opposite Zeeman transitions can be split, so one incident frequency need
+not have the same $t_j$ for both spin-direction choices. The Hallacy PL/HBT
+data do not establish arbitrary resident-spin preparation, preservation
+and readout with those matched coherent ports. Relative path phase,
+drift and finite-pulse spectral overlap must also be calibrated. A path
+phase that leaves an output maximally entangled can still leave its
+unknown local frame unusable as a calibrated Bell pair. Retained spins
+therefore do not remove the need for a complete, measured instrument.
+
+At the ideal quarter-phase endpoint a simple finite comparison can be
+stated without optimizing all native protocols. If the only path fault
+is dephasing with visibility $v$, and $\eta$ is the valid-photon
+preparation/transport/detection probability independent of the spins,
+the all-outcome acceptance and joint Bell-good weight are
+$p=\eta$, $q=\eta(1+v)/2$. Dephasing is a path phase flip with probability
+$(1-v)/2$; it exchanges the two ideal flags, and their usual local
+corrections then give an orthogonal Bell state. A passive time-bin
+analyzer's factor $1/2$ belongs in its $\eta$. Extra spin-pulse errors,
+drift and initialization faults are not contained in this formula.
+These parameters and the full preparation/reset duration, rather than
+the occupied scattering count, determine a finite delivered-fidelity
+and rate comparison. The inline dimer data do not currently provide
+all of them for either implementation.
+
+There is relevant measured spin-control hardware, but it must not be
+silently combined with the dimer. [Koong et al.](https://doi.org/10.1038/s41467-026-74590-z)
+demonstrate Raman control with cyclic Faraday transitions in separate
+GaAs/InGaAs devices. A GaAs sequence has $2.195(2)$ ns $\pi$ time, while
+its fitted $96.8(1)\%$ contrast is explicitly an **upper bound** on
+$\pi$-pulse fidelity. The same experiments use nuclear cooling and
+microsecond initialization/readout; their end-to-end efficiency below
+$1\%$ prevents single-shot spin readout in that device. These establish
+ordinary controls and substantive overheads, not the matched two-dot
+quarter-phase gate or its delivered-pair rate.
+
 ### Two-photon survivor scattering in a common continuum basis
 
 Nonlinear scattering need not preserve each photon's frequency, so it
@@ -1536,17 +1792,230 @@ If a tail estimate holds only for a specified state family rather than
 uniformly on the input space, the conclusion is the corresponding
 state/record trace-distance bound, not an unrestricted diamond bound.
 
-For compact optical drive ending at $t_{\rm end}$ and no later input,
-excited population decays at the total radiative rate, so population
-remaining after a guard interval $g$ is at most
-$e^{-\kappa_{\rm rad}g}$. Pure dephasing does not alter this
-population equation. For two photons in one Gaussian temporal mode,
-a one-photon outside-window probability $\epsilon$ gives pair
-outside-window probability $1-(1-\epsilon)^2\le2\epsilon$.
-These observations can contribute to a specified tail estimate; they
-do not prove (33) for two cascaded scatterers, because the first changes
-the pulse entering the second. A native uniform $\delta_s$ and the
-finite-window empty-product mismatch remain uncharacterized here.
+<a id="nr-r11-uniform-record-guard"></a>
+
+### A uniform few-emitter record guard and its clock cost
+
+The change of pulse shape between cascaded scatterers need not be bounded
+by assuming that the second sees the original Gaussian. There is a uniform
+bound for a specified vacuum-Markov emitter model. It also applies to a
+collective emitter module, but does **not** turn that joint module into
+independent switch slots.
+
+After a compact incoming pulse has ended at $T$, suppose the retained
+system consists of $m$ two-level emitters, with no later drive or input.
+Let $N=\sum_j n_j$ be their excitation number. The Hamiltonian may contain
+arbitrary number-conserving detunings and exchange, $[H,N]=0$. Radiative
+jumps have the form $L_a=\sum_j u_{aj}\sigma_j^-$, including local losses.
+Pure-dephasing jumps commute with $N$. The **actual dilation** must leave
+the joint ground and all future reservoir modes in vacuum; in particular
+each dephasing jump must annihilate the ground, as $\sqrt{\gamma_j}n_j$
+does. A nonzero constant in a diagonal jump can generate a coherent idle
+reservoir output even when the reduced ground state is stationary.
+Subtracting it is a changed record convention and is not free physical
+access to an unknown reservoir displacement.
+
+This is a two-level optical-emitter theorem. A resident spin memory can
+have several optically ground states with ongoing spin dephasing or
+spin--phonon dynamics. Such ground-manifold records are not bounded by
+the trion excitation number in (NT1); they require their own enlarged
+instrument. In particular this guard is not an automatic spin-memory
+noise model for (SP3)--(SP6).
+
+Define the radiative Gram matrix $G_{ij}=\sum_a u_{ai}^*u_{aj}$. Assume
+$G\succeq\kappa_* I_m$ for some certified $\kappa_*>0$. The adjoint
+Lindblad generator satisfies
+
+$$
+\mathcal L^*(N)=-\sum_aL_a^\dagger L_a
+ =-\sum_{ij}G_{ij}\sigma_i^+\sigma_j^-
+ \preceq-\kappa_* N.
+\tag{NT1}
+$$
+
+For the first equality use $[N,L_a]=-L_a$; the Hamiltonian and dephasing
+terms vanish. For the inequality factor $G-\kappa_*I=V^\dagger V$.
+The difference is a sum of positive operators
+$\sum_r(\sum_jV_{rj}\sigma_j^-)^\dagger
+(\sum_jV_{rj}\sigma_j^-)$. This holds on **every** excitation sector;
+it does not treat the emitters as bosonic oscillators. Gronwall's
+inequality therefore gives
+$\operatorname{Tr}(N\rho_{T+g})\le m e^{-\kappa_*g}$, for every initial
+emitter state and passive-reference extension.
+
+To obtain a record bound, let $E_{\rm future}$ be the system effect for
+any nonvacuum reservoir record after $T+g$. It is positive and at most
+identity. The vacuum-preserving ground has zero such probability, so
+positivity forces $E_{\rm future}|g\cdots g\rangle=0$, including its
+off-diagonal blocks with that vector. Hence
+$E_{\rm future}\preceq I-|g\cdots g\rangle\langle g\cdots g|
+\preceq N$. Consequently
+
+$$
+\Pr(\text{any record after }T+g)
+ \le\delta(g):=\min\{1,m e^{-\kappa_*g}\}.
+\tag{NT2}
+$$
+
+The effect argument includes coherences with the ground and arbitrary
+reference entanglement. Since the bound is uniform over the input, the
+late-record part of its Stinespring isometry has squared operator norm
+at most $\delta(g)$. It supplies (33) when a route's declared nonempty
+window projector excludes only those late records. It is not merely a
+population estimate for one fitted probe.
+
+A cascade can instead be truncated stage by stage: first bound the
+complete first-stage output after its last incoming time, then propagate
+that truncated pulse through the next stage and apply the same uniform
+bound after its new last incoming time. The second pulse may be distorted
+and entangled with retained outputs; the operator bound does not require
+it to remain Gaussian. Projection errors must be added at the isometry
+or complete-instrument level. A finite propagation segment that retains
+photons, a cavity, a driven emitter, a non-Markov reservoir, or coherent
+feedback with an unmodeled delay is additional memory. Applying (NT1)
+only to its atoms then fails to bound that memory's late records.
+
+The positive Gram floor is a sufficient condition, not a necessary one
+for every fixed Hamiltonian: exchange can mix an instantaneous dark
+subspace into bright states. There is no uniform bound from bare atomic
+linewidths alone. With $L_+=\sigma_1^-+\sigma_2^-$,
+$L_-=\epsilon(\sigma_1^--\sigma_2^-)$ and $H=0$, the antisymmetric
+single excitation has late-emission probability $e^{-2\epsilon^2g}$
+for $\epsilon>0$. It can be arbitrarily slow. At $\epsilon=0$ it is
+exactly dark: it retains memory but emits no future photon. A reset bound
+and a late-record bound must not be conflated at that singular limit.
+
+**Gaussian preparation and the complete instrument.** Let a normalized
+one-photon mode have Gaussian **intensity** with standard deviation
+$\sigma_I$. Truncation to $[-L\sigma_I,L\sigma_I]$ has mass removed
+$\epsilon_L=\operatorname{erfc}(L/\sqrt2)$. On the code spanned by zero
+through $n_{\max}$ photons in that mode, replace it by its normalized
+truncation. The two encoding isometries have overlap
+$(1-\epsilon_L)^{n/2}$ on number state $n$. For any reference-entangled
+input the overlap is a convex combination of these nonnegative numbers,
+at least $(1-\epsilon_L)^{n_{\max}/2}$. Pure-state trace distance and
+convexity prove the half-diamond preparation bound
+
+$$
+s_L=\sqrt{1-(1-\epsilon_L)^{n_{\max}}}
+ \le\sqrt{n_{\max}\epsilon_L}.
+\tag{NT3}
+$$
+
+All later physical instruments are contractive. When comparing two
+protocols, truncating both source encodings therefore costs at most
+$2s_L$ in their half-diamond comparison. This is a declared finite-photon
+code, not an uncharged conversion of a weak coherent source into a Fock
+state. Arbitrary uncontrolled temporal modes do not obey this Gaussian
+code estimate.
+
+For a compact-pulse switch and each compact-pulse ordinary temporal filter
+let $r_X=\sqrt{\delta_{X,0}}+\sqrt{\delta_{X,1}}$, as in (34).
+Provided all the independent-station, matched-mode, empty-product and
+visibility hypotheses of (29)--(31) actually hold, triangle inequality
+gives the complete flagged-instrument bound
+
+$$
+\frac12\|\mathcal I_S^{\rm Gauss}
+                -\mathcal F^{\rm Gauss}\|_\diamond
+ \le 2s_L+\frac{r_S}{2}+\frac{r_{AB}+r_{BA}}4.
+\tag{NT4}
+$$
+
+If all six route tails have the same bound $\delta$, the last terms
+are $2\sqrt\delta$. An empty-product mismatch adds the half-diamond
+quantity $\|D_0-D_1\|^2/4$ from (32), at equal unit visibility. Other
+helper or physical errors need their own bounds. In particular, (NT2)
+alone proves none of the independent-slot or empty-product hypotheses.
+Shared collective jumps or exchange between two supposed stations can
+invalidate that factorization even when the entire pair becomes quiet.
+
+If the right side of a complete-instrument half-diamond bound is $e$,
+every joint accepted-good probability and the acceptance probability
+change by at most $e$; the all-attempt signed good/bad reward changes by
+at most $2e$. For normalized accepted outputs the trace-distance allowance
+is at most $e/p_{\min}$ when both acceptance probabilities are at least
+$p_{\min}>0$. Indeed the rejected block has trace-norm difference at
+least the difference of acceptance probabilities; normalizing the
+accepted block then gives this inequality. There is no yield-independent
+postselection guarantee.
+
+**A nominal device calculation and uncertainty.** In the reciprocal
+two-emitter Markov model (35), the complete radiative Gram is
+
+$$
+G=\begin{pmatrix}
+\Gamma_1&\sqrt{\gamma_1\gamma_2}\cos\phi\\
+\sqrt{\gamma_1\gamma_2}\cos\phi&\Gamma_2
+\end{pmatrix},\quad \gamma_j=\beta_j\Gamma_j,
+\qquad
+\kappa_*=
+\frac{\Gamma_1+\Gamma_2-
+\sqrt{(\Gamma_1-\Gamma_2)^2+4\gamma_1\gamma_2\cos^2\phi}}2.
+\tag{NT5}
+$$
+
+[Hansen et al., Table S1 and excitation setup](https://arxiv.org/html/2605.18525v1)
+report nominal $\Gamma_j/(2\pi\,\mathrm{GHz})=0.388,0.345$,
+$\beta_j=0.95,0.85$ and $\phi=0.8\pi$, with Gaussian pulses described
+by width $3\,\mathrm{ns}$ and a $20\,\mathrm{ns}$ repetition period.
+For those nominal model values, (NT5) is approximately
+$\kappa_* /(2\pi\,\mathrm{GHz})=0.0996492$. The conservative value
+$0.099$ is certified by a rational $2\times2$ PSD test:
+$\cos^2(4\pi/5)=(3+\sqrt5)/8<21/32$ makes the determinant margin
+$101541/640000000$ after subtracting $0.099I$ in these units.
+This calculation is about the stated Markov model, not a measured
+uniform tail bound for that experiment.
+
+There is a direct uncertainty test. For declared rate intervals
+$\Gamma_j^-\le\Gamma_j\le\Gamma_j^+$, upper guided rates
+$\gamma_j^+$, and $|\cos\phi|\le c^+$, a positive proposed $\kappa_0$
+is valid whenever
+$\Gamma_j^-\ge\kappa_0$ and
+$(\Gamma_1^--\kappa_0)(\Gamma_2^--\kappa_0)
+\ge\gamma_1^+\gamma_2^+(c^+)^2$.
+For example, the **declared** box
+$\Gamma_1/(2\pi\,\mathrm{GHz})\in[0.386,0.390]$,
+$\Gamma_2/(2\pi\,\mathrm{GHz})\in[0.343,0.347]$,
+$\beta_1\le0.95$, $\beta_2\le0.85$ and
+$|\cos\phi|^2\le21/32$ permits $\kappa_0/(2\pi\,\mathrm{GHz})=0.095$:
+the rational determinant margin is $580701/1280000000$.
+The paper's fitted point estimates and linewidth errors do not establish
+that whole box as a confidence region; in particular the required
+guided-fraction and phase bounds need independent calibration. Without
+them, a nearly dark Gram matrix cannot be excluded by this calculation.
+
+The collective pair in that experiment does not supply the independent
+slots of (29)--(31). Its Gram calculation bounds the tail of the **joint**
+module. Using a similar number in (NT4) requires a proposed independent
+module interface whose six route guards and other hypotheses have each
+been separately justified.
+
+As a conditional illustration of that clock budget, declare $n_{\max}=2$,
+$\sigma_I=3\,\mathrm{ns}$, $L=5$, $g=30\,\mathrm{ns}$ and the above
+conditional $\kappa_0$ as a floor for every required route. Then
+$\epsilon_L\simeq5.74\cdot10^{-7}$,
+$\delta\simeq3.35\cdot10^{-8}$, and (NT4) is below $0.00251$
+before empty-product, helper and other errors. If every declared slot
+receives its last input within its initial $2L\sigma_I$ interval and
+its full route-tail certificate applies after the following guard, one
+can choose the nonoverlapping slot clock
+$W=2L\sigma_I+g=60\,\mathrm{ns}$. In that **declared clock**, the
+two-window switch and three-window ordinary construction occupy $120$
+and $180$ ns respectively, before transport, reset, readout and source
+constraints. These are conditional schedule costs, not universal latency
+lower bounds. A distorted first-stage output can lengthen the next
+stage's incoming interval; the original Gaussian width and a Gram floor
+alone do not certify the six route guards at this $W$. A streaming
+cascade can also have a different clock. Those input-end times and
+window assignments require their own complete route model.
+The reported $20$ ns **period is not an idle guard**, and the source's
+Gaussian-width convention must be calibrated before identifying it with
+$\sigma_I$. No native rate advantage follows from comparing an unguarded
+switch clock to a guarded ordinary clock. Conversely the extra ordinary
+window has a real delay and visibility cost once both use the same
+declared accuracy and slot definition. This finite accuracy/cost test
+replaces an inference based only on a fitted dephasing linewidth.
 
 Nor does this white-reservoir model identify a semiconductor's actual
 acoustic bath. [Tighineanu et al.](https://doi.org/10.1103/PhysRevLett.120.257401)
@@ -1693,6 +2162,19 @@ They do not close every unequal-fraction kernel, group-velocity
 dispersion, frequency-dependent mode mixing, additional internal levels,
 photon-preserving bath record or coherent bidirectional device.
 
+The retained-spin next test must therefore keep a mechanism outside the
+diagonal photon-bus family: Raman/spin-changing scattering with its
+frequency and polarization outputs, or an explicitly retained shared
+quantum memory. Specify a heralded spin Bell-pair or gate target and
+derive the full ground-state-changing optical kernels and bath records
+for that actual device. A stimulated classical Raman rotation does not
+by itself provide a large coherent single-photon Raman branch. Compare
+ordinary spectral heralding, the parity instruments (SP1)--(SP2), the
+available fixed-order bus and spin echo (SP5)--(SP6), and all rejected
+launches at matched source, readout, memory and reset cost. Neither the
+diagonal quarter-phase example nor a quiet Markov tail supplies that
+remaining positive application.
+
 A remaining application needs its full instrument, executable input
 code or constrained source, surviving output/flag, and a gain after
 ordinary pulse/detuning optimization, spectral and temporal filtering,
@@ -1701,6 +2183,10 @@ reuse, routing and rejected-attempt costs. The
 is an ordinary comparator, including its spectral filtering and timing
 selection. A favorable commutator or coincidence-normalized phase is
 insufficient. The linked finite replay checks an elastic state-carving
-instrument and a bin-flip example; the continuum proofs here are analytic
-and are not certified by finite frequency-grid sampling, a hardware fit
-or a Lean formalization.
+instrument and a bin-flip example, the retained-spin parity/photon-bus
+identities (SP1)--(SP6), and full finite-emitter number, ground-vacuum,
+nominal-Gram and near-dark identities supporting (NT1)--(NT2). The
+semigroup, infinite-future effect, Gaussian-code and complete-instrument
+bounds are analytic proofs. Neither they nor the continuum scattering
+arguments are certified by finite frequency-grid sampling, a hardware
+fit or a Lean formalization.

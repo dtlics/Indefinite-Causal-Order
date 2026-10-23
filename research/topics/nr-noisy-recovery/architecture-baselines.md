@@ -1980,6 +1980,773 @@ accepted conditional output, a metrology likelihood or an adaptive future
 utility. Source/reset/calibration effort, helper lifetime, connectivity,
 readout and the actual controlled-Weyl implementation remain native costs.
 
+<a id="nr-r06-encoded-pauli"></a>
+
+### Encoded Pauli outputs admit an ordinary decoder and retained syndrome records
+
+The fixed-control preparation in (DW1) excludes an order control that
+already carries useful input information. A separate, exact comparison
+applies to one such code. [Chen and Ma, *Commutator Geometry and
+Information Preservation in the Quantum Switch*, §6](https://arxiv.org/html/2609.21310v1#S6)
+consider the joint encoding $V|0\rangle=|00\rangle$,
+$V|1\rangle=|11\rangle$. Their ordinary comparator is the specified map
+$\mathrm{id}_C\otimes(\Phi\circ\Psi)$, rather than an optimization over
+interleaved decoding, memory and measurements. The construction below
+enlarges that comparator. It reproduces the full switched output on
+this code without knowing the noise probabilities, and does not
+contradict the paper's fixed-map inequalities.
+
+**Error model and branch identity.** Let two target-only noise modules
+apply $X^a$ and $Y^b$, where $a,b\in\{0,1\}$. Independent modules have
+$\pi_{ab}=p^a(1-p)^{1-a}q^b(1-q)^{1-b}$ for unknown $p,q$. The proof
+also allows any exogenous classical joint law $\pi_{ab}$ that is common
+to both implementations and unaffected by the input, query order or
+intermediate controls and reads. Reduced one-time channels alone do
+not supply that promise for a correlated quantum memory process.
+Using the source's order convention, put
+
+$$
+W_{ab}=|0\rangle\langle0|_C\otimes X^aY^b
+       +|1\rangle\langle1|_C\otimes Y^bX^a,
+\qquad
+\mathcal S_\pi(\rho)=\sum_{ab}\pi_{ab}W_{ab}\rho W_{ab}^\dagger.
+\tag{EP1}
+$$
+
+Let $V_c=(I_C\otimes X_T^c)V$, $c=a\mathbin\oplus b$, and
+$f=b(1-a)$. Since $XY=iZ$, $YX=-iZ$, and $Z_CZ_TV=V$,
+
+$$
+W_{ab}V=i^b V_cZ_L^f.
+\tag{EP2}
+$$
+
+In the order $ab=00,10,01,11$ these are $V,V_1,iV_1Z_L,iV$.
+The single-error odd-parity output is part of the retained channel;
+this is not just an equality after projection back onto the code.
+
+**Ordinary chronology and proof.** The known gate
+$E=\operatorname{CNOT}_{C\to T}=E^\dagger$ decodes any input on the code
+to $\rho_C\otimes|0\rangle\langle0|_T$. The same statement holds for
+an arbitrary mixed input correlated with a passive reference $R$.
+Store the decoded logical state coherently in $C$ and perform:
+
+1. Query the $X$ module and read $Z_T$ nondestructively, obtaining $s=a$.
+2. Query the $Y$ module on the same target, **without resetting it**,
+   and read $Z_T$ nondestructively again, obtaining $t=a\oplus b=c$.
+3. Infer $b=s\oplus t$, apply $Z_C^{b(1-a)}$, and apply $E$ to reencode.
+   The target is already $|c\rangle$, so this retains the appropriate
+   even or odd output sector.
+
+Indeed, after decoding the two target actions and read projectors give
+$Y^bX^a|0\rangle=i^b(-1)^{ab}|c\rangle$. The projectors act on known
+basis states of a tensor factor and reveal no logical or reference
+information. The ordinary branch isometry is therefore
+
+$$
+M_{ab}=i^b(-1)^{ab}V_cZ_L^f=(-1)^{ab}W_{ab}V.
+\tag{EP3}
+$$
+
+Only the double-error branch changes sign, from $iV$ to $-iV$. This is
+a branch-global phase, not an uncorrected logical $Z$. Thus for every
+logical operator $A$, $M_{ab}AM_{ab}^\dagger=(W_{ab}V)A(W_{ab}V)^\dagger$.
+Each branch is an isometry. Summing with any $\pi_{ab}$ proves exact
+trace-preserving equality of the full encoded-input, retained-output
+channel. Tensoring this operator identity with $\mathrm{id}_R$ proves
+the assertion for every mixed state and reference. All outcomes count;
+no success normalization, learned $p,q$ or input-parameter-dependent
+control is used. A signal written before decoding is included. A
+signal acting later on the now-decoded target is a different task.
+
+Retaining the two read records, and relabeling $(s,t)$ as $(a,b)$,
+gives the ordinary instrument
+
+$$
+\Gamma_\pi(\rho)=\sum_{ab}\pi_{ab}|a,b\rangle\langle a,b|_F\otimes
+       (W_{ab}V)\rho(W_{ab}V)^\dagger.
+\tag{EP4}
+$$
+
+Discarding $F$ gives $\mathcal S_\pi(V\rho V^\dagger)$ through a
+parameter-independent map. The refinement therefore includes every
+later joint-output measurement, statistical decision and processing
+that accesses only this output. It does not reproduce an inaccessible microscopic
+environment or coherent superpositions of error labels.
+
+**Perfect storage and noise information with the same access.** Instead
+of the phase feedback in step 3, apply $X_T^c$ and then $E$. The decoded
+logical state was untouched, and this restores $T=0$ before encoding.
+The output is exactly
+
+$$
+V\rho_{RL}V^\dagger\otimes
+       \sum_{ab}\pi_{ab}|a,b\rangle\langle a,b|_F.
+\tag{EP5}
+$$
+
+Thus the same memory/readout ports allow perfect encoded storage while
+retaining the complete error record. For independent interior $p,q$
+the record Fisher matrix is
+$\operatorname{diag}(1/[p(1-p)],1/[q(1-q)])$. With $p=q=\gamma$ its
+single-parameter information is $2/[\gamma(1-\gamma)]$, the same optimal
+noise information already established in the source's Appendix 9.3
+for ordinary Bell probes and SWITCH. For any regular differentiable
+classical law, the record matrix is
+$\sum_{ab}(\partial_\mu\pi_{ab})(\partial_\nu\pi_{ab})/\pi_{ab}$.
+For input-state parameters alone, (EP5) preserves the full input QFI
+matrix. This does not assert simultaneous attainability of incompatible
+parameter measurements or use interior Fisher formulas at a rank-changing
+endpoint. The decoder and instrument are independent of every unknown
+probability and signal parameter, so discarding records remains a valid
+data-processing comparison when the probabilities vary.
+
+**Deferred reads are a priced coherent variant.** When two clean record
+qubits $R_1,R_2$ and their actual coherent gates are supplied, replace
+the intermediate reads by $\operatorname{CNOT}_{T\to R_1}$ after the
+$X$ query and $\operatorname{CNOT}_{T\to R_2}$ after the $Y$ query.
+For each classical error branch they store $(a,c)$. Apply $Z_C$ if
+$R_1=0,R_2=1$, then reencode. Since $f=b(1-a)=c(1-a)$, this is the same
+isometry (EP3), with orthogonal retained records that may be read only
+at the end. For (EP5), replace this controlled phase by
+$\operatorname{CNOT}_{R_2\to T}$. This avoids an intermediate classical
+readout deadline only by retaining coherent records and supplying the
+additional couplings, conditional gate and memory. It is not free
+controlled access to an arbitrary unknown module.
+
+**Noise and physical boundary.** Identical parameter-independent
+postprocessing of the simulated output can always be appended on both
+sides. More specifically, diagonal control-noise Kraus operators
+$f_j(Z_C)$ commute with $E$, the target operations, reads, phase feedback
+and every $W_{ab}$. Under genuinely matched exposure and error law they
+can be moved to the output, preserving the comparison, including ordinary
+control phase noise. General in-loop helper noise does not have this
+property. Already with noiseless queries, an $X_C$ during decoded storage
+becomes $EX_CE=X_CX_T$, whereas an $X_C$ on the original encoded register
+is $X_C$. They differ on $|00\rangle$. Helper relaxation, cross-talk,
+leakage, wrong read records, noisy gates and measurement-reactive memory
+need their complete timed instruments. Coherent non-Pauli rotations
+cannot be replaced by the classical law in (EP1).
+
+The ordinary ledger is two module calls, two known decode/encode CNOTs,
+coherent $C$ storage over both calls and read latency, two sequential
+nondemolition $Z_T$ reads, two classical bits and feedforward; or the
+explicit coherent-record replacement above. A read must act as
+$I_C\otimes|t\rangle\langle t|$ and retain the target carrier without
+leaving a record of $C$. If $C$ is path and $T$ polarization of one
+photon, path-resolving detection can destroy the logical coherence,
+and destructive polarization detection destroys the retained photon.
+Ancillas, failure events, buffer time, routing, coherent gates and
+coupling loss enter the all-launch comparison. A postselected optical
+QND demonstration does not supply a deterministic read for free; see
+[Pryde et al., *Measuring a photonic qubit without destroying it*](https://doi.org/10.1103/PhysRevLett.92.190402).
+
+The noiseless-control decoder is an established resource-model issue:
+[Chiribella and Kristjánsson, §III.1.3](https://arxiv.org/html/1812.05292v3)
+explicitly distinguish communication encoders that transfer information
+to noiseless control from restricted non-signalling encoders. Ordinary
+syndrome-based noise estimation is also established, for example
+[Y. Fujiwara](https://arxiv.org/html/1405.6267v1). These are context, not
+priority claims for this particular elementary circuit. Equations
+(EP1)--(EP5) close this code-restricted candidate only when the stated
+decode, memory and readout or coherent-record ports are allowed. They
+do not simulate the switch on arbitrary $CT$ inputs or arbitrary channels,
+and do not establish equal laboratory time. A native advantage must be
+tested against the same actual storage, gates and retained-output ports.
+
+<a id="nr-r06-fermionic-poisoning"></a>
+
+### Fermionic collision flags require the even physical dilation
+
+Quasiparticle poisoning is a real Majorana-memory bottleneck. The
+[poisoning analysis of Karzig, Cole and Pikulin](https://doi.org/10.1103/PhysRevLett.126.057702)
+distinguishes above-gap quasiparticles from localized subgap parity
+reservoirs. The [local-detection construction](https://arxiv.org/html/2307.08896)
+uses a four-Majorana tetron of fixed parity and explicitly includes its
+parity measurement and additional quasiparticle detectors as ordinary
+error-detection resources. These sources motivate the following screen;
+they do not demonstrate a quantum switch of poisoning contacts or certify
+the symmetric bath model below.
+
+This application cannot be obtained merely by treating physical odd
+Majoranas as commuting tensor factors with their fermionic reservoirs.
+Let $\gamma_1,\ldots,\gamma_m$, $m=2n$, be system Majoranas, with
+$\{\gamma_j,\gamma_k\}=2\delta_{jk}$. For each station $A,B$ and each
+$j$, provide a **different reservoir fermion mode**, initially empty, and
+use one of its Majoranas $\eta_{Aj},\eta_{Bj}$. All system and bath
+Majoranas anticommute. One bath Majorana per independent fermion mode
+ensures that distinct excited subsets have orthogonal vacuum records;
+packing these Majoranas into fewer modes would not have that property.
+The extra generator in a maximal $2n+1$ qubit Clifford alphabet is total
+fermion parity, which is even and acts as a scalar on a fixed-parity code;
+it is not another single-fermion poisoning error.
+Consider the parity-preserving joint unitaries
+
+$$
+U_A=\prod_{j=1}^{m}(c+s\gamma_j\eta_{Aj}),\qquad
+U_B=\prod_{j=1}^{m}(c+s\gamma_j\eta_{Bj}),\quad
+c=\sqrt{1-r},\quad s=\sqrt r,\quad 0\le r\le1.
+\tag{FP1}
+$$
+
+Each bilinear is anti-Hermitian and squares to $-I$, so its factor is
+unitary and even. Terms at distinct $j$ within a station commute. This
+is a declared joint system/bath process: stationary retained reservoir
+modes are used in both order histories, with no additional timing record.
+It is not inferred from the reduced memory channel. Grant a perfect
+surviving order helper and ideal coherent routing to this process.
+
+**The graded sign changes which flag detects a collision.** Put
+$A_j=\gamma_j\eta_{Aj}$ and $B_k=\gamma_k\eta_{Bk}$. Direct CAR
+reordering gives
+
+$$
+A_jB_k=B_kA_j\quad(j\ne k),\qquad A_jB_j=-B_jA_j.
+\tag{FP2}
+$$
+
+For example, distinct $j,k$ require four odd exchanges, while a shared
+system Majorana leaves one net minus sign. Consequently, if $J,K$ are
+the excited system-index subsets in the two stations,
+$A_JB_K=(-1)^{|J\cap K|}B_KA_J$. The order-minus flag selects
+$|J\cap K|$ odd, and the net memory error is, up to a scalar phase,
+$\gamma_{J\triangle K}$. Its branch probability before the flag is
+
+$$
+w(J,K)=r^{|J|+|K|}(1-r)^{2m-|J|-|K|}.
+\tag{FP3}
+$$
+
+For a model that artificially allows at most one poisoning jump per
+station, the minus branch selects exactly equal jump indices, leaving
+identity on the memory and two bath excitations. Its yield is
+$\sum_jp_{Aj}p_{Bj}$, or $p_Ap_B/m$ for uniform jump labels. Grading
+therefore swaps the naive qubit collision flag; it does not by itself
+eliminate that idealized filter. In the full product process (FP1),
+additional unmatched jumps survive alongside an odd collision. There is
+no exact identity filter at nonzero generic $r$.
+
+**A useful tetron endpoint includes its ordinary parity check.** Set
+$m=4$ and encode an arbitrary logical qubit, possibly entangled with a
+passive reference, in the known $+1$ sector of
+$P=-\gamma_1\gamma_2\gamma_3\gamma_4$. The final projective $P$
+measurement rejects odd net errors. Every proper nonempty even Majorana
+monomial restricts, up to phase, to one of the three logical Paulis;
+complementary pairs have the same logical action. The empty and full
+net subsets are both logical identity.
+
+Write
+
+$$
+x=1-2r,\quad y=x^2,\quad
+a=1-2r+2r^2=(1+x^2)/2,\quad q=2r(1-r)=(1-x^2)/2.
+$$
+
+Let $p_P$ be the unflagged probability of passing final parity, and
+$g_P$ its unnormalized logical-identity/Bell-good weight. Let $p_S,g_S$
+denote these quantities when also retaining the switched minus flag.
+Summing (FP3) gives
+
+$$
+\begin{aligned}
+p_P&=(1+x^8)/2,&g_P&=a^4+q^4=(x^8+6x^4+1)/8,\\
+p_S&=\frac{1+x^8-(x+q)^4-(x-q)^4}{4}
+ =\frac{(1-x^2)^2(7x^4-6x^2+7)}{32},\\
+g_S&=(a^4-x^4)/2
+ =\frac{(1-x^2)^2(x^4+6x^2+1)}{32}.
+\end{aligned}
+\tag{FP4}
+$$
+
+For $p_P$, each net bit is independently one with probability $q$.
+For $p_S$, project simultaneously on even net cardinality and odd
+intersection cardinality. Their per-index characters are respectively
+$x^2$, $1-2r^2=x+q$, and $1-4r+2r^2=x-q$, giving the first expression.
+For $g_S$, identity with empty net subset requires $J=K$ and odd $|J|$;
+the generating function is $(a^4-x^4)/2$. The full net subset has
+$J\cap K=\varnothing$ and never contributes to this flag. Permutation
+symmetry makes the three nonidentity logical-Pauli weights equal to
+$(p_S-g_S)/3$. These are complete CP maps on the code, rather than just
+state fidelities.
+
+**An ordinary one-helper comparator has higher yield and fidelity.**
+Suppose the actual interface supplies known controlled applications of
+the even bilinear $Q=i\gamma_1\gamma_2$, together with the same final
+$P$ measurement. Prepare one helper in plus, apply controlled-$Q$, run
+the two actual contacts in a fixed order, then controlled-$Q$ again.
+Since $Q$ commutes with bath operators, its helper character on (FP3)
+is $(-1)^{|(J\triangle K)\cap\{1,2\}|}$. Keep its plus outcome and
+the final even-parity outcome. Both pair parities are now even, giving
+
+$$
+p_O=(1+x^4)^2/4,\qquad g_O=g_P=(x^8+6x^4+1)/8.
+\tag{FP5}
+$$
+
+No oracle matrix or value of $r$ is needed for this fixed selection.
+For all $0\le r\le1$,
+
+$$
+\begin{aligned}
+32(p_O-p_S)
+ &=y^4+1+20y(y-1)^2+30y^2>0,\\
+256(g_Op_S-g_Sp_O)
+ &=(1-y)^4\{5(y-1)^4+12y(y-1)^2+16y^2\}\ge0.
+\end{aligned}
+\tag{FP6}
+$$
+
+The polynomial identities prove both greater accepted yield and at least
+as high conditional identity fidelity whenever $p_S>0$. At $r=0,1$
+the switched minus branch never occurs. In fact this also defeats its
+best deterministic final decoder: a Pauli channel with weights
+$g_S,b,b,b$ has optimal corrected Bell-good weight $\max(g_S,b)$ by
+the recovery-to-POVM argument. If $b$ is largest its conditional score
+is at most $1/3$, whereas (FP5) obeys
+$2g_O-p_O=y^2\ge0$. The comparison uses the physical parity-constrained
+qubit; it does not encode arbitrary coherent even/odd superpositions.
+
+**Symmetric final helper dephasing preserves this resource screen.**
+Let both retained helpers suffer the same declared final $Z$-dephasing
+visibility $\nu\in[0,1]$, after the order operation or echo and before
+their $X$ readout. This flips the ideal flag with probability
+$(1-\nu)/2$. The unnormalized selected weights become
+
+$$
+\begin{aligned}
+p_{S,\nu}&=\nu p_S+(1-\nu)p_P/2,&
+g_{S,\nu}&=\nu g_S+(1-\nu)g_P/2,\\
+p_{O,\nu}&=\nu p_O+(1-\nu)p_P/2,&
+g_{O,\nu}&=(1+\nu)g_P/2.
+\end{aligned}
+\tag{FP7}
+$$
+
+Their yield difference is $\nu(p_O-p_S)$. Their conditional-fidelity
+cross numerator is $\nu^2C+\nu(1-\nu)D/2$, where
+$C=g_Pp_S-g_Sp_O\ge0$ is given in (FP6), and
+
+$$
+\begin{aligned}
+256D=(1-y)^2\{&4(y^6+1)+7(y-1)^2(y^4+1)\\
+ &+94(y^4+y^2)+60y^3\}\ge0.
+\end{aligned}
+\tag{FP8}
+$$
+
+Here $D=(g_P-g_S)p_P-g_P(p_O-p_S)$. Thus fixed ordinary selection
+also dominates the raw identity fidelity with this common final noise.
+It does not model noisy controlled gates, bath-correlated helper errors
+or arbitrary noncovariant final helper noise.
+
+**Calibrated classical postprocessing simulates both accepted flags.**
+There is a stronger complete-output comparison when the noise rate is
+calibrated. Choose the echo check uniformly among
+$i\gamma_1\gamma_2,i\gamma_1\gamma_3,i\gamma_1\gamma_4$.
+Each choice uses the same two controlled-bilinear gates. In the fixed
+code these are the three logical Pauli axes. Averaging their instruments
+makes each ordinary flag depolarizing, with total weights $p_O,p_P-p_O$
+and good weights $g_P,0$. No data-Clifford gates or extra quantum memory
+are needed for this averaging; the classical random choice is discarded.
+
+Keep the ordinary plus flag as a synthesized switched minus with
+probability $\alpha=g_S/g_P$, and the ordinary minus flag with
+$\beta=(p_S-\alpha p_O)/(p_P-p_O)$. At the endpoints choose both zero.
+The numerator defining $\beta$ is nonnegative by (FP6). The complementary
+constraint follows from
+
+$$
+\begin{aligned}
+256\{g_P(p_P-p_S-p_O)+g_Sp_O\}
+=(1-y)^2\{3y^6+34y^5+13y^4+156y^3+13y^2+34y+3\}\ge0.
+\end{aligned}
+\tag{FP9}
+$$
+
+Hence $0\le\alpha,\beta\le1$. By construction the synthesized flag
+has both total weight $p_S$ and good weight $g_S$. Depolarizing logical
+qubit CP maps are fixed by these two numbers, so this gives the complete
+switched minus code map on every reference-entangled input. The
+complement gives the switched plus code map because both sums equal
+the same unflagged parity-accepted map. It also reproduces every later
+decoder, flag-dependent herald and utility confined to that accepted code
+instrument. It does not reproduce the rejected odd-parity quantum output
+or the retained reservoir state. It simulates measured classical flags,
+not a coherently unmeasured order register.
+
+With the common dephasing in (FP7), replace the probabilities by
+
+$$
+\alpha_\nu=\nu\alpha+(1-\nu)(1+\alpha-\beta)/2,\qquad
+\beta_\nu=\nu\beta+(1-\nu)(1-\alpha+\beta)/2.
+\tag{FP10}
+$$
+
+These are convex combinations of numbers in $[0,1]$. Substitution in the
+ordinary noisy flag weights gives exactly $p_{S,\nu},g_{S,\nu}$; its
+complement again supplies the other switched code map. Thus the
+calibrated simulation includes arbitrary downstream code recovery under
+this declared helper-noise law. Calibration of $r,\nu$, classical
+randomization and the actual three available controlled-parity settings
+are real costs. No general efficient experimental learner is asserted.
+
+The ordinary comparison has two occupied poisoning contacts, one coherent
+helper, two known controlled-even-bilinear gates, and the same final code
+parity readout. A switch additionally needs the actual coherent order
+interface. These are resource inventories, not measured fault or latency
+equalities. If controlled bilinears are unavailable, their compilation
+cannot be imported for free; a native proposal must compare their actual
+cost with its router. A stationary coherent selector has the ordinary
+chronological comparator already described above. A clean helper that
+can directly hold the encoded logical state supplies further ordinary
+storage options.
+
+This closes the specified symmetric tetron collision-filter candidate
+under the stated ordinary ports. It is not an all-Majorana-noise no-go.
+Unequal rates, correlated poisoning, accessible quasiparticle records,
+nonvacuum reservoirs, additional Hamiltonian terms and physical timing
+records change the model. In particular, emitted early/late reservoir
+wavepackets cannot be treated as the same localized mode without their
+actual overlap. The formulas favor the switch by retaining ideal bath
+coherence; they do not establish that coherence in a device, a full
+fermionic-channel SWITCH from reduced maps, or a native architecture gain.
+
+The [microscopic tetron analysis of Bhattacharyya and van Heck](https://arxiv.org/html/2608.18042v1)
+includes charging energy, Majorana overlap and thermal lead spectra.
+Its transition operators are energy-projected Majoranas, rather than
+the homogeneous bare-generator product (FP1). The declared contact model
+cannot be silently substituted for that physical master equation. A
+surviving application would have to identify its actual coherent bath
+history and beat ordinary parity monitoring, accessible quasiparticle
+records and production-schedule calibration at matched memory, gate,
+reset, discarded-launch and routing costs.
+
+<a id="nr-r06-jc-energy"></a>
+
+### Finite-energy Jaynes--Cummings rotations have a stronger ordinary comparator
+
+[Fellous-Asiani et al., *Phys. Rev. Research* **5**, 023111 (2023)](https://doi.org/10.1103/PhysRevResearch.5.023111)
+([complete model and Appendices A, C, E](https://arxiv.org/html/2208.01952v2))
+compare a quantum switch with a four-independent-box simulation at fixed
+initial photon budget. A coherent-state Jaynes--Cummings interaction
+approximates an equatorial atomic rotation; the other gate is ideal.
+Their actual equatorial promise admits an ordinary perfect discriminator
+in the infinite-energy limit (Appendix E.3), while the headline ordinary
+comparison imposes isotropy. Appendix A proposes a four-level atom and
+two-mode cavity with an intermediate control flip. It is a proposed
+experiment, not an established architecture gain.
+
+The following comparison uses their ordinary isometry and extends its
+measurement on the ideal experiment's unused subspace. It proves an
+exact finite-energy inequality for the stated prior, without an optimizer.
+It preserves the distinct four-box and isotropic comparisons. There is
+no priority claim for the published isometry, and no claim that this
+diagnostic supplies a new useful gate or a total hardware-cost advantage.
+
+**Promise, actual noise and photon budget.** Write
+$\sigma_\phi=\cos\phi X+\sin\phi Y$ and
+$\sigma_\perp=\sigma_{\phi+\pi/2}$. The commuting class has ideal
+$A=R_\phi(\theta)$, $B=R_\phi(\vartheta)$, with
+$\phi,\theta,\vartheta$ independent and uniform on $[-\pi,\pi]$.
+The anticommuting class has $A=R_\phi(\pi)$ and
+$B=-i(\cos\chi\,\sigma_\perp+\sin\chi\,Z)$, with $\phi,\chi$
+uniform on $[-\pi,\pi]$. The two classes have equal prior. The laboratory
+energy axis $Z$ is known; the gate parameters are unknown. This is the
+physical equatorial prior, rather than a later Haar-twirled prior.
+
+Let $N>0$ be the mean photon number in $A$'s one coherent field. Put
+$w_m=e^{-N/2}N^{m/2}/\sqrt{m!}$, $w_{-1}=0$, and $u=\theta/2$.
+The complete field-traced Kraus operators for the interaction time
+$t=\theta/(\Omega_0\sqrt N)$ are
+
+$$
+\begin{aligned}
+K_m(\theta,\phi)&=
+\begin{pmatrix}
+r_m&-i\beta_m e^{-i\phi}\\
+-i\gamma_m e^{i\phi}&s_m
+\end{pmatrix},\qquad m\ge0,\\
+r_m&=w_m\cos\!\left(u\sqrt{m/N}\right),\quad
+s_m=w_m\cos\!\left(u\sqrt{(m+1)/N}\right),\\
+\beta_m&=w_{m-1}\sin\!\left(u\sqrt{m/N}\right),\quad
+\gamma_m=w_{m+1}\sin\!\left(u\sqrt{(m+1)/N}\right).
+\end{aligned}
+\tag{J1}
+$$
+
+Negative angles use the stipulated sign or axis control. No optimized
+interaction time is assumed. The field is traced over every $m$;
+there is no photon-number postselection. Equivalently,
+
+$$
+\begin{aligned}
+K_m&=a_mI+b_m\sigma_\phi+c_m\sigma_\perp+d_mZ,\\
+a_m&=(r_m+s_m)/2,\quad d_m=(r_m-s_m)/2,\\
+b_m&=-i(\beta_m+\gamma_m)/2,\quad
+c_m=(\beta_m-\gamma_m)/2.
+\end{aligned}
+\tag{J2}
+$$
+
+Here $a_m,c_m,d_m$ are real and $b_m$ is imaginary. Define
+$q_a(\theta)=\sum_m a_m^2$, $q_b(\theta)=\sum_m|b_m|^2$,
+$q_c(\theta)=\sum_m c_m^2$, and $q_d(\theta)=\sum_m d_m^2$.
+They are independent of $\phi$. Taking half the trace of Kraus
+completeness gives $q_a+q_b+q_c+q_d=1$. Angular brackets below denote
+the uniform $\theta$ average in the commuting class.
+
+**An explicit ordinary circuit and complete measurement.** Prepare
+$|\Phi^+\rangle_{Sb}$, call the one ideal unknown $B$ on $S$, then use
+the following known isometry, independent of every unknown parameter:
+
+$$
+\begin{aligned}
+V|00\rangle&=|\Phi^+\rangle_{Sa_1}|0\rangle_{a_2},&
+V|11\rangle&=|\Phi^+\rangle_{Sa_1}|1\rangle_{a_2},\\
+V|01\rangle&=|01\rangle_{Sa_1}|2\rangle_{a_2},&
+V|10\rangle&=|10\rangle_{Sa_1}|2\rangle_{a_2}.
+\end{aligned}
+\tag{J3}
+$$
+
+Its four images are orthonormal, so it extends to a known unitary after
+adjoining an initialized qutrit. Call the single noisy $A$ on $S$ and
+measure the two-outcome projective measurement
+
+$$
+\begin{aligned}
+P_-&=I_{Sa_1}\otimes|-\rangle\langle-|_{a_2}
+ +|\Phi^-\rangle\langle\Phi^-|_{Sa_1}\otimes|2\rangle\langle2|_{a_2},\\
+P_+&=I-P_-,\qquad |\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2.
+\end{aligned}
+\tag{J4}
+$$
+
+Guess anticommuting on $P_-$. Its summands have orthogonal $a_2$
+support; $P_-$ has rank five and its complement rank seven. Assigning
+the whole $a_2=-$ block to this guess extends the ideal experiment's
+success-one effect onto two unused directions. No unknown query,
+intermediate record or rejected attempt is added.
+
+The protocol uses one $B$ and one $A$ call, the same one $A$ field with
+mean $N$ photons, and no field readout, refill, inverse or controlled
+unknown gate. It requires an initial Bell pair, a known isometry and
+joint measurement, one memory qubit after $B$, and a qubit plus qutrit
+of memory after $V$ through $A$. Their preparation, native compilation,
+energy, storage and readout must be charged in a hardware comparison.
+The photon budget concerns the field implementing $A$; it is not a
+bound on the energy of all controls or the stipulated ideal $B$.
+
+**Exact ordinary class errors.** Define
+$|\Psi_\phi\rangle=(e^{-i\phi}|01\rangle+e^{i\phi}|10\rangle)/\sqrt2$.
+Equation (J3) gives
+$V|\Phi^+\rangle=|\Phi^+\rangle|+\rangle$,
+$V|\Phi^-\rangle=|\Phi^+\rangle|-\rangle$, and
+$V|\Psi_\phi\rangle=|\Psi_\phi\rangle|2\rangle$.
+For the commuting class, averaging $\vartheta$ removes the sine--cosine
+cross terms, giving the pre-$A$ state
+
+$$
+\frac12|\Phi^+\rangle\langle\Phi^+|\otimes|+\rangle\langle+|
++\frac12|\Psi_\phi\rangle\langle\Psi_\phi|\otimes|2\rangle\langle2|.
+\tag{J5}
+$$
+
+The first term never triggers $P_-$, for any noise on $S$. For the
+second,
+$\langle\Phi^-|(K_m\otimes I)|\Psi_\phi\rangle=-ic_m$.
+Consequently the commuting-class error at fixed $\theta$, after the
+$B$-angle average, is
+
+$$
+e_{\rm com}^{\rm FCO}(\theta)=q_c(\theta)/2.
+\tag{J6}
+$$
+
+For the anticommuting class, averaging $\chi$ gives the pre-$A$ state
+
+$$
+\frac12|\Phi^+\rangle\langle\Phi^+|\otimes|-\rangle\langle-|
++\frac12|\Psi_{\phi+\pi/2}\rangle\langle\Psi_{\phi+\pi/2}|
+                 \otimes|2\rangle\langle2|.
+\tag{J7}
+$$
+
+The first term is always classified correctly, regardless of the
+$A$ noise. In the second term the $\Phi^-$ amplitude is $ib_m$,
+so its success probability is $q_b(\pi)$. Thus
+
+$$
+e_{\rm anti}^{\rm FCO}
+=\frac{1-q_b(\pi)}2
+=\frac{q_a(\pi)+q_c(\pi)+q_d(\pi)}2.
+\tag{J8}
+$$
+
+All $\phi$ dependence has canceled before its average. The ordinary
+circuit does not require knowing $\phi$. Its complete equal-prior error is
+
+$$
+e_{\rm FCO}
+=\frac{\langle q_c\rangle+q_a(\pi)+q_c(\pi)+q_d(\pi)}4.
+\tag{J9}
+$$
+
+**Exact comparison with the specified switch readout.** The switch
+prepares a plus control and maximally mixed data, then guesses using
+the final control $X$ outcome. Its cross amplitude for Kraus $K_m$
+and unitary $B$ is
+$\operatorname{Tr}(K_m^\dagger B^\dagger K_mB)/2$.
+In the commuting class, $a_mI+b_m\sigma_\phi$ commutes with
+$\sigma_\phi$ and $c_m\sigma_\perp+d_mZ$ anticommutes with it.
+The uniform $\vartheta$ average and Hilbert--Schmidt orthogonality
+remove the cross terms, giving
+
+$$
+e_{\rm com}^{\rm QS}(\theta)
+=\frac{q_c(\theta)+q_d(\theta)}2.
+\tag{J10}
+$$
+
+For the anticommuting class, averaging $\chi$ gives equal weights to
+the conjugation tests with $\sigma_\perp$ and $Z$. Their errors are
+$q_a(\pi)+q_c(\pi)$ and $q_a(\pi)+q_d(\pi)$, respectively:
+
+$$
+e_{\rm anti}^{\rm QS}
+=q_a(\pi)+\frac{q_c(\pi)+q_d(\pi)}2.
+\tag{J11}
+$$
+
+Combining (J6)--(J11) proves
+
+$$
+p_{\rm FCO}-p_{\rm QS}
+=e_{\rm QS}-e_{\rm FCO}
+=\frac{\langle q_d\rangle+q_a(\pi)}4\ge0.
+\tag{J12}
+$$
+
+This holds for every $N>0$ in the complete infinite-Fock-space model,
+without numerical truncation or an asymptotic limit. It concerns this
+prior and switch strategy, rather than arbitrary priors, both gates
+being noisy, an unknown laboratory energy axis, or all possible switch
+protocols. The inequality is strict at every finite positive $N$:
+the $m=0$ term alone has
+$d_0(\theta)^2=e^{-N}[1-\cos(\theta/(2\sqrt N))]^2/4$.
+This continuous function is not identically zero on $[-\pi,\pi]$,
+so its average is positive. An accidental zero at $\theta=\pi$ does
+not affect this argument.
+
+**High-energy behavior and its remainder.** Let $\epsilon=1/N$,
+$x=m/N$, and $f_u(x)=\cos(u\sqrt x)$. Then
+$d_m=(w_m/2)[f_u(x)-f_u(x+\epsilon)]$.
+For $x\ge0$, $|f_u'(x)|\le u^2/2$, including its continuous value
+at zero. Therefore $q_d(\theta)\le u^4/(16N^2)$ uniformly on
+$|u|\le\pi/2$, and $\langle q_d\rangle=O(N^{-2})$.
+At $\theta=\pi$, $f_{\pi/2}(1)=0$ and
+$f_{\pi/2}'(1)=-\pi/4$. The Poisson variance gives
+
+$$
+q_a(\pi)=\frac{\pi^2}{16N}+O(N^{-2}).
+\tag{J13}
+$$
+
+To justify the remainder, expand on $|m/N-1|\le1/2$. The centered
+Poisson moments are
+$\mathbb E(x-1)^2=N^{-1}$,
+$\mathbb E(x-1)^3=N^{-2}$, and
+$\mathbb E(x-1)^4=3N^{-2}+N^{-3}$.
+The relevant derivatives are bounded on this interval, uniformly for
+$|u|\le\pi/2$. Outside it the Poisson Chernoff tail is exponentially
+small, while cosine is bounded. Taylor expansion through the required
+orders therefore yields the stated $O(N^{-2})$ contribution.
+
+The Poisson coefficient ratios also give
+$c_m=(w_m/2)[\sqrt x\sin(u\sqrt x)
+-\sin(u\sqrt{x+\epsilon})/\sqrt{x+\epsilon}]$.
+At $\epsilon=0$ the bracket is
+$g_u(x)=(\sqrt x-1/\sqrt x)\sin(u\sqrt x)$, with its continuous
+value at zero. It obeys $g_u(1)=0$, $g_u'(1)=\sin u$.
+The same central-moment expansion, with exponentially small tails
+bounded using the at-most-polynomial growth of this bracket, gives
+
+$$
+q_c(\theta)=\frac{\sin^2(\theta/2)}{4N}+O(N^{-2}),\qquad
+\langle q_c\rangle=\frac1{8N}+O(N^{-2}),\qquad
+q_c(\pi)=\frac1{4N}+O(N^{-2}).
+\tag{J14}
+$$
+
+Substitution into the exact errors yields
+
+$$
+\begin{aligned}
+p_{\rm FCO}&=1-\frac{6+\pi^2}{64N}+O(N^{-2}),\\
+p_{\rm QS}&=1-\frac{3+\pi^2}{32N}+O(N^{-2}),\\
+p_{\rm FCO}-p_{\rm QS}&=\frac{\pi^2}{64N}+O(N^{-2}).
+\end{aligned}
+\tag{J15}
+$$
+
+The switch coefficient agrees with the source's expression (28).
+The ordinary coefficient is achieved by the explicit circuit above;
+it is not an asserted optimum over all finite-energy ordinary protocols.
+
+**The native selector and the correct dummy interface.** The proposed
+four-level-atom experiment supplies a chronological selector
+$M=P_0^C\otimes U_{A,SF_A}+P_1^C\otimes U_{B,SF_B}$.
+The same two prepared cavity modes persist across both interaction
+intervals. A middle control flip and restoring output flip give
+
+$$
+X_CM X_CM
+=P_0^C\otimes U_BU_A+P_1^C\otimes U_AU_B.
+\tag{J16}
+$$
+
+This identity holds on both fields and every passive reference, before
+field trace or control readout, at any photon budget. It uses the same
+two intervals and one prepared field per mode, rather than two
+half-energy copies of $A$. It specializes the
+[native-selector comparison](backaction.md#nr-r14) to the actual
+supplied interaction. It does not construct that selector from
+classically selectable opaque channels or invalidate their query
+separation. The actual selector, pulses and their faults must be
+available and charged to both hardware strategies.
+
+A separate three-window route is possible if a true no-atom sector is
+supplied coherently: the cavity acts as $I_F$ on an unoccupied branch
+and as $U_{A,SF}$ on an occupied branch. Route the payload through $A$
+in the first window on control branch zero and in the third window on
+branch one, through $B$ in the middle, and leave $A$ unoccupied in the
+other window. Its full result is again the right side of (J16), with
+the same one $A$ field and initial energy. Extra coherent delay,
+transport, clock phases and free-field evolution are resources; this
+extension is not supplied by an abstract qubit Jaynes--Cummings channel.
+
+An atomic ground-state dummy is different. With $B=I$, payload $S=e$,
+dummy $T=g$, field $F=0$, and resonant interaction time $\pi/\Omega_0$
+(a complete swap on the one-excitation doublet),
+
+$$
+U_{A,TF}U_{A,SF}|e,g,0\rangle=-|g,e,0\rangle,\qquad
+U_{A,SF}U_{A,TF}|e,g,0\rangle=-i|g,g,1\rangle.
+\tag{J17}
+$$
+
+The unused $T,F$ outputs are orthogonal. Treating the retained field
+as a memoryless unitary oracle in a dummy-based simulation would
+therefore dephase its order control, although switching $A$ with $I$
+does not. This vacuum-field example is an exact operator counterexample,
+not the $N>0$ coherent-drive promise in (J12).
+
+Equation (J16), the conditional no-atom route, and the interacting
+atomic dummy are distinct access models. A positive energetic
+architecture claim still needs a useful gate or calibration workload
+and matched full energy, time, memory, control and readout costs against
+the ordinary methods that the physical device actually admits.
+
 <a id="nr-r07"></a>
 
 ## NR-R07 — The efficient finite-frame family admits polynomial-query reused calibration
@@ -2681,7 +3448,18 @@ arguments remain analytic. The same native-check replay verifies the
 complete fixed-plus two-qubit correlated-Pauli channel on all input
 matrix units, local separators, cyclic Weyl character images, ternary
 affine assignments and noisy-control grouped-POVM examples for
-(DW1)--(DW6) and (DN1)--(DN4). Recovery-to-POVM reduction,
+(DW1)--(DW6) and (DN1)--(DN4). It also checks every encoded Pauli
+error/readout branch, logical/reference matrix units, correlated laws,
+retained records, the deferred coherent-record circuit and helper-noise
+boundary for (EP1)--(EP5). It verifies the even fermionic CAR branches
+and exact probability/positivity polynomial identities for (FP1)--(FP10);
+the rational rate/visibility grid is only an additional scope and
+transcription guard. For (J1)--(J17), it verifies the finite isometry,
+complete projective measurement, ordinary and switched CP-weight
+identities, nonnegative gap and full invariant-sector atomic-dummy
+counterexample. The all-Fock sums, strict finite-energy inequality,
+Poisson remainders and native-selector access remain analytic.
+Recovery-to-POVM reduction,
 all-dimensional dominance and sparse interpolation remain analytic;
 finite examples do not certify a general noise model or native
 performance. It also checks transported-Pauli calibration branch and

@@ -72,6 +72,15 @@ for calibrated Pauli and tensor-product qutrit Weyl noise using one helper
 and checks on at most two physical sites. Its common preparation/final-control
 noise extension preserves the comparison under its specified ordering;
 in-circuit correlated faults and heralded tasks require separate analysis.
+The encoded-Pauli comparison separately preserves the full output on the
+specified two-qubit code using ordinary decoding, clean control storage
+and either two nondemolition reads or two coherent record qubits. These
+extra ports and their timed errors remain charged.
+The graded tetron-poisoning model has a separate ordinary parity comparator
+on its final parity-accepted code; unequal or correlated physical poisoning
+requires a new analysis. The finite-energy Jaynes--Cummings comparison
+closes its specified equatorial decision benchmark while preserving the
+source's isotropic and four-box restrictions.
 Recorded Lüders measurements have the ordinary baseline in NR-R08.
 
 The next application questions concern a physical unmonitored multimode
@@ -101,6 +110,10 @@ The [phase-calibration benchmark](metrology.md) independently certifies a
 known finite-query switch advantage, but preserves its hard two-call scope.
 Longer ordinary rounds, emitted timing records and coherent bath reuse
 change that comparison. A native calibration-rate advantage remains open.
+Its known-auxiliary-gate analysis gives an exact ordinary pre/post compiler
+and separates coherent signal reversal from its two classical direction
+channels. The granted joint signal/bath interface must be compared directly;
+its reduced channels alone do not justify a noise-protected extension.
 The shared-spectrum analysis in NR-R08 now specifies a joint-record
 test and a bandwidth--delay resource bound before treating two optical
 sections as independent unread measurements. NR-R06 separately bounds
@@ -136,12 +149,19 @@ general family also admits a three-call simulation. The remaining target
 is a useful native interface with the complete register routed through
 both modules, a justified drift window and a matched primitive-level
 comparison including calibration, clean memory, delays and routing loss.
+Its Andreev-reflection screen excludes the specified single-Majorana
+realization and requires a separate analysis for symmetry-restricted
+converters; the full unknown-coupler prior cannot be imported into them.
 The [scattering result](communication.md#nr-r11) now includes unequal-rate
 and photon-preserving bath-record comparisons. Conditional spectral
 filtering, pair-preserving readout and ordinary delayed/reused paths must
 be compared on the complete output. Recent two-dot experiments motivate
 a joint physical device model rather than assumed independent swapped
-slots. The assessment records that concrete next test.
+slots. Its finite-emitter record guard requires a certified radiative Gram
+floor, a vacuum-preserving physical ground and an explicit pulse/clock
+budget. The retained-spin endpoint also has ordinary parity and photon-bus
+baselines with specific optical ports. The assessment records the remaining
+device and accuracy tests.
 The [alignment benchmark](alignment.md) separates a strict two-call
 advantage from measurement-record access, ordinary reuse and control
 backgrounds. Its calibrated one-memory ordinary construction at shrinking

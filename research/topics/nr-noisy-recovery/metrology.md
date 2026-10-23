@@ -322,6 +322,166 @@ $$
 
 This is an attained classical information, with parameter-independent syndrome probabilities to first order. Launch it with probability $2/3$ and otherwise emit a parameter-independent skip flag. Keeping that flag gives exactly two queries in expectation and information $(2/3)F_3>3$, exceeding the all-input plain-switch value (15), which is less than $66/25$. Its information per query also exceeds $3/2$, whereas the two-query plain switch has less than $33/25$ per query. These are query-count comparisons, not wall-clock rate comparisons: syndrome extraction, feedback, resets and three-query coherence have real costs. The construction establishes a counterbenchmark to those broader interpretations, not the optimal ordinary value under either budget.
 
+<a id="nr-r15-known-control-qec"></a>
+
+### Known auxiliary gates and coherent reversal of the signal
+
+[Xu et al., PRL **137**, 020801 (2026)](https://doi.org/10.1103/9mjc-nhxx)
+study error correction by switching known auxiliary gates with noisy
+sensing evolution. Their parallel-noise construction additionally uses
+coherent forward/backward Hamiltonian evolution. The following comparisons
+refer to the explicitly stated map in the
+[public preprint, Eqs. (4)--(8)](https://arxiv.org/html/2601.01404v1);
+the published supplement's platform constructions were not audited here.
+They distinguish known-gate order control from the physical signal-reversal
+interface, without contesting the stated restricted comparisons.
+
+**A known-gate switch has an exact ordinary implementation.** Let $V$ be
+a known parameter-independent unitary, $K_j$ arbitrary Kraus operators of
+one sensing interval, and define
+$F_V=P_0^A\otimes V+P_1^A\otimes I$ and
+$G_V=P_0^A\otimes I+P_1^A\otimes V$. Direct multiplication gives
+
+$$
+P_0^A\otimes VK_j+P_1^A\otimes K_jV
+ =F_V(I_A\otimes K_j)G_V.
+\tag{IQ1}
+$$
+
+The right side is chronological: apply known $V$ controlled on $A=1$,
+use the actual sensing interval once, then apply known $V$ controlled on
+$A=0$. Each history contains one occupied $V$, with two programmed
+placement windows. No inverse of $V$, or matrix description, inverse or
+controlled version of the unknown sensing evolution is used. There is no assumption that $V$
+commutes with the signal or that the noise is Pauli. The identity holds
+for every input and passive reference and, with the bath included in
+$K_j$, for the stipulated joint dilation. Consequently it preserves the
+entire flagged instrument, subsequent recovery and all parameter
+derivatives when these controls are held fixed. It is not only an
+agreement of one control fringe or a first-order error expansion.
+
+More generally, if branch $s$ places known products on either side of
+one common unknown interval, its Kraus operator is $L_sK_jR_s$. Known
+controlled-$R_s$ before the interval and controlled-$L_s$ after it give
+the complete superposition of those branches. All known controlled
+gates, helper memory, readout and faults have their actual costs. A
+temporally different joint bath interaction in the two branches is a
+different interface; equality of isolated reduced channels does not
+establish the common-dilation premise. Nor does a classically selectable
+opaque auxiliary operation automatically provide its controlled unitary.
+
+**Parallel signal and noise require the coherent extension.** To make
+the premise concrete, use parameter $\omega$ and signal Hamiltonian
+$\omega Z_P$, rather than the dimensionless $\phi Z/2$ convention of
+(1). On direction helper $A$ and probe $P$, compare the two exact joint
+generators, with $\kappa\ge0$,
+
+$$
+\begin{aligned}
+\mathcal L_g(\rho)&=-i[\omega Z_AZ_P,\rho]
+       +\kappa[(I_AZ_P)\rho(I_AZ_P)-\rho],\\
+\mathcal L_b(\rho)&=-i[\omega Z_AZ_P,\rho]
+       +\kappa[(Z_AZ_P)\rho(Z_AZ_P)-\rho].
+\end{aligned}
+\tag{IQ2}
+$$
+
+Restrict either generator to classical $A=0$ or $A=1$. Both give exactly
+the same probe channel with Hamiltonian $+\omega Z_P$ or $-\omega Z_P$
+and dephasing $\kappa(Z_P\rho Z_P-\rho)$, for every time and parameter.
+The noise signs disappear because $\mathcal D[Z_P]=\mathcal D[-Z_P]$.
+Thus even complete characterization of both classical direction channels
+does not determine the coherent direction interface. In $\mathcal L_g$
+the same signed noise acts on both branches; in $\mathcal L_b$ a jump
+has an additional relative minus sign. This off-diagonal information is
+physical, rather than a Kraus representation one may choose freely.
+
+**The same-signed extension already has a simpler ordinary sensor.**
+Prepare $P=|0\rangle$ and $A=|+\rangle$. Under $\mathcal L_g$, noise
+acts trivially on this probe eigenstate, while the signal acts on $A$:
+
+$$
+e^{t\mathcal L_g}(|+\rangle\langle+|_A\otimes|0\rangle\langle0|_P)
+ =e^{-i\omega tZ_A}|+\rangle\langle+|e^{i\omega tZ_A}
+                         \otimes|0\rangle\langle0|_P.
+\tag{IQ3}
+$$
+
+Its unconditional quantum Fisher information is $4t^2$, since the pure
+state has $4\operatorname{Var}_{+}(tZ_A)=4t^2$. One helper, the same
+probe and one sensing interval suffice. There is no syndrome readout,
+rejection, encoded entanglement or correction. This is a comparator
+when the actual coherent sign-controlled interaction, eigenstate
+preparation and helper readout are available. It is not a construction
+of that interaction from the two classical probe channels.
+
+For $\mathcal L_b$, the same preparation gives helper visibility
+$v=e^{-2\kappa t}$ and QFI $4t^2e^{-4\kappa t}$. Indeed its helper
+state has Bloch vector $v(\cos2\omega t,\sin2\omega t,0)$ up to the
+chosen sign convention; its radial derivative is zero and the squared
+angular derivative is $4t^2v^2$. The two native extensions therefore
+have different sensing power despite identical classical channels.
+Repeated independent rounds with total exposure $T$ and integer $T/t$
+give $4Tt e^{-4\kappa t}$ for this ordinary preparation. In the many-round
+limit at $\kappa>0$, its best interrogation time is $t=1/(4\kappa)$
+and its information per total exposure tends to $1/(e\kappa)$; finite
+budgets retain the integer and end-round constraints. This statement concerns this explicit preparation,
+not an optimized all-protocol upper bound. Local QFI also does not
+solve global phase unwrapping or price a finite-prior estimation task.
+
+**The error-correction interpretation has the same resource boundary.**
+Let $C_X=P_0^A\otimes I+P_1^A\otimes X_P$. Its exact conjugations are
+
+$$
+C_X(Z_AZ_P)C_X=I_AZ_P,\qquad
+C_X(I_AZ_P)C_X=Z_AZ_P.
+\tag{IQ4}
+$$
+
+For $p_0=(1+v)/2$, $p_1=(1-v)/2$, a common Kraus family for the
+same-signed extension is
+$\Omega_j=\sqrt{p_j}(I_A\otimes Z_P^j)e^{-i\omega tZ_AZ_P}$.
+Consequently
+
+$$
+C_X\Omega_j C_X
+ =\sqrt{p_j}\,Z_A^j\otimes
+                  [Z_P^je^{-i\omega tZ_P}],\qquad j=0,1.
+\tag{IQ5}
+$$
+
+Prepare $A=+$, measure it in $X$, and correct $Z_P^j$. This chronological
+pre/post check retains every branch and implements the noiseless sensing
+unitary exactly in this commuting model, at every time. It uses the
+granted coherent sign interaction and known controlled-$X$ gates, with
+no inverse of the unknown signal. For the opposite-signed extension
+the additional $Z_A^j$ cancels the syndrome in (IQ5); the same procedure
+leaves parallel probe dephasing. The two classical direction channels
+alone do not justify selecting the correctable extension.
+
+Equivalently, the code
+$C_X(|+\rangle_A\otimes\mathcal H_P)$ is spanned by
+$|\Phi^+\rangle,|\Psi^+\rangle$ and has stabilizer $X_AX_P$.
+In the original same-signed joint model the signal $Z_AZ_P$ acts as
+logical $Z$, while $I_AZ_P$ changes the stabilizer and is correctable.
+The joint signal lies outside the noise's Lindblad span. This is
+consistent with ordinary metrological QEC; the enlarged joint sensing
+interface differs from $H=\omega Z_P$, $L=Z_P$ with a spectator helper.
+If the same fluctuating physical coefficient $(\omega+b(t))$ multiplies
+the generator, coherently reversing its sign reverses signal and noise
+together. Separating those two responses needs an actual device model.
+
+If only a sealed higher-order map is provided, ordinary access to its
+underlying sign-controlled interaction need not follow automatically.
+Its input/output ports and inability to undo known surrounding controls
+would need to be stated. Conversely, hardware exposing the interaction
+in (IQ2) with its same-signed bath, probe preparation and helper readout
+already exposes (IQ3). A matched architecture claim must charge the
+physical sign control, bath cross coherence, helper noise, gate and
+readout time, phase acquisition and all failed launches for both methods.
+These conditional comparisons do not settle every time-direction
+process or audit an unexamined implementation in the published supplement.
+
 ### Resource boundary and the next test
 
 The two-query certificate cannot be multiplied into a converse for expected query budgets, entangled blocks spanning many rounds, or unrestricted information per query; (24)–(26) explicitly exclude the mean-two and unrestricted per-query interpretations for the plain switch. A persistent calibration source does not force the ordinary receiver into independent two-call rounds. Numerical optimizations at three queries are not exact converse extensions of (12), and no asymptotic or calibration-throughput conclusion is drawn here. Global finite-prior estimation, phase-sign acquisition, adaptive recentering and estimating $p$ as well as $\phi$ require their own costs and error analysis.

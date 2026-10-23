@@ -231,6 +231,113 @@ def verify_longer_ordinary_block():
                 scope='Exact feedback-tangent and recorded-history scalar algebra; the feasible three-call protocol is proved in metrology.md. This excludes an unrestricted per-query or mean-two-query interpretation of the hard-two-query benchmark.')
 
 
+def verify_known_controls_and_direction_extensions():
+    """Finite full-matrix guards for IQ1--IQ5; universal proofs are analytic."""
+    import verify_fault_simulation as g
+
+    def scaled(a,weight):
+        return [[g.times(value,weight) for value in row] for row in a]
+    def matrix_add(a,b):
+        return [[g.add(x,y) for x,y in zip(ar,br)] for ar,br in zip(a,b)]
+    def evolved(u,rho):
+        return g.matmul(g.matmul(u,rho),g.adjoint(u))
+    def dephased(u,jump,rho,visibility):
+        out=evolved(u,rho)
+        return matrix_add(scaled(out,(1+visibility)/2),
+                          scaled(evolved(jump,out),(1-visibility)/2))
+    def matrix_unit(d,i,j):
+        out=g.zeros(d,d);out[i][j]=g.ONE
+        return out
+    i2=g.identity(2)
+    x=[[g.ZERO,g.ONE],[g.ONE,g.ZERO]]
+    z=[[g.ONE,g.ZERO],[g.ZERO,g.gaussian(-1)]]
+    vr=g.rational_rotation(x,3,4,5)
+    cycle=[[g.ZERO,g.ZERO,g.ONE],[g.ONE,g.ZERO,g.ZERO],[g.ZERO,g.ONE,g.ZERO]]
+    phase3=g.zeros(3,3)
+    phase3[0][0]=g.ONE;phase3[1][1]=g.gaussian(0,1)
+    phase3[2][2]=g.gaussian(F(3,5),F(4,5))
+    compiler_count=0
+    for d,controls in [(2,[i2,x,z,vr]),(3,[cycle,phase3])]:
+        eye=g.identity(d)
+        kernels=[matrix_unit(d,i,j) for i in range(d) for j in range(d)]
+        if d==2:
+            kernels.extend([[[g.ONE,g.ZERO],[g.ZERO,g.gaussian(F(3,5))]],
+                            [[g.ZERO,g.gaussian(F(4,5))],[g.ZERO,g.ZERO]]])
+        for v in controls:
+            assert g.matmul(g.adjoint(v),v)==eye
+            before=g.diagonal_blocks(eye,v)
+            after=g.diagonal_blocks(v,eye)
+            for k in kernels:
+                switched=g.diagonal_blocks(g.matmul(v,k),g.matmul(k,v))
+                serial=g.matmul(g.matmul(after,g.tensor(i2,k)),before)
+                assert serial==switched
+                compiler_count+=1
+
+    h_joint=g.tensor(z,z);j_good=g.tensor(i2,z);j_bad=h_joint
+    cx=g.diagonal_blocks(i2,x)
+    assert g.matmul(g.matmul(cx,h_joint),cx)==j_good
+    assert g.matmul(g.matmul(cx,j_good),cx)==j_bad
+    plus=[[g.gaussian(F(1,2))]*2 for _ in range(2)]
+    p0=[[g.ONE,g.ZERO],[g.ZERO,g.ZERO]]
+    initial=g.tensor(plus,p0)
+    phases=[g.ONE,g.gaussian(F(3,5),F(4,5)),
+            g.gaussian(F(5,13),F(-12,13)),g.gaussian(0,1)]
+    conditional_count=0;state_count=0;qfi_count=0;syndrome_count=0
+    contrast_count=0
+    for phase in phases:
+        reverse=g.conjugate(phase)
+        ua=[[phase,g.ZERO],[g.ZERO,reverse]]
+        ub=g.adjoint(ua)
+        u=g.diagonal_blocks(ua,ub)
+        assert g.matmul(g.adjoint(u),u)==g.identity(4)
+        for j in range(2):
+            probe_error=i2 if j==0 else z
+            helper_error=i2 if j==0 else z
+            omega=g.matmul(g.tensor(i2,probe_error),u)
+            expected=g.tensor(helper_error,g.matmul(probe_error,ua))
+            assert g.matmul(g.matmul(cx,omega),cx)==expected
+            omega_bad=g.matmul(g.tensor(helper_error,probe_error),u)
+            expected_bad=g.tensor(i2,g.matmul(probe_error,ua))
+            assert g.matmul(g.matmul(cx,omega_bad),cx)==expected_bad
+            syndrome_count+=2
+        for visibility in [F(0),F(3,5),F(4,5),F(1)]:
+            for address in range(2):
+                address_state=matrix_unit(2,address,address)
+                for i in range(2):
+                    for j in range(2):
+                        rho=g.tensor(address_state,matrix_unit(2,i,j))
+                        assert dephased(u,j_good,rho,visibility)==dephased(u,j_bad,rho,visibility)
+                        conditional_count+=1
+            good=dephased(u,j_good,initial,visibility)
+            bad=dephased(u,j_bad,initial,visibility)
+            helper_good=evolved(ua,plus)
+            helper_bad=dephased(ua,z,plus,visibility)
+            assert good==g.tensor(helper_good,p0)
+            assert bad==g.tensor(helper_bad,p0)
+            state_count+=2
+            if visibility<1:
+                assert good!=bad
+                contrast_count+=1
+            for rho,expected_qfi in [(helper_good,F(4)),(helper_bad,4*visibility**2)]:
+                left,right=g.matmul(z,rho),g.matmul(rho,z)
+                comm=matrix_add(left,scaled(right,-1))
+                derivative=[[g.multiply(g.gaussian(0,-1),value) for value in row] for row in comm]
+                sld=scaled(derivative,2)
+                assert scaled(matrix_add(g.matmul(rho,sld),g.matmul(sld,rho)),F(1,2))==derivative
+                qfi_matrix=g.matmul(rho,g.matmul(sld,sld))
+                qfi=g.ZERO
+                for index in range(2):qfi=g.add(qfi,qfi_matrix[index][index])
+                assert qfi==g.gaussian(expected_qfi)
+                qfi_count+=1
+    return dict(status='passed',known_unitary_compiler_operator_identities=compiler_count,
+                controlled_signal_noise_conjugations=2,
+                identical_classical_direction_matrix_units=conditional_count,
+                exact_full_output_states=state_count,contrasting_coherent_extensions=contrast_count,
+                syndrome_operator_identities=syndrome_count,exact_SLD_QFI_checks=qfi_count,
+                arithmetic='Gaussian-rational matrices from the shared standard-library helper',
+                scope='Finite all-input operator, conditional-channel, coherent-state and SLD identities for IQ1--IQ5. General compiler, continuous-time generator inclusion, global risk and physical sign-control costs remain analytic; no published supplement or native implementation audit.')
+
+
 def main():
     certificate=json.loads((HERE/'metrology_sequential_certificate.json').read_text(encoding='utf-8'))
     report=dict(status='passed',arithmetic='Python standard library; exact rational intervals, LDL and integer polynomials',
@@ -238,6 +345,7 @@ def main():
                 SWITCH_readout_and_robustness=verify_switch_and_echo(),
                 retained_collision_echo=verify_regular_echo(),
                 longer_ordinary_block=verify_longer_ordinary_block(),
+                known_controls_and_direction_extensions=verify_known_controls_and_direction_extensions(),
                 scope='Finite algebra/certificate replay. General tester semantics, all-input covariance/concavity and native collision-interface proofs remain in metrology.md; no numerical SDP or hardware-runtime certificate.')
     print(json.dumps(report,indent=2))
 

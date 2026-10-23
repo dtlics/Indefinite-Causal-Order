@@ -10,6 +10,8 @@ diamond-norm factor identities and normalized Choi Gram data, with no access
 to the defect output. NR-R19 adds full matrix-unit odd-coupler channel
 identities and ordinary counterprotocols. Its universal hard-two converse,
 like the generic norm bound, remains an analytic proof.
+Andreev/Majorana guards check finite signature, particle-hole, bandwidth
+and rank-one commutator identities; all-family wrapper/access proofs are analytic.
 """
 from fractions import Fraction as F
 from pathlib import Path
@@ -616,6 +618,109 @@ def odd_coupler_checks():
             "scope": "Exact finite identities and ordinary closures; d>=3 full hard-two converse, no-SWITCH dependency and native cost remain analytic."}
 
 
+def andreev_native_checks():
+    """Finite guards for AM1 and AM3--AM5, not the universal AM2 proof."""
+    def transpose(a):
+        return [list(row) for row in zip(*a)]
+
+    def conjugated(a):
+        return [[conjugate(v) for v in row] for row in a]
+
+    def difference(a, b):
+        return plus(a, scaled(b, -1))
+
+    def norm_square(a):
+        return sum(v[0]**2+v[1]**2 for row in a for v in row)
+
+    def reflector(vector):
+        p = [[multiply(a, conjugate(b)) for b in vector] for a in vector]
+        return difference(identity(len(vector)), scaled(p, 2))
+
+    def odd(u):
+        d = len(u)
+        out, ud = zeros(2*d, 2*d), adjoint(u)
+        for i, j in product(range(d), repeat=2):
+            out[i][d+j], out[d+i][j] = ud[i][j], u[i][j]
+        return out
+
+    def particle_hole(a):
+        flip = odd(identity(len(a)//2))
+        return matmul(flip, matmul(conjugated(a), flip)) == a
+
+    signature_cases = commutator_cases = 0
+    for n in range(2, 6):
+        m = 2*n
+        p = [ONE]+[ZERO]*(m-1)
+        a = reflector(p)
+        require(matmul(a, a) == identity(m) and trace(a) == gaussian(m-2),
+                "Single-Majorana involution signature guard failed.")
+        signature_cases += 1
+        for c, s in [(F(1), F(0)), (F(0), F(1)),
+                     (F(3, 5), F(4, 5)), (F(5, 13), F(12, 13))]:
+            b = reflector([gaussian(c), gaussian(s)]+[ZERO]*(m-2))
+            comm = difference(matmul(b, a), matmul(a, b))
+            overlap = c*c
+            score = norm_square(comm)/F(4*m)
+            require(score == 8*overlap*(1-overlap)/m and score <= F(2, m),
+                    "Rank-one mixed-probe commutator normalization failed.")
+            commutator_cases += 1
+
+    h = [[ZERO, ONE, ZERO], [ONE, ZERO, ZERO], [ZERO, ZERO, ONE]]
+    phases = [ONE, gaussian(0, 1), gaussian(F(3, 5), F(4, 5)),
+              gaussian(F(5, 13), F(12, 13))]
+    phs_pairs = dressed_phs_pairs = 0
+    for q in phases:
+        v = identity(3)
+        v[1][1] = q
+        u = matmul(v, transpose(v))
+        hq = matmul(conjugated(v), matmul(h, transpose(v)))
+        require(adjoint(hq) == hq and matmul(hq, hq) == identity(3),
+                "Correlated particle-hole reflection guard failed.")
+        uh = matmul(u, hq)
+        require(transpose(u) == u and transpose(uh) == uh,
+                "Takagi-correlated converter pair is not symmetric.")
+        a, b = odd(u), odd(uh)
+        require(particle_hole(a) and particle_hole(b) and
+                matmul(a, b) == diagonal_blocks(hq, conjugated(hq)),
+                "Particle-hole full target specialization failed.")
+        phs_pairs += 1
+        for pa, pb in product(phases, repeat=2):
+            za, zb = zeros(6, 6), zeros(6, 6)
+            # e^(i alpha Z) has Gaussian-rational phases pa and pa*.
+            for i in range(3):
+                za[i][i], za[3+i][3+i] = pa, conjugate(pa)
+                zb[i][i], zb[3+i][3+i] = pb, conjugate(pb)
+            require(particle_hole(matmul(za, a)) and particle_hole(matmul(zb, b)),
+                    "Station phase was incorrectly excluded by particle-hole symmetry.")
+            dressed_phs_pairs += 1
+
+    u = identity(3)
+    u[1][1] = gaussian(0, 1)
+    require(particle_hole(odd(u)) and not particle_hole(odd(matmul(u, h))),
+            "Independent-H particle-hole counterexample failed.")
+    antisymmetric = [[ZERO, ONE], [gaussian(-1), ZERO]]
+    a = odd(antisymmetric)
+    ia = [[multiply(gaussian(0, 1), value) for value in row] for row in a]
+    require(not particle_hole(a) and particle_hole(ia),
+            "Even-dimensional antisymmetric global-phase branch was lost.")
+
+    bandwidth_cases = 0
+    for energy, width in product([F(0), F(1, 7), F(-2, 5), F(3)],
+                                 [F(1), F(2, 3), F(5)]):
+        denominator = energy*energy+width*width
+        value = gaussian(2*energy*energy/denominator, -2*energy*width/denominator)
+        require(value[0]**2+value[1]**2 == 4*energy*energy/denominator,
+                "Finite-bandwidth resonance norm identity failed.")
+        bandwidth_cases += 1
+    return {"result": "NR-R19", "signature_cases": signature_cases,
+            "rank_one_commutator_cases": commutator_cases,
+            "joint_qutrit_particle_hole_pairs": phs_pairs,
+            "station_phase_dressed_pairs": dressed_phs_pairs,
+            "independent_H_violation": 1, "even_antisymmetric_phase_guard": 1,
+            "bandwidth_identities": bandwidth_cases,
+            "scope": "Exact finite operator/normalization guards; all-family AM2, physical source model and full-device access remain analytic."}
+
+
 def main():
     cases = sum(echo_check(a, b) for d in [2, 3] for a, b in pairs(d))
     example = heldout_counterexample()
@@ -623,13 +728,15 @@ def main():
     symbolic = symbolic_ramsey_checks()
     exchange = exchange_backaction_checks()
     odd_couplers = odd_coupler_checks()
+    andreev_native = andreev_native_checks()
     print(json.dumps({"status": "passed", "flagged_full_choi_cases": cases,
                       "data_dimensions": [2, 3], "arithmetic": "exact Gaussian rational",
                       "ordinary_three_window_record_contrast": contrast,
                       "symbolic_ramsey_and_storage": symbolic,
                       "exchange_backaction": exchange,
                       "odd_couplers": odd_couplers,
-                      "scope": "NR-R14/NR-R19 exact finite full-instrument, exchange norm-factor, scalar polynomial and odd-coupler replay; universal proofs, access and physical-cost statements remain analytic.",
+                      "andreev_native_interface": andreev_native,
+                      "scope": "NR-R14/NR-R19 exact finite full-instrument, exchange norm-factor, scalar polynomial, odd-coupler and Andreev-interface replay; universal proofs, access and physical-cost statements remain analytic.",
                       "counterexample": example}, sort_keys=True))
 
 

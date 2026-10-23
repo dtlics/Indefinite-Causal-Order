@@ -466,6 +466,283 @@ def random_receiver_examples():
     }
 
 
+def late_record_guard_examples():
+    """Finite operator identities supporting the analytic Markov guard bound."""
+    def complex_scale(a, value):
+        value = gaussian(value) if not isinstance(value, tuple) else value
+        return [[multiply(value, x) for x in row] for row in a]
+
+    def total(matrices, dimension):
+        return matrix_sum(list(matrices), dimension)
+
+    def local(a, site, emitters):
+        out = [[ONE]]
+        for j in range(emitters):
+            out = tensor(out, a if j == site else identity(2))
+        return out
+
+    def generator_adjoint(hamiltonian, jumps, observable):
+        d = len(observable)
+        commutator = matrix_sum([
+            matmul(hamiltonian, observable),
+            scale(matmul(observable, hamiltonian), -1)], d)
+        terms = [complex_scale(commutator, gaussian(0, 1))]
+        for jump in jumps:
+            jd = adjoint(jump)
+            rate = matmul(jd, jump)
+            terms.append(matrix_sum([
+                matmul(jd, matmul(observable, jump)),
+                scale(matmul(rate, observable), F(-1, 2)),
+                scale(matmul(observable, rate), F(-1, 2))], d))
+        return matrix_sum(terms, d)
+
+    cases = []
+    lowering = [[ZERO, ONE], [ZERO, ZERO]]
+    for m in (2, 3):
+        d = 2**m
+        lowers = [local(lowering, j, m) for j in range(m)]
+        occupations = [matmul(adjoint(a), a) for a in lowers]
+        number = matrix_sum(occupations, d)
+        hamiltonian = total((scale(a, F(j+1, 7))
+                             for j, a in enumerate(occupations)), d)
+        for i in range(m):
+            for j in range(i+1, m):
+                exchange = matmul(adjoint(lowers[i]), lowers[j])
+                coefficient = gaussian(F(i+j+1, 9), F(j-i, 11))
+                hamiltonian = matrix_sum([
+                    hamiltonian, complex_scale(exchange, coefficient),
+                    complex_scale(adjoint(exchange), conjugate(coefficient))], d)
+        assert hamiltonian == adjoint(hamiltonian)
+        assert matmul(hamiltonian, number) == matmul(number, hamiltonian)
+        guided = [total((complex_scale(a, gaussian(F(j+k+1, 5), F((j+1)*(k+1), 13)))
+                         for j, a in enumerate(lowers)), d) for k in range(2)]
+        loss_amplitudes = [F(j+1, j+2) for j in range(m)]
+        losses = [scale(a, b) for a, b in zip(lowers, loss_amplitudes)]
+        dephasing = [scale(a, F(j+1, 3)) for j, a in enumerate(occupations)]
+        dephasing.append(scale(matmul(occupations[0], occupations[1]), F(2, 7)))
+        jumps = guided+losses+dephasing
+        actual = generator_adjoint(hamiltonian, jumps, number)
+        radiative_rate = total((matmul(adjoint(a), a) for a in guided+losses), d)
+        assert actual == scale(radiative_rate, -1)
+        loss_floor = min(a*a for a in loss_amplitudes)
+        positive_remainder = matrix_sum([
+            total((matmul(adjoint(a), a) for a in guided), d),
+            total((scale(a, b*b-loss_floor)
+                   for a, b in zip(occupations, loss_amplitudes)), d)], d)
+        assert matrix_sum([actual, scale(number, loss_floor)], d) == scale(positive_remainder, -1)
+        assert all(jump[r][0] == ZERO for jump in jumps for r in range(d))
+        assert all(hamiltonian[r][0] == ZERO for r in range(d))
+        cases.append({"emitters": m, "complete_number_operator_entries": d*d,
+                      "radiative_jumps": len(guided+losses),
+                      "ground_vacuum_entries": len(jumps)*d,
+                      "certified_local_loss_floor": str(loss_floor)})
+
+    # Nominal reciprocal two-emitter Gram, in units of 2*pi GHz. This
+    # enclosure is an exact model calculation, not an uncertainty fit.
+    gamma1, gamma2, floor = F(388, 1000), F(345, 1000), F(99, 1000)
+    guided1, guided2 = gamma1*F(95, 100), gamma2*F(85, 100)
+    # cos^2(4*pi/5)=(3+sqrt(5))/8 < 21/32, since sqrt(5)<9/4.
+    assert F(5) < F(9, 4)**2
+    determinant_lower = ((gamma1-floor)*(gamma2-floor)
+                         -guided1*guided2*F(21, 32))
+    assert gamma1-floor > 0 and gamma2-floor > 0
+    assert determinant_lower == F(101541, 640000000) > 0
+
+    # A declared uncertainty box, not a confidence region inferred from
+    # the source's point estimates. Extremal diagonals and off-diagonal
+    # magnitude independently give a sufficient PSD enclosure.
+    box_floor = F(95, 1000)
+    lower1, lower2 = F(386, 1000), F(343, 1000)
+    upper1, upper2 = F(390, 1000), F(347, 1000)
+    box_determinant_lower = ((lower1-box_floor)*(lower2-box_floor)
+        -upper1*upper2*F(95, 100)*F(85, 100)*F(21, 32))
+    assert lower1 > box_floor and lower2 > box_floor
+    assert box_determinant_lower == F(580701, 1280000000) > 0
+
+    # Lossless nearly dark modes give no positive dimension-only decay
+    # rate. The normalized antisymmetric state's population decay is
+    # exp(-2*epsilon^2*t); the vector below omits its common sqrt(2).
+    s1, s2 = [local(lowering, j, 2) for j in range(2)]
+    dark = [ZERO, gaussian(-1), ONE, ZERO]
+    def apply_to_dark(a):
+        answer = []
+        for row in a:
+            value = ZERO
+            for x, y in zip(row, dark):
+                value = add(value, multiply(x, y))
+            answer.append(value)
+        return answer
+
+    for epsilon in (F(1, 2), F(1, 7), F(1, 31)):
+        plus = matrix_sum([s1, s2], 4)
+        minus = scale(matrix_sum([s1, scale(s2, -1)], 4), epsilon)
+        rate = matrix_sum([matmul(adjoint(plus), plus),
+                           matmul(adjoint(minus), minus)], 4)
+        assert apply_to_dark(plus) == [ZERO]*4
+        assert apply_to_dark(rate) == [times(x, 2*epsilon*epsilon) for x in dark]
+
+    return {"number_operator_cases": cases,
+            "nominal_Gram_floor_in_2pi_GHz": str(floor),
+            "nominal_Gram_determinant_lower": str(determinant_lower),
+            "declared_box_Gram_floor_in_2pi_GHz": str(box_floor),
+            "declared_box_Gram_determinant_lower": str(box_determinant_lower),
+            "near_dark_eigenvalue_examples": 3,
+            "scope": ("Exact finite full-excitation number identities, positive "
+                      "loss remainder, vacuum ground and nominal Gram enclosure. "
+                      "Semigroup/future-record bounds, compact-input errors and "
+                      "physical model validity remain analytic; no fitted bath, "
+                      "measured guard interval or hardware advantage is certified.")}
+
+
+def chiral_parity_examples():
+    """Elastic QND MZI/two-click and quarter-phase photon-bus guards."""
+    def minus(a, b):
+        return add(a, times(b, -1))
+
+    def norm(a):
+        value = multiply(a, conjugate(a))
+        assert value[1] == 0
+        return value[0]
+
+    def diagonal_product(a, b):
+        return [multiply(x, y) for x, y in zip(a, b)]
+
+    def cp_coefficient(k, i, j):
+        return multiply(k[i], conjugate(k[j]))
+
+    transmissions = (ZERO, gaussian(-1), ONE, gaussian(F(1, 2)),
+                     gaussian(F(-4, 5)), gaussian(F(3, 5), F(4, 5)),
+                     gaussian(F(1, 2), F(1, 2)))
+    even = [ONE, ZERO, ZERO, ONE]
+    odd = [ZERO, ONE, ONE, ZERO]
+    z0 = [ONE, ONE, gaussian(-1), gaussian(-1)]
+    z1 = [ONE, gaussian(-1), ONE, gaussian(-1)]
+    two_click_units = direction_units = bus_units = 0
+    for t0, t1 in product(transmissions, repeat=2):
+        # Separate-arm ordinary MZI; unmonitored arm loss completes its effect.
+        d0, d1 = [ONE, ONE, t0, t0], [ONE, t1, ONE, t1]
+        kp = [times(add(a, b), F(1, 2)) for a, b in zip(d0, d1)]
+        km = [times(minus(a, b), F(1, 2)) for a, b in zip(d0, d1)]
+        loss = (F(0), (1-norm(t1))/2, (1-norm(t0))/2,
+                (2-norm(t0)-norm(t1))/2)
+        assert all(value >= 0 for value in loss)
+        assert all(norm(kp[i])+norm(km[i])+loss[i] == 1 for i in range(4))
+        t = times(add(t0, t1), F(1, 2))
+        a = times(multiply(add(ONE, t0), add(ONE, t1)), F(1, 4))
+        b = times(multiply(minus(ONE, t0), minus(ONE, t1)), F(1, 4))
+        for k, expected in ((kp, [t, a, a, t]),
+                            (km, [ZERO, times(b, -1), times(b, -1), ZERO])):
+            # F=X0X1 conjugation reverses the diagonal before composition.
+            actual = diagonal_product(k[::-1], k)
+            assert actual == expected
+            for i, j in product(range(4), repeat=2):
+                assert cp_coefficient(actual, i, j) == cp_coefficient(expected, i, j)
+                two_click_units += 1
+
+        # Complementary-direction model uses both spins per photon history.
+        # These monitored photon/spin operators commute in fixed order;
+        # no equality of photon-loss branches is inferred.
+        v0 = [t0, t0, ONE, ONE, ONE, ONE, t0, t0]
+        v1 = [t1, ONE, t1, ONE, ONE, t1, ONE, t1]
+        dr = [multiply(t0, t1), t0, t1, ONE]
+        dl = [ONE, t1, t0, multiply(t0, t1)]
+        fixed = diagonal_product(v0, v1)
+        assert fixed == diagonal_product(v1, v0) == dr+dl
+        for i, j in product(range(8), repeat=2):
+            assert cp_coefficient(fixed, i, j) == cp_coefficient(dr+dl, i, j)
+            bus_units += 1
+        u = times(add(ONE, multiply(t0, t1)), F(1, 2))
+        v = times(add(t0, t1), F(1, 2))
+        w = times(minus(multiply(t0, t1), ONE), F(1, 2))
+        z = times(minus(t0, t1), F(1, 2))
+        actual_flags = ([times(add(x, y), F(1, 2)) for x, y in zip(dr, dl)],
+                        [times(minus(x, y), F(1, 2)) for x, y in zip(dr, dl)])
+        expected_flags = ([u, v, v, u], [w, z, times(z, -1), times(w, -1)])
+        for actual, expected in zip(actual_flags, expected_flags):
+            assert actual == expected
+            for i, j in product(range(4), repeat=2):
+                assert cp_coefficient(actual, i, j) == cp_coefficient(expected, i, j)
+                direction_units += 1
+
+    # Ideal separate-arm MZI correction is the full parity instrument.
+    kp = [times(add(a, b), F(1, 2)) for a, b in zip(z0, z1)]
+    km = [times(minus(a, b), F(1, 2)) for a, b in zip(z0, z1)]
+    assert diagonal_product(z0, kp) == even
+    assert diagonal_product(z0, km) == odd
+
+    # Quarter phase gives both Bell outputs, while pi gives no order flag.
+    for transmission in (gaussian(0, 1), gaussian(-1)):
+        dr = [multiply(transmission, transmission), transmission, transmission, ONE]
+        dl = [ONE, transmission, transmission, multiply(transmission, transmission)]
+        kp = [times(add(a, b), F(1, 2)) for a, b in zip(dr, dl)]
+        km = [times(minus(a, b), F(1, 2)) for a, b in zip(dr, dl)]
+        if transmission == gaussian(0, 1):
+            assert kp == [multiply(gaussian(0, 1), value) for value in odd]
+            assert km == [times(value, -1) for value in diagonal_product(z0, even)]
+            assert sum(map(norm, kp))/4 == sum(map(norm, km))/4 == F(1, 2)
+        else:
+            assert kp == diagonal_product(z0, z1) and km == [ZERO]*4
+
+    # Same-forward-rail early/late echo with arbitrary spin/frequency coherence.
+    # Here the two frequency modes have distinct complex monitored amplitudes.
+    # The matrix identity includes both photon bins and every spin input.
+    echo_units = 0
+    frequency_cases = (
+        ((gaussian(F(3, 5), F(4, 5)), gaussian(-1)),
+         (gaussian(F(1, 2), F(1, 2)), gaussian(0, 1))),
+        ((gaussian(0, 1), gaussian(F(3, 5), F(4, 5))),
+         (gaussian(0, 1), gaussian(F(5, 13), F(12, 13)))),
+    )
+    spin_flip = zeros(4, 4)
+    for j in range(4):
+        spin_flip[3-j][j] = ONE
+    flip = tensor(identity(2), tensor(spin_flip, identity(2)))
+    for first, second in frequency_cases:
+        right = [[multiply(first[w], second[w]), first[w], second[w], ONE]
+                 for w in range(2)]
+        left = [[ONE, second[w], first[w], multiply(first[w], second[w])]
+                for w in range(2)]
+        dr, dl = zeros(8, 8), zeros(8, 8)
+        for s, w in product(range(4), range(2)):
+            dr[2*s+w][2*s+w] = right[w][s]
+            dl[2*s+w][2*s+w] = left[w][s]
+        early = diagonal_blocks(dr, identity(8))
+        late = diagonal_blocks(identity(8), dr)
+        actual = matmul(flip, matmul(late, matmul(flip, early)))
+        expected = diagonal_blocks(dr, dl)
+        assert actual == expected
+        assert all(actual[i][j] == ZERO for i, j in product(range(16), repeat=2) if i != j)
+        for i, j in product(range(16), repeat=2):
+            assert multiply(actual[i][i], conjugate(actual[j][j])) == multiply(
+                expected[i][i], conjugate(expected[j][j]))
+            echo_units += 1
+
+    # In the ideal lossless model, a passive time-bin analyzer's central
+    # window has exactly half the complete X-readout effect. A same-order
+    # resonant pair versus a bypass also gives the complete parity map.
+    resonance_pair = diagonal_product(z0, z1)
+    bypass_plus = [times(add(ONE, x), F(1, 2)) for x in resonance_pair]
+    bypass_minus = [times(minus(ONE, x), F(1, 2)) for x in resonance_pair]
+    assert bypass_plus == even and bypass_minus == odd
+    assert all((norm(bypass_plus[i])+norm(bypass_minus[i]))/2 == F(1, 2)
+               for i in range(4))
+
+    return {"complex_transmission_pairs": len(transmissions)**2,
+            "two_click_CP_matrix_unit_coefficients": two_click_units,
+            "direction_flag_CP_matrix_unit_coefficients": direction_units,
+            "full_photon_bus_CP_matrix_unit_coefficients": bus_units,
+            "ideal_parity_maps": 2, "quarter_and_pi_phase_guards": 2,
+            "same_rail_frequency_echo_cases": len(frequency_cases),
+            "same_rail_echo_CP_matrix_unit_coefficients": echo_units,
+            "resonant_external_bypass_parity_maps": 2,
+            "passive_time_bin_central_effect": "1/2",
+            "scope": ("Exact elastic QND monochromatic stationary MZI/two-click "
+                      "filters, monitored complementary-direction photon-bus and "
+                      "same-rail early/late echo identities with frequency coherence. "
+                      "Finite pulses, emitted records, native ports, calibration, "
+                      "source/detection costs and delivered rates remain analytic.")}
+
+
 def main():
     losses = [loss_example(d, x, lx, y, ly) for d, x, lx, y, ly in (
         (2,F(3,5),F(4,5),F(5,13),F(12,13)),
@@ -483,6 +760,8 @@ def main():
         "frequency_check_example":frequency_check_example(),
         "replacement_reset_cycle_examples":reset_cycle_examples(),
         "random_receiver_native_baselines":random_receiver_examples(),
+        "late_record_guard_examples":late_record_guard_examples(),
+        "chiral_parity_examples":chiral_parity_examples(),
         "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and random-receiver phase/normalized-bus isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 

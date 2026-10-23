@@ -3,7 +3,7 @@
 Standard library only; Gaussian-rational arithmetic reuses the fault-simulation
 matrix helpers. Examples include coherent, nonunital CPTP noise, rather than
 only Pauli mixtures. General projection and physical-cost arguments are
-analytic inputs, not certified by these finite examples. Terminal common-replacement checks include arbitrary global CPTP preprocessing, direct reduced cross maps and sharp SWAP examples; their universal norm bounds remain analytic. Calibrated Pauli/Weyl recovery checks include correlated histories, sparse qutrit phase assignments and common final control noise. General recovery/POVM and all-dimensional dominance proofs remain analytic. No files are written.
+analytic inputs, not certified by these finite examples. Terminal common-replacement checks include arbitrary global CPTP preprocessing, direct reduced cross maps and sharp SWAP examples; their universal norm bounds remain analytic. Calibrated Pauli/Weyl recovery checks include correlated histories, sparse qutrit phase assignments and common final control noise. Encoded Pauli checks include all error/readout branches, reference matrix units, correlated laws and a deferred coherent-record circuit. Fermionic checks use the even CAR dilation and exact probability/SOS polynomials; JC checks use finite isometry, measurement, CP-weight and invariant-excitation examples. General recovery/POVM, infinite-Fock, asymptotic and all-dimensional dominance proofs remain analytic. No files are written.
 """
 
 from fractions import Fraction as F
@@ -1278,6 +1278,467 @@ def replay_common_control_noise():
     }
 
 
+def replay_encoded_pauli():
+    """Full code-input output/instrument replay with priced ordinary ports."""
+    mm, kron, dag, q = matmul, tensor, adjoint, gaussian
+    ident = identity(2)
+    x = [[ZERO, ONE], [ONE, ZERO]]
+    y = [[ZERO, q(0, -1)], [q(0, 1), ZERO]]
+    z = [[ONE, ZERO], [ZERO, q(-1)]]
+    v = [[ONE, ZERO], [ZERO, ZERO], [ZERO, ZERO], [ZERO, ONE]]
+
+    def projector(bit):
+        return [[q(r == c == bit) for c in range(2)] for r in range(2)]
+
+    def ad_unit(k, r, c):
+        # Exact Ad_k(|r><c|), including off-diagonal/reference operators.
+        return [[multiply(row[r], conjugate(col[c])) for col in k] for row in k]
+
+    def bits(index, n):
+        return [(index >> (n-1-j)) & 1 for j in range(n)]
+
+    def number(values):
+        out = 0
+        for value in values:
+            out = 2*out+value
+        return out
+
+    def cnot(control, target, n):
+        out = zeros(2**n, 2**n)
+        for col in range(2**n):
+            values = bits(col, n)
+            values[target] ^= values[control]
+            out[number(values)][col] = ONE
+        return out
+
+    def flag(k, value):
+        out = zeros(4*len(k), len(k[0]))
+        for row, values in enumerate(k):
+            out[value*len(k)+row] = list(values)
+        return out
+
+    def record_embed(k, a, c):
+        # Output order C,T,R1,R2; records remain actual retained systems.
+        out = zeros(16, len(k[0]))
+        for row, values in enumerate(k):
+            for col, value in enumerate(values):
+                out[4*row+2*a+c][col] = value
+        return out
+
+    encode = cnot(0, 1, 2)
+    encode4 = cnot(0, 1, 4)
+    copy1, copy2, reset = cnot(1, 2, 4), cnot(1, 3, 4), cnot(3, 1, 4)
+    feed = identity(16)
+    for index in range(16):
+        logical, target, first, second = bits(index, 4)
+        if logical and not first and second:
+            feed[index][index] = q(-1)
+    require(mm(encode, encode) == identity(4), "Code decoder is not a CNOT.")
+    for gate in [encode4, copy1, copy2, reset, feed]:
+        require(mm(gate, gate) == identity(16), "Deferred-record gate is not unitary.")
+    physical = basis = reference = phase = coherent = coherent_reference = 0
+    ordinary_maps, switch_maps, recovered_maps = [], [], []
+    for a, b in product(range(2), repeat=2):
+        xp, yp = (x if a else ident), (y if b else ident)
+        switched = mm(plus(kron(projector(0), mm(xp, yp)),
+                            kron(projector(1), mm(yp, xp))), v)
+        c, exponent = a ^ b, b*(1-a)
+        ordinary = recovered = None
+        for first, second in product(range(2), repeat=2):
+            branch = mm(kron(ident, projector(second)), mm(kron(ident, yp),
+                        mm(kron(ident, projector(first)), mm(kron(ident, xp), mm(encode, v)))))
+            physical += 1
+            if (first, second) != (a, c):
+                require(branch == zeros(4, 2), "QND read yielded a wrong physical error label.")
+            else:
+                ordinary = mm(encode, mm(kron(z if exponent else ident, ident), branch))
+                recovered = mm(encode, mm(kron(ident, x if c else ident), branch))
+        require(ordinary is not None and recovered is not None, "Correct read branch is absent.")
+        require(ordinary == [[times(value, -1 if a*b else 1) for value in row] for row in switched],
+                "Encoded branch-global phase differs from EP3.")
+        for r, s in product(range(2), repeat=2):
+            require(ad_unit(ordinary, r, s) == ad_unit(switched, r, s) and
+                    ad_unit(recovered, r, s) == ad_unit(v, r, s),
+                    "Encoded output or perfect storage failed on a logical matrix unit.")
+            basis += 1
+            for phase_bit in range(2):
+                noisy = mm(encode, mm(kron(z if exponent else ident, ident),
+                    mm(kron(ident, projector(c)), mm(kron(ident, yp),
+                    mm(kron(z if phase_bit else ident, ident), mm(kron(ident, projector(a)),
+                    mm(kron(ident, xp), mm(encode, v))))))))
+                noisy_switch = mm(kron(z if phase_bit else ident, ident), switched)
+                require(ad_unit(noisy, r, s) == ad_unit(noisy_switch, r, s),
+                        "Matched diagonal control noise failed the encoded comparator.")
+                phase += 1
+        ordinary_ref, switched_ref, recovered_ref, v_ref = [kron(k, ident) for k in
+                                                           [ordinary, switched, recovered, v]]
+        for r, s in product(range(4), repeat=2):
+            require(ad_unit(ordinary_ref, r, s) == ad_unit(switched_ref, r, s) and
+                    ad_unit(recovered_ref, r, s) == ad_unit(v_ref, r, s),
+                    "Reference-inclusive encoded branch identity failed.")
+            reference += 1
+        ordinary_maps.append(ordinary)
+        switch_maps.append(switched)
+        recovered_maps.append(recovered)
+
+        initial = record_embed(v, 0, 0)
+        gxp, gyp = kron(kron(kron(ident, xp), ident), ident), kron(kron(kron(ident, yp), ident), ident)
+        before = mm(copy2, mm(gyp, mm(copy1, mm(gxp, mm(encode4, initial)))))
+        deferred, coherent_recovered = mm(encode4, mm(feed, before)), mm(encode4, mm(reset, before))
+        desired, ideal_recovery = record_embed(switched, a, c), record_embed(v, a, c)
+        for r, s in product(range(2), repeat=2):
+            require(ad_unit(deferred, r, s) == ad_unit(desired, r, s) and
+                    ad_unit(coherent_recovered, r, s) == ad_unit(ideal_recovery, r, s),
+                    "Deferred coherent-record circuit failed on a logical matrix unit.")
+            coherent += 1
+        deferred_ref, desired_ref, coherent_recovered_ref, ideal_ref = [kron(k, ident) for k in
+                                                      [deferred, desired, coherent_recovered, ideal_recovery]]
+        for r, s in product(range(4), repeat=2):
+            require(ad_unit(deferred_ref, r, s) == ad_unit(desired_ref, r, s) and
+                    ad_unit(coherent_recovered_ref, r, s) == ad_unit(ideal_ref, r, s),
+                    "Reference-inclusive deferred coherent-record identity failed.")
+            coherent_reference += 1
+
+    laws = [[F(1, 10), F(2, 10), F(3, 10), F(4, 10)], [F(1, 2), F(0), F(0), F(1, 2)],
+            [F(0), F(1, 3), F(2, 3), F(0)], [F(1, 4)]*4]
+    correlated = flagged = 0
+    for law in laws:
+        require(sum(law) == 1 and all(value >= 0 for value in law), "Invalid correlated Pauli law.")
+        tp = zeros(2, 2)
+        for probability, k in zip(law, ordinary_maps):
+            tp = plus(tp, scaled(mm(dag(k), k), probability))
+        require(tp == ident, "Encoded ordinary instrument is not trace preserving.")
+        for r, s in product(range(2), repeat=2):
+            lhs, rhs, rec = zeros(4, 4), zeros(4, 4), zeros(4, 4)
+            flag_lhs, flag_rhs = zeros(16, 16), zeros(16, 16)
+            for value, (probability, o, sw, recovered) in enumerate(zip(law, ordinary_maps, switch_maps, recovered_maps)):
+                lhs = plus(lhs, scaled(ad_unit(o, r, s), probability))
+                rhs = plus(rhs, scaled(ad_unit(sw, r, s), probability))
+                rec = plus(rec, scaled(ad_unit(recovered, r, s), probability))
+                flag_lhs = plus(flag_lhs, scaled(ad_unit(flag(o, value), r, s), probability))
+                flag_rhs = plus(flag_rhs, scaled(ad_unit(flag(sw, value), r, s), probability))
+            require(lhs == rhs and rec == ad_unit(v, r, s), "Correlated Pauli-law channel failed.")
+            require(flag_lhs == flag_rhs, "Retained error-record instrument differs.")
+            correlated += 1
+            flagged += 1
+    ordinary_x = mm(encode, mm(kron(x, ident), mm(encode, v)))
+    switch_x = mm(kron(x, ident), v)
+    ordinary_output, switch_output = ad_unit(ordinary_x, 0, 0), ad_unit(switch_x, 0, 0)
+    require(ordinary_output != switch_output and ordinary_output[3][3] == ONE and switch_output[2][2] == ONE,
+            "Nonphase-control-noise counterexample disappeared.")
+    return {"physical_error_readout_branches": physical, "branch_matrix_unit_checks": basis,
+            "full_logical_reference_matrix_units": reference, "correlated_laws": len(laws),
+            "correlated_law_matrix_units": correlated, "retained_record_matrix_units": flagged,
+            "matched_C_phase_noise_branch_matrix_units": phase,
+            "deferred_coherent_record_branch_matrix_units": coherent,
+            "deferred_coherent_record_reference_matrix_units": coherent_reference,
+            "stronger_identity_recovery": True, "nonphase_C_noise_counterexample": True,
+            "scope": "Full code-input Pauli instrument, mixed/reference states and actual deferred coherent record gates; clean control storage and priced nondemolition ports remain assumptions."}
+
+
+def replay_fermionic_collision():
+    """Exact graded CAR and probability/SOS polynomial replay for FP1--FP10."""
+    def trim(a):
+        a=list(a)
+        while len(a)>1 and not a[-1]: a.pop()
+        return a
+    def add(a,b):
+        return trim([(a[i] if i<len(a) else 0)+(b[i] if i<len(b) else 0) for i in range(max(len(a),len(b)))])
+    def scale(a,c): return trim([v*c for v in a])
+    def mul(a,b):
+        c=[F(0)]*(len(a)+len(b)-1)
+        for i,u in enumerate(a):
+            for j,v in enumerate(b): c[i+j]+=u*v
+        return trim(c)
+    def power(a,n):
+        out=[F(1)]
+        for _ in range(n):out=mul(out,a)
+        return out
+    def val(a,y):
+        return sum(v*y**i for i,v in enumerate(a))
+
+    # Polynomial variable y=(1-2r)^2.
+    one=[F(1)];y=[F(0),F(1)];minus=[F(1),F(-1)]
+    ps=scale(mul(power(minus,2),[F(7),F(-6),F(7)]),F(1,32))
+    gs=scale(mul(power(minus,2),[F(1),F(6),F(1)]),F(1,32))
+    po=scale(power([F(1),F(0),F(1)],2),F(1,4))
+    go=scale([F(1),F(0),F(6),F(0),F(1)],F(1,8))
+    positive_P=add(add(scale(power(minus,4),5),scale(mul(y,power(minus,2)),12)),scale(power(y,2),16))
+    assert add(mul(go,ps),scale(mul(gs,po),-1))==scale(mul(power(minus,4),positive_P),F(1,256))
+    positive_D=add(add([F(1),F(0),F(0),F(0),F(1)],scale(mul(y,power(minus,2)),20)),scale(power(y,2),30))
+    assert add(po,scale(ps,-1))==scale(positive_D,F(1,32))
+    pp=[F(1,2),F(0),F(0),F(0),F(1,2)]
+    gp=go
+    # Common-final-helper dephasing cross term.
+    D=add(mul(gp,add(add(pp,ps),scale(po,-1))),scale(mul(gs,pp),-1))
+    Dpositive=add(add(scale([F(1),0,0,0,0,0,F(1)],4),scale(mul(power(minus,2),[F(1),0,0,0,F(1)]),7)),
+                  add(scale([0,0,F(1),0,F(1)],94),[0,0,0,F(60)]))
+    assert D==scale(mul(power(minus,2),Dpositive),F(1,256))
+    # Upper stochastic-kernel bound b<=1.
+    E=add(mul(gp,add(add(pp,scale(ps,-1)),scale(po,-1))),mul(gs,po))
+    assert E==scale(mul(power(minus,2),list(map(F,[3,34,13,156,13,34,3]))),F(1,256))
+    assert add(scale(gp,2),scale(po,-1))==power(y,2)
+
+    # Canonical anticommutation representation on n=2 system modes and eight
+    # distinct reservoir modes. One unused bath Majorana partner per mode is
+    # necessary so all subset records are orthogonal on the bath vacuum.
+    def majorana(index,bits):
+        mode,kind=divmod(index,2)
+        phase=2*((bits&((1<<mode)-1)).bit_count()%2)
+        if kind: phase=(phase+1+2*((bits>>mode)&1))%4
+        return bits^(1<<mode),phase
+    def bilinear(j,bath,bits):
+        bits,p1=majorana(2*(2+4*bath+j),bits)
+        bits,p2=majorana(j,bits)
+        return bits,(p1+p2)%4
+    def branch(J,K,reverse,input_bits):
+        bits=input_bits;p=0
+        operations=[(0,J),(1,K)]
+        if reverse:operations.reverse()
+        for bath,subset in operations:
+            for j in range(4):
+                if (subset>>j)&1:
+                    bits,q=bilinear(j,bath,bits);p=(p+q)%4
+        return bits,p
+
+    cases=0
+    for J,K in product(range(16),repeat=2):
+        for logical in [0,3]:
+            b0,p0=branch(J,K,False,logical);b1,p1=branch(J,K,True,logical)
+            assert b0==b1
+            assert (p0-p1)%4==2*((J&K).bit_count()%2)
+            # Final bath record depends only on its subset, not on payload.
+            assert (b0>>2)&15==J and (b0>>6)&15==K
+            cases+=1
+        if J==K:
+            b0,p0=branch(J,K,False,0);b1,p1=branch(J,K,False,3)
+            assert b0&3==0 and b1&3==3 and p0==p1
+
+    grid=0;noisy_instruments=0
+    for j in range(101):
+        r=F(j,100);x=1-2*r;yy=x*x
+        a=(1-r)**2;c=r*r;q=2*r*(1-r);z=1-2*q
+        pS=(1-(1-2*c)**4+z**4-(1-4*r+2*r*r)**4)/4
+        gS=((a+c)**4-(a-c)**4)/2
+        pO=(1+z**2)**2/4;gO=(a+c)**4+q**4
+        assert (pS,gS,pO,gO)==tuple(val(a,yy) for a in (ps,gs,po,go))
+        assert pO>=pS and gO*pS>=gS*pO
+        pP=(1+z**4)/2;gP=gO
+        a=gS/gP
+        b=(pS-a*pO)/(pP-pO) if pP!=pO else F(0)
+        assert 0<=a<=1 and 0<=b<=1
+        bP=(pP-gP)/3;bS=(pS-gS)/3
+        # Uniformly select Q from the three even Majorana bilinears forming
+        # the three logical Pauli axes. Each coefficient is a complete CP
+        # instrument coefficient, so equality holds for every input/reference.
+        Oplus=[gP]+[bP/3]*3;Ominus=[F(0)]+[2*bP/3]*3
+        Sminus=[gS]+[bS]*3;Ptotal=[gP]+[bP]*3
+        for nu in [F(0),F(1,4),F(1,2),F(3,4),F(1)]:
+            av=nu*a+(1-nu)*(1+a-b)/2
+            bv=nu*b+(1-nu)*(1-a+b)/2
+            assert 0<=av<=1 and 0<=bv<=1
+            Ovplus=[nu*v+(1-nu)*t/2 for v,t in zip(Oplus,Ptotal)]
+            Ovminus=[nu*v+(1-nu)*t/2 for v,t in zip(Ominus,Ptotal)]
+            Svminus=[nu*v+(1-nu)*t/2 for v,t in zip(Sminus,Ptotal)]
+            assert [av*u+bv*v for u,v in zip(Ovplus,Ovminus)]==Svminus
+            noisy_instruments+=1
+        grid+=1
+
+    # Rebuild FP4/FP5 from their unfactored character expressions as exact
+    # polynomial identities in x, independent of the finite rational grid.
+    def lift_y(poly):
+        out = [F(0)]*(2*len(poly)-1)
+        for j, coefficient in enumerate(poly): out[2*j] = coefficient
+        return trim(out)
+    xx = [F(0), F(1)]
+    aa = [F(1,2), F(0), F(1,2)]
+    qq = [F(1,2), F(0), F(-1,2)]
+    assert scale(add(one,power(xx,8)),F(1,2)) == lift_y(pp)
+    assert add(power(aa,4),power(qq,4)) == lift_y(gp)
+    assert scale(add(add(one,power(xx,8)),scale(add(power(add(xx,qq),4),power(add(xx,scale(qq,-1)),4)),-1)),F(1,4)) == lift_y(ps)
+    assert scale(add(power(aa,4),scale(power(xx,4),-1)),F(1,2)) == lift_y(gs)
+    assert scale(power(add(one,power(xx,4)),2),F(1,4)) == lift_y(po)
+    return {"status":"passed", "CAR_payload_branch_cases":cases,
+            "exact_polynomial_identities":10,
+            "probability_character_polynomial_identities":5,
+            "exact_probability_grid_scope_guards":grid,
+            "complete_noisy_code_instrument_grid_guards":noisy_instruments,
+            "scope":"Specified even CAR collision dilation; exact CAR and polynomial replay. Rational grid points only guard transcription. General positivity, calibrated accepted-instrument postprocessing and native costs remain analytic."}
+
+
+def verify_jc_energy_baseline():
+    """Exact isometry/PVM, arbitrary JC-form CP weights and dummy guards."""
+    from fractions import Fraction as F
+    import verify_fault_simulation as g
+
+    def scale(a, value):
+        return [[g.times(x, value) for x in row] for row in a]
+
+    def add(a, b):
+        return [[g.add(x, y) for x, y in zip(ar, br)]
+                for ar, br in zip(a, b)]
+
+    def trace(a):
+        out = g.ZERO
+        for i in range(len(a)):
+            out = g.add(out, a[i][i])
+        return out
+
+    def outer(vector, weight=F(1)):
+        out = g.zeros(len(vector), len(vector))
+        g.add_outer(out, vector, weight)
+        return out
+
+    def evolved(u, rho):
+        return g.matmul(g.matmul(u, rho), g.adjoint(u))
+
+    def effect_weight(effect, rho):
+        value = trace(g.matmul(effect, rho))
+        assert value[1] == 0
+        return value[0]
+
+    zero, one = g.ZERO, g.ONE
+    i2, i4, i6, i12 = (g.identity(d) for d in (2, 4, 6, 12))
+    z = [[one, zero], [zero, g.gaussian(-1)]]
+    phi_plus = outer([one, zero, zero, one], F(1, 2))
+    phi_minus = outer([one, zero, zero, g.gaussian(-1)], F(1, 2))
+    a_plus = outer([one, one, zero], F(1, 2))
+    a_minus = outer([one, g.gaussian(-1), zero], F(1, 2))
+    a_two = outer([zero, zero, one])
+
+    # J3: normalized column weights avoid irrational square roots.
+    columns = [[zero] * 12 for _ in range(4)]
+    columns[0][0] = one
+    columns[0][9] = one
+    columns[1][5] = one
+    columns[2][8] = one
+    columns[3][1] = one
+    columns[3][10] = one
+    column_weights = [F(1, 2), F(1), F(1), F(1, 2)]
+    isometry_entries = 0
+    for i in range(4):
+        for j in range(4):
+            value = g.inner(columns[i], columns[j])
+            if i == j:
+                assert g.times(value, column_weights[i]) == one
+            else:
+                assert value == zero
+            isometry_entries += 1
+
+    # The two coherent Phi input combinations have rational output vectors.
+    isometry_bell_images = 0
+    for sign, qutrit_state in [(1, a_plus), (-1, a_minus)]:
+        image = [g.times(g.add(x, g.times(y, sign)), F(1, 2))
+                 for x, y in zip(columns[0], columns[3])]
+        assert outer(image) == g.tensor(phi_plus, qutrit_state)
+        isometry_bell_images += 1
+
+    # J4: complete twelve-dimensional orthogonal effects, ranks five/seven.
+    p_minus = add(g.tensor(i4, a_minus), g.tensor(phi_minus, a_two))
+    p_plus = add(i12, scale(p_minus, -1))
+    for effect, rank in [(p_minus, 5), (p_plus, 7)]:
+        assert g.adjoint(effect) == effect
+        assert g.matmul(effect, effect) == effect
+        assert trace(effect) == g.gaussian(rank)
+    assert g.matmul(p_minus, p_plus) == g.zeros(12, 12)
+    assert add(p_minus, p_plus) == i12
+
+    phases = [one, g.gaussian(0, 1),
+              g.gaussian(F(3, 5), F(4, 5)),
+              g.gaussian(F(5, 13), F(-12, 13))]
+    # K=a I-i bR sigma_phi+c sigma_perp+d Z, with real coefficients.
+    # The mixed fixtures are contractions by sum|coefficient|<=1. The
+    # single-axis fixtures are unitaries. Thus each is a valid CP branch.
+    fixtures = [(F(0), F(0), F(0), F(0)),
+                (F(1), F(0), F(0), F(0)),
+                (F(0), F(1), F(0), F(0)),
+                (F(0), F(0), F(1), F(0)),
+                (F(0), F(0), F(0), F(1)),
+                (F(1, 8), F(2, 8), F(-1, 8), F(1, 8)),
+                (F(2, 9), F(-1, 9), F(1, 9), F(-2, 9))]
+    class_weights = switch_weights = gap_weights = 0
+    psi_images = 0
+    for phase in phases:
+        reverse = g.conjugate(phase)
+        assert g.multiply(phase, reverse) == one
+        sigma = [[zero, reverse], [phase, zero]]
+        perpendicular = [[zero, g.multiply(g.gaussian(0, -1), reverse)],
+                         [g.multiply(g.gaussian(0, 1), phase), zero]]
+        psi = outer([zero, reverse, phase, zero], F(1, 2))
+        phase_perp = g.multiply(g.gaussian(0, 1), phase)
+        psi_perp = outer([zero, g.conjugate(phase_perp), phase_perp, zero], F(1, 2))
+
+        # J3's Psi image can be verified using its unnormalized columns.
+        for phase_value, expected in [(phase, psi), (phase_perp, psi_perp)]:
+            image = [g.add(g.multiply(g.conjugate(phase_value), x),
+                           g.multiply(phase_value, y))
+                     for x, y in zip(columns[1], columns[2])]
+            assert outer(image, F(1, 2)) == g.tensor(expected, a_two)
+            psi_images += 1
+
+        rho_comm = scale(add(g.tensor(phi_plus, a_plus), g.tensor(psi, a_two)), F(1, 2))
+        rho_anti = scale(add(g.tensor(phi_plus, a_minus), g.tensor(psi_perp, a_two)), F(1, 2))
+        assert trace(rho_comm) == trace(rho_anti) == one
+        for a, b_real, c, d in fixtures:
+            k = add(add(scale(i2, a), scale(z, d)), scale(perpendicular, c))
+            k = add(k, [[g.multiply(g.gaussian(0, -b_real), v) for v in row]
+                        for row in sigma])
+            norm = a*a + b_real*b_real + c*c + d*d
+            assert trace(g.matmul(g.adjoint(k), k)) == g.gaussian(2*norm)
+            full_k = g.tensor(k, i6)
+            false_comm = effect_weight(p_minus, evolved(full_k, rho_comm))
+            false_anti = effect_weight(p_plus, evolved(full_k, rho_anti))
+            assert false_comm == c*c/2
+            assert false_anti == (a*a+c*c+d*d)/2
+            class_weights += 2
+
+            # J10/J11: two-node quadratures reproduce exactly the required
+            # angle moments; no numerical integration is used.
+            def switch_cross(b):
+                value = trace(g.matmul(g.matmul(g.matmul(g.adjoint(k), g.adjoint(b)), k), b))
+                assert value[1] == 0
+                return value[0]/2
+
+            wrong_comm_switch = sum((norm-switch_cross(b))/2 for b in [i2, sigma])/2
+            wrong_anti_switch = sum((norm+switch_cross(b))/2 for b in [perpendicular, z])/2
+            assert wrong_comm_switch == (c*c+d*d)/2
+            assert wrong_anti_switch == a*a+(c*c+d*d)/2
+            switch_weights += 2
+            assert ((wrong_comm_switch+wrong_anti_switch)
+                    -(false_comm+false_anti))/2 == (d*d+a*a)/4
+            gap_weights += 1
+
+    # J17 is checked on the complete vacuum/one-excitation sector, which
+    # is invariant under the two physical JC interactions. We do NOT
+    # truncate an occupied field's two-excitation doublet to a qubit.
+    # Basis: |000>, |100>, |010>, |001> in payload,dummy,field order.
+    minus_i = g.gaussian(0, -1)
+    u_sf, u_tf = g.identity(4), g.identity(4)
+    for unitary, excited in [(u_sf, 1), (u_tf, 2)]:
+        unitary[excited][excited] = unitary[3][3] = zero
+        unitary[excited][3] = unitary[3][excited] = minus_i
+        assert g.matmul(g.adjoint(unitary), unitary) == i4
+    initial = [[zero], [one], [zero], [zero]]
+    payload_then_dummy = g.matmul(g.matmul(u_tf, u_sf), initial)
+    dummy_then_payload = g.matmul(g.matmul(u_sf, u_tf), initial)
+    expected_first = [[zero], [zero], [g.gaussian(-1)], [zero]]
+    expected_second = [[zero], [zero], [zero], [minus_i]]
+    assert payload_then_dummy == expected_first
+    assert dummy_then_payload == expected_second
+    assert g.inner([r[0] for r in payload_then_dummy],
+                   [r[0] for r in dummy_then_payload]) == zero
+
+    return dict(status='passed',isometry_Gram_entries=isometry_entries,
+                isometry_Phi_images=isometry_bell_images,isometry_Psi_images=psi_images,
+                complete_PVM_ranks=[5,7],ordinary_class_CP_weight_identities=class_weights,
+                switch_class_CP_weight_identities=switch_weights,
+                nonnegative_gap_identities=gap_weights,
+                interacting_atomic_dummy_branch_identities=2,
+                interacting_atomic_dummy_environment_overlap='0',
+                arithmetic='Python standard-library Gaussian-rational matrices',
+                scope='Finite J3/J4/J6/J8/J10--J12/J17 guards; all-m, finite-N strictness, Poisson asymptotics, native selector and physical resource comparisons remain analytic. No infinite-Fock truncation or hardware-performance certificate.')
+
+
 def main():
     pcs_cases = replay_pcs()
     read_cases = replay_read_oracles()
@@ -1290,6 +1751,9 @@ def main():
     deterministic_cases = replay_deterministic_pauli_weyl()
     affine_cases = replay_qutrit_affine_recovery()
     common_control_cases = replay_common_control_noise()
+    encoded_cases = replay_encoded_pauli()
+    fermionic_cases = replay_fermionic_collision()
+    jc_cases = verify_jc_energy_baseline()
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian and Eisenstein rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
@@ -1304,7 +1768,10 @@ def main():
         "deterministic_pauli_weyl_recovery": deterministic_cases,
         "qutrit_affine_recovery": affine_cases,
         "common_control_noise_recovery": common_control_cases,
-        "scope": "Finite projection, routing, loss, replacement and calibrated Pauli/Weyl recovery replay; general cb/diamond, recovery/POVM dominance, all-n interpolation, costs and physical hypotheses remain analytic.",
+        "encoded_pauli_instrument": encoded_cases,
+        "fermionic_collision_instruments": fermionic_cases,
+        "jaynes_cummings_energy_baseline": jc_cases,
+        "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",
     }, sort_keys=True))
 
 

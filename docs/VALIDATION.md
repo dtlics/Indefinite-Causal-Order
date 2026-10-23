@@ -90,6 +90,15 @@ number-lowering cases now test physical Bell metrics, nonzero Choi cross
 terms, the exact no-loss CP remainder and explicit double-fault/parity
 limitations. The all-dimension proofs and native helper costs remain analytic.
 
+NR-R15 also has exact known-unitary pre/post compiler identities and
+full-output, conditional-channel, syndrome and SLD/QFI checks for two
+coherent signal/noise extensions. Its general common-dilation compiler,
+continuous-time interpretation and physical sign-control conditions are
+analytic. Equal classical direction channels do not certify a coherent
+extension; the explicit noisy-extension sensor is an achievable comparison,
+not an all-protocol upper bound. No unexamined published platform
+supplement or native implementation is certified.
+
 The two-photon proofs in NR-R11 use the complete scattering basis and
 resolvent kernel. The unequal-rate relative-mode gate, normalizable-pulse
 target-amplitude identity, photon-preserving readout, known-dressing reuse,
@@ -98,6 +107,17 @@ The existing finite communication replay does not certify those continuum
 arguments, actual phonon overlaps, a native pulse-tail bound, a physical
 pair router or a hardware performance advantage. No frequency-grid
 certificate or fitted single-mode gate is claimed.
+The finite-emitter extension proves a uniform late-record bound under a
+positive radiative Gram floor and an actual vacuum-preserving ground,
+with a Gaussian-code preparation allowance and matched route guards.
+Its semigroup, effect and complete-instrument proofs remain analytic;
+the replay checks finite full-excitation number identities, vacuum-ground
+conditions, Gram-floor enclosures and near-dark counterexamples. Nominal
+parameters and a declared uncertainty box are not a measured bath-tail
+confidence region, nor do they turn a collective pair into independent
+slots. Retained-spin parity and photon-bus identities have exact finite
+checks under their elastic QND assumptions. Actual coherent ports, pulse
+matching, spin readout, failed heralds and reset costs remain unverified.
 
 The [drifting-alignment benchmark](../research/topics/nr-noisy-recovery/alignment.md)
 has exact causal primal/dual null-event witnesses and a native adaptive
@@ -153,6 +173,26 @@ do not model faults throughout the check gates. The conditional NR-R10
 network comparisons have full control/data parity identities and all-branch
 travelling-bus checks. Their physical controller ports, protected transport
 and source-loading resources remain explicit assumptions.
+The separate encoded-Pauli replay checks full code-input and retained-record
+channels, mixed/reference states, the deferred coherent-record circuit and
+a non-phase helper-noise counterexample. Its proof assumes clean decoded
+control storage and the priced nondemolition-read or coherent-record ports.
+It preserves the source's restricted fixed-map comparison and does not
+establish equal laboratory time or simulate arbitrary joint inputs.
+The graded tetron extension separately uses an even fermionic collision
+dilation, independent isotropic mode faults and a measured final code-parity
+record. Its finite exact checks support parity-accepted code maps,
+controlled-even-parity flags and calibrated stochastic flag processing;
+the general positivity/postprocessing proof remains analytic, with
+rational-grid instrument checks guarding transcription. They do not
+certify microscopic poisoning or simulate rejected odd-parity outputs.
+The Jaynes--Cummings extension checks the explicit ordinary
+isometry/measurement and decision identities. Its complete infinite-Fock
+inequality for all positive field energies and high-energy remainder are
+analytic. The physical equatorial prior, one ideal gate, known energy axis
+and actual Bell/qubit/qutrit memory costs remain explicit. Neither result
+settles all native noise models or contradicts the cited restricted
+ordinary comparisons.
 
 NR-R19 has finite exact corrected-channel and ordinary-wrapper checks;
 its all-ordinary dimension-at-least-three exact converse uses analytic
@@ -170,6 +210,11 @@ oracle-dependent initial advice. It is not a calibrated persistent-device
 throughput bound or an optimal ordinary frontier. Native coupler access,
 primitive errors, routing costs and a finite-energy GKP bound remain
 unverified.
+The Andreev extension has finite exact reflection-signature,
+particle-hole-symmetry, rank-one commutator and bandwidth identities.
+Its fixed-dressing family obstruction and device mapping are analytic.
+Those results constrain the stated Majorana/converter models and do not
+extend the full-Haar certificate to a symmetry-restricted physical prior.
 These checks do not constitute a measured instrument, a new
 fault-tolerance threshold or an architecture advantage.
 

@@ -94,6 +94,17 @@ ordinary two-visit echo that beats the independent-slot switch. The next
 comparison must therefore use actual reset, timing, return and interrogation
 rules rather than import a hard two-query bound as a throughput theorem.
 
+The [known-auxiliary-gate comparison](metrology.md#nr-r15-known-control-qec)
+supplies another ordinary baseline: known controlled gates placed before
+and after one common unknown sensing interval reproduce its full switched
+instrument. Coherent forward/backward signal access is a separate physical
+resource. Identical classical direction channels can have different joint
+bath extensions; in the specified same-signed-noise extension, an ordinary
+probe eigenstate lets the helper sense directly without error correction.
+The next device test must establish that joint extension and price the same
+sign control, helper lifetime and readout in both protocols. The comparison
+does not audit every implementation of time-direction control.
+
 The [drifting measurement-alignment benchmark NR-R18](alignment.md) makes
 that distinction in an unread-meter model. It proves a finite advantage
 under a strict two-call cap, with an exact ordinary adaptive certificate.
@@ -205,6 +216,18 @@ the shared-net-error model used by this theorem. The next storage comparison
 therefore needs the actual gate sequence, in-circuit helper faults and a
 useful output or heralded frontier beyond these closed models.
 
+An [encoded-Pauli output comparison](architecture-baselines.md#nr-r06-encoded-pauli)
+also addresses an order control carrying input information. On the specified
+two-qubit code, ordinary decoding stores the logical state in that clean
+control while two target queries and retained error reads reproduce the
+full switched output. The same access permits perfect storage with the
+complete classical error record. Two nondemolition reads can be replaced
+by two coherent record qubits and their gates. Their memory, coupling,
+latency and failures are substantive resources, especially for a retained
+single photon. This enlarges the source's fixed-map comparator; its
+restricted inequalities remain valid. Generic in-loop helper noise and
+signal evolution on the decoded target need separate timed instruments.
+
 Quantum correlations do not by themselves remove ordinary alternatives:
 [two-qubit quantum-noise spectroscopy](https://doi.org/10.1103/PRXQuantum.1.010305)
 accesses cross spectra under its noise model without entangled preparation
@@ -266,6 +289,16 @@ compare ordinary calibration reuse and three-window routing at matched
 primitive operations, delay, clean memory, loss and retained records. No
 complete device/task combination with a convincing benefit has been verified.
 
+The [Andreev-reflection screen](backaction.md#nr-r19-andreev) makes one
+superconducting candidate more precise. A single Majorana mode gives a
+rank-one reflection rather than the required full balanced exchange.
+Particle-hole symmetry also restricts full converters to a different prior,
+and finite bandwidth introduces pulse error. Those restrictions prevent
+direct use of NR-R19's full-Haar fidelity certificate. A surviving converter
+needs enough bright modes, its own symmetry-respecting comparison and the
+complete ordinary reflection/routing baselines. These conclusions concern
+the stated models, rather than all superconducting switches.
+
 There is a named optical testbed with a longer-lived oscillator:
 [Spinnler et al.](https://doi.org/10.1038/s41467-024-53882-2) couple a quantum
 dot to a phononic-crystal mode with frequency $1.466\,\mathrm{GHz}$,
@@ -311,6 +344,18 @@ the best deterministic entanglement fidelity allowed by one switch
 control qubit in the specified ideal diagonal-Gaussian code model. The
 argument requires an exact final syndrome while the control stays
 coherent. It supplies no finite-energy or heralded-frontier conclusion.
+
+A distinct [finite-energy Jaynes--Cummings benchmark](architecture-baselines.md#nr-r06-jc-energy)
+concerns discrimination of commuting and anticommuting rotations, with one
+noisy coherent-field gate and one ideal gate. For its physical equatorial
+prior, an explicit ordinary circuit and completed measurement dominate the
+specified switch readout at every positive field energy. It uses the same
+one-field photon budget, plus Bell preparation, a known isometry and joint
+readout, and a qubit plus qutrit of memory through the noisy call. Those
+control and memory costs remain charged. The source's restricted isotropic
+and four-box comparisons remain distinct. The next energetic comparison
+needs a useful workload and the total physical energy, time and memory
+budget, including the actual selector or no-atom port and field reuse.
 
 There is a real whole-mode routing primitive:
 [Chapman et al.](https://doi.org/10.1103/PRXQuantum.4.020355) demonstrate
@@ -571,6 +616,15 @@ errors and local spin errors preserving those labels supply no extra order
 syndrome. Mode-changing scattering is a different hypothesis, not a conclusion
 from the documented elastic model.
 
+Keeping spin memories does not remove ordinary entanglement protocols.
+The [retained-spin comparison](communication.md#nr-r11-retained-spin-parity)
+gives full one/two-click parity instruments and a serial photon-bus
+construction under their elastic spin-preserving assumptions. Separate-arm
+and local logical-photon ports are not automatically available in an inline
+two-dot device. The useful next test is a calibrated retained Bell pair,
+including its local frame, every failed herald and reset, actual spin
+readout, finite-pulse distortion and the permitted optical connections.
+
 The remaining narrow optical candidate is retained inelastic spectral
 scattering followed by a downstream frequency-dependent reflection. A
 [quantum-dot waveguide analysis](https://doi.org/10.1038/s41534-023-00717-5)
@@ -640,6 +694,21 @@ readout and reset charged. The current experiment establishes no such
 matched hardware advantage.
 
 ## Native computation and coherent dispatch
+
+Quasiparticle poisoning supplies another concrete memory test. The
+[graded fermionic comparison](architecture-baselines.md#nr-r06-fermionic-poisoning)
+uses the even system/reservoir dilation and the final code-parity record.
+In its independent isotropic tetron model, an ordinary controlled-even-parity
+check dominates the specified collision-filter yield/fidelity comparison;
+calibrated classical flag processing also reproduces the measured
+parity-accepted code instrument. This uses one surviving helper and real
+controlled bilinear gates, rather than odd Majoranas treated as unrelated
+tensor factors. It does not simulate rejected odd-parity outputs or all
+poisoning models. A useful native test must derive the actual contact
+operators and early/late reservoir overlaps, then compare ordinary parity
+monitoring at the same gate error, memory exposure, reset and rejected-launch
+cost. Unequal rates or retained reservoir coherence require their own
+instrument rather than importing the symmetric formula.
 
 The [native-check baselines](architecture-baselines.md#nr-r06) also prevent
 promoting a known Clifford layer or a read-only classical-bit lookup merely
@@ -855,10 +924,15 @@ order-flag and photon-output instrument. This comparison uses three global
 windows instead of two, with the same two occupied traversals; its extra
 delay, route loss and visibility matter. A Markov model alone does not imply
 disjoint records for finite pulses with long scattering tails. The proof
-gives an error bound conditional on a uniform record-tail estimate, but the
-native two-emitter estimate remains to be calculated. Retained phonon modes,
-overlapping histories and coherent inter-emitter feedback are not closed by
-that reduction.
+now supplies a [uniform finite-emitter record guard](communication.md#nr-r11-uniform-record-guard)
+for number-conserving vacuum-Markov models with a positive radiative Gram
+floor and an actual vacuum-preserving ground. Gaussian truncation and all
+route guards enter a complete-instrument error and clock budget. Nominal
+two-emitter parameters illustrate that test; they do not establish a measured
+confidence region or split a collective device into independent slots.
+Retained phonon modes, overlapping histories and unmodeled delayed feedback
+remain outside that reduction. Both protocols must meet the same declared
+accuracy before their extra-window delay and visibility costs are compared.
 
 There are now more specific physical starting points than an assumed pair
 of copies of Nielsen's processor.

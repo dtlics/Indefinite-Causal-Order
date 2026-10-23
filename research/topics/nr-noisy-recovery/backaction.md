@@ -1011,6 +1011,159 @@ give stronger comparators for specified hardware. They establish no
 physical impossibility for every coupler family or measured architecture
 advantage.
 
+<a id="nr-r19-andreev"></a>
+
+### Andreev reflection supplies a different unknown involution
+
+Coherent electron/hole conversion is a concrete device task in electron
+quantum optics. [Burset et al.](https://arxiv.org/html/2312.13145v2)
+propose a driven, flux-tunable converter and explicitly model its
+Floquet--Nambu scattering, source pulses and superconducting gap.
+Coherent electron/hole inputs are meaningful resources; there is no
+general superselection exclusion of this application. A sealed
+superconducting contact is therefore a motivated source to test, but
+an unknown Hermitian reflection does not automatically supply (34).
+
+**A single Majorana mode has the wrong exchange rank.** In the
+wide-band, subgap model of [Haim et al., Phys. Rev. B **92**, 245112
+(2015)](https://doi.org/10.1103/PhysRevB.92.245112)
+([Supplement IV, (24)--(26)](https://arxiv.org/html/1509.00463v2)), one
+isolated Majorana mode coupled to $N$ electronic channels has reflection
+matrix on $2N$ electron/hole channels
+
+$$
+r(E)=I-\frac{2i\Gamma}{E+i\Gamma}P,\qquad
+P=\frac{w^\dagger w}{ww^\dagger},\quad
+\operatorname{rank}P=1,\quad \Gamma=\pi ww^\dagger.
+\tag{AM1}
+$$
+
+The row $w$ contains paired electron/hole couplings
+$(\lambda,\lambda^*)$, with the corresponding density-of-states factors.
+Thus $r(0)=I-2P$ is an unknown Hermitian involution, with one negative
+and $2N-1$ positive eigenvalues. By contrast, (34) anticommutes with
+$Z_C$, which maps its positive eigenspace isometrically onto its negative
+eigenspace. Both have dimension $N$, and its trace is zero. For $N>1$,
+$r(0)$ therefore cannot equal (34) after any unitary change of basis
+and common scalar phase. In the physical electron/hole split,
+$r_{\rm he}(0)$ has rank one and $r_{\rm ee}(0)$ has rank $N-1$:
+only one bright combination converts, while the other modes normally
+reflect. Selecting the bright electron/hole pair leaves data dimension
+one, where this benchmark's target channel is trivial.
+
+The trace argument allows a common basis change. Fixed, unrelated
+input/output unitaries do not repair the entire unknown-coupling family
+either. Let $m=2N>2$, let $Z$ be any fixed grading with two
+$N$-dimensional sectors, and suppose fixed unitaries $L,R$ made every
+$K_x=L(I-2|x\rangle\langle x|)R$ odd for all real unit vectors
+$x\in\mathbb R^m$. Summing over a real orthonormal basis gives
+$\sum_iK_{e_i}=(m-2)LR$. Hence $LR$ is odd and so is every rank-one
+$L|x\rangle\langle x|R$. Put $u=Lx$, $v=R^\dagger x$. Its two diagonal
+blocks vanish:
+
+$$
+u_0v_0^\dagger=0,\qquad u_1v_1^\dagger=0.
+\tag{AM2}
+$$
+
+If both components of $u$ were nonzero, both components of $v$ would
+vanish, a contradiction. Thus every $Lx$ lies entirely in one grading
+sector. The basis vectors $Le_i$ span the whole space, so some are in
+opposite sectors. Their normalized real sum is another allowed $Lx$
+with both components nonzero, again a contradiction. This proves the
+fixed-pre/post-unitary obstruction.
+
+The physical paired-coupling family supports this real-vector premise:
+after absorbing positive density-of-states factors into $\lambda$, the
+fixed unitary
+$2^{-1/2}\left(\begin{smallmatrix}I&iI\\I&-iI\end{smallmatrix}\right)$
+maps real vectors $(a,b)$ onto all paired vectors
+$(a+ib,a-ib)/\sqrt2$. It is a Majorana-basis change and can be absorbed
+into $L,R$. The obstruction excludes neither controls calibrated to one
+specific $P$, nor restricted coupling sets, ancillas, heralded mode
+selection or different interacting devices. Their actual yields,
+calibration and memory change the comparison.
+
+**Particle-hole symmetry also restricts hypothetical full converters.**
+In a conventional fixed Nambu basis, zero-energy particle-hole symmetry
+is $\tau_xr^*\tau_x=r$. Allow the physically irrelevant scalar
+$r=e^{i\gamma}A_\alpha$. Comparing its off-diagonal blocks gives
+$U^T=e^{2i\gamma}U$. Transposing twice forces $e^{4i\gamma}=1$, so $U$
+is symmetric or antisymmetric. An odd-dimensional antisymmetric matrix
+has zero determinant and cannot be unitary. For the qutrit benchmark,
+therefore, $U^T=U$. The second converter likewise requires
+$(UH)^T=UH$, which implies $H^TU=UH$ and
+
+$$
+UHU^\dagger=H^T=H^*,\qquad W=\operatorname{diag}(H,H^*).
+\tag{AM3}
+$$
+
+The station phases cancel under this conjugation comparison.
+Takagi-factor $U=VV^T$ and write $H=V^*hV^T$. Then
+$(UH)^T=UH$ makes $h$ symmetric; Hermiticity makes it real, and
+$H^2=I$ makes $h^2=I$. This is a correlated symmetric-$U$/real-reflection
+family. Neither the full-family hard-two converse nor the independent
+Haar-$U(3)$/complex-reflection certificate automatically transfers to
+this restricted family. Even-dimensional antisymmetric branches require
+separate analysis; symmetric-only is not asserted for every dimension.
+
+The chiral-symmetry source supplies another distinction.
+[Diez et al., (3)--(7)](https://arxiv.org/html/1206.3079v2) identify the
+protected Hermitian involution as $\tau_xr$, rather than generally $r$;
+normal-reflection blocks remain in the physical scattering matrix.
+At the insulating-wire limit, end reflections are unitary and
+transmission vanishes. A full exchange through that same two-port
+device instead needs unitary transmission and zero reflection. If
+$t_{\rm LR}$ denotes transmission from the chosen input, unitarity gives
+$r^\dagger r+t_{\rm LR}^\dagger t_{\rm LR}=I$. The source's
+infinitesimal-transmission relation between end indices is not an
+arbitrary-input unitary transport gate. At finite transmission, use the
+complete device scattering matrix.
+
+**Finite bandwidth and the specified commutator statistic.** Directly
+subtracting the zero-energy limit in (AM1) gives
+
+$$
+\|r(E)-r(0)\|=\frac{2|E|}{\sqrt{E^2+\Gamma^2}}.
+\tag{AM4}
+$$
+
+The coefficient difference is $2E/(E+i\Gamma)$ times the rank-one
+projector. On the entire input space supported in $|E|\le E_{\max}$,
+its uniform operator-norm error is the maximum of (AM4). An error at
+most $0<\epsilon<2$ requires
+$E_{\max}\le\Gamma\epsilon/\sqrt{4-\epsilon^2}$. A fixed pulse
+envelope can have smaller integrated error than this worst-band bound.
+Source temperature, above-gap components, timing, helper storage and
+readout still need their complete model; the $E=0$ matrix alone does
+not certify a finite-pulse gate.
+
+For two ideal rank-one reflectors $r_p=I-2P$, $r_q=I-2Q$ on $m=2N$
+dimensions, put $s=|\langle p|q\rangle|^2$. Their maximally mixed
+minus probability is
+
+$$
+p_- = \frac{\|[r_q,r_p]\|_{\rm HS}^2}{4m}
+    = \frac{8s(1-s)}m\le\frac2m=\frac1N.
+\tag{AM5}
+$$
+
+Indeed $[r_q,r_p]=4(QP-PQ)$, and rank-one multiplication gives
+$\|QP-PQ\|_{\rm HS}^2=2s(1-s)$. Thus this low-rank model supplies no
+constant maximally mixed commutator signal as the channel count grows.
+The bound concerns that observable; it excludes neither state-dependent
+probes nor other switch tasks.
+
+A surviving superconducting candidate needs a finite-bandwidth
+multichannel converter with enough bright modes for a full balanced
+exchange, a justified correlated second converter and a useful coherent
+address output. Its symmetry-restricted prior must be analyzed directly.
+The ordinary reflection wrapper, persistent calibration and complete
+three-window routing comparisons above still apply when their ports
+exist. These analytic screens rule out the specified single-Majorana
+implementation of NR-R19, not superconducting switches in general.
+
 The remaining architecture target must specify that pair, a useful coherent address input, full temporal dilations and emitted records, an independent surviving helper, all routing/storage/control costs, phase stability across repeats and any calibration reuse. Pulse, idle, preparation, cooling, leakage and rejected launches enter the same physical ledger on both sides. Known $H$, classical addresses, a supplied selector, or destructive helper/payload readout changes or closes the endpoint. A significant finite advantage on such a native workload remains open.
 
 The shared [exact checker](checks/architecture/verify_backaction.py) separately reports NR-R19. It replays noncommuting rational examples in data dimensions two and three, all address/data matrix units for the corrected and visibility-limited channels, phase drift, known-$H$ wrappers, whole-pair ambiguity, selector compilation, and the unknown-$H$ Abelian qubit counterprotocol. These finite identities support transcription and scope checks. The connected-orbit, determinant, operational normalization and no-SWITCH reduction above are analytic proofs, not conclusions inferred from a finite optimizer or the replay.
