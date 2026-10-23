@@ -1058,6 +1058,45 @@ $v_A+v_B$. Both off-diagonal blocks are
 $\int p_{v_A+v_B}(\gamma)e^{-w|\gamma|^2}
 D(\gamma)X D(\gamma)^\dagger\,d^2\gamma$.
 
+The conditional variance gain has a closed quantitative limit. Put
+$v=v_A+v_B>0$ and $c=(1+v_Av_B)^{-1}$. Multiplying the Gaussian density
+by the (BOS6) kernel gives
+$p_v(\gamma)e^{-w|\gamma|^2}=c\,p_{cv}(\gamma)$.
+For an initially plus helper and $X$ flags, the exact unnormalized maps
+are $\mathcal F_\pm=(\mathcal N_v\pm c\mathcal N_{cv})/2$ and
+$p_\pm=(1\pm c)/2$, where $\mathcal N_s$ denotes additive complex
+Gaussian displacement noise of variance $s$. The maps are CP because
+they arise from the displayed physical flag instrument. Their conditional
+added displacement variances are
+
+$$
+V_+=v\frac{1+c^2}{1+c},\qquad V_-=v(1+c),\qquad
+p_+V_++p_-V_-=v.
+\tag{BOS6a}
+$$
+
+The minus variance is asserted only when $p_->0$; otherwise its
+unnormalized contribution is zero. Gaussian integration proves these
+identities directly from the second displacement moment. They concern
+the added classical displacement variance, not the entire variance of an
+arbitrary input state. Moreover
+
+$$
+\frac{V_+}{v}-(2\sqrt2-2)
+=\frac{[c-(\sqrt2-1)]^2}{1+c}\ge0.
+\tag{BOS6b}
+$$
+
+Equality occurs at $c=\sqrt2-1$, so the largest plus-flag variance
+reduction relative to the serial variance is $3-2\sqrt2$, about 17.16%.
+This is a variance-only comparison to serial noise, not a Fisher
+information, readout-error or rate bound. The ordinary calibrated
+controlled-displacement compiler (BOS7) reproduces the same flags and
+conditional output. The distinct [full-support
+obstruction](obstructions.md#nr-r04-gaussian-displacement) addresses
+exact heralded code recovery; approximate utility remains a separate
+task.
+
 Ordinarily sample a known $z\sim\mathrm{CN}(0,w)$, apply controlled
 $D(z)$, the same two serial displacement channels, then the inverse
 controlled displacement. The conjugation identity
@@ -1115,6 +1154,789 @@ held fixed in such a derivative. Bath reuse, thermal noise, nonlinear
 engineered recovery, correlated/nonstationary errors and actual gate faults
 require their complete model. No native timing or logical-performance
 advantage, or general no-go for encoded dissipative switches, is inferred.
+
+<a id="nr-r06-readout-noise-floor"></a>
+
+### Readout protection needs noise ports and the actual cavity response
+
+A useful microwave task is to protect a dispersively coupled readout
+cavity and its qubit from amplifier thermal backflow while transmitting
+the outgoing pointer to a detector. Hold fixed the cavity response and
+loading over the operational band, probe energy, elapsed time, useful
+forward information and available pump resources. The
+[interferometric Josephson readout experiment of Abdo et al., PRX
+Quantum **2**, 040360 (2021), §IV.3](https://arxiv.org/html/2006.01918)
+varies isolation and measures qubit dephasing from output-chain noise.
+Its model includes the resonator's frequency response, residual noise
+and pump depletion/dynamic range. A single-frequency isolation value
+therefore does not specify protection. A mean returning photon flux
+is a useful backaction proxy; a full qubit dephasing or excitation claim
+also needs its coupling and relevant noise spectrum.
+
+**Complete Gaussian inputs and outputs.** For photon-flux-normalized
+annihilation inputs, a stable linear pumped circuit has Bogoliubov map
+
+$$
+b_{\rm out}=U b_{\rm in}+V b_{\rm in}^\dagger,\qquad
+UU^\dagger-VV^\dagger=I,\quad UV^T-VU^T=0.
+$$
+
+All loss, idler and dump inputs are included; at Fourier frequency
+$\omega$, the creation input has the conjugate frequency. For independent
+thermal inputs with occupation matrix N and coherent means treated
+separately, its normal noise covariance is
+$N_{\rm out}=UNU^\dagger+V(N^T+I)V^\dagger$. In particular a protected
+output q receives
+$n_q=\sum_j|U_{qj}|^2n_j+|V_{qj}|^2(n_j+1)$: gain has spontaneous
+noise even with a vacuum idler. The
+[41-tone comb of Bock et al., Physical Review Applied **24**, 014027
+(2025), §§II–III](https://arxiv.org/html/2501.09453)
+uses annihilation and conjugate amplitudes, low- and high-frequency
+pumps and a common phase reference. Its coherent-tone scattering does
+not itself supply the quantum noise covariance. No fresh-oracle prior
+or unknown-coupler query ceiling is used in this readout task.
+
+For a known-direction weak coherent pointer, define the forward
+efficiency e as homodyne Fisher information divided by ideal homodyne
+information on that incoming pointer. A passive detected gain
+$\eta=|S_{dq}|^2$ and excess thermal occupation $N_d$ give
+$e=\eta/(1+2N_d)$, since the quadrature variance is $1/2+N_d$.
+This is a stated local information metric, not automatically every
+experimental definition of qubit measurement efficiency or a binary
+coherent-state discrimination error.
+
+**Multimode passive feedback floor.** A network reflection changes the
+cavity loading, so external-source transmission/noise alone can give a
+misleading comparison. At each frequency take passive return and
+environment blocks R,F satisfying
+
+$$
+b_{\rm in}=R b_{\rm out}+F e_{\rm env},\qquad
+RR^\dagger+FF^\dagger=I.
+$$
+
+The identity is a row of the complete unitary scattering matrix,
+including all loss ports. Let the cavity equations be
+$a=\chi_0(D b_{\rm in}+d)$ and $b_{\rm out}=b_{\rm in}-Da$, with D
+positive diagonal square roots of the bare external coupling rates.
+The vector d contains independent drives and other cavity baths.
+Require $X=(I-R)^{-1}$ to exist and the closed loop to be stable.
+Eliminating the return gives
+$b_{\rm in}=-XRDa+XF e_{\rm env}$ and
+$\chi_{\rm eff}^{-1}=\chi_0^{-1}+DXRD$.
+Write $\chi_0^{-1}=\chi_{\rm other}^{-1}+D^2/2$, explicitly separating
+the bare network-port damping. Since X commutes with R and $XR=X-I$,
+put $Y=(I+R)(I-R)^{-1}=2X-I$ and $L=DXF$. Then
+
+$$
+\chi_{\rm eff}^{-1}=\chi_{\rm other}^{-1}+\tfrac12DYD,\qquad
+a=\chi_{\rm eff}(L e_{\rm env}+d),\qquad
+K_{\rm eff}:=D\operatorname{Re}Y D=LL^\dagger.
+\tag{G1}
+$$
+
+Here $\operatorname{Re}Y=(Y+Y^\dagger)/2$. To prove its last equality,
+use
+$I-RR^\dagger=(I-R)+(I-R^\dagger)-(I-R)(I-R^\dagger)$.
+Multiplying by X and $X^\dagger$ gives
+$X(I-RR^\dagger)X^\dagger=X+X^\dagger-I=\operatorname{Re}Y$;
+substitute $FF^\dagger=I-RR^\dagger$. This proves positivity of the
+effective damping kernel without assuming R normal or diagonal.
+
+If the independent thermal environmental inputs obey
+$N_{\rm env}\succeq n_cI$, their effective drive covariance satisfies
+
+$$
+Q_{\rm eff}=LN_{\rm env}L^\dagger\succeq n_cK_{\rm eff}.
+\tag{G2}
+$$
+
+Congruence by the full susceptibility gives their intracavity noise
+contribution
+
+$$
+N_{a,\rm network}=\chi_{\rm eff}Q_{\rm eff}\chi_{\rm eff}^\dagger
+\succeq n_c\chi_{\rm eff}K_{\rm eff}\chi_{\rm eff}^\dagger.
+\tag{G3}
+$$
+
+These are frequency-resolved matrix inequalities; integration against
+positive mode/filter weights preserves them. At fixed full susceptibility
+and coupling/damping kernel, passive routing cannot lower its effective
+photon occupation below the smallest supplied thermal occupation. For
+frequency conversion this compares occupations, not thermodynamic
+temperatures at different frequencies; pump work still counts. Colored
+noise and mode mixing are included in this spectral statement, but a
+white-noise qubit dephasing formula is not thereby established. Active
+gain, squeezed or correlated inputs, conditional measurement, changed
+couplings or a changed cavity response require their actual instruments.
+
+For one return r, (G1)–(G3) reduce to
+$n_{\rm eff}=n_f/(1-|r|^2)\ge n_c$ and
+$\kappa_{r,\rm eff}=\kappa_r(1-|r|^2)/|1-r|^2$.
+At $r=4/5$ the external linewidth is nine times its bare value; at
+$r=-4/5$ it is one ninth, although $n_{\rm eff}=n_c$ for a cold input in
+both cases. A changed spectral density with changed linewidth is not a
+fixed-bandwidth protection gain. A fully closed port with zero damping
+does not evade a task requiring finite readout coupling.
+
+**A finite-band ordinary reservoir benchmark.**
+[Metelmann and Clerk, PRX **5**, 021025 (2015), §§II.A and
+III.A](https://arxiv.org/html/1502.07274)
+construct directionality by balancing coherent and dissipative
+couplings. Retain their auxiliary reservoir mode rather than assuming
+an infinitely broad Markov bath. In a passive three-mode realization,
+let external linewidths be $\Gamma=\operatorname{diag}(\kappa,\kappa,
+\kappa')$ and Hermitian hopping matrix h have
+$h_{12}=i\kappa/2$, $h_{13}=h_{23}=g=\sqrt{\kappa\kappa'}/2$,
+with zero diagonal. With no hidden loss bath,
+
+$$
+S(\omega)=I-\sqrt\Gamma
+(\Gamma/2-i\omega I+ih)^{-1}\sqrt\Gamma.
+$$
+
+The defining damped input/output equations preserve the commutator,
+and direct multiplication gives $S^\dagger S=I$ at real frequency.
+At $\omega=0$, its power matrix is the cycle
+$|S|^2=(\begin{smallmatrix}0&0&1\\1&0&0\\0&1&0\end{smallmatrix})$:
+the pointer reaches port 2, hot port-2 noise goes to the dump, and
+port 1 receives the reservoir input. Thus the matched carrier has
+$B=n_c$ returning photons and $e=1$. For the explicit finite choice
+$\kappa=1$, $\kappa'=4$, $g=1$, $\omega=1/2$, exact inversion gives
+
+$$
+|S|^2=\frac1{389}
+\begin{pmatrix}65&4&320\\260&65&64\\64&320&5\end{pmatrix},\quad
+B=\frac{4n_A+320n_c}{389},\quad
+e=\frac{260}{389+2(65n_A+64n_c)}.
+$$
+
+For illustrative, unmeasured occupations $n_A=10$, $n_c=1/100$, these
+are $B=216/1945$ and $e=6500/42257$. The reverse/forward power ratio is
+$1/65$, consistent with
+$|S_{12}|^2/|S_{21}|^2=\omega^2/(\kappa'^2+\omega^2)$ in this model.
+These finite-frequency e,B are external-port metrics; when attached
+to a cavity with $S_{11}\ne0$, (G1) must first update its response and
+the correlations of its readout noise. Matching over a wider band
+requires greater auxiliary coupling. The transparent ledger
+$|h_{12}|^2+2g^2=\kappa^2/4+\kappa\kappa'/2$ is a squared-coupling
+budget, **not calibrated pump watts**. Per-tone calibration, heating,
+depletion, stability and pump reuse remain device constraints. This
+construction is a concrete ordinary benchmark, not a proof of a global
+finite-band, finite-pump optimum.
+
+**A controlled-order router defeated by the same two ordinary pulses.**
+In a favorable ideal limit, let A swap traveling modes q,d and B swap
+d,c, with mode order (q,d,c). The source pointer enters q; detector
+thermal backflow enters d and the cold dump input enters c. Then
+
+$$
+BA=\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix},\qquad
+AB=\begin{pmatrix}0&0&1\\1&0&0\\0&1&0\end{pmatrix}.
+$$
+
+Use their number-preserving second quantizations on the full Fock
+space, not their one-photon matrices alone. Grant an ideal independent
+helper controlling these orders, initially +, including the required
+coherence of bath and timing records. The ordinary fixed order AB is
+a matched circulator: it sends the source intact to d, hot detector
+noise to c and the cold input to q. BA instead sends hot noise to q
+and the source to the dump. Both have zero q-to-q reflection and use
+the same one A and one B pulse. Tracing the helper gives
+
+$$
+B_{\rm switch}=\frac{n_A+n_c}{2},\qquad B_{\rm ordinary}=n_c.
+\tag{G4}
+$$
+
+For the specified continuous, known-quadrature weak coherent pointer,
+any joint helper/detector measurement after the switch is
+parameter-independent processing of that pointer and independent
+thermal ancillas. Its Fisher information is bounded by the incoming
+pointer's quantum Fisher information. Ideal aligned homodyne after
+AB attains that information. Thus a better helper measurement cannot
+rescue this router's forward-information comparison. This metric is
+essential: aligned homodyne does not generally attain the binary
+coherent-state Helstrom optimum. Nor is this a converse for arbitrary
+active or noisy order-dependent devices.
+
+The helper nevertheless has a real order-sensitive thermal statistic.
+At zero source signal put
+$\rho=|0\rangle\langle0|_q\otimes\tau(n_A)_d\otimes\tau(n_c)_c$.
+The helper's off-diagonal overlap is the trace of a three-cycle against
+this product. A diagonal thermal term contributes only when all three
+occupations are equal; the source vacuum forces them all to zero.
+Hence $h=\langle X_O\rangle=[(1+n_A)(1+n_c)]^{-1}$ and
+$p_\pm=(1\pm h)/2$. Inserting the protected number operator into
+the same interference trace gives zero. Its conditional occupations
+therefore satisfy
+
+$$
+B_\pm=\frac{n_A+n_c}{2(1\pm h)},\qquad
+p_+B_++p_-B_-=\frac{n_A+n_c}{2}.
+\tag{G5}
+$$
+
+This is a full-Fock thermal generating-function argument without a
+cutoff. For $n_A=10$, $n_c=1/100$,
+$h=100/1111$, $p_+=1211/2222$ and
+$B_+=158873/34600\simeq4.592$. Even the selected plus output is
+worse than the ordinary $1/100$; the unconditional switch gives
+$1001/200=5.005$. The statistic measures thermal/order information,
+not a protection gain. No experimental qubit-controlled global order
+router is claimed by this ideal component calculation.
+
+**Terminal helper measurements and the open task.** For arbitrary
+physical Stinespring histories $U_0,U_1$, including all reservoirs and
+the cavity, tracing a controlled-order helper leaves exactly
+$pU_0\rho U_0^\dagger+(1-p)U_1\rho U_1^\dagger$. Ordinary randomized
+histories reproduce this complete reduced process, with the same mean
+waveform and primitive-resource ledger, when those histories are
+available under the same interface. Keeping the ordinary branch record
+can add information. Summing any complete terminal helper measurement
+also leaves this mixture, so it cannot change the unconditional noise
+energy already delivered to a qubit. Selecting a quiet subensemble
+does not remove rejected trials' earlier exposure. Joint helper
+readout, a conditional quantum output, early noise routing, or active
+outcome-dependent qubit recovery are not excluded; they need a full
+instrument and ordinary controlled-Gaussian/reservoir-monitoring
+comparators with the same latency and costs.
+
+The
+[exact readout guards](checks/architecture/gaussian_readout_guards.py)
+check a nonnormal two-mode return, the noise/damping and finite-cavity
+inequalities, the finite three-mode reservoir scattering, and (G4)–(G5)
+at rational occupations. General matrix/Fock and information arguments
+are analytic. Finite-band, finite-pump active conditional readout remains
+open; calibration, pump depletion and effective cavity loading cannot
+be omitted from that comparison.
+
+<a id="nr-r06-conditional-microwave-readout"></a>
+
+### Conditional microwave readout needs the full signal–idler instrument
+
+The [readout noise-floor comparison](#nr-r06-readout-noise-floor) concerns
+the noise delivered to a cavity and its actual response. A complementary
+task is to improve a retained conditional readout or quantum output.
+Here the relevant object includes the measurement likelihood, qubit
+coherence and every helper flag. A small selected output variance does
+not alone establish a useful error–time–disturbance improvement.
+
+**Measured controls and their limits.**
+[Liu et al., Physical Review Applied **18**, 064092 (2022), including
+the supplement](https://arxiv.org/pdf/2007.15460), measure a transmon
+with a two-JPC SU(1,1) interferometer. They report 31% improvement in
+power SNR at fixed coherent cavity drive. Fitted weak-readout efficiencies
+at matched SNR are 0.58 and 0.29 at two pump settings, versus 0.46 for
+coherent readout (0.52 after a $T_2$ correction); the variation lacks a
+detailed theory. Analyzer pump-power variation from entangler leakage
+reaches $\pm50\%$ without cancellation; active pump-copy cancellation
+leaves residual leakage amplitude about 0.01. Inferred arm loss assumes a
+quantum-limited analyzer. Both signal and idler connect the two JPCs;
+the coherent drive enters a separate weak cavity port.
+The retained correlated idler enables ordinary destructive noise
+interference. These facts identify loss, pump crossfeed and backaction
+as bottlenecks; the measured power-SNR change is not a fidelity change.
+
+[Rosenthal et al., Physical Review Letters **126**, 090503
+(2021)](https://doi.org/10.1103/PhysRevLett.126.090503),
+[full primary text](https://arxiv.org/html/2008.03805), demonstrate SIMBA:
+a dc-switched parametric cavity receives a readout pulse in 20 ns,
+disconnects the qubit, latches by nonunitary bistable amplification,
+then connects the output chain. Simultaneous reported metrics are
+efficiency $70.4\pm0.9\%$, measurement time 265 ns and excess backaction
+$0.66\pm0.01$ effective photons. Its fitted $F_0=95.5\pm0.3\%$ is
+contrast $1-P(e|0)-P(g|\pi)$, not average assignment accuracy. A switch
+tested in isolation exceeds 50 dB on/off; operating reflect-state
+transmission is about $-26$ dB. This provides an ordinary readout
+comparator with time-gated isolation, not a state-preserving quantum
+transmission channel or a demonstrated qubit-coherent order controller.
+
+[Descamps et al., arXiv:2602.16889
+(2026)](https://arxiv.org/html/2602.16889), demonstrate an on-chip
+attenuator for gain/noise calibration over 4–8 GHz. About 1 nW produces a
+257 mK equivalent thermal field; the authors argue this avoids
+undesirable baseplate heating. Fitted heating/cooling time constants
+are 0.25/1.57 ms, and unintentional local heating is observed without
+applied drive. These are calibration and settling costs, not a measured
+parametric-amplifier drift spectrum or total calibration time. No source
+here justifies independent unknown squeeze parameters on every trial.
+
+The following equations are an independent specified-dilation baseline;
+they do not fit the unexplained measured efficiency variation. In
+particular, retaining a correlated idler is a different physical
+instrument from cascading two reduced single-mode amplifier channels
+with fresh traced idlers. A proposed coherent-order implementation must
+declare which of these ports it routes.
+
+**A complete ordinary SU(1,1) dilation.** The following specified model
+retains the correlated idler and every loss output. It is an analytic
+baseline, rather than a fit to a measured efficiency. Let the independent
+incident modes be $a,b,f_{\rm pre},f_{\rm post},g$, with centered thermal
+occupations $n_a,n_b,n_{\rm pre},n_{\rm post},n_g$ and coherent means
+$\alpha,\beta,0,0,0$. Keep a purification of each thermal input when
+computing qubit coherence. The entangler acts as
+
+$$
+a_1=u_1a+v_1b^\dagger,\qquad
+b_1=u_1b+v_1a^\dagger,\qquad
+u_j=\cosh r_j,\quad v_j=e^{i\phi_j}\sinh r_j.
+\tag{CM1}
+$$
+
+The convention is $a_{\rm out}=U^\dagger a_{\rm in}U$, with the
+standard continuous-to-identity squeezer
+$U_j=\exp[r_j(e^{i\phi_j}a^\dagger b^\dagger
+-e^{-i\phi_j}ab)]$ and beam splitters
+$\exp[\vartheta(a^\dagger f-af^\dagger)]$.
+The phase-only cavity block is explicitly
+$U_z=\exp(i\theta_zN_c)$ for qubit state $z\in\{g,e\}$, with no
+extra $z$-dependent scalar. Common qubit-independent global phases are
+fixed identically. Additional controlled scalar phases of an apparatus
+are calibration inputs. Undepleted pumps are declared classical coherent
+controls; this approximation does not supply a finite quantum-pump
+dilation or free coherent qubit control of a pump.
+
+Let $p,q,\eta$ be the pre-cavity, post-cavity and idler power
+transmissions, and $\theta_i$ the idler phase. Put
+$c=\sqrt p\,a_1+\sqrt{1-p}\,f_{\rm pre}$,
+$a_2=\sqrt q\,e^{i\theta_z}c+\sqrt{1-q}\,f_{\rm post}$ and
+$b_2=\sqrt\eta\,e^{i\theta_i}b_1+\sqrt{1-\eta}\,g$.
+After the analyzer the **five complete output rows** are
+
+$$
+\begin{aligned}
+a_{\rm out}&=u_2a_2+v_2b_2^\dagger
+ =A_za+B_zb^\dagger
+   +L_{{\rm pre},z}f_{\rm pre}+L_{\rm post}f_{\rm post}+Mg^\dagger,\\
+b_{\rm out}&=u_2b_2+v_2a_2^\dagger
+ =C_zb+D_za^\dagger
+   +\widetilde L_{{\rm pre},z}f_{\rm pre}^\dagger
+   +\widetilde L_{\rm post}f_{\rm post}^\dagger+\widetilde M g,\\
+\ell_{\rm pre}&=-\sqrt{1-p}\,a_1+\sqrt p\,f_{\rm pre},\\
+\ell_{\rm post}&=-\sqrt{1-q}\,e^{i\theta_z}
+ (\sqrt p\,a_1+\sqrt{1-p}\,f_{\rm pre})
+                       +\sqrt q\,f_{\rm post},\\
+\ell_i&=-\sqrt{1-\eta}\,e^{i\theta_i}b_1+\sqrt\eta\,g,
+\end{aligned}
+\tag{CM2}
+$$
+
+where direct expansion gives
+
+$$
+\begin{aligned}
+A_z&=u_2\sqrt{pq}\,e^{i\theta_z}u_1
+                    +v_2\sqrt\eta\,e^{-i\theta_i}v_1^*,\\
+B_z&=u_2\sqrt{pq}\,e^{i\theta_z}v_1
+                    +v_2\sqrt\eta\,e^{-i\theta_i}u_1,\\
+C_z&=u_2\sqrt\eta\,e^{i\theta_i}u_1
+                    +v_2\sqrt{pq}\,e^{-i\theta_z}v_1^*,\\
+D_z&=u_2\sqrt\eta\,e^{i\theta_i}v_1
+                    +v_2\sqrt{pq}\,e^{-i\theta_z}u_1,\\
+L_{{\rm pre},z}&=u_2\sqrt{q(1-p)}\,e^{i\theta_z},\qquad
+L_{\rm post}=u_2\sqrt{1-q},\qquad M=v_2\sqrt{1-\eta},\\
+\widetilde L_{{\rm pre},z}&=v_2\sqrt{q(1-p)}\,e^{-i\theta_z},\qquad
+\widetilde L_{\rm post}=v_2\sqrt{1-q},\qquad
+\widetilde M=u_2\sqrt{1-\eta}.
+\end{aligned}
+$$
+
+The cavity lies between the two upper losses. Moving one loss across
+that interaction changes qubit backaction even if the measured total
+transmission is unchanged. An actual dissipative cavity replaces the
+phase-only block by its full measured conditional scattering matrix,
+including internal loss ports. An independent weak-port cavity drive
+requires its additional input/output column; the displayed source means
+do not identify every experimental drive port.
+
+**Canonical commutators and independent baths.** Write all five rows
+as $\boldsymbol a_{\rm out}=X_z\boldsymbol a_{\rm in}
++Y_z\boldsymbol a_{\rm in}^\dagger$. Each beam splitter is unitary
+and each squeezer has $u_j^2-|v_j|^2=1$. Composition therefore gives
+
+$$
+X_zX_z^\dagger-Y_zY_z^\dagger=I,\qquad
+X_zY_z^{\mathsf T}-Y_zX_z^{\mathsf T}=0,
+\qquad
+|A_z|^2-|B_z|^2+|L_{{\rm pre},z}|^2
+                  +|L_{\rm post}|^2-|M|^2=1.
+\tag{CM3}
+$$
+
+For a direct first-row proof,
+$|A_z|^2-|B_z|^2=u_2^2pq-|v_2|^2\eta$;
+the remaining two annihilation coefficients contribute
+$u_2^2[q(1-p)+(1-q)]=u_2^2(1-pq)$, and the last creation
+coefficient contributes $-|v_2|^2(1-\eta)$. Their sum is one.
+Replacing the independent upper baths by
+$(L_{{\rm pre},z}+L_{\rm post})f$ adds the spurious commutator term
+$2u_2^2\sqrt{q(1-p)(1-q)}\cos\theta_z$.
+A normalized effective bath can represent one fixed-$z$ output
+marginal, but its $z$-dependent definition cannot identify the same
+environment in two initially coherent qubit branches. Keep the
+orthogonal bath mode and shared physical input labels in that comparison.
+
+**Warm moments and ordinary homodyne.** The entangler's signal marginal
+and inter-arm correlation are
+$\mu_1=u_1\alpha+v_1\beta^*$,
+$n_1=u_1^2n_a+|v_1|^2(n_b+1)$ and
+$M_1=\langle\delta a_1\delta b_1\rangle
+=u_1v_1(n_a+n_b+1)$. Thus a warm idler changes both the signal
+noise and its accessible correlation. For the independent inputs above,
+
+$$
+\begin{aligned}
+\mu_{{\rm out},z}&=A_z\alpha+B_z\beta^*,\\
+n_{{\rm out},z}&=|A_z|^2n_a+|B_z|^2(n_b+1)
+ +|L_{{\rm pre},z}|^2n_{\rm pre}
+ +|L_{\rm post}|^2n_{\rm post}+|M|^2(n_g+1),\\
+\langle\delta a_{\rm out}\delta a_{\rm out}\rangle&=0.
+\end{aligned}
+\tag{CM4}
+$$
+
+Consequently $X_\vartheta=(e^{-i\vartheta}a_{\rm out}
++e^{i\vartheta}a_{\rm out}^\dagger)/\sqrt2$ has a Gaussian
+distribution with mean
+$\sqrt2\operatorname{Re}(e^{-i\vartheta}\mu_{{\rm out},z})$ and
+variance $n_{{\rm out},z}+1/2$. Detector transmission $d$ with an
+independent thermal input of occupation $n_d$ multiplies the mean by
+$\sqrt d$ and gives variance
+$d(n_{{\rm out},z}+1/2)+(1-d)(n_d+1/2)$.
+Additional receiver noise uses its actual measured covariance.
+The general full-mode rule is $V_{\rm out}=S_zV_{\rm in}S_z^{\mathsf T}$,
+with the full source, loss and purification modes included. Correlated
+baths, phase-sensitive inputs or reverse-propagating noise require that
+larger model instead of (CM4)'s independent-input specialization.
+
+Let the centered pre-analyzer arms have occupations $N_s,N_i$ and
+$M_{si}=\langle\delta a_2\delta b_2\rangle$, with other anomalous
+moments zero. Here
+$N_s=pqn_1+q(1-p)n_{\rm pre}+(1-q)n_{\rm post}$,
+$N_i=\eta[u_1^2n_b+|v_1|^2(n_a+1)]+(1-\eta)n_g$, and
+$M_{si}=\sqrt{pq\eta}\,e^{i(\theta_z+\theta_i)}M_1$.
+The ordinary analyzer has
+
+$$
+\begin{aligned}
+V(r,\phi)&=\cosh^2r\,N_s+\sinh^2r\,(N_i+1)
+ +2\cosh r\sinh r\operatorname{Re}(e^{-i\phi}M_{si})+\tfrac12,\\
+\tanh(2r_*)&=\frac{2|M_{si}|}{N_s+N_i+1},\qquad
+V_{\min}=\frac{\sqrt{(N_s+N_i+1)^2-4|M_{si}|^2}+N_s-N_i}{2}.
+\end{aligned}
+\tag{CM5}
+$$
+
+To obtain the minimum, set $\phi=\arg M_{si}+\pi$, express the
+variance in $\cosh2r,\sinh2r$ and differentiate. Physical covariance
+positivity gives a real square root; limiting cases are continuous.
+This is a **noise** optimum. The unknown qubit requires one common
+analyzer setting; it cannot choose the phase after learning $z$.
+Means, covariance contrast, detector noise and pump costs change with
+gain, so optimize the full stated readout likelihood rather than this
+variance alone. The same analyzer obeys the operator identity
+
+$$
+X_{{\rm out},\vartheta}
+ =\cosh r\,X_{a_2,\vartheta}
+              +\sinh r\,X_{b_2,\phi-\vartheta}.
+\tag{CM6}
+$$
+
+Its two arm quadratures commute, so ideal joint homodynes and electronic weighting
+reproduce the entire scalar distribution. Finite detector noise can
+favor physical pre-detection gain, with its actual ports and resources.
+For a common covariance in a local linear-response model, the best
+electronic linear discriminant is proportional to
+$\Sigma^{-1}\Delta\mu$; qubit-dependent covariance requires the full
+likelihood.
+
+As a consistency check, vacuum inputs, lossless arms and inverse pumps
+$u_2=u_1$, $v_2=-v_1$, $\theta_i=0$ give
+$n_{{\rm out},z}=4n(n+1)\sin^2(\theta_z/2)$ for $n=|v_1|^2$.
+With equal arm power transmissions $pq=\eta=\tau$ and vacuum loss
+inputs this becomes
+$n(1-\tau)+4\tau n(n+1)\sin^2(\theta_z/2)$.
+
+**Total backaction and the lost columns.** Let $|\Psi_z\rangle$ be
+the complete conditional output, including every source/bath
+purification. Its unobserved qubit coherence multiplier is
+$\Gamma=\langle\Psi_e|\Psi_g\rangle$.
+For $\delta=\theta_g-\theta_e$, the cavity's incident marginal is a
+displaced thermal state with
+$n_c=pn_1+(1-p)n_{\rm pre}$ and $\mu_c=\sqrt p\,\mu_1$. Exactly,
+
+$$
+\Gamma=\operatorname{Tr}(\rho_c e^{i\delta N_c})
+ =\frac{\displaystyle
+ \exp\!\left[-\frac{|\mu_c|^2(1-e^{i\delta})}
+                         {1+n_c(1-e^{i\delta})}\right]}
+       {1+n_c(1-e^{i\delta})}.
+\tag{CM7}
+$$
+
+For a proof, use the positive Gaussian coherent-state representation
+of a displaced thermal state and
+$\langle\gamma|e^{i\delta N}|\gamma\rangle
+=\exp[-|\gamma|^2(1-e^{i\delta})]$.
+Completing the complex Gaussian integral gives (CM7), with the
+$n_c=0$ coherent-state limit understood continuously. It retains a
+warm idler through $n_1$ and a warm pre-loss input through $n_c$.
+Every later qubit-independent trace-preserving operation, including
+the post-loss and analyzer, leaves the nonselective qubit state
+unchanged. It can redistribute accessible information or amplify it
+before a noisy receiver. A real network with back-propagation or
+feedback needs the enlarged causal dilation; the one-way premise
+cannot be assumed there.
+
+For a passive cavity with vacuum loss inputs, let $h_z$ be its complete
+signal-input output column, including all loss ports. For an incident
+displaced thermal signal of parameters $n,\mu$, define
+
+$$
+\begin{aligned}
+\kappa&=h_e^\dagger h_g,
+\qquad
+\Gamma=\frac{\displaystyle
+ \exp\!\left[-\frac{|\mu|^2(1-\kappa)}{1+n(1-\kappa)}\right]}
+ {1+n(1-\kappa)},\\
+h_z\big|_{\{a_2,\ell_{\rm pre},\ell_{\rm post}\}}
+ &=\left(\sqrt{pq}\,e^{i\theta_z},
+          -\sqrt{1-p},
+          -\sqrt{p(1-q)}\,e^{i\theta_z}\right)^{\mathsf T},\\
+\kappa\text{ for (CM2)}&=(1-p)+pe^{i\delta}.
+\end{aligned}
+\tag{CM8}
+$$
+
+For a coherent incident amplitude $\gamma$, the complete outgoing
+coherent vectors have overlap
+$\exp[-|\gamma|^2(1-\kappa)]$. Its Gaussian thermal average proves
+the first line. The last two lines follow by reading the signal-input
+coefficients in (CM2); post-loss information in
+$\ell_{\rm post}$ is essential. They agree with (CM7) for vacuum
+pre-loss input. Transmissions alone do not determine $\kappa$:
+the lost-port phases are required. Non-vacuum cavity loss inputs require
+the full joint Gaussian purification instead of this column reduction.
+
+**The complete qubit measurement kernel.** Let $x$ be the observed
+homodyne record and $u$ all unobserved output and purifying coordinates.
+Put $\Psi_z(x,u)=\langle x,u|\Psi_z\rangle$. The instrument density is
+
+$$
+\begin{aligned}
+\mathcal J_x(\rho_Q)
+ &=\begin{pmatrix}
+ p_g(x)\rho_{gg}&k(x)\rho_{ge}\\
+ k(x)^*\rho_{eg}&p_e(x)\rho_{ee}
+ \end{pmatrix},\\
+p_z(x)&=\int du\,|\Psi_z(x,u)|^2,\qquad
+k(x)=\int du\,\Psi_g(x,u)\Psi_e(x,u)^*,\\
+\int k(x)dx&=\Gamma,\qquad
+|k(x)|\le\sqrt{p_g(x)p_e(x)},\qquad
+|\Gamma|\le\int dx\sqrt{p_g(x)p_e(x)}.
+\end{aligned}
+\tag{CM9}
+$$
+
+The inequalities are Cauchy--Schwarz followed by the triangle inequality.
+Unobserved idler/loss outputs, thermal purifications and detector-noise
+dilations all belong to $u$. Record-dependent feedback can use the
+phase of $k(x)$, while an inaccessible record cannot be corrected away.
+This distinguishes better accessible readout from reduced total
+backaction, without inferring qubit coherence from an output variance.
+
+For a pure Gaussian branch write
+$\Psi_z(q)=C_z\exp[-q^{\mathsf T}A_zq/2+b_z^{\mathsf T}q]$,
+$q=(x,u)$, with $A_z$ symmetric and $\operatorname{Re}A_z>0$.
+Partition $A_z,b_z$ into observed and unobserved blocks, and set
+
+$$
+\begin{aligned}
+M_{ge}&=A_{g,uu}+A_{e,uu}^*,\\
+j_{ge}(x)&=b_{g,u}+b_{e,u}^*
+                    -(A_{g,ux}+A_{e,ux}^*)x,\\
+k(x)&=\frac{C_gC_e^*(2\pi)^{\dim(u)/2}}{\sqrt{\det M_{ge}}}
+ \exp\!\left[
+ -\tfrac12x^{\mathsf T}(A_{g,xx}+A_{e,xx}^*)x
+ +(b_{g,x}+b_{e,x}^*)^{\mathsf T}x
+ +\tfrac12j_{ge}(x)^{\mathsf T}M_{ge}^{-1}j_{ge}(x)\right].
+\end{aligned}
+\tag{CM10}
+$$
+
+Multiplying the two wavefunctions isolates
+$-u^{\mathsf T}M_{ge}u/2+j_{ge}^{\mathsf T}u$.
+Completing its square and integrating gives the determinant factor
+and final quadratic term in (CM10). Positive real part fixes the
+convergent complex-Gaussian integral; choose the determinant branch
+continuously from positive real matrices. Setting $g=e$ gives $p_z(x)$.
+The complete symplectic matrix, mean and source purification determine
+$A_z,b_z,|C_z|$, but do **not** determine the physical relative phase
+of $C_z$. The declared conditional Hamiltonians/unitaries and their
+vacuum extension fix that phase, including the metaplectic phase.
+A coherent-amplitude scattering matrix alone therefore cannot fix a
+controlled-history interference term. Finite-bandwidth models replace
+these matrices by the actual temporal kernels, with a controlled mode
+truncation or error bound when a finite replay is used.
+
+**What an independent quantum helper adds.** Suppose a physically
+specified qubit $H$ controls histories $r=0,1$, each a complete Gaussian
+dilation with branch wavefunction $\Psi_{z,r}$. For $H$ initially plus,
+an $X$ flag $\epsilon$ with declared helper phase $\phi_H$ gives
+
+$$
+\begin{aligned}
+\Psi_{z,\epsilon}
+ &=\frac{\Psi_{z,0}+\epsilon e^{i\phi_H}\Psi_{z,1}}2,\\
+k_\epsilon(x)
+ &=\frac14\sum_{r,s=0}^1
+ \epsilon^{r+s}e^{i(r-s)\phi_H}
+ \int du\,\Psi_{g,r}(x,u)\Psi_{e,s}(x,u)^*.
+\end{aligned}
+\tag{CM11}
+$$
+
+The diagonal densities have the analogous four terms. Each integral
+is (CM10) with its corresponding pair of branch matrices and physical
+phases. Covariance averaging drops the cross-history operator
+interference; discarding idler/loss labels overestimates it. The flag
+can create a non-Gaussian state, but the independent coherent helper,
+its couplings and its complete outcome instrument are additional
+physical resources.
+
+A fixed Gaussian network with Gaussian ancillas maps Gaussian inputs
+to Gaussian outputs. Exact Gaussian-measurement outcomes have Gaussian
+conditional states. Grouping or classically postselecting records can
+produce non-Gaussian mixtures, but supplies neither these coherent
+cross-history terms nor Wigner negativity from positive-Wigner Gaussian
+resources and Gaussian measurements. In particular a beam splitter
+takes a coherent probe to a product of coherent amplitudes. Splitting
+a nonclassical Gaussian probe may correlate arms but still supplies
+one global Gaussian network, rather than an independent qubit selecting
+operator order. Classical pump programmability also does not establish
+a coherent qubit-controlled pump. The ordinary comparator must retain
+its accessible idler correlations and any physically available qubit
+controls with their actual source, detector, loss and timing costs.
+
+**An ordinary conditional-noise likelihood.** The same experiment's
+no-displacement readout uses different qubit-dependent noise widths
+despite equal mean voltages. For the ideal circular Gaussian comparator,
+let $y=I+iQ$, $p_z(y)=e^{-|y|^2/N_z}/(\pi N_z)$, equal priors and
+$N_e>N_g$. The complete-record likelihood chooses $e$ when
+
+$$
+|y|^2>R_*^2=\frac{N_gN_e\log(N_e/N_g)}{N_e-N_g},\qquad
+P_{\rm err}=\frac12\left[e^{-R_*^2/N_g}+1-e^{-R_*^2/N_e}\right].
+\tag{CM12}
+$$
+
+Compare log densities to obtain the threshold; integrating in polar
+coordinates gives $P_z(|y|^2>R^2)=e^{-R^2/N_z}$ and proves the error.
+For $N_e=2N_g$, the optimum error is $3/8$ even though mean-separation
+SNR is zero. An ordinary classical confidence flag accepting
+$|y|^2>2N_g\log m$, $m>1$, has the complete accepted probabilities
+$P(g,\mathrm{keep})=m^{-2}/2$ and
+$P(e,\mathrm{keep})=m^{-1}/2$, with their complementary rejected
+probabilities. Consequently
+
+$$
+p_{\rm keep}=\frac{m^{-1}+m^{-2}}2,\qquad
+P(e\mid\mathrm{keep})=\frac{m}{m+1}.
+\tag{CM13}
+$$
+
+Conditional confidence can approach one while yield vanishes without an
+order helper. This ideal statistical example is consistent with ordinary
+bullseye conditioning; it does not fit non-Gaussian tails, state errors,
+finite bandwidth or the measured efficiency variation. Actual priors and
+the complete time-voltage likelihood determine the experimental
+comparator. The [full-record information and support
+guards](obstructions.md#nr-r04-gaussian-displacement) apply to a
+parameter-independent receiver after a fixed signal interaction. A
+different order that changes the incident cavity probe requires a new
+matched-exposure comparison rather than that downstream argument.
+
+**Known squeezing/displacement preparation has an exact ordinary
+compiler.** The primary
+[Gaussian-order state-preparation proposal](https://arxiv.org/pdf/2108.13074)
+and [Gaussian-probe metrology comparison](https://arxiv.org/pdf/2608.25870)
+motivate conditional non-Gaussian outputs. For a known squeeze, fix
+$S aS^\dagger=a\cosh r+e^{i\phi}a^\dagger\sinh r$ and define
+$\beta=\alpha\cosh r-\alpha^*e^{i\phi}\sinh r$.
+Conjugating the exponent of $D(\alpha)$ proves
+
+$$
+SD(\alpha)=D(\beta)S,\qquad
+P_0\otimes SD(\alpha)+P_1\otimes D(\alpha)S
+=[P_0\otimes D(\beta)+P_1\otimes D(\alpha)](I\otimes S).
+\tag{CM14}
+$$
+
+Put $\mu=(\alpha+\beta)/2$, $d=(\alpha-\beta)/2$ and
+$\vartheta=\operatorname{Im}(\mu d^*)$. The bracket is exactly
+
+$$
+\bigl(e^{i\vartheta}P_0+e^{-i\vartheta}P_1\bigr)\otimes I\;
+(I\otimes D(\mu))
+\bigl[P_0\otimes D(-d)+P_1\otimes D(d)\bigr].
+\tag{CM15}
+$$
+
+Indeed the Weyl multiplication phases in $D(\mu)D(\mp d)$ are
+$\mp\vartheta$, canceled by the displayed helper phase. One ordinary
+known squeeze, one unconditional displacement and one sign-controlled
+displacement therefore reproduce the complete controlled-order unitary
+on arbitrary input and reference, before the same helper measurement.
+Every helper-flagged conditional output is identical, including its
+non-Gaussianity. The amplitude identity
+$|\mu|^2+|d|^2=(|\alpha|^2+|\beta|^2)/2$ follows by expansion; it is not
+the total energy or duration of a realistic pulse sequence.
+
+[Eickbusch et al., Nature Physics **18**, 1464–1469
+(2022)](https://doi.org/10.1038/s41567-022-01776-9),
+[primary full paper](https://arxiv.org/pdf/2111.06414), demonstrate
+ordinary echoed conditional-displacement control of a superconducting
+oscillator. Strong temporary displacement enhances weak dispersive
+coupling, with real pulse, peak-excitation, ancilla-noise and enhanced
+dephasing costs. Their ECD primitive also flips the qubit; a known
+qubit $X$ converts it to the diagonal sign-controlled form, at its own
+control cost. This does not demonstrate (CM15) on a propagating
+readout field; capture/release or coherent whole-mode routing is a
+separate interface. If $r$ or $\alpha$ is an unknown sensed encoding,
+the compiler cannot set $\beta$ from that unknown value: controls must
+be held fixed under parameter derivatives. The identity is a known
+probe-preparation baseline, not a general sensing no-go.
+
+**Bounded device test and check scope.** Compare either assignment error
+at fixed measurement time and permitted qubit disturbance, or
+transmission fidelity at fixed latency. A latching detector is admitted
+for the first task, not the second. Calibrate the complete causal
+signal/idler/loss matrices, bath correlations, pump leakage and drift
+over the repeat window. Compute both $p_z(\mathrm{record})$ and
+$k(\mathrm{record})$, including every helper flag and rejected record.
+A classical selectable pump matrix is not coherent control of its full
+Gaussian dilation. A clean qubit selector or nonlinear predicate is an
+extra resource. Compare its
+ordinary conditional-displacement, parity, reservoir-monitoring or QEC
+uses only where the same interface supplies them, and charge preparation,
+capture/release, pump work, compression, storage, reset and all failures.
+The measured devices supply strong ordinary controls, but no complete
+cost separation for native coherent order has been established here.
+
+The [five-mode exact replay](checks/architecture/verify_su11_ports.py)
+checks canonical commutators, explicit Bogoliubov coefficients, warm
+moments, independent-bath failure and downstream relative-network
+cancellation. The [conditional
+replay](checks/architecture/verify_conditional_readout.py) checks Weyl
+phases, symplectic displacement products, amplitude identities,
+accepted/rejected likelihoods and the (BOS6) isotropic variance law.
+The Gaussian integrals, all-Fock operator identities, full physical
+relative phases, continuous temporal bandwidth and measured costs remain
+analytic or experimental inputs; finite replay is not their device
+validation.
 
 <a id="nr-r06-anisotropic-gkp"></a>
 
@@ -3411,6 +4233,257 @@ syndrome PVM also leaves its channel and switch signal unchanged while
 potentially changing a decoder's action. Consequently zero switch
 incompatibility alone cannot certify logical information preservation
 or agreement of syndrome dictionaries.
+
+<a id="nr-r08-material-pointer-clock"></a>
+
+### Material-pointer mode dephasing needs a joint clock and ordinary controls
+
+**A primitive-backed array, rather than a demonstrated high-dimensional box.**
+[Reiserer, Ritter and Rempe, Science **342**, 1349 (2013)](https://doi.org/10.1126/science.1246164)
+([primary full text](https://arxiv.org/pdf/1311.3625)) demonstrate the binary
+write primitive: cavity reflection conditionally changes an atom's
+superposition phase, followed by an atomic rotation and fluorescence
+readout. Their faint-pulse characterization reports $74\%$ detection
+efficiency and $66\%$ photon survival. These are detector figures, not a
+complete arbitrary-input instrument for an array. The microwave
+[Kono et al. experiment](https://doi.org/10.1038/s41567-018-0066-3)
+([full text](https://arxiv.org/pdf/1711.05479)) implements the corresponding
+photon/transmon conditional phase, reporting detection efficiency $0.84$
+and survival $0.87$. Its phase condition requires the pulse spectrum to
+fit inside the cavity bandwidth. Neither experiment demonstrates two
+independently routed rank-$d$ unread meters with hidden bases.
+
+Here is an explicit ideal extension to test. Let $D$ contain one photon
+in $d$ orthogonal paths, with one cavity/atom cell per path. Prepare the
+atoms in $|+\rangle^{\otimes d}$. An occupied cell applies $Z_j$ to its
+atom; vacuum cells act as identity. For an actual input $U^\dagger$/output
+$U$ mode encoder, the joint unitary on the one-photon code is
+
+$$
+W_U=\sum_{j=1}^d P_j^U\otimes Z_j,
+\qquad P_j^U=U|j\rangle\langle j|U^\dagger,
+\qquad
+W_U|\psi\rangle|+\rangle^{\otimes d}
+ =\sum_j P_j^U|\psi\rangle|e_j\rangle.
+\tag{MC1}
+$$
+
+Orthogonality of the $P_j^U$ and $Z_j^2=I$ give $W_U^\dagger W_U=I$.
+The state $e_j$ has $| -\rangle$ in cell $j$ and $|+\rangle$ elsewhere.
+For $i\ne j$ a differing cell has zero inner product, so
+$\langle e_i|e_j\rangle=\delta_{ij}$. Tracing the atoms therefore gives
+the rank-$d$ Lüders channel $\Delta_U$. This is a material record, not
+a frozen classical phase setting or a trace over the photon's one shared
+frequency. The ideal extension obeys
+$W_U(|\mathrm{vac}\rangle\otimes|a\rangle)
+=|\mathrm{vac}\rangle\otimes|a\rangle$ for every pointer state $a$.
+Whether the real empty apparatus has that action is a separate test.
+
+With distinct arrays $E_A,E_B$ and projectors $P_i,Q_j$, the joint
+pointer family $\{e_i\otimes f_j\}_{i,j}$ is orthonormal with $d^2$
+labels. In the common ideal pointer frame the switched write is
+
+$$
+|\psi\rangle\longmapsto\frac1{\sqrt2}\sum_{ij}
+\left(|0\rangle Q_jP_i|\psi\rangle
+     +|1\rangle P_iQ_j|\psi\rangle\right)
+       |e_i\rangle_{E_A}|f_j\rangle_{E_B}.
+\tag{MC2}
+$$
+
+This establishes the required *record capacity*, not the rank of every
+particular output state: SAME inputs can occupy fewer joint labels.
+The direct two-module construction uses $2d$ material pointers and $d$
+cavity cells per module. A photon occupies one cell in each module,
+while array preparation, pumps, calibration and reset remain charged.
+An abstract record needs only $\log_2d$ bits per module; compressing this
+physical construction needs its actual additional gates and interactions.
+The encoders, their inverses and matrix knowledge are also access. Known
+mesh settings already supply ordinary pointer preparation/decoding.
+Unknown drift needs a physical joint law; mode count gives neither a
+Haar prior nor a SAME/MUB promise.
+
+**Which-mode records do not determine the order-history records.** Let
+$e_i^r,f_j^r$ be the complete final records when the respective write
+occurs in window $r$, including emitted and reset fields. Assuming the
+same projectors in both windows, the control off-diagonal cross map is
+
+$$
+\mathcal X(\rho)=\sum_{ijkl}
+\langle e_k^{\rm late}|e_i^{\rm early}\rangle
+\langle f_l^{\rm early}|f_j^{\rm late}\rangle
+ Q_jP_i\rho Q_lP_k.
+\tag{MC3}
+$$
+
+This follows by multiplying the two branch isometries in (MC2) and
+tracing the actual records. Orthogonality of different labels *within*
+each window does not fix these cross-window inner products. For example,
+fresh pointer arrays in the two windows have states
+$e_i\otimes e_0$ versus $e_0\otimes e_i$, with $e_0=|+\rangle^{\otimes d}$.
+Since $\langle e_0|e_i\rangle=0$, the histories are orthogonal although
+each isolated reduced channel is the exact desired dephaser. Disjoint
+early/late fluorescence can do the same. Delaying a classical timestamp
+does not erase an emitted record. Holding the same atoms until a common
+readout can avoid this example only with the appropriate full spin,
+apparatus and field dynamics.
+
+**An exact three-window ordinary compiler at a common finish.** The
+following is a sufficient native-access model. Let $F(t,0)$ be the
+route-independent idle evolution of the complete target, apparatus and
+field system. Keep the order control in a fixed or coherently compensated
+path frame. A vacuum/bypass opportunity contributes only that idle
+evolution: it triggers no separate preparation, read/reset or slot
+record. Let $G_A(t),G_B(t)$ be the actual occupied pulses in this
+interaction picture. Finite pulses are allowed by defining each $G$ as
+its full propagator relative to the matching idle propagator. These are
+physical joint unitaries with every private pointer and reservoir
+retained, rather than chosen Kraus representations.
+
+At a common final time $T$, the two-window switch and the ordinary
+$A$--$B$--$A$ construction respectively have joint operators
+
+$$
+\begin{aligned}
+V_S&=F(T,0)\left[
+ P_0^C G_B(\tau)G_A(0)+P_1^C G_A(\tau)G_B(0)\right],\\
+V_O&=F(T,0)\left[
+ P_0^C G_B(\tau)G_A(0)+P_1^C G_A(2\tau)G_B(\tau)\right].
+\end{aligned}
+\tag{MC4}
+$$
+
+To implement the second line, use fixed named windows $A$ at $0$, $B$
+at $\tau$, and $A$ at $2\tau$. Route the photon through early $A$ on
+$C=0$ and late $A$ on $C=1$, bypassing the other $A$ opportunity as
+vacuum. Both histories occupy $B$ in the middle. Thus each history
+has two occupied encounters, with one additional global window and
+coherent delay. The bypass and surviving order helper are physical
+resources beyond channel-only opaque-query access.
+
+If $G_A(2\tau)=G_A(\tau)$ and $G_B(\tau)=G_B(0)$, the two lines of
+(MC4) are identical. Time-independent interaction-picture writes are
+sufficient; no commutation between $A,B$, basis knowledge, environment
+readout or inverse is used. Equality holds on every input/reference
+and all private records at that common finish. Appending any common
+measurement or future instrument therefore preserves it. This is a
+direct full-joint identity, not an inference from equal reduced channels.
+
+The common finish matters: the earlier switch is padded by its actual
+idle evolution in (MC4). Earlier readout/reset or extra target/control
+storage noise changes the cycle comparison. Spontaneous emission,
+window-dependent loss fields, route-dependent idle dynamics and mandatory
+fresh resets can violate the premises. Their complete instruments must
+be used. A bare single-detector survival number cannot supply this
+joint equality or a routing-rate estimate.
+
+There is a conservative robustness version. Set
+$\epsilon_A=\|G_A(2\tau)-G_A(\tau)\|$ and
+$\epsilon_B=\|G_B(\tau)-G_B(0)\|$ in physical operator norm. Subtracting
+the $P_1$ blocks and inserting $G_A(\tau)G_B(\tau)$ gives
+
+$$
+\|V_O-V_S\|\le\epsilon_A+\epsilon_B,
+\qquad
+\frac12\|\mathcal V_O-\mathcal V_S\|_\diamond
+ \le\epsilon_A+\epsilon_B.
+\tag{MC5}
+$$
+
+For the first inequality use the triangle inequality, unitary norms
+and the norm of a block-diagonal operator. For the second, purify a
+common initial apparatus state. On every pure input/reference the two
+output vectors differ by at most the first bound, and their trace
+distance is at most that vector norm. Convexity and partial trace give
+the channel bound, including any common retained classical instrument.
+One-time process tomography and a scalar $T_2$ do not establish the
+physical joint-operator mismatch premise.
+
+**The actual noise axis and ordinary pointer echo matter.** For (MC1),
+an idle dilation acting only on the pointers/baths and commuting with
+every $Z_j$ factors as the common $F$. More generally it must commute
+with the full $W_U$, including its data projectors. Atomic energy-basis
+$Z$ dephasing can reduce final $X$-readout contrast while leaving this
+early/late joint-record relation unchanged. A quoted Ramsey $T_2$ is
+therefore not automatically an order-visibility decay constant.
+
+A separate homogeneous example illustrates possible timing costs.
+Suppose every label at station $j$ has the same cross-history overlap
+$\kappa_j(\Delta)$. The switch samples
+$\kappa_A(\tau)\kappa_B(\tau)$, while repeating $A$ or $B$ samples
+$\kappa_A(2\tau)$ or $\kappa_B(2\tau)$. For independent Markov records
+$\kappa_j(\Delta)=e^{-\gamma_j|\Delta|/2}$, put
+$x_j=\kappa_j(\tau)$. Then
+
+$$
+\max\{\kappa_A(2\tau),\kappa_B(2\tau)\}
+ =\max\{x_A^2,x_B^2\}\ge x_Ax_B.
+\tag{MC6}
+$$
+
+Indeed the larger of $x_A,x_B$ has square at least their product.
+The better repeated station is therefore at least as coherent in this
+example; doubling one pointer span alone is not a Markov advantage.
+Mode-dependent kernels or correlated noise require the full (MC3).
+Identical Gaussian quasistatic kernels
+$\kappa(\Delta)=e^{-\sigma^2\Delta^2/2}$ instead give
+$e^{-\sigma^2\tau^2}$ for the switch and $e^{-2\sigma^2\tau^2}$ for
+either bare repeat. This is a possible raw-coherence margin, not a
+useful-task advantage or an empirically justified noise law.
+
+It must also survive ordinary control. If a Hadamard-equivalent write
+uses controlled $X_j$ on energy-basis pointers, and idle uncertainty is
+$H=\sum_j\xi_jZ_j$ with static unknown real $\xi_j$, the global pointer
+pulse $R=\prod_jX_j$ satisfies
+$[R,X_j]=0$ and $RHR=-H$. Hence
+
+$$
+R e^{-iH\tau}R e^{-iH\tau}=I.
+\tag{MC7}
+$$
+
+A midpoint pulse and a restored or tracked final pointer frame refocus
+the repeated station's interval without learning the photon basis or
+label. Moving an endpoint write past $R$ is valid by the displayed
+commutator. Exactness uses separated ideal writes/control pulses, or
+actual complete pulse propagators satisfying those relations. Finite
+simultaneous noisy write dynamics, pulse errors, duration and
+state-dependent survival need their own bounds. This is a serious
+ordinary comparator, not a claim that laboratory echo is free or perfect.
+
+**A bounded physical next test.** Actual many-mode count and actual
+measurement backaction are distinct evidence.
+[Chakram et al.](https://doi.org/10.1038/s41567-022-01630-y)
+([full text](https://arxiv.org/pdf/2010.15292)) demonstrate nine stored
+cavity modes, dispersive number-dependent transmon shifts and two/three-mode
+single-photon superpositions, rather than a complete which-mode instrument.
+[Essig et al.](https://doi.org/10.1103/PhysRevX.11.031045)
+([full text](https://arxiv.org/pdf/2001.03217)) measure fluorescence
+backaction for Fock labels $0$ through $8$ of one oscillator. Their
+proof-of-principle experiment did not achieve single-shot number
+discrimination; those nine labels are not one photon in nine modes.
+Neither source supplies the complete two-module interface above.
+
+Start with $d\ge3$ on a declared one-photon code. Measure within-history
+record Gram matrices, survival/leakage, accessible outcomes and the
+early/late cross maps at $\tau$ and $2\tau$, including actual vacuum
+action. Compare a held-out modal-retention/alignment decision with
+native pointer encoding/decoding, the stable-record three-call estimator
+above, bright or weak pilots in their valid photon-number regime,
+amortized calibration, both three-window orders and available pointer
+echo. Freeze controls after a fixed training budget and charge source
+and control energy, pointer preparation/reset, memory, routing loss,
+every rejected attempt and mean completion time. Excluding readable
+material records needs a physical reason. A remaining finite benefit
+must arise from a measured task/noise/cost regime, not an imposed reset
+deadline or a Haar assumption inferred from mode count.
+
+The [material-pointer clock replay](checks/architecture/material_pointer_clock.py)
+checks finite exact array isometries, record orthogonality, a fresh-clock
+counterexample and formal echo/timing identities. The universal clock,
+norm and physical-interface arguments remain the proofs above. No
+native advantage, general measurement-switch simulator or new priority
+claim follows from the construction.
 
 ## Shared quantum baths require more than two channel marginals
 

@@ -548,6 +548,11 @@ def passive_reordering_checks():
 
 
 def main():
+    from gaussian_readout_guards import verify_gaussian_readout_guards
+    from verify_su11_ports import verify_su11_full_ports
+    from verify_conditional_readout import (
+        verify_known_gaussian_control, verify_conditional_noise_readout,
+    )
     examples = [example(1), example(1, diagonal_only=True), example(2)]
     print(json.dumps({
         "status": "passed",
@@ -556,6 +561,10 @@ def main():
         "examples": examples,
         "bosonic_compilers": bosonic_compiler_checks(),
         "passive_reordering": passive_reordering_checks(),
+        "gaussian_readout_noise_floor": verify_gaussian_readout_guards(),
+        "su11_complete_ports": verify_su11_full_ports(),
+        "known_gaussian_control": verify_known_gaussian_control(),
+        "conditional_noise_readout": verify_conditional_noise_readout(),
         "scope": ("Finite exact d=2,4 algebra replay of known orthogonal-unitary process bases, "
                   "correlated Bell-label decoding, and the full coherent switched-output ordinary simulation. "
                   "Persistent-trajectory induction, matched physical fault laws, noiseless memory, allowed "

@@ -191,12 +191,35 @@ component phases/loss, pulse guards, resets and physical port availability
 remain hypotheses; no route-family optimum or hardware rate is certified.
 
 The [balanced-cavity checks](../communication.md#nr-r11-raman-cavity-frontier)
+are complemented by the [direct temporal replay](architecture/raman_direct_temporal.py),
+which checks the passive source completion, all detector clocks, polynomial
+cancellation and a finite-response false herald. The
+[tail replay](architecture/raman_temporal_tail.py) verifies exact coefficient
+norms and accepted-state geometry; uniform node/kernel error certificates,
+continuum pulse tails and actual physical clock costs remain analytic
+premises. The [timed-control replay](architecture/raman_timed_controls.py)
+checks full known-frame spin/photon compiler identities, pulse chronology,
+loss/frame counterexamples and the calibrated late-photon-flip instrument.
+Its comparison is with the specified ring, not every possible router.
+
+The balanced-cavity checks
 verify exact polynomial frontier identities and rational nominal model
 substitutions. The continuum inequality, narrow-pulse design limit,
 ordinary retuning permissions, complete source/route/phase/reset ledger
 and renewal-time comparison are analytic or physical hypotheses. No
 unrestricted ordinary optimum, adaptive local-memory upper bound, measured
 Bell-pair yield or hardware clock advantage is certified.
+
+The fault-simulation job also calls the
+[Gaussian readout guards](architecture/gaussian_readout_guards.py),
+[five-mode SU(1,1) replay](architecture/verify_su11_ports.py) and
+[conditional readout replay](architecture/verify_conditional_readout.py).
+These check complete finite scattering/noise matrices, independent baths,
+Weyl phases, all-record likelihood identities and conditional variance
+algebra. General passive-network inequalities, full-Fock thermal traces,
+Gaussian integrals, information monotonicity and physical measured-source
+comparisons remain analytic. A covariance fit is not a full conditional
+instrument or a hardware advantage.
 
 The known-control NR-R15 replay checks the exact compiler and contrasting
 coherent signal/noise extensions, including their full states and QFI.
@@ -213,6 +236,15 @@ rank/phase identities. Universal matching/rank arguments and the cited
 device premises remain analytic. The model excludes unaccounted internal
 loss, gain, detuning, bandwidth and drift; the replay is not a quantum
 device characterization or an ordinary-recovery optimum.
+
+The measurement job also calls the
+[material-pointer clock replay](architecture/material_pointer_clock.py).
+Its finite array isometries, independent records, fresh-clock
+counterexample, pointer echo and timing-kernel arithmetic guard the
+displayed formulas. The complete interaction-picture compiler, norm
+transfer and device-access comparison remain analytic. Neither a binary
+QND detector nor a multimode cavity alone certifies the full native
+unknown-basis pair.
 
 The [alignment benchmark](../alignment.md) proves its all-ordinary strict
 two-call local limit analytically using the replayed causal witnesses and

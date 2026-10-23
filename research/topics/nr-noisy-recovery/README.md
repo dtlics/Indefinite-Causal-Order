@@ -110,6 +110,10 @@ ordinary chronological implementation. Predicting a useful held-out
 memory decision at lower total cost remains the next test, with ordinary
 phase-resolved echo, retained records and direct schedule calibration
 included.
+The [microwave readout comparisons](architecture-baselines.md#nr-r06-readout-noise-floor)
+and [full conditional port model](architecture-baselines.md#nr-r06-conditional-microwave-readout)
+require fixed cavity loading, measured signal/idler/bath correlations and
+all-record error--time--disturbance costs before a native helper advantage.
 The [phase-calibration benchmark](metrology.md) independently certifies a
 known finite-query switch advantage, but preserves its hard two-call scope.
 Longer ordinary rounds, emitted timing records and coherent bath reuse
@@ -118,6 +122,13 @@ Its known-auxiliary-gate analysis gives an exact ordinary pre/post compiler
 and separates coherent signal reversal from its two classical direction
 channels. The granted joint signal/bath interface must be compared directly;
 its reduced channels alone do not justify a noise-protected extension.
+The [material-pointer construction](architecture-baselines.md#nr-r08-material-pointer-clock)
+supplies a concrete array dilation and common-finish ordinary compiler.
+Its next test needs actual cross-history records and available pointer
+echo, rather than inferring order coherence from a quoted memory lifetime.
+The [Gaussian support extension](obstructions.md#nr-r04-gaussian-displacement)
+concerns exact heralded recovery; it leaves approximate-error and capacity
+questions open.
 The shared-spectrum analysis in NR-R08 now specifies a joint-record
 test and a bandwidth--delay resource bound before treating two optical
 sections as independent unread measurements. NR-R06 separately bounds
@@ -188,6 +199,11 @@ The [native-port analysis](communication.md#nr-r11-raman-route) constructs
 conditional temporal-helper routes and a same-graph ordinary comparator;
 physical code preservation, rejected paths and loop/pulse guards still
 require a measured instrument.
+Its [direct temporal comparator](communication.md#nr-r11-raman-direct-temporal)
+counts source preparation and rejects, while a
+[calibrated photon-flip comparator](communication.md#nr-r11-raman-late-flip)
+uses explicit timed rail control. Their exact disjoint-slot results leave
+finite response leakage, phase calibration and full delivery clocks explicit.
 The [phase-reference result](communication.md#nr-r11-raman-phase-reference)
 separates scalar-phase immunity from physical Raman/spin/route phases.
 Its next test requires measured causal signal/pilot correlations and

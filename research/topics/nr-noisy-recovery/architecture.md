@@ -161,6 +161,29 @@ global decoding before discard and exposed syndrome records outside its
 scope. Both arguments assume actual terminal layers; neither replaces a
 continuously interacting open-system calculation.
 
+### Microwave readout with complete noise and idler ports
+
+Amplifier backaction and inefficient qubit measurement are real architecture
+bottlenecks. The [readout-noise floor](architecture-baselines.md#nr-r06-readout-noise-floor)
+holds the actual cavity response and loading fixed, includes every thermal
+input, and compares a concrete order-controlled router with ordinary
+directional reservoir engineering. Its passive-network bound does not
+cover active gain, squeezed inputs or corrected conditional outputs.
+
+The [conditional microwave comparison](architecture-baselines.md#nr-r06-conditional-microwave-readout)
+retains the correlated idler, independent loss ports, pump phases and
+complete measurement record. Established ordinary interference, time-gated
+isolation and likelihood processing are material comparators. A quieter
+selected output does not by itself reduce earlier qubit disturbance.
+Known squeezing/displacement preparation also has an ordinary qubit-assisted
+implementation; a restriction to Gaussian probes is insufficient.
+
+The remaining finite test needs an actual coherent helper circuit at fixed
+pump and bandwidth budgets. Compare its complete assignment-error, time
+and qubit-disturbance frontier with optimized ordinary correlated-arm
+receivers and available conditional controls. Measure gain drift and reuse
+calibration over its real window. No such native advantage is established.
+
 ### Displacement-area calibration with a complete optical budget
 
 Transverse optical displacement experiments provide a concrete signal
@@ -494,6 +517,16 @@ separate material baths can supply different records. A reported spectral
 width alone is insufficient, and delay span is not automatically the
 clock period of a stationary source.
 
+The [material-pointer array](architecture-baselines.md#nr-r08-material-pointer-clock)
+provides a different, explicit record dilation using cavity-QND primitives.
+The demonstrated binary gates do not yet supply the complete high-dimensional
+unknown-basis pair. A common-finish three-window ordinary compiler includes
+the private pointers and native vacuum action. Markov timing kernels and
+available pointer echo can close proposed coherence margins. The remaining
+experiment must measure noncommuting write/storage dynamics and their
+cross-history kernels, including actual echo errors, reset emissions and
+calibration reuse. A memory lifetime alone supplies no such comparison.
+
 Actual large-mode interconnects already use targeted ordinary tools.
 [Li, Ryczkowski and Genty](https://doi.org/10.1364/OE.558061) measure
 spatial coherence and vary source bandwidth;
@@ -747,6 +780,21 @@ modes, a passive contraction, four readouts and a coherent local spin
 filter. Additional vacuum rejection ports, mode preservation, apparatus,
 failed photons and resets remain charged. These are achievable processor
 families; arbitrary adaptive photon/spin controls still require comparison.
+
+The [direct temporal filter](communication.md#nr-r11-raman-direct-temporal)
+includes a physical passive source preparer and all clock/port rejections,
+closing the selected symmetric ring-minus yield margin in its disjoint-slot
+model. A [calibrated timed photon flip](communication.md#nr-r11-raman-late-flip)
+also compares the ring's combined Bell flags in a stated transfer regime.
+Its active rail control, filters, phase calibration and clock remain priced.
+Closed [timed spin conjugations](communication.md#nr-r11-raman-timed-controls)
+compile to photon/helper controls in the known accepted SWAP frame; this
+does not identify their physical costs or their rejected bath instruments.
+Finite node response can create false central-clock heralds, so a real
+temporal circuit needs an [operator-level pulse/leakage certificate](communication.md#nr-r11-raman-temporal-tail).
+The finite-response proof retains the actual useful wavepacket strength
+and bounds Bell fidelity and yield; an observed intensity tail alone
+does not supply its uniform node and environment premises.
 
 The [balanced-cavity frontier](communication.md#nr-r11-raman-cavity-frontier)
 retains complex bright, dark and spectator amplitudes. In its declared

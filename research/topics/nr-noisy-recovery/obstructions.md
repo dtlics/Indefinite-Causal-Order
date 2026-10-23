@@ -104,7 +104,9 @@ protected encodings, or a different promise.
 
 ## NR-R04 — Full-support noisy queries cannot give exact unknown-unitary recovery
 
-This result uses **global replacement noise**, not the local model of
+### Finite-dimensional global replacement queries
+
+This statement uses **global replacement noise**, not the local model of
 NR-R01. For $0<\gamma\le1$, every supplied box
 $G_U=(1-\gamma)\operatorname{Ad}_{V_U}+\gamma\Omega_D$ obeys the
 completely positive order bounds
@@ -170,6 +172,153 @@ Known fixed targets, exposed noise records, frame-dependent free advice,
 and coherent dilation access need not obey these premises. The result
 does not prohibit approximate success with an exactly preserved failure
 branch.
+
+<a id="nr-r04-gaussian-displacement"></a>
+
+### Gaussian displacement noise: no exact heralded code recovery
+
+There is an infinite-dimensional physical extension for a **specified
+two-slot switch**, with a different access scope from the finite-query
+statement above. Let $S$ be one bosonic mode, with
+$D(\alpha)=\exp(\alpha a^\dagger-\alpha^*a)$, and let the two independent
+channels be
+
+$$
+\mathcal A(\rho)=\int_{\mathbb C}p_A(\alpha)
+ D(\alpha)\rho D(\alpha)^\dagger\,d^2\alpha,
+\qquad
+\mathcal B(\rho)=\int_{\mathbb C}p_B(\beta)
+ D(\beta)\rho D(\beta)^\dagger\,d^2\beta.
+$$
+
+Both displacement laws are Gaussian with strictly positive real
+$2\times2$ covariance matrices. Their means may be nonzero. Thus both
+densities are positive on the full complex plane; singular
+one-quadrature noise and a noiseless slot are outside this statement.
+Use each channel once in the standard channel switch, with an independent
+control fixed to $|+\rangle$. Displacement records are inaccessible.
+The receiver may keep and jointly process the output control and signal,
+use independent ancillas, non-Gaussian operations, measurement and
+feedforward, and herald a successful branch.
+
+For every normalizable signal state, the joint output has full support
+on $\mathbb C^2_C\otimes\mathcal H_S$. More generally, for any state
+$\rho_{RS}$ with a finite-dimensional passive reference $R$, the output
+is faithful on
+$\mathbb C^2_C\otimes\operatorname{supp}(\rho_R)\otimes\mathcal H_S$:
+it has no nonzero vector of zero expectation on that space.
+
+To prove this, put $\delta=\alpha+\beta$ and
+$\chi=\operatorname{Im}(\beta\alpha^*)
+=\operatorname{Im}(\delta\alpha^*)$. The Weyl products are
+
+$$
+D(\beta)D(\alpha)=e^{i\chi}D(\delta),\qquad
+D(\alpha)D(\beta)=e^{-i\chi}D(\delta).
+$$
+
+Consequently each displacement pair leaves the control in
+
+$$
+|c_\chi\rangle=
+\frac{e^{i\chi}|0\rangle+e^{-i\chi}|1\rangle}{\sqrt2}
+$$
+
+and acts on the signal by $D(\delta)$. Let $w(\delta)$ be the density
+of the total displacement and define
+
+$$
+M_\delta=\frac{w(\delta)}2
+\begin{pmatrix}1&m_\delta\\m_\delta^*&1\end{pmatrix},
+\qquad
+m_\delta=\mathbb E[e^{2i\chi}\mid\delta].
+$$
+
+In real coordinates $(\operatorname{Re}\alpha,\operatorname{Im}\alpha)$,
+the conditional covariance of $\alpha$ is
+$C=(\Sigma_A^{-1}+\Sigma_B^{-1})^{-1}\succ0$. With
+$\ell_\delta=(\operatorname{Im}\delta,-\operatorname{Re}\delta)$,
+the conditional phase is $\chi=\ell_\delta\cdot\alpha$, so
+
+$$
+|m_\delta|=e^{-2\ell_\delta^T C\ell_\delta}<1
+\qquad(\delta\ne0).
+$$
+
+Since $w(\delta)>0$, both eigenvalues
+$w(\delta)(1\pm|m_\delta|)/2$ are positive for every
+$\delta\ne0$. The complete reference-preserving output is
+
+$$
+\Omega_{CRS}=\int_{\mathbb C}M_\delta\otimes
+ (I_R\otimes D(\delta))\rho_{RS}
+ (I_R\otimes D(\delta)^\dagger)\,d^2\delta.
+$$
+
+Suppose $|\Psi\rangle=|0\rangle|u\rangle+|1\rangle|v\rangle$
+has zero expectation in $\Omega$. Positivity bounds each integrand below
+by $\lambda_{\min}(M_\delta)$ times the sum of the corresponding
+$u$ and $v$ expectations in the displaced $\rho_{RS}$. These
+nonnegative expectations must therefore vanish almost everywhere.
+No uniform lower bound on $\lambda_{\min}(M_\delta)$ is needed;
+the exceptional point $\delta=0$ has measure zero.
+
+The Weyl orthogonality identity, as a weak operator integral, is
+
+$$
+\int_{\mathbb C}(I_R\otimes D(\delta))\rho_{RS}
+ (I_R\otimes D(\delta)^\dagger)\,d^2\delta
+ =\pi\rho_R\otimes I_S.
+$$
+
+Its scalar normalization follows from
+$\big(D((q+ip)/\sqrt2)\psi\big)(x)=e^{ip(x-q/2)}\psi(x-q)$:
+Fourier Plancherel and integration over $q$ give
+$\int d^2\delta\,|\langle u|D(\delta)|\psi\rangle|^2
+=\pi\|u\|^2\|\psi\|^2$.
+Spectral decomposition and Tonelli extend this to positive trace-class
+states; polarization gives the displayed identity blockwise for finite
+$R$. On $\operatorname{supp}(\rho_R)$ the right-hand quadratic form
+is strictly positive for any nonzero vector. Hence $u=v=0$, proving
+faithfulness without a Fock cutoff.
+
+This excludes exact unambiguous readout of any two signal states by a
+downstream receiver: a bounded positive effect with zero probability on
+one faithful output must be zero, and cannot identify the other input.
+There is also a reference-complete quantum consequence. Encode a
+$k$-dimensional logical input, $k\ge2$, entirely into $S$ by a
+trace-preserving encoder, and prepare a Bell pair between that input
+and an inaccessible $k$-dimensional reference. Then $\rho_R=I_k/k$.
+No nonzero physical normal CP trace-nonincreasing receiver branch on
+$C,S$ can produce a pure Bell state on $R$ and a decoded logical output.
+
+Indeed, refine that branch into bounded Kraus operators $L_j$. If its
+output were $p|\Phi_k\rangle\langle\Phi_k|$, every vector orthogonal
+to $\Phi_k$ would have zero expectation in each positive Kraus
+contribution. Faithfulness forces
+$(I_R\otimes L_j^\dagger)|x\rangle=0$ for all such $x$.
+Thus the range of $I_R\otimes L_j$ would lie in the single entangled
+line spanned by $\Phi_k$. For nonzero $L_j$, that range contains
+nonzero product vectors $|r\rangle\otimes L_j|s\rangle$, which
+cannot lie on a Bell line. All $L_j$ are therefore zero and $p=0$.
+Tracing any receiver garbage or resolving additional success records is
+already included in this CP branch. The same argument permits any
+declared Bell frame, and in particular rules out exact heralded
+unitary recovery of an unknown logical state.
+
+The restriction that the input is carried entirely by the noisy signal
+is essential. An input-bearing bypass memory, encoding into a protected
+control, access to the random displacement record, or additional
+pre/inter-query controls changes the model. Independent receiver ancillas
+and arbitrary processing after this switch are already allowed. The
+argument concerns every strictly positive pair of Gaussian covariances,
+but supplies **no positive finite-error margin**, Gaussian-code optimum,
+entanglement-breaking claim or quantum-capacity conclusion. Approximate
+error correction, high-energy limits and finite-error readout utility
+remain open; ideal nonnormalizable grid states are not density operators
+covered by the proof. General thermal attenuators, amplifiers,
+correlated noise and other physical order dilations need their own
+support argument rather than an import of this displacement result.
 
 <a id="nr-r05"></a>
 

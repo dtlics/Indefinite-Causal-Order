@@ -1528,6 +1528,457 @@ station. Both must demonstrate coherent slot access, the relevant
 stationarity interval, the full physical phase frame, source/reset
 cost and complete output instrument before a finite-rate comparison.
 
+<a id="nr-r11-raman-direct-temporal"></a>
+
+**A direct passive temporal filter includes its source rejection and
+exceeds the symmetric-ring minus coefficient.** Work in the same
+complete two-rail Raman port frame, with $AB=00$ and static accepted
+operators $T_j=a_jI+b_jF_{Pj}$. Both physical counterpropagating outputs
+are collected. The ordinary static ring setting $k_A=1,k_B=0$ supplies
+deterministic A-then-B routing. The construction below uses one input
+photon, vacuum in all other optical inputs, fixed beam splitters and
+delays, no additional stationary memories, and a recorded photon
+port/time herald. It does not assume a free arbitrary four-mode
+processor or a lossless prepared temporal state.
+
+Let $z$ denote one delay $\Delta$ and define
+$x=1-z-z^2$, $y=1+z-z^2$. A fully passive source preparer gives the two
+kept station-input rails the unnormalized waveforms
+
+$$
+x'(z)=\frac{x(z)}{\sqrt{10}},\qquad
+y'(z)=\frac{y(z)}{\sqrt{10}},
+\qquad w(z)=\frac{1+z^2}{\sqrt5}
+\tag{PT1}
+$$
+
+in a third, rejected output rail. To realize it, split a single-bin
+input into three rails with amplitudes
+$(\sqrt{2/5},1/\sqrt5,\sqrt{2/5})$, give them delays $0,\Delta,2\Delta$,
+and mix the outer rails into their difference and sum. Send the sum to
+the rejected port. Mix the difference and middle rail on another
+balanced beam splitter with kept outputs
+$P0=(r_0-r_2)/2-r_1/\sqrt2$ and
+$P1=(r_0-r_2)/2+r_1/\sqrt2$. The fixed output matrix is
+
+$$
+U=\begin{pmatrix}
+1/2&-1/\sqrt2&-1/2\\
+1/2&1/\sqrt2&-1/2\\
+1/\sqrt2&0&1/\sqrt2
+\end{pmatrix},\qquad U^\dagger U=I_3.
+$$
+
+The two kept rails have total weight $3/5$ and the rejected rail $2/5$.
+All of this source rejection is counted. The normalized kept waveform
+occupies three bins, but its temporal Schmidt support against $P$ is
+two dimensional: the outer antisymmetric pair and the middle bin.
+This is an actual temporal code, with its extra duration charged.
+
+Between A and B apply the lossless two-rail interferometer
+
+$$
+H(z)=\frac12\begin{pmatrix}1+z&1-z\\1-z&1+z\end{pmatrix}
+=H_2\operatorname{diag}(1,z)H_2.
+\tag{PT2}
+$$
+
+After B, delay $P0$ by $\Delta$ and mix the two rails on $H_2$.
+Accept only its plus output in clock bin $2\Delta$, relative to the
+common propagation delay. Every other port/clock and the no-click
+outcome is a failure record. There is no intermediate temporal gate.
+
+Here is the complete polynomial cancellation. Set
+$h_+=(1+z)/2$, $h_-=(1-z)/2$, $c_j=a_j+b_j$. Before the common source
+and readout normalization $1/\sqrt{20}$, the plus-port state is
+
+$$
+\begin{aligned}
+\Phi_+(z)={}&|00\rangle\{c_B[c_Azh_+x+a_Azh_-y]
+                  +a_B[c_Ah_-x+a_Ah_+y]\}\\
+&+|10\rangle b_A[c_Bzh_+y+a_Bh_-y]\\
+&+|01\rangle b_B[c_Azh_-x+a_Azh_+y]
+ +|11\rangle b_Ab_Bzh_-y.
+\end{aligned}
+\tag{PT3}
+$$
+
+Use $h_+x=(1-2z^2-z^3)/2$,
+$h_-y=(1-2z^2+z^3)/2$,
+$h_-x=(1-2z+z^3)/2$ and
+$h_+y=(1+2z-z^3)/2$. Extracting $z^2$, the identity, single-A and
+single-B monomials $a_Aa_B,b_Aa_B,a_Ab_B$ each have zero coefficient
+in every memory basis state. The double term is exactly
+
+$$
+[z^2]\frac{\Phi_+(z)}{\sqrt{20}}
+=\frac{b_Ab_B}{\sqrt{20}}(|10\rangle-|01\rangle),\qquad
+p_{\rm direct}=\frac1{10}|b_Ab_B|^2.
+\tag{PT4}
+$$
+
+Thus the coefficient $1/10$ includes the $3/5$ passive source success,
+all physical beam-splitter amplitudes and the single selected readout
+flag. The normalized-kept-source coefficient is $1/6$. The exact
+enumeration retains both detector ports in clocks $0,\ldots,4$;
+among these ten flags only $(+,2)$ is a coefficient-independent Bell
+flag for this fixed circuit. Endpoint I/SWAP and lossless partial-SWAP
+checks preserve the complete $3/5$ kept-photon weight across all flags;
+the rejected source port completes it to one. For lossy nodes, their
+full loss and no-click outputs must also be retained.
+
+There is a limited optimality observation only for this fixed source
+shape. On $|z|=1$, the normalized target pair $x/\sqrt6,y/\sqrt6$ has
+spectral norm $1-(2/3)\cos2\omega\le5/3$. A time-invariant passive
+preparer multiplying this exact shape by a common kept amplitude
+$\sqrt\eta$ must have $\eta\le3/5$. PT1 attains it, because the rejected
+$w$ completes the column pointwise to norm one. This is not an optimum
+over source shapes, interferometers, flags or general ordinary protocols.
+
+The symmetric passive ring's switch-minus coefficient is
+$(4/27)(1/2)=2/27$. Consequently
+
+$$
+\frac{p_{\rm direct}}{p_{S,-}^{\rm ring}}=\frac{27}{20}>1
+\tag{PT5}
+$$
+
+under the common static-frame/code/node hypotheses, before differing
+component losses and cycle times. This removes that particular bare
+minus-flag routing margin even after passive source preparation is
+charged. It does not compare all useful plus outputs of calibrated
+identical nodes, a different switch router, or arbitrary ordinary
+optima. If $\eta_D,\eta_S$ are the additional complete-path detection
+throughputs, the ordinary raw-yield comparison requires
+$\eta_D/\eta_S\ge20/27$. For average rate the additional condition is
+$d_D/d_S\le(27/20)(\eta_D/\eta_S)$, with full generated-photon,
+preparation, failed-clock, node-loss, reset and readout durations.
+
+Physical qualifications matter. Passive mixing of $P$ requires matched
+optical carriers; the Rb SPRINT experiment already mixes its two
+direction modes on beam splitters for equatorial qubits, whereas a
+nondegenerate Raman-frequency encoding may require a frequency converter.
+The source spans three bins, B receives four, and final detection spans
+five. Slot separation needs the actual pulse and node tails, and the
+node/bath operation must remain the same throughout those slots. A
+finite-bandwidth cavity produces additional temporal tails; accepting a
+central clock does not erase their leakage. The polynomial identities
+apply exactly in the ideal disjoint-slot model; an actual source needs
+a complete-instrument leakage bound and measured clock.
+For an explicit obstruction to an unrestricted frequency-dependent
+extension, the identity-only polynomial in PT3 is
+$a_Aa_B(1+z-2z^3)|00\rangle$. Choose the valid passive scalar kernel
+$a_A(z)=(1+z)/2$, $a_B=1$ and $b_A=b_B=0$. Its central $z^2$
+coefficient is $1/2$, producing a false product-state click with
+probability $1/80$. The kernel's other output completes its passive
+instrument. Thus arbitrary stationary LTI kernels do not suffice;
+the response/window bound is part of the theorem's access model.
+Static whole-
+node phases multiply PT4 only globally, and static Raman-leg phases
+dress its odd Bell state by exactly the same local gauge as switch
+minus. Route-dependent, time-dependent or unobserved bath records are
+not covered by that statement. True circulator/adaptor loss, extra
+source/interferometer components, stable rail phases and the available
+stationarity/coherence interval remain measured costs, not consequences
+of the finite replay.
+
+<a id="nr-r11-raman-temporal-tail"></a>
+
+### Finite response tails, accepted Bell quality and the clock budget
+
+The direct filter has a finite-response extension under an explicit
+stationary kernel premise. Suppose that, in the same complete two-rail
+carrier/spin frame, the accepted one-photon scattering multiplier is
+$T_j(\omega)=a_j(\omega)I+b_j(\omega)F_{Pj}$. Its accepted unobserved
+environment must be the common vacuum. Every other radiative channel
+loses the sole photon and cannot produce the final selected click.
+This premise excludes an unaccounted photon-preserving bath record;
+it is stronger than stationarity of a marginal transfer function.
+Ground-spin dynamics, frequency conversion and temporal/spatial mode
+matching must be included in the actual kernel or separately bounded.
+No assumption about Gaussian classical noise is made.
+
+**Frequency dependence and a physical clock window.** The scalar
+multipliers commute with $z=e^{-i\omega\Delta}$, so (PT3) remains a
+pointwise polynomial identity with frequency-dependent $a_j,b_j$. For
+a normalized source mode $f$, define the four actual wavepackets
+$\psi_{aa}=a_Aa_Bf$, $\psi_{ba}=b_Aa_Bf$,
+$\psi_{ab}=a_Ab_Bf$, and $\psi_{bb}=b_Ab_Bf$.
+Multiplication here means composition of stationary scalar filters.
+Each $z^k$ translates its entire wavepacket by $k\Delta$; detecting
+clock 2 does not automatically extract a polynomial coefficient.
+
+Choose a common base interval $I$ of width $w<\Delta$, its time
+projector $P_I$, and the accepted translated window $I+2\Delta$.
+Put $\tau_v=\|(I-P_I)\psi_v\|$ and
+$B_I=\|P_I\psi_{bb}\|^2$. For $k\ne2$, disjointness gives
+$P_{I+2\Delta}D^kP_I=0$ and hence
+$\|P_{I+2\Delta}D^k\psi_v\|\le\tau_v$, where $D$ is the delay.
+After undoing the common $2\Delta$ translation, the accepted vector
+therefore differs from
+$(|10\rangle-|01\rangle)\otimes P_I\psi_{bb}/\sqrt{20}$ by at most
+
+$$
+\epsilon_D\le
+\frac{4\tau_{aa}+2\sqrt2\,\tau_{ba}
+ +(2+\sqrt2)\tau_{ab}+(2+\sqrt2)\tau_{bb}}{\sqrt{20}}.
+\tag{TG1}
+$$
+
+To verify the constant, the squared norms of the spin-vector
+coefficients of each side clock in (PT3), before $1/\sqrt{20}$, are
+$aa:(1,1,4)$ at clocks $(0,1,3)$;
+$ba:(1/2,1/2,1/2,1/2)$ at $(0,1,3,4)$;
+$ab:(2,4)$ at $(1,3)$; and $bb:(1,2,1)$ at $(1,3,4)$.
+Their norm sums are respectively $4,2\sqrt2,2+\sqrt2,2+\sqrt2$.
+The only central term is the double-Raman Bell vector. Thus if every
+$\tau_v\le\tau$,
+
+$$
+\epsilon_D\le C_D\tau,\qquad
+C_D=\frac{4+2\sqrt2}{\sqrt5}\simeq3.053765446.
+\tag{TG2}
+$$
+
+The ideal compact accepted yield is $B_I/10$, including passive source
+rejection. It factors as the Bell spin state times its actual common
+wavepacket, so discarding that wavepacket does not damage the Bell
+factor. The useful strength is **$B_I$**, rather than automatically
+$|b_A(0)b_B(0)|^2$. In particular,
+
+$$
+B_I\ge B_{\rm band}-\tau_{bb}^2,\qquad
+B_{\rm band}=\int |b_A(\omega)b_B(\omega)f(\omega)|^2\,d\omega.
+\tag{TG3}
+$$
+
+If the two ring routes have the same complete accepted scalar kernels,
+their $b_A,b_B$ commute and give the same untruncated $\psi_{bb}$.
+The matched compact ring-minus ideal then has yield $2B_I/27$.
+Its actual router still needs its own accepted error certificate
+$\epsilon_S$, including circulating, extraction and rejected paths;
+(TG1) does not supply that certificate.
+
+**A sufficient node-tail certificate.** For a compact photon input in
+an interval $J$, require uniformly on the declared rail/spin input
+space, with passive references allowed,
+
+$$
+\|P_{\text{nonvacuum radiative output after }\sup J+g_j}
+ V_j\|^2\le\delta_j(g_j).
+\tag{TG4}
+$$
+
+This refers to the complete node dilation. Residual module excitation
+at the cutoff can be bounded separately by the same decay estimate;
+it is not added again as an independent late-photon event. A fitted
+probe's mean output intensity does not establish (TG4).
+
+In the stationary kernel model, the accepted eigenkernels $a_j+b_j$
+and $a_j-b_j$ are contractions and obey the same tail bound.
+Their half sum and difference show that $a_j,b_j$ individually are
+contractions with tail norm at most $\sqrt{\delta_j}$. For a compact
+source duration $t_p$, truncate A's output after $t_p+g_A$ only for
+the estimate. The omitted vector has norm at most
+$\sqrt{\delta_A}$. The retained pulse may be distorted and entangled
+with retained spins; (TG4) at B applies uniformly to this whole compact
+input space. Contractivity on the omitted vector and B's uniform bound
+on the retained vector give
+
+$$
+\tau_v\le\sqrt{\delta_A(g_A)}+\sqrt{\delta_B(g_B)},\qquad
+w=t_p+g_A+g_B.
+\tag{TG5}
+$$
+
+This is a stage-by-stage norm argument, not an assumption that B sees
+the original Gaussian pulse. One sufficient clock condition is
+$\Delta>w$. If accepted node-kernel errors on the complete reachable
+input code are $\xi_A,\xi_B$, telescoping through the other
+contractions adds at most their sum. Source, passive-component,
+mode-mismatch and detector errors need their own certified norms, so
+
+$$
+\epsilon_D\le C_D(\sqrt{\delta_A}+\sqrt{\delta_B})
+ +\xi_A+\xi_B+\epsilon_{\rm source}+\epsilon_{\rm components}.
+\tag{TG6}
+$$
+
+The constant $C_D$ concerns the prepared $AB=00$ and (PT1) temporal/rail
+code. It includes a passive reference entangled with the declared
+source-mode input when the hypotheses are uniform on that code.
+Extending to arbitrary spin inputs requires recomputing coefficient
+**operator** norms; uniform (TG4) alone does not extend the same $C_D$.
+Likewise, a per-bin state estimate is not automatically a uniform
+temporal-code bound. For $n$ orthogonal input bins with per-bin operator
+errors $e$, Cauchy--Schwarz only guarantees $\sqrt n\,e$ on the whole
+code unless a stronger orthogonality estimate is proved. The coherent
+source and processor coefficients have already been charged in (TG1).
+
+**Including a cavity in the radiative guard.** The
+[uniform record guard](#nr-r11-uniform-record-guard) has the following
+sufficient extension. After the last compact input, let $Q$ be the
+integer total stored optical excitation, including cavities, trions
+and any other retained optical storage. Assume no later input or
+drive, $[H,Q]=0$, radiative jumps lowering $Q$ by one, and
+$\sum_a L_a^\dagger L_a\succeq\kappa_* Q$ with a certified
+$\kappa_*>0$. Excitation-preserving jumps commute with $Q$ and must
+annihilate the entire optical ground-spin manifold in the actual
+vacuum dilation. Then $\mathcal L^*(Q)\preceq-\kappa_*Q$.
+If $Q\le n_{\max}$ on the reachable code, Gronwall gives
+
+$$
+\delta_j(g)\le\min\{1,n_{\max}e^{-\kappa_*g}\}.
+\tag{TG7}
+$$
+
+For the record statement, its positive future-record effect is at
+most identity and vanishes on the vacuum-preserving ground manifold.
+Positivity kills its off-diagonal blocks with that manifold, so the
+effect is at most $P_{\rm exc}\preceq Q$. This proves (TG7) uniformly
+for reference-entangled inputs; the residual excitation probability
+obeys the same bound. Only after this uniform effect bound may its
+square root be used as a tail amplitude.
+
+For independent cavity and emitter decays
+$L_c=\sqrt{k_c}\,c$ and $L_e=\sqrt{k_e}\,\sigma^-$,
+$\kappa_*=\min(k_c,k_e)$ is sufficient in the one-excitation sector.
+These are **population** rates: an amplitude-decay convention requires
+the corresponding factor of two. Shared channels can introduce cross
+terms, so their complete radiative Gram floor must replace the bare
+linewidth minimum. Nearly dark modes can make the floor arbitrarily
+small. A weighted Lyapunov inequality for the full generator is another
+possible certificate, with its operator inequalities and norm constants
+checked separately. No nominal cavity linewidth is turned into a
+measured bound here. Ground-spin dephasing or spin--phonon records are
+not bounded by trion excitation. Drives, feedback delays and unmodeled
+storage also require an enlarged certificate. Even (TG7) does not
+prove the common-vacuum stationary kernel premise.
+
+For an arbitrary source mode with tail mass $\zeta$ outside a declared
+compact interval, its normalized truncation differs in vector norm by
+$\sqrt{2-2\sqrt{1-\zeta}}\le\sqrt{2\zeta}$ and in half trace
+distance by $\sqrt\zeta$. Subsequent complete instruments are
+contractive. Gaussian **intensity** is only an optional source model:
+$\zeta=\operatorname{erfc}(L/\sqrt2)$ for a window
+$\pm L\sigma_I$. It imposes no Gaussian law on classical phase noise.
+
+**Accepted states and complete failure outputs are distinct norms.**
+Let $K,K_0$ be accepted Stinespring contractions in one common record
+space with $\|K-K_0\|\le e$. Their accepted CP maps differ in diamond
+norm by at most $e(\|K\|+\|K_0\|)\le2e$, including references and
+all retained spins. For the Bell-preparation input let $a=\sqrt{p_0}>0$
+and suppose the ideal accepted vector is Bell tensor its actual
+retained records. Triangle and projection inequalities give
+
+$$
+\begin{gathered}
+(a-e)_+^2\le p\le\min\{1,(a+e)^2\},\qquad
+q_{\rm Bell}\ge(a-e)_+^2,\qquad p-q_{\rm Bell}\le e^2,\\
+F_{\rm Bell}=q_{\rm Bell}/p\ge\max\{0,1-e^2/p_0\}\quad(p>0).
+\end{gathered}
+\tag{TG8}
+$$
+
+For the last inequality, the distance from the ideal vector to the
+line through the actual vector is at most $e$. Their squared sine
+angle is at most $e^2/p_0$, and projection onto the whole Bell
+subspace is at least projection onto the ideal vector's line.
+Tracing true inaccessible records preserves this Bell inequality.
+Normalization counts all failure histories through $1-p$, but an
+accepted-only bound does not control their raw spin density matrices:
+identical zero accepted maps can have rejected spin channels $I$ and
+$X$.
+
+To include those quantum failure outputs, certify the **complete**
+experiment's isometries on a common dilation by
+$\|V_X-V_{X,0}\|\le E_X$, including source-reject rails, every
+clock/port, loss modes, no-click flags and final retained spins.
+Pure-state trace distance, contractivity and the ancilla-stable
+operator norm give complete flagged half-diamond distance at most
+$E_X$. Complete node-instrument errors telescope through an ordinary
+causal network; a coherent router needs a common dilation bound rather
+than independently chosen Kraus gauges. Every accepted or Bell-good
+joint probability then changes by at most $E_X$. For accepted blocks
+$A,A_0$, the rejected block supplies
+$\|A-A_0\|_1+|p-p_0|\le2E_X$, whence
+$D(A/p,A_0/p_0)\le E_X/\max(p,p_0)$ when both are nonzero.
+An ideal Bell therefore gives $F\ge\max\{0,1-E_X/p_0\}$.
+Signed all-launch rewards in $[-1,1]$ change by at most $2E_X$.
+There is no rare-herald guarantee independent of useful yield.
+
+**Accuracy required to preserve the comparison.** With matched
+$B_I>0$, complete flagged errors preserve ordinary Bell-good yield
+above this symmetric ring-minus flag if
+
+$$
+E_D+E_S<\frac7{270}B_I.
+\tag{TG9}
+$$
+
+The stronger accepted-amplitude criterion is
+
+$$
+\epsilon_D+\epsilon_S<c_{\rm margin}\sqrt{B_I},\qquad
+c_{\rm margin}=\frac1{\sqrt{10}}-\sqrt{\frac2{27}}
+ \simeq0.044062239.
+\tag{TG10}
+$$
+
+Indeed, compare the direct lower yield
+$(\sqrt{B_I/10}-\epsilon_D)^2$ with the ring upper yield
+$(\sqrt{2B_I/27}+\epsilon_S)^2$. Complete-path throughputs
+$\eta_D,\eta_S$ replace the right side of (TG10) by
+$\sqrt{\eta_DB_I/10}-\sqrt{2\eta_SB_I/27}$, which must be positive.
+Direct Bell infidelity at most $\zeta_B$ follows from
+$\epsilon_D^2\le\zeta_B\eta_DB_I/10$; the generic complete-error
+criterion is $E_D\le\zeta_B\eta_DB_I/10$.
+
+For equal direct-node tails $\delta\le m e^{-\kappa_*g}$, (TG6)
+gives $\epsilon_D\le e_{D,\rm fixed}
++2C_D\sqrt m\,e^{-\kappa_*g/2}$. If the ring separately supplies
+$\epsilon_S\le e_{S,\rm fixed}+C_Se^{-\kappa_*g/2}$ and a
+certified useful-strength floor $B_I\ge B_{\min}>0$, a sufficient
+guard is
+
+$$
+g>\frac2{\kappa_*}\log
+\frac{2C_D\sqrt m+C_S}
+ {c_{\rm margin}\sqrt{B_{\min}}-e_{D,\rm fixed}-e_{S,\rm fixed}},
+\tag{TG11}
+$$
+
+provided the denominator is positive; a negative right side permits
+$g\ge0$. The ring constant cannot be inserted without its actual
+route certificate. If only $B_{\rm band}$ is known, (TG3)--(TG5)
+give $B_I\ge B_{\rm band}-4m e^{-\kappa_*g}$; one may require the
+subtracted term to be at most $B_{\rm band}/2$ and use
+$B_{\min}=B_{\rm band}/2$. Thus weaker Raman conversion or slower
+dark poles demand a longer guard. No strength-independent guard is
+inferred as useful conversion tends to zero.
+
+The three-bin source, four-bin B input and five-bin final output
+also charge this accuracy in time. With
+$\Delta>t_p+g_A+g_B$, one sufficient optical schedule extends through
+$4\Delta+t_p+g_A+g_B$, plus common propagation; a $5\Delta$ envelope
+suffices for these declared windows. Generated-photon preparation,
+source rejection, unused clocks, detector/reset and spin-coherence
+costs remain charged. These are sufficient schedules, not latency
+lower bounds. The ring must be timed at the same certified accuracy.
+
+The [exact replay](checks/architecture/raman_temporal_tail.py) rebuilds
+the side-clock coefficients, rational radical enclosures, false LTI
+herald, margin and finite complex norm identities. The uniform kernel,
+node-tail, decay and complete-dilation arguments above are analytic
+conditional inputs. A device comparison still needs those operator
+certificates on all reachable distorted inputs, uncertainty bounds
+for every cavity/dark/feedback mode and ground-spin record, common
+carriers/modes, and actual source/router/detector losses. An accepted
+photon response or a fitted linewidth alone supplies none of the
+missing full failure-spin certificate. The result makes the finite
+architecture comparison quantitative under these premises; it does
+not assert a measured finite-cavity advantage.
+
 <a id="nr-r11-raman-passive-filter"></a>
 
 ### A passive photon filter gives a coefficient-independent ordinary Bell pair
@@ -1705,12 +2156,199 @@ The larger photon code, rejected ports, complete joint readout and local
 spin filter must be preserved by the actual node and priced. This needs
 the physical extension $T_j\otimes I_H$ on all eight joint modes;
 the two-level temporal codec above does not by itself implement it.
-Arbitrary
-processors that do not annihilate the source between nodes, adaptive
-local filtering and timed spin pulses that conjugate the node differently
-for early and late photon bins remain separate ordinary comparisons.
-Their costs and actual vacuum extension must be included before an
-upper bound on all ordinary protocols can be claimed.
+Arbitrary processors that do not annihilate the source between nodes
+and adaptive local filtering remain open ordinary comparisons. The
+timed-spin compiler below accounts for closed known-frame conjugations;
+their physical controls and actual vacuum extension still need pricing
+before a hardware bound covering all ordinary protocols can be claimed.
+
+
+<a id="nr-r11-raman-timed-controls"></a>
+
+#### Closed timed spin controls have an exact photon compiler
+
+Consider the same accepted family $T_j=a_jI+b_jF_{Pj}$ in a known
+common SWAP frame, extended as $T_j\otimes I_H$ on a preserved flying
+helper. A known unconditional spin-pulse schedule has cumulative
+propagator $U_k$ just before photon slot $k$ and complete no-photon
+propagator $K$. Its post-slot propagator is $KU_k^\dagger$, so the
+occupied-slot operator is $KU_k^\dagger T_jU_k$. A common restoration
+$K^\dagger$ after all slots gives
+$U_k^\dagger T_jU_k$ and identity on every vacuum history. All pulses
+run after lost and rejected photons as well. This factorization requires
+the drive to lie outside the complete photon interaction and its
+unresolved dwell; each gap includes actual pulse time and tail guards.
+
+For every known qubit unitary $U$, the SWAP identity gives
+
+$$
+(I_P\otimes U_j^\dagger)F_{Pj}(I_P\otimes U_j)
+=(U_P\otimes U_j^\dagger)F_{Pj}
+=(U_P\otimes I_j)F_{Pj}(U_P^\dagger\otimes I_j).
+\tag{TC1}
+$$
+
+The identity term transforms the same way. Therefore (TC1) also holds
+with $F_{Pj}$ replaced by $T_j$, coefficient by coefficient, for unknown,
+unequal complex $a_j,b_j$. It is an operator equality on every input and
+reference. Since the helper is preserved, a helper-controlled spin
+conjugation equals $C_jT_jC_j^\dagger$, where
+$C_j=\sum_k|k\rangle\langle k|_H\otimes U_{j,k}$ is the corresponding
+known controlled **photon** gate.
+
+For an arbitrary intermediate photon/helper contraction $V$, including
+one that mixes helper labels, the complete ordinary sequence factors as
+
+$$
+C_BT_BC_B^\dagger V C_AT_AC_A^\dagger
+=C_BT_B(C_B^\dagger VC_A)T_AC_A^\dagger.
+\tag{TC2}
+$$
+
+Absorb $C_A^\dagger$ into the prepared photon/helper state,
+$C_B^\dagger VC_A$ into the intermediate processor and $C_B$ into the
+final joint photon readout. The processor remains a contraction. Common
+spin output frames $K_A,K_B$ commute past the other node and the photon
+operations and can be restored locally. Every polynomial term and any
+subsequent accepted spin filter is preserved. Thus these closed timed
+spin conjugations add no capability to the already arbitrary
+photon/helper source, processor and readout in this known-frame
+accepted family. Their physical durations, losses and control references
+remain separate costs.
+
+An explicit physical schedule for four Pauli rays is
+$\mathrm{bin}_0;R_x(\pi);\mathrm{bin}_1;R_y(\pi);
+\mathrm{bin}_2;R_x(\pi);\mathrm{bin}_3;R_y(-\pi)$.
+Its pre-slot propagators are $I,-iX,iZ,-iY$ and its total propagator is
+$I$. It uses four actual XY $\pi$ pulses. A virtual frame update alone
+does not rotate the spin seen by the scattering device. A snake through
+all sixteen independent pairs of these frames uses twelve physical
+transitions/restoration pulses at A and four at B. These are achievable
+schedules rather than minimum pulse counts. Long helpers add spin
+exposure, coherent time-bin storage, pulse errors and phase stability
+requirements on every attempt.
+
+The known-frame and instrument scope is essential:
+
+* If the physical family is
+  $T_R=(I\otimes R)(aI+bF)(I\otimes R^\dagger)$, a laboratory spin
+  $U$ compiles to the photon gate $R^\dagger UR$. An unknown Raman-leg
+  frame $R$ therefore requires its actual phase reference or calibration,
+  unless the chosen control commutes with it. Equation (TC2) does not
+  remove unknown relative Raman phases.
+* Spectator coefficient operators may be retained only when they commute
+  with the compiled controls and preserved helper. A frequency-changing
+  control cannot be commuted through an unknown frequency kernel by this
+  scalar identity. Helper-changing node operators also invalidate it.
+* Equality of accepted operators does not specify rejected spin/bath
+  outputs. For example a valid all-loss channel resetting the spin to
+  $0$ has accepted $T=0$. Spin $X$ conjugation resets it to $1$, whereas
+  photon $X$ conjugation followed by vacuum still resets it to $0$.
+  Full loss-instrument equality needs a separate intertwining of its
+  actual Kraus operators and vacuum action. Losses, resets and records
+  remain charged.
+* Pulses overlapping the optical dwell, changes to coupling or detuning,
+  nonunitary spin control during the query, and nonfactorizing spin/bath
+  dynamics define a different driven or multi-time primitive. Its full
+  instrument requires a new comparison.
+
+The [timed-control replay](checks/architecture/raman_timed_controls.py)
+checks full reference-complete one- and two-node operator identities,
+complex coefficient examples, noncommuting helper-mixing processors,
+known twisted frames, the pulse chronology and the stated counterexamples.
+No upper bound for arbitrary photon processors or adaptive ordinary
+protocols is inferred.
+
+<a id="nr-r11-raman-late-flip"></a>
+
+#### A calibrated timed photon flip gives direct ordinary Bell heralds
+
+There is a separate direct comparator for two identical calibrated
+nodes $T=tI+\beta F$, $t=1-\beta$, $0\le\beta\le1$, in a known
+real Raman frame. Prepare
+$(|\mathrm{early},P0\rangle+|\mathrm{late},P1\rangle)/\sqrt2$ and
+spins $00$, and route A then B through the complete two-port adapters.
+One balanced beam splitter followed by a delay on its $P1$ output
+prepares these two bins from one single-bin photon. Both orthogonal
+output rails enter A, so this preparation needs no selected source port.
+Between the nodes apply an unconditional classical photon-rail $X$
+gate during the late bin. This timed physical rail operation and its
+drive, loss and phase reference are part of the ordinary apparatus.
+The full no-loss output is
+
+$$
+\frac1{\sqrt2}\left[
+|\mathrm{early},P0,00\rangle+
+|\mathrm{late}\rangle\left(t|P0,00\rangle+
+\beta t|P1,10\rangle+\beta^2|P0,11\rangle\right)\right].
+\tag{LF1}
+$$
+
+Accept $P0$ and both central-clock ports of a balanced passive time-bin
+$X$ decoder. Its bras are
+$(\langle\mathrm{early}|\pm\langle\mathrm{late}|)/2$, so their
+total effect is $I_Q/2$. The two spin vectors are
+
+$$
+\frac{(1\pm t)|00\rangle\pm\beta^2|11\rangle}{2\sqrt2}.
+\tag{LF2}
+$$
+
+For the corresponding flag use the local A filter
+$\operatorname{diag}(\beta^2/(1\pm t),1)$. Both are contractions:
+the minus ratio is $\beta$, and
+$2-\beta-\beta^2=(1-\beta)(\beta+2)\ge0$ proves the plus ratio
+is at most one. At $\beta=0$ the minus click is zero and is rejected.
+Each filter success has a known Bell frame and probability $\beta^4/4$.
+Counting both ports therefore gives
+
+$$
+p_{\rm late\ flip}=\frac{\beta^4}{2}.
+\tag{LF3}
+$$
+
+All-launch accounting follows directly from (LF1). Node-loss rejection,
+$P1$ rejection, offcentral photon rejection, spin-filter rejection and
+Bell success have respective probabilities
+
+$$
+\beta(1-\beta)(1+\beta^2),\quad
+\frac{\beta^2t^2}{2},\quad
+\frac{1+t^2+\beta^4}{4},\quad
+\frac{(1-\beta)(\beta^3+\beta^2+2)}4,\quad
+\frac{\beta^4}{2}.
+$$
+
+They are nonnegative and sum to one. This circuit uses the displayed
+passive central-clock decoder directly. Prepared source bins, the timed
+photon flip, spin filters, complete port access, pulse/tail guards,
+reset after failures and actual component losses remain charged.
+Known $\beta$ and a sufficiently calibrated relative Raman phase are
+needed for the filters and Bell frames; (LF3) is not the uniform
+unknown-coefficient construction (RP1)--(RP6).
+
+Against the specified symmetric passive ring (RT2), with routing factor
+$4/27$ and intrinsic both-flag yield $\beta^2(1+t^2)$, the ideal
+difference is
+
+$$
+\frac{\beta^4}{2}-\frac4{27}\beta^2(1+t^2)
+=\frac{\beta^2}{54}(19\beta^2+16\beta-16).
+$$
+
+It is nonnegative for
+$\beta\ge(-8+4\sqrt{23})/19\simeq0.5886$.
+An equal physical scalar spectator attenuation on both two-query
+protocols multiplies their yields by the same factor. Unequal,
+frequency-dependent or helper-dependent kernels and the actual
+component loss require their full comparison. This is a comparison of
+the stated circuits and adapters, with no universal routing optimum.
+
+The same exact replay reconstructs (LF1)--(LF3) as rational polynomial
+identities, checks both physical central-clock flags and filter effects,
+the nonnegative failure factors, total probability and threshold.
+Finite rational guards support transcription; the displayed polynomial
+identities establish the whole interval.
 
 
 <a id="nr-r11-raman-local-ancillas"></a>

@@ -277,4 +277,29 @@ raw-yield comparisons do not certify a measured Bell-pair rate or a clock
 advantage. The mechanical-memory hardware screen is a primary-source
 assessment and a held-out test specification, not a new measured result.
 
+The direct temporal Raman replay includes its actual passive source,
+all clock/port flags and a non-flat-response counterexample. Its finite-tail
+extension checks coefficient norms and exact Bell-state geometry, while the
+uniform kernel/dilation and decay-floor premises remain device-conditional.
+Accepted-only certificates do not determine raw rejected spin states.
+The timed-control replay checks the known-frame spin-to-photon compiler
+and calibrated late-photon-flip outputs and failure accounting.
+
+The Gaussian readout replays retain complete noise/idler/loss ports and
+finite feedback examples, including ordinary conditional likelihoods and
+known squeezing/displacement control phases. The full matrix noise floor,
+continuous Gaussian kernels, thermal Fock traces and data-processing proofs
+remain analytic. The Gaussian full-support obstruction is an analytic
+infinite-mode proof with a finite passive reference; no finite replay
+establishes its universal quantifier or an approximate-recovery bound.
+No new measured device, global ordinary optimum or native advantage is
+certified by these additions.
+
+The material-pointer clock replay checks finite array isometries, record
+orthogonality, a fresh-clock counterexample, pointer echo and Markov timing
+arithmetic. Its full joint compiler and norm transfer are analytic, and its
+hardware model remains a proposed combination of separately demonstrated
+primitives. A measured scalar memory lifetime is not a certified
+cross-history coherence kernel.
+
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.
