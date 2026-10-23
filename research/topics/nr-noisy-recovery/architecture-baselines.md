@@ -347,6 +347,1114 @@ with local/correlated-reference and hidden-spike guards. The
 all-dimensional sampling and physical resource assumptions remain the
 proofs above.
 
+<a id="nr-r06-local-overlap"></a>
+### A reference-free estimator governed by local error overlap
+
+The exponential variance of a generic Pauli reconstruction is not a
+lower bound for the scalar (PM1). There is a direct ordinary estimator
+whose cost depends on the overlap of two error supports. This applies
+to correlated error laws with a local-stochastic bound, without learning
+their full distributions. It is a diagnostic experiment: both channel
+inputs are prepared probes, and no unknown payload is preserved.
+
+Keep the independent stationary Pauli-channel model of (PM1), with
+public physical axes. At every qubit choose independent uniform axes
+$k_i,l_i\in\{X,Y,Z\}$. Prepare their positive eigenstates, call
+$\mathcal A$ and $\mathcal B$ once each, and measure in the same bases.
+Write $u_i,v_i\in\{\pm1\}$ for the results. Conditional on the full
+realized Pauli labels $a,b$, these are
+$u_i=h(a_i,k_i)$ and $v_i=h(b_i,l_i)$. Set
+
+$$
+f_i=1+9\sigma(k_i,l_i)\,1_{\{u_i=v_i=-1\}},\qquad
+\sigma(k,l)=\begin{cases}1&k=l,\\-1&k\ne l,\end{cases}
+\qquad Z=\prod_{i=1}^n f_i.
+\tag{OL1}
+$$
+
+If either $a_i$ or $b_i$ is identity, then $f_i=1$ deterministically.
+If both are the same nonidentity Pauli, the nine axis pairs contain
+two diagonal double-minus events, two off-diagonal double-minus events,
+and five other events. The corresponding $f_i$ values are $10,-8,1$.
+For distinct nonidentity Paulis the counts are one, three, and five.
+Consequently the complete one-qubit table is
+
+$$
+\begin{array}{c|c|c}
+(a_i,b_i)&\mathbb E f_i&\mathbb E f_i^2\\\hline
+a_i=I\text{ or }b_i=I&1&1\\
+a_i=b_i\ne I&1&37\\
+a_i,b_i\ne I,\ a_i\ne b_i&-1&33.
+\end{array}
+\tag{OL2}
+$$
+
+The random axes are independent across sites, even when the physical
+errors are correlated across sites. Thus, conditional on $a,b$,
+
+$$
+\mathbb E Z=h(a,b),\qquad
+\mathbb E Z^2=37^{J_=}33^{J_{\ne}}\le37^J,
+\quad J=|\operatorname{supp}(a)\cap\operatorname{supp}(b)|.
+\tag{OL3}
+$$
+
+Averaging gives $\mathbb E Z=\eta$. In particular an exponentially
+large error support does not by itself force an exponential scalar
+estimation cost.
+
+**All-dimension local-stochastic bound.** Suppose, for every set of
+sites $S$, the two error laws obey
+
+$$
+\Pr(S\subseteq\operatorname{supp}(a))\le\alpha^{|S|},\qquad
+\Pr(S\subseteq\operatorname{supp}(b))\le\beta^{|S|}.
+\tag{OL4}
+$$
+
+These are explicit promises about the complete within-call errors,
+not a claim that all architecture noise satisfies them. Channel draws
+are independent of one another. Expanding the product over overlap
+indicators $A_i=1_{a_i\ne I}$, $B_i=1_{b_i\ne I}$ gives
+
+$$
+\begin{aligned}
+\mathbb E Z^2
+&\le\mathbb E\prod_i(1+36A_iB_i)\\
+&=\sum_{S\subseteq[n]}36^{|S|}
+ \Pr(S\subseteq\operatorname{supp}(a))
+ \Pr(S\subseteq\operatorname{supp}(b))\\
+&\le(1+36\alpha\beta)^n\le e^{36n\alpha\beta}=:V.
+\end{aligned}
+\tag{OL5}
+$$
+
+For $0<\epsilon,\delta<1$, use $b=\lceil4V/\epsilon^2\rceil$ trials per batch and an odd number
+$t\ge8\ln(2/\delta)$ of independent batches. Each batch mean has
+error greater than $\epsilon$ with probability at most $1/4$, by
+Chebyshev. Hoeffding on the bad-batch indicators makes the median fail
+with probability at most $e^{-t/8}\le\delta$. This proves the ordinary
+query upper bound
+
+$$
+O\!\left(e^{36n\alpha\beta}\epsilon^{-2}
+                  \log(2/\delta)\right)
+\tag{OL6}
+$$
+
+paired trials, including every attempt. When $n\alpha\beta=O(1)$,
+the number of channel calls is bounded independently of $n$. Constants
+can be large; this is not a measured finite-resource winner. Each trial
+needs $n$ freshly prepared pure probe qubits for each call, local basis
+controls, $2n$ readout bits, reset, and $O(n)$ classical arithmetic.
+There is no extra reference bank, global Clifford, retained quantum
+memory between calls, or need to expose either error label. Precision
+for the product statistic and its classical representation must also
+be budgeted. The result does not simulate the full switched instrument.
+
+With $r$ ideal Bell references on a specified subset, first Bell-probe
+$\mathcal A$ there to learn $a_R$, and use a product $P_{a_R}$ eigenstate
+on the corresponding $\mathcal B$ input. Its measured parity equals
+$h(a_R,b_R)$. Multiply that parity by (OL1) only on the $n-r$
+unreferenced sites. Conditional unbiasedness is unchanged and (OL5)
+uses the overlap on those sites. Arbitrary correlations between the
+referenced and unreferenced errors are allowed. The Bell bank is coherent
+only during the first channel; faulty references need a separate analysis.
+
+**A bounded refinement, not an optimal ordinary frontier.** Choose
+$\Pr(k=l)=w\in(0,1)$, uniformly within the three diagonal or six
+off-diagonal pairs. Replace $9\sigma$ on a double-minus event by $3/w$
+on the diagonal and $-6/(1-w)$ off it. The two nonidentity cases in
+(OL2) then have second moments
+
+$$
+V_=(w)=1+\frac6w+\frac{12}{1-w},\qquad
+V_{\ne}(w)=-3+\frac3w+\frac{18}{1-w}.
+\tag{OL7}
+$$
+
+Their means remain $1,-1$ and identity cases remain deterministic.
+For $w=2/5$ the moments are $36,69/2$, so $36^J$ and
+$(1+35\alpha\beta)^n$ replace the bounds in (OL3),(OL5).
+Within this specified two-class axis family the minimum of the larger
+second moment is $19+12\sqrt2$, attained at $w=\sqrt2-1$:
+$V_=$ alone has that minimum and $V_{\ne}$ is then smaller by one.
+This does not optimize general probe states, adaptive experiments,
+multiple queries or other ordinary strategies.
+
+**Readout contrast and its calibration are real resources.** Here is
+one explicit extension of the uniform-axis experiment. Suppose each
+ideal sign is independently passed through a known binary visibility
+$s_A,s_B\in(0,1]$: $\mathbb E[\widetilde u\mid u]=s_Au$ and
+$\mathbb E[\widetilde v\mid v]=s_Bv$. This can describe calibrated
+symmetric preparation/readout attenuation when that binary model is
+justified; it is not arbitrary SPAM. Assume the bit errors are independent
+across sites, between experiments, and of the physical Pauli labels.
+Replace the two indicators in (OL1) by
+
+$$
+U=\frac{1-\widetilde u/s_A}{2},\qquad
+W=\frac{1-\widetilde v/s_B}{2},\qquad
+\tau_A=\frac{s_A^{-2}-1}{4},\quad
+\tau_B=\frac{s_B^{-2}-1}{4}.
+\tag{OL8}
+$$
+
+Conditional means are the ideal indicators, so the product remains
+unbiased. Also $\mathbb E U^2=1_{u=-1}+\tau_A$, and similarly for
+$W$. Expanding $(1+9\sigma UW)^2$ and averaging the nine axis pairs
+gives, respectively for both identities, only a $\mathcal B$ error,
+only an $\mathcal A$ error, and two nonidentity errors,
+
+$$
+\begin{array}{c|c}
+(a_i,b_i)&\mathbb E f_i^2\\\hline
+(I,I)&1+81\tau_A\tau_B\\
+(I,b_i\ne I)&1+54\tau_A+81\tau_A\tau_B\\
+(a_i\ne I,I)&1+54\tau_B+81\tau_A\tau_B\\
+\text{both nonidentity}&V_{a_i,b_i}
+             +54(\tau_A+\tau_B)+81\tau_A\tau_B,
+\end{array}
+\tag{OL9}
+$$
+
+where $V_{a_i,b_i}$ is $37$ or $33$. Therefore the nonnegative product
+expansion used above proves
+
+$$
+\mathbb E Z^2\le
+\left[1+36\alpha\beta+54(\tau_A\beta+\tau_B\alpha)
+                  +81\tau_A\tau_B\right]^n.
+\tag{OL10}
+$$
+
+For site-dependent calibrated visibilities, use their worst-case
+$\tau$ in this bound, or retain the site-dependent product when the
+corresponding support promises are available. The $w=2/5$ experiment
+has different coefficients: $35,55,165/2$ replace $36,54,81$ in
+(OL10). Neither formula gives bounded overhead at fixed nonzero
+visibility loss as $n$ grows. In particular even a physically perfect
+channel pair has variance driven by $\tau_A\tau_B$; false double-minus
+events cannot be called free error detection.
+
+For clarity about finite calibration, suppose estimated visibilities
+$\widehat s$ satisfy $|s_A/\widehat s_A-1|\le d_A$ and likewise $d_B$.
+Writing each corrected indicator mean as its ideal indicator plus
+$\Delta(1_{u=-1}-1/2)$ shows that the absolute one-site mean error is
+at most $3d_A B_i+3d_B A_i+9d_Ad_B/4$. Telescoping the product and
+using (OL4) consequently bounds the total bias by
+
+$$
+\left[1+3(d_A\beta+d_B\alpha)+\frac94d_Ad_B\right]^n-1.
+\tag{OL11}
+$$
+
+This is a bias bound, not permission to use the exact-calibration
+variance in (OL10) with an uncertain visibility. A confidence-bounded
+second moment must be used as well. Calibration precision and its
+failure probability, trusted calibration access, reset, drift and reuse
+must be charged. For symmetric strengths of order $n^{-1/2}$, (OL11)
+requires relative visibility error of order $\epsilon/\sqrt n$ to
+keep bias of order $\epsilon$. Estimating $n$ constant visibilities
+in parallel to that precision by bounded binary calibration data costs
+$O(n\epsilon^{-2}\log(n/\delta))$ calibration shots under a trusted
+visibility fixture. This is a sufficient calibration budget, not a
+SPAM-identifiability theorem or a lower bound. Amortizing it requires
+stationarity. The switch has its own helper/routing contrast budget.
+
+**Where the application search must now move.** Unknown, spatially
+scrambled correlations can evade (OL4) at small strength, and the
+finite constants or SPAM terms can erase the direct estimator's appeal.
+For example, conjugate a product of independent $X$ and $Z$ generator
+faults, each present with probability $r$, by one fixed unknown global
+Clifford $C$. The self-channel statistic is exactly
+
+$$
+\eta=(1-2r^2)^{2n},\qquad p_0=(1-r)^{2n}.
+\tag{OL12}
+$$
+
+Indeed the one-qubit commutation sign factors into the independent
+Bernoulli products $xz'$ and $zx'$, each with mean $1-2r^2$;
+Clifford conjugation preserves the commutation form. For fixed $c>0$, at $r=c/\sqrt n$
+the signal tends to $e^{-4c^2}$ even though $p_0$ vanishes. Averaging
+over $C$, a physical site's nonidentity error probability is
+$(1-p_0)3\cdot4^{n-1}/(4^n-1)$, since every nonzero Pauli label is
+uniformly scrambled. Thus the physical-axis small-strength bound does
+not apply uniformly to this family. A public $C$ permits ordinary
+unscrambling and changes that comparison. This is a stress test with a
+constant signal, not a query lower bound or an identified hardware task.
+It still needs a real reason for hidden global scrambling, an ordinary
+adaptive/concatenating bound, and a native routing and calibration ledger.
+
+The [exact local-overlap replay](checks/architecture/verify_local_overlap.py) checks every one-qubit Pauli pair, the weighted-axis
+refinement, binary-visibility output distributions, correlated multi-site
+examples, partial-reference signs, calibration-bias examples and (OL12).
+The all-dimension guarantees are the proofs above; no optimality,
+hardware advantage, general SPAM robustness or novelty priority follows.
+
+<a id="nr-r06-local-lindblad-statistic"></a>
+
+### Sparse two-local Pauli-Lindblad noise permits ordinary scalar estimation
+
+A sparse *generator* is a different promise from a sparse error
+distribution. The following ordinary estimator applies even when both
+channels have full Pauli support. It learns only a linear number of local
+parameters and then evaluates the commutation statistic classically,
+without a coherent reference bank or an all-eigenvalue reconstruction.
+Its calibration and model premises are explicit.
+
+**Physical channel and local rates.** On the same $n$-qubit register, let
+each stationary repeatable channel $X\in\{A,B\}$ be
+
+$$
+\mathcal E_X=e^{\mathcal L_X},\qquad
+\mathcal L_X=\sum_{g\in\mathcal G_X}
+ r_{X,g}(\operatorname{Ad}_{P_g}-\mathrm{Id}),\qquad r_{X,g}\ge0.
+\tag{LL1}
+$$
+
+The known admissible list $\mathcal G_X$ contains the three one-site
+Paulis per vertex and nine nonidentity/nonidentity pairs per edge of a
+known simple graph $G_X$. Zero rates are allowed. Set
+$s_X=3n+9|E_X|$. The physical axes and the channel window are public;
+repeated uses of the *Pauli channel itself* are available, with fresh
+stationary noise. This includes an appropriate idle or known net-identity
+cycle. An unknown error map inferred behind a nontrivial Clifford layer is
+not automatically such an oracle.
+
+Pauli conjugation superoperators commute, including when their unitary
+representatives anticommute. Each factor in (LL1) is
+
+$$
+e^{r_g(\operatorname{Ad}_{P_g}-\mathrm{Id})}
+ =(1-\theta_g)\mathrm{Id}+\theta_g\operatorname{Ad}_{P_g},
+\qquad \theta_g=\frac{1-e^{-2r_g}}2.
+\tag{LL2}
+$$
+
+Thus the error label is the binary sum of independently selected generator
+labels with event probabilities $\theta_g$. The event probability is
+not $r_g$. Positive one-site rates already permit a full-support
+distribution despite the $O(n)$ parameter count on a bounded-degree graph.
+For the symplectic character $\chi(g,z)=(-1)^{[g,z]}$,
+
+$$
+\lambda_X(z)=
+ \exp\!\left[\sum_g r_{X,g}(\chi(g,z)-1)\right]>0,
+\qquad
+\ell_X(z):=\log\lambda_X(z).
+\tag{LL3}
+$$
+
+**Exact inversion from weight at most two.** Suppress $X$ temporarily.
+For edge $ij$, and $a,b\in\{X,Y,Z\}$, character orthogonality gives
+
+$$
+\begin{aligned}
+r_{ab}^{ij}
+ &=\frac1{16}\sum_{u,v\in\{I,X,Y,Z\}}
+       \ell(u_i v_j)\chi(a,u)\chi(b,v),\\
+m_a^i
+ &:=\frac14\sum_{u\in\{I,X,Y,Z\}}
+       \ell(u_i)\chi(a,u)
+   =r_a^i+\sum_{j:ij\in E}\sum_{b\ne I}r_{ab}^{ij},\\
+r_a^i&=m_a^i-\sum_{j:ij\in E}\sum_{b\ne I}r_{ab}^{ij}.
+\end{aligned}
+\tag{LL4}
+$$
+
+Use the appropriate order of edge indices when $j<i$.
+For the first identity, every generator other than one supported on
+exactly $ij$ depends on at most one of the two probe coordinates.
+Summing the nontrivial character on the other coordinate kills it,
+including the constant part of (LL3). The remaining $4$-letter Fourier
+orthogonality selects exactly $a,b$. The one-coordinate calculation
+selects all generator restrictions equal to $a$, which proves the
+second and third identities. These arguments hold for every $n$.
+Only the $s_X$ nonidentity probe labels on vertices and edges are needed;
+$\ell(I)=0$ is known.
+
+If every requested $\ell$ has absolute error at most $\gamma$, each
+two-body rate has error at most $\gamma$. Each one-body rate has error at
+most $(1+3\deg i)\gamma$. Consequently
+
+$$
+\|\widehat r_X-r_X\|_1\le B_X\gamma,\qquad
+B_X=3n+27|E_X|\le3s_X.
+\tag{LL5}
+$$
+
+Indeed, the two-body total contributes $9|E_X|\gamma$, while the
+one-body total contributes
+$[3n+9\sum_i\deg i]\gamma=[3n+18|E_X|]\gamma$.
+Clipping estimated rates to zero cannot increase coordinate error because
+the true rates are nonnegative. One may clip the pair rates before the
+one-body subtraction; the same bounds hold.
+
+**Fixed SPAM can be removed with an explicit contrast cost.** For one
+requested nonidentity probe $P_z$, choose a fixed preparation $\rho$
+and a fixed binary measurement with observable $M$, $\|M\|\le1$.
+They can include arbitrary fixed state-preparation and measurement errors.
+Apply a trusted uniformly random Pauli $P_R$ *after preparation*, perform
+$m=0$ or $1$ actual channel uses, and weight the observed outcome
+$y\in\{-1,1\}$ by $\chi(R,z)$. Character projection gives
+
+$$
+\begin{aligned}
+\mathbb E_R\!\left[\chi(R,z)P_R\rho P_R^\dagger\right]
+ &=\frac{\operatorname{tr}(P_z\rho)}{D}P_z,\\
+\mu_z(m):=\mathbb E[\chi(R,z)y]
+ &=A_z\lambda(z)^m,\qquad
+A_z=\frac{\operatorname{tr}(P_z\rho)\operatorname{tr}(MP_z)}D .
+\end{aligned}
+\tag{LL6}
+$$
+
+The first equality follows by expanding $\rho$ in all $D^2$ Paulis
+and using character orthogonality. The second uses the actual diagonal
+channel action on $P_z$; unwanted SPAM components are projected out.
+This construction needs no controlled unknown operation.
+
+Assume the preparation and measurement are the same at both depths,
+$|A_z|\ge A_{\min}>0$, and all requested eigenvalues obey
+$\lambda(z)\ge\lambda_{\min}>0$. Negative $A_z$ is allowed.
+If both estimated means have error at most
+$\zeta=A_{\min}\lambda_{\min}\gamma/4$, with $0<\gamma\le1$,
+their ratio is positive, and
+
+$$
+\left|\log\frac{\widehat\mu_z(1)}{\widehat\mu_z(0)}
+             -\ell(z)\right|
+ \le 2[-\log(1-\gamma/4)]\le\gamma .
+\tag{LL7}
+$$
+
+Each relative mean error is at most $\gamma/4$, proving the first
+inequality; the final inequality follows from
+$-\log(1-x)\le x/(1-x)$ for $x\le1/4$.
+Clipping the log ratio to $[\log\lambda_{\min},0]$ cannot increase its
+error. Calibration may reject probes with inadequate contrast rather than
+silently treating zero contrast as informative.
+
+The condition number is local, rather than an $n$-qubit Bell visibility.
+If the sum of rates incident on every vertex is at most $L$, a probe of
+weight at most two anticommutes with generators of total rate at most
+$2L$, so $\lambda_{\min}=e^{-4L}$ suffices. A constant lower bound on
+the measured low-weight contrasts is a separate calibration premise.
+Fixed SPAM robustness does not remove its $A_{\min}^{-2}$ sampling cost.
+
+**Settings and channel-query count.** For $0<\epsilon,\delta<1$, put
+$M=s_A+s_B$ and $B=B_A+B_B$. For each depth and requested probe,
+Hoeffding and a union bound make all mean errors at most $\zeta$,
+except with probability $\delta/2$, using
+
+$$
+N_{\mathrm{cal}}=
+\left\lceil2\zeta^{-2}\log\frac{8M}{\delta}\right\rceil
+\tag{LL8}
+$$
+
+shots per setting. No independence between compatible observables measured
+on the same shot is needed for this union bound.
+
+One may run a separate setting per probe, giving $2M N_{\mathrm{cal}}$
+shots and $M N_{\mathrm{cal}}$ tested-channel calls. There is a better
+parallel schedule when product preparation and terminal per-qubit readout
+are supplied. Properly color graph $G_X$ using $c_X\le\Delta_X+1$
+colors. For each assignment of $X,Y,Z$ axes to colors, prepare in and
+measure those local bases. Every one-site probe and every allowed
+two-site probe is compatible with some assignment. A single shot supplies
+the relevant local parities and character weights simultaneously.
+The unknown fixed $\rho,M$ in (LL6) may depend on this setting and on
+the parity being read; require the same contrast bound for all assigned
+probes. A full random Pauli layer implements the projection even for
+correlated fixed SPAM; it is not replaced by an unproved local-noise
+factorization.
+
+Writing $C=3^{c_A}+3^{c_B}$, this schedule uses at most
+$2C N_{\mathrm{cal}}$ shots and $C N_{\mathrm{cal}}$ tested-channel
+calls. The depth-zero shots omit that channel but still incur preparation,
+trusted randomization, reset and readout. Bipartite graphs have $c_X\le2$
+and hence at most nine global product-basis settings per channel.
+All trusted Pauli pulses and basis operations count as physical controls;
+there are $O(n)$ such local operations per full-register shot. There is
+no clean reference register or global entangling Clifford requirement.
+
+**Classical sampling and the scalar error ledger.** Sample a fitted
+$\widehat B$ label $b$ by independently selecting its generators with
+probabilities (LL2), then compute
+$\lambda_{\widehat A}(b)$ from (LL3). The resulting number lies in
+$[0,1]$, costs $O(s_A+s_B)$ elementary sparse-label work, and has
+mean $\eta(\widehat A,\widehat B)$. Its sample average needs
+
+$$
+N_{\mathrm{MC}}\ge
+2\epsilon^{-2}\log(4/\delta)
+\tag{LL9}
+$$
+
+independent classical draws to have error at most $\epsilon/2$
+except with probability $\delta/2$.
+
+For completeness, the approximation bias needs no dimension-dependent
+distribution reconstruction. Couple each Bernoulli generator event in
+two rate models with a common uniform random number. Because
+$\theta'(r)=e^{-2r}\le1$,
+
+$$
+\operatorname{TV}(p_r,p_{\widehat r})
+ \le\sum_g|\theta(r_g)-\theta(\widehat r_g)|
+ \le\|r-\widehat r\|_1.
+\tag{LL10}
+$$
+
+Taking the XOR of events cannot increase total variation. Since
+$\chi(a,b)\in\{-1,1\}$, changing the two independent label laws changes
+its mean by at most
+$2(\|r_A-\widehat r_A\|_1+\|r_B-\widehat r_B\|_1)$.
+Thus the total error is bounded by
+$2B\gamma+\epsilon/2+\epsilon_{\mathrm{num}}$, with learning and
+Monte Carlo failure probability at most $\delta$. For example, choose
+$\gamma=\epsilon/(8B)$ and bound classical arithmetic/sampling
+approximation bias by $\epsilon_{\mathrm{num}}\le\epsilon/4$.
+If Bernoulli probabilities or exponentials are approximated, allocate this
+bias explicitly using the same coupling bound; the required precision has
+only logarithmic dependence on $s_A+s_B$ and $1/\epsilon$.
+
+Consequently, on bounded-degree graphs with constant
+$A_{\min},\lambda_{\min}$, the parallel scheme uses
+$O((s_A+s_B)^2\epsilon^{-2}\log((s_A+s_B)/\delta))$
+tested-channel calls and the same order of shots, plus
+$O((s_A+s_B)\epsilon^{-2}\log(1/\delta))$ classical Monte Carlo work.
+The more general explicit count is
+$O(CB^2A_{\min}^{-2}\lambda_{\min}^{-2}\epsilon^{-2}\log(M/\delta))$
+calls. Without the parallel settings, replace $C$ by $M$.
+Training may be reused for multiple module-pair statistics only over its
+validated stationarity interval.
+
+**Physical and literature scope.** Sparse local Pauli-Lindblad modeling,
+factorized Bernoulli sampling, and overlapping low-weight product-basis
+learning are established techniques; see
+[van den Berg et al., *Probabilistic error cancellation with sparse
+Pauli-Lindblad models on noisy quantum processors*, Supplement SIII--SIV](https://arxiv.org/html/2201.09866).
+The source also treats actual Clifford layers, where robust decays can
+identify fidelity-pair products and additional assumptions or unit-depth
+information supply missing splits. The elementary inversion and ratio
+above are asserted for the declared repeatable Pauli channel, not for
+arbitrary bare-gate noise behind an unknown Clifford cycle.
+[Chen et al., *Disambiguating Pauli noise in quantum computers*](https://arxiv.org/html/2505.22629)
+explain why separately
+learning gate and SPAM parameters can introduce gauge inconsistencies;
+a fitted decay alone does not supply the physical channel interface here.
+No priority claim is made for these ingredients.
+
+There is an exact task-specific guard against replacing the physical
+channel by unresolved Clifford-orbit products. A Hadamard layer swaps $X$
+and $Z$. Two one-qubit Lindblad models with
+
+$$
+(\lambda_X,\lambda_Y,\lambda_Z)
+ =(3/4,3/8,1/2)\quad\hbox{or}\quad(1/2,3/8,3/4)
+\tag{LL11}
+$$
+
+have the same $X/Z$ orbit product and $Y$ fidelity, but against
+$\mathcal B=(3/4)\mathrm{Id}+(1/4)\operatorname{Ad}_Z$ they give
+$\eta=7/8$ and $15/16$. They are realized by interchanging the positive
+$X$ and $Z$ generator rates, whose $e^{-2r}$ values are $1/2$ and $3/4$.
+This is an ambiguity of those orbit statistics, not an assertion of
+equivalence under extra admissible experiments.
+
+Trusted random Pauli controls, fixed depth-independent SPAM, nonzero
+contrast, stable positive local eigenvalues, the exact two-local generator
+model and fresh noise are substantive assumptions. Timing-dependent
+preparation/readout, randomizer-dependent faults, non-Markovian drift,
+leakage, higher-weight generators or a misspecified graph require new
+systematic-error budgets. In particular, fitting weight-two data does not
+certify the absence of unmodeled higher-weight correlations. The result
+gives a polynomial ordinary upper bound for this architecture-relevant
+family even with full error support; it is not a universal $\eta$
+algorithm, an optimal memory/query frontier or a useful retained-output
+certificate.
+
+The [exact local-model replay](checks/architecture/verify_lindblad_statistic.py)
+checks rational log-eigenvalue inversion, rate-error/clipping bounds,
+Bernoulli convolution and the full-support scalar expectation on small
+graphs, complete Pauli-coefficient SPAM projection, and the orbit
+counterexample (LL11). All-$n$ inversion, conditioning, concentration,
+graph-cover and physical-interface claims remain the arguments above.
+
+**Related two-copy scope.**
+[Tang and Steckmann](https://arxiv.org/html/2610.03307v1) learn stabilizer
+structure of an underlying low-nullity pure target under specified
+Pauli-noise conditions; Bell sampling requires two $n$-qubit copies
+simultaneously. This does not directly robustify the subgroup-output
+experiment: $\Lambda_V(\psi_L)=D^{-1}\sum_{z\in K}\mathrm{sign}(z)P_z$,
+$K=L\cap V^\perp$, is a rank-$2^R$ normalized code projector. For
+$R>0$, its weak Pauli symmetry $K^\perp$ has dimension $n+R$ and
+is noncommuting. Its maximum eigenvalue $2^{-R}\le1/2$ also precludes
+any pure-target Pauli-noise representation with identity probability
+above $1/2$. The paper's support-preserving pure-target guarantee
+therefore cannot be substituted for a theorem about these mixed channel
+outputs, nor does that limitation establish hardness of $\eta$.
+
+<a id="nr-r06-pauli-spectral-closure"></a>
+
+### Spectral concentration and dense-noise signal bounds
+
+There is a further ordinary estimator for the scalar in (PM1) when one
+channel has bounded nonidentity Fourier mass, even if its Fourier support
+is unknown. This includes a channel with only polynomially many nonzero
+Pauli eigenvalues. The argument uses heavy **error probabilities** of the
+other channel; it does not learn the complete eigenvalue spectrum or
+assume the hidden Fourier labels are supplied.
+
+Let $D=2^n$, $N=D^2$, $G=\mathbb F_2^{2n}$ and
+$H_{ab}=(-1)^{[a,b]}$. The physical Pauli axes are public. The fixed
+channels have error laws $p,q$, with fresh independent errors at each
+use, and
+
+$$
+\lambda_{\mathcal A}(b)=\sum_a p_aH_{ab},\qquad
+\eta=p^{\mathsf T}Hq
+     =q_0+\sum_{b\ne0}q_b\lambda_{\mathcal A}(b).
+\tag{NL1}
+$$
+
+Suppose a known bound $S\ge0$ satisfies
+
+$$
+\sum_{b\ne0}|\lambda_{\mathcal A}(b)|\le S.
+\tag{NL2}
+$$
+
+If at most $s$ nonidentity eigenvalues are nonzero, then $S=s$ is a
+valid bound because $|\lambda_{\mathcal A}(b)|\le1$. The labels and
+values need not be known. The second channel is arbitrary. For
+$0<\epsilon,\delta<1$, the following ordinary protocol uses no
+additional quantum reference qubits and estimates $\eta$ within
+$\epsilon$ except with probability $\delta$.
+
+**The population-recovery input.**
+[Flammia and O'Donnell, Quantum **5**, 549 (2021), Theorem 1](https://doi.org/10.22331/q-2021-09-23-549)
+([primary theorem](https://arxiv.org/html/2105.02885#S1))
+give an algorithm using
+
+$$
+M_B=O\!\left(\theta^{-2}\log\frac{n}{\theta\delta}\right)
+\tag{NL3}
+$$
+
+calls to $\mathcal B$, unentangled single-qubit preparations from the
+six Pauli eigenstates and product measurements. With failure at most
+$\delta/2$, it returns estimates $\widehat q$ as a list of at most
+$4/\theta$ labels; all unlisted coordinates are zero and
+$\|\widehat q-q\|_\infty\le\theta$. Its classical postprocessing
+cost is $O(M_Bn/\theta)$. The change from $\delta$ to $\delta/2$
+only changes the logarithm by a constant. This theorem concerns
+error-rate accuracy, not all-eigenvalue accuracy. Its stated product
+preparation/readout and repeated-use assumptions are resources here;
+arbitrary SPAM noise is not removed by this invocation.
+
+Clip the returned estimates into $[0,1]$, retaining zero at every
+unlisted coordinate. Clipping cannot increase their coordinate errors.
+Let $\mathcal L$ be the returned nonidentity list and $K=|\mathcal L|$.
+On the recovery event,
+
+$$
+K\le\frac4\theta,\qquad
+\sum_{b\in\mathcal L}\widehat q_b
+\le\sum_{b\in\mathcal L}q_b+K\theta\le5.
+\tag{NL4}
+$$
+
+Normalization of the list is unnecessary; only its nonnegative mass
+bound is used. In particular, no step assumes $\widehat q$ is an
+exact probability distribution.
+
+For every $b\in\mathcal L$, prepare a product $+1$ eigenstate of the
+known $P_b$, call $\mathcal A$ and measure $P_b$ by local Pauli
+readout and classical parity. Each $\{-1,1\}$ outcome has mean
+$\lambda_{\mathcal A}(b)$. Conditional on the recovered list, use
+fresh calls and
+
+$$
+M_A(b)\ge
+2\alpha^{-2}\log\frac{4\max(1,K)}\delta
+\tag{NL5}
+$$
+
+samples per listed label. Hoeffding and a union bound make all empirical
+means $\nu_b$ accurate to $\alpha$ except with probability
+$\delta/2$. If $K=0$, this step is empty. Output
+
+$$
+\widehat\eta=\widehat q_0+
+\sum_{b\in\mathcal L}\widehat q_b\nu_b,
+\tag{NL6}
+$$
+
+where $\widehat q_0=0$ if the identity label was not listed. The
+error on the two successful events is
+
+$$
+\begin{aligned}
+\widehat\eta-\eta
+&=\sum_{b\in G}(\widehat q_b-q_b)
+       \lambda_{\mathcal A}(b)
+ +\sum_{b\in\mathcal L}\widehat q_b
+       (\nu_b-\lambda_{\mathcal A}(b)),\\
+|\widehat\eta-\eta|
+&\le (S+1)\theta+5\alpha.
+\end{aligned}
+\tag{NL7}
+$$
+
+The first bound uses (NL2), $\lambda_{\mathcal A}(0)=1$ and the
+coordinate guarantee at **all** labels, including those not returned.
+It covers missing Fourier directions without identifying them. The
+second uses (NL4). Choose, for example,
+$\theta=\epsilon/[4(S+1)]$ and $\alpha=\epsilon/10$; then
+(NL7) is at most $3\epsilon/4$. Union-bounding the two failure
+events proves the claimed $\epsilon$ guarantee.
+
+The total channel-query upper bound is
+
+$$
+O\!\left(
+\frac{(S+1)^2}{\epsilon^2}
+ \log\frac{n(S+1)}{\epsilon\delta}
++\frac{S+1}{\epsilon^3}
+ \log\frac{S+1}{\epsilon\delta}
+\right).
+\tag{NL8}
+$$
+
+Logarithms may equivalently use $2$ times their arguments. Classical
+postprocessing is polynomial: the recovery step costs
+$O(M_Bn/\theta)$, and generating, recording and processing the
+known-index probes costs $O(n\sum_bM_A(b))$ with standard bit
+representations. There are only $O((S+1)/\epsilon)$ listed labels.
+All quantum preparations and measurements are local product operations;
+the protocol needs no coherent reference, controlled unknown channel,
+inverse or concatenation. These are achievable bounds, not an optimal
+ordinary frontier. If the known promise is $S=0$, then
+$\eta=q_0$ and the population-recovery step alone suffices.
+
+**A hidden spike cannot gain a constant gap merely from an auxiliary
+channel.** If $\lambda_{\mathcal A}(0)=1$,
+$\lambda_{\mathcal A}(a)=t$ for one unknown $a\ne0$, and all other
+eigenvalues vanish, then
+
+$$
+\eta=q_0+tq_a.
+\tag{NL9}
+$$
+
+Here $|t|\le1$. A constant contribution from the hidden label requires
+$q_a=\Omega(1)$; it is then an error-rate heavy hitter accessible to
+the ordinary routine. A diffuse $q$ instead gives a vanishing hidden-label
+contribution. More generally (NL8) applies with $S=|t|\le1$ to any
+auxiliary Pauli channel, including one correlated with $a$ in the
+instance description, provided the physical error draws are independent.
+Thus the all-eigenvalue or hidden-spike lower bounds do not yield a
+constant-gap scalar lower bound through this direct construction. This
+does not bound information in a switch's complete conditional output.
+
+**Dense perturbations also need a signal check.** Character orthogonality
+gives $H^2=NI$ and $\|H\|_2=D$. Hence
+
+$$
+|\eta|\le D\|p\|_2\|q\|_2.
+\tag{NL10}
+$$
+
+For $|\eta|\ge c>0$, the product of the collision probabilities
+must therefore satisfy
+$\bigl(\sum_ap_a^2\bigr)\bigl(\sum_bq_b^2\bigr)\ge c^2/D^2$.
+Uniform supports $A,B$ consequently obey $|A||B|\le D^2/c^2$.
+This allows supports exponential in $n$; it does not imply that one
+channel has only polynomially many heavy errors.
+
+For a more explicit dense-noise bound, let $u$ be uniform on $G$ and
+write $r=p-u$, $s=q-u$. Since $Hu=e_0$,
+
+$$
+\eta=p_0+q_0-\frac1N+r^{\mathsf T}Hs.
+\tag{NL11}
+$$
+
+Define the classical chi-square divergences
+$C_p=\chi^2(p\|u)=N\|r\|_2^2$ and
+$C_q=\chi^2(q\|u)=N\|s\|_2^2$. The coordinate bounds
+$|r_0|\le\sqrt{C_p}/D$, $|s_0|\le\sqrt{C_q}/D$ and the
+operator norm of $H$ imply
+
+$$
+|\eta|\le\frac1{D^2}
++\frac{\sqrt{C_p}+\sqrt{C_q}+\sqrt{C_pC_q}}D.
+\tag{NL12}
+$$
+
+In particular, if both divergences are bounded by a dimension-independent
+$C$, then $|\eta|\le D^{-2}+(2\sqrt C+C)/D$. Such generic dense
+perturbations cannot furnish a constant-gap helper-$X$ statistic. A
+known baseline or classical postprocessing of that fringe does not
+turn its vanishing gap into a constant-shot test. This is a necessary
+signal bound, not a general efficient estimator, a bound on all switched
+outputs or a lower bound on ordinary queries.
+
+**The remaining constant-gap test is separate.** A concrete unresolved
+resource prior is a fixed unknown maximal isotropic subspace
+$L\le G$, with $p=q=\mathrm{Unif}(L)$, versus
+$p=q=u$. Both channels are reused and each call draws fresh errors.
+Their scalar values are respectively $1$ and $D^{-2}$, so the ideal
+self-switch has a constant helper-readout gap. There is also an explicit
+ordinary linear-query test; the rank-$n$ estimation formula must not be
+applied to the fully depolarizing channel, whose error subspace has rank
+$2n$.
+
+To make the test precise, choose a random probe Lagrangian $J$, prepare
+its known stabilizer state and measure its stabilizer syndromes after
+each use. For complete depolarization the true syndrome rank is $n$,
+so $X:=2^{n-R}=1$. For the structured channel, rank-nullity gives
+$X=|L\cap J|$. The
+[subgroup inclusion probabilities](#nr-r08-subgroup-ordinary) imply
+
+$$
+\mathbb E(X-1)=\frac{D-1}{D+1},\qquad
+\mathbb E(X-1)^2=
+\frac{(D-1)(3D-2)}{(D+1)(D+2)}.
+$$
+
+Indeed the first moment counts nonzero vectors in $L\cap J$; the
+second follows by subtracting $2\mathbb EX-1$ from the pair-count
+formula (SG7) at $\eta=1$. Cauchy--Schwarz therefore gives
+
+$$
+\Pr(X>1)\ge
+\frac{(D-1)(D+2)}{(D+1)(3D-2)}\ge\frac13
+\qquad(D\ge2).
+$$
+
+Repeat $T=O(\log(2/\delta))$ independent settings and use
+$n+\lceil\log_2(2T/\delta)\rceil$ channel calls per setting to
+recover each syndrome rank. The rank-learning failure probability is
+at most $\delta/2$, and the chance that every structured setting has
+$X=1$ is at most $(2/3)^T$. Declaring the structured case whenever
+a recovered rank is below $n$ thus distinguishes the two channels with
+failure at most $\delta$ and
+$O((n+\log(2/\delta))\log(2/\delta))$ ordinary calls, with the
+trusted stabilizer preparation/readout resources already specified in
+the subgroup test. No hidden subgroup rank is inferred by applying its
+promised-rank estimator to the null channel.
+
+A matching lower bound against arbitrary adaptive, concatenating
+receivers with a specified reference cap is not established here.
+Both channels in this example are entanglement breaking, so this is
+not itself a delivered quantum-memory advantage or a new native
+architecture application.
+
+[Arunachalam and Schatzki, arXiv:2607.02444v2](https://arxiv.org/html/2607.02444v2)
+prove a linear memory-dependent sample bound for testing stabilizer
+**state copies**. It is a methodological lead, not a theorem for the
+channel oracle just described: arbitrary channel inputs, coherent reuse
+and the reference space needed to simulate an oracle from supplied
+states have to be preserved by a reduction. No such reduction or
+$\eta$-specific lower bound is assumed here. The spectral and dense-noise
+closures leave nonlinear or high-Fourier-mass constant-gap priors open,
+without asserting their hardness or new priority.
+
+The [finite spectral replay](checks/architecture/verify_pauli_spectral.py)
+checks character orthogonality, the reconstruction error bound on
+synthetic clipped/omitted lists, spike identities and norm bounds. It
+does not implement or verify the external population-recovery algorithm;
+that source theorem and the all-dimensional sampling and runtime
+arguments remain explicit analytic dependencies.
+
+<a id="nr-r06-pauli-coset-scalar"></a>
+
+### Reusing ordinary stabilizer sketches improves the general scalar upper bound
+
+For arbitrary independent stationary Pauli error laws, an ordinary
+calibration experiment with $r$ clean reference qubits has an explicit
+$O(2^{n-r}\epsilon^{-2}\log(2/\delta))$ channel-query upper bound for
+$\eta=\mathbb E_{a\sim p,b\sim q}\chi(a,b)$. This uses global stabilizer
+preparation/readout on the unreferenced queried qubits, and classical
+cross-pairing of independent data streams. The cross-pairs are correlated;
+the proof below accounts for their covariance. It is an upper bound, not
+an optimal exponent or a cheap classical-processing claim.
+
+**A single reference-free stabilizer sketch.** First let all $m$ queried
+qubits be unreferenced, put $d=2^m$, and let
+$\mathcal P_m=\mathbb F_2^{2m}$ with its nondegenerate symplectic form.
+Write $H_{xy}=\chi(x,y)=(-1)^{[x,y]}$, so $H=H^\mathsf T$ and
+$H^2=d^2I$. Choose a uniformly random Lagrangian $L$ of dimension $m$,
+prepare its known pure stabilizer state, call the Pauli channel, then
+measure the same commuting stabilizers. A known Clifford and terminal
+computational measurements implement this on the queried register,
+without extra coherent measurement ancillas.
+
+Conditional on realized error $a$, the syndrome identifies its affine
+coset $C_a=a+L$. Define the signed classical vector
+
+$$
+h_a(x)=\frac{d+1}{d}\mathbf1[x\in C_a]-\frac1d
+ =\begin{cases}1&x\in C_a,\\-1/d&x\notin C_a.\end{cases}
+\tag{CS1}
+$$
+
+This is a representation of a classical record, not a physical state.
+For $x\ne a$, the inclusion probability
+$\Pr(x+a\in L)=1/(d+1)$ gives $\mathbb E_Lh_a(x)=0$;
+$h_a(a)=1$ always. Thus $\mathbb E_Lh_a=e_a$.
+
+Here and below uniform Lagrangians and Clifford descriptions can be
+sampled by symplectic linear algebra. Their counting formula is
+$\prod_{j=1}^m(2^j+1)$. A prescribed nonzero vector belongs with
+probability $1/(d+1)$. Two distinct nonzero commuting vectors belong
+together with probability $1/[(d+1)(d/2+1)]$, by quotienting their
+two-dimensional isotropic span. An anticommuting pair never belongs.
+
+**The complete conditional second moment.** Put
+$M_a=\mathbb E_Lh_ah_a^\mathsf T$. At $a=0$, its $0,0$ entry is one,
+its entries connecting $0$ to a nonzero label are zero, and for nonzero
+labels $x,y$,
+
+$$
+M_0(x,y)=
+\begin{cases}
+1/d,&x=y,\\
+1/[d(d+2)],&x\ne y,\ [x,y]=0,\\
+-1/d^2,&[x,y]=1.
+\end{cases}
+\tag{CS2}
+$$
+
+These follow by expanding (CS1) and using the just stated one-vector
+and two-vector inclusion probabilities.
+For clarity, let $H'$ be $H$ restricted to nonzero labels and $J$ the
+all-ones matrix there. Character orthogonality gives
+$H'\mathbf1=-\mathbf1$ and $H'^2=d^2I-J$. The nonzero block of (CS2) is
+
+$$
+\alpha H'+\beta J+\gamma I,\quad
+\alpha=\frac{d+1}{d^2(d+2)},\quad
+\beta=-\frac1{d^2(d+2)},\quad
+\gamma=\frac{d+1}{d(d+2)}.
+$$
+
+It vanishes on $\mathbf1$ and on the $-d$ eigenspace of $H'$ orthogonal
+to $\mathbf1$. On the $+d$ eigenspace it is scalar
+$t=2(d+1)/[d(d+2)]$. Translation by $a$ therefore proves
+
+$$
+M_a=e_ae_a^\mathsf T+t\Pi_a,\quad
+\Pi_a^2=\Pi_a,\quad \Pi_ae_a=0,\quad
+t=\frac{2(d+1)}{d(d+2)}\le\frac2d,\quad
+\operatorname{rank}\Pi_a=\frac{d^2+d-2}{2}=:s.
+\tag{CS3}
+$$
+
+The rank follows from the nonzero block's trace $(d^2-1)/d$ divided
+by $t$. This establishes (CS3) in every dimension, not by finite
+enumeration.
+
+For independent sketches conditional on $a,b$,
+$Z=h_a^\mathsf THh_b$ has mean $\chi(a,b)$. Its second moment obeys
+
+$$
+\begin{aligned}
+\mathbb E[Z^2\mid a,b]
+ &=\operatorname{tr}(HM_bHM_a)\\
+ &\le1+2td^2+t^2d^2s\\
+ &\le2d^2+6d-3\le5d^2 \qquad(d\ge2).
+\end{aligned}
+\tag{CS4}
+$$
+
+For the first inequality, the $e_a,e_b$ term is $H_{ab}^2=1$.
+Each cross term is at most $td^2$ because a column of $H$ has squared
+norm $d^2$. For the last term, $H\Pi_bH\preceq d^2I$ and
+$\operatorname{tr}\Pi_a=s$. Substituting $t\le2/d$ proves the next
+inequality; $5d^2-(2d^2+6d-3)=3(d-1)^2\ge0$ proves the last.
+Averaging over arbitrary $p,q$ preserves the bound.
+
+**All cross-pairs, with their actual covariance.** Independently collect
+$N$ sketches $X_i$ from $A$ and $N$ sketches $Y_j$ from $B$, with all
+settings and channel draws independent across both streams. Their means
+are $p,q$. Let $M_p=\mathbb EXX^\mathsf T$ and
+$\Sigma_p=M_p-pp^\mathsf T$, with analogous definitions for $q$.
+The estimator
+
+$$
+T_N=\frac1{N^2}\sum_{i,j}X_i^\mathsf THY_j
+    =\overline X^\mathsf TH\overline Y
+\tag{CS5}
+$$
+
+is unbiased for $\eta$. Write $\overline X=p+U$ and
+$\overline Y=q+V$. The centered terms
+$U^\mathsf THq$, $p^\mathsf THV$ and $U^\mathsf THV$ have zero mutual
+covariance by independence of $U,V$. Since their covariances are
+$\Sigma_p/N,\Sigma_q/N$,
+
+$$
+\operatorname{Var}T_N=
+\frac{(Hq)^\mathsf T\Sigma_p(Hq)}N+
+\frac{(Hp)^\mathsf T\Sigma_q(Hp)}N+
+\frac{\operatorname{tr}(H\Sigma_qH\Sigma_p)}{N^2}.
+\tag{CS6}
+$$
+
+For the first term, (CS3) gives
+
+$$
+(Hq)^\mathsf TM_p(Hq)
+\le\sum_ap_a(Hq)_a^2+t\|Hq\|_2^2
+\le1+td^2\|q\|_2^2\le1+2d.
+$$
+
+Every entry $(Hq)_a$ is a mean of signs and lies in $[-1,1]$, while
+$\|Hq\|_2^2=d^2\|q\|_2^2$. Subtracting the nonnegative mean-square
+term only improves the covariance bound. The other first-order term
+is symmetric. Because $0\preceq\Sigma_p\preceq M_p$ and
+$0\preceq H\Sigma_qH\preceq HM_qH$, monotonicity of the trace pairing
+of positive matrices and (CS4) give
+$\operatorname{tr}(H\Sigma_qH\Sigma_p)\le5d^2$. Hence
+
+$$
+\operatorname{Var}T_N\le\frac{2+4d}{N}+\frac{5d^2}{N^2}.
+\tag{CS7}
+$$
+
+No $N^2$-independent-samples assumption appears. For
+$0<\epsilon\le1$, $d\ge2$, take
+$N=\lceil32d/\epsilon^2\rceil$.
+The right side is at most
+$\epsilon^2(5/32+5/1024)<\epsilon^2/4$.
+Chebyshev therefore makes one batch fail additive error $\epsilon$
+with probability at most $1/4$. Use independent batches and take their
+median, with the number of batches the smallest odd integer at least
+$8\log(2/\delta)$. Hoeffding on independent bad-batch indicators gives
+failure at most $\delta$.
+Each batch uses exactly $N$ calls to each channel. The result is
+$O(d\epsilon^{-2}\log(2/\delta))$ calls **per channel**.
+
+**Polynomial work per pair, rather than exponentially long sketch
+vectors.** A stored record consists of the Clifford/stabilizer setting
+and a syndrome/coset representative. Define
+
+$$
+S(C_a,C_b)=\frac1{d^2}\sum_{x\in C_a,y\in C_b}\chi(x,y).
+$$
+
+Expanding (CS1) and using $H\mathbf1=d^2e_0$ gives
+
+$$
+Z=(d+1)^2S(C_a,C_b)
+ -(d+1)\bigl(\mathbf1[0\in C_a]+\mathbf1[0\in C_b]\bigr)+1.
+\tag{CS8}
+$$
+
+Let $K=L_A\cap L_B$.
+The inner average over $y\in b_0+L_B$ vanishes unless $x\in L_B$,
+since $L_B=L_B^\perp$. Solve the affine intersection
+$C_a\cap L_B$ by binary linear algebra. If it is empty, $S=0$.
+Otherwise it is $x_0+K$ for any found $x_0$. Its remaining character
+sum vanishes unless $b_0\in K^\perp$; when it does not vanish,
+$S=2^{\dim K-m}\chi(x_0,b_0)$.
+All required operations have polynomial cost in $m$. Representatives
+do not affect the result because $K\subseteq L_B$.
+
+Thus no $d^2$-entry vector needs storage. Straightforward evaluation of
+all cross-pairs still costs $O(N^2\operatorname{poly}(n))$ classical
+work per batch and $O(N\operatorname{poly}(n))$ record storage.
+This can be very large. The query improvement is not an efficient
+classical-time or native-Clifford implementation claim.
+
+**Partial references require two independent Bell-label streams.**
+Let $R$ contain $r$ referenced qubits and $M$ the remaining
+$m=n-r\ge1$, now putting $d=2^m$. Prepare Bell pairs on $R$ and the
+chosen stabilizer state on $M$ for each channel call. Joint Bell
+readout on $R$ supplies the exact realized restricted label $a_R$;
+the other readout supplies the coset sketch $h_{a_M}$. Use the
+formal vector $X=e_{a_R}\otimes h_{a_M}$, and independently
+$Y=e_{b_R}\otimes h_{b_M}$ from the other channel. Its pair kernel is
+
+$$
+\chi(a_R,b_R)\,h_{a_M}^\mathsf TH_Mh_{b_M}.
+\tag{CS9}
+$$
+
+Conditional on the complete labels, it is unbiased even when each
+law has arbitrary $R/M$ correlations. Its squared kernel remains
+bounded by $5d^2$ because the referenced factor is a sign.
+
+The same first-order bound also survives. For fixed $a_R$, the
+$M$-slice of $Hq$ has squared norm
+
+$$
+d^2\sum_{b_M}
+ \left[\sum_{b_R}\chi(a_R,b_R)q(b_R,b_M)\right]^2
+\le d^2\sum_{b_M}q_M(b_M)^2\le d^2.
+$$
+
+Its individual entries remain in $[-1,1]$. Conditional second moments
+are $e_{a_R}e_{a_R}^\mathsf T\otimes M_{a_M}$, so the proof of (CS6)--(CS7)
+applies with this slice bound. This proves the stated
+$O(2^{n-r}\epsilon^{-2}\log(2/\delta))$ calls per channel.
+
+The same physical $r$-qubit reference bank can be read, reset and reused
+sequentially for $A$ and $B$; two simultaneous reference banks are
+unnecessary. Both channels nevertheless incur their Bell preparation,
+coherence interval and readout costs. This is different from (PM2)'s
+cheaper one-sided Bell experiment. In particular one cannot cross-pair
+its $B$ outcomes whose probe choice depended on a particular earlier
+$A$ label: the construction here deliberately samples $b_R$ independently.
+At $r=n$, use the dimension-independent one-sided experiment instead.
+
+This scalar upper bound assumes trusted stabilizer/Bell preparation and
+readout, known global Clifford settings, clean reference intervals,
+fresh independent stationary channel errors and classical record storage.
+No unknown payload is retained. Readout faults, noisy reference banks,
+Clifford synthesis, SPAM and drift require separate error budgets;
+they are not repaired by classical cross-pairing. The uniform-subgroup
+polynomial result uses its extra promise and remains stronger for that
+family. Neither construction proves a universal ordinary lower bound,
+an optimal memory/query frontier, a decoder or useful conditional quantum
+output. A switch comparison must charge these resources alongside its
+own helper coherence and routing.
+
+The [exact cross-pair replay](checks/architecture/verify_pauli_cross_pair.py) checks finite coset moments, character sums and the covariance identity. It does not establish the all-dimension or physical-resource claims by sampling.
+
+<a id="nr-r06-pauli-physical-ports"></a>
+
+### Physical ports for the scalar Pauli test
+
+The one-clean-helper comparison requires physical channel slots on the declared mixed payload. A large logical Hilbert space and coherent routing alone do not establish these slots. The following two measured interfaces narrow the next test without supplying an arbitrary-noise implementation or a physical-resource lower bound.
+
+[Wei et al., PRL 122, 120504 (2019), arXiv:1810.10238v2](https://arxiv.org/html/1810.10238), Fig. 2 and Appendices A–C, demonstrate direction-controlled order in a fiber Sagnac. One heralded photon carries the target in arrival-time bins, reaching dimension 8192. The apparatus uses selected positive fiber delays, programmed binary phase masks, 2-ns bins and a 7-km storage spool. Appendix A explicitly replaces tensor-bit XOR by cyclic addition; Fig. 5 adds active switches for genuine cyclic wrap. Table II reports 15.14±0.04-dB total loss at the largest size. Its demonstrated task starts the target in bin zero and charges repetition in a one-way communication game.
+
+Two independent interface obstructions follow analytically. First, for D=2^m, the cyclic shift $X_D|z\rangle=|z+1\pmod D\rangle$ is not a tensor-Pauli bit flip: at D=4 it sends 1→2, whereas XOR with one sends 1→0. Matching 0→1 fixes the cyclic-shift power to one, so another power cannot repair this example. Binary phase masks do not supply the missing permutation.
+
+Second, the measured delay hardware is positive time translation, not wrap on every input of a finite bin code. For the paper's task, D=2^(n+1) and each selected delay is at most 2^n−1. Starting at zero, two delays therefore stay below D. For an arbitrary code input, delay one sends |D−1> to |D>, outside the code. This is a complete boundary counterexample to identifying that physical delay with a closed D-dimensional cyclic channel. Keeping additional temporal modes preserves the physical translation isometry but changes the payload promise. Thus the many reachable output bins do not validate arbitrary maximally mixed input or arbitrary tensor-Pauli slots. A redesigned switched/modulated network could change this conclusion and must be priced separately.
+
+The ordinary reference comparison must also respect encoding. Two photons with D modes each can carry
+
+$$
+ |\Phi_D\rangle=D^{-1/2}\sum_{z=0}^{D-1}a_z^\dagger b_z^\dagger|\mathrm{vac}\rangle.
+$$
+
+This uses 2D one-particle modes, not D²: the D²-dimensional reference–target space is a two-particle space. Encoding both independent registers on one photon instead needs D² one-particle modes. The two-photon baseline still requires an entangled source, reference storage and a complete tensor-Pauli Bell-label measurement; none is free or demonstrated here at D=8192. The switch's detected herald photon is not already a retained coherent reference. No generalized Bell-decoder success bound or preparation-cost lower bound is assumed.
+
+[Li et al., PRApplied 21, 044030 (2024)](https://doi.org/10.1103/PhysRevApplied.21.044030), Fig. 1 and Appendices A–D, demonstrate one transmon-controlled two-sided cavity routing an itinerant photon into transmission/reflection. A separate source supplies 1-us pulses; the helper has T1=15.75 us and T2=4.19 us. Hybrid couplers split both outputs and interfere their other halves. Field tomography uses amplifier-noise calibration with vacuum inputs. The reported 98.06% process fidelity concerns a selected time-bin transmission channel, not the complete joint routing instrument. The [author-uploaded published text](https://www.researchgate.net/publication/379886137_Quantum_switch_for_itinerant_microwave_single_photons_with_superconducting_quantum_circuits) supplies the inspected appendices.
+
+That device provides coherent route selection, not both products BA and AB of two unknown channel slots. A proposed order network still needs return/recombination ports, delays, internal-loss and helper baths, and complete retained/rejected records. The existing microwave full-port analysis applies; a selected process fidelity cannot replace those records.
+
+The next finite physical test is therefore code closure **and** the all-record order cross term of an actual unknown noncommuting noise module. Its loss/controller/time records must preserve the required coherence. Known random-Pauli settings already reveal commutation labels; diagonal-only Pauli pairs have eta=1. Compare any surviving unknown-noise instrument against available controller records, ordinary local-overlap probes and realistically prepared references before claiming a memory advantage.
+
 ### Two further coherent-error screens
 
 For persistent $E_\theta=e^{-i\theta X}$ and $F_\phi=e^{-i\phi Z}$,

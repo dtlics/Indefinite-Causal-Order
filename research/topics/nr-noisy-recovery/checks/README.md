@@ -111,6 +111,19 @@ analytic and exact-prior conditional. The
 [Pauli-statistic replay](architecture/verify_pauli_statistic_memory.py)
 checks full Bell/PCS/product-probe identities and noise corrections,
 including local/correlated-reference counterexamples. The
+[local-overlap replay](architecture/verify_local_overlap.py) checks
+complete finite Pauli/axis/readout distributions, correlated supports,
+calibration bias and scrambled-generator signal examples. The
+[local-Lindblad replay](architecture/verify_lindblad_statistic.py)
+checks exact log-rate inversion, clipping/coupling, full-support
+sampling, SPAM projection and a Clifford-orbit ambiguity guard. The
+[spectral replay](architecture/verify_pauli_spectral.py) checks
+deterministic reconstruction-error and character/norm identities;
+it does not implement external population recovery. The
+[cross-pair replay](architecture/verify_pauli_cross_pair.py) checks
+finite coset moments, affine character sums and covariance identities.
+All-n concentration, conditioning, complexity and physical access
+claims remain analytic, with no ordinary optimality claim. The
 [cat physical-route replay](architecture/verify_cat_physical_interface.py)
 retains dummy/buffer/field registers and helper phases. The
 [Rydberg exchange replay](architecture/rydberg_exchange_eraser.py)

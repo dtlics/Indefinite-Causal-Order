@@ -138,6 +138,24 @@ or one-helper Pauli check for the other. Its calibrated global-reference
 noise correction differs from weight-dependent local noise. Existing
 many-eigenvalue learning bounds do not lower-bound this scalar task.
 
+The [local-overlap estimator](architecture-baselines.md#nr-r06-local-overlap)
+needs no reference bank: its ideal variance is controlled by overlap
+of the two physical error supports, with explicit readout-contrast and
+calibration costs. The [local Pauli-Lindblad baseline](architecture-baselines.md#nr-r06-local-lindblad-statistic)
+uses low-weight product probes and calibrated fixed-SPAM ratios even
+for full-support error laws. Its positive local eigenvalue, trusted
+randomizer, graph and stationarity premises must be verified.
+The [spectral-concentration closure](architecture-baselines.md#nr-r06-pauli-spectral-closure)
+also excludes a direct hidden-spike lower-bound reduction, and the
+[cross-pair coset construction](architecture-baselines.md#nr-r06-pauli-coset-scalar)
+gives an explicit general partial-reference query upper bound with
+substantial classical processing. None establishes the optimal
+ordinary frontier. A remaining test needs a constant task signal
+outside these efficient regimes, a reason for its hidden correlations,
+and [actual mixed-payload channel ports](architecture-baselines.md#nr-r06-pauli-physical-ports).
+Large time-bin dimension or one coherent router alone supplies
+neither that noise instrument nor a useful logical-output guarantee.
+
 For a two-photon unitary reordering certificate, the
 [passive-probe baseline in NR-R06](architecture-baselines.md#nr-r06-passive-reordering)
 uses two Fock seeds and passive mode mixing to estimate the phase-invariant

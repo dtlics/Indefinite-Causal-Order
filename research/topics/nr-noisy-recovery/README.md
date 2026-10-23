@@ -244,6 +244,13 @@ The [memory-algebra qualification task](architecture-baselines.md#nr-r08-memory-
 has a full conditional-output bound and an exact-prior ordinary
 stabilizer estimator. Its remaining resource question includes noisy
 references and the [one-sided Pauli statistic](architecture-baselines.md#nr-r06-pauli-statistic-memory).
+Ordinary alternatives now have separate owning proofs for
+[local overlap and readout costs](architecture-baselines.md#nr-r06-local-overlap),
+[local generator learning](architecture-baselines.md#nr-r06-local-lindblad-statistic),
+[spectral concentration](architecture-baselines.md#nr-r06-pauli-spectral-closure) and
+[cross-pair partial-reference estimation](architecture-baselines.md#nr-r06-pauli-coset-scalar).
+The remaining native test must preserve the
+[complete physical channel port](architecture-baselines.md#nr-r06-pauli-physical-ports).
 The [cat physical route](architecture-baselines.md#nr-r06-cat-physical-route),
 [mechanical decision model](architecture-baselines.md#nr-r08-mechanical-clock)
 and [retained Rydberg exchange](communication.md#nr-r11-rydberg-exchange)

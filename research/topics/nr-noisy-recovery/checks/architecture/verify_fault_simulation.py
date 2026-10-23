@@ -551,6 +551,10 @@ def main():
     from verify_cat_reservoir_parity import verify_cat_reservoir_parity
     from verify_cat_physical_interface import verify_cat_physical_interface
     from verify_pauli_statistic_memory import verify_pauli_statistic_memory
+    from verify_local_overlap import verify_local_overlap
+    from verify_lindblad_statistic import verify_lindblad_statistic
+    from verify_pauli_spectral import verify_pauli_spectral
+    from verify_pauli_cross_pair import verify_pauli_cross_pair
     from gaussian_readout_guards import verify_gaussian_readout_guards
     from verify_su11_ports import verify_su11_full_ports
     from verify_conditional_readout import (
@@ -566,6 +570,10 @@ def main():
         "cat_reservoir_parity": verify_cat_reservoir_parity(),
         "cat_physical_interface": verify_cat_physical_interface(),
         "pauli_statistic_memory": verify_pauli_statistic_memory(),
+        "local_overlap": verify_local_overlap(),
+        "lindblad_statistic": verify_lindblad_statistic(),
+        "pauli_spectral": verify_pauli_spectral(),
+        "pauli_cross_pair": verify_pauli_cross_pair(),
         "passive_reordering": passive_reordering_checks(),
         "gaussian_readout_noise_floor": verify_gaussian_readout_guards(),
         "su11_complete_ports": verify_su11_full_ports(),

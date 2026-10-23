@@ -51,7 +51,7 @@ JOBS = (
     ("local-recovery", "recovery/local_recovery.py", (),
      "Local n>=8 recovery constants, expected-cost coefficients, approximate-design loss and 97% visibility gap."),
     ("architecture-fault-simulation", "architecture/verify_fault_simulation.py", (),
-     "Exact orthogonal-process/full-output and bosonic coefficients, passive probe identities, complete finite Gaussian readout/noise/idler matrices, conditional records, known-control Weyl phases and cat parity/CCR/physical-route records, one-sided Bell/PCS/noisy-reference statistics; universal/integral/information proofs and native costs analytic."),
+     "Exact orthogonal-process/full-output and bosonic coefficients, passive probe identities, complete finite Gaussian readout/noise/idler matrices, conditional records, known-control Weyl phases and cat parity/CCR/physical-route records, one-sided Bell/PCS/noisy-reference, local-overlap/readout, local-Lindblad, spectral-closure and cross-pair statistics; universal/integral/information proofs and native costs analytic."),
     ("architecture-reuse", "architecture/verify_reuse.py", (),
      "Exact finite-frame calibration score, threshold, rejection and query-crossover arithmetic; cited learner not implemented."),
     ("architecture-measurements", "architecture/verify_measurements.py", (),

@@ -319,7 +319,16 @@ The memory-algebra checks include complete finite sector/flag maps and
 Haar-coefficient contractions, while its gauge entanglement-breaking
 and Schmidt-number bounds are analytic. Uniform subgroup enumeration
 and Pauli-statistic/Bell/noisy-reference identities support separately
-scoped ordinary estimators, not a scalar-specific lower bound. The cat
+scoped ordinary estimators, not a scalar-specific lower bound.
+Local-overlap checks include exact binary-readout distributions and
+calibration-bias examples; local-Lindblad checks include full-support
+rate/sampling/projection identities and a gate-orbit ambiguity.
+Spectral checks cover deterministic bounds, not an implementation
+of the cited population-recovery learner. Cross-pair coset and
+covariance checks support an analytic query upper bound whose
+classical processing and reference access remain charged. No generic
+SPAM, model-identifiability, optimal frontier or native advantage
+follows from these finite replays. The cat
 physical-route and Rydberg exchange checks keep their complete finite
 dummy, field, retained-memory and false-herald models. Mechanical
 decision coefficients and endpoint garbling are exact; scalar Gaussian
