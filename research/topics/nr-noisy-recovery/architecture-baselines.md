@@ -98,6 +98,255 @@ Bell-assisted Pauli learning is established prior work; see
 The complete trajectory and output simulation above are direct deductions
 from the orthogonal process-state observation, without a novelty claim.
 
+<a id="nr-r06-pauli-statistic-memory"></a>
+
+### A commutation statistic needs one Bell-label sample, not full channel learning
+
+Consider independent, stationary $n$-qubit Pauli channels
+$\mathcal A=\sum_a p_a\operatorname{Ad}_{P_a}$ and
+$\mathcal B=\sum_b q_b\operatorname{Ad}_{P_b}$, with $D=2^n$,
+Hermitian Pauli labels $a,b\in\mathbb F_2^{2n}$ and
+$h(a,b)=(-1)^{[a,b]}$. The scalar
+
+$$
+\eta=\sum_{a,b}p_aq_bh(a,b)
+     =\sum_bq_b\lambda_{\mathcal A}(b),\qquad
+\lambda_{\mathcal A}(b)=\sum_ap_ah(a,b)
+\tag{PM1}
+$$
+
+determines a standard switch's $X$-control mean, or equivalently its
+minus probability $p_-=(1-\eta)/2$. Learning this scalar is a different
+task from learning every eigenvalue of either channel. The following
+ordinary construction needs no such reconstruction.
+
+**One-sided Bell sampling.** Prepare a normalized Bell pair
+$|\Phi_D\rangle=D^{-1/2}\sum_j|j,j\rangle$, apply $\mathcal B$ to
+one half, then measure in its Pauli Bell basis. Since
+
+$$
+\langle\Phi_D|(P_b^\dagger P_{b'}\otimes I)|\Phi_D\rangle
+=D^{-1}\operatorname{Tr}(P_b^\dagger P_{b'})=\delta_{bb'},
+$$
+
+the result samples $b$ exactly from $q$. Next prepare any product $+1$
+eigenstate of the now-known $P_b$, call $\mathcal A$, and measure $P_b$
+by local Pauli measurements and classical parity. The outcome
+$Y\in\{-1,1\}$ has conditional mean $\lambda_{\mathcal A}(b)$,
+hence $\mathbb EY=\eta$. Independent trials obey
+
+$$
+\Pr\{ |\bar Y-\eta|>\epsilon\}
+\le 2e^{-N\epsilon^2/2},\qquad
+N\ge 2\epsilon^{-2}\log(2/\delta).
+\tag{PM2}
+$$
+
+Each trial uses at most one call per channel, one Bell preparation/readout
+and one product preparation/readout. Only the $\mathcal B$ call needs
+$n$ additional coherent reference qubits; coherence between calls or
+trials is unnecessary. The label uses $2n$ classical bits. When $b=0$,
+return $Y=1$ without calling $\mathcal A$, giving expected call cost
+$2-q_0$. If $q$ is classically sampleable, including accessible
+random-Pauli setting records, sample $b$ directly and omit both the Bell
+reference and the $\mathcal B$ call. These are calibration experiments;
+the Bell probe is consumed.
+
+**The second call can use arbitrary data and one clean helper.** Define
+$C_b=|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes P_b$.
+Prepare a helper in $|+\rangle$, apply $C_b$, call $\mathcal A$, apply
+$C_b$ again and measure helper $X$. For every error label,
+
+$$
+C_b(I\otimes P_a)C_b
+=\bigl(|0\rangle\langle0|+h(a,b)|1\rangle\langle1|\bigr)
+ \otimes P_a.
+\tag{PM3}
+$$
+
+Thus the helper records $h(a,b)$ deterministically in each Pauli branch,
+even with arbitrary input data entangled with an untouched reference.
+Ignoring the helper leaves exactly $\mathcal A$ on those data;
+conditioning on it filters the error distribution and does not undo the
+noise. This needs no controlled unknown channel or inverse. It replaces
+clean data preparation for the second call, while retaining the Bell bank
+for the first. The helper must survive the $\mathcal A$ window and two
+controlled-$P_b$ layers, each with at most $\operatorname{wt}(P_b)$
+elementary controlled-Pauli gates under suitable connectivity. Their
+noise, routing and duration count; the product-state option may be cheaper.
+
+**Known global reference depolarization has an affine correction.**
+Suppose the effective reference noise in the Bell experiment is
+$\mathcal R_f=f\operatorname{id}+(1-f)\Omega_D$, $0<f\le1$,
+independent of the system and all channel errors, with
+$\Omega_D(X)=\operatorname{Tr}(X)I/D$. Bell preparation and readout
+are ideal or their complete effect is included in this calibrated model.
+The measured label law is
+
+$$
+q_f(b)=fq_b+(1-f)/D^2,
+\qquad
+\eta_f=f\eta+(1-f)p_0.
+\tag{PM4}
+$$
+
+Indeed, the uniform term in (PM1) is $p_0$ by character orthogonality:
+
+$$
+D^{-2}\sum_b\lambda_{\mathcal A}(b)
+=\sum_ap_a\left[D^{-2}\sum_b(-1)^{[a,b]}\right]=p_0.
+\tag{PM5}
+$$
+
+Here $f$ is **depolarizing visibility**, not Bell fidelity; the latter is
+$f+(1-f)/D^2$. Global depolarization means the whole reference register,
+not independent single-qubit depolarization.
+
+There are two ordinary ways to estimate the correction $p_0$.
+
+- Choose $b$ uniformly from all $D^2$ Pauli labels and perform (PM3)
+  on arbitrary data. Its $\{-1,1\}$ outcome $T$ has mean $p_0$ by
+  (PM5). This uses one clean helper, one $\mathcal A$ call and two
+  controlled-Pauli layers, with no clean $n$-qubit preparation.
+- Prepare a uniformly random pure stabilizer state $|s\rangle$, call
+  $\mathcal A$, undo its preparation and test the all-zero outcome.
+  For nonidentity $P_a$, $|\langle s|P_a|s\rangle|^2$ equals one
+  exactly when the unsigned $P_a$ belongs to the stabilizer. Uniform
+  Clifford symmetry and its $D-1$ nonidentity members give probability
+  $(D-1)/(D^2-1)=1/(D+1)$. The binary survival outcome therefore has
+  mean $\mu=(Dp_0+1)/(D+1)$, so $p_0=((D+1)\mu-1)/D$.
+  This uses trusted state preparation, its inverse and readout rather
+  than protected reference memory. It is the usual
+  [average-fidelity relation](https://arxiv.org/abs/quant-ph/0205035).
+
+For known $f$, use independent sample streams and
+
+$$
+\widehat\eta=\frac{\bar Y_f-(1-f)\bar T}{f}.
+\tag{PM6}
+$$
+
+Taking $N\ge8f^{-2}\epsilon^{-2}\log(4/\delta)$ samples in each
+stream makes both means accurate to $f\epsilon/2$ by (PM2). A union
+bound and the triangle inequality give absolute error at most $\epsilon$
+with probability at least $1-\delta$. The first stream costs at most
+$2N$ channel calls and the correction stream $N$ additional
+$\mathcal A$ calls. Constant $f>0$ incurs a constant, dimension-independent
+sampling penalty; the survival option has the same order because its
+unbiased outcome $((D+1)Z-1)/D$ lies in $[-1/D,1]$.
+
+This correction does not assume that reference noise is harmless. For a
+general independent Pauli reference error law $u_e$, Bell labels become
+$b+e$ and the measured mean is
+
+$$
+\eta_{\rm obs}
+=\sum_ap_a\lambda_{\mathcal B}(a)\lambda_{\mathcal R}(a).
+\tag{PM7}
+$$
+
+Local depolarization makes $\lambda_{\mathcal R}(a)$ depend on weight,
+so a scalar correction is generally invalid. Unknown $f$ requires
+calibration. Correlated system/reference errors, state-dependent faults,
+drift between the sample streams and unmodelled SPAM require a different
+analysis. The one-helper protocol also needs its controlled operations
+and memory noise included in the comparison.
+
+**What the learning literature does and does not establish.**
+
+- [Sitan Chen and Weiyuan Gong, PRX Quantum 6, 020323 (2025)](https://arxiv.org/html/2309.14326v3)
+  estimate all Pauli eigenvalues with
+  $O(\log n/\epsilon^2)$ memory qubits and
+  $\widetilde O(n^2/\epsilon^2)$ **measurements**, using concatenated
+  queries. Corollary 1 gives $\widetilde O(n^2|S|/\epsilon^2)$ total
+  calls for a requested Pauli subset $S$, hence exponential cost when
+  $|S|=4^n$. This is not polynomial total query cost. Their Theorem 8
+  lower-bounds total calls by $\Omega(2^{(n-k)/3})$ for constant-error
+  learning, even with adaptive concatenation and $k$ memory qubits,
+  and already for their hidden-spike decision task. Theorem 4 solves
+  that spike task with two memory qubits and one measurement but
+  $\widetilde O(4^n)$ queries. None is an $\eta$-specific lower bound.
+- [Kim and Oh, Nature Communications 17, 1822 (2026)](https://doi.org/10.1038/s41467-026-68532-y)
+  distinguish input entanglement from reference-qubit count. Their
+  non-concatenating model uses one call then a joint measurement per
+  adaptive round, with ideal reference identity evolution. Theorem 1
+  uses $k=n$ references, designed probes with entropy $\Theta(n\alpha)$
+  and $N=O(n\alpha^{-2}\epsilon^{-2}\log\delta^{-1})$.
+  Thus $\alpha=n^{-2}$ gives vanishing entropy $\Theta(1/n)$ but
+  retains all $n$ physical references and costs $O(n^5\epsilon^{-2}
+  \log\delta^{-1})$ samples. Their low-weight learning bounds concern
+  all requested eigenvalues, not (PM1); fixed weight is not an
+  exponential-in-$n$ regime. See the
+  [expanded primary text](https://arxiv.org/html/2507.11089v2).
+- [Seif et al., Nature Communications 17, 9000 (2026)](https://doi.org/10.1038/s41467-026-75553-0)
+  demonstrate noisy-reference learning with 64 total qubits for injected
+  hypotheses (32 system plus 32 reference) and 16 total for native
+  gate-layer noise (eight plus eight), estimating symmetrized Pauli
+  fidelities of twirled Clifford layers. The latter reports 500 twirls
+  and 500 shots per depth, with auxiliary calibration and depth fitting.
+  The fitted variance overhead $(1.33\pm0.05)^w$ remains exponential in Pauli
+  weight $w$. Reference-noise mitigation uses factorized errors after
+  decoupling/twirling, calibrated auxiliary eigenvalues and division
+  with variance overhead; it is not a guarantee for arbitrary correlated
+  memory noise. See the
+  [primary methods](https://arxiv.org/html/2408.03376).
+
+**The hard spike does not give a constant control-only self-switch gap.**
+Chen and Gong's Problem 3 uses $a\ne0$ and the unit-amplitude channel
+
+$$
+\Lambda_a(\rho)=\frac{\operatorname{Tr}(\rho)I+
+                   \operatorname{Tr}(P_a\rho)P_a}{D}
+=\sum_{s=\pm}\frac{\operatorname{Tr}(\Pi_s\rho)}{D/2}\Pi_s,
+\qquad \Pi_s=\frac{I+sP_a}{2}.
+$$
+
+For $n\ge1$, this is the conditional expectation onto
+$\operatorname{span}\{I,P_a\}$: in the
+[memory-algebra notation](#nr-r08-memory-algebra), it has two sectors
+with $g_\pm=D/2$ and $\ell_\pm=1$. For $D>2$ it also depolarizes
+inside each sector; it is not merely block pinching. More generally,
+$\Lambda_{a,t}$ with eigenvalues $\lambda(0)=1$, $\lambda(a)=t$
+and zero elsewhere is a Pauli channel for $-1\le t\le1$, with
+
+$$
+p_b=\frac{1+t h(a,b)}{D^2},\qquad
+\eta(\Lambda_{a,t},\Lambda_{a,t})=p_0+t p_a
+=\frac{(1+t)^2}{D^2}.
+$$
+
+The last equality uses $h(a,a)=1$. Thus independent unit-spike calls
+give $\eta=4/D^2$, versus $1/D^2$ for $\Omega_D$; their minus-probability
+gap is only $3/(2D^2)$. General amplitude gives gap
+$|2t+t^2|/(2D^2)$. This direct control-only readout therefore supplies
+no constant-signal reduction from the hard-spike task. It does not rule
+out information in the full conditional output or more general protocols,
+and asserts no new lower bound.
+
+The proved endpoint here is a bounded-statistic calibration baseline.
+All Pauli channels commute as channel maps; $\eta$ concerns the relative
+phases of their realized errors. It alone does not certify useful
+accepted quantum output: the unnormalized minus-branch Pauli law is
+
+$$
+r_-(c)=\sum_{a+b=c}p_aq_b\frac{1-h(a,b)}2,
+\qquad \sum_cr_-(c)=\frac{1-\eta}2.
+\tag{PM8}
+$$
+
+Equal $\eta$ can accompany different accepted logical errors. A small
+switch helper may motivate a native memory/control tradeoff, but needs
+an $\eta$-specific ordinary bound and a useful-output test. Full-learning
+lower bounds provide neither. With a usable $n$-qubit reference bank,
+(PM2) already supplies dimension-independent paired sample complexity.
+
+The [exact Pauli-statistic replay](checks/architecture/verify_pauli_statistic_memory.py)
+checks full monomial Pauli/Bell identities, product-eigenstate probes,
+reference-complete PCS columns and calibrated global-noise corrections,
+with local/correlated-reference and hidden-spike guards. The
+all-dimensional sampling and physical resource assumptions remain the
+proofs above.
+
 ### Two further coherent-error screens
 
 For persistent $E_\theta=e^{-i\theta X}$ and $F_\phi=e^{-i\phi Z}$,
@@ -1446,6 +1695,207 @@ checks the nominal thermal bound with rational arithmetic. The
 trace-class symmetry proof, trajectory convergence, finite-time
 remainders, actual coherent access and experimental utility are analytic
 or measured inputs, not consequences of a finite replay.
+
+<a id="nr-r06-cat-physical-route"></a>
+
+**A physical whole-mode route and its ordinary opportunity ledger.**
+The next question is whether a real router supplies the two-slot cat
+instrument, rather than whether two abstract Lindblad channels can be
+switched. [Chapman et al., PRX Quantum **4**, 020355
+(2023)](https://doi.org/10.1103/PRXQuantum.4.020355),
+[full primary paper](https://arxiv.org/html/2212.11929), demonstrate two
+cavity modes coupled by a pumped SNAIL, with Bob's dispersive transmon
+controlling the mode swap. The corrected target is
+$|g\rangle\langle g|I+|e\rangle\langle e|\mathrm{SWAP}$.
+At $\chi/(2\pi)=-1.104$ MHz and
+$g_{\rm bs}=|\chi|/(2\sqrt3)$ the gate takes $1.3\,\mu$s including
+phase delays and ramps. The reported $95.5\pm0.2\%$ is a
+measurement-corrected repeated-gate Bell estimate, not a uniform
+arbitrary-input/reference process guarantee. Apps. O–P propose a
+superposition-safe unconditional swap using pump detuning $\chi/2$ and
+strong resonant transmon driving; that is not a demonstrated additional
+same-error swap primitive. No integrated cat-reservoir/order-memory
+processor is demonstrated in this source.
+
+Retain helper $C$, two complete cavity modes $1,2$, the declared dummy
+state in mode 2, both local buffers, every natural-loss/heating and
+emitted-field register, gate-noise baths, pumps and references. Let
+$S=\mathrm{SWAP}_{12}$ swap only the **cavity** registers. It does not
+swap, reset or rename the physical buffers or their fields. Define
+
+$$
+Q=P_0\otimes I+P_1\otimes S,\qquad
+\bar Q=X_CQX_C=P_0\otimes S+P_1\otimes I,
+\qquad \bar QQ=I_C\otimes S.
+\tag{CAT8}
+$$
+
+Let $\mathbb V_r$ be the full physical joint evolution in window
+$r=1,2$. Both stations have their actual contacts in each window.
+Memory loss acts during pumps, gates and idle intervals too; turning
+off a cat pump does not turn off the natural bath. A complete routed
+program is
+
+$$
+\mathbb U_{\rm route}=\bar Q\mathbb V_2S\mathbb V_1Q
+ =\bar Q\mathbb V_2\bar QQ\mathbb V_1Q.
+\tag{CAT9}
+$$
+
+This is an operator identity on the full register for arbitrary windows,
+even with persistent buffers, shared fields and helper-dependent
+coupling. The second word uses **four** corrected controlled swaps and
+four helper flips through its two $\bar Q=XQX$ factors. It is a native
+ordinary fixed-clock construction at that same resource ledger. It
+uses neither an inverse nor a matrix description of either window.
+This is a constructive fallback, not a lower bound on all possible
+calibrated open-control implementations.
+If the middle $S$ is actually supplied as a superposition-safe
+primitive, both strategies instead receive that same $S$ and its
+physical errors. Replacing a noisy $S$ by two noisy controlled swaps
+is not an equality of their error channels. The equality concerns the
+declared ideal gates; an ordinary comparator running the **same literal
+pulse implementation** retains its actual gate faults and all records.
+
+To identify what the program orders, first assume windows preserve
+the helper basis and write
+$\mathbb V_r=P_0\otimes V_{r,0}+P_1\otimes V_{r,1}$. Direct block
+multiplication gives
+
+$$
+\mathbb U_{\rm route}
+ =P_0\otimes(SV_{2,0}SV_{1,0})
+  +P_1\otimes(V_{2,1}SV_{1,1}S).
+\tag{CAT10}
+$$
+
+The source's dispersive transmon remains coupled to Bob during the
+windows. Classical pump settings alone do not establish
+$V_{r,0}=V_{r,1}$. If control decay breaks this block form, keep
+(CAT9)'s full joint unitary/instrument instead; do not delete that
+noise to restore an ideal order qubit.
+
+Only under fresh independent window reservoirs and product windows
+$V_r=A_{1,r}B_{2,r}$ with helper-independent controls can the two
+branches be separated into payload histories $B_2A_1$, $A_2B_1$ and
+complementary dummy histories $A_2B_1$, $B_2A_1$, respectively. There
+are then four station opportunities in the two windows, two on the
+payload and two on the dummy. With a persistent physical buffer or
+shared bath this factorization fails: retain the full products in
+(CAT10). The router does not exchange bath labels along with a
+payload. Every later helper-flagged state and reference fidelity
+depends on those actual products and their dummy/field records.
+
+For example, when the block form holds, put its complete branch
+operators $W_0,W_1$ equal to those in (CAT10). Starting the helper plus
+and measuring flag $\epsilon$ at phase $\phi$ uses
+$K_{\epsilon,\phi}=(W_0+\epsilon e^{-i\phi}W_1)/2$ on the **full**
+input state. Trace only the registers the task really discards.
+Summing both flags is complete; no discarded dummy, bath photon,
+timestamp or failed herald is absent from this law.
+
+**The selector compression has an exact physical premise.** If
+$V_{r,0}=V_{r,1}=V_r$ has actually been established, the supplied
+sequence $M_r=QV_rQ$ is the full setting selector
+$P_0V_r+P_1SV_rS$. The [NR-R14 chronological
+identity](backaction.md#nr-r14) gives
+
+$$
+X_CM_2X_CM_1
+ =P_0SV_2SV_1+P_1V_2SV_1S
+ =\mathbb U_{\rm route}.
+\tag{CAT11}
+$$
+
+This implementation has four controlled swaps and two explicit flips
+after using the justified commutation through the window. For
+helper-dependent windows the actual selector instead yields
+$P_0SV_{2,1}SV_{1,0}+P_1V_{2,0}SV_{1,1}S$, which generally differs
+from (CAT10). The literal four-swap/four-flip word (CAT9) remains valid;
+the two-flip compression cannot silently remove dispersive phases.
+A separately engineered coherent cat-pump on/off selector is likewise
+subject to NR-R14 with its actual full dilations and timing. A
+classical selectable pump is not that resource. This closes the
+declared selector/routed native implementation at its full opportunity
+budget; it is not a two-named-call simulation of every possible
+spatial or time-delocalized channel switch.
+
+**A driven cat reservoir is not an inactive vacuum port.** For
+$c=\alpha^2(1+\lambda)\ne0$, $F|0\rangle=-c|0\rangle$ and the
+full cold-buffer coupling in (CAT1) has matrix element
+$\langle0,1|H_{\rm int}/\hbar|0,0\rangle=-g_2c$. Its evolution is not a
+vacuum-preserving identity. The ordinary source experiment deliberately
+inflates vacuum into an even cat; those dynamics cannot be omitted when
+that mode is a dummy.
+
+There is a finite-time test without a Fock cutoff or short-time
+commutator. In the favorable cold-loss limit let $A_\eta$ be pure
+attenuation, $0\le\eta<1$, and let the actual pumped block $B_t$ give
+the dummy a finite positive mean
+$N_B(t)=\operatorname{Tr}[nB_t(|0\rangle\langle0|)]>0$.
+Then
+
+$$
+B_tA_\eta(|0\rangle\langle0|)=B_t(|0\rangle\langle0|),
+\qquad
+\operatorname{Tr}[nA_\eta B_t(|0\rangle\langle0|)]
+ =\eta N_B(t)\ne N_B(t).
+\tag{CAT12}
+$$
+
+The first equality uses the loss vacuum fixed point; the second is the
+exact beam-splitter photon-number law for any finite-energy state.
+Thus the complementary dummy histories are already distinct in this
+finite-time idealization. Their photon-number record and complete
+environment can contribute to the helper overlap and cannot simply be
+replaced by an identical vacuum output. This does not turn an energy
+difference into a measured visibility or a universal trace-distance
+constant. The actual warm loss channel additionally excites vacuum;
+its complete joint output must replace this favorable cold test.
+Preparing a nonvacuum dark dummy instead costs its preparation, energy
+and protection against natural loss. The normalizability and physical
+completion restriction above still applies; a truncated formal dark
+vector at fitted $\lambda>1$ does not establish such a resource.
+
+**Same-source ordinary control and the next action.** The transmon
+coupled to Bob already supplies a conditional number phase. At an
+ideal delay $\pi/|\chi|$, its $g/e$ dispersive block gives
+$P_g\otimes I+P_e\otimes e^{\pm i\pi n_B}
+=P_g\otimes I+P_e\otimes\Pi_B$.
+The measured $\chi$ makes this wait about $0.453\,\mu$s, before
+ramps, echo, noise and readout. If that mode also had the cat reservoir,
+it would supply the native premise for the ordinary check (CAT3).
+Neither source demonstrates that integrated device or its memory
+performance. In particular $[n,F]=-2a^2\ne0$; the cat pump cannot be
+treated as commuting throughout a finite controlled-number-phase gate.
+Pump pause/refocusing, buffer settling and restabilization must be
+included. Two ideal waits are not a measured $0.906\,\mu$s correction
+cycle, and the moon-cat phase-flip time cannot be transplanted onto the
+Chapman chip to predict its error.
+
+The next action is therefore ordinary parity-tagged pump scheduling on
+a calibrated finite-energy code, with its full record and timing
+frontier, rather than an optimization over two independently switched
+Lindblad boxes. First specify or measure the pump-on coherent parity
+gate or the paused-pump gate plus restabilization, the helper-dependent
+window dynamics and emitted temporal fields. Compare continuous
+stabilization, storage in the cleaner available mode, pump/echo
+schedules, accessible buffer monitoring and code recovery under those
+same controls. If a different coherent-order interface is proposed,
+it must supply the actual finite-buffer/bath isometry, inactive-port
+action, timing-record erasure/reset and compatible helper at a lower
+physical cost. No such distinct demonstrated interface is supplied by
+these two sources. A finite-code switch frontier before that step would
+optimize an unverified access model.
+
+The [physical-route exact
+guards](checks/architecture/verify_cat_physical_interface.py) retain a
+dummy, persistent buffers, early/late field registers and coherent
+helper-dependent phases, including counterexamples to the false
+two-flip compression. They also check finite pure-loss moment and
+dummy-order examples. General full-register identities, continuous
+field timing, oscillator tails, actual gate errors and integrated
+memory performance remain analytic or experimental inputs.
 
 <a id="nr-r06-readout-noise-floor"></a>
 
@@ -4526,6 +4976,341 @@ potentially changing a decoder's action. Consequently zero switch
 incompatibility alone cannot certify logical information preservation
 or agreement of syndrome dictionaries.
 
+<a id="nr-r08-memory-algebra"></a>
+
+### A self-switch diagnoses gauge algebra, with a separate memory bound
+
+**A useful qualification task with an essential promise.** A noise block
+may erase a gauge factor while preserving a smaller quantum memory.
+Deciding whether an expensive encoder search is warranted is different
+from delivering an unknown logical state. Consider the declared
+trace-preserving conditional expectation
+
+$$
+\mathcal H_D=\bigoplus_\lambda
+ (\mathbb C^{g_\lambda}\otimes\mathbb C^{\ell_\lambda}),
+\qquad D=\sum_\lambda g_\lambda\ell_\lambda,
+\qquad
+\mathcal E(\rho)=\bigoplus_\lambda
+ \frac{I_{g_\lambda}}{g_\lambda}\otimes
+ \operatorname{Tr}_{g_\lambda}(P_\lambda\rho P_\lambda).
+\tag{MA1}
+$$
+
+The sector basis may be unknown. This is a specified idempotent unital
+noise model, not a representation of every quantum channel or a
+consequence of a long memory lifetime. The noise-commutant connection to
+noiseless subsystems is established prior work; see
+[Choi and Kribs, PRL **96**, 050501 (2006)](https://doi.org/10.1103/PhysRevLett.96.050501).
+Preparation, identification and decoding of its factors remain real
+tasks. Two labeled ports must supply the actual independent-slot channel switch;
+identical reduced maps of one reused box do not establish it. A persistent
+bath, slot records or a supplied coherent selector requires
+its own physical dilation and ordinary comparison.
+
+Choose Kraus operators
+$K_{\lambda ij}=g_\lambda^{-1/2}|i\rangle\langle j|\otimes
+I_{\ell_\lambda}$ on their sector. For an independent plus helper,
+the exact two-use self-switch flags are
+
+$$
+\begin{aligned}
+\mathcal F_\pm(\rho)&=\tfrac12[\mathcal E(\rho)\pm\Gamma(\rho)],\\
+\Gamma(\rho)&=\sum_\lambda
+ \frac{P_\lambda\rho P_\lambda}{g_\lambda^2},\\
+z(\rho)&=\operatorname{Tr}\Gamma(\rho)
+ =\sum_\lambda\frac{\operatorname{Tr}(P_\lambda\rho)}{g_\lambda^2},\\
+\eta:=z(I/D)&=\frac1D\sum_\lambda\frac{\ell_\lambda}{g_\lambda}.
+\end{aligned}
+\tag{MA2}
+$$
+
+Here the full retained-helper output is
+$|+\rangle\langle+|\otimes\mathcal F_+(\rho)+
+|-\rangle\langle-|\otimes\mathcal F_-(\rho)$; references are
+unchanged. To prove the cross map, different-sector Kraus products
+vanish. Within a sector, write $A=E_{ij}/\sqrt g$ and
+$B=E_{kl}/\sqrt g$. Then
+$BA\rho(AB)^\dagger=\delta_{li}\delta_{jk}
+E_{kj}\rho E_{li}/g^2$. Summing sets $k=j,l=i$, giving
+$\sum_{ij}E_{jj}\rho E_{ii}/g^2=\rho/g^2$ on that sector, with
+the logical identity retained. Both diagonal maps are
+$\mathcal E^2=\mathcal E$. This proves (MA2) on every input matrix
+unit and hence every reference extension, including cross-sector
+coherences, which are lost in both diagonal and cross maps.
+
+**Conditional quantum output does not enlarge this model's quantum
+factor.** Write $\mathcal D_g(X)=\operatorname{Tr}(X)I_g/g$.
+Within one sector the flag probabilities are
+$p_\pm^{(g)}=(1\pm g^{-2})/2$, independent of its normalized state.
+For $g>1$, the normalized gauge maps are
+
+$$
+\Phi_+=\frac{g^2\mathcal D_g+\mathrm{Id}}{g^2+1},\qquad
+\Phi_-=\frac{g^2\mathcal D_g-\mathrm{Id}}{g^2-1}.
+\tag{MA3}
+$$
+
+Both are entanglement breaking. A direct measure-and-prepare proof
+avoids inferring this from a selected fidelity. Normalized Haar measure
+satisfies
+$\int |\psi\rangle\langle\psi|^{\otimes2}d\psi
+=(I+\mathrm{SWAP})/[g(g+1)]$: unitary invariance makes it proportional
+to the symmetric projector, and its trace fixes the constant. Hence
+
+$$
+\begin{aligned}
+\mathcal R_g(X)&=g\int\langle\psi|X|\psi\rangle
+ |\psi\rangle\langle\psi|d\psi
+ =\frac{X+\operatorname{Tr}(X)I}{g+1},\\
+\Phi_+&=\frac{g+1}{g^2+1}\mathcal R_g+
+ \left(1-\frac{g+1}{g^2+1}\right)\mathcal D_g,\\
+\Phi_-(X)&=g\int\langle\psi|X|\psi\rangle
+ \frac{I-|\psi\rangle\langle\psi|}{g-1}d\psi.
+\end{aligned}
+\tag{MA4}
+$$
+
+Each integral measures the POVM $g|\psi\rangle\langle\psi|d\psi$
+and prepares the indicated density matrix. The plus mixture coefficient
+lies in $[0,1]$. For $g=1$ the minus branch is zero and the plus
+branch is the unchanged logical factor. The full switched channel
+therefore has a Kraus representation of ranks at most
+$\ell_{\max}=\max_\lambda\ell_\lambda$: refine its sector,
+flag, gauge measurement and prepared gauge state into rank-one gauge
+operators tensored with $I_{\ell_\lambda}$.
+
+Consequently, for any input/reference, the output Schmidt number across
+reference versus receiver is at most $\ell_{\max}$. One can see this
+by refining the input into pure vectors; a Kraus operator of rank at
+most $\ell_{\max}$ makes each output vector have Schmidt rank at
+most that number. Mixtures preserve this upper bound. Every subsequent
+receiver-local decoder or heralded operation preserves it too. For a
+desired Bell output of dimension $k$, every accepted output therefore
+satisfies
+
+$$
+q_{\rm Bell}\le\min(1,\ell_{\max}/k)\,p_{\rm accept}.
+\tag{MA5}
+$$
+
+Indeed a normalized Schmidt-rank-$r$ vector overlaps a $k$-dimensional
+Bell state by at most $r/k$, by Cauchy--Schwarz, and the same holds for
+their mixtures. This applies to arbitrary encoders whose whole
+input-bearing output traverses the channel. An input-bearing bypass,
+encoded order helper or extra quantum link changes the premise.
+For $m$ parallel independent uses the same Kraus-rank argument gives
+$\ell_{\max}^m$ in place of $\ell_{\max}$, including joint encoding
+and decoding. No unknown decoder is supplied for free. When the sector
+encoder is actually available, ordinary storage already preserves its
+$\ell_\lambda$-dimensional factor. The familiar classical-information
+activation of fully depolarizing channels is compatible with this
+gauge entanglement-breaking result; see
+[Ebler, Salek and Chiribella, PRL **120**, 120502 (2018)](https://doi.org/10.1103/PhysRevLett.120.120502)
+and [Wu et al., PRA **111**, 012605 (2025)](https://arxiv.org/abs/2407.02726).
+This is a two-slot statement, not a theorem about arbitrary higher-order
+switches or every noisy channel.
+
+**Uniform Pauli-subgroup noise gives an explicit decision.** Let
+$V\le\mathbb F_2^{2n}$ have dimension $r$ and restricted symplectic
+rank $2s$. Uniform conjugation by its Pauli representatives defines
+$\Lambda_V$. Symplectic elimination pairs $s$ anticommuting generator
+pairs and leaves $c=r-2s$ commuting central generators. A Clifford
+change of frame puts its channel into (MA1) with $2^c$ sectors,
+$g=2^s$ and $\ell=2^{n-r+s}$. The paired generators depolarize $s$
+gauge qubits, the central generators dephase $c$ sector qubits, and
+the remaining qubits are untouched. Thus
+
+$$
+\eta=2^{-2s},\qquad \ell=2^{n-r+s}.
+\tag{MA6}
+$$
+
+Equivalently, averaging $(-1)^{[a,b]}$ over independent uniform
+$a,b\in V$ gives one for $a$ in the radical and zero otherwise;
+the radical has dimension $r-2s$, proving the first identity directly.
+At fixed $r=n$ and even $n$, an isotropic $V$ is a complete dephaser
+with $\eta=1,\ell=1$, whereas nondegenerate $V$ has
+$\eta=2^{-n},\ell=2^{n/2}$. The ideal switch can distinguish these
+qualification cases with a constant number of launches at fixed
+confidence. It neither identifies the encoder nor creates that memory.
+The [ordinary subgroup test below](#nr-r08-subgroup-ordinary) estimates
+the same property using stabilizer preparation, measurement and
+classical rank computations; a learning-all-eigenvalues lower bound
+is not a lower bound for this scalar task.
+
+The promise $r$ matters. With $n=2m$, a single block $g=2^m,\ell=2^m$
+has $\eta=2^{-n}$ and a $2^m$ quantum factor, whereas $2^m$ blocks
+with $g=2^m,\ell=1$ have the same $D=2^{2m}$ and same $\eta$ but
+are entirely entanglement breaking. In subgroup language their ranks
+are $n$ and $3m$ respectively. Thus the statistic alone does not certify
+quantum memory without the structural/rank promise.
+
+Approximate uniformity also matters. For Pauli laws $p,q$, a total
+variation perturbation $\delta_p,\delta_q$ changes
+$\eta(p,q)=\mathbb E(-1)^{[a,b]}$ by at most
+$2(\delta_p+\delta_q)$, by coupling each draw and bounding the changed
+bounded sign by two. This certifies robustness of that scalar only;
+it does not certify closeness of a noiseless factor or decoder, and
+rank-based ordinary learners need a separate noisy-data analysis.
+
+The [exact memory-algebra replay](checks/architecture/memory_algebra.py)
+checks finite complete cross/flag maps and measure-and-prepare moments.
+The all-dimensional algebra, Schmidt-number and access arguments remain
+analytic. No general ordinary lower bound, hardware advantage or new
+priority claim follows from this structural example.
+
+<a id="nr-r08-subgroup-ordinary"></a>
+
+### Ordinary estimation for a uniform Pauli subgroup
+
+The uniform-subgroup prior has a polynomial-query ordinary baseline with **no additional clean qubits outside the queried register**. This excludes an exponential ordinary query cost for this exact prior; it does not establish optimal query complexity, exclude a smaller finite query advantage, construct an unknown quantum decoder, or settle the corresponding question for arbitrary Pauli distributions.
+
+Let $\mathcal P=\mathbb F_2^{2n}$ have its public nondegenerate symplectic form $[a,b]$, let $D=2^n$, and let the unknown subspace $V\leq\mathcal P$ have **exactly dimension $n$**. Each use of $\Lambda_V$ applies a fresh, independently uniform Pauli label from $V$. The quantity to estimate is
+
+$$
+\eta(V)=\frac1{D^2}\sum_{v,w\in V}(-1)^{[v,w]}.
+\tag{SG1}
+$$
+
+For $0<\epsilon,\delta<1$, the ordinary protocol below estimates $\eta$ to additive error $\epsilon$ with failure probability at most $\delta$, using
+
+$$
+O\!\left(\epsilon^{-2}\log\frac2\delta\right)
+\quad\text{random stabilizer settings, and}\quad
+O\!\left(n+\log\frac1{\epsilon\delta}\right)
+\quad\text{channel queries per setting}.
+\tag{SG2}
+$$
+
+The resources include known global Clifford preparation and readout, public physical Pauli axes, repeatable query windows, fresh stationary stochastic faults, and calibrated state preparation and measurement. The Clifford gates may entangle the $n$ queried qubits. The claim is about extra quantum memory and query count, not product-state-only control or an optimum native gate budget.
+
+**The measured rank and the hidden kernel.** Draw a uniform maximal isotropic, or Lagrangian, subspace $L\leq\mathcal P$ of dimension $n$. Prepare its stabilizer state with known generator eigenvalues, query $\Lambda_V$, and measure the same commuting stabilizers. A known Clifford followed by terminal computational measurements implements this readout without extra measurement ancillas. Uniform Lagrangians and their Clifford descriptions can be sampled by ordinary symplectic linear algebra.
+
+For the realized Pauli $v$, the syndrome is
+
+$$
+\pi_L(v)\in L^*,\qquad \pi_L(v)(\ell)=[v,\ell].
+$$
+
+It is uniform on $W=\pi_L(V)$. Write $R=\dim W$. Since $L=L^\perp$, rank-nullity gives
+
+$$
+\ker(\pi_L|_V)=V\cap L,\qquad
+\dim(V\cap L)=n-R,\qquad
+X_L:=|V\cap L|=2^{n-R}.
+\tag{SG3}
+$$
+
+The annihilator actually recovered from the observed syndrome space is
+
+$$
+W^{\mathrm{ann}}=L\cap V^\perp.
+\tag{SG4}
+$$
+
+The spaces in (SG3) and (SG4) generally differ. They have the same dimension $n-R$ here because both $V$ and $L$ have dimension $n$. Only that common dimension is used.
+
+For $m$ independent uniform samples from an $R$-dimensional binary space, failure to span it implies that one of its $2^R-1$ nonzero linear functionals vanishes on every sample. Therefore
+
+$$
+\Pr(\widehat R\neq R)\leq(2^R-1)2^{-m}\leq2^{n-m}.
+\tag{SG5}
+$$
+
+With $K$ settings, taking $m=n+\lceil\log_2(2K/\delta)\rceil$ makes every recovered rank correct except with probability $\delta/2$. The value of $R$ need not be known in advance.
+
+**Lagrangian inclusion probability.** For any fixed isotropic subspace $S$ of dimension $r\leq n$,
+
+$$
+\Pr_L(S\subseteq L)
+=\prod_{j=0}^{r-1}\frac1{2^{n-j}+1}
+\leq\frac{2^{r(r-1)/2}}{D^r}.
+\tag{SG6}
+$$
+
+To see the equality, Lagrangians containing $S$ correspond to Lagrangians of the symplectic quotient $S^\perp/S$. The number of Lagrangians in dimension $2n$ is $\prod_{j=1}^n(2^j+1)$, giving the displayed ratio. A nonisotropic $S$ has inclusion probability zero.
+
+**A second moment with constant sensitivity to $\eta$.** Expand $X_L^2$ over ordered pairs in $V^2$. There is one rank-zero pair and $3(D-1)$ rank-one pairs: $(v,0),(0,v),(v,v)$ for $v\neq0$. All are isotropic. The number of commuting ordered pairs is $(1+\eta)D^2/2$, so the number of rank-two isotropic pairs is $(1+\eta)D^2/2-3D+2$. Applying (SG6) gives
+
+$$
+\begin{aligned}
+\mu:=\mathbb E_L X_L^2
+&=1+\frac{3(D-1)}{D+1}
++\frac{(1+\eta)D^2/2-3D+2}{(D+1)(D/2+1)}\\
+&=a_D+g_D\eta,\qquad
+g_D=\frac{D^2}{(D+1)(D+2)}.
+\end{aligned}
+\tag{SG7}
+$$
+
+Here $a_D$ is the known $\eta$-independent part. We have $g_D\geq1/3$ for $D\geq2$, and $g_D\geq8/15$ for $D\geq4$. Thus a constant gap in $\eta$ gives a constant gap in the measured second moment. For even $n$, the cases $\eta=1$ and $\eta=1/D$ have moment gap
+
+$$
+\frac{D(D-1)}{(D+1)(D+2)}\geq\frac25\qquad(D\geq4).
+\tag{SG8}
+$$
+
+There is a dimension guard on this example. Character orthogonality gives
+
+$$
+\eta=\frac{|\operatorname{rad}(V)|}{D}
+=2^{-\operatorname{rank}([\cdot,\cdot]|_V)}.
+\tag{SG9}
+$$
+
+An alternating form has even rank. Consequently $\eta=1/D$ requires even $n$; for odd $n$ the minimum is $2/D$. The estimator itself works for either parity.
+
+**A uniform fourth-moment bound.** Group ordered four-tuples in $V^4$ by the rank $r$ of their span. Before imposing isotropy their number is
+
+$$
+{n\brack r}_2\prod_{j=0}^{r-1}(16-2^j)
+={4\brack r}_2\prod_{j=0}^{r-1}(D-2^j)
+\leq D^r{4\brack r}_2,
+\tag{SG10}
+$$
+
+where ${s\brack r}_2$ denotes the Gaussian binomial coefficient. Nonisotropic spans contribute zero; isotropic spans obey (SG6). Extending the truncated sum $r\leq\min(n,4)$ to $r\leq4$ and using ${4\brack r}_2=1,15,35,15,1$ yields
+
+$$
+\mathbb E_L X_L^4
+\leq\sum_{r=0}^4{4\brack r}_2\,2^{r(r-1)/2}
+=1+15+70+120+64=270.
+\tag{SG11}
+$$
+
+Thus $Z_L=X_L^2$ has variance at most $270$, uniformly in $n$ and in the symplectic type of $V$. Individual values can be large; their bounded second moment, rather than a dimension-independent maximum, controls the estimator.
+
+**Confidence and total cost.** One explicit, unoptimized median-of-means choice is
+
+$$
+b=\left\lceil\frac{1080}{g_D^2\epsilon^2}\right\rceil,
+\qquad
+t=\text{the smallest odd integer at least }8\ln(2/\delta),
+\qquad K=bt,
+\qquad m=n+\left\lceil\log_2\frac{2K}{\delta}\right\rceil.
+\tag{SG12}
+$$
+
+Draw $K$ independent settings, recover the syndrome rank using $m$ queries per setting, and form $\widehat Z_L=2^{2(n-\widehat R)}$. Split these values into $t$ batches of size $b$ and take the median $\widehat\mu$ of the batch means. First analyze the **ideal independent** values $Z_L$, without conditioning on successful rank recovery. By (SG11) and Chebyshev, a batch mean deviates from $\mu$ by more than $g_D\epsilon$ with probability at most $1/4$. Hoeffding applied to independent batch-failure indicators bounds median failure by $e^{-t/8}\leq\delta/2$.
+
+Couple the computed samples to those ideal samples: every $\widehat Z_L$ equals its ideal $Z_L$ whenever all ranks are recovered correctly. Union-bound this rank-failure event with the ideal median-failure event. This avoids conditioning a concentration inequality on an event that could bias the distribution of $L$. Then
+
+$$
+\widehat\eta=\frac{\widehat\mu-a_D}{g_D}
+\quad\text{satisfies}\quad
+\Pr(|\widehat\eta-\eta|>\epsilon)\leq\delta.
+\tag{SG13}
+$$
+
+Clipping the estimate to $[0,1]$ cannot increase its error. The total channel-query count is $Km$, as stated in (SG2); the classical processing consists of binary ranks and known Clifford descriptions.
+
+**Scope and calibration limits.** Exact dimension $n$, the uniform linear-subspace distribution, independent fresh Pauli errors on repeated uses, and calibrated Clifford preparation/readout are part of this theorem. It is not automatically robust to SPAM or errors outside $V$: even a rare wrong syndrome can enlarge the empirical span. Robust subspace recovery and systematic-error tolerance need a separate budget and proof. Conversely, a platform unable to implement the stated global Clifford settings must charge their synthesis and errors alongside the cost of coherent SWITCH routing.
+
+This is a scalar-estimation baseline. It does not learn a protected logical encoding, supply an unknown decoder, establish a capacity theorem for another channel family, or reproduce the full switched channel. It provides no universal ordinary lower or upper bound for arbitrary $p,q$ in $\mathbb E_{a\sim p,b\sim q}(-1)^{[a,b]}$.
+
+The exact finite checker [verify_subgroup_moment.py](checks/architecture/verify_subgroup_moment.py) enumerates all Lagrangians for $n=2,3,4$, verifies their counts, inclusion probabilities, the distinct-kernel/equal-dimension identity, (SG7), and the fourth-moment guard for all symplectic types at those dimensions. The all-$n$ sampling and moment bounds are the analytic proof above; finite replay alone is not a general proof or a Lean formalization.
+
 <a id="nr-r08-material-pointer-clock"></a>
 
 ### Material-pointer mode dephasing needs a joint clock and ordinary controls
@@ -5218,6 +6003,205 @@ a preparation-restricted channel bound, not unrestricted diamond continuity
 over arbitrary pointer inputs. Its preparation and diagonal helper-control
 conditions must be checked after earlier pointer processing. In particular,
 arbitrary correlated preparations do not inherit the scalar $\eta$ bound.
+
+**A complete fixed-input alignment decision.** The clock must be evaluated
+on a task rather than on raw order visibility. Consider the declared SAME/MUB
+promise for two rank-one bases in dimension $d\ge2$, input $I/d$, helper
+$|+\rangle$, and inaccessible material records. This fixed-input experiment
+requires no Haar prior. Assume independent stationary arrays whose cross
+matrices have the isotropic form (MP3). Write $k_A$ for the same-label
+early/late overlap at $A$, $k_B$ for the oppositely oriented overlap at $B$,
+$q_A,q_B$ for their constant different-label overlaps, and $g=1-1/d$.
+The full accessible output under either promise factors as
+$I/d\otimes\rho(c)$, where
+
+$$
+\begin{aligned}
+\rho(c)&=\frac12\begin{pmatrix}1&c\\c^*&1\end{pmatrix},\\
+c(v)&=q_Ak_B+k_Aq_B-q_Aq_B
+       +v(k_A-q_A)(k_B-q_B),\\
+c_{\rm SAME}&=k_Ak_B,\\
+c_{\rm MUB}&=c_{\rm SAME}-g(k_A-q_A)(k_B-q_B).
+\end{aligned}
+\tag{MP12}
+$$
+
+To prove the factorization, expand the two kernels in (MP4). The terms with
+zero or one label equality each give $I/d$ after summing the projectors. The
+term with both equalities is
+$d^{-1}\sum_{ij}Q_jP_iQ_jP_i$. Under SAME this is $I/d$; under MUB,
+$Q_jP_iQ_j=Q_j/d$, so it is $I/d^2$. Thus $v=1$ or $1/d$ respectively.
+The diagonal helper blocks are $I/(2d)$ because both causal words are unital.
+Taking the trace gives (MP12), without discarding any target information
+available for this specified input and promise. Other target/reference
+inputs, readable material records and other modal tasks remain different
+experiments.
+
+The single-launch trace distance and equal-prior optimal helper success are
+therefore
+
+$$
+D_S=\frac g2|(k_A-q_A)(k_B-q_B)|,
+\qquad P_{\rm succ}^{(1)}=\frac{1+D_S}{2}.
+\tag{MP13}
+$$
+
+Both repeated-station ordinary routes are explicit comparators. For
+$A$--$B$--$A$ with occupied-$A$ separation $T_A$, replace
+$(k_A,k_B)$ by $(\kappa_A(-T_A),1)$ in (MP12); for the opposite repeated
+station use $(1,\kappa_B(T_B))$. In particular their coherence differences
+are $g(1-q_B)[\kappa_A(-T_A)-q_A]$ and
+$g(1-q_A)[\kappa_B(T_B)-q_B]$. Complex coherences allow calibrated equatorial
+helper readout, so comparing only a fixed real minus count would weaken an
+ordinary receiver.
+
+There is a useful universal contrast bound within this stationary kernel
+model. For two distinct labels $i,l$, the record-vector differences
+$r_i(t)-r_l(t)$ and $r_i(s)-r_l(s)$ have squared norm $2(1-q)$ and mutual
+inner product $2(\kappa-q)$. Cauchy--Schwarz gives
+
+$$
+|\kappa-q|\le1-q,\qquad
+D_S\le t:=\frac g2(1-q_A)(1-q_B).
+\tag{MP14}
+$$
+
+The actual full-record vectors, including thermal purifications and emitted
+fields, are essential to this argument. A nonstationary preparation with
+time-dependent off-label coefficients requires its full Gram matrices
+rather than substituting a constant $q$.
+
+**Closed ordinary recurrence gives an error benchmark.** With a genuinely
+closed harmonic pointer, an ordinary route can repeat just one station at
+an integer number of that station's periods, with the middle station at
+the same time in both histories. Choose the first such period long enough
+to fit the actual pulse widths and routes. No common recurrence of both
+stations' frequencies is needed. The helper pair is then
+$c_{\rm SAME}=1$, $c_{\rm MUB}=1-2t$. For $N$ independent reset launches,
+the rule declaring MUB upon any minus has exact equal-prior error
+
+$$
+P_{e,O}^{(N)}=\frac12(1-t)^N.
+\tag{MP15}
+$$
+
+It is the optimal receiver for this commuting helper pair. It is an
+achievable ordinary error law, not an optimum over every ordinary probe.
+
+For arbitrary two stationary modules, define the quantum Chernoff
+coefficient $Q(\rho,\sigma)=\inf_{0\le s\le1}
+\operatorname{tr}(\rho^s\sigma^{1-s})$. The inequality
+$Q\ge1-\tfrac12\|\rho-\sigma\|_1$ and its independent-copy error-exponent
+interpretation are given by
+[Audenaert et al., Eq. (6)](https://arxiv.org/pdf/quant-ph/0610027).
+The ordinary pair above has $Q_O=1-t$, whereas (MP14) gives
+$Q_S\ge1-D_S\ge1-t$. Consequently its optimal collective fixed-input
+asymptotic error exponent per launch cannot exceed the ordinary recurrence
+benchmark. This is a per-launch statement. It does not equate the launch
+durations or prove finite-$N$ ordinary dominance for arbitrary noncommuting
+helper pairs.
+
+For identical matched harmonic modules there is a stronger exact statement.
+Put $q=e^{-\lambda}$, $\lambda=(2n+1)a$, and let $\kappa=qe^z$.
+For the closed kernel,
+$z=a[(n+1)e^{i\theta}+ne^{-i\theta}]$ with
+$\theta=\Omega\tau$, so $|z|\le\lambda$. The passive equilibrium-damped
+kernel also has this form with $z$ multiplied by
+$e^{-\Gamma|\tau|/2}\le1$. Write $z=x+iy$. Then
+
+$$
+2|\kappa-q|^2\le(1-q)^2(1+|\kappa|^2).
+\tag{MP16}
+$$
+
+Indeed this is equivalent to
+$\cosh x-\cos y\le(\cosh\lambda-1)\cosh(x-\lambda)$.
+The left side is at most
+$(\cosh x-1)+(\cosh|y|-1)$ because $1-\cos y\le\cosh y-1$.
+Expanding the nonnegative even-power series gives
+$\cosh x+\cosh|y|-2\le\cosh\sqrt{x^2+y^2}-1
+\le\cosh\lambda-1$; the last factor on the right is at least one.
+This proves (MP16), including the zero-displacement limit by continuity.
+
+For $q<1$ set $h=(\kappa-q)/(1-q)$ and
+$b=(1-|\kappa|^2)/2$. The identical switch pair has minus probabilities
+$b$ and $b+g|\kappa-q|^2/2$. Take the closed ordinary recurrence's binary
+outcome and output minus with probability $b$ after plus, or
+$b+|h|^2$ after minus. Equation (MP16) says exactly that these are valid
+probabilities. Their images are precisely the two switched probabilities.
+The two switch states commute, so this classical channel reproduces their
+complete fixed-input output. Thus the identical closed switch experiment is
+a garbling of the ordinary recurrence experiment, and cannot improve any
+finite-$N$ decision loss at the same number of independent launches. At
+$q=1$ both experiments are uninformative. The damped kernel satisfies the
+algebraic inequality, but emitted-field leakage prevents granting it an
+ideal ordinary recurrence; that physical resource must not be inferred from
+(MP16). Nor does the identical-module garbling extend automatically to
+unequal clock kernels.
+
+**Pulse duration, full cycle and access remain the physical test.** An
+instantaneous strong displacement and an arbitrarily short clock separation
+are not independent parameters of a passive number-force device. Under
+$H/\hbar=\Omega N+g_0n_{\rm ph}(b+b^\dagger)$ with a photon held for one
+uninterrupted pulse of duration $w$,
+
+$$
+a=4(g_0/\Omega)^2\sin^2(\Omega w/2),\qquad \tau\ge w
+\tag{MP17}
+$$
+
+for nonoverlapping occupied windows, before route delays. The first identity
+follows from exact forced-oscillator evolution, up to its common rotation
+and known one-photon phase. Damping, shaped scattering, modulation and bright
+drives require their actual pulse dilation. A loaded cavity linewidth is
+neither a measured preserved-photon dwell time nor its absorption loss.
+
+For equal-prior error $0<\epsilon<1/2$, (MP15) needs
+$N\ge\lceil\log(2\epsilon)/\log(1-t)\rceil$ when $0<t<1$.
+Its completion time includes the repeated station's period, all occupied
+pulses, source/helper storage, readout, cooling/reset and rejected attempts.
+The switch needs the same complete ledger for its measured error law.
+For example, if success has the same probability $s$ under both promises
+and every failure gives one hypothesis-independent orthogonal flag, then
+$Q_{\rm all}=1-s+sQ_{\rm success}$ exactly by block-diagonal functional
+calculus. A conditional success exponent therefore cannot be divided by
+launch time while omitting failed attempts. Hypothesis-dependent loss,
+resolved ports or timestamps require their complete output instrument.
+Total energy includes each launch's carrier, control pulses, preparation,
+reset and calibration, rather than only detected photons.
+
+Without reset the pointer is reused in a correlated state: neither (MP15)
+nor independent-copy Chernoff rates apply automatically. Stable bases and
+clock parameters also allow ordinary training, pilots and reuse. An actual
+inaccessible coordinate may forbid direct cell actuation, but this does
+not by itself forbid forces through admitted optical ports, further visits,
+waiting or source calibration. The same deployment boundary must govern
+preparation, cooling, production and readout for both strategies.
+
+The bounded primary screen does not yet supply the required rate certificate.
+In [Bera's device](https://arxiv.org/html/2309.06765), the thermal calibration
+$(g_+/(2\pi),\kappa/(2\pi),n_m)\simeq(22\ \mathrm{kHz},11.5\ \mathrm{MHz},365)$
+is separate from both the maximum-coupling point and the flux-noise-affected
+13-Hz mechanical-linewidth measurement; these cannot be combined into a
+fresh-pointer cycle. The
+[published optomechanical measurements of Mayor et al.](https://doi.org/10.1038/s41467-025-57948-7)
+give same-device mechanical/optical linewidths and external coupling, but
+their detected sideband photons and pump-enhanced interactions do not
+demonstrate a preserved-carrier which-mode instrument. Their supplement
+also identifies the tradeoff between phonon isolation and thermal
+reinitialization. Conversely,
+[Reiserer et al.](https://doi.org/10.1038/nature13177) demonstrate a strong
+reflected photon--spin gate with explicit loss, while supplying local Raman
+spin rotations and readout. That is a real material-pointer lead, but the
+source does not justify withholding ordinary controls or establish a
+high-dimensional two-module clock instrument.
+
+Accordingly the next candidate needs a measured complete pulse/port
+instrument, strong surviving-carrier records, actual cross-clock maps and
+reset/reuse performance at one operating point. The remaining possible
+benefit is useful decision error per full time/energy budget after ordinary
+retiming and controls, rather than a raw coherence margin. No global
+ordinary optimum or native advantage follows from this fixed-input screen.
 
 **Bounded primary evidence and the next test.**
 [Bera et al.](https://doi.org/10.1038/s41467-024-51499-z) measure driven

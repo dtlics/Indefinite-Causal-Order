@@ -3745,6 +3745,371 @@ cross-record/reference coefficients, reduced Gram kernels and coherent
 record selections, and checks the shared-probe counterexample. It is
 not a continuum fit or a certification of a laboratory two-use bath.
 
+<a id="nr-r11-rydberg-exchange"></a>
+
+### Coherent Rydberg exchange has an ordinary memory-source comparator
+
+The following source and delivery comparators do not assert a
+demonstrated Bell source or a native order advantage.
+
+#### EX1. Physical operation and source boundary
+
+[Thompson et al., Nature **542**, 206–209 (2017)](https://doi.org/10.1038/nature20823)
+demonstrate exchange between a stored $99P$ excitation and a propagating
+$100S$ polariton, a conditioned collision phase $0.48(3)\pi$, and
+transverse rail exchange. Their
+[primary paper](https://eapg.mit.edu/wp-content/uploads/2018/01/Symmetry_protected_collisions_nature20823.pdf)
+reports weak coherent gate/signal means $0.15/0.25$ in the single-mode
+experiment, baseline signal transmission $0.56$, and gate write/retrieve
+probability $0.06$. The distinct two-rail run uses approximately one
+input photon per pulse. Its reported $8.3(5)\%$ exchange probability is
+the swapped coincidence count divided by the **total no-interaction
+transmitted-pair count**; it is not an absolute incident-pair success
+probability. Detector rail mixing is about $10\%$. The
+[supplement, Secs. VIII.A, VIII.D and VIII.E](https://eapg.mit.edu/wp-content/uploads/2018/01/Symmetry_protected_collisions_nature20823_Supplemental.pdf)
+reports $300$ ms sample preparation, $1000$ shots at $38\,\mu$s repetition,
+and $7\,\mu$s trap-off periods. The measured two-rail observables are
+intensity correlations, not the off-diagonal memory/rail coherence
+required below. The two transverse modes are inside one gas, not two
+remote memory nodes. Orthogonal collected photon ports do not alone
+certify an orthogonal, independently addressable two-memory spin-wave
+code within that gas.
+
+[Khazali, Murray and Pohl, PRL **123**, 113605 (2019), Eqs. (4)–(6) and Fig. 4](https://arxiv.org/html/1903.12442v2)
+derive the two-body output kernel
+$T\psi(\mathbf r_\perp,\mathbf R_\perp)+
+H\psi(-\mathbf r_\perp,\mathbf R_\perp)$.
+This is a non-diagonal spatial-exchange target beyond the
+[frozen-position Schur screen](#nr-r11-rydberg-memory).
+Their three-rail, two-exchange controlled-phase network is a proposal,
+not a demonstrated full gate. Its pulse advance and conditional
+memory-location/retrieval delays are explicit; their proposed additional
+gradient-echo synchronizer is an extra device, not free timing erasure.
+
+[Šumarac et al., arXiv:2601.06345, Figs. 2–4 and Secs. .5–.6](https://arxiv.org/html/2601.06345v1)
+experimentally observe exchange/hopping between $2$–$5$ separated
+ensembles with optical density about $2$. The reported network tests
+monitor population and transmission during weak-probe windows; they
+do not demonstrate a coherent rail Bell source. State-selective remote
+readout has source-defined combined preparation/detection fidelity
+$47(5)\%$ with $30\,\mu$s readout, under a convention assigning zero to
+a random guess, or $79(4)\%$ after $20$ repeated preparation/detection
+cycles of $10\,\mu$s. These are not a single-shot healthy-memory herald.
+
+#### EX2. A single-exchange eraser with its inaccessible record
+
+Prepare a certified one-excitation memory in rail A and one propagating
+photon in rail B. Define the two-dimensional memory code
+$|A\rangle=|10\rangle$, $|B\rangle=|01\rangle$. In its successful sector,
+the most general pure joint output with the desired exchange correlation
+can be written
+
+$$
+|\Psi\rangle=
+ |A\rangle_M|B\rangle_P|\tau\rangle_{KE}
+ +|B\rangle_M|A\rangle_P|\eta\rangle_{KE}
+ +|\mathrm{failure}\rangle.
+\tag{EX1}
+$$
+
+Here K contains every accessible temporal, frequency and transverse
+record, while E contains every unobserved bath record and residual
+degree of freedom. An unresolved **memory** position that cannot factor
+from the code must remain in the joint state or be charged as code
+leakage. Projecting it by later retrieval is destructive and is not an
+available memory herald before use. The orthogonal failure completion
+includes photon loss and code leakage. This decomposition is a
+hypothesis to test, not a consequence of rail intensity measurements or
+of the protected phase of H alone. A code block below means the
+mathematical block $P_{\mathrm{code}}\rho P_{\mathrm{code}}$; it does not
+assume an available physical code projector.
+
+Let
+
+$$
+a=\langle\tau|\tau\rangle,\qquad
+b=\langle\eta|\eta\rangle,\qquad
+c=\langle\eta|\tau\rangle.
+\tag{EX2}
+$$
+
+Interfere the photon rails on a balanced splitter. For every resolved
+accessible record k, keep **both** output flags $s=\pm1$ and track their
+known memory Bell-sign frame. The conditional post-click joint amplitude
+is
+
+$$
+\frac{|A\rangle|\tau_k\rangle+
+ s|B\rangle|\eta_k\rangle}{\sqrt2}.
+\tag{EX3}
+$$
+
+After the sign correction and summing all retained $k,s$, the
+unnormalized memory state on this code is exactly
+
+$$
+\sigma=\begin{pmatrix}a&c\\c^*&b\end{pmatrix},
+\qquad p_{\mathrm{code}}=a+b.
+\tag{EX4}
+$$
+
+To prove (EX4), each flag's density matrix contributes half of the same
+corrected outer product. Completeness of the k measurement preserves
+$\langle\eta|\tau\rangle$. In particular, interfering accessible optical
+rails does **not** erase inaccessible records. With a calibrated scalar
+phase, the fidelity with the corresponding Bell state and the
+concurrence on this single-excitation support are
+
+$$
+F_{\mathrm{Bell}}=\frac12+\frac{|c|}{a+b},\qquad
+\mathcal C=\frac{2|c|}{a+b}.
+\tag{EX5}
+$$
+
+Put passive amplitude attenuators $\alpha,\beta$ in photon rails B,A
+**before** the splitter. Their rejected optical ports are explicit
+failed flags. The resulting code state is
+
+$$
+\sigma'=\begin{pmatrix}
+ \alpha^2a&\alpha\beta c\\
+ \alpha\beta c^*&\beta^2b
+\end{pmatrix}.
+\tag{EX6}
+$$
+
+For $a,b>0$, choose
+$m=\min(a,b)$, $\alpha^2=m/a$, $\beta^2=m/b$.
+Both attenuators are contractions, and this gives
+
+$$
+p_{\mathrm{code}}=2m,\qquad
+F_{\mathrm{Bell}}=\frac{1+\gamma}{2},\qquad
+\gamma=\frac{|c|}{\sqrt{ab}}\in[0,1].
+\tag{EX7}
+$$
+
+Both photon flags count; there is no additional $1/2$ measurement
+penalty. For $\gamma=1$, this is an exact distributed-memory Bell source
+with yield $2\min(a,b)$ before common source, storage, detector and
+memory-survival factors. It uses one exchange collision and ordinary
+optical interference, with no order helper or stationary ancilla. It is
+a constructive ordinary comparator for a proposed exchange-created
+memory-entanglement task, not a universal optimum over optical mode
+processors.
+
+Two complete models can have identical $a,b$ but different utility. Set
+$|\tau\rangle=(3/5)|e_0\rangle$ and
+$|\eta\rangle=(8/25)|e_0\rangle+(6/25)|e_1\rangle$.
+Then $\gamma=4/5$; after balancing,
+$p_{\mathrm{code}}=8/25$ and $F_{\mathrm{Bell}}=9/10$.
+Replacing $|\eta\rangle$ by $(2/5)|e_1\rangle$ keeps all populations
+$a=9/25$, $b=4/25$ but gives $\gamma=0$, hence
+$F_{\mathrm{Bell}}=1/2$ and a separable memory mixture. Complete loss has
+probability $12/25$ in both models. The exact checker replays these full
+record states.
+
+#### EX3. False heralds, complete cycles and the physical test to beat
+
+A detector click alone does not establish that a retained excitation
+survived. Initial gate-write failure, P decay, background photons and
+unrecognized memory-code leakage can all give an accepted photon flag.
+Let $\sigma'$ be the accepted code block and $\nu$ the accepted
+memory-vacuum weight. Allow code-vacuum coherences: weak coherent
+preparation does not automatically supply an orthogonal failure record.
+With no further accepted leakage, the Bell fidelity is still
+
+$$
+F_{\mathrm{Bell}}=
+\frac{m(1+\gamma)}{2m+\nu},\qquad
+F_{\mathrm{Bell}}>\frac12\ \Longleftrightarrow\ 2m\gamma>\nu.
+\tag{EX8}
+$$
+
+Vacuum/code cross terms have zero trace and zero Bell expectation, which
+proves (EX8) without assuming that the full state is block diagonal.
+Additional accepted leakage must also enter the denominator. This is a
+fidelity threshold for this specific source protocol, not an
+entanglement no-go: vacuum-plus-single-excitation states can remain
+weakly entangled below it, and additional local filtering has its own
+yield and controls. Do not substitute a postselected retrieved-gate
+click for $\nu=0$ when the requested output is a retained memory state.
+
+Suppose $a,b$ already include exchange survival conditioned on one
+successfully prepared memory and one launched photon. Define $q_M$ as
+the certified memory-preparation probability, $q_P$ as the single-photon
+launch probability, $\eta_{\mathrm{opt}}$ and $\eta_d$ as common extra
+optical transmission and detection, and $\eta_{\mathrm{hold}}$ as
+retained-code survival until consumption. The useful ideal code yield
+per complete attempt is
+
+$$
+Y_D=q_Mq_P\eta_{\mathrm{opt}}\eta_d\eta_{\mathrm{hold}}
+\,2\min(a,b).
+\tag{EX9}
+$$
+
+The cycle denominator includes unsuccessful preparation, launch and
+herald attempts; both spatial detection flags; rejected attenuator
+ports; guard windows; the actual trap sequence; retrieval/readout for
+verification; and reset. The quoted $0.06$ single-mode write/retrieve
+probability and two-rail $0.083$ normalized swap figure cannot be
+multiplied to obtain an absolute Bell rate. A route proposal must
+separately measure $q_M,a,b,c,\nu$ and the complete attempt duration on
+the same geometry and source state.
+
+The positive physical test is specific: interfere both transverse S
+output rails **before** later microwave P-to-S retrieval, retain the
+detector/time flag, and use phase-resolved interference of the two
+retrieved memory rails to estimate c and vacuum leakage. Characterization
+may destroy the memories on those trials. The conditional output on
+other trials is usable only after the same output-code/false-herald
+instrument has been validated. This is stronger than the existing rail
+population test and is already an ordinary architecture. A switch must
+beat this measured yield, Bell fidelity and complete-cycle frontier on
+the same code; nonzero hopping or a $\pi/2$ optical phase alone is
+insufficient.
+
+#### EX4. Ordinary two-exchange delivery with all early and late flags
+
+The [three-rail feedback network in Khazali et al., Fig. 4](https://arxiv.org/html/1903.12442v2)
+has another direct workload: deliver a single retained excitation from
+A to C. Route only the first exchanged photon output A into a later
+input C. Let $T_1,H_1$ and $T_2,H_2$ be the full successful
+transmission/exchange kernels, $\mathcal F$ the physical feedback/delay
+isometry, and f the incident photon mode. At the three distinguishable
+no-loss output records, the map is
+
+$$
+\begin{aligned}
+|A;B\rangle f\ \longmapsto{}&
+ |A\rangle_M|B,\mathrm{early}\rangle_P\,T_1f\\
+&+|B\rangle_M|C,\mathrm{late}\rangle_P\,
+ T_2\mathcal F H_1f\\
+&+|C\rangle_M|B,\mathrm{late}\rangle_P\,
+ H_2\mathcal F H_1f\\
+&+|\mathrm{loss/leakage}\rangle.
+\end{aligned}
+\tag{EX10}
+$$
+
+Products mean compositions on the complete matched code, continuum and
+record spaces, not products of reported intensities. Accepting the late-B
+detector flag isolates the double-exchange word without an order
+interferometer **within the displayed matched no-loss code**. A usable
+transport herald also needs a bound on every accepted out-of-code,
+background and rail-mixing contribution to late B. Its code probability
+is
+
+$$
+p_{\mathrm{delivery}}=\|H_2\mathcal F H_1f\|^2,
+\tag{EX11}
+$$
+
+reducing to $|h_1h_2|^2$ only for undistorted matched scalar modes. The
+full probability completion is $\|T_1f\|^2+\|H_1f\|^2$ before first
+loss, then
+
+$$
+\|T_2\mathcal F H_1f\|^2+
+\|H_2\mathcal F H_1f\|^2\le\|H_1f\|^2,
+\tag{EX12}
+$$
+
+plus rejected/loss flags. The retained excitation needs no final
+retrieval for this transport task; retrieval may test it destructively.
+This does not transfer an arbitrary vacuum/one-excitation qubit: without
+an excitation, the photon leaves in the rejected early-B record, so the
+herald projects on excitation presence.
+
+Actual early-B and late-B wave packets must be distinguishable by
+measured guards; tails can make a false late-B event. Every later loop,
+if a closed loop replaces the open network, must be included as a
+further record. For a polarization controlled-phase gate, the source
+paper already explains additional polarization-conditioned spatial and
+temporal correlations; their removal and the full basis-state
+amplitudes/loss are extra conditions. No common complete A/B-channel
+switch is certified by this network map.
+
+#### EX5. Population transport does not lower-bound retained coherence
+
+For any measured conditional site/record distribution $p(k,r\mid j)$,
+the instrument
+
+$$
+L_{krj}=\sqrt{p(k,r\mid j)}\,|k\rangle\langle j|,
+\qquad \sum_{k,r}p(k,r\mid j)=1,
+\tag{EX13}
+$$
+
+with environment labels $(k,r,j)$ is completely positive and complete.
+It produces the same site populations and classical readout records
+on every tested localized input j, while destroying every inter-site
+off-diagonal. It may be tensored with the demonstrated internal
+microwave rotations. Thus separate internal S/P Ramsey coherence and
+location-population transport do not by themselves lower-bound c in
+(EX2). This is an explicit data-compatible alternative instrument, not
+a claim that the actual coherent-exchange experiment is classical or
+that all its observables are reproduced. The 2017 conditioned optical
+phase is evidence of coherent collision dynamics, but does not
+determine this distinct two-rail retained-memory Bell coherence.
+
+#### EX6. A shared-pair survivor screen within the transverse CW model
+
+The [continuous-wave exchange kernel of Khazali et al., Eq. (4)](https://arxiv.org/html/1903.12442v2)
+has a second useful ordinary comparison. On the **same transverse S/P
+pair-coordinate space retained by that CW model**, let F flip the
+relative transverse coordinate $\mathbf r_\perp\mapsto-\mathbf r_\perp$,
+leaving the transverse center coordinate $\mathbf R_\perp$ unchanged.
+The accepted, no-emitted-bath kernel is
+$K_j=T_j+H_jF$, where $T_j,H_j$ multiply wavefunctions. If both
+coefficients are even under F, as the source's
+$T_j(|\mathbf r_\perp|),H_j(|\mathbf r_\perp|)$ are, then they commute
+with F. Since $F^2=I$, direct multiplication gives
+
+$$
+\begin{aligned}
+K_BK_A
+&=(T_BT_A+H_BH_A)+(T_BH_A+H_BT_A)F\\
+&=K_AK_B.
+\end{aligned}
+\tag{EX14}
+$$
+
+This is a polynomial operator identity for arbitrary coefficient
+values, including complex loss-dependent amplitudes, not a scalar
+single-mode approximation. It holds on arbitrary normalizable
+transverse joint-pair inputs and references **within that CW model**,
+whenever these are bounded accepted contractions. It does not require
+a fresh independent probe: the same S/P pair can be retained.
+Conditional on that common no-emitted-bath code, an ideal order helper
+again factors and its minus amplitude is zero. Any common later optical
+eraser, filter or retrieval preserves the serial equality. The screen
+distinguishes non-diagonal exchange from noncommuting contacts.
+
+The premises are substantive. Physical propagation/delay between
+contacts, site-dependent asymmetry, a different rail-exchange
+permutation, shared extra bath, finite-bandwidth dynamics beyond the
+CW kernel, or leakage that preserves an accepted photon can invalidate
+this form. In particular, the three-rail feedback graph in (EX10)
+moves the stationary excitation and changes the next collision
+geometry. It is not two applications of one common F on a fixed pair
+space, so this screen does not close that graph or any general exchange
+network. The lost or leaked full instruments are not identified by this
+survivor equality. A destructive two-photon coincidence is not a
+nondestructive retained-memory code flag. A claimed native switch still
+needs a physical router for those **same complete contacts**, all early
+and late output records, and a measured source, memory and throughput
+budget before any positive comparison.
+
+The exact checker retains four complex optical/bath record models,
+both balanced-splitter flags and the attenuator rejection completion.
+It checks the memory density coefficients, vacuum/code coherences,
+open-feedback probability completion, a location-dephasing alternative
+instrument and the formal common-parity polynomial identity. It is an
+exact algebra replay, not a certification of the experimental code,
+finite-time kernel or herald instrument.
+
 ### Two-photon survivor scattering in a common continuum basis
 
 Nonlinear scattering need not preserve each photon's frequency, so it

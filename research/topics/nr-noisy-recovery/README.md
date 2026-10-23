@@ -240,6 +240,16 @@ Their remaining tests concern complete physical access and useful task
 outputs after ordinary controls, rather than record rank, one decay time
 or a selected commutator flag. No native benefit is established.
 
+The [memory-algebra qualification task](architecture-baselines.md#nr-r08-memory-algebra)
+has a full conditional-output bound and an exact-prior ordinary
+stabilizer estimator. Its remaining resource question includes noisy
+references and the [one-sided Pauli statistic](architecture-baselines.md#nr-r06-pauli-statistic-memory).
+The [cat physical route](architecture-baselines.md#nr-r06-cat-physical-route),
+[mechanical decision model](architecture-baselines.md#nr-r08-mechanical-clock)
+and [retained Rydberg exchange](communication.md#nr-r11-rydberg-exchange)
+state their full-record ordinary comparators and actual next
+instrument tests. A significant native advantage remains open.
+
 The [literature comparison](references.md) credits the existing filtering
 and recovery mechanisms. The bounded primary-source check does not
 establish priority.

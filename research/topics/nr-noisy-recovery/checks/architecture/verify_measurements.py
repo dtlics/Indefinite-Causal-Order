@@ -410,6 +410,8 @@ def main():
     from material_pointer_clock import verify_material_pointer_clock
     from mechanical_pointer_strength import verify_mechanical_pointer_strength
     from mechanical_pointer_clock import verify_mechanical_pointer_clock
+    from memory_algebra import verify_memory_algebra
+    from verify_subgroup_moment import verify_subgroup_moment
     z = [[F(1), F(0)], [F(0), F(-1)]]
     x = [[F(0), F(1)], [F(1), F(0)]]
     p4 = kron(z, eye(2))
@@ -543,6 +545,8 @@ def main():
         "material_pointer_clock": verify_material_pointer_clock(),
         "mechanical_pointer_strength": verify_mechanical_pointer_strength(),
         "mechanical_pointer_clock": verify_mechanical_pointer_clock(),
+        "memory_algebra": verify_memory_algebra(),
+        "subgroup_moment": verify_subgroup_moment(),
         "limitations": ["No hardware runtime, detector-noise, generic bath, or optimal-strategy proof.",
                         "No all-dimensional representation theorem or Lean formalization is replayed."],
     }

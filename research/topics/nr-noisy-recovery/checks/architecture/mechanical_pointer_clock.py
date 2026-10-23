@@ -79,6 +79,81 @@ def weyl_product(vectors):
     return phase, total
 
 
+def real_zero(d):
+    return [[F(0) for _ in range(d)] for _ in range(d)]
+
+
+def real_mul(a, b):
+    d = len(a)
+    out = real_zero(d)
+    for i in range(d):
+        for k in range(d):
+            if a[i][k]:
+                for j in range(d):
+                    if b[k][j]:
+                        out[i][j] += a[i][k] * b[k][j]
+    return out
+
+
+def real_projectors(d, mub):
+    if not mub:
+        return [[[F(i == j == label) for j in range(d)] for i in range(d)]
+                for label in range(d)]
+    return [[[F((-1) ** ((label & i).bit_count()
+                         + (label & j).bit_count()), d)
+              for j in range(d)] for i in range(d)] for label in range(d)]
+
+
+def verify_fixed_input_task():
+    # Every isotropic K is a linear combination of J and I. Checking their
+    # four tensor combinations certifies all kernel coefficients here by
+    # bilinearity, including complex coefficient substitutions in the proof.
+    full_target_coefficients = 0
+    for d in (2, 4):
+        ps = real_projectors(d, False)
+        for mub in (False, True):
+            qs = real_projectors(d, mub)
+            v = F(1, d) if mub else F(1)
+            for qa, ka in ((F(1), F(1)), (F(0), F(1))):
+                for qb, kb in ((F(1), F(1)), (F(0), F(1))):
+                    actual = real_zero(d)
+                    for i in range(d):
+                        for k in range(d):
+                            ca = ka if i == k else qa
+                            if not ca:
+                                continue
+                            for j in range(d):
+                                left = real_mul(qs[j], ps[i])
+                                for l in range(d):
+                                    cb = kb if j == l else qb
+                                    if not cb:
+                                        continue
+                                    term = real_mul(left, real_mul(qs[l], ps[k]))
+                                    for x in range(d):
+                                        for y in range(d):
+                                            actual[x][y] += ca * cb * term[x][y] / d
+                    c = qa * kb + ka * qb - qa * qb + v * (ka - qa) * (kb - qb)
+                    assert actual == [[F(x == y) * c / d
+                                       for y in range(d)] for x in range(d)]
+                    full_target_coefficients += 1
+
+    # Actual closed Gaussian cases at angle zero and pi have k=1 and q**2.
+    # Check complete classical channels, not only their contrast.
+    exact_garbling_rows = 0
+    for q in (F(1, 5), F(1, 2), F(9, 10)):
+        for d in (2, 3, 5):
+            g = 1 - F(1, d)
+            p = 1 - q
+            t = g * p * p / 2
+            for k in (F(1), q * q):
+                b = (1 - k * k) / 2
+                h2 = (k - q) ** 2 / (p * p)
+                assert 0 <= b <= 1 and 0 <= b + h2 <= 1
+                assert b * (1 - t) + (b + h2) * t == b + g * (k - q) ** 2 / 2
+                exact_garbling_rows += 1
+    return full_target_coefficients, exact_garbling_rows
+
+
 def verify_mechanical_pointer_clock():
     steps = 6
     h = (F(0), F(3, 5))
@@ -190,6 +265,7 @@ def verify_mechanical_pointer_clock():
     # These floating-point identities guard the analytic Weyl formula;
     # they are not finite-Fock substitutes for its proof.
     numerical_guards = 0
+    numerical_gaussian_garbling_guards = 0
     for amplitude in (0.01, 0.3, 2.0):
         for n in (0.0, 0.7, 5.0):
             for delta in (0.0, 0.2, 1.1, math.pi, 2 * math.pi):
@@ -209,6 +285,18 @@ def verify_mechanical_pointer_clock():
                 assert 0 < mechanical_root_fidelity <= 1
                 numerical_guards += 1
 
+                q = math.exp(-(2 * n + 1) * A)
+                p = -math.expm1(-(2 * n + 1) * A)
+                for response_amplitude in (0.0, 0.6, 1.0):
+                    response = response_amplitude * cmath.exp(1j * delta)
+                    k = cmath.exp(1j * A * response.imag
+                                  - (2 * n + 1) * A * (1 - response.real))
+                    assert abs(k - q) <= p + 2e-14
+                    assert 2 * abs(k - q) ** 2 <= p * p * (1 + abs(k) ** 2) + 2e-14
+                    numerical_gaussian_garbling_guards += 1
+
+    full_target_coefficients, exact_garbling_rows = verify_fixed_input_task()
+
     return {
         "exact_passive_dilation_pairs": exact_pairs,
         "exact_thermal_covariance_splits": covariance_splits,
@@ -219,7 +307,12 @@ def verify_mechanical_pointer_clock():
         "exact_force_loop_phase_programs": force_loop_phase_programs,
         "closed_recurrence_and_damped_field_counterexample": True,
         "numerical_closed_weyl_guards": numerical_guards,
-        "scope": "finite exact passive-dilation identities; infinite Weyl/thermal and instrument results analytic",
+        "exact_fixed_input_full_target_kernel_coefficients": full_target_coefficients,
+        "exact_gaussian_endpoint_garbling_rows": exact_garbling_rows,
+        "numerical_gaussian_garbling_guards": numerical_gaussian_garbling_guards,
+        "scope": ("finite exact passive-dilation, Weyl-loop and fixed-input kernel identities; "
+                  "Gaussian exponentials are numerical guards; infinite Weyl/thermal, "
+                  "garbling inequality, Chernoff, timing and physical claims analytic"),
     }
 
 

@@ -132,6 +132,11 @@ signal even when ordinary repeated sequences amplify their generators.
 calibrated orthogonal-unitary faults and a continuous-angle scalar example.
 These do not settle hardware cost: Bell probes require preparation, storage
 and readout, while the switch requires coherent routing and a clean control.
+The [one-sided Bell/statistic construction](architecture-baselines.md#nr-r06-pauli-statistic-memory)
+needs a reference bank only for one channel, followed by a product probe
+or one-helper Pauli check for the other. Its calibrated global-reference
+noise correction differs from weight-dependent local noise. Existing
+many-eigenvalue learning bounds do not lower-bound this scalar task.
 
 For a two-photon unitary reordering certificate, the
 [passive-probe baseline in NR-R06](architecture-baselines.md#nr-r06-passive-reordering)
@@ -458,7 +463,14 @@ parity wrapper reads total odd-jump parity without measuring the initial
 logical parity. The small-time switch flag has distinct loss and heating
 records; it is not a certified loss-only syndrome. A useful extension
 needs the complete physical order interface and finite-time heralded
-memory frontier beyond this available ordinary record.
+memory frontier beyond this available ordinary record. The
+[whole-mode route analysis](architecture-baselines.md#nr-r06-cat-physical-route)
+now keeps the vacuum dummy, persistent buffers and all four physical
+station opportunities. Its literal native ordinary construction retains
+helper-dependent phases and gate faults; a pumped cat reservoir is not
+an inactive vacuum port. The next action is calibrated parity-tagged
+pump scheduling on an integrated finite-energy device before optimizing
+an abstract two-slot switch.
 
 A distinct [finite-energy Jaynes--Cummings benchmark](architecture-baselines.md#nr-r06-jc-energy)
 concerns discrimination of commuting and anticommuting rotations, with one
@@ -529,6 +541,14 @@ use known symmetry and control structure;
 [direct unknown-subspace discovery](https://doi.org/10.1103/PhysRevA.86.052101)
 is also an ordinary baseline. A large protected sector is not evidence of
 many hidden measurement outcomes.
+The [memory-algebra task](architecture-baselines.md#nr-r08-memory-algebra)
+now defines a qualification decision for a promised conditional
+expectation. Its full self-switch output cannot enlarge the existing
+quantum factor. For exact uniform rank-n Pauli-subgroup noise, the
+[random-stabilizer ordinary estimator](architecture-baselines.md#nr-r08-subgroup-ordinary)
+uses polynomially many calls and no extra reference qubits. A surviving
+resource comparison needs the actual subgroup/rank promise, noise
+robustness, encoder usefulness, frame stability and routing cost.
 
 A spectral bath needs a separate independence test. The
 [shared-clock result in NR-R08](architecture-baselines.md#nr-r08) gives
@@ -559,6 +579,12 @@ task comparison, certify the actual strength and complex history kernel
 at one operating point; do not combine unrelated coupling, temperature
 and linewidth values. Strong preserved-photon records outside these
 ordinary controls remain unverified.
+For the declared mixed-input SAME/MUB decision, the full clock model
+also supplies ordinary recurrence error laws, an identical-module
+finite-launch garbling and a closed-model Chernoff benchmark. Its
+remaining possible benefit concerns complete time/energy cost with
+actual damping, pulse duration, failed launches and reset, rather than
+per-launch helper contrast.
 
 Actual large-mode interconnects already use targeted ordinary tools.
 [Li, Ryczkowski and Genty](https://doi.org/10.1364/OE.558061) measure
@@ -1183,6 +1209,11 @@ independent-probe instruments commute before any records are discarded;
 an output photon deficit is not a valid success herald. A distinct next
 test needs measured non-diagonal spin-wave dynamics or shared probes,
 with ordinary mixing, retrieval and pulse controls admitted.
+The [coherent exchange model](communication.md#nr-r11-rydberg-exchange)
+now provides ordinary one-collision memory preparation and two-collision
+delivery benchmarks with full record kernels. The specific next
+experiment measures retained memory/rail coherence and false heralds;
+population hopping alone does not certify that memory resource.
 
 The next test is the full input-output model of one such actual device.
 Prespecify a useful detuning or spin-setting decision, or a delivered

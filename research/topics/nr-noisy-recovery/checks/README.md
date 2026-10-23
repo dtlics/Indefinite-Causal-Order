@@ -102,6 +102,24 @@ Additional modules run inside the same existing architecture jobs:
   record/reference coefficients and the shared-probe counterexample.
   It does not fit the continuum device or certify its two-use instrument.
 
+The [memory-algebra replay](architecture/memory_algebra.py) checks finite
+sector cross/flag maps and measure-and-prepare moments; its
+Schmidt-number theorem is analytic. The
+[subgroup replay](architecture/verify_subgroup_moment.py) enumerates all
+Lagrangians through n=4; the all-n rank/moment/confidence proof remains
+analytic and exact-prior conditional. The
+[Pauli-statistic replay](architecture/verify_pauli_statistic_memory.py)
+checks full Bell/PCS/product-probe identities and noise corrections,
+including local/correlated-reference counterexamples. The
+[cat physical-route replay](architecture/verify_cat_physical_interface.py)
+retains dummy/buffer/field registers and helper phases. The
+[Rydberg exchange replay](architecture/rydberg_exchange_eraser.py)
+checks ordinary eraser/filter/feedback and population-only countermodels.
+The mechanical-clock module additionally checks full fixed-input
+coefficients and exact endpoint garbling, with separately marked
+numerical scalar inequalities. None is a fitted hardware certificate,
+an unrestricted ordinary optimum or a native rate advantage.
+
 The architecture jobs support the [ordinary baselines](../architecture-baselines.md),
 [communication bounds](../communication.md) and
 [shared-bath screen](../backaction.md), not a positive application claim.

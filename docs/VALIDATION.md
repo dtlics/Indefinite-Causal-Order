@@ -315,4 +315,16 @@ general support/control proofs and hardware port, phase, bath and clock
 premises are explicitly scoped in their canonical owners. None supplies
 a significant native architecture advantage.
 
+The memory-algebra checks include complete finite sector/flag maps and
+Haar-coefficient contractions, while its gauge entanglement-breaking
+and Schmidt-number bounds are analytic. Uniform subgroup enumeration
+and Pauli-statistic/Bell/noisy-reference identities support separately
+scoped ordinary estimators, not a scalar-specific lower bound. The cat
+physical-route and Rydberg exchange checks keep their complete finite
+dummy, field, retained-memory and false-herald models. Mechanical
+decision coefficients and endpoint garbling are exact; scalar Gaussian
+inequality tests remain numerical guards. Continuous-field/interface,
+all-n confidence and measured full-cycle performance claims remain
+analytic or unverified as specified in their owners.
+
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

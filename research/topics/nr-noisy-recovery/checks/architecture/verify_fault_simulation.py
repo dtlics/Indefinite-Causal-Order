@@ -549,6 +549,8 @@ def passive_reordering_checks():
 
 def main():
     from verify_cat_reservoir_parity import verify_cat_reservoir_parity
+    from verify_cat_physical_interface import verify_cat_physical_interface
+    from verify_pauli_statistic_memory import verify_pauli_statistic_memory
     from gaussian_readout_guards import verify_gaussian_readout_guards
     from verify_su11_ports import verify_su11_full_ports
     from verify_conditional_readout import (
@@ -562,6 +564,8 @@ def main():
         "examples": examples,
         "bosonic_compilers": bosonic_compiler_checks(),
         "cat_reservoir_parity": verify_cat_reservoir_parity(),
+        "cat_physical_interface": verify_cat_physical_interface(),
+        "pauli_statistic_memory": verify_pauli_statistic_memory(),
         "passive_reordering": passive_reordering_checks(),
         "gaussian_readout_noise_floor": verify_gaussian_readout_guards(),
         "su11_complete_ports": verify_su11_full_ports(),
