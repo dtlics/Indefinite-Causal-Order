@@ -31,6 +31,12 @@ SCHEMA = "noisy-recovery-validation-v1"
 SCOPE = "Finite exact replay and symbolic integer/rational identities, with separately scoped numerical scalar guards, supporting the linked proofs; no new Lean kernel audit."
 
 JOBS = (
+    ("architecture-thermal-attenuator", "architecture/verify_thermal_attenuator.py", (),
+     "Exact finite full-joint contacts, Gaussian coefficient polynomials, source flag/modulo instruments and finite-dimensional kernel guards; infinite-oscillator density, faithfulness and physical costs analytic."),
+    ("architecture-general-channel-entropy", "architecture/verify_unital_entropy.py", (),
+     "Exact general Kraus/Choi, mixed-adjoint energy, nonunitality, pinching, spectral-tail and full-flag identities; all-dimension entropy integration and coding analytic."),
+    ("architecture-remote-spin-phase", "architecture/verify_remote_spin_phase.py", (),
+     "Exact complete detected spin-gate instruments, qualified four-mode comparators and all-history erasure-completion maps; calibration, native ports, timing and control costs analytic."),
     ("architecture-orthogonal-unitary-entropy", "architecture/verify_orthogonal_entropy.py", (),
      "Exact non-Pauli unitary error bases, Choi entry-permutation/commutator identities, spectral tails and full target-dependent flags; entropy integration and capacity achievability analytic."),
     ("architecture-approx-unitary-capacity", "architecture/verify_approx_unitary_capacity.py", (),

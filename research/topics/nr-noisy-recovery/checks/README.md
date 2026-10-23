@@ -12,6 +12,9 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 
 | Directory / job | Proof obligations replayed |
 | --- | --- |
+| `architecture/verify_thermal_attenuator.py` | Exact finite full-joint contact identities, Gaussian coefficient polynomials, source flag/modulo instruments and finite-dimensional kernel guards. Infinite-oscillator density and faithfulness, Gaussian integration, tails and hardware premises remain analytic. |
+| `architecture/verify_unital_entropy.py` | Exact general Kraus/Choi contractions, mixed-adjoint energies, nonunitality, pinching, spectral tails and complete flagged maps, including non-mixed-unitary channels. Entropy integration and coding remain analytic. |
+| `architecture/verify_remote_spin_phase.py` | Complete detected spin-gate Choi instruments, qualified four-mode comparisons, a lost-carrier counterexample and all-history state-independent erasure maps. Calibration, native ports, timing and control costs retain their stated analytic scope. |
 | `architecture/verify_orthogonal_entropy.py` | Exact orthogonal non-Pauli unitary bases, Choi entry contractions, commutator energies, threshold bounds and target-dependent full flags. The entropy integral and capacity theorem are analytic. |
 | `architecture/verify_approx_unitary_capacity.py` | Exact unitary/Gram overlap corrections, weighted tails, fidelity inversion, commuting counterexample and rational confidence certificate. Finite matrices do not establish the all-dimension entropy proof or a physical error model. |
 | `architecture/verify_pauli_local_certification.py` | Exact ordinary OR and known population-estimator identities, correlated error laws, full readout-noise trajectories and the rational population example. Confidence and physical SPAM assumptions remain analytic. |

@@ -316,9 +316,14 @@ but supplies **no positive finite-error margin**, Gaussian-code optimum,
 entanglement-breaking claim or quantum-capacity conclusion. Approximate
 error correction, high-energy limits and finite-error readout utility
 remain open; ideal nonnormalizable grid states are not density operators
-covered by the proof. General thermal attenuators, amplifiers,
-correlated noise and other physical order dilations need their own
-support argument rather than an import of this displacement result.
+covered by the proof. The separate
+[partial thermal-attenuator proof](methods/thermal-attenuator.md) supplies
+that support argument for two independent oscillator attenuators with
+$0<\eta_i<1$ and strictly positive finite thermal occupations. It retains
+both helper and target and permits arbitrary post-switch receivers, but
+still gives no approximate-error margin or capacity upper bound.
+Amplifiers, correlated noise and other physical order dilations require
+their own argument.
 
 <a id="nr-r05"></a>
 

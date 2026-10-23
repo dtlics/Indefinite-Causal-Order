@@ -325,8 +325,12 @@ can be enlarged without changing the channel. Diagonalizing a
 general CPTP Choi state instead supplies orthogonal Kraus
 operators that need not be unitary; the baseline
 $\sum_{i,j}v_iv_j=w^2$ and its unitary commutator defect then
-do not follow. The claims here do not cover arbitrary nonorthogonal
-random-unitary representations or arbitrary CPTP maps.
+do not follow. The realization-entropy claims here do not cover arbitrary
+nonorthogonal random-unitary representations. A separate
+[general-channel proof](unital-entropy-capacity.md) bounds Choi entropy
+using mixed-adjoint commutators and identity-fidelity pinching, including
+all unital CPTP maps and a correction for nonunitality. It does not bound
+the Shannon entropy of arbitrary representation labels.
 The [bounded-overlap extension](unitary-error-overlap.md) supplies a
 corrected bound under additional cardinality and coherence promises;
 it does not cover arbitrary representations.

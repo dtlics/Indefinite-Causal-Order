@@ -39,8 +39,12 @@ makes the deployment issue quantitative: a supplied reliable code admits
 an ordinary test, so its learning and block cost must enter any claimed
 end-to-end saving.
 
-The capacity witness extends to orthogonal and approximately orthogonal
-unitary-error families, with corrected fidelity and overlap assumptions.
+The [general capacity witness](methods/unital-entropy-capacity.md)
+applies to all unital channels, using entanglement fidelity and the
+self-switch statistic; nonunital channels require a separately justified
+imbalance or model-closeness bound. Separate proofs bound orthogonal and approximately
+orthogonal unitary-error realization entropy. These certificates do not
+supply a decoder or make the required coherent routing native.
 For diluted physical Pauli errors, ordinary product probes can already
 provide the required sufficient certificate. Hidden weak-product frames
 admit polynomial device-call calibration with exponential classical work;
@@ -55,6 +59,17 @@ depolarization inside each opaque channel. It covers arbitrary retained
 helper memory when the output target is discarded before controller
 interaction. Retaining or processing that target is a separate open route;
 noise applied only after sign compression has a different effect.
+
+Retained-output comparisons must include failed attempts. The
+[remote spin-phase baseline](methods/remote-spin-phase.md) matches
+the proposed detected gates with an ordinary photon bus. Its stronger
+compiler also matches the observed no-click spin map under calibrated,
+state-independent erasure and reciprocal propagation. Spin-dependent
+cavity scattering, resolved loss records and actual control/clock costs
+remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
+separately excludes exact heralded recovery in its infinite-oscillator
+model and supplies ordinary source-preparation comparisons; it leaves
+approximate unknown-state recovery open.
 
 [NR-R01](theorem.md) concerns physical Bell-frame restoration with a fresh
 private frame for each job. For $n\geq8$, each unknown module is followed once

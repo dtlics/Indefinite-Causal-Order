@@ -501,20 +501,35 @@ shortcut requires learning a full encoder or every basis vector.
 
 ### An entropy certificate beyond the two-family promise
 
-The [entropy/capacity component](methods/pauli-entropy-capacity.md)
-also proves a sufficient certificate for Hilbert--Schmidt orthogonal
-unitary-error families containing identity, including arbitrary spatially
-correlated Pauli laws. Its Choi entry-permutation proof does not require
-a public Pauli frame. The general self-switch statistic uses target
-$I/D$; its input independence is a separate Pauli property. At $n=32$,
-simultaneous confidence bounds $p_0\geq0.38$ and
-$\eta\geq0.96$ certify $Q\geq2.9$ qubits per channel use, and a
-full-support law realizes that confidence region. For that example,
-even its exact identity probability and scalar purity together cannot
-give a positive worst-case entropy-based hashing certificate, while
-the additional commutation information does. This compares sufficient
-capacity certificates; it supplies no lower bound on ordinary
-estimation of $\eta$ and no switch hardware advantage.
+The [general-channel entropy component](methods/unital-entropy-capacity.md)
+proves a sufficient certificate for every unital CPTP channel. Put
+$f=F_e(I/D,\mathcal E)$, let $\eta$ be its self-switch control mean with
+target $I/D$, and write $C_D=(2-D^{-1})/\ln2<3$. Then
+$$
+Q(\mathcal E)\geq
+\max\{0,[f-\sqrt{1-\eta}]\log_2D-h_2(f)-(1-f)C_D\}.
+$$
+The proof bounds Choi entropy using mixed-adjoint commutators and
+pinching along the maximally entangled vector. It does not assume
+unitary Kraus operators, an identity branch, or that $f$ is a Choi
+eigenvalue. For nonunital CPTP channels it supplies an explicit
+correction in $u=\|\mathcal E(I)-I\|_F^2/D$; a bound on $u$ is a
+separate resource. A supplied diamond-distance bound to a unital model
+gives a continuity-based alternative, with its model promise charged.
+At $n=32$, jointly valid lower confidence bounds
+$f\geq0.38$ and $\eta\geq0.96$ certify $Q\geq2.9$ qubits per use
+under known unitality. No finite-block encoder or native query
+advantage follows from this sufficient certificate.
+
+The [unitary-error component](methods/pauli-entropy-capacity.md)
+separately bounds the Shannon entropy of an orthogonal unitary
+realization, including arbitrary spatially correlated Pauli laws.
+Its full-support example realizes the confidence region above. There,
+even exact identity probability and scalar purity together cannot give
+a positive worst-case entropy-based hashing certificate, while the
+commutation information can. This compares sufficient certificates;
+it supplies no ordinary-estimation lower bound for $\eta$. Its input
+independence is a Pauli specialization.
 
 The [overlap-robust extension](methods/unitary-error-overlap.md) treats
 at most $D^2$ unitary branches with supplied normalized pairwise overlap
@@ -522,7 +537,9 @@ bound $\mu$ and $D\mu^2<1$. It distinguishes identity branch mass from
 measured entanglement fidelity, proves the corrected entropy and
 confidence bounds, and gives a nonorthogonal positive-rate example.
 The branch model and overlap promise are assumptions about the device;
-two measured moments do not establish them or justify a general-CPTP claim.
+two measured moments do not establish that realization or its label
+entropy. The general Choi-entropy theorem uses the different argument
+above and does not require this branch promise.
 
 Strong ordinary comparisons remain essential. [Local product probes](methods/pauli-local-certification.md)
 can give a dimension-independent sufficient certificate without a helper

@@ -793,6 +793,17 @@ memory measurements; it is stronger than a vanishing average statistic.
 It assumes the same station instruments in both routes and common
 outcome definitions. It does not identify the rejected/lost instruments.
 
+The separate [remote spin-phase comparison](methods/remote-spin-phase.md)
+treats a noncommuting controlled-$X$/controlled-$Z$ photon-bus pair.
+It gives ordinary implementations of its detected spin gates on arbitrary
+unknown input, with local phase controls and modal-access requirements
+charged. A stronger ordinary compiler reproduces the complete observed
+detected/no-click spin instrument under calibrated state-independent
+erasure, reciprocal propagation and unresolved loss locations. The
+proof retains explicit counterexamples to inferring that completion
+from a detected-map identity alone. Actual spin-dependent cavity losses
+and physical clock costs remain outside the matched model.
+
 This screen applies to the elastic two-time-bin state-carving model of
 [Knaut et al.](https://doi.org/10.1038/s41586-024-07252-z). Its local
 successful-reflection operator has the form

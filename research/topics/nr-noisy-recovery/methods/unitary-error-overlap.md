@@ -5,7 +5,13 @@ It extends the entropy/capacity method to a promised approximately
 orthogonal random-unitary realization. The
 [entropy component](pauli-entropy-capacity.md) owns the Pauli and
 exact-orthogonal statements. No channel-learning lower bound, efficient
-encoder, general-CPTP extension or native switch advantage follows here.
+encoder or native switch advantage follows here. A separate
+[general-channel proof](unital-entropy-capacity.md) bounds Choi entropy
+without this realization promise; it does not bound the Shannon entropy
+of arbitrary representation labels.
+For capacity qualification alone, that theorem can be used without
+the cardinality or overlap promise, since random-unitary channels are
+unital. The realization-entropy estimate below remains a separate claim.
 
 ## Realization, statistic and theorem
 

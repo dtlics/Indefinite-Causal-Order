@@ -2405,6 +2405,10 @@ $\zeta=(\sqrt{G_1}+\sqrt{G_2})/(1+\sqrt{G_1G_2})$.
 The total-added-photon Kraus has the opposite number charge; the real
 moments in (BOS5) are unchanged by this sign. This statement does not
 include a mixed amplifier/attenuator pair or a thermal attenuator.
+For the latter, the separate [partial thermal-attenuation component](methods/thermal-attenuator.md)
+proves a source-specific ordinary retained-state filter and an exact
+heralded-recovery obstruction. It does not supply an arbitrary-input
+thermal-channel compiler or an approximate-recovery optimum.
 
 **Two centered isotropic Gaussian displacement channels.** Use
 $D(\alpha)=e^{\alpha a^\dagger-\alpha^*a}$ and independent
