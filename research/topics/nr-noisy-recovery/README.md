@@ -19,7 +19,7 @@ and from learning a scalar channel property.
 | NR-R06 | Native checks, calibrated faults and ordinary path baselines | [Fault and check comparisons](architecture-baselines.md#nr-r06) |
 | NR-R07 | Polynomial-query calibration of the reused finite-frame family | [Reuse baseline](architecture-baselines.md#nr-r07) |
 | NR-R08 | Accessible measurement records and syndrome-sector baselines | [Measurement baselines](architecture-baselines.md#nr-r08) |
-| NR-R09 | Absorbing optical loss is serial erasure plus a receiver-preparable flag | [Loss equivalence](communication.md#nr-r09) |
+| NR-R09 | Optical loss: calibrated reductions and native record constraints | [Loss equivalence](communication.md#nr-r09) |
 | NR-R10 | Entanglement-breaking slot, control-quality wire simulation and stopping bounds | [Communication resource bounds](communication.md#nr-r10) |
 | NR-R11 | Accepted cavity and nonlinear-scattering instruments | [Scattering-instrument screens](communication.md#nr-r11) |
 | NR-R12 | Exact coherent dispatch with a dephased counter and bounded-query boundary | [Conditional dispatch result](dispatch.md#nr-r12) |
@@ -29,6 +29,7 @@ and from learning a scalar channel property.
 | NR-R16 | Displacement-area calibration and native ordinary controls | [Geometric calibration](geometric-calibration.md#nr-r16) |
 | NR-R17 | Braided magic, coherent trajectory resources and ordinary factories | [Braided magic](braided-magic.md#nr-r17) |
 | NR-R18 | Drifting measurement alignment: exact two-query limit and reuse costs | [Alignment benchmark](alignment.md#nr-r18) |
+| NR-R19 | Unknown odd couplers: exact two-query correction and ordinary limits | [Coupler benchmark](backaction.md#nr-r19) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -99,11 +100,28 @@ change that comparison. A native calibration-rate advantage remains open.
 The shared-spectrum analysis in NR-R08 now specifies a joint-record
 test and a bandwidth--delay resource bound before treating two optical
 sections as independent unread measurements. NR-R06 separately bounds
-raw full-register correct-output weight at fixed terminal site noise;
-logical encodings and continuous interacting noise remain distinct.
+raw full-register correct-output weight at fixed terminal site noise. Its
+local-output bound also permits arbitrary globally interacting preprocessing
+when both terminal noise layers have independent replacement components;
+global decoding before discard remains distinct. The same owner gives
+full calibrated bosonic noise compilers. NR-R09 separates those storage
+comparisons from unknown-loss inference and tests the complete passive
+optical transfer matrix and its directional loss records.
+NR-R06 also gives a passive two-photon ordinary estimator for the specified
+phase-invariant unitary reordering fidelity, with dimension-independent
+variance and explicit source/readout costs. Its noisy-channel statistic
+is a Choi overlap, rather than the switch's Kraus-interference visibility.
+Anisotropic shifts fall outside the simple random-displacement compiler;
+an ordinary parity echo nevertheless closes the specified deterministic
+ideal-GKP fidelity benchmark. Finite-energy and heralded tasks remain open.
 The full-reset ordinary simulation in NR-R10 and the excitation-exchange
 decision counterexample in NR-R14 sharpen the remaining state-preparation
 and memory-calibration targets without claiming a native advantage.
+The separate unknown-coupler benchmark NR-R19 gives exact two-query
+correction and a full ordinary hard-two converse for data dimension at
+least three. Known-parity and Abelian subfamilies admit two-query ordinary
+wrappers, and the general family admits a three-call simulation. A useful
+approximation gap and a native unknown-coupler interface remain unproved.
 The [scattering result](communication.md#nr-r11) now includes unequal-rate
 and photon-preserving bath-record comparisons. Conditional spectral
 filtering, pair-preserving readout and ordinary delayed/reused paths must
@@ -115,8 +133,8 @@ advantage from measurement-record access, ordinary reuse and control
 backgrounds. Its calibrated one-memory ordinary construction at shrinking
 positive angles rules out treating that strict cap as the unrestricted
 mean-query frontier; the longer frame-stability and helper costs remain
-explicit. Its fresh
-shared-frame assumptions still need a physical two-meter realization. The
+explicit. Its fresh shared-frame assumptions still need a physical two-meter
+realization. The
 [displacement-calibration result](geometric-calibration.md)
 identifies a more concrete optical comparison: measure the complete
 ordinary conditional-displacement echo and switched instrument at the

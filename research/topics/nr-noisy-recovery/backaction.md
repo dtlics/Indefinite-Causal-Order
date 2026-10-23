@@ -459,3 +459,132 @@ The native central-spin commutator candidate supplies no advantage over the ordi
 A remaining positive target must specify an unknown joint intervention family and an implementable coherent temporal interface, then identify a storage, gate or calibration decision that ordinary echo, phase cycling, pump/reset/read, retained records, entangled probes and direct target-sequence calibration cannot match at the same cost. A concrete falsifiable benchmark is lower prediction error or lower all-attempt cost for a stated held-out control family, with bath initialization/drift, inaccessible histories, coherent buffers, readout inefficiency and rejections charged. A nonzero commutator signal or a favorable conditional bath state alone does not establish that benchmark.
 
 The [exact checker](checks/architecture/verify_backaction.py) replays finite reference-inclusive $X/Y$ echo instruments, the rational held-out counterexample, the maximal ordinary record contrast, polynomial identities for the calibration/storage example, and all input matrix units for the exchange-channel factorization with its Choi Gram data. The all-dimension operator, norm and linearity arguments are the proofs above; the finite cases are not a general formalization, a hardware demonstration, a sample-optimality theorem, or a no-go for every shared-bath application.
+
+<a id="nr-r19"></a>
+## NR-R19 — Unknown odd couplers: exact two-query correction and ordinary limits
+
+This is a separate unknown-gate benchmark, rather than a strengthening of the shared-bath claims in NR-R14. Two commuting Hermitian couplers admit exact correction of unknown static station phases with two queries and a surviving order helper. For data dimension $d\ge3$, the full ordinary circuit model specified below cannot implement the same unknown target exactly with a hard cap of two named queries. An ordinary three-query construction is exact. Known couplers, restricted qubit links and supplied coherent selectors have stronger ordinary baselines. No useful approximate gap or native device advantage follows from the exact query separation.
+
+### Coupler family and the complete corrected output
+
+Let $C$ be a two-level physical address, $D$ a $d$-dimensional data register, $U\in U(d)$ unknown, and $H=H^\dagger=H^{-1}$ an unknown involution. In the address basis define
+
+$$
+A=\begin{pmatrix}0&U^\dagger\\ U&0\end{pmatrix},\qquad
+B=\begin{pmatrix}0&HU^\dagger\\ UH&0\end{pmatrix},\qquad
+W=AB=BA=\operatorname{diag}(H,UHU^\dagger).
+\tag{34}
+$$
+
+Both couplers square to $I$ and anticommute with the known $Z_C$. A station supplies $A_\alpha=e^{i\alpha Z_C}A$ or $B_\beta=e^{i\beta Z_C}B$, with unknown phases static throughout one job. These are again Hermitian involutions. With $\delta=\beta-\alpha$, the two temporal products are
+
+$$
+P_0=B_\beta A_\alpha=e^{i\delta Z_C}W,\qquad
+P_1=A_\alpha B_\beta=e^{-i\delta Z_C}W.
+\tag{35}
+$$
+
+Prepare an independent order helper $O$ in $+$, realize $\operatorname{diag}_O(P_0,P_1)$, and measure $O$ in $X$. The two target Kraus operators are
+
+$$
+K_+=\cos\delta\,W,\qquad K_-=i\sin\delta\,Z_CW.
+\tag{36}
+$$
+
+Apply the known $Z_C$ after the minus outcome. The two corrected Kraus operators are scalar multiples of $W$ whose squared moduli sum to one. Thus the **all-outcome, surviving-output** channel is exactly $\operatorname{Ad}_W$, on every input including arbitrary references. No phase estimation or accepted-outcome normalization is used. Equivalently, apply a Hadamard to $O$ and then controlled-$Z_C$: the output factors as $W|\psi\rangle\otimes(\cos\delta|0\rangle+i\sin\delta|1\rangle)$. This endpoint needs an independent surviving helper or a coherent equivalent. Destructive detection of the payload's path does not implement it. The target is an unknown gate; interpreting it as a measurement of $H$ or a holonomy expectation requires a further specified interferometric interface.
+
+For the isolated model of input-independent order dephasing with visibility $0\le\nu\le1$, the same correction gives
+
+$$
+\left[\frac{1+\nu}{2}\,\mathrm{id}
+      +\frac{1-\nu}{2}\operatorname{Ad}_{Z_C}\right]
+\circ\operatorname{Ad}_W.
+\tag{37}
+$$
+
+Its target entanglement fidelity is $(1+\nu)/2$ and its half-diamond error is $(1-\nu)/2$. To verify (37), decompose the helper state as $\nu|+\rangle\langle+|+(1-\nu)I/2$; the latter component gives the equal mixture of corrected address phases and completely dephases $C$. This formula does not model input-dependent emissions or correlated payload errors. If phases instead vary between early and late windows, the two histories have $\theta_0=\beta_2-\alpha_1$ and $\theta_1=\alpha_2-\beta_1$. Factoring their mean shows that the same correction leaves $e^{imZ_C}W$, where $m=(\theta_0+\theta_1)/2=[(\alpha_2-\alpha_1)+(\beta_2-\beta_1)]/2$. Static cancellation therefore does not establish cancellation of temporal drift.
+
+### Ordinary controls, repeated queries and calibration
+
+Several ordinary closures are essential to the scope of the task.
+
+* If the useful address is classical, (35) differs from $W$ only by a sectorwise global phase. The task must preserve coherence between the two address sectors.
+* If $H$ is known and its conditional application is available at its actual cost, put $M=\operatorname{diag}(H,I)$. Direct block multiplication gives $MA_\alpha MA_\alpha=W$, and also $MB_\beta MB_\beta=W$. These are ordinary two-query implementations, independent of $U$ and the static phase. Manufacturing $B$ from an accessible known $H$ does not justify withholding that control from the comparator.
+* Even unknown $H$ does not save a natural Abelian qubit family. Let $U=e^{i\varphi Z}$ with unknown $\varphi$ and let unknown $H$ anticommute with the known $Z$. Hold the useful logical address in ordinary memory. A fixed physical input address $1$ at $A$ supplies $P=U^\dagger$, and input address $0$ at $B$ supplies $Q=UH$, each up to a harmless global station phase. For known logical-controlled $X$, $C_X$, use $Q$ first, then $C_X$, then $P$, then $C_X$. Since $XPX=U$ and $HU^\dagger=UH$,
+  $$C_X(I\otimes P)C_X(I\otimes Q)
+      =\operatorname{diag}(PQ,UQ)=W.\tag{38}$$
+  This preserves all logical address/data/reference coherences with two ordinary queries and no knowledge of $H$ or $\varphi$.
+* If a native coherent setting selector is supplied, the same selector is available to the ordinary comparator. Equation (32), with the actual records and delays, then gives the two-window controlled products. Classical query-name choice alone does not supply that selector.
+
+There is a general exact **three-query ordinary upper bound** with static station unitaries, arbitrary known controlled swaps and one full-size dummy register. Query $A$ in the first and third slots and $B$ in the middle slot. On helper branch $0$, route the payload through the first $A$ and $B$, and the dummy through the last $A$; on branch $1$, route the dummy through the first $A$, and the payload through $B$ and the last $A$. The output is $\operatorname{diag}_O(B_\beta A_\alpha,A_\alpha B_\beta)$ on the payload, while the dummy is the identical state $A_\alpha|\eta\rangle$ on both branches. It decouples without a record of the branch. Applying (36) gives $W$ deterministically. The dummy, known routing and storage have costs; this is a query upper bound. It assumes identical repeated $A$ operations, with no additional timing record or changed environment. Giving new independent noise only to ordinary repeated visits changes the comparison.
+
+Direct ordinary calibration also limits interpretation. A raw serial pair has target entanglement fidelity $\cos^2\delta$ and half-diamond error $|\sin\delta|$; the uniform-phase fidelity $1/2$ is **not** an optimal-ordinary bound. Because $W^2=I$, two serial pairs give $P_0^2=e^{i2\delta Z_C}I$, costing four station visits. Ramsey readout of this gate learns $\delta$ only modulo $\pi/2$. The ambiguity is real for a balanced involution: choose $RHR^\dagger=-H$, set $U'=UR$ and $\delta'=\delta+\pi/2$. Then $W'=Z_CW$ but $P_0'=iP_0$, so whole-pair channels cannot distinguish two orthogonal target Choi states. Any whole-pair-only common output has average target fidelity at most $1/2$. This is not a bound for separated access to $A$ and $B$. A prior branch interval of width less than $\pi/2$ removes this ambiguity; precision-dependent calibration costs and stability then permit an amortized ordinary approximate production strategy. It is not exact finite-query phase learning.
+
+### Full ordinary hard-two obstruction for $d\ge3$
+
+**Statement and interface.** Allow arbitrary finite clean memory, known joint data/controller operations, reference entanglement, coherent routing of each fixed-name query through program or data registers, adaptive instruments, and classical choices of query name. Advice must be independent of $U,H,\alpha,\beta$; learning them is charged. The oracle space is precisely $\mathbb C^2\otimes\mathbb C^d$. A free coherent selector between names or an additional known coherent vacuum extension is a different interface. In this model, for $d\ge3$, no deterministic ordinary protocol with **at most two total named queries** implements $\operatorname{Ad}_W$ for every $U,H,\alpha,\beta$. Together with the construction above, the minimum hard query cap for exact implementation is three. The proof below concerns exact implementation, not a numerical approximation gap or a hardware cost advantage.
+
+It suffices to restrict $H$ to the connected orbit of rank-one reflections $H_h=I-2|h\rangle\langle h|$. Its trace is $d-2\ne0$. Allowing $U(d)$ is legitimate even if a constituent native link is presented as $SU(d)$: a scalar phase in $U$ can be absorbed in the unknown station phases while leaving $W$ unchanged.
+
+**1. Every surviving path must use both stations.** Refine all classical outcomes and final discarded helpers into Kraus paths. Exact unitary output has rank-one Choi support, so every path operator is proportional to $W$. A path using only $A$, including repeated $AA$, is independent of $H$, whereas $W$ varies nonproportionally with $H$; that path must be zero. For a path using only $B$, fix $V=UH$ and vary $H$ with $U=VH$. The complete oracle $B_\beta$ is fixed, but $W=\operatorname{diag}(H,VHV^\dagger)$ again varies nonproportionally. This path is also zero. Zero-query and early-stop paths are included. This step uses actual **static** station phases, not independent phase noise on repeated visits. Consequently any exact hard-two protocol queries one of each almost surely.
+
+Now average $\alpha,\beta$ independently uniformly on the circle. Exactness is preserved. For one use per station the averaged Kraus operators are
+
+$$
+\begin{array}{ll}
+A_0=|1\rangle\langle0|\otimes U,&A_1=|0\rangle\langle1|\otimes U^\dagger,\\
+B_0=|1\rangle\langle0|\otimes UH,&B_1=|0\rangle\langle1|\otimes HU^\dagger.
+\end{array}\tag{39}
+$$
+
+The address is measured in $Z$ before its unknown data action and then flipped. Grant that direction record to the ordinary circuit; this can only strengthen the comparator. One may refine all direction and known-operation Kraus labels. For a fixed $U$, every resulting path $K_\sigma(U,H)$ is complex-linear in $H$, since it uses exactly one $B$ action.
+
+**2. Linearity fixes every path's dependence on $H$.** Define the injective linear map $J_U(X)=\operatorname{diag}(X,UXU^\dagger)$. Exactness says $K_\sigma(U,H)=c_\sigma(U,H)J_U(H)$. The reflection orbit spans $M_d(\mathbb C)$: $\sum_jH_{e_j}=(d-2)I$, and differences of projectors onto basis vectors and their real/imaginary pair superpositions span the traceless matrices. Hence the range of the linear map $K_\sigma(U,\cdot)$ lies in $J_U(M_d)$, and $T=J_U^{-1}K_\sigma(U,\cdot)$ is a linear endomorphism of $M_d$. Every promised $H$ is an eigenvector with eigenvalue $c_\sigma(U,H)$. That eigenvalue is continuous, as extracted by Hilbert–Schmidt pairing with $J_U(H)$ divided by its squared norm $2d$. A finite-dimensional linear map has a finite spectrum; a continuous function on the connected orbit into that spectrum is constant. Therefore
+
+$$
+K_\sigma(U,X)=c_\sigma(U)J_U(X)
+\quad\text{for every }X\in M_d(\mathbb C).
+\tag{40}
+$$
+
+Vanishing at one reflection implies vanishing throughout the orbit. Finite-dimensional finite-query combs admit finite Kraus refinements. For continuous classical randomization the same reasoning holds almost everywhere, using a countable dense parameter subset and continuity; an unrecorded random choice does not evade rank-one output support.
+
+**3. Equal query directions have zero probability.** For directions $A_0,B_0$, in either causal order, each entry of $K_\sigma(U,X)$ is a homogeneous holomorphic polynomial of degree two in the entries of $U$, linear in $X$. All adaptive programs and routing are known coefficient contractions. At $X=I$, (40) gives $K_\sigma(U,I)=c_\sigma(U)I$, so $c_\sigma$ is also a degree-two homogeneous polynomial. The $C=1$ block obeys, on unitaries,
+
+$$
+(\det U)K_{11}(U,X)
+   =c_\sigma(U)UX\operatorname{adj}(U).
+\tag{41}
+$$
+
+Both sides are holomorphic polynomials, so the identity extends to all complex matrices. To see the needed density without an oracle assumption, substitute $U=\exp(i\sum_jt_jE_j)$ in a Hermitian matrix basis. Vanishing for real $t_j$ implies vanishing for complex $t_j$ by repeated analytic continuation, hence in a complex neighborhood and then identically as a polynomial.
+
+At any rank-$(d-1)$ matrix $U$, the adjugate is nonzero and some $X$ makes $UX\operatorname{adj}(U)\ne0$: map its nonzero image outside $\ker U$. Thus $c_\sigma(U)=0$ on every such matrix. These matrices are dense in the determinant-zero hypersurface. This hypersurface is irreducible: its dense rank-$(d-1)$ part is parameterized by products of full-rank $d\times(d-1)$ and $(d-1)\times d$ matrices, an irreducible parameter space. The determinant is reduced (at a rank-$(d-1)$ point it has a nonzero first derivative). It therefore divides $c_\sigma$. Since $2<d$, $c_\sigma=0$. For directions $A_1,B_1$, set $T=U^\dagger$; the same reasoning uses $(\det T)K_{11}=c_\sigma(T)\operatorname{adj}(T)XT$ and gives zero. All final Kraus labels were retained, so equal directions have zero **total probability**, not just zero amplitude after a selected readout.
+
+**4. Normalize a first direction before extending the promise.** Choose a nonzero first-name-and-direction record. It is selected before any unknown data action. Unitary final output makes its probability independent of the logical input; its timing makes it independent of unknown parameters. Dividing this known preprocessing instrument by its constant probability therefore gives a genuine trace-preserving preprocessing channel.
+
+The first selected data unitary ranges over all $U(d)$, including a first $B$ action by holding one promised $H$ fixed and varying $U$. A decision to repeat the first station has zero probability by step 1; a decision to use the same second direction has zero probability by step 3. Both decisions occur **before** the second unknown action, and depend only on the first unitary and known operations. Since that first unitary ranges over all unitaries, these forbidden decisions vanish for every possible first unitary regardless of the second oracle. They can be replaced operationally by the fixed other station and opposite direction. The result is already a valid trace-preserving fixed-slot ordinary circuit for arbitrary independent unitaries in its two data slots, before any off-promise extension. This prevents a discarded repeated-station branch from reappearing when $H$ is extended.
+
+**5. The normalized circuit would implement a forbidden universal SWITCH.** Apply (40) with an arbitrary unitary $X=V$. Only the selected $B$ direction is queried, so no promise about its unused reverse block is needed. The coefficients are independent of $V$ and retain their original normalized squared sum. Consequently the conditioned circuit implements $J_U(V)$ deterministically, rather than as a heralded outcome. If $A$ is first, the two opposite-direction cases give
+
+$$
+\begin{array}{c|c|c}
+\text{data slots}&\text{independent change of variables}&J_U(V)\\\hline
+P=U,\ Q=VU^\dagger&U=P,\ V=QP&\operatorname{diag}(QP,PQ)\\
+P=U^\dagger,\ Q=UV&U=P^\dagger,\ V=PQ&\operatorname{diag}(PQ,QP).
+\end{array}\tag{42}
+$$
+
+For $B$ first, name its first slot $P$ and the later $A$ slot $Q$. Directions $B_0,A_1$ give $P=UV,Q=U^\dagger$; setting $U=Q^\dagger,V=QP$ yields $J_U(V)=\operatorname{diag}(QP,PQ)$. Directions $B_1,A_0$ give $P=VU^\dagger,Q=U$; setting $U=Q,V=PQ$ yields $\operatorname{diag}(PQ,QP)$. Thus either first-name branch would implement universal coherent controlled order with one query each in an ordinary fixed order.
+
+The prior impossibility used here is [Chiribella et al., *Quantum computations without definite causal structure*, Phys. Rev. A **88**, 022318 (2013)](https://doi.org/10.1103/PhysRevA.88.022318), [full text §§III.7–IV, Lemma 4 and Theorem 3](https://arxiv.org/html/0912.0195v4). Theorem 3 excludes the one-call-each fixed-order classical SWITCH; Lemma 4 starts from unitary inputs and its following remark extends the argument beyond qubits. For completeness, the unitary-to-channel qualification can also be bridged directly. Any alleged ordinary universal unitary SWITCH has path operators bilinear in $P,Q$, proportional to $\operatorname{diag}(QP,PQ)$ on unitaries. At fixed $P$, the connected spanning set $U(d)$ and the eigenvector argument of step 2 make each scalar independent of $Q$; fixing $Q$ makes it independent of $P$. Bilinearity therefore extends the identity with a constant scalar to all complex $P,Q$. Substituting arbitrary channel Kraus operators gives the usual SWITCH channel, and discarding the surviving control gives precisely the forbidden classical supermap. This proves that the independent-unitary circuit obtained in (42) contradicts the cited theorem and completes the hard-two obstruction.
+
+### Dimension, physical assumptions and verification boundary
+
+The full qubit problem is unresolved by this proof. Its rank-one reflection orbit is traceless and spans only $\mathfrak{sl}_2$, so step 2 cannot reach $I$ or all unitary $V$. Also $\deg\det U=2$, so step 3 does not force a degree-two coefficient to vanish. The $SU(2)$ identity $YU^TY=U^\dagger$ does not itself grant an ordinary physical transpose query. Equation (38) is a real ordinary qubit closure, rather than a general qubit converse. No quantitative approximate-fidelity or expected-cost frontier is supplied here.
+
+A native Hermitian hopping Hamiltonian $g\left(\begin{smallmatrix}0&U^\dagger\\U&0\end{smallmatrix}\right)$ is consistent with $A$: a calibrated pulse of duration $\pi/(2g)$ gives $-iA$. It assumes flat singular values, a calibrated pulse area and no additional onsite terms. A second link $UH$ with unknown exact $H^2=I$ is additional correlated structure, not generic disorder. A proposed device must explain why its relation and spectrum persist while $H$ is unknown and unavailable to ordinary controls. Generic reciprocal optical propagation supplies a transpose in reciprocal port bases, rather than automatically an adjoint; any reverse-access claim needs its actual port and polarization model. These algebraic observations do not supply a native unknown qutrit-or-higher pair or a working temporal router.
+
+The remaining architecture target must specify that pair, a useful coherent address input, full temporal dilations and emitted records, an independent surviving helper, all routing/storage/control costs, phase stability across repeats and any calibration reuse. Pulse, idle, preparation, cooling, leakage and rejected launches enter the same physical ledger on both sides. Known $H$, classical addresses, a supplied selector, or destructive helper/payload readout changes or closes the endpoint. A significant finite advantage on such a native workload remains open.
+
+The shared [exact checker](checks/architecture/verify_backaction.py) separately reports NR-R19. It replays noncommuting rational examples in data dimensions two and three, all address/data matrix units for the corrected and visibility-limited channels, phase drift, known-$H$ wrappers, whole-pair ambiguity, selector compilation, and the unknown-$H$ Abelian qubit counterprotocol. These finite identities support transcription and scope checks. The connected-orbit, determinant, operational normalization and no-SWITCH reduction above are analytic proofs, not conclusions inferred from a finite optimizer or the replay.

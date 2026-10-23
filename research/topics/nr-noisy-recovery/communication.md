@@ -6,7 +6,7 @@ These results distinguish an abstract switch placement from a physical network c
 
 <a id="nr-r09"></a>
 
-## NR-R09 — Pure absorbing loss adds only a receiver-preparable flag
+## NR-R09 — Optical loss: calibrated reductions and native record constraints
 
 ### Specified channel and exact output
 
@@ -52,6 +52,192 @@ Ordinary serial transmission is the flagged erasure channel with survival $ab$. 
 Thus the two channels are related by receiver-local postprocessing in both directions. They have identical performance for communication and entanglement-distribution tasks with arbitrary data encodings, memories, parallel uses, LOCC and postselection, when calibrated $a,b$ are available for that postprocessing. Both use the same two module slots; switch routing supplies no improvement in this model. Conditional fidelity on a surviving or selected branch cannot replace the all-attempt comparison.
 
 The conclusion concerns this vacuum extension and fixed input control. It is not a statement about every rectangular erasure-switch definition, quantum-correlated losses, unknown-parameter estimation, or arbitrary encoding into the control. In particular, preparing the forward simulation's flag depends on $a,b$; it is not a parameter-independent simulator of an unknown loss family. Other erasure conventions must be checked from their complete channel, as illustrated by the distinct flag formulas in [Caleffi, Simonov and Cacciapuoti](https://arxiv.org/abs/1912.08575).
+
+### Unknown loss calibration differs from calibrated storage
+
+The [calibrated bosonic compilers](architecture-baselines.md#nr-r06-bosonic-compilers)
+reproduce the full switched channel, including a reference and every control
+outcome, when their loss-dependent helper settings are supplied. This does
+not imply a parameter-independent simulation of an unknown loss family.
+For two single-mode pure-loss channels, write
+
+$$
+\tau=\eta_1\eta_2,\qquad
+\zeta=\frac{\sqrt{\eta_1}+\sqrt{\eta_2}}{1+\sqrt\tau}.
+$$
+
+On a one-photon input and an independent $|+\rangle_C$ control, the
+abstract same-port switch has probabilities
+
+$$
+p(1)=\tau,\qquad
+p(0,\pm)=\frac{(1-\tau)(1\pm\zeta)}2.                 \tag{L1}
+$$
+
+The serial channel depends only on $\tau$, whereas (L1) can also reveal
+$\zeta$. Together they determine the **unordered** pair of efficiencies:
+the roots $a,b$ obey $ab=\sqrt\tau$ and
+$a+b=\zeta(1+\sqrt\tau)$, with $\eta_1=a^2,\eta_2=b^2$.
+They do not identify which labeled node is worse. If either efficiency is
+already known, serial transmission determines the other. The calibrated
+compiler samples helper phases from a law depending on $\zeta$; it cannot
+be differentiated as though that unknown law were freely provided to a
+sensing experiment. No Fisher-information converse follows from that
+pointwise storage simulation.
+
+### A fixed passive vacuum network is determined by its field matrix
+
+There is a separate family-level obstruction for a common proposed
+photonic realization. Let $a$ collect all accessible optical input
+annihilation operators, $b$ all accessible outputs, and $e$ the initially
+uncorrelated vacuum environment inputs of a **fixed passive,
+number-preserving linear network**. Include accessible reflection,
+polarization, spatial, frequency and temporal modes. Its dilation has
+
+$$
+b=Ta+Re,\qquad TT^\dagger+RR^\dagger=I.                 \tag{P1}
+$$
+
+The second identity follows from preservation of the output commutators;
+$T$ may be rectangular. With the complex Weyl convention
+$D_a(\alpha)=\exp(a^\dagger\alpha-\alpha^\dagger a)$,
+substitution in $D_b(\xi)$ gives
+
+$$
+D_b(\xi)=D_a(T^\dagger\xi)D_e(R^\dagger\xi).
+$$
+
+The two factors commute. Taking the vacuum expectation of the second
+factor gives the complete channel's characteristic function
+
+$$
+\chi_{\Phi_T(\rho)}(\xi)
+=\chi_\rho(T^\dagger\xi)
+ \exp\!\left[-\frac12\xi^\dagger(I-TT^\dagger)\xi\right]. \tag{P2}
+$$
+
+Characteristic functions determine arbitrary trace-class operators, so
+(P2) identifies the entire channel, including non-Gaussian inputs and
+inputs entangled with retained references. This is the passive-vacuum
+specialization of the Gaussian-channel Weyl action and dilation in
+[Caruso, Eisert, Giovannetti and Holevo, New J. Phys. **10**, 083030
+(2008), Eqs. (16), (18) and Section 2](https://arxiv.org/html/0804.0511v3).
+
+Consequently, if $T_\theta$ depends on unknown internal parameters only
+through $\tau(\theta)$, no parameter-independent endpoint protocol
+
+$$
+\Lambda_{\rm out}\circ
+ (\Phi_{T_\theta}\otimes\operatorname{id}_M)
+ \circ\Lambda_{\rm in}                                  \tag{P3}
+$$
+
+can distinguish internal parameter values having the same $\tau$.
+The endpoint maps may use an independent
+stored control, controlled path demultiplexing and recombination,
+nonlinear helpers, memories and arbitrary measurements. Equality of
+channels includes the complete outcome instrument and its postselected
+statistics. Repeated-use extension requires fresh baths, or the same
+premise on the **full joint temporal transfer matrix**; isolated one-use
+matrices do not characterize a device with reservoir memory.
+
+In particular, $T=\sqrt\tau V$ with known $V$ gives only $\tau$ access.
+If a different loss split changes accessible reflections or cross-coupling,
+that change belongs in $T$ and is also identifiable in principle with
+coherent probes: $|\alpha\rangle\mapsto|T\alpha\rangle$.
+This observation is not a claim that bright pilots have optimal precision
+or negligible dose, latency or detector cost.
+
+### Opposite-direction loss records need not be the same environment
+
+The simple counterpropagating ring shows the missing physical record.
+For one reciprocal two-port attenuator in matched power-normalized
+orthogonal propagating modes, write its one-photon isometry as
+
+$$
+\begin{aligned}
+|L\rangle&\longmapsto r_L|L_{\rm out}\rangle
+ +t|R_{\rm out}\rangle+|\ell_L\rangle,\\
+|R\rangle&\longmapsto t|L_{\rm out}\rangle
+ +r_R|R_{\rm out}\rangle+|\ell_R\rangle.
+\end{aligned}
+$$
+
+Here the $\ell$ vectors contain every inaccessible loss mode.
+Preserving the zero inner product of the input columns gives
+
+$$
+\langle\ell_L|\ell_R\rangle
+=-(r_L^*t+t^*r_R).                                      \tag{R1}
+$$
+
+For the reciprocity convention see [Svendsen, Haakestad and Skaar,
+Phys. Rev. A **87**, 013838 (2013)](https://arxiv.org/abs/1301.2458).
+Equation (R1) is the elementary isometry consequence used here. A
+reflectionless attenuator has orthogonal opposite-direction loss
+records. Equal reduced transmitted channels therefore do not establish
+the environment identification required by the abstract switch.
+
+For two such reflectionless elements with independent vacuum baths,
+opposite-direction $AB$ and $BA$ routes have orthogonal records for
+every lost one-photon history: loss at the same node has the direction
+tag in (R1), and loss at different nodes occupies independent baths.
+After endpoint recombination the output for arbitrary stored $\rho_C$ is
+
+$$
+\tau\rho_C\otimes|1\rangle\langle1|
+ +(1-\tau)\Delta_Z(\rho_C)\otimes|0\rangle\langle0|.       \tag{R2}
+$$
+
+It contains no $\zeta$ signal. This does not rely on distinct pulse
+arrival times: long wavepackets can overlap, but the direction records
+already suffice. If the control is carried only by the lost photon's
+path or polarization, there is also no independent control qubit left
+to measure in the vacuum sector.
+
+These are scoped implementation statements. Controller-conditioned
+**internal** interactions, active or nonlinear networks, initially
+non-vacuum or correlated baths, and access to emitted fields fall
+outside (P1)-(P3). A retained endpoint control alone does not supply
+those resources. An actual same-port quantum router could fall outside
+the proof and requires its complete ports, records and cost model.
+
+### Network tomography supplies the ordinary access test
+
+[Zheng, Gong, Guha and Towsley, arXiv:2604.25194v1 (2026), Sections 2.1
+and 4.1](https://arxiv.org/html/2604.25194v1), study loss inference from
+end-to-end optical probes when only some nodes have transceivers.
+Their ordinary routes are walks, including repeated edges; a route
+has transmissivity $\prod_{e\in P}\eta_e$, and identifiability requires
+the edge-count matrix to have full column rank. Additional native routes
+or returns can therefore remove an apparent two-link ambiguity.
+These network routing switches are distinct from a causal-order switch.
+If individual elements are interrogable, [Nair, Phys. Rev. Lett.
+**121**, 230801 (2018)](https://arxiv.org/html/1804.02211v2) gives the
+energy-constrained diagonal QFI $N_j/[\eta_j(1-\eta_j)]$, attained by
+number-diagonal-signal probes without observing the loss baths. That
+benchmark does not grant local access to a genuinely composite-only
+interface.
+
+The theoretical [Li, Li and Dahlsten, EPJ Quantum Technology **13**,
+78 (2026)](https://link.springer.com/article/10.1140/epjqt/s40507-026-00523-w)
+uses effective erasure/fading loss and proposes quantum-controlled MZI
+routing in Appendix A; it supplies no measured loss-localization
+interface or full bosonic pure-loss analysis. The models should be
+distinguished: with a vacuum bath, a pure-loss beamsplitter maps
+$|1\rangle\langle0|$ to $\sqrt\eta|1\rangle\langle0|$, whereas a
+transmitted-or-vacuum-replaced interpolation scales it by $\eta$.
+Its illumination error bounds are not needed for the reductions above.
+
+A useful next experiment would hold $\tau$ fixed while changing the
+loss split, measure the complete accessible $T$, and test an independent
+control conditioned on probe vacuum. Any split-dependent signal at
+unchanged $T$ must identify which premise of (P1) fails. A network claim
+must additionally explain physically why local probes, alternate walks,
+bright pilots, reflected fields and reflectometry are unavailable while
+the required coherent two-order interaction remains available. No
+deployed loss-localization advantage is established by the abstract
+parameter distinction alone.
 
 <a id="nr-r10"></a>
 

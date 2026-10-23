@@ -131,7 +131,26 @@ discrimination identities, and full reset-channel ordinary simulations.
 The all-dimension bandwidth--delay bound, terminal fixed-site-noise
 bound, thermal filtering inequalities and reciprocal emitter scattering
 model are complete analytic arguments in their respective owners.
-Their finite checks do not constitute a measured instrument, a new
+The calibrated bosonic compilers have exact finite Fock/control and
+Gaussian/Weyl coefficient replays; all-Fock extension and the required
+Fourier/Gaussian integrations remain analytic. The local-output terminal
+noise proof permits globally interacting CPTP preprocessing; finite
+replacement cross-map identities and sharp SWAP witnesses are replayed,
+while its universal norm and adaptive-use arguments are analytic.
+The full passive-vacuum transfer and directional loss-record arguments
+are analytic family-level statements under their specified optical model.
+The passive two-photon reordering comparison has finite exact seed,
+coefficient, second-design and CP-overlap checks; its representation
+decomposition, Haar identity and dimension-independent variance bounds
+remain analytic. No native source or detector efficiency is certified.
+The anisotropic characteristic-function obstruction and ideal-GKP
+deterministic-fidelity comparison are analytic, with explicit ideal-code
+and syndrome-port assumptions. NR-R19 has finite exact corrected-channel
+and ordinary-wrapper checks; its all-ordinary dimension-at-least-three
+converse uses analytic orbit, polynomial and causal-circuit arguments.
+No finite replay establishes a quantitative approximation gap, a
+finite-energy GKP bound or a native unknown-coupler implementation.
+These checks do not constitute a measured instrument, a new
 fault-tolerance threshold or an architecture advantage.
 
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

@@ -3,7 +3,7 @@
 Standard library only; Gaussian-rational arithmetic reuses the fault-simulation
 matrix helpers. Examples include coherent, nonunital CPTP noise, rather than
 only Pauli mixtures. General projection and physical-cost arguments are
-analytic inputs, not certified by these finite examples. No files are written.
+analytic inputs, not certified by these finite examples. Terminal common-replacement checks include arbitrary global CPTP preprocessing, direct reduced cross maps and sharp SWAP examples; their universal norm bounds remain analytic. No files are written.
 """
 
 from fractions import Fraction as F
@@ -650,6 +650,156 @@ def replay_number_diagonal_loss():
     return count
 
 
+def repl_zeros(rows, cols=None):
+    return zeros(rows, rows if cols is None else cols)
+
+
+def repl_total(values):
+    out = ZERO
+    for value in values:
+        out = add(out, value)
+    return out
+
+def repl_gaussian_scale(a, value):
+    return [[multiply(value, v) for v in row] for row in a]
+
+def repl_matmul(a, b):
+    out = repl_zeros(len(a), len(b[0]))
+    for i, row in enumerate(a):
+        for k, first in enumerate(row):
+            if first == ZERO:
+                continue
+            for j, second in enumerate(b[k]):
+                if second != ZERO:
+                    out[i][j] = add(out[i][j], multiply(first, second))
+    return out
+
+def repl_units(n):
+    for i, j in product(range(n), repeat=2):
+        out = repl_zeros(n)
+        out[i][j] = ONE
+        yield out
+
+def repl_kraus_norm(kraus):
+    out = repl_zeros(len(kraus[0][0]))
+    for k in kraus:
+        out = plus(out, repl_matmul(adjoint(k), k))
+    return out
+
+def repl_givens(n, first, second, cosine=F(3, 5), sine=F(4, 5)):
+    out = identity(n)
+    out[first][first] = out[second][second] = gaussian(cosine)
+    out[first][second], out[second][first] = (gaussian(0, -sine), gaussian(0, -sine))
+    require(repl_matmul(adjoint(out), out) == identity(n), 'Terminal replacement cross-map identity failed.')
+    return out
+
+def repl_damp_after(unitary, source, target):
+    n = len(unitary)
+    k0, k1 = (identity(n), repl_zeros(n))
+    k0[source][source], k1[target][source] = (gaussian(F(3, 5)), gaussian(F(4, 5)))
+    out = [repl_matmul(k0, unitary), repl_matmul(k1, unitary)]
+    require(repl_kraus_norm(out) == identity(n), 'Terminal replacement cross-map identity failed.')
+    return out
+
+def repl_reduced_kraus(pre, d, r):
+    out = []
+    for k in pre:
+        for z in range(d):
+            a = [list(row) for row in k[z * r:(z + 1) * r]]
+            if any((v != ZERO for row in a for v in row)):
+                out.append(a)
+    require(repl_kraus_norm(out) == identity(d * r), 'Terminal replacement cross-map identity failed.')
+    return out
+
+def repl_input_block(a, x, r):
+    return [row[x * r:(x + 1) * r] for row in a]
+
+def repl_output_embed(a, x, d, r):
+    out = repl_zeros(d * r)
+    for i in range(r):
+        out[x * r + i] = list(a[i])
+    return out
+
+def repl_trace_j(a, d, r):
+    return [[repl_total((a[x * r + i][x * r + j] for x in range(d))) for j in range(r)] for i in range(r)]
+
+def repl_cross_map(pairs, rho, r, weight=F(1)):
+    out = repl_zeros(r)
+    for left, right in pairs:
+        out = plus(out, repl_gaussian_scale(repl_matmul(repl_matmul(left, rho), adjoint(right)), gaussian(weight)))
+    return out
+
+def repl_replay(pre_a, pre_b, d, r, full_units=False):
+    n = d * r
+    a, b = (repl_reduced_kraus(pre_a, d, r), repl_reduced_kraus(pre_b, d, r))
+    pairs = [(repl_matmul(repl_input_block(bj, x, r), ai), repl_matmul(repl_input_block(ai, x, r), bj)) for x, ai, bj in product(range(d), a, b)]
+    require(repl_kraus_norm([left for left, right in pairs]) == repl_gaussian_scale(identity(n), gaussian(d)), 'Terminal replacement cross-map identity failed.')
+    require(repl_kraus_norm([right for left, right in pairs]) == repl_gaussian_scale(identity(n), gaussian(d)), 'Terminal replacement cross-map identity failed.')
+    effect = repl_zeros(n)
+    for left, right in pairs:
+        effect = plus(effect, repl_gaussian_scale(repl_matmul(adjoint(right), left), gaussian(F(1, d * d))))
+    checked = 0
+    if full_units:
+        raw_a = [repl_output_embed(ai, x, d, r) for x, ai in product(range(d), a)]
+        raw_b = [repl_output_embed(bj, y, d, r) for y, bj in product(range(d), b)]
+        physical = [(repl_matmul(bb, aa), repl_matmul(aa, bb)) for aa, bb in product(raw_a, raw_b)]
+        for rho in repl_units(n):
+            actual_full = repl_cross_map(physical, rho, n, F(1, d * d))
+            actual = repl_trace_j(actual_full, d, r)
+            expected = repl_cross_map(pairs, rho, r, F(1, d * d))
+            require(actual == expected, 'Terminal replacement cross-map identity failed.')
+            require(trace(actual) == trace(repl_matmul(effect, rho)), 'Terminal replacement cross-map identity failed.')
+            checked += 1
+    return (effect, pairs, checked)
+
+def replay_terminal_replacement():
+    """Exact common-replacement rectangular factors, direct reduced cross maps, SWAP sharpness and nonuniform qudit weights. Universal norm/convexity arguments remain analytic."""
+    cases, matrix_units = (0, 0)
+    for d, r in [(2, 1), (2, 2), (2, 3), (3, 2)]:
+        n = d * r
+        ua = repl_givens(n, 0, n - 1)
+        ub = repl_matmul(repl_givens(n, 0, 1, F(5, 13), F(12, 13)), repl_givens(n, 1, n - 1)) if n > 2 else repl_givens(n, 0, 1, F(5, 13), F(12, 13))
+        for pre_a, pre_b in [([ua], [ub]), (repl_damp_after(ua, n - 1, 0), repl_damp_after(ub, n - 2, 1 if n > 2 else 0))]:
+            _, _, count = repl_replay(pre_a, pre_b, d, r, full_units=d == 2 and r <= 2)
+            matrix_units += count
+            cases += 1
+    for d in [2, 3]:
+        r, n = (d, d * d)
+        swap = repl_zeros(n)
+        for j, k in product(range(d), repeat=2):
+            swap[k * d + j][j * d + k] = ONE
+        effect, pairs, count = repl_replay([swap], [swap], d, r, full_units=d == 2)
+        matrix_units += count
+        require(effect == repl_gaussian_scale(swap, gaussian(F(1, d))), 'Terminal replacement cross-map identity failed.')
+        for rho in repl_units(n):
+            actual = repl_cross_map(pairs, rho, r, F(1, d * d))
+            expected = repl_gaussian_scale(identity(r), multiply(gaussian(F(1, d * d)), trace(repl_matmul(swap, rho))))
+            require(actual == expected, 'Terminal replacement cross-map identity failed.')
+        witness = repl_zeros(n)
+        witness[0][0] = ONE
+        require(trace(repl_cross_map(pairs, witness, r, F(1, d * d))) == gaussian(F(1, d)), 'Terminal replacement cross-map identity failed.')
+        cases += 1
+    dimensions = [2, 3, 2]
+    eta_a, eta_b = ([F(1, 5), F(2, 7), F(1, 3)], [F(3, 8), F(1, 6), F(4, 9)])
+    for retained in [set(), {1}, {0, 1, 2}]:
+        expected = F(1)
+        for j, d in enumerate(dimensions):
+            if j not in retained:
+                expected *= 1 - (1 - F(1, d)) * eta_a[j] * eta_b[j]
+        expanded = F(0)
+        for sa, sb in product(range(8), repeat=2):
+            weight, reciprocal_dim = (F(1), F(1))
+            for j, d in enumerate(dimensions):
+                in_a, in_b = (bool(sa & 1 << j), bool(sb & 1 << j))
+                weight *= eta_a[j] if in_a else 1 - eta_a[j]
+                weight *= eta_b[j] if in_b else 1 - eta_b[j]
+                if in_a and in_b and (j not in retained):
+                    reciprocal_dim /= d
+            expanded += weight * reciprocal_dim
+        require(expanded == expected, 'Terminal replacement cross-map identity failed.')
+    return {'status': 'passed', 'arithmetic': 'exact Gaussian rational fractions', 'replacement_channel_examples': cases, 'direct_physical_reduced_cross_map_matrix_units': matrix_units, 'rectangular_cross_factor_both_column_sums': 'd I', 'swap_effects': {'d2': 'SWAP/2', 'd3': 'SWAP/3'}, 'swap_reduced_map': 'I_R Tr(SWAP X)/d^2', 'nonuniform_qudit_replacement_expansions': 3, 'scope': 'Finite CPTP preprocessing, direct cross-map, sharpness and convex-weight identities; universal cb/diamond and postselection proofs remain analytic.'}
+
+
 def main():
     pcs_cases = replay_pcs()
     read_cases = replay_read_oracles()
@@ -657,6 +807,7 @@ def main():
     self_metric_cases, self_instrument_cases = replay_self_channel_routes()
     known_basis_cases, coherent_cross_cases = replay_known_basis_layers()
     loss_cases = replay_number_diagonal_loss()
+    replacement_cases = replay_terminal_replacement()
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
@@ -666,7 +817,8 @@ def main():
         "known_basis_fault_full_choi_cases": known_basis_cases,
         "known_basis_coherent_cross_term_cases": coherent_cross_cases,
         "number_diagonal_loss_kraus_pair_cases": loss_cases,
-        "scope": "Finite replay; general projection, costs and physical hypotheses are analytic.",
+        "terminal_replacement_contraction": replacement_cases,
+        "scope": "Finite projection, routing, loss and terminal-replacement cross-map replay; general cb/diamond, costs and physical hypotheses remain analytic.",
     }, sort_keys=True))
 
 

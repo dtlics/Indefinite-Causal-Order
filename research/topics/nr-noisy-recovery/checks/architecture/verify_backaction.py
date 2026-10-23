@@ -1,4 +1,4 @@
-"""Exact finite and polynomial replay of NR-R14 bath backaction screens.
+"""Exact finite and polynomial replay of NR-R14 and NR-R19.
 
 Gaussian-rational matrices and polynomial quotient arithmetic are used;
 no floating point, third-party packages, or generated files. Full flagged
@@ -7,7 +7,9 @@ examples and algebraic counterexamples do not certify a general hardware
 advantage, a complete noise model, or exclusion of every classical bath.
 The exchange example additionally replays the full controlled sensor map,
 diamond-norm factor identities and normalized Choi Gram data, with no access
-to the defect output. The generic norm bound remains an analytic proof.
+to the defect output. NR-R19 adds full matrix-unit odd-coupler channel
+identities and ordinary counterprotocols. Its universal hard-two converse,
+like the generic norm bound, remains an analytic proof.
 """
 from fractions import Fraction as F
 from pathlib import Path
@@ -479,18 +481,155 @@ def exchange_backaction_checks():
             "scope": "Finite joint model and norm-factor replay; analytic diamond inequality, no fitted hardware or all-adaptive ordinary converse."}
 
 
+def odd_coupler_checks():
+    """Finite NR-R19 identities; no numerical or general-comb converse."""
+    mm, kron, dag, q = matmul, tensor, adjoint, gaussian
+
+    def cscale(a, value):
+        return [[multiply(value, x) for x in row] for row in a]
+
+    def odd(u):
+        d = len(u)
+        out, ud = zeros(2*d, 2*d), dag(u)
+        for r, c in product(range(d), repeat=2):
+            out[r][d+c], out[d+r][c] = ud[r][c], u[r][c]
+        return out
+
+    def phase(value):
+        return [[value, ZERO], [ZERO, conjugate(value)]]
+
+    def ad_unit(k, r, c):
+        # Ad_k(|r><c|), including off-diagonal inputs without density fitting.
+        return [[multiply(row[r], conjugate(col[c])) for col in k] for row in k]
+
+    i2 = identity(2)
+    x = [[ZERO, ONE], [ONE, ZERO]]
+    y = [[ZERO, q(0, -1)], [q(0, 1), ZERO]]
+    z = [[ONE, ZERO], [ZERO, q(-1)]]
+    u2 = plus(scaled(i2, F(5, 13)), cscale(y, q(0, F(-12, 13))))
+    h2 = plus(scaled(x, F(3, 5)), scaled(z, F(4, 5)))
+    r01, r12 = identity(3), identity(3)
+    r01[0][0] = r01[1][1] = q(F(3, 5))
+    r01[0][1] = r01[1][0] = q(0, F(-4, 5))
+    r12[1][1] = r12[2][2] = q(F(5, 13))
+    r12[1][2], r12[2][1] = q(F(-12, 13)), q(F(12, 13))
+    u3 = mm(r01, r12)
+    hvec = [F(1, 3), F(2, 3), F(2, 3)]
+    h3 = [[q(F(r == c)-2*hvec[r]*hvec[c]) for c in range(3)] for r in range(3)]
+    phases = [ONE, q(0, 1), q(F(3, 5), F(4, 5)), q(F(5, 13), F(-12, 13))]
+    corrected_count = visibility_count = drift_count = wrapper_count = selector_count = gauge_count = 0
+
+    for u, h in [(u2, h2), (u3, h3)]:
+        d, idata = len(u), identity(len(u))
+        n = 2*d
+        require_unitary(u)
+        require(dag(h) == h and mm(h, h) == idata, "Odd-coupler involution failed.")
+        require(mm(u, h) != mm(h, u), "Odd-coupler example must be noncommuting.")
+        a, b = odd(u), odd(mm(u, h))
+        zc = kron(z, idata)
+        w = diagonal_blocks(h, mm(mm(u, h), dag(u)))
+        require(mm(a, b) == mm(b, a) == w and mm(w, w) == identity(n),
+                "Commuting odd-coupler target failed.")
+        for pa, pb in product(phases, repeat=2):
+            ap, bp = mm(kron(phase(pa), idata), a), mm(kron(phase(pb), idata), b)
+            require(dag(ap) == ap and mm(ap, ap) == identity(n) and
+                    dag(bp) == bp and mm(bp, bp) == identity(n),
+                    "Phase-dressed coupler is not a Hermitian involution.")
+            delta = multiply(pb, conjugate(pa))
+            p, reverse = mm(bp, ap), mm(ap, bp)
+            require(p == mm(kron(phase(delta), idata), w) and
+                    reverse == mm(kron(phase(conjugate(delta)), idata), w),
+                    "Static phase signs differ from the controlled products.")
+            kp = scaled(plus(p, reverse), F(1, 2))
+            km = mm(zc, scaled(plus(p, scaled(reverse, -1)), F(1, 2)))
+            require(kp == scaled(w, delta[0]) and km == cscale(w, q(0, delta[1])),
+                    "All-outcome corrected Kraus operators failed.")
+            require(mm(p, p) == kron(phase(multiply(delta, delta)), idata),
+                    "Whole-pair phase calibration failed.")
+            serial_overlap = times(trace(mm(dag(w), p)), F(1, n))
+            require(multiply(serial_overlap, conjugate(serial_overlap)) == q(delta[0]**2),
+                    "Raw serial entanglement fidelity differs from cos(delta)^2.")
+            m = diagonal_blocks(h, idata)
+            require(mm(m, mm(ap, mm(m, ap))) == w and mm(m, mm(bp, mm(m, bp))) == w,
+                    "Known-H two-repeated-query wrapper failed.")
+            wrapper_count += 2
+            selector, flip = diagonal_blocks(ap, bp), kron(x, identity(n))
+            require(mm(flip, mm(selector, mm(flip, selector))) == diagonal_blocks(p, reverse),
+                    "Supplied-selector chronological compilation failed.")
+            selector_count += 1
+
+            pa_late, pb_late = q(0, 1), q(F(3, 5), F(4, 5))
+            ap_late, bp_late = mm(kron(phase(pa_late), idata), a), mm(kron(phase(pb_late), idata), b)
+            p0, p1 = mm(bp_late, ap), mm(ap_late, bp)
+            drift_kp = scaled(plus(p0, p1), F(1, 2))
+            drift_km = mm(zc, scaled(plus(p0, scaled(p1, -1)), F(1, 2)))
+            relative = multiply(multiply(pb_late, conjugate(pa)), multiply(pa_late, conjugate(pb)))
+            desired = mm(kron([[relative, ZERO], [ZERO, ONE]], idata), w)
+            zp, zr, zw = mm(zc, p), mm(zc, reverse), mm(zc, w)
+            for r, c in product(range(n), repeat=2):
+                coherent = plus(ad_unit(kp, r, c), ad_unit(km, r, c))
+                target = ad_unit(w, r, c)
+                require(coherent == target, "Corrected full matrix-unit channel failed.")
+                corrected_count += 1
+                incoherent = scaled(plus(plus(ad_unit(p, r, c), ad_unit(reverse, r, c)),
+                                         plus(ad_unit(zp, r, c), ad_unit(zr, r, c))), F(1, 4))
+                for visibility in [F(0), F(3, 5), F(1)]:
+                    actual = plus(scaled(coherent, visibility), scaled(incoherent, 1-visibility))
+                    expected = plus(scaled(target, (1+visibility)/2),
+                                    scaled(ad_unit(zw, r, c), (1-visibility)/2))
+                    require(actual == expected, "Visibility-limited full output channel failed.")
+                    visibility_count += 1
+                require(plus(ad_unit(drift_kp, r, c), ad_unit(drift_km, r, c)) == ad_unit(desired, r, c),
+                        "Time-dependent phase residual channel failed.")
+                drift_count += 1
+            if d == 2:
+                require(mm(y, mm(h, y)) == scaled(h, -1), "Balanced-H gauge example failed.")
+                up = mm(u, y)
+                ap2 = mm(kron(phase(pa), idata), odd(up))
+                bp2 = mm(kron(phase(multiply(q(0, 1), pb)), idata), odd(mm(up, h)))
+                w2 = diagonal_blocks(h, mm(mm(up, h), dag(up)))
+                require(w2 == mm(zc, w) and mm(bp2, ap2) == cscale(p, q(0, 1)) and
+                        trace(mm(dag(w), w2)) == ZERO,
+                        "Whole-pair identical-channel/orthogonal-target gauge failed.")
+                gauge_count += 1
+
+    abelian_count = 0
+    cx = diagonal_blocks(i2, x)
+    for value in phases:
+        u = phase(value)
+        for h in [x, y, plus(scaled(x, F(3, 5)), scaled(y, F(4, 5)))]:
+            require(dag(h) == h and mm(h, h) == i2 and mm(h, z) == scaled(mm(z, h), -1),
+                    "Unknown transverse H example failed.")
+            p, qdata = dag(u), mm(u, h)
+            actual = mm(cx, mm(kron(i2, p), mm(cx, kron(i2, qdata))))
+            require(actual == diagonal_blocks(h, mm(mm(u, h), dag(u))),
+                    "Unknown-H Abelian ordinary two-query counterprotocol failed.")
+            abelian_count += 1
+    return {"result": "NR-R19", "data_dimensions": [2, 3], "station_phase_pairs_per_dimension": 16,
+            "corrected_channel_input_matrix_units": corrected_count,
+            "visibility_channel_input_matrix_units": visibility_count,
+            "temporal_drift_input_matrix_units": drift_count,
+            "known_H_repeated_query_wrappers": wrapper_count,
+            "supplied_selector_identities": selector_count,
+            "whole_pair_gauge_ambiguities": gauge_count,
+            "unknown_H_Abelian_two_query_identities": abelian_count,
+            "scope": "Exact finite identities and ordinary closures; d>=3 full hard-two converse, no-SWITCH dependency and native cost remain analytic."}
+
+
 def main():
     cases = sum(echo_check(a, b) for d in [2, 3] for a, b in pairs(d))
     example = heldout_counterexample()
     contrast = record_correlation_check()
     symbolic = symbolic_ramsey_checks()
     exchange = exchange_backaction_checks()
+    odd_couplers = odd_coupler_checks()
     print(json.dumps({"status": "passed", "flagged_full_choi_cases": cases,
                       "data_dimensions": [2, 3], "arithmetic": "exact Gaussian rational",
                       "ordinary_three_window_record_contrast": contrast,
                       "symbolic_ramsey_and_storage": symbolic,
                       "exchange_backaction": exchange,
-                      "scope": "Exact finite full-instrument, exchange-channel norm-factor and scalar polynomial replay; generic norm inequalities, access and physical-cost statements remain analytic.",
+                      "odd_couplers": odd_couplers,
+                      "scope": "NR-R14/NR-R19 exact finite full-instrument, exchange norm-factor, scalar polynomial and odd-coupler replay; universal proofs, access and physical-cost statements remain analytic.",
                       "counterexample": example}, sort_keys=True))
 
 

@@ -177,7 +177,7 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R06 | [Native checks, calibrated faults and ordinary path baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06) |  |
 | NR-R07 | [Polynomial-query calibration of the reused finite-frame family](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r07) |  |
 | NR-R08 | [Accessible measurement records and syndrome-sector baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08) |  |
-| NR-R09 | [Absorbing optical loss is serial erasure plus a receiver-preparable flag](../research/topics/nr-noisy-recovery/communication.md#nr-r09) |  |
+| NR-R09 | [Optical loss: calibrated reductions and native record constraints](../research/topics/nr-noisy-recovery/communication.md#nr-r09) |  |
 | NR-R10 | [Entanglement-breaking slot, control-quality wire simulation and stopping bounds](../research/topics/nr-noisy-recovery/communication.md#nr-r10) |  |
 | NR-R11 | [Accepted cavity and nonlinear-scattering instruments](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
 | NR-R12 | [Exact coherent dispatch with a dephased counter and bounded-query boundary](../research/topics/nr-noisy-recovery/dispatch.md#nr-r12) |  |
@@ -187,3 +187,4 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R16 | [Displacement-area calibration and native ordinary controls](../research/topics/nr-noisy-recovery/geometric-calibration.md#nr-r16) |  |
 | NR-R17 | [Braided magic, coherent trajectory resources and ordinary factories](../research/topics/nr-noisy-recovery/braided-magic.md#nr-r17) |  |
 | NR-R18 | [Drifting measurement alignment: exact two-query limit and reuse costs](../research/topics/nr-noisy-recovery/alignment.md#nr-r18) |  |
+| NR-R19 | [Unknown odd couplers: exact two-query correction and ordinary limits](../research/topics/nr-noisy-recovery/backaction.md#nr-r19) |  |

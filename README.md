@@ -12,6 +12,7 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | Communication cuts, optical loss and control-resource bounds | [Communication results](research/topics/nr-noisy-recovery/communication.md) |
 | Coherent dispatch, ordinary recovery and microscopic temporal models | [Dispatch result](research/topics/nr-noisy-recovery/dispatch.md) |
 | Bath backaction, calibration transfer and ordinary echo/record controls | [Shared-bath screen](research/topics/nr-noisy-recovery/backaction.md) |
+| Unknown odd couplers, exact two-query correction and ordinary limits | [Coupler benchmark](research/topics/nr-noisy-recovery/backaction.md#nr-r19) |
 | Noisy phase calibration, finite-query precision and native memory costs | [Metrology benchmark](research/topics/nr-noisy-recovery/metrology.md) |
 | Displacement calibration, energy bookkeeping and ordinary optical loops | [Geometric calibration](research/topics/nr-noisy-recovery/geometric-calibration.md) |
 | Braided magic and physical coherent-trajectory resources | [Braided-magic screen](research/topics/nr-noisy-recovery/braided-magic.md) |

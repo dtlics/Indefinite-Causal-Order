@@ -122,15 +122,33 @@ calibrated orthogonal-unitary faults and a continuous-angle scalar example.
 These do not settle hardware cost: Bell probes require preparation, storage
 and readout, while the switch requires coherent routing and a clean control.
 
+For a two-photon unitary reordering certificate, the
+[passive-probe baseline in NR-R06](architecture-baselines.md#nr-r06-passive-reordering)
+uses two Fock seeds and passive mode mixing to estimate the phase-invariant
+process fidelity with dimension-independent variance. It uses four photons,
+four pair-module traversals and destructive copy interference. Source
+heralds, mode matching and detector losses remain costs. Commuting and
+anticommuting unitaries both have fidelity one, so their familiar switch
+decision separation does not provide a lower bound for this compilation
+task. For noisy maps the same method measures a Choi overlap, a different
+statistic from switch visibility.
+
 There is also a fixed-rate limitation for raw full-register computation.
 The [terminal-noise bound in NR-R06](architecture-baselines.md#nr-r06-terminal-noise)
 allows arbitrary recovery on both the quantum control and data. A terminal
 tensor-product noise layer still makes its accepted correct universal-gate
 weight decrease exponentially with register size. This includes amplitude
 damping and does not require a known common eigenbasis. A surviving
-large-register application must therefore state its logical encoding or
-different useful observable. The proof assumes an actual terminal layer;
-it does not replace a continuously interacting open-system calculation.
+large-register application must therefore state its useful output and
+logical encoding. A [local-output strengthening](architecture-baselines.md#nr-r06-local-output-noise)
+covers a different common model: terminal depolarization in both slots.
+After discarding the bulk, the complete control and retained local region
+approach an ordinary measurement-controlled order even when the preceding
+gates interact globally. This is a channel bound with an explicit finite
+noise/size dependence, not an inference from low Bell fidelity. It leaves
+global decoding before discard and exposed syndrome records outside its
+scope. Both arguments assume actual terminal layers; neither replaces a
+continuously interacting open-system calculation.
 
 ### Displacement-area calibration with a complete optical budget
 
@@ -206,6 +224,18 @@ coherent selector, when it is actually supplied, also has a chronological
 implementation. Neither reduced-channel calibration nor a phase-complete
 order fringe alone determines the useful production schedule.
 
+The [unknown-coupler benchmark NR-R19](backaction.md#nr-r19) is a separate
+oracle family. A switch corrects arbitrary static station phases in two
+queries; an exact ordinary implementation with at most two queries is
+impossible for data dimension at least three, even with arbitrary known
+controls and memory. This is an analytic query statement. Known parity,
+a supplied coherent setting selector, or an Abelian qubit subfamily gives
+ordinary shortcuts; one extra unitary query also suffices for the general
+family. No quantified useful approximation margin or physical source of
+the unknown couplers has been established. A native application must
+justify address coherence and actual access, and charge repeated-device
+calibration, clean memory, control operations and all routing records.
+
 There is a named optical testbed with a longer-lived oscillator:
 [Spinnler et al.](https://doi.org/10.1038/s41467-024-53882-2) couple a quantum
 dot to a phononic-crystal mode with frequency $1.466\,\mathrm{GHz}$,
@@ -229,6 +259,50 @@ characteristic cutoff timescale of about $0.455\,\mathrm{ps}$, and exposes
 non-Markovian effects in ordinary emission spectra. Such a model does not by itself preserve bath
 coherence over nanosecond order routing. Pulse profiles and complete
 two-history overlaps remain necessary in either regime.
+
+### Encoded bosonic storage and available ordinary controls
+
+Bosonic loss and Gaussian shift correction are concrete memory bottlenecks.
+The [calibrated compilers in NR-R06](architecture-baselines.md#nr-r06-bosonic-compilers)
+reproduce the entire switched channel for two pure-loss channels, two
+quantum-limited amplifiers, or two centered isotropic Gaussian displacement
+channels. Two known conditional number phases or conditional displacements
+around the same serial noise calls suffice. Equality precedes encoding or
+recovery, so finite-energy cat, binomial and GKP states do not evade it.
+Native cavity-ancilla experiments establish these ordinary primitives,
+while their drive energy, duration, control noise and memory exposure
+remain charged. No measured switched bosonic memory or timing winner is
+established by the component values.
+
+The [anisotropic and ideal-GKP comparison](architecture-baselines.md#nr-r06-anisotropic-gkp)
+keeps a distinct limitation: anisotropy can defeat the independent random
+displacement compiler, while a known logical-parity echo still matches
+the best deterministic entanglement fidelity allowed by one switch
+control qubit in the specified ideal diagonal-Gaussian code model. The
+argument requires an exact final syndrome while the control stays
+coherent. It supplies no finite-energy or heralded-frontier conclusion.
+
+There is a real whole-mode routing primitive:
+[Chapman et al.](https://doi.org/10.1103/PRXQuantum.4.020355) demonstrate
+a transmon-controlled swap of two high-Q cavity modes in $1.3$ $\mu$s.
+Their reported measurement-corrected Bell estimate is not an
+arbitrary-input/reference process bound or a switched noise instrument.
+A second mode, coupler, pumps and coherent control are physical resources;
+the second mode also belongs in ordinary storage comparisons with its
+actual noise. A two-station, two-window proposal must account for all four
+module opportunities when both modes are exposed in both windows.
+Displacement noise excites an unused vacuum mode, and bath timing or dummy
+outputs can retain order information. The complete instrument needs to
+erase those records or specify a real inactive-module interface.
+
+This is a calibrated storage comparison. Its helper randomization depends
+on the noise parameters and supplies no unknown-parameter sensing converse.
+Thermal loss, mixed gain/loss, anisotropic shifts and actual engineered
+dissipation need separate instruments and strong ordinary QEC comparators.
+Any control must remain a real independent system through vacuum; a path
+carried only by a lost packet does not supply that memory. A clean control
+or protected routing mode also offers input-storage alternatives when
+the native encoder can use it.
 
 ### Multimode pointer retention
 
@@ -389,6 +463,26 @@ ordinary workarounds, not this combination. These assumptions need resolution
 on a named device before extending the recovery theorem into an architecture
 claim. This is a bounded assessment, not an exhaustive
 novelty or priority claim.
+
+### End-to-end loss inference and the passive-network test
+
+Inferring an internal bottleneck from end-to-end probes is a real network
+task. The [loss-inference screen in NR-R09](communication.md#nr-r09) separates
+its statistical promise from physical access. The abstract switch can
+reveal an unordered loss split beyond the serial product, but a fixed
+passive network with vacuum baths is completely specified by its full
+accessible field matrix. If that matrix depends only on total loss, no
+quantum probe or endpoint controller reveals the split. Reflectionless
+opposite-direction absorbers leave orthogonal directional loss records;
+their equal transmitted channels do not realize the abstract same-port
+switch through vacuum.
+
+The next native test must identify controller-conditioned internal
+interactions or another resource outside that passive model, then include
+the ordinary access it permits. Alternate walks, returns, reflected
+fields, local probes and nondestructive monitors cannot be omitted when
+physically available. Holding total loss fixed while measuring every
+accessible complex transfer amplitude provides a falsifiable first test.
 
 ## Cooling and reset-based state preparation
 
