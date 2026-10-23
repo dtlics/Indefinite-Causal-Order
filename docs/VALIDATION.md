@@ -32,6 +32,19 @@ replay does not implement that learner or determine its asymptotic
 constant. These checks do not establish hardware efficiency, source
 priority, a general memory-process model or an architecture advantage.
 
+The [decoder-bootstrap component](../research/topics/nr-noisy-recovery/methods/memory-code-bootstrap.md)
+adds a high-prior mean-cost converse with receiver quantum programs under
+an all-instance unassisted deployment interface. Its replay checks complete
+compiler, projection/Petz and cost identities; C6 and the converse remain
+analytic. The [finite-energy bosonic component](../research/topics/nr-noisy-recovery/methods/bosonic-logical-frontier.md)
+derives a normalizable code and a fixed product-decoder plus-flag comparison.
+Finite guards do not certify its abstract decoder as a native operation or
+establish equal-energy optimality. The
+[spin-phase component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md)
+also checks scattering normalization and full ordinary entanglement-first
+gate/resource branches. Its continuum loss and full-space recovery
+obstruction remain analytic; no native router or rate ordering is certified.
+
 The measurement replay also checks complete recorded parity-braid branches,
 initialized-ancilla effects and tracked frame corrections at dimensions
 four and eight. The ordinary three-measurement construction is a cited

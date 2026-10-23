@@ -73,7 +73,8 @@ proof components for the [general-channel entropy certificate](methods/unital-en
 [overlap-robust extension](methods/unitary-error-overlap.md),
 [ordinary support-span learner](methods/pauli-subspace-calibration.md),
 [structured memory tests](methods/memory-ordinary-tests.md),
-[working-code verification](methods/memory-code-verification.md), and
+[working-code verification](methods/memory-code-verification.md),
+[decoder bootstrap and Petz costs](methods/memory-code-bootstrap.md), and
 [native cost screens](methods/memory-native-cost.md). The next test must
 justify the private orientation, usable encoding and full repeated-slot
 interface on one platform. In particular, the fresh-frame converse does
@@ -158,7 +159,11 @@ variance and explicit source/readout costs. Its noisy-channel statistic
 is a Choi overlap, rather than the switch's Kraus-interference visibility.
 Anisotropic shifts fall outside the simple random-displacement compiler;
 an ordinary parity echo nevertheless closes the specified deterministic
-ideal-GKP fidelity benchmark. Finite-energy and heralded tasks remain open.
+ideal-GKP fidelity benchmark. The separate
+[finite-energy fixed-decoder comparison](methods/bosonic-logical-frontier.md)
+shows that ordinary rotation and finite squeezing dominate the specified
+plus-flag score at matched acceptance. It leaves physical decoder costs,
+equal-energy optimization and general heralded recovery open.
 The full-reset ordinary simulation in NR-R10 and the excitation-exchange
 decision counterexample in NR-R14 sharpen the remaining state-preparation
 and memory-calibration targets without claiming a native advantage.

@@ -3974,6 +3974,20 @@ already reproduces the switch for every draw. Invisible bath noise is
 not assumed to expose such a record. None of these scoped statements
 establishes a native quantum-switch storage advantage.
 
+### Finite-energy logical storage with a fixed product decoder
+
+The [finite-energy logical component](methods/bosonic-logical-frontier.md)
+keeps independent complementary Gaussian shifts and the switched plus
+flag. For a fixed decoder with product coordinate-retention functions,
+its conditional entanglement fidelity is at most the better single-axis
+retention. Ordinary Fourier alignment and finite squeezing attain that
+bound using the same two noise calls; independent thinning matches
+acceptance. An explicit normalizable encoding proves the product law
+and finite mean energy for every logical input. Transient squeezing
+energy, calibration and the abstract decoder's physical implementation
+remain charged. This is a fixed-decoder result, rather than equal-energy
+optimality or a bound on arbitrary flag-dependent recovery.
+
 <a id="nr-r06-terminal-noise"></a>
 
 ### Fixed terminal local noise limits raw full-register switch throughput

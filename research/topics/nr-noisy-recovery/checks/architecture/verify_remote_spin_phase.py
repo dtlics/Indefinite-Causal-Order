@@ -304,6 +304,153 @@ def loss_replay_detected():
 
 
 
+def cavity_resonant_parameters():
+    return ((F(38, 5), F(5, 2), F(23, 10), F(3)),
+            (F(38, 5), F(14, 5), F(12, 5), F(3)))
+
+
+def cavity_coefficients(station, z, zp, polarization):
+    g, kappa, kr, gamma = cavity_resonant_parameters()[station]
+    gz = g if z == 1 and polarization == 0 else F(0)
+    gp = g if zp == 1 and polarization == 0 else F(0)
+    den = kappa * gamma + gz * gz
+    dep = kappa * gamma + gp * gp
+    return (1 - 2 * kr * gamma / den, 1 - 2 * kr * gamma / dep,
+            4 * kr * (kappa - kr) * gamma * gamma / (den * dep),
+            4 * gz * gp * kr * gamma / (den * dep))
+
+
+def cavity_matmul(a, b):
+    return tuple(tuple(sum(a[i][k] * b[k][j] for k in range(2))
+                       for j in range(2)) for i in range(2))
+
+
+def cavity_h_conjugate(m):
+    h = ((F(1), F(1)), (F(1), F(-1)))
+    return tuple(tuple(x / 2 for x in row)
+                 for row in cavity_matmul(cavity_matmul(h, m), h))
+
+
+def cavity_route(first, label, label_prime):
+    """One declared completion: distinct lost station/route/time modes.
+    It is not inferred from the reported scalar reflectivities.
+    """
+    m = ((F(1, 2), F(1, 2)), (F(1, 2), F(1, 2)))
+    lost = F(0)
+    emitted = F(0)
+    for station in (first, 1 - first):
+        if station == 0:
+            m = cavity_h_conjugate(m)
+        coeff = [cavity_coefficients(station, label[station],
+                                    label_prime[station], p) for p in range(2)]
+        lost += sum(m[p][p] * (coeff[p][2] + coeff[p][3]) for p in range(2))
+        emitted += sum(m[p][p] * coeff[p][3] for p in range(2))
+        m = tuple(tuple(m[p][q] * coeff[p][0] * coeff[q][1]
+                        for q in range(2)) for p in range(2))
+        if station == 0:
+            m = cavity_h_conjugate(m)
+    return sum(m[p][p] for p in range(2)), lost, emitted
+
+
+def cavity_replay():
+    normalization_cases = 0
+    for g, kappa, kr, gamma in cavity_resonant_parameters():
+        for z, pol, omega in product((0, 1), (0, 1),
+                                    (F(-3), F(-1, 3), F(0), F(2, 5), F(7))):
+            gg = g if z == 1 and pol == 0 else F(0)
+            # Dc*Da+g^2 = u+i*v for resonant nodes at detuning omega.
+            u = kappa * gamma - omega * omega + gg * gg
+            v = -(kappa + gamma) * omega
+            den = u * u + v * v
+            # r numerator = (u-2kr gamma)+i(v+2kr omega).
+            rn = (u - 2 * kr * gamma)**2 + (v + 2 * kr * omega)**2
+            ln = 4 * kr * (kappa - kr) * (gamma * gamma + omega * omega)
+            en = 4 * gg * gg * kr * gamma
+            assert rn + ln + en == den
+            normalization_cases += 1
+    reflected = []
+    rejected = []
+    emission = []
+    for label in AB:
+        grow, rrow, erow = [], [], []
+        for label_prime in AB:
+            a = cavity_route(0, label, label_prime)
+            b = cavity_route(1, label, label_prime)
+            grow.append((a[0] + b[0]) / 2)
+            rrow.append((a[1] + b[1]) / 2)
+            erow.append((a[2] + b[2]) / 2)
+        reflected.append(grow)
+        rejected.append(rrow)
+        emission.append(erow)
+    for k in range(4):
+        assert reflected[k][k] + rejected[k][k] == 1
+    assert rejected[0][0] != rejected[3][3]
+    w = sum(emission[k][k] for k in range(4)) / 4
+    p = sum(rejected[k][k] for k in range(4)) / 4
+    assert w == F(8766022309695204, 44601684337881125)
+    assert 1 - p == F(16118512411044049, 44601684337881125)
+    assert rejected[0][2] == F(432624, 3997175)
+    assert 0 < w <= p
+    # Representative bright projection: rank two on the four-dimensional
+    # data. Its unnormalized identity-Choi overlap is exactly p/2.
+    bright = (F(0), F(0), F(1), F(1))
+    probability = sum(x*x for x in bright) / 4
+    overlap = sum(bright)**2 / 16
+    assert probability == F(1, 2) and overlap == probability / 2
+    return normalization_cases
+
+
+def factory_replay():
+    # The ideal fixed-order parity factory, including both X-readout records.
+    for x in (0, 1):
+        state = [scale(ONE, F(1, 2)) if (a ^ b) == x else ZERO for a, b in AB]
+        corrected = [state[2 * a + (b ^ x)] for a, b in AB]
+        assert corrected == [scale(ONE, F(1, 2)), ZERO, ZERO,
+                             scale(ONE, F(1, 2))]
+        assert inner(state, state) == scale(ONE, F(1, 2))
+    # Every matrix entry of the remote controlled-S Kraus operators. The
+    # Bell term surviving the a=measurement outcome fixes b=A xor m.
+    online = 0
+    for m, n in product((0, 1), repeat=2):
+        kraus = []
+        for a, b in AB:
+            bell_bit = m ^ a
+            bob_bit = bell_bit ^ m
+            amp = mul(INV_SQRT2, INV_SQRT2)
+            amp = mul(amp, root(4 * bob_bit * b))
+            amp = scale(amp, (-1) ** (n * bob_bit + n * a))
+            kraus.append(amp)
+        target = [scale(root(4 * a * b), F(1, 2)) for a, b in AB]
+        assert kraus == target
+        require_cp(kraus, target)
+        online += 1
+    for b, data in AB:
+        # T_b,T_B,CNOT,T_Bdagger,CNOT.
+        exponent = 2 * (b + data - (b ^ data))
+        assert root(exponent) == root(4 * b * data)
+    # Known-state conversion: the Bell-pair POVM has completeness and equal
+    # outcome probabilities; outcome1 followed by X⊗X equals outcome0.
+    assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
+    t = [COS, ZERO, ZERO, SIN]
+    for outcome in (0, 1):
+        raw = [mul(INV_SQRT2, COS if outcome == 0 else SIN), ZERO, ZERO,
+               mul(INV_SQRT2, SIN if outcome == 0 else COS)]
+        assert inner(raw, raw) == scale(ONE, F(1, 2))
+        if outcome:
+            raw = list(reversed(raw))
+        assert raw == [mul(INV_SQRT2, x) for x in t]
+    # CS|++> has the same two Schmidt eigenvalues: trace1, determinant1/8.
+    target_state = [scale(root(4*a*b), F(1, 2)) for a, b in AB]
+    determinant = add(mul(target_state[0], target_state[3]),
+                      scale(mul(target_state[1], target_state[2]), -1))
+    assert inner([determinant], [determinant]) == scale(ONE, F(1, 8))
+    assert mul(mul(COS, COS), mul(SIN, SIN)) == scale(ONE, F(1, 8))
+    inverse_state = [scale(root(-4*a*b), F(1, 2)) for a, b in AB]
+    corrected = [mul(root(4*b), inverse_state[2*(a ^ 1)+b]) for a, b in AB]
+    assert corrected == target_state
+    return online
+
+
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
@@ -313,7 +460,9 @@ def verify():
             "lost_carrier_scope_obstructions": replay_loss_boundary(carrier_states),
             "all_loss_parameter_cases": loss_replay_failures(),
             "all_loss_detected_full_choi_branches": loss_replay_detected(),
-            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures; native ports, calibration and clocks remain analytic"}
+            "cavity_kernel_normalization_cases": cavity_replay(),
+            "entanglement_first_online_full_choi_branches": factory_replay(),
+            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus cavity kernels/rank-loss/factory identities; native ports, calibration and clocks remain analytic"}
 
 
 if __name__ == "__main__":

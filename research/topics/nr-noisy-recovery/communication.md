@@ -801,8 +801,15 @@ charged. A stronger ordinary compiler reproduces the complete observed
 detected/no-click spin instrument under calibrated state-independent
 erasure, reciprocal propagation and unresolved loss locations. The
 proof retains explicit counterexamples to inferring that completion
-from a detected-map identity alone. Actual spin-dependent cavity losses
-and physical clock costs remain outside the matched model.
+from a detected-map identity alone. Its spin-dependent cavity extension
+retains spectral loss amplitudes and proves that a nonzero rank-deficient
+loss Kraus operator prevents exact heralded restoration of an unresolved,
+unencoded full-space input. An ordinary entanglement-first construction
+protects unknown data from factory losses when extra communication qubits
+and local gates are available; their storage, feedback and reset costs
+are explicit. The component also separates pure monochromatic filtering
+from finite-bandwidth mixed resources. Actual router records, encoded
+recovery and matched physical clocks remain open comparisons.
 
 This screen applies to the elastic two-time-bin state-carving model of
 [Knaut et al.](https://doi.org/10.1038/s41586-024-07252-z). Its local

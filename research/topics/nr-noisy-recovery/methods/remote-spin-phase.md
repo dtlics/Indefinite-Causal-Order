@@ -7,7 +7,9 @@ spin payload. The
 [exact finite checker](../checks/architecture/verify_remote_spin_phase.py)
 replays the complete detected spin instruments, an explicit
 lost-carrier counterexample for the first ordinary compiler, and a
-stronger all-outcome compiler under a declared erasure dilation. Native
+stronger all-outcome compiler under a declared erasure dilation. It also
+states a microscopic bright-loss obstruction for unencoded data and an
+entanglement-first ordinary baseline with explicit extra resources. Native
 routing, clocks, general cavity loss and optimal fault-tolerant rates
 remain separate. This comparison has not been formalized in Lean.
 
@@ -496,12 +498,10 @@ branches, rather than hidden in a fitted erasure parameter.
 A known-input resource factory may reset after rejection. A supplied
 unknown input can be irreversibly damaged on no-click, so retrying
 requires the specified physical code or recovery; neither circuit gets
-that recovery free. The next falsifiable model is the full calibrated
-spin-dependent scattering dilation, with optimized ordinary
-preparation, wrappers, readout, local phases and qualified mode-assisted
-controls, evaluated in an actual clocked encoded task. A larger detected
-gate fidelity or control fringe does not settle that comparison. A
-substantial native gate or rate advantage remains open.
+that recovery free. The following microscopic loss obstruction and
+ordinary factory baseline sharpen that distinction. A larger detected
+gate fidelity or control fringe does not settle complete encoded
+performance; a substantial native gate or rate advantage remains open.
 
 The checker uses exact arithmetic in
 $\mathbb Q[e^{i\pi/8}]=\mathbb Q[x]/(x^8+1)$. It checks every spin
@@ -513,3 +513,279 @@ boundary values. It also checks the stronger compiler's four detected
 branches and the corrector's positivity decomposition. These are full
 corresponding Choi-map checks; all-dimensional native-port, calibration,
 composition and clock arguments remain the proofs above.
+
+## Spin-dependent cavity loss and an unencoded recovery obstruction
+
+The preceding all-loss compiler is scoped to post-unitary,
+state-independent erasure. A cavity reflection can violate that premise
+before routing costs enter. A useful minimal extension is the linear,
+one-excitation, closed-cycling input–output model used in
+[Hacker et al., Nature Photonics **13**, 110–115 (2019), Methods and supplement](https://arxiv.org/pdf/1812.09604).
+The formulas below are the corresponding one-excitation solution, not
+a full experimental fit. Set
+$D_c(\omega)=\kappa+i(\omega_c-\omega)$,
+$D_a(\omega)=\gamma+i(\omega_a-\omega)$ and
+$\Delta_g=D_cD_a+|g|^2$, where $\kappa,\gamma$ are **amplitude**
+decay rates and $\kappa=\kappa_r+\kappa_\ell$; choose $g$ real by a
+fixed phase convention. A photon entering the
+monitored reflection port has amplitudes
+$$
+r_g=1-\frac{2\kappa_rD_a}{\Delta_g},\qquad
+\ell_g=-\frac{2\sqrt{\kappa_r\kappa_\ell}\,D_a}{\Delta_g},\qquad
+e_g=\frac{2ig\sqrt{\kappa_r\gamma}}{\Delta_g}.
+\tag{RS19}
+$$
+The output modes are reflected light, intrinsic cavity loss and atomic
+spontaneous emission, respectively. They are orthogonal reservoirs in
+this declared model, and
+$|r_g|^2+|\ell_g|^2+|e_g|^2=1$ for real frequency. Indeed
+$\operatorname{Re}(\Delta_gD_a^*)=\kappa|D_a|^2+\gamma g^2$, so
+$$
+|\Delta_g|^2-|\Delta_g-2\kappa_rD_a|^2
+=4\kappa_r[\kappa_\ell|D_a|^2+\gamma g^2],
+$$
+which is exactly the sum of the two loss numerators.
+For spin label $a$ and polarization $p$, take $g_{1,R}=g$ and the
+other $g_{a,p}=0$. The isometry retains the atomic basis label and
+sends $|p,\omega\rangle$ into those three modes with amplitudes
+(RS19). Spontaneous emission is nonzero only in the bright spin and
+$R$ polarization. This assumes a closed transition returning to the
+same qubit state; Raman leakage, motion and extra levels require more
+output channels.
+
+[Daiss et al., primary manuscript and supplement](https://arxiv.org/pdf/2103.13095)
+give $(g,\kappa,\kappa_r,\gamma)/(2\pi)$ in MHz as
+$(7.6,2.5,2.3,3)$ and $(7.6,2.8,2.4,3)$ for their two modules,
+and use an input–output simulation. Substitution into (RS19) at
+resonance gives dark/bright reflected amplitudes approximately
+$(-0.8400,0.7885)$ and $(-0.7143,0.7823)$. Thus even the minimal
+mode-matched model has spin- and polarization-dependent survival.
+These derived amplitudes are an illustration from the reported
+parameters, not a fit of the experiment or a measured switch rate.
+The experiment's weak coherent source also allows multiple incident
+photons, including lost-photon records on a detected attempt; the
+one-photon model does not include those events.
+
+For a normalizable pulse $\int|f(\omega)|^2d\omega=1$, retain the
+frequency and emission modes in the dilation. A frequency-unresolved
+detection gives a Kraus integral, not the operator obtained by replacing
+$r_g(\omega)$ with its average. In particular, if history $h$ has loss
+amplitude $F^z_{h,\mu}(\omega)$ for spin label $z$, its overlap with
+history $h'$ is
+$$
+\Gamma^{z,z'}_{h,h'}=
+ \sum_\mu\int d\omega\,
+ F^z_{h,\mu}(\omega)
+ F^{z'}_{h',\mu}(\omega)^*.
+\tag{RS20}
+$$
+Here $F$ includes the pulse, all preceding reflection amplitudes,
+propagation delays and the actual router's mode transformations.
+Relative time shifts supply frequency-dependent phases. Scalar
+reflectivities do not determine (RS20). Neither orthogonal time
+records nor their coherent erasure follows just from a fiber length
+and a pulse duration. The native router and accessible records must be
+specified before assigning the switch a complete no-click instrument.
+
+There is nevertheless a recovery obstruction that does not require
+orthogonal order-history records. Let $\mathcal J$ be an unresolved
+no-click CP map from the **unencoded** $AB$ data space to the same
+space, with only that flag and $AB$ accessible afterwards. Suppose
+some Kraus representation contains a nonzero operator $K_*$ of rank
+less than four. There is no subsequent trace-nonincreasing recovery
+$\mathcal R$ on those data such that
+$$
+\mathcal R\circ\mathcal J=p\operatorname{Ad}_U,
+\qquad p>0,
+\tag{RS21}
+$$
+for a unitary $U$ on arbitrary $ABR$.
+
+To prove this, write the recovery Kraus operators as square matrices
+$L_\ell$. The output Choi operator in (RS21) has rank one, so every
+$L_\ell K_j$ must be zero or a scalar multiple of $U$. Because $p>0$,
+some $L_{\ell_0}K_{j_0}$ has full rank. Thus $L_{\ell_0}$ is
+invertible. But $L_{\ell_0}K_*$ is nonzero and rank deficient,
+a contradiction. Fresh clean recovery ancillas followed by readout or
+tracing still give square effective Kraus operators $L_\ell$ and do
+not change this argument. It includes a heralded recovery, rather than
+only deterministic feedback.
+
+In the spin-diagonal direct constructions above, an emission from
+module $A$ has right support in
+$P_{A,1}=|1\rangle\!\langle1|_A\otimes I_B$, hence rank at most
+two. All photon rotations and the other diagonal spin interaction
+preserve that support. Coherent sums of early/late emission amplitudes
+with the same bright-spin support retain the bound, so the argument
+allows arbitrary initial route/polarization states. A common spin
+pre-rotation merely rotates the right support. This application assumes
+independent local radiation reservoirs and no route-dependent spin
+basis controls coherently combining different supports. General
+interventions must be tested from their actual Kraus operators.
+
+A quantitative version holds for a trace-preserving recovery after
+the aggregate flag. Define the accepted weight of that flag on
+$\Phi_4$ as $p_J$, and let $w$ be the weight of the rank-at-most-two
+emission constituents. With $q_J$ its overlap with the desired
+unitary Choi state after recovery,
+$$
+q_J\le p_J-\frac{w}{2}.
+\tag{RS22}
+$$
+Indeed $|\operatorname{Tr}(U^\dagger K)|^2\le
+\operatorname{rank}(K)\operatorname{Tr}(K^\dagger K)$, by the
+trace-norm and Hilbert–Schmidt inequalities. Every recovered emission
+constituent still has rank at most two. A trace-preserving recovery
+preserves their summed probability $w$; the other constituents have
+$q\le p$. Integrating over continuous emission records gives (RS22).
+This is a subnormalized all-input Choi bound, not a worst-input
+conditional-fidelity guarantee.
+
+The obstruction concerns restoring an unknown full-space data state
+following one unresolved flag. It does not exclude encoding into extra
+physical qubits, backup quantum memory, a smaller code space, or an
+additional accessible syndrome identifying a different output sector.
+If emission has a separately accessible flag, aborting that destructive
+branch is distinct from repairing it. No claim about all encoded
+repeat-until-success schemes follows.
+
+## Entanglement first: the ordinary baseline with spare matter qubits
+
+If the architecture supplies a separate communication qubit $a,b$ at
+each node, the strongest baseline should isolate optical failures from
+the unknown data. Initialize $a,b,D$ in $+$, use ordinary
+$\operatorname{CZ}_{aD}$ followed by $\operatorname{CZ}_{bD}$,
+and read $D$ in $X$. In the ideal model, result $x$ applies
+$$
+J_x=\frac{I+(-1)^xZ_aZ_b}{2},\qquad
+J_x|++\rangle=
+\begin{cases}
+ (|00\rangle+|11\rangle)/2,&x=0,\\
+ (|01\rangle+|10\rangle)/2,&x=1.
+\end{cases}
+\tag{RS23}
+$$
+Thus a local $X_b^x$ supplies $\Phi_2$ on every detected attempt.
+In the preceding ideal erasure model, its yield is $s$ from (RS10).
+Any failed factory branch acts on $a,b$ and the optical environment,
+while the arbitrary $ABR$ state factors unchanged. More generally this
+factorization is exact for **any** factory scattering instrument if the
+whole factory and its initial environment are independent of $ABR$
+and physically isolated from it. Shared baths, reset crosstalk and
+storage errors violate that premise and must be charged. For real
+cavities, optical detection is not automatically a perfect Bell herald.
+
+One known Bell pair then implements $\operatorname{CS}_{AB}$ by the
+standard controlled-unitary LOCC construction of
+[Eisert et al., Phys. Rev. A **62**, 052317 (2000)](https://doi.org/10.1103/PhysRevA.62.052317).
+Alice applies $\operatorname{CNOT}_{A\to a}$ and measures $a$ in
+$Z$, sending result $m$ to Bob. Bob applies $X_b^m$, then the **local**
+$\operatorname{CS}_{bB}$, measures $b$ in $X$ with result $n$, and
+sends $n$ to Alice for $Z_A^n$. For arbitrary coefficients
+$|\psi\rangle_{ABR}=\sum_{ij}|ij\rangle|r_{ij}\rangle$,
+the first corrected measurement makes
+$\sum_{ij}|i\rangle_A|i\rangle_b|j\rangle_B|r_{ij}\rangle$.
+The local controlled phase contributes $i^{ij}$; the final $X$
+measurement contributes $(-1)^{ni}$, removed by $Z_A^n$. Including
+normalizations, every online record has Kraus operator
+$$
+K_{m,n}=\frac12\operatorname{CS}_{AB},\qquad m,n\in\{0,1\}.
+\tag{RS24}
+$$
+All four records are usable and there is no inverse-CS output needing
+a nonlocal correction. A sufficient local synthesis of
+$\operatorname{CS}_{bB}$ is chronological
+$T_b,T_B,\operatorname{CNOT}_{b\to B},T_B^\dagger,
+\operatorname{CNOT}_{b\to B}$: its basis phase is
+$\exp[i\pi(b+B-(b\mathbin{\oplus}B))/4]=i^{bB}$.
+The online ledger therefore includes three local matter–matter CNOTs,
+three $T/T^\dagger$ phases, measurements, Pauli feedback and one
+classical bit in each direction. This is a sufficient synthesis, not
+an optimality claim; non-Clifford local phases are not free protected
+Clifford operations.
+
+For the exact ideal-resource statement, let $s_{\rm Bell}$ be the
+perfect Bell-pair yield per fresh independent factory attempt, including
+its filters and source heralds. A hard maximum of $K$ attempts gives
+the data instrument
+$$
+[1-(1-s_{\rm Bell})^K]\operatorname{Ad}_{\rm CS}
+ \quad\hbox{or}\quad
+(1-s_{\rm Bell})^K\operatorname{id}_{AB}.
+\tag{RS25}
+$$
+The mean launch count is $[1-(1-s_{\rm Bell})^K]/s_{\rm Bell}$,
+with a hard $K$ cap; without a cutoff it is $1/s_{\rm Bell}$ if
+$s_{\rm Bell}>0$. Two commanded station windows are counted per
+launch, even when loss prevents a visit. In the ideal $a$-then-$b$
+erasure model, the mean occupied visits per launch are
+$\tau_0(1+\tau_A\tau_L)$; multiply this by the same expected
+attempt count. The online classical round trip, local gates, resets,
+Bell storage and data idling are additional. The geometric equalities
+need the stated conditional stationary success probability; marginal
+one-use success alone does not imply them with bath memory.
+
+For an imperfect but data-independent normalized resource $\sigma$,
+use the same deterministic protocol. Contractivity under that LOCC map
+for every input and reference proves
+$$
+\frac12\|\mathcal G_\sigma-\operatorname{Ad}_{\rm CS}\|_\diamond
+ \le\frac12\|\sigma-\Phi_2\|_1.
+\tag{RS26}
+$$
+Keep available accepted-resource labels and apply the bound to their
+flagged corrected state; false heralds belong in that state. The
+factory's optical click probability must not replace $s_{\rm Bell}$
+without a quality/yield justification.
+
+For example, a known pure monochromatic reflected branch has an
+unnormalized two-spin coefficient matrix $M_y$. Its local singular
+vector rotations and a Schmidt filter give a Bell pair with yield
+$2\sigma_{\min}(M_y)^2$, counted before normalization. This is the
+two-qubit instance of pure-state entanglement conversion
+([Vidal, Phys. Rev. Lett. **83**, 1046 (1999)](https://doi.org/10.1103/PhysRevLett.83.1046)).
+The filter's local meter, readout, herald and failures are real costs.
+For a finite unresolved bandwidth the state is instead generally
+$\int |f(\omega)|^2|M_y(\omega)\rangle\!\langle M_y(\omega)|d\omega$.
+Its average amplitude cannot be inserted into the pure-state formula;
+exact filtering at a monochromatic, nonnormalizable limit is not an
+exact finite-pulse factory claim.
+
+This architecture adds **two** independently addressable matter
+qubits and local data–communication entangling gates. The Daiss
+experiment has one qubit atom per cavity; it does not supply this
+spare-register architecture automatically. If entanglement is prepared
+before data arrival, factory waiting can be moved offline, while Bell
+storage remains a cost. With data already present, their coherence
+must last through the waiting and online feedback time. Thus this is a
+stronger ordinary baseline when the node supplies those resources,
+not a measured rate ordering or a two-atom-only simulation.
+
+For a **known resource-state** task there is an additional ordinary
+baseline without two extra remote stationary qubits. A Bell pair on
+the two output spins can be converted deterministically by LOCC into
+$\operatorname{CS}|++\rangle$. Its squared Schmidt coefficients are
+$\lambda_\pm=(1\pm1/\sqrt2)/2$. In Schmidt bases, apply the local
+POVM
+$$
+M_0=\operatorname{diag}(\sqrt{\lambda_+},\sqrt{\lambda_-}),\qquad
+M_1=\operatorname{diag}(\sqrt{\lambda_-},\sqrt{\lambda_+}).
+\tag{RS27}
+$$
+Each outcome has probability $1/2$ on $\Phi_2$; on outcome one,
+$X\otimes X$ gives the same Schmidt state, followed by known local
+basis rotations. A local helper or weak meter, readout and feedback
+are required for this POVM; it is not a local unitary. Moreover,
+$(I\otimes S)X_A\operatorname{CS}^{\dagger}|++\rangle
+=\operatorname{CS}|++\rangle$.
+This locally Clifford equivalence concerns those known states and does
+not correct the inverse-CS gate on an arbitrary unknown input.
+
+The exact checker replays resonant scattering-kernel normalization,
+finite rank-loss examples, the ideal factory and remote-gate Kraus
+identities, local controlled-phase synthesis and the resource-state
+POVM. It does not fit finite-bandwidth data or verify a native router.
+A remaining positive target must specify the real scattering and
+record dilation, support arbitrary data/reference input and compare
+encoded recovery, ancilla factories, optical loss and complete elapsed
+clocks. No native switch advantage is established here.

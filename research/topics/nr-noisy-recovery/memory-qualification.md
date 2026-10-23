@@ -576,8 +576,33 @@ The method gives the full proof, stopping assumptions and a return-test
 alternative without a retained logical reference. A code supplied as
 $U$-correlated advice is extra access; a code learned through the
 stipulated ordinary interface incurs the training and block cost above.
-Preserved quantum training assistance or an input-bearing bypass
-changes the unassisted-code model.
+Shared encoder/decoder quantum assistance or an input-bearing bypass
+changes the unassisted-code model. Receiver-only program memory has the
+more specific extension below.
+
+### Decoder bootstrap with retained quantum programs
+
+The [bootstrap component](methods/memory-code-bootstrap.md) proves that
+every unframed self-switch of production powers has exactly the serial
+full output on the high dephasing promise. Its high-case emulator preserves
+arbitrary receiver-side quantum programs. With a syntactic unassisted
+deployment interface enforced for every oracle and truncation, one Bell
+validation gives, for high-prior almost-surely terminating protocols, the mean bound
+$c_h\ge q_*(F_h-3/4-215/10000)$; at $F_h\ge7/8$, this is
+$207q_*/2000$. Training, deployment and validation calls all enter the
+cost. The proof does not assume that the emulated low protocol halts.
+
+The same component separates available self-adjoint noise from the
+code-dependent inverse filter in Petz recovery. A particular raw-filter
+routine has success at most $tK/D$ on a full-rank output for a proper
+rank-$K$ code; this is not a lower bound on every decoder. Ordinary
+Clifford code projection already gives high conditional fidelity under
+both capacity promises, so conditional output quality alone does not
+qualify a working memory. Framed switches, online higher-order storage,
+shared entangled programs and coherent environment access require their
+own comparisons. The component also closes a particular framed-qubit
+heralded-recovery candidate using a stronger ordinary helper echo, while
+retaining its protected-helper and unknown-input failure costs.
 
 ### What remains to make this an architecture advantage
 

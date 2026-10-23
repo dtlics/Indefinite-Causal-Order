@@ -37,7 +37,11 @@ including helper survival, duty cycle, rejected attempts and reuse.
 The [working-code verification bound](methods/memory-code-verification.md)
 makes the deployment issue quantitative: a supplied reliable code admits
 an ordinary test, so its learning and block cost must enter any claimed
-end-to-end saving.
+end-to-end saving. The [decoder-bootstrap extension](methods/memory-code-bootstrap.md)
+includes retained receiver quantum programs under an all-instance
+unassisted deployment interface. Unframed high-case self-switches compile
+to serial calls, while Petz inverse filters and ordinary heralded code
+projection have separate yield and all-attempt ledgers.
 
 The [general capacity witness](methods/unital-entropy-capacity.md)
 applies to all unital channels, using entanglement fidelity and the
@@ -65,7 +69,9 @@ Retained-output comparisons must include failed attempts. The
 the proposed detected gates with an ordinary photon bus. Its stronger
 compiler also matches the observed no-click spin map under calibrated,
 state-independent erasure and reciprocal propagation. Spin-dependent
-cavity scattering, resolved loss records and actual control/clock costs
+cavity scattering now has a full-space unresolved-loss recovery obstruction
+and an ordinary entanglement-first comparison with spare matter qubits.
+Encoded recovery, resolved loss records and matched control/clock costs
 remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
 separately excludes exact heralded recovery in its infinite-oscillator
 model and supplies ordinary source-preparation comparisons; it leaves
@@ -528,7 +534,11 @@ displacement compiler, while a known logical-parity echo still matches
 the best deterministic entanglement fidelity allowed by one switch
 control qubit in the specified ideal diagonal-Gaussian code model. The
 argument requires an exact final syndrome while the control stays
-coherent. It supplies no finite-energy or heralded-frontier conclusion.
+coherent. The separate [finite-energy component](methods/bosonic-logical-frontier.md)
+derives a normalizable encoding and proves fixed product-decoder plus-flag
+dominance by ordinary Fourier alignment and finite squeezing. Its energy
+ledger includes transient occupation. A finite-cost decoder, equal-energy
+optimization and arbitrary flag-dependent recovery remain open.
 
 The [non-Gaussian cat-reservoir comparison](architecture-baselines.md#nr-r06-cat-reservoir-parity)
 retains the actual warm bath and finite buffer. An ordinary coherent
