@@ -13,10 +13,11 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | Directory / job | Proof obligations replayed |
 | --- | --- |
 | `architecture/verify_thermal_attenuator.py` | Exact finite full-joint contact identities, Gaussian coefficient polynomials, source flag/modulo instruments and finite-dimensional kernel guards. Infinite-oscillator density and faithfulness, Gaussian integration, tails and hardware premises remain analytic. |
-| `architecture/verify_unital_entropy.py` | Exact general Kraus/Choi contractions, mixed-adjoint energies, nonunitality, pinching, spectral tails and complete flagged maps, including non-mixed-unitary channels. Entropy integration and coding remain analytic. |
-| `architecture/verify_remote_spin_phase.py` | Complete detected spin-gate Choi instruments, four-mode and all-history erasure maps, scattering normalization, rank-loss guards and full ordinary entanglement-first gate/resource-state branches. Continuum loss, the recovery obstruction, native ports and clock costs remain analytic. |
-| `architecture/verify_code_bootstrap.py` | Complete self-switch compiler, projection/Petz and framed-qubit echo instruments, Clifford moments and adaptive mean-cost guards. C6, the all-instance program interface, spectral/filter bounds and coding arguments remain analytic. |
-| `architecture/verify_bosonic_logical_frontier.py` | Rational product-retention bounds, Gaussian-control/Weyl identities, syndrome wrap/Pauli phases, energy and acceptance bookkeeping. Continuous integration, Fourier completeness, the finite-energy encoding and physical decoder costs remain analytic. |
+| `architecture/verify_unital_entropy.py` | Exact Kraus/Choi contractions, mixed-adjoint energies, nonunitality, pinching, spectral tails and full flagged maps, plus complete Clifford twirls including nonunital and negative-multiplier cases. Entropy integration, relative-entropy convexity and coding remain analytic. |
+| `architecture/verify_remote_spin_phase.py` | Complete detected spin-gate, four-mode and erasure maps; scattering/rank-loss, scalar concurrence and rational Bell-yield guards; two-CZ online branches, known-gate compilers and coherent-spectral counterexample. Universal comparisons, continuum loss, native ports and clock costs remain analytic. |
+| `architecture/verify_code_bootstrap.py` | Complete self-switch, projection/Petz and framed-qubit echo instruments, Clifford moments, adaptive cost guards and normalized serial-history rank/completeness examples. C6, universal history bounds, all-instance interfaces and coding remain analytic. |
+| `architecture/verify_memory_stream_screening.py` | Optimistic caps, direct-sum/stopping ledgers, native early rejection and likelihoods, pointer learning/perturbation and complete five-use phase-code maps. C6, all-size reductions, concentration and physical addressing/flux/clock assumptions remain analytic. |
+| `architecture/verify_bosonic_logical_frontier.py` | Rational retention/prior bounds, Gaussian-control/Weyl and syndrome phases, energy, coherent gauge-tag recovery and finite-SDP bookkeeping. Heat positivity, continuous integration, Fourier completeness, recovery duality and physical decoder costs remain analytic. |
 | `architecture/verify_orthogonal_entropy.py` | Exact orthogonal non-Pauli unitary bases, Choi entry contractions, commutator energies, threshold bounds and target-dependent full flags. The entropy integral and capacity theorem are analytic. |
 | `architecture/verify_approx_unitary_capacity.py` | Exact unitary/Gram overlap corrections, weighted tails, fidelity inversion, commuting counterexample and rational confidence certificate. Finite matrices do not establish the all-dimension entropy proof or a physical error model. |
 | `architecture/verify_pauli_local_certification.py` | Exact ordinary OR and known population-estimator identities, correlated error laws, full readout-noise trajectories and the rational population example. Confidence and physical SPAM assumptions remain analytic. |
@@ -90,10 +91,11 @@ is inferred from these replays.
 The anisotropic compiler obstruction and ideal-GKP deterministic-fidelity
 comparison in NR-R06 are analytic. A separate
 [finite-energy component](../methods/bosonic-logical-frontier.md) proves
-fixed product-decoder plus-flag dominance by calibrated ordinary Gaussian
-controls. Its normalizable encoding and exact abstract decoder are derived
-analytically; neither a finite-cost native decoder nor an unrestricted
-heralded frontier is certified.
+fixed product-decoder plus-flag and reduced all-control dominance by
+calibrated ordinary Gaussian controls. Its normalizable encoding,
+coherent-gauge counterexamples and exact abstract recovery maps are
+derived analytically. Neither full Gaussian coherent recovery, a
+finite-cost native decoder nor an unrestricted heralded frontier is solved.
 The native-check job also checks local Pauli separators, Weyl-character
 images, sparse tensor-qutrit color interpolation, recovery-to-POVM examples
 and common-preparation/final-control-noise identities. The arbitrary-register

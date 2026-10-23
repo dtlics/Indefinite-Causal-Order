@@ -521,6 +521,15 @@ $f\geq0.38$ and $\eta\geq0.96$ certify $Q\geq2.9$ qubits per use
 under known unitality. No finite-block encoder or native query
 advantage follows from this sufficient certificate.
 
+The component also credits the ordinary fidelity-only certificate
+$Q\ge\max\{0,\log_2D-h_2(f)-(1-f)\log_2(D^2-1)\}$, valid for
+every square CPTP channel without a unitality promise. It follows by
+isotropic twirling and joint convexity of relative entropy. The best
+certificate takes the maximum of this prior baseline and the
+commutator-dependent bound. Near $f=1/2+O(1/D)$ the fidelity-only
+expression is negative; a high conditional fidelity on a lossy branch
+cannot replace the full-channel fidelity in either statement.
+
 The [unitary-error component](methods/pauli-entropy-capacity.md)
 separately bounds the Shannon entropy of an orthogonal unitary
 realization, including arbitrary spatially correlated Pauli laws.
@@ -602,7 +611,37 @@ qualify a working memory. Framed switches, online higher-order storage,
 shared entangled programs and coherent environment access require their
 own comparisons. The component also closes a particular framed-qubit
 heralded-recovery candidate using a stronger ordinary helper echo, while
-retaining its protected-helper and unknown-input failure costs.
+retaining its protected-helper and unknown-input failure costs. Its
+finite serial-history boundary bounds accepted Bell weight by trajectory
+rank and excludes exact recovery above that rank when error records stay
+opaque. The explicit single-wire interface does not cover parallel codes
+or arbitrary intermediate protected workspace.
+
+### Screening many devices with a paid working decoder
+
+The [rare-good screening component](methods/memory-stream-screening.md)
+gives a conditional end-to-end use of qualification. Among $M$ independent
+candidates with classically chosen addresses, identify the unique HIGH
+device and supply a working logical-qubit code, or return NONE on an
+all-LOW bank. A physical QA stream with only the current package connected
+is one possible access model; an available coherent indexed router is
+not covered by the lower bound.
+
+An optimistic stopping cap and a direct-sum reduction retain arbitrary
+ordinary quantum memory and collective measurements. They give ordinary
+expected cost $\Omega(MD^{1/16})$. Native early rejection costs
+$O(M+\log M)$ in expectation, including unsuccessful candidates.
+Learning two pointer states and validating a five-use phase-repetition
+code adds a conservative $O(D^5\operatorname{polylog}D)$ cost. The
+calibrated ideal code has all-attempt Bell fidelity $459/512>7/8$;
+perturbation and validation budgets are explicit. Thus sufficiently
+large $M$ can amortize survivor calibration in this model.
+
+This is a conditional query/service separation. Mounting, optical flux,
+parallel ordinary probes, known control work, physical exposure schedules
+and the complete native routing process still determine any actual
+time or energy saving. The dimension and inventory regime is extreme;
+no inspected native platform or convincing finite crossover is supplied.
 
 ### What remains to make this an architecture advantage
 

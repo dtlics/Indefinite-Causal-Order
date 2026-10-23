@@ -75,7 +75,11 @@ proof components for the [general-channel entropy certificate](methods/unital-en
 [structured memory tests](methods/memory-ordinary-tests.md),
 [working-code verification](methods/memory-code-verification.md),
 [decoder bootstrap and Petz costs](methods/memory-code-bootstrap.md), and
-[native cost screens](methods/memory-native-cost.md). The next test must
+[native cost screens](methods/memory-native-cost.md). The
+[rare-good screening component](methods/memory-stream-screening.md)
+prices an explicit survivor code and gives a conditional classical-address
+selection saving, while leaving the physical stream and native interface
+unverified. The next test must
 justify the private orientation, usable encoding and full repeated-slot
 interface on one platform. In particular, the fresh-frame converse does
 not extend to reused devices after calibration; the ordinary reuse
@@ -162,8 +166,10 @@ an ordinary parity echo nevertheless closes the specified deterministic
 ideal-GKP fidelity benchmark. The separate
 [finite-energy fixed-decoder comparison](methods/bosonic-logical-frontier.md)
 shows that ordinary rotation and finite squeezing dominate the specified
-plus-flag score at matched acceptance. It leaves physical decoder costs,
-equal-energy optimization and general heralded recovery open.
+plus-flag score at matched acceptance. After the fixed gauge trace it
+also bounds all-control deterministic recovery. Coherent gauge recovery,
+physical decoder costs, equal-energy optimization and the general
+heralded frontier remain open.
 The full-reset ordinary simulation in NR-R10 and the excitation-exchange
 decision counterexample in NR-R14 sharpen the remaining state-preparation
 and memory-calibration targets without claiming a native advantage.

@@ -3985,8 +3985,13 @@ bound using the same two noise calls; independent thinning matches
 acceptance. An explicit normalizable encoding proves the product law
 and finite mean energy for every logical input. Transient squeezing
 energy, calibration and the abstract decoder's physical implementation
-remain charged. This is a fixed-decoder result, rather than equal-energy
-optimality or a bound on arbitrary flag-dependent recovery.
+remain charged. After the same fixed gauge trace, the ordinary protocol
+also bounds arbitrary deterministic recovery using all retained control
+outcomes. Measuring a final syndrome and retaining the full coherent
+oscillator are different interfaces. Exact finite-energy counterexamples
+show that coherent gauge information can aid recovery, equally in ordinary
+order. The full Gaussian recovery optimization and equal-energy optimum
+remain open; a reduced-decoder bound does not settle them.
 
 <a id="nr-r06-terminal-noise"></a>
 

@@ -1,10 +1,11 @@
-"""Exact finite guards for high-case switch emulation and code baselines.
+"""Exact finite guards for switch emulation, serial histories and code baselines.
 
 Standard library and Gaussian rational arithmetic only. C6, coding and
 all-dimension statistical statements remain analytic dependencies.
 """
 
 from fractions import Fraction as F
+from itertools import product
 import json
 
 if not __debug__:
@@ -341,6 +342,165 @@ def verify_framed_echo():
             "two_helper_twirl_operator_cases": twirl_cases}
 
 
+def rect_mul(a, b):
+    require(len(a[0]) == len(b), "rectangular product dimensions")
+    return [[sum((a[i][k]*b[k][j] for k in range(len(b))), C())
+             for j in range(len(b[0]))] for i in range(len(a))]
+
+
+def rect_adj(a):
+    return [[a[j][i].conj() for j in range(len(a))]
+            for i in range(len(a[0]))]
+
+
+def matrix_rank(a):
+    a = [row[:] for row in a]
+    row = 0
+    for col in range(len(a[0])):
+        pivot = next((i for i in range(row, len(a))
+                      if a[i][col].norm2()), None)
+        if pivot is None:
+            continue
+        a[row], a[pivot] = a[pivot], a[row]
+        leading = a[row][col]
+        a[row] = [x/leading for x in a[row]]
+        for i in range(len(a)):
+            if i != row:
+                factor = a[i][col]
+                a[i] = [x-factor*y for x, y in zip(a[i], a[row])]
+        row += 1
+        if row == len(a):
+            break
+    return row
+
+
+def history_matrix(slot_matrices, amplitudes, gates):
+    """Two mandatory slots, coherently retained rational history amplitudes."""
+    result = []
+    for h, amplitude in enumerate(amplitudes):
+        order = (0, 1) if h % 2 == 0 else (1, 0)
+        a = gates[h][0]
+        for k, j in enumerate(order):
+            a = mul(gates[h][k+1], mul(slot_matrices[j], a))
+        result.extend(scale(a, amplitude))
+    return result
+
+
+def verify_history_rank():
+    pattern_cases = trajectory_cases = sum_cases = recovery_cases = 0
+    trace_rank_cases = saturation_cases = 0
+    for d, amplitudes in ((2, [F(1)]), (3, [F(3, 5), F(4, 5)]),
+                           (4, [F(1, 3), F(2, 3), F(2, 3)])):
+        histories = len(amplitudes)
+        require(sum((x*x for x in amplitudes), F()) == 1,
+                "history amplitudes are normalized")
+        ps = frame(d)
+        shift = [[C(int(i == (j+1) % d)) for j in range(d)] for i in range(d)]
+        phase = [[C((-1)**i if i == j else 0)
+                  for j in range(d)] for i in range(d)]
+        second = [mul(mul(shift, p), adj(shift)) for p in ps]
+        slots = [ps, second]
+        gates = [(eye(d), shift if h % 2 == 0 else phase, phase)
+                 for h in range(histories)]
+        clean = history_matrix([eye(d), eye(d)], amplitudes, gates)
+        patterns = []
+        for mask in product((False, True), repeat=2):
+            family = []
+            choices = [range(d) if flag else (None,) for flag in mask]
+            for labels in product(*choices):
+                matrices = [slots[j][labels[j]] if mask[j] else eye(d)
+                            for j in range(2)]
+                a = history_matrix(matrices, amplitudes, gates)
+                family.append(a)
+                if any(mask):
+                    require(matrix_rank(a) <= histories,
+                            "projector-containing history Kraus rank")
+                    trajectory_cases += 1
+            total = zero(d)
+            for a in family:
+                total = add(total, rect_mul(rect_adj(a), a))
+            require(total == eye(d), "every fixed slot-type pattern is TP")
+            patterns.append((mask, family))
+            pattern_cases += 1
+        for j in range(2):
+            total = [[C() for _ in range(d)] for _ in range(histories*d)]
+            for p in slots[j]:
+                matrices = [eye(d), eye(d)]
+                matrices[j] = p
+                total = add(total, history_matrix(matrices, amplitudes, gates))
+            require(total == clean, "aligned single-projector sum equals clean map")
+            sum_cases += 1
+        # Two explicit valid recoveries: discard the history, or postselect it.
+        discard = []
+        for h in range(histories):
+            discard.append([[C(int(j == h*d+i)) for j in range(histories*d)]
+                            for i in range(d)])
+        accept = [[C(amplitudes[j//d] if j % d == i else 0)
+                   for j in range(histories*d)] for i in range(d)]
+        require(rect_mul(accept, rect_adj(accept)) == eye(d),
+                "history projection is a contractive accepted recovery")
+        for t in (F(1, 10), F(1, 2), F(1)):
+            r, zeta = 1-t, min(F(histories, d), F(1))
+            for recovery, tp in ((discard, True), ([accept], False)):
+                family, clean_family = [], []
+                for mask, paths in patterns:
+                    weight = t**sum(mask)*r**(2-sum(mask))
+                    for a in paths:
+                        for b in recovery:
+                            k = rect_mul(b, a)
+                            family.append((weight, k))
+                            if any(mask):
+                                require(trace(k).norm2()
+                                        <= histories*trace(mul(adj(k), k)).r,
+                                        "rank-to-Bell trace inequality after recovery")
+                                trace_rank_cases += 1
+                            else:
+                                clean_family.append((weight, k))
+                p, q = trace(choi(family)).r, fidelity(family)
+                p_clean = trace(choi(clean_family)).r
+                require(p_clean <= min(p, r*r)
+                        and q <= zeta*p+(1-zeta)*min(p, r*r),
+                        "accepted history-rank p/q envelope")
+                if tp:
+                    require(effect(family) == eye(d) and p == 1
+                            and q <= r*r+(1-r*r)*zeta,
+                            "complete history-rank storage score")
+                recovery_cases += 1
+            require(fidelity(power(ps, t, 2)) == r*r+(1-r*r)/d,
+                    "ordinary one-history full-space saturation")
+            saturation_cases += 1
+    # A retained clean/burst flag breaks the exact no-go's common-output sum.
+    d, r, t = 2, F(1, 2), F(1, 2)
+    clean = eye(d)+zero(d)
+    error = [zero(d)+p for p in frame(d)]
+    total = [[C() for _ in range(d)] for _ in range(2*d)]
+    for a in error:
+        total = add(total, a)
+    require(total != clean, "exposed noise flags invalidate the clean/projector sum")
+    accept_clean = [[C(int(j == i)) for j in range(2*d)] for i in range(d)]
+    accepted = [(r, rect_mul(accept_clean, clean))]
+    accepted += [(t, rect_mul(accept_clean, a)) for a in error]
+    full_effect = scale(rect_mul(rect_adj(clean), clean), r)
+    for a in error:
+        full_effect = add(full_effect, scale(rect_mul(rect_adj(a), a), t))
+    require(full_effect == eye(d)
+            and choi(accepted) == scale(choi([(F(1), eye(d))]), r),
+            "exposed clean/burst flag is a TP instrument with exact accepted identity")
+    p, q, zeta = trace(choi(accepted)).r, fidelity(accepted), F(1, d)
+    require(p == q == r and q == zeta*p+(1-zeta)*min(p, r),
+            "flagged exact clean acceptance still respects the p/q envelope")
+    require(matrix_rank(tensor(frame(2)[0], eye(2))) == 2,
+            "protected workspace multiplies projector rank")
+    return {"normalized_slot_patterns": pattern_cases,
+            "error_trajectory_rank_cases": trajectory_cases,
+            "single_projector_completeness_sums": sum_cases,
+            "accepted_and_complete_score_cases": recovery_cases,
+            "recovered_trace_rank_cases": trace_rank_cases,
+            "ordinary_saturation_cases": saturation_cases,
+            "exposed_flag_counterexamples": 1,
+            "protected_workspace_rank_cases": 1}
+
+
 def verify():
     compiler_cases = projection_cases = moment_cases = ledger_cases = 0
     truncation_cases = 0
@@ -450,6 +610,7 @@ def verify():
             and (high-low-delta)/2 == F(207, 4000),
             "single-validation high-mean and balanced-mean constants")
     framed = verify_framed_echo()
+    histories = verify_history_rank()
     return {
         "status": "passed", "complete_switch_compiler_cases": compiler_cases,
         "projection_instrument_cases": projection_cases,
@@ -459,10 +620,14 @@ def verify():
         "one_sided_truncation_cases": truncation_cases,
         "high_mean_coefficient": "207/2000",
         "framed_qubit_guards": framed,
+        "serial_history_guards": histories,
         "scope": ("Finite exact matrix and probability guards. Does not prove C6, "
                   "all-dimension coding or a general Petz decoder lower bound; "
                   "the specific framed-qubit echo comparison is not a compiler "
-                  "for arbitrary framed switches or a native hardware validation.")
+                  "for arbitrary framed switches or a native hardware validation. "
+                  "Serial-history cases check the explicit aligned multilinear "
+                  "model, not that an arbitrary device has that interface; "
+                  "the universal rank and exact-herald statements remain analytic.")
     }
 
 

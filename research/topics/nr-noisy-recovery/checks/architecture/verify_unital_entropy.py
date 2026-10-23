@@ -234,6 +234,84 @@ def common_ground_degrader(d):
     return family
 
 
+def projective_qubit_cliffords():
+    """Exact projective lifts; squared normalizations stay rational."""
+    generators = ([[C(1), C(1)], [C(1), C(-1)]], diag([1, C(0, 1)]))
+
+    def canonical(a):
+        pivot = next(z for row in a for z in row if z.norm2())
+        a = [[z/pivot for z in row] for row in a]
+        key = tuple((z.r, z.i) for row in a for z in row)
+        return key, a
+
+    key, first = canonical(eye(2))
+    lifts, queue = {key: first}, [first]
+    while queue:
+        for g in generators:
+            key, a = canonical(mul(g, queue[0]))
+            if key not in lifts:
+                lifts[key] = a
+                queue.append(a)
+                require(len(lifts) <= 24, "projective Clifford closure")
+        queue.pop(0)
+    require(len(lifts) == 24, "complete 24-element qubit Clifford twirl")
+    result = []
+    for a in lifts.values():
+        c = mul(adj(a), a)[0][0].r
+        require(c > 0 and mul(adj(a), a) == scale(eye(2), c),
+                "projective lift is a scalar multiple of a unitary")
+        result.append((c, a))
+    return result
+
+
+def verify_fidelity_twirl():
+    """Full Choi twirls, including nonunital and negative-multiplier cases."""
+    x = [[C(), C(1)], [C(1), C()]]
+    z = diag([1, -1])
+    replacement = [(F(1), [[C(1), C()], [C(), C()]]),
+                   (F(1), [[C(), C(1)], [C(), C()]])]
+    families = [amplitude(2, F(3, 5), F(4, 5)),
+                amplitude(2, C(0, F(3, 5)), F(4, 5)), replacement,
+                [(F(1), x)], [(F(1, 5), eye(2)), (F(4, 5), z)],
+                [(F(1), diag([1, C(F(3, 5), F(4, 5))]))]]
+    lifts = projective_qubit_cliffords()
+    phi = scale(outer([C(1), C(), C(), C(1)]), F(1, 2))
+    cases = nonunital = negative = 0
+    for family in families:
+        a, b = effects(family)
+        require(a == eye(2), "untwirled input family is TP")
+        nonunital += int(b != eye(2))
+        f = fidelity(family)
+        require(0 <= f <= 1, "identity fidelity probability domain")
+        twirled = []
+        for c, u in lifts:
+            conjugated = [(w, scale(mul(mul(adj(u), k), u), 1/c))
+                          for w, k in family]
+            require(fidelity(conjugated) == f,
+                    "identity fidelity invariant under channel conjugation")
+            twirled.extend((w/24, k) for w, k in conjugated)
+        target = add(scale(phi, f),
+                     scale(add(eye(4), phi, -1), (1-f)/3))
+        require(choi(twirled) == target,
+                "complete finite Clifford twirl equals isotropic Choi state")
+        require(effects(twirled) == (eye(2), eye(2))
+                and trace(target) == 1,
+                "twirling restores a maximally mixed output without a promise")
+        require(mul(target, phi) == scale(phi, f)
+                and mul(target, add(eye(4), phi, -1))
+                == scale(add(eye(4), phi, -1), (1-f)/3),
+                "isotropic eigenvalues and multiplicities")
+        multiplier = (4*f-1)/3
+        negative += int(multiplier < 0)
+        require(-F(1, 3) <= multiplier <= 1,
+                "full CP multiplier range includes negative values")
+        cases += 1
+    require(nonunital == 3 and negative == 2,
+            "fidelity twirl guards contain the declared scope examples")
+    return {"full_choi_cases": cases, "conjugations_per_case": len(lifts),
+            "nonunital_cases": nonunital, "negative_multiplier_cases": negative}
+
+
 def verify():
     z = C(F(3, 5), F(4, 5))
     wh3, wh5 = wh(3), wh(5)
@@ -448,8 +526,10 @@ def verify():
                     and epsilon <= 1-F(1, d*d),
                     "Audenaert upper-distance substitution stays in monotone range")
             near_unital_cases += 1
+    fidelity_twirl = verify_fidelity_twirl()
     return {
         "status": "passed", "channel_cases": len(cases),
+        "fidelity_only_twirl_guards": fidelity_twirl,
         "full_choi_contractions": contractions, "mixed_energy_cases": mixed_cases,
         "tail_cases": tail_cases, "pinching_cases": pinching_cases,
         "normalized_residual_cases": normalized_cases,
@@ -463,7 +543,8 @@ def verify():
             "bounds_are_population_not_finite_data": True},
         "exact_values": values,
         "scope": ("Finite exact Gaussian-rational matrix guards, including odd-dimensional "
-                  "non-mixed-unitary and nonunital channels. The all-dimension entropy "
+                  "non-mixed-unitary, nonunital channels and finite fidelity twirls. "
+                  "The all-dimension entropy "
                   "and quantum coding proofs remain analytic; no encoder, native-model "
                   "validation or query advantage is established.")
     }

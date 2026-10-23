@@ -807,9 +807,14 @@ loss Kraus operator prevents exact heralded restoration of an unresolved,
 unencoded full-space input. An ordinary entanglement-first construction
 protects unknown data from factory losses when extra communication qubits
 and local gates are available; their storage, feedback and reset costs
-are explicit. The component also separates pure monochromatic filtering
-from finite-bandwidth mixed resources. Actual router records, encoded
-recovery and matched physical clocks remain open comparisons.
+are explicit, including a two-local-CZ online construction. For the
+scalar reflected sector, ordinary polarization control attains the
+universal average-concurrence bound. A certified ordinary Bell factory
+leaves less than 0.104% relative room for a switch improvement at the
+specified resonant scalar point. This is not a finite-pulse rate result:
+coherent spectral readout can invalidate a pointwise frequency bound.
+Actual router records, encoded recovery and matched physical clocks
+remain open comparisons.
 
 This screen applies to the elastic two-time-bin state-carving model of
 [Knaut et al.](https://doi.org/10.1038/s41586-024-07252-z). Its local

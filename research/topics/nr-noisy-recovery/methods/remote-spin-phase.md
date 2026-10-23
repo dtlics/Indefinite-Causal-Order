@@ -9,7 +9,9 @@ replays the complete detected spin instruments, an explicit
 lost-carrier counterexample for the first ordinary compiler, and a
 stronger all-outcome compiler under a declared erasure dilation. It also
 states a microscopic bright-loss obstruction for unencoded data and an
-entanglement-first ordinary baseline with explicit extra resources. Native
+entanglement-first ordinary baseline with explicit extra resources. A scalar
+reflected-sector comparison gives an exact average-concurrence closure and
+a certified narrow Bell-yield interval. Native
 routing, clocks, general cavity loss and optimal fault-tolerant rates
 remain separate. This comparison has not been formalized in Lean.
 
@@ -675,34 +677,76 @@ and physically isolated from it. Shared baths, reset crosstalk and
 storage errors violate that premise and must be charged. For real
 cavities, optical detection is not automatically a perfect Bell herald.
 
-One known Bell pair then implements $\operatorname{CS}_{AB}$ by the
-standard controlled-unitary LOCC construction of
+One known Bell pair implements $\operatorname{CS}_{AB}$ on arbitrary
+input by ordinary LOCC. Bell-assisted controlled-unitary constructions
+are established by
 [Eisert et al., Phys. Rev. A **62**, 052317 (2000)](https://doi.org/10.1103/PhysRevA.62.052317).
-Alice applies $\operatorname{CNOT}_{A\to a}$ and measures $a$ in
-$Z$, sending result $m$ to Bob. Bob applies $X_b^m$, then the **local**
-$\operatorname{CS}_{bB}$, measures $b$ in $X$ with result $n$, and
-sends $n$ to Alice for $Z_A^n$. For arbitrary coefficients
-$|\psi\rangle_{ABR}=\sum_{ij}|ij\rangle|r_{ij}\rangle$,
-the first corrected measurement makes
-$\sum_{ij}|i\rangle_A|i\rangle_b|j\rangle_B|r_{ij}\rangle$.
-The local controlled phase contributes $i^{ij}$; the final $X$
-measurement contributes $(-1)^{ni}$, removed by $Z_A^n$. Including
-normalizations, every online record has Kraus operator
+A stronger sufficient local ledger for this phase gate follows directly
+from two local controlled-$Z$ gates. Prepare
+$(|00\rangle+i|11\rangle)_{ab}/\sqrt2$ by a local $S_b$ on the
+factory Bell pair. Apply $\operatorname{CZ}_{aA}$ and
+$\operatorname{CZ}_{bB}$, set $P=Z_AZ_B$, and measure $a$ in $X$
+with eigenvalue $m=\pm1$. For arbitrary $ABR$ input the remaining
+operator-valued state is
 $$
-K_{m,n}=\frac12\operatorname{CS}_{AB},\qquad m,n\in\{0,1\}.
+\frac{|0\rangle_b I+i m|1\rangle_b P}{2}.
+$$
+Send $m$ to Bob. With $c=\cos\beta$, $s_\beta=\sin\beta$, Bob
+measures the orthonormal basis
+$c|0\rangle+m s_\beta|1\rangle$,
+$-m s_\beta|0\rangle+c|1\rangle$. The two data Kraus operators are
+$$
+K_{m,0}=\frac12U_\beta,\qquad
+K_{m,1}=\frac{i m}{2}P U_\beta,\qquad
+U_\beta=e^{i\beta Z_AZ_B}.
 \tag{RS24}
 $$
-All four records are usable and there is no inverse-CS output needing
-a nonlocal correction. A sufficient local synthesis of
-$\operatorname{CS}_{bB}$ is chronological
-$T_b,T_B,\operatorname{CNOT}_{b\to B},T_B^\dagger,
-\operatorname{CNOT}_{b\to B}$: its basis phase is
-$\exp[i\pi(b+B-(b\mathbin{\oplus}B))/4]=i^{bB}$.
-The online ledger therefore includes three local matter–matter CNOTs,
-three $T/T^\dagger$ phases, measurements, Pauli feedback and one
-classical bit in each direction. This is a sufficient synthesis, not
-an optimality claim; non-Clifford local phases are not free protected
-Clifford operations.
+Every joint record has probability $1/4$, independently of $ABR$.
+For the second outcome Bob applies $Z_B$ and sends that outcome bit to
+Alice for $Z_A$. At $\beta=\pi/8$, the two local data rotations obey
+$$
+(T_A\otimes T_B)U_{\pi/8}=e^{i\pi/8}\operatorname{CS}_{AB}.
+$$
+This proves the full arbitrary-input/reference channel, rather than a
+known-state factory identity. All four records are usable, with no
+inverse-CS output needing a nonlocal correction.
+
+The stronger online cost is two local matter–matter CZ gates, two data
+$T$ rotations, a single $T$-equivalent $R_y(\pi/4)$ measurement-basis
+rotation on $b$, Pauli feedback, and one classical bit in each
+direction. Alice's bit changes Bob's basis by a known Pauli $Z$;
+readout, resource phase $S_b$, Bell readiness and storage are additional.
+An alternative generic controlled-unitary construction uses one local
+CNOT and a local CS synthesized by two CNOTs plus three $T/T^\dagger$
+phases. That three-CNOT count is sufficient, but is not the strongest
+phase-gate comparator here. Neither ledger treats non-Clifford control
+or local entangling gates as free hardware.
+
+A primary recent context is
+[Liu, Zheng, Yin and Wei, New J. Phys. **28**, 034506 (2026)](https://doi.org/10.1088/1367-2630/ae4a44),
+whose [primary protocol](https://inspirehep.net/files/ffad4269b5939382009116652d0d3624)
+uses the phase-Bell resource and two local switches of known
+single-qubit gates. The ordinary reduction can be checked explicitly.
+For anticommuting known Pauli operators $P_0,Q_0$, let
+$R=e^{-i\pi P_0/4}$ and
+$W=|0\rangle\!\langle0|\otimes Q_0R+
+|1\rangle\!\langle1|\otimes RQ_0$. Since
+$Q_0RQ_0=R^\dagger$,
+$$
+(Q_0R)^\dagger RQ_0=R^{-2}=iP_0,\qquad
+W=(I\otimes Q_0R)(S\otimes I)\operatorname{C}(P_0).
+\tag{RS24a}
+$$
+Here $\operatorname{C}(P_0)$ is controlled Pauli $P_0$, locally
+Clifford-equivalent to CZ. Thus the specified ideal local switch is
+itself a known entangling gate under a change of local Clifford frame.
+For a general known rotation axis the corresponding equivalence uses
+known local basis rotations, whose synthesis must be counted.
+Equations (RS24)–(RS24a) are an ordinary comparator, not a claim that
+the primary paper demonstrates a matter-gate implementation or that a
+physical router and a synthesized CZ have identical noise and timing.
+Native errors, coherent-mode access and durations still determine the
+actual architecture comparison.
 
 For the exact ideal-resource statement, let $s_{\rm Bell}$ be the
 perfect Bell-pair yield per fresh independent factory attempt, including
@@ -789,3 +833,257 @@ A remaining positive target must specify the real scattering and
 record dilation, support arbitrary data/reference input and compare
 encoded recovery, ancilla factories, optical loss and complete elapsed
 clocks. No native switch advantage is established here.
+
+## Scalar elastic reflections: exact average-concurrence comparison
+
+For the pure reflected sector, retain generic complex dark amplitudes
+$\alpha,\beta$ and bright contrasts $\Delta_A,\Delta_B$. In the
+native polarization basis,
+$$
+R_A(a)=\alpha I+a\Delta_A P,\qquad
+R_B(b)=\beta I+b\Delta_B Q,\quad a,b\in\{0,1\},
+\tag{RS28}
+$$
+with rank-one photon projectors $P,Q$ and
+$|\alpha|,|\alpha+\Delta_A|,|\beta|,|\beta+\Delta_B|\le1$.
+Fixed photon wrappers may occur
+on both sides of each reflection; they need not be inverse
+conjugations. Every selected surviving history visits each module
+exactly once. Arbitrary initial route/polarization states, known
+photon routing and generalized photon readout are allowed. Spin
+preparation is a product, with no preshared matter entanglement or
+route-controlled spin-basis interventions. The optical network's
+additional modes, controls and clocks must be supplied and charged;
+allowing them for an upper bound does not establish a native router.
+
+The metric is concurrence multiplied by each branch's probability,
+summed per **launched** model photon. It scores reflected-photon
+heralds; no-click states are retained as separate physical outcomes,
+and are not declared useless or bounded as entanglement resources by
+this result. For a pure unnormalized two-spin coefficient matrix $M$,
+its contribution is $2|\det M|$. A generalized detector can be refined
+into rank-one branches; forgetting records cannot increase mixed-state
+concurrence.
+
+For spin input $++$, the four surviving photon vectors have the
+multilinear form
+$$
+v_{ab}=\alpha\beta w_0+a\beta\Delta_A w_A
+ +b\alpha\Delta_B w_B+ab\Delta_A\Delta_B w_{AB}.
+\tag{RS29}
+$$
+The $w$ vectors include the source, router and all known photon
+wrappers. They do not depend on the four scalar amplitudes. This
+remains true when the dark action of a wrapped station contains a
+known nontrivial rotation: expand each station's scalar and contrast
+terms before composing the two histories. For a readout bra $m_y$,
+put $t_j=\langle m_y|w_j\rangle$ and
+$M_y(a,b)=\langle m_y|v_{ab}\rangle/2$. Expansion gives
+$$
+\det M_y=\frac{D}{4}(t_0t_{AB}-t_At_B),\qquad
+D=\alpha\beta\Delta_A\Delta_B.
+\tag{RS30}
+$$
+
+Replace the scalar module values by
+$\alpha=\beta=1$, $\Delta_A=\Delta_B=-2$, while keeping exactly
+the same source, wrappers, routing and readout. The native reflections
+are now the unitaries $I-2P,I-2Q$. Thus the ideal comparison has
+$\sum_y p_y C_y\le\sum_y p_y\le1$, including any optical
+postselection. Branchwise, (RS30) scales every determinant by $D/4$
+relative to that comparison. Consequently
+$$
+\sum_y p_y C_y\le\frac{|D|}{4}.
+\tag{RS31}
+$$
+This requires no optimized-switch solver or assumed measurement basis.
+
+More precisely, for a fixed product spin input with coefficients
+$u_av_b$, the ideal circuit preserves each spin-basis population
+$|u_av_b|^2$. Triangle inequality followed by Cauchy–Schwarz gives
+$$
+\sum_y2|\det M_y|
+\le2\sum_y(|M_{00}M_{11}|+|M_{01}M_{10}|)
+\le4|u_0u_1v_0v_1|.
+$$
+Optical postselection can only reduce the population sums used in this
+inequality. The physical bound is therefore
+$|D|\,|u_0u_1v_0v_1|$, at most $|D|/4$.
+Mixed optical preparations and separable spin preparations follow by
+refining their mixtures and using convexity.
+
+An ordinary **two-polarization-mode** bus attains the bound. Use bare
+$R_A$, any known intermediate polarization unitary $U$, then bare
+$R_B$. For input photon $\chi$ and rank-one output POVM vectors $m_y$,
+a two-by-two determinant expansion gives, up to a fixed sign,
+$$
+\det M_y=\frac{D}{4}\det(U)\,
+ \chi_R\chi_L\,m_{y,R}^*m_{y,L}^*.
+\tag{RS32}
+$$
+Hence
+$$
+\sum_y2|\det M_y|
+=\frac{|D|}{2}|\chi_R\chi_L|
+ \sum_y|m_{y,R}m_{y,L}|\le\frac{|D|}{4}.
+\tag{RS33}
+$$
+The bounds use $|\chi_R\chi_L|\le1/2$ and POVM completeness plus
+Cauchy–Schwarz. A balanced photon and any equatorial projective
+polarization readout attain both inequalities; $|\det U|=1$.
+For fixed product spin coefficients the same construction attains the
+refined bound above. Thus even arbitrary extra order modes do not
+improve this metric over the ordinary polarization-only port. This
+neither compiles every switched flagged instrument nor proves equality
+for every other resource measure. For a diagonal gate Kraus operator,
+the same coefficient matrix describes its Choi state in the local
+spans $\{|00\rangle,|11\rangle\}$ of each node's input/output
+pair, so it also bounds that process-entanglement measure; it is not
+a gate-fidelity or all-task simulation statement.
+
+Local feedback and filters cannot evade the average-concurrence
+comparison. A local Kraus operator $L$ multiplies $2|\det M|$ by
+$|\det L|$, and
+$\sum_j|\det L_j|\le\frac12\sum_j\operatorname{Tr}(L_j^\dagger L_j)
+\le1$ for a local instrument. Iterate over local rounds and both
+nodes, counting filter failures. The determinant and assistance
+mechanisms are established tools: see
+[Gour, Meyer and Sanders, Phys. Rev. A **72**, 042329 (2005)](https://arxiv.org/pdf/quant-ph/0505091),
+whose Theorem 1 treats concurrence of assistance for $2\times2\times n$
+pure states, and the related one-sided-channel factorization law of
+[Konrad et al., Nature Physics **4**, 99–102 (2008)](https://doi.org/10.1038/nphys885).
+The circuit-specific comparison (RS29)–(RS33) is derived here without
+a priority claim for those mechanisms.
+
+## A certified narrow Bell-yield interval at the resonant scalar point
+
+A Bell branch has concurrence one, so (RS31) bounds its total
+reflected-herald yield. Equality of average concurrence is not equality
+of Bell yield: extracting a Bell pair from a nonmaximal pure branch
+can lose probability. A stronger ordinary factory closes most of that
+possible gap at the resonant scalar values derived from Table S1.
+
+Write the real opposite-phase amplitudes as
+$r_{A,0}=-a$, $r_{A,1}=b$, $r_{B,0}=-c$, $r_{B,1}=d$, with all four
+letters positive. Prepare the bright probabilities of spins $A,B$ as
+$u,v$, and the photon's $R$ probability as $x$. After the first
+reflection its photon marginal has trace and determinant
+$$
+T=a^2+(b^2-a^2)ux,\qquad
+h=a^2(a+b)^2u(1-u)x(1-x).
+\tag{RS34}
+$$
+An arbitrary known intermediate photon unitary can give its $R$
+population any $z$ with $0\le z\le T$ and $h\le z(T-z)$;
+these are precisely the interval between the two eigenvalues of that
+marginal. Directly tracing the pure reflected three-qubit state gives
+the common trace $P$ and spin-marginal determinants
+$$
+\begin{aligned}
+P&=c^2T+v(d^2-c^2)z,\\
+D_A&=h c^2[c^2+v(d^2-c^2)],\\
+D_B&=v(1-v)c^2(c+d)^2z(T-z).
+\end{aligned}
+\tag{RS35}
+$$
+For example, if $N$ is the first spin–photon coefficient matrix,
+$\det(N^\dagger N)=h$. Tracing the second spin inserts the photon
+effect $\operatorname{diag}(c^2+v(d^2-c^2),c^2)$ between $N$ and
+$N^\dagger$, proving $D_A$. Expanding the second spin's two-by-two
+marginal proves $D_B$ and its trace $P$.
+
+For a pure $2\times2\times2$ state, Theorem 1 of
+[Pollock, Wang and Chitambar, Phys. Rev. A **103**, 032428 (2021)](https://arxiv.org/abs/2010.11431)
+states that helper measurement followed by local filtering can attain
+the smaller of the two single-copy Bell-probability cut bounds. Applied
+to these **unnormalized** marginals, the attainable yield is exactly
+$$
+Y=P-\sqrt{P^2-4\min(D_A,D_B)}.
+\tag{RS36}
+$$
+This invocation requires a pure scalar reflected state and the
+prescribed helper measurement and local Schmidt filters. Their local
+meters or ancillas, feedforward and failed branches are charged. The
+three-qubit theorem does not make the analogous cut sufficient for an
+arbitrary four-mode switch helper or a mixed finite-bandwidth state.
+
+An exact rational lower witness is
+$$
+(a,b,c,d)=\left(\frac{21}{25},\frac{2573}{3263},
+ \frac57,\frac{647}{827}\right),\quad
+u=x=\frac{499457255181911835}{10^{18}},\quad
+v=\frac{4135}{8664},\quad z=vT.
+$$
+The checker verifies with fractions that $h\le z(T-z)$,
+$D_A\le D_B$, $P>L$ and
+$4\min(D_A,D_B)>2PL-L^2$, where $L=36521957/10^8$.
+Since $P-L>0$, squaring proves $Y>L$ in (RS36) without trusting a
+floating optimizer or inferring an exact Bell pair from nearly
+maximally mixed marginals. The witness explicitly includes local
+Schmidt filtering.
+
+At the same scalar point the universal switch upper bound is
+$$
+C_{\max}=\frac{|r_{A,0}r_{B,0}
+ (r_{A,1}-r_{A,0})(r_{B,1}-r_{B,0})|}{4}
+=\frac{863246304}{2361188375}.
+$$
+Thus, writing $Y_{\rm ord}^{\star}$ for the best ordinary factory yield
+with these controls, every compared switch satisfies
+$$
+Y_{\rm sw}-Y_{\rm ord}^{\star}
+ <\frac{379}{10^6},\qquad
+\frac{Y_{\rm sw}-Y_{\rm ord}^{\star}}{Y_{\rm ord}^{\star}}
+ <\frac{13}{12500}=0.104\%.
+\tag{RS37}
+$$
+The second inequality follows from $(C_{\max}-L)/L<13/12500$;
+no global ordinary optimizer is needed. These are per-launch bounds
+for the scalar elastic/heralded-photon task, before additional
+optical losses, not a measured probability or complete-loss-model
+advantage. Known spin/source imbalance, the intermediate unitary and
+the filters require calibrated amplitudes and controls. The 18-digit
+fraction is an arithmetic witness, not a claim of free physical
+precision: uncertain amplitudes or preparation need a stated
+approximate-Bell tolerance and an error budget. No such robustness
+claim is supplied by the exact inequality alone.
+
+## Spectral records and the remaining physical test
+
+If frequency is first resolved or dephased, (RS31) applies pointwise;
+tracing unresolved frequency then bounds mixed-state concurrence by
+convexity. With a frequency-resolving readout, the ordinary balanced
+photon and equatorial polarization measurement attain the corresponding
+pointwise average. Frequency resolution, finite bin width, pulse
+shaping, control bandwidth and their loss/time costs remain physical
+resources. A time-resolved detector instead implements coherent
+frequency integrals conditional on its timestamp. It is not the same
+instrument as tracing frequency, and an available timestamp cannot be
+deleted solely to weaken the ordinary baseline.
+
+There is no universal integral-of-pointwise-contrasts bound for
+**coherent** spectral readout. An exact two-mode counterexample makes
+this distinction explicit. In spectral mode zero let only $A$ apply
+$Z_A$; in mode one let only $B$ apply $Z_B$. Both stations are visited,
+and these native controlled operations commute. The pointwise contrast
+products vanish in each mode. Yet a balanced coherent spectral input
+and its $\pm$ readout give
+$$
+K_\pm=\frac{Z_A\pm Z_B}{2}.
+\tag{RS38}
+$$
+On $++$ each outcome is a Bell state with probability $1/2$.
+Ordinary fixed order already realizes the entire instrument; no switch
+advantage is asserted. The example shows why a scalar proof cannot
+silently be applied after coherent spectral erasure. It is a minimal
+scope guard, not a claim that a particular cavity supplies these ideal
+mode selectivities.
+
+The exact replay covers (RS30), ordinary saturation, the rational
+Bell-yield witness, the local known-gate compiler and online two-CZ
+protocol, and (RS38). It does not optimize the full switched flagged
+instrument, prove exact Bell-yield equality, or validate a finite-pulse
+router. A remaining native benefit must survive the actual spectral
+scattering and loss-record dilation, the strongest ordinary spectral
+and local controls, source/filter rejection, any supplied spare-qubit
+factory or code, and complete optical, classical and memory clocks.

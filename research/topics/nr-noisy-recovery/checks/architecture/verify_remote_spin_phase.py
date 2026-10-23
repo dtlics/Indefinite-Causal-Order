@@ -2,7 +2,9 @@
 
 Arithmetic is in Q[exp(i*pi/8)] with standard-library fractions. All spin
 matrix-unit coefficients and explicit unequal-module loss histories are
-checked. The native port, calibration, timing and general scattering/RUS
+checked. Gaussian rationals also guard the scalar-concurrence determinant
+factorization; the rational Bell-yield witness and known-gate compilers are
+replayed exactly. The native port, calibration, timing and general scattering/RUS
 comparisons remain analytic scope, not certified by finite replay.
 Import is silent; no files are written.
 """
@@ -450,11 +452,222 @@ def factory_replay():
     assert corrected == target_state
     return online
 
+class ConcG:
+    __slots__=('r','i')
+    def __init__(self,r=0,i=0):self.r=F(r);self.i=F(i)
+    def __add__(self,o):
+        o=conc_cast(o);return ConcG(self.r+o.r,self.i+o.i)
+    __radd__=__add__
+    def __neg__(self):return ConcG(-self.r,-self.i)
+    def __sub__(self,o):return self+-conc_cast(o)
+    def __rsub__(self,o):return conc_cast(o)+-self
+    def __mul__(self,o):
+        o=conc_cast(o);return ConcG(self.r*o.r-self.i*o.i,self.r*o.i+self.i*o.r)
+    __rmul__=__mul__
+    def __truediv__(self,o):
+        o=conc_cast(o);n=o.r*o.r+o.i*o.i
+        return self*ConcG(o.r/n,-o.i/n)
+    def __eq__(self,o):
+        o=conc_cast(o);return self.r==o.r and self.i==o.i
+    def conj(self):return ConcG(self.r,-self.i)
+    def conc_norm2(self):return self.r*self.r+self.i*self.i
+
+def conc_cast(x):return x if isinstance(x,ConcG) else ConcG(x)
+def conc_ident(n):return [[ConcG(int(i==j)) for j in range(n)] for i in range(n)]
+def conc_mv(a,v):return [sum(x*y for x,y in zip(row,v)) for row in a]
+def conc_mm(a,b):return [[sum(a[i][k]*b[k][j] for k in range(len(b))) for j in range(len(b[0]))] for i in range(len(a))]
+def conc_adj(a):return [[a[j][i].conj() for j in range(len(a))] for i in range(len(a[0]))]
+def conc_inner(v,w):return sum(x.conj()*y for x,y in zip(v,w))
+def conc_norm2(v):return sum(x.conc_norm2() for x in v)
+def conc_det(a):return a[0]*a[3]-a[1]*a[2]
+
+def conc_u2(a=ConcG(F(3,5)),b=ConcG(0,F(4,5))):return [[a,b],[-b.conj(),a.conj()]]
+def conc_native(a,alpha,delta):return [[alpha+a*delta,ConcG()], [ConcG(),alpha]]
+def conc_unitary(a):assert conc_mm(conc_adj(a),a)==conc_ident(len(a))
+def conc_plane(n,i,j,c=F(3,5),s=F(4,5)):
+    u=conc_ident(n);u[i][i]=u[j][j]=ConcG(c);u[i][j]=ConcG(s);u[j][i]=ConcG(-s);return u
+
+def conc_full_vectors(alpha,delta,beta,epsilon,source,wrappers):
+    vectors=[]
+    for a,b in product((0,1),repeat=2):
+        amat=conc_mm(conc_mm(wrappers[0][1],conc_native(a,alpha,delta)),wrappers[0][0])
+        bmat=conc_mm(conc_mm(wrappers[1][1],conc_native(b,beta,epsilon)),wrappers[1][0])
+        vectors.append(conc_mv(conc_mm(bmat,amat),source[:2])+conc_mv(conc_mm(amat,bmat),source[2:]))
+    return vectors
+
+def conc_readouts():
+    u=conc_mm(conc_plane(4,0,3),conc_plane(4,1,2,F(5,13),F(12,13)))
+    phases=conc_ident(4);phases[1][1]=ConcG(0,1);phases[3][3]=ConcG(0,-1)
+    v=conc_mm(conc_mm(conc_plane(4,0,2),phases),conc_plane(4,1,3))
+    for x in (u,v):conc_unitary(x)
+    # Eight rank-one POVM vectors; two different orthonormal bases, weights
+    #9/25 and16/25. Bra rows suffice and satisfy sum |row><row|=I.
+    rows=[[x*F(3,5) for x in row] for row in u]+[[x*F(4,5) for x in row] for row in v]
+    effect=[[sum(row[i].conj()*row[j] for row in rows) for j in range(4)] for i in range(4)]
+    assert effect==conc_ident(4)
+    return rows
+
+def conc_spectral_counterexample():
+    # Frequency0 couples only A; frequency1 couples only B. Both conc_native
+    #slots are visited and commute. Per-frequency contrast products vanish.
+    assert (-2)*0 == 0*(-2) == 0
+    total_probability=F(0)
+    total_weighted_concurrence=F(0)
+    for y in (1,-1):
+        k=[F((-1)**a+y*(-1)**b,2) for a,b in product((0,1),repeat=2)]
+        probability=sum(x*x for x in k)/4
+        determinant=k[0]*k[3]-k[1]*k[2]
+        weighted_concurrence=abs(determinant)/2
+        assert probability==weighted_concurrence==F(1,2)
+        total_probability+=probability
+        total_weighted_concurrence+=weighted_concurrence
+    assert total_probability==total_weighted_concurrence==1
+    return 2
+
+
+def conc_verify():
+    A=conc_u2();B=[[ConcG(1),ConcG()],[ConcG(),ConcG(0,1)]];C=conc_u2(ConcG(F(5,13)),ConcG(F(12,13)))
+    for u in (A,B,C):conc_unitary(u)
+    wrappers=[((conc_ident(2),conc_ident(2)),(conc_ident(2),conc_ident(2))),
+              ((A,B),(C,A)),((B,C),(A,B))]
+    sources=[[ConcG(1),ConcG(0,1),ConcG(-1),ConcG(1)], [ConcG(1),ConcG(1),ConcG(1),ConcG(-1)],
+             [ConcG(2),ConcG(),ConcG(),ConcG()]]
+    sources=[[z/2 for z in source] for source in sources]
+    for source in sources:assert conc_norm2(source)==1
+    parameters=[(ConcG(F(-3,5),F(1,5)),ConcG(F(4,5),F(-2,5)),
+                 ConcG(F(1,3),F(1,2)),ConcG(F(-3,4),F(1,7))),
+                (ConcG(-1),ConcG(2),ConcG(-1),ConcG(2)),
+                (ConcG(),ConcG(F(1,2)),ConcG(F(1,2)),ConcG(F(1,4))),
+                (ConcG(F(1,3)),ConcG(),ConcG(F(1,2)),ConcG(F(1,3))),
+                (ConcG(F(-21,25)),ConcG(F(2573,3263))+ConcG(F(21,25)),
+                 ConcG(F(-5,7)),ConcG(F(647,827))+ConcG(F(5,7)))]
+    rows=conc_readouts();branch_cases=0
+    for pars,wrap,source in product(parameters,wrappers,sources):
+        v=conc_full_vectors(*pars,source,wrap)
+        vi=conc_full_vectors(ConcG(1),ConcG(-2),ConcG(1),ConcG(-2),source,wrap)
+        D=pars[0]*pars[1]*pars[2]*pars[3]
+        ideal_probability=F(0)
+        for row in rows:
+            k=[sum(x*y for x,y in zip(row,w)) for w in v]
+            ki=[sum(x*y for x,y in zip(row,w)) for w in vi]
+            assert conc_det(k)==D/4*conc_det(ki)
+            # Every pure two-spin branch obeys p*C<=p. We compare the
+            #squares exactly, then use the analytic scaling argument.
+            assert 4*conc_det(ki).conc_norm2()<=conc_norm2(ki)**2
+            ideal_probability+=conc_norm2(ki)/4
+            branch_cases+=1
+        assert ideal_probability==1
+    ordinary_cases=0
+    for pars,u in product(parameters,(conc_ident(2),A,B,C)):
+        alpha,delta,beta,epsilon=pars
+        D=alpha*delta*beta*epsilon
+        for y in (1,-1):
+            # Balanced source and Y readout are both unnormalized here.
+            #The actual k is this vector/2 and the comm input adds1/2.
+            k=[]
+            for a,b in product((0,1),repeat=2):
+                vv=conc_mv(conc_mm(conc_native(b,beta,epsilon),conc_mm(u,conc_native(a,alpha,delta))),[ConcG(1),ConcG(1)])
+                k.append(vv[0]+ConcG(0,-y)*vv[1])
+            expected=D*(u[0][0]*u[1][1]-u[0][1]*u[1][0])*ConcG(0,-y)
+            assert conc_det(k)==expected
+            # Two branches each give |D|/8 weighted concurrence, hence
+            #total |D|/4; exact norm-squared identity avoids any floats.
+            assert conc_det(k).conc_norm2()==D.conc_norm2()
+            ordinary_cases+=1
+    d=F(863246304,2361188375)
+    pars=parameters[-1]
+    D=pars[0]*pars[1]*pars[2]*pars[3]
+    assert D.conc_norm2()/16==d*d
+    return {'status':'passed','coherent_order_branch_factorizations':branch_cases,
+            'ordinary_saturation_branches':ordinary_cases,
+            'coherent_spectral_erasure_counterexample_branches':conc_spectral_counterexample(),
+            'scope':'finite exact Gaussian-rational guards for scalar elastic concurrence closure; no full-instrument simulation, Bell-yield optimum or finite-bandwidth proof'}
+
+
+
+def phase_field_matmul(a, b):
+    return [[sum_field(mul(a[i][k], b[k][j]) for k in range(len(b)))
+             for j in range(len(b[0]))] for i in range(len(a))]
+
+
+def phase_field_adjoint(a):
+    return [[conj(a[j][i]) for j in range(len(a))] for i in range(len(a[0]))]
+
+
+def phase_two_cz_replay():
+    count = 0
+    for m, outcome in product((1, -1), (0, 1)):
+        kraus = []
+        for a, b in AB:
+            parity = (-1)**(a + b)
+            if outcome == 0:
+                amp = add(COS, scale(mul(root(4), SIN), parity))
+            else:
+                amp = add(scale(SIN, -m), scale(mul(root(4), COS), m*parity))
+                amp = scale(amp, parity)  # the local Z_A Z_B correction
+            amp = mul(root(2*(a+b)), scale(amp, F(1, 2)))
+            kraus.append(amp)
+        target = [scale(root(4*a*b), F(1, 2)) for a, b in AB]
+        require_cp(kraus, target)
+        count += 1
+    return count
+
+
+def phase_known_switch_replay():
+    eye = [[ONE, ZERO], [ZERO, ONE]]
+    x = [[ZERO, ONE], [ONE, ZERO]]
+    y = [[ZERO, root(-4)], [root(4), ZERO]]
+    z = [[ONE, ZERO], [ZERO, scale(ONE, -1)]]
+    cases = 0
+    for p, q in ((z, x), (x, y), (y, z)):
+        r = [[mul(INV_SQRT2, add(eye[i][j], mul(root(-4), p[i][j])))
+              for j in range(2)] for i in range(2)]
+        qr = phase_field_matmul(q, r)
+        rq = phase_field_matmul(r, q)
+        relative = phase_field_matmul(phase_field_adjoint(qr), rq)
+        expected = [[mul(root(4), p[i][j]) for j in range(2)] for i in range(2)]
+        assert relative == expected
+        compiled = phase_field_matmul(qr, p)
+        assert [[mul(root(4), v) for v in row] for row in compiled] == rq
+        cases += 1
+    return cases
+
+
+def phase_bell_witness():
+    # Real opposite-phase resonant model. This is an attainable nearby
+    #rational preparation using the cited helper theorem and local filters,
+    #not an assertion that nearly mixed marginals already give exact Bell.
+    a, b, c, d = F(21, 25), F(2573, 3263), F(5, 7), F(647, 827)
+    u = x = F(499457255181911835, 10**18)
+    v = F(4135, 8664)
+    assert v == c/(c+d)
+    t = a*a+(b*b-a*a)*u*x
+    h = a*a*(a+b)**2*u*(1-u)*x*(1-x)
+    z = v*t
+    probability = c*c*t+v*(d*d-c*c)*z
+    da = h*c*c*(c*c+v*(d*d-c*c))
+    db = v*(1-v)*c*c*(c+d)**2*z*(t-z)
+    assert 0 < u < 1 and 0 < v < 1 and 0 < x < 1
+    assert 0 <= z <= t and h <= z*(t-z)
+    assert da <= db and probability**2 >= 4*da
+    lower = F(36521957, 10**8)
+    assert probability > lower
+    assert 4*min(da, db) > 2*probability*lower-lower*lower
+    cap = a*c*(a+b)*(c+d)/4
+    assert cap == F(863246304, 2361188375)
+    assert cap-lower < F(379, 10**6)
+    assert (cap-lower)/lower < F(13, 12500)
+    return {"ordinary_Bell_yield_strict_lower": str(lower),
+            "scalar_switch_Bell_yield_upper": str(cap),
+            "absolute_improvement_strict_upper": "379/1000000",
+            "relative_improvement_strict_upper": "13/12500"}
+
 
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
     switch_branches, carrier_states = replay_switch_and_one_bus()
+    concurrence = conc_verify()
     return {"status": "passed", "switch_one_bus_full_choi_branches": switch_branches,
             "four_mode_full_choi_branches": replay_four_mode(),
             "lost_carrier_scope_obstructions": replay_loss_boundary(carrier_states),
@@ -462,7 +675,13 @@ def verify():
             "all_loss_detected_full_choi_branches": loss_replay_detected(),
             "cavity_kernel_normalization_cases": cavity_replay(),
             "entanglement_first_online_full_choi_branches": factory_replay(),
-            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus cavity kernels/rank-loss/factory identities; native ports, calibration and clocks remain analytic"}
+            "scalar_concurrence_branch_factorizations": concurrence["coherent_order_branch_factorizations"],
+            "ordinary_concurrence_saturation_branches": concurrence["ordinary_saturation_branches"],
+            "coherent_spectral_erasure_branches": concurrence["coherent_spectral_erasure_counterexample_branches"],
+            "two_CZ_online_full_choi_branches": phase_two_cz_replay(),
+            "known_local_switch_compiler_cases": phase_known_switch_replay(),
+            "exact_scalar_Bell_yield_witness": phase_bell_witness(),
+            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities; native ports, calibration and clocks remain analytic"}
 
 
 if __name__ == "__main__":

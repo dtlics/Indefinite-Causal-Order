@@ -1,8 +1,9 @@
 """Exact finite guards for the fixed product-decoder bosonic comparator.
 
 The all-function dominance proof, Gaussian integrals, Fourier completeness,
-Sobolev regularity, continuum decoder and physical control costs remain
-analytic in methods/bosonic-logical-frontier.md. No floating grid is used.
+Sobolev regularity, heat positivity, QEC and SDP duality remain analytic
+in methods/bosonic-logical-frontier.md, as do physical control costs.
+No floating grid or numerical SDP solver is used.
 """
 if not __debug__:
     raise RuntimeError("Run without -O: exact verification requires assertions")
@@ -220,11 +221,210 @@ def centered_kick_energy():
     return count
 
 
+def product_prior_guards():
+    cases = flag_cases = 0
+    for i, j in product(range(17), repeat=2):
+        hq, hp = F(i, 16), F(j, 16)
+        priors = (hq * hp, (1 - hq) * hp, hq * (1 - hp), (1 - hq) * (1 - hp))
+        assert sum(priors) == 1
+        assert sum(sorted(priors, reverse=True)[:2]) == max(hq, 1 - hq, hp, 1 - hp)
+        cases += 1
+    for i, j in product(range(5), repeat=2):
+        hq, hp = F(i, 4), F(j, 4)
+        priors = (hq * hp, (1 - hq) * hp, hq * (1 - hp), (1 - hq) * (1 - hp))
+        top_two = sum(sorted(priors, reverse=True)[:2])
+        for factors in product((-1, 0, 1), repeat=4):
+            hs = tuple(p * t for p, t in zip(priors, factors))
+            weights = tuple(tuple((p + f * h) / 2 for p, h in zip(priors, hs))
+                            for f in (-1, 1))
+            assert all(w >= 0 for row in weights for w in row)
+            assert sum(map(sum, weights)) == 1
+            assert all(sum(row[e] for row in weights) == priors[e] for e in range(4))
+            assert sum(map(max, weights)) <= top_two
+            flag_cases += 1
+    return cases, flag_cases
+
+
+# Complex rational pairs avoid floating complex arithmetic in gauge guards.
+def cz(a=0, b=0):
+    return F(a), F(b)
+
+
+def cadd(z, w):
+    return z[0] + w[0], z[1] + w[1]
+
+
+def cmul(z, w):
+    return z[0] * w[0] - z[1] * w[1], z[0] * w[1] + z[1] * w[0]
+
+
+def cstar(z):
+    return z[0], -z[1]
+
+
+def cscale(z, r):
+    return z[0] * r, z[1] * r
+
+
+def cmat_add(a, b):
+    return tuple(tuple(cadd(z, w) for z, w in zip(row, other))
+                 for row, other in zip(a, b))
+
+
+def cmat_scale(a, r):
+    return tuple(tuple(cscale(z, r) for z in row) for row in a)
+
+
+def cmat_mul(a, b):
+    return tuple(tuple(cadd(cmul(row[0], col[0]), cmul(row[1], col[1]))
+                       for col in zip(*b)) for row in a)
+
+
+def ctrace(a):
+    return cadd(a[0][0], a[1][1])
+
+
+def cpsd2(a):
+    assert a[0][0][1] == a[1][1][1] == 0
+    assert a[1][0] == cstar(a[0][1])
+    assert a[0][0][0] >= 0 and a[1][1][0] >= 0
+    determinant = cadd(cmul(a[0][0], a[1][1]), cscale(cmul(a[0][1], a[1][0]), -1))
+    assert determinant[1] == 0 and determinant[0] >= 0
+
+
+def phase_gauge_recovery():
+    eye = ((cz(1), cz()), (cz(), cz(1)))
+    xp = ((cz(), cz(1)), (cz(1), cz()))
+    rho0 = cmat_scale(((cz(1), cz(1)), (cz(1), cz(1))), F(1, 2))
+    pairs = effects = matrix_units = 0
+    for z, s in ((F(3, 5), F(4, 5)), (F(5, 13), F(12, 13)),
+                 (F(8, 17), F(15, 17)), (F(20, 29), F(21, 29))):
+        assert z * z + s * s == 1 and 0 < z < 1
+        phase = cmul(cz(z, s), cz(z, s))
+        rho1 = cmat_scale(((cz(1), phase), (cstar(phase), cz(1))), F(1, 2))
+        for rho in (rho0, rho1):
+            cpsd2(rho)
+            assert ctrace(rho) == cz(1) and cmat_mul(rho, rho) == rho
+        assert rho0[0][0] == rho1[0][0] and rho0[1][1] == rho1[1][1]
+        assert ctrace(cmat_mul(rho0, rho1)) == cz(z * z)
+        delta = cmat_add(rho0, cmat_scale(rho1, -1))
+        assert cmat_mul(delta, delta) == cmat_scale(eye, s * s)
+        plus = cmat_scale(cmat_add(eye, cmat_scale(delta, 1 / s)), F(1, 2))
+        minus = cmat_add(eye, cmat_scale(plus, -1))
+        for effect in (plus, minus):
+            cpsd2(effect)
+            assert cmat_mul(effect, effect) == effect
+            effects += 1
+        h00, h01 = (ctrace(cmat_mul(plus, rho)) for rho in (rho0, rho1))
+        h10, h11 = (ctrace(cmat_mul(minus, rho)) for rho in (rho0, rho1))
+        assert h00 == h11 == cz((1 + s) / 2)
+        assert h01 == h10 == cz((1 - s) / 2)
+        e0 = cmat_scale(cmat_add(eye, cmat_scale(rho1, -1)), 1 / (1 + z))
+        e1 = cmat_scale(cmat_add(eye, cmat_scale(rho0, -1)), 1 / (1 + z))
+        fail = cmat_add(eye, cmat_scale(cmat_add(e0, e1), -1))
+        for effect in (e0, e1, fail):
+            cpsd2(effect)
+            effects += 1
+        t00, t01 = (ctrace(cmat_mul(e0, rho)) for rho in (rho0, rho1))
+        t10, t11 = (ctrace(cmat_mul(e1, rho)) for rho in (rho0, rho1))
+        f0, f1 = (ctrace(cmat_mul(fail, rho)) for rho in (rho0, rho1))
+        assert (t00, t01, t10, t11) == (cz(1 - z), cz(), cz(), cz(1 - z))
+        assert f0 == f1 == cz(z)
+        for i, j in product(range(2), repeat=2):
+            unit = tuple(tuple(cz(row == i and col == j) for col in range(2))
+                         for row in range(2))
+            flipped = cmat_mul(cmat_mul(xp, unit), xp)
+            helstrom = cmat_add(cmat_scale(unit, (h00[0] + h11[0]) / 2),
+                                cmat_scale(flipped, (h01[0] + h10[0]) / 2))
+            assert helstrom == cmat_add(cmat_scale(unit, (1 + s) / 2),
+                                        cmat_scale(flipped, (1 - s) / 2))
+            assert ctrace(helstrom) == ctrace(unit)
+            accepted = cmat_add(cmat_scale(unit, (t00[0] + t11[0]) / 2),
+                                cmat_scale(flipped, (t01[0] + t10[0]) / 2))
+            failed = cmat_add(cmat_scale(unit, f0[0] / 2), cmat_scale(flipped, f1[0] / 2))
+            assert accepted == cmat_scale(unit, 1 - z)
+            assert failed == cmat_scale(cmat_add(unit, flipped), z / 2)
+            assert ctrace(cmat_add(accepted, failed)) == ctrace(unit)
+            matrix_units += 1
+        pairs += 1
+    return pairs, effects, matrix_units
+
+
+def partial_trace2(a, first):
+    return tuple(tuple(sum((a[2 * k + i][2 * k + j] if first
+                            else a[2 * i + k][2 * j + k] for k in range(2)), F(0))
+                       for j in range(2)) for i in range(2))
+
+
+def recovery_normalization():
+    # Matching explicit primal/dual witnesses only, not a generic SDP solver.
+    def scale(a, t):
+        return tuple(tuple(t * z for z in row) for row in a)
+
+    def trace(a):
+        return sum((a[i][i] for i in range(len(a))), F(0))
+
+    phi = tuple(tuple(F(i in (0, 3) and j in (0, 3), 2) for j in range(4))
+                for i in range(4))
+    assert mm(phi, phi) == phi and phi == tuple(zip(*phi))
+    cases = accepted_cases = 0
+    for rho, x, sigma in ((phi, scale(phi, 2), F(1)),
+                           (scale(ident(4), F(1, 4)), scale(ident(4), F(1, 2)), F(1, 4))):
+        assert trace(rho) == 1 and partial_trace2(rho, True) == scale(ident(2), F(1, 2))
+        assert partial_trace2(x, True) == ident(2)
+        gap = tuple(tuple(sigma * F(i == j) - rho[i][j] for j in range(4))
+                    for i in range(4))
+        # Dual residuals are respectively an orthogonal projector and zero.
+        assert gap == tuple(zip(*gap)) and mm(gap, gap) == gap
+        fidelity = trace(mm(rho, x)) / 2
+        assert fidelity == sigma
+        for acceptance in (F(0), F(1, 4), F(1, 2), F(3, 4), F(1)):
+            xa = scale(x, acceptance)
+            total = partial_trace2(xa, True)
+            assert total == scale(ident(2), acceptance)
+            assert trace(mm(partial_trace2(rho, True), total)) == acceptance
+            assert trace(mm(rho, xa)) / 2 == acceptance * fidelity
+            # I_R tensor S is scalar here, so this also checks all-input acceptance.
+            assert partial_trace2(scale(rho, acceptance), False) == scale(ident(2), acceptance / 2)
+            accepted_cases += 1
+        cases += 1
+    return cases, accepted_cases
+
+
+def asymmetric_acceptance():
+    # Normalized Choi state of amplitude damping gamma=3/4, in R,B order.
+    gamma, root = F(3, 4), F(1, 2)
+    assert root * root == 1 - gamma
+    vector = (F(1), F(0), F(0), root)
+    rho = tuple(tuple(vector[i] * vector[j] / 2 + F(i == j == 2) * gamma / 2
+                      for j in range(4)) for i in range(4))
+    half_eye = ((F(1, 2), F(0)), (F(0), F(1, 2)))
+    rho_b = ((F(7, 8), F(0)), (F(0), F(1, 8)))
+    assert partial_trace2(rho, False) == half_eye
+    assert partial_trace2(rho, True) == rho_b
+    count = 0
+    for i, j in product(range(5), repeat=2):
+        s0, s1 = F(i, 4), F(j, 4)
+        weighted = tuple(tuple((s0 if row % 2 == 0 else s1) * z for z in entries)
+                         for row, entries in enumerate(rho))
+        average = F(7, 8) * s0 + F(1, 8) * s1
+        assert sum((weighted[k][k] for k in range(4)), F(0)) == average
+        reduced = partial_trace2(weighted, False)
+        assert reduced == ((s0 / 2, F(0)), (F(0), (gamma * s0 + (1 - gamma) * s1) / 2))
+        uniform = ((average / 2, F(0)), (F(0), average / 2))
+        assert (reduced == uniform) == (s0 == s1)
+        count += 1
+    return count
+
+
 def verify():
     triples = dominance()
     alignments, symplectic_phases = alignment()
     records, phases, matrix_units, ordered = zak_guards()
     symbolic, forms, scaling = energy()
+    priors, flags = product_prior_guards()
+    tags, effects, recovery_units = phase_gauge_recovery()
+    sdp_cases, accepted_sdp_cases = recovery_normalization()
     return {"status": "passed", "rational_dominance_triples": triples,
             "alignment_circuits": alignments, "symplectic_phase_checks": symplectic_phases,
             "zak_records": records, "zak_phase_checks": phases,
@@ -232,8 +432,15 @@ def verify():
             "symbolic_energy_cases": symbolic, "squeeze_form_cases": forms,
             "unnormalized_scaling_cases": scaling, "centered_kick_energy_cases": centered_kick_energy(),
             "thinning_cases": thinning(),
+            "product_prior_cases": priors, "all_flags_diagonal_cases": flags,
+            "pure_phase_tag_pairs": tags, "positive_recovery_effects": effects,
+            "recovery_channel_matrix_units": recovery_units,
+            "sdp_normalization_witnesses": sdp_cases,
+            "accepted_sdp_normalization_cases": accepted_sdp_cases,
+            "asymmetric_acceptance_cases": asymmetric_acceptance(),
             "scope": "Exact finite rational algebra only; all-function dominance, Gaussian integration, "
-                     "Fourier completeness, Sobolev regularity, the continuum decoder and device costs remain analytic."}
+                     "Fourier completeness, Sobolev regularity, heat positivity, QEC, SDP duality, "
+                     "the continuum decoder and device costs remain analytic. Phase-tag cases are not a Gaussian counterexample."}
 
 
 if __name__ == "__main__":

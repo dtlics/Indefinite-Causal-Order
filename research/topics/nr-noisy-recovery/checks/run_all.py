@@ -31,16 +31,18 @@ SCHEMA = "noisy-recovery-validation-v1"
 SCOPE = "Finite exact replay and symbolic integer/rational identities, with separately scoped numerical scalar guards, supporting the linked proofs; no new Lean kernel audit."
 
 JOBS = (
+    ("architecture-memory-stream-screening", "architecture/verify_memory_stream_screening.py", (),
+     "Exact optimistic-cap, selection/stopping, native rejection/likelihood, pointer-gap, perturbation and five-use code guards; C6, all-size direct sums, concentration and physical stream/access costs analytic."),
     ("architecture-code-bootstrap", "architecture/verify_code_bootstrap.py", (),
-     "Exact complete self-switch compilers, projection/Petz and framed-qubit echo instruments, Clifford moments and adaptive cost guards; C6, program-interface converse, spectral/filter and coding arguments analytic."),
+     "Exact self-switch, projection/Petz and framed-qubit echo instruments, moments, cost and normalized history-rank/completeness guards; C6, universal history/interface and coding proofs analytic."),
     ("architecture-bosonic-logical-frontier", "architecture/verify_bosonic_logical_frontier.py", (),
-     "Exact rational product-retention bounds, Gaussian-control/Weyl, wrap/Pauli, energy and acceptance identities; continuous inequality, Fourier completeness, finite-energy code and physical decoder costs analytic."),
+     "Exact retention/prior, Gaussian-control/Weyl, wrap/Pauli, energy, coherent gauge-recovery and finite-SDP guards; heat/continuous inequalities, Fourier completeness, recovery duality and physical costs analytic."),
     ("architecture-thermal-attenuator", "architecture/verify_thermal_attenuator.py", (),
      "Exact finite full-joint contacts, Gaussian coefficient polynomials, source flag/modulo instruments and finite-dimensional kernel guards; infinite-oscillator density, faithfulness and physical costs analytic."),
     ("architecture-general-channel-entropy", "architecture/verify_unital_entropy.py", (),
-     "Exact general Kraus/Choi, mixed-adjoint energy, nonunitality, pinching, spectral-tail and full-flag identities; all-dimension entropy integration and coding analytic."),
+     "Exact Kraus/Choi, mixed-adjoint energy, nonunitality, pinching, spectral-tail, full-flag and Clifford-twirl identities; entropy integration, relative-entropy convexity and coding analytic."),
     ("architecture-remote-spin-phase", "architecture/verify_remote_spin_phase.py", (),
-     "Exact complete detected spin-gate instruments, four-mode and erasure-completion maps, scattering normalization, rank-loss, entanglement-first gate and resource-state branches; continuum loss, recovery obstruction, native ports and clocks analytic."),
+     "Exact spin-gate/four-mode/erasure maps, scattering/rank-loss, scalar concurrence, rational Bell-yield, two-CZ/known-gate and coherent-spectrum guards; universal comparisons, continuum loss, native ports and clocks analytic."),
     ("architecture-orthogonal-unitary-entropy", "architecture/verify_orthogonal_entropy.py", (),
      "Exact non-Pauli unitary error bases, Choi entry-permutation/commutator identities, spectral tails and full target-dependent flags; entropy integration and capacity achievability analytic."),
     ("architecture-approx-unitary-capacity", "architecture/verify_approx_unitary_capacity.py", (),

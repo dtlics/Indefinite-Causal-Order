@@ -12,10 +12,14 @@ bounded is the channel's Choi entropy, so no random-unitary representation
 or orthogonal-unitary promise is needed.
 
 The [exact checker](../checks/architecture/verify_unital_entropy.py) checks
-the index, energy, spectral-tail, full pinching and flagged-channel
-identities on non-mixed-unitary, Schur and nonunital examples.
+the index, energy, spectral-tail, full pinching, flagged-channel and
+finite fidelity-twirl identities on non-mixed-unitary, Schur and
+nonunital examples.
 Its finite cases do not prove the all-dimension entropy or coding theorems.
 No efficient encoder, native model or query advantage is established.
+The fidelity-only ordinary capacity bound below applies to every square
+CPTP channel without a unitality or nonunitality promise and is retained
+alongside the commutator certificate.
 
 Let $\mathcal E(X)=\sum_iK_iXK_i^\dagger$ be a channel on dimension
 $D\ge2$, with $n=\log_2D$, normalized Choi state
@@ -257,6 +261,54 @@ These are existence certificates for a fixed memoryless channel,
 not efficient encoders, finite-block guarantees or estimates of an
 existing decoder's performance.
 
+### The fidelity-only ordinary baseline
+
+[Barizien et al., *Quantifying the fidelity of a quantum memory*,
+arXiv:2610.08445v1, Section III.5 and Appendix C, Eqs. (86)--(107)](https://arxiv.org/html/2610.08445v1)
+derive the following fidelity-only capacity certificate. It applies to
+every square CPTP channel, including nonunital channels:
+$$
+Q(\mathcal E)\ge\max\{0,g_D(f)\},\qquad
+g_D(f)=n-h_2(f)-(1-f)\log_2(D^2-1).                 \tag{F0}
+$$
+This is a prior ordinary baseline; no priority claim for the
+fidelity-to-capacity implication is made here.
+
+Here is a direct derivation in the present normalization. Let
+$\rho_B=\mathcal E(I/D)$. Then
+$I_c(I/D,\mathcal E)=D(J\|\rho_B\otimes I_R)$ in output-first Choi
+ordering, where the second
+relative-entropy argument has trace $D$. Conjugating the channel to
+$\operatorname{Ad}_{U^\dagger}\circ\mathcal E\circ\operatorname{Ad}_U$
+conjugates both arguments by $U^\dagger\otimes U^{\mathsf T}$.
+Relative entropy and $f$ are unchanged.
+Joint convexity therefore bounds this coherent information below by
+that of the Haar-averaged channel. Its Choi state and output are
+$$
+\widetilde J=f\Phi_D+
+ \frac{1-f}{D^2-1}(I-\Phi_D),\qquad
+\widetilde\rho_B=I/D.
+$$
+Its eigenvalues are $f$ once and $(1-f)/(D^2-1)$ with multiplicity
+$D^2-1$, proving (F0) by the coding direct theorem. This parameterization
+is valid for all $0\le f\le1$; it does not require a nonnegative
+depolarizing multiplier. Twirling is a mathematical comparison, not an
+additional native operation that the certificate requires performing.
+
+Consequently (J) should always be combined with (F0):
+$$
+Q(\mathcal E)\ge\max\left\{0,\ g_D(f),\
+[f-\sqrt{1-\eta+u/2}]n-h_2(f)-(1-f)C_D
+ -\log_2(1+u)\right\}.                             \tag{F1}
+$$
+The commutator-dependent branch can add information at fidelities where
+the ordinary branch certifies zero. For example $g_D(f)<0$ throughout
+$0\le f\le1/2$: $g_D$ is convex and both endpoint values are negative.
+Also, when $f=1/2+O(D^{-1})$ and $D$ grows,
+$g_D(f)=(2f-1)n-h_2(f)+O(D^{-2})\to-1$.
+These observations do not impose a lower bound on ordinary estimation
+of $\eta$.
+
 ## 4. Simultaneous confidence
 
 Suppose jointly valid bounds give
@@ -272,6 +324,11 @@ Q\ge\max\left\{0,\
 [f_*-\sqrt{1-c_*+u_*/2}]n-1
 -(1-f_*)C_D-\log_2(1+u_*)\right\}.                  \tag{M}
 $$
+If $f_*\ge D^{-2}$, the same joint confidence event also justifies
+taking the maximum with $g_D(f_*)$ from (F0), since
+$g_D'(f)=\log_2[f(D^2-1)/(1-f)]\ge0$ on that interval.
+For $f_*<D^{-2}$, use zero for this fidelity-only confidence branch;
+monotone substitution over the whole interval $[0,1]$ is not valid.
 Known unitality sets $u_*=0$. For example, at $n=32$ with simultaneous
 lower bounds $f_*=19/50$ and $c_*=24/25$, use
 $\sqrt{1-c_*}=1/5$ and $C_D<3$ to obtain
@@ -347,11 +404,20 @@ only for a separately prepared control and target marginal $I/D$.
 For general Kraus channels it is not target independent. The two
 slots must be independently initialized uses of the same fixed channel.
 The fidelity $f$ is the usual identity entanglement fidelity and may
-be estimated by a trusted Bell test; in qubit dimensions, the existing
+be estimated by a trusted Bell test. Equivalently, ordinary
+prepare-and-measure probing with a state $2$-design estimates average
+channel fidelity, related by
+$f=[(D+1)F_{\rm avg}-1]/D$ for a TP channel. Its state preparation,
+measurements and calibration remain resources. In qubit dimensions, the existing
 [random-sign local product-fidelity estimator](pauli-local-certification.md)
 also applies to arbitrary
 CPTP maps. Preparing $I/D$, coherent-order control, the clean reference
 if used, loss, rejected attempts and all physical uses remain charged.
+In particular, a conditional successful-memory fidelity cannot be
+inserted into (F0) or (F1) as the fidelity of the full TP channel.
+Loss must remain in the channel or in a declared completion with its
+yield charged. No reported conditional experimental fidelity is being
+turned into an all-attempt capacity here.
 
 For nonunital channels $u$ is an additional promised or estimated
 quantity; no cheap universal $u$ estimator is supplied here.
@@ -514,6 +580,9 @@ $S(J)\le h_2(f)+(1-f)\log_2(D^2-1)$, which is retained in (I').
 The additional commutator term is proved here by the CP-family
 spectral-tail and pinching arguments, rather than inferred from that
 dimension-only estimate.
+The fidelity-only capacity implication is the separate twirling and
+relative-entropy baseline (F0), credited to Barizien et al. above; it
+does not require paying an output-purity penalty for nonunitality.
 
 Fraas's commuting-Kraus theorem supplies the stronger
 trace-preserving exact endpoint noted above; it does not state the

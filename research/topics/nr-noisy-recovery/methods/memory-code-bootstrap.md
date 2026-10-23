@@ -14,8 +14,9 @@ programs and a high-prior mean cost. It also evaluates Petz and ordinary
 code-projection constructions. It does not exclude every switch-assisted
 decoder, framed switch slots or richer coherent access to the environment.
 The [exact checker](../checks/architecture/verify_code_bootstrap.py)
-guards the complete channel identities, code-projection formulas and
-finite probability ledgers; it does not reprove C6 or a coding theorem.
+guards the complete channel identities, code-projection formulas,
+finite history-rank identities and probability ledgers; it does not
+reprove C6 or a coding theorem.
 
 ## The complete self-switch has a high-case ordinary compiler
 
@@ -450,3 +451,131 @@ The comparison closes this particular framed qubit identity-branch
 candidate with the supplied ordinary helper interface. It does not
 simulate arbitrary framed switch instruments or prove an ordinary
 compiler for every program trained with framed higher-order blocks.
+
+## A finite serial-history storage boundary
+
+A scalar qualification result does not itself provide a high-rate
+single-wire storage protocol. The following boundary assumes an explicit
+physical history interface. There are $L\ge1$ independently fresh,
+mandatory slots, each used exactly once in every complete history, with
+$\mathcal E_t=r\operatorname{id}+t\Delta_U$, $r=1-t$. Known framed
+conjugates are allowed. A logical $K$-dimensional input, $2\le K\le D$,
+is encoded by a CPTP map into ONE $D$-dimensional payload wire; no other
+input-bearing quantum workspace remains protected within a history. The reference is
+inaccessible. The initially input-independent order register is retained
+in the output, as are known measurement records and their failure flags.
+
+Here $H$ bounds the number of coherent serial terms in each COMPLETE
+physical Kraus trajectory, not merely the number of named orders or final
+controller outcomes. More precisely, refine the known operations by a
+record $\mu$. For the SAME physical slot-environment labels in all
+histories, the unweighted output Kraus map has the form
+$$
+T_{\mathbf Q,\mu}
+ =\sum_{h=1}^H |h\rangle\otimes
+ A_{\mu h,L}Q_{\pi_h(L)}A_{\mu h,L-1}\cdots
+ Q_{\pi_h(1)}A_{\mu h,0}.                            \tag{H1}
+$$
+Each $A$ acts on the payload alone, including known frame gates and
+history amplitudes; $\pi_h$ visits every slot once. A final known
+isometry or recovery can act on the full output. More generally each
+$|h\rangle\otimes$ may be replaced by a fixed linear output embedding
+for that history, allowing coherent recombination, provided the same
+physical refinement and normalization hold. Mixed initial controls
+and classical records may be refined into additional Kraus labels.
+The actual deterministic device must be multilinear in its slots:
+replacing any subset by $\Delta_U$ and the others by identity gives a
+TP channel. Thus (H1) is not an arbitrary coherent sum followed by
+input-dependent normalization. A branch-preserved controlled routing
+network with complete readouts has this property. Arbitrary intermediate
+helper coupling requires a new proof of (H1), possibly with a larger $H$;
+a controller's Hilbert-space dimension alone does not establish it.
+
+Write $P_{j,i}$ for the rank-one dephasing projectors at slot $j$.
+Their frames can be absorbed into (H1). Expanding each fresh slot gives
+a normalized mixture over subsets $S$ of dephasing slots, with weight
+$t^{|S|}r^{L-|S|}$. Its clean weight is $w=r^L$. For $S\ne\varnothing$,
+put $Q_j=P_{j,i_j}$ for $j\in S$ and $Q_j=I$ otherwise. Each serial
+product in (H1) contains a rank-one factor. Hence
+$$
+\operatorname{rank}T_{S,\mathbf i,\mu}\le H.           \tag{H2}
+$$
+Encoding and every Kraus operator of a subsequent accepted recovery
+cannot increase this rank. This statement concerns matrix rank of each
+refined trajectory, not the Choi rank or rank of a mixed output state.
+
+For the accepted logical subchannel $\mathcal M$, define its joint
+Bell-input acceptance and pass probabilities by
+$$
+p=\operatorname{Tr}[(\operatorname{id}\otimes\mathcal M)(\Phi_K)],
+\qquad q=\langle\Phi_K|
+ (\operatorname{id}\otimes\mathcal M)(\Phi_K)|\Phi_K\rangle,
+\qquad \zeta=\min\{H/K,1\}.
+$$
+For any $K\times K$ matrix $B$ of rank at most $H$,
+$|\operatorname{Tr}B|^2\le H\operatorname{Tr}(B^\dagger B)$:
+insert the rank-$\operatorname{rank}B$ projection onto its image into
+the trace and use Hilbert--Schmidt Cauchy--Schwarz. Summing the Kraus
+formulas for $p$ and $q$ proves $q_{\rm error}\le\zeta p_{\rm error}$.
+This is the usual Schmidt-number Bell-overlap bound; see
+[Terhal and Horodecki, Proposition 1 and Lemma 1](https://arxiv.org/abs/quant-ph/9911117).
+The clean accepted trace $p_{\rm clean}$ is at most $\min\{p,w\}$,
+because its unweighted complete network is TP and acceptance is TNI.
+Also $q_{\rm clean}\le p_{\rm clean}$. Therefore
+$$
+\boxed{q\le\zeta p+(1-\zeta)\min\{p,r^L\}.}          \tag{H3}
+$$
+For $p>0$ the conditional Bell fidelity is $q/p$. For a TP recovery,
+$p=1$ and
+$$
+\boxed{F_e\le r^L+(1-r^L)\min\{H/K,1\}.}             \tag{H4}
+$$
+Postselection must retain its actual $p$ in (H3). The ordinary $H=1$
+serial channel $\mathcal E_t^L$ on the full $K=D$ space, with identity
+recovery, attains (H4) exactly: $F_e=r^L+(1-r^L)/D$.
+
+There is a stronger EXACT-recovery conclusion for the opaque interface
+(H1). Slot environments, including any burst/no-error or phase-error
+labels, remain inaccessible; only the payload, order register and known
+operation records are returned. If $0<t\le1$ and $K>H$, then
+$$
+\boxed{\mathcal M=p\operatorname{id}_K\quad\Longrightarrow\quad p=0.}
+                                                               \tag{H5}
+$$
+To prove it, refine the encoder by $C_\alpha$ and accepted recovery by
+$R_\beta$, including the known record $\mu$. A rank-one Choi matrix
+$p\Phi_K$ forces every accepted Kraus matrix to be proportional to $I_K$.
+Every projector-containing matrix
+$R_\beta T_{S,\mathbf i,\mu}C_\alpha$ has rank at most $H<K$, so is
+zero. For $0<t<1$, fix one mandatory slot $j$ and set all other slots
+to identity. Multilinearity in the SAME physical refinement gives
+$$
+\sum_i T_{\{j\},i,\mu}=T_{\varnothing,\mu},           \tag{H6}
+$$
+because $\sum_iP_{j,i}=I$. These single-projector trajectories have
+strictly positive weight $tr^{L-1}$. Their accepted matrices all vanish,
+so (H6) makes the clean accepted matrices vanish too. All trajectories
+therefore vanish. At $t=1$ every trajectory already contains a projector.
+No independently relabeled purifications across histories are used.
+
+The hidden-record condition in (H5) is essential. If a device exposes a
+classical clean/burst flag, accepting only all-clean yields
+$r^L\operatorname{id}$, even for $K>H$. The rank bound (H3) survives
+but the accepted clean and error maps have different accessible flag
+states, so (H6) cannot be passed through the SAME recovery. Coherent
+access to, or inversion of, the environment is likewise a different
+interface. Correlated reused errors also invalidate the fresh-slot
+mixture: two visits with the same sampled qubit $I/N$ error can multiply
+to identity although each marginal is dephasing.
+
+The workspace restriction is equally substantive. If a declared protected
+workspace has dimension $M$ within each history, the same proof replaces
+$H$ by $HM$, since $P_{j,i}\otimes I_M$ has rank $M$; its memory and
+couplings must be charged. A protected $K$-dimensional register permits
+a SWAP bypass and makes that bound vacuous. Parallel block codes do not
+satisfy the single-wire rank premise: one projector on one of $m$
+payload factors has rank $D^{m-1}$ on the rest. Their positive capacity
+and ordinary coding baselines remain compatible with (H3)--(H5).
+These results delimit this explicit finite serial-history deployment,
+not arbitrary higher-order processes, parallel coding, quantum programs
+or a native hardware advantage.

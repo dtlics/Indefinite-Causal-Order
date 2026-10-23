@@ -35,15 +35,28 @@ priority, a general memory-process model or an architecture advantage.
 The [decoder-bootstrap component](../research/topics/nr-noisy-recovery/methods/memory-code-bootstrap.md)
 adds a high-prior mean-cost converse with receiver quantum programs under
 an all-instance unassisted deployment interface. Its replay checks complete
-compiler, projection/Petz and cost identities; C6 and the converse remain
-analytic. The [finite-energy bosonic component](../research/topics/nr-noisy-recovery/methods/bosonic-logical-frontier.md)
-derives a normalizable code and a fixed product-decoder plus-flag comparison.
-Finite guards do not certify its abstract decoder as a native operation or
-establish equal-energy optimality. The
+compiler, projection/Petz, cost and normalized serial-history rank
+identities; C6 and universal interface/rank converses remain analytic.
+The [finite-energy bosonic component](../research/topics/nr-noisy-recovery/methods/bosonic-logical-frontier.md)
+derives a normalizable code, reduced all-control recovery bounds and
+complete coherent-gauge counterexamples. Its fixed-controller recovery
+SDP is a method, not a solved Gaussian frontier or native decoder.
+Finite guards do not establish equal-energy optimality. The
 [spin-phase component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md)
-also checks scattering normalization and full ordinary entanglement-first
-gate/resource branches. Its continuum loss and full-space recovery
-obstruction remain analytic; no native router or rate ordering is certified.
+also checks scattering, full entanglement-first gate/resource branches,
+scalar concurrence, a rational Bell-yield interval and coherent-spectral
+scope guards. Universal comparisons, continuum loss and full-space
+recovery obstructions remain analytic; no native router or rate ordering
+is certified. Full Choi twirls in the general-channel replay support the
+credited ordinary fidelity-only bound without a unitality premise; its
+relative-entropy and coding proof remains analytic.
+
+The [rare-good screening component](../research/topics/nr-noisy-recovery/methods/memory-stream-screening.md)
+prices selection, survivor learning, validation and a finite working code.
+Its exact guards support probability/stopping and complete code identities;
+C6, the all-size selection reduction, continuous prior and concentration
+arguments remain analytic. Its conditional classical-address query saving
+is not a certified native platform, finite crossover or wall-time gain.
 
 The measurement replay also checks complete recorded parity-braid branches,
 initialized-ancilla effects and tracked frame corrections at dimensions

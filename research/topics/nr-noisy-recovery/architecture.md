@@ -41,14 +41,28 @@ end-to-end saving. The [decoder-bootstrap extension](methods/memory-code-bootstr
 includes retained receiver quantum programs under an all-instance
 unassisted deployment interface. Unframed high-case self-switches compile
 to serial calls, while Petz inverse filters and ordinary heralded code
-projection have separate yield and all-attempt ledgers.
+projection have separate yield and all-attempt ledgers. A separate
+single-wire history-rank bound delimits high-dimensional storage in its
+explicit opaque-error interface; it does not exclude parallel coding.
+
+The [rare-good selection analysis](methods/memory-stream-screening.md)
+tests a different end-to-end workload: screen many candidates, then
+calibrate and validate a working code only on a survivor. Its conditional
+expected-query saving charges that training and all rejected devices,
+while retaining ordinary quantum memory and collective readout.
+Classical addressing, extreme dimension/inventory, fixture time and the
+missing native process remain substantial assumptions. A QA stream can
+justify the access cut only when unavailable packages cannot actually be
+queried coherently; a controller's chosen classical policy is insufficient.
 
 The [general capacity witness](methods/unital-entropy-capacity.md)
 applies to all unital channels, using entanglement fidelity and the
 self-switch statistic; nonunital channels require a separately justified
 imbalance or model-closeness bound. Separate proofs bound orthogonal and approximately
 orthogonal unitary-error realization entropy. These certificates do not
-supply a decoder or make the required coherent routing native.
+supply a decoder or make the required coherent routing native. A prior
+ordinary fidelity-only capacity bound applies to all square CPTP maps
+without a unitality promise and is combined with the joint certificate.
 For diluted physical Pauli errors, ordinary product probes can already
 provide the required sufficient certificate. Hidden weak-product frames
 admit polynomial device-call calibration with exponential classical work;
@@ -71,7 +85,10 @@ compiler also matches the observed no-click spin map under calibrated,
 state-independent erasure and reciprocal propagation. Spin-dependent
 cavity scattering now has a full-space unresolved-loss recovery obstruction
 and an ordinary entanglement-first comparison with spare matter qubits.
-Encoded recovery, resolved loss records and matched control/clock costs
+Its scalar reflected-sector comparison proves ordinary saturation of
+average concurrence and a narrow Bell-yield interval at the cited
+operating point. Coherent spectral readout needs a separate full-record
+analysis. Encoded recovery, resolved loss records and matched control/clock costs
 remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
 separately excludes exact heralded recovery in its infinite-oscillator
 model and supplies ordinary source-preparation comparisons; it leaves
@@ -536,9 +553,12 @@ control qubit in the specified ideal diagonal-Gaussian code model. The
 argument requires an exact final syndrome while the control stays
 coherent. The separate [finite-energy component](methods/bosonic-logical-frontier.md)
 derives a normalizable encoding and proves fixed product-decoder plus-flag
-dominance by ordinary Fourier alignment and finite squeezing. Its energy
-ledger includes transient occupation. A finite-cost decoder, equal-energy
-optimization and arbitrary flag-dependent recovery remain open.
+dominance by ordinary Fourier alignment and finite squeezing. The bound
+extends to arbitrary deterministic control/logical recovery after the
+fixed gauge trace. Retaining the physical gauge coherently can preserve
+additional recovery information, as exact ordinary counterexamples show.
+Its energy ledger includes transient occupation. A finite-cost decoder,
+equal-energy optimization and full coherent Gaussian recovery remain open.
 
 The [non-Gaussian cat-reservoir comparison](architecture-baselines.md#nr-r06-cat-reservoir-parity)
 retains the actual warm bath and finite buffer. An ordinary coherent
