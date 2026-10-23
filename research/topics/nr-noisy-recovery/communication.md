@@ -763,7 +763,7 @@ The [communication checker](checks/architecture/verify_communication.py) compare
 
 <a id="nr-r11"></a>
 
-## NR-R11 — Accepted cavity and nonlinear-scattering instruments
+## NR-R11 — Accepted cavity, Raman and nonlinear-scattering instruments
 
 Let a photon bus have a common set of orthogonal mode projectors $T_h$.
 Two stations with independent slot environments act on disjoint matter
@@ -1067,6 +1067,331 @@ microsecond initialization/readout; their end-to-end efficiency below
 $1\%$ prevents single-shot spin readout in that device. These establish
 ordinary controls and substantive overheads, not the matched two-dot
 quarter-phase gate or its delivered-pair rate.
+
+<a id="nr-r11-raman-swap"></a>
+
+### Raman scattering: useful Bell outputs and stronger ordinary SWAP baselines
+
+The common-label closure (9) does not cover a photon that changes a
+retained ground-state spin. A concrete replacement is the single-photon
+Raman interaction (SPRINT), rather than an arbitrary depolarizing map.
+[Koshino, Ishizaka and Nakamura](https://arxiv.org/html/0909.4762v2),
+equations (6)--(19), derive the complete wavepacket map of a degenerate
+three-level Lambda system. Its equal-leg, long-pulse limit supplies both
+a resonant photon--atom SWAP, up to local phases, and a detuned partial
+SWAP. [Bechler et al.](https://doi.org/10.1038/s41567-018-0241-6)
+([primary preprint](https://arxiv.org/pdf/1711.10974)) demonstrate passive
+state transfer using a single Rb atom and counterpropagating nanofiber
+modes. Their attenuated coherent-pulse experiment infers the
+single-photon transfer fidelity; it does not demonstrate the two-node
+protocols below. [Rosenblum, Borne and Dayan](https://doi.org/10.1103/PhysRevA.95.033814)
+([primary analysis](https://arxiv.org/html/1412.0604v3)) include cavity
+loss, unguided emission, polarization imperfections and additional levels.
+The following flat symmetric model is a declared reduction, not a fit to
+that full experiment or the inline quantum-dot dimer.
+
+In particular, [Hallacy et al., published Fig. 3](https://www.nature.com/articles/s44310-026-00148-y.pdf)
+identify the selected dimer lines as negatively charged excitons $X^-$
+in a $0.5$ T Faraday field. A resident-electron ground manifold is
+compatible with that assignment. It does not establish a coherent
+common-excited-state Lambda transition or arbitrary ground-spin control.
+Ideal Faraday cycling legs are disconnected; a mixing or control
+mechanism must supply the Raman cross leg. PL/HBT interference and
+Stark alignment do not by themselves measure its amplitude or phase.
+
+**Monitored Raman operator and excluded records.** Label the photon
+qubit $P$ by $0=H,1=V$, and the ground-state memory by $0,1$.
+The active states are $|H1\rangle,|V0\rangle$; $|H0\rangle,|V1\rangle$
+are spectators. Each guided leg has population decay rate $\Gamma$;
+all excluded radiative channels together have rate $\gamma\ge0$. Write
+
+$$
+a=\Gamma+\gamma/2,\quad \beta=\Gamma/a,\qquad
+r(\delta)=-\frac{\Gamma}{a-i\delta},\quad t(\delta)=1+r(\delta).
+\tag{RS1}
+$$
+
+The accepted one-photon operator $T(\delta)$ is identity on the
+spectators and has block $tI+rX$ on the active states. Its active dark
+state has eigenvalue $1$, while the bright state
+$|b\rangle=(|H1\rangle+|V0\rangle)/\sqrt2$ has eigenvalue
+$1-2\Gamma/(a-i\delta)$. Consequently
+
+$$
+I-T^\dagger T=
+\frac{2\Gamma\gamma}{a^2+\delta^2}|b\rangle\langle b|.
+\tag{RS2}
+$$
+
+This is a contraction with an explicit positive loss defect. A complete
+physical dilation must assign that defect to the actual lost-photon
+modes and final memory states. A valid photon herald excludes these
+events; tracing them into an accepted ideal SWAP would change the task.
+On resonance the defect is $4\beta(1-\beta)|b\rangle\langle b|$.
+At $\beta=1$, $T=(Z_P\otimes Z_S)\operatorname{SWAP}_{PS}$.
+Known local $Z$ operations convert this to literal SWAP, with their
+actual access and faults charged. For $0<\beta<1$ there is coherent
+elastic leakage $t=1-\beta$, not a scalar successful SWAP.
+
+The frequency bookkeeping follows from the full one-excitation
+resolvent. For ground energies $\epsilon_\mu$, one excited energy
+$\epsilon_e$ and optical legs
+$v_\mu=\sqrt{\Gamma_\mu}e^{i\phi_\mu}$, include all radiative output
+legs in $v$ and put $\Gamma_{\rm tot}=v^\dagger v$. On the correlated
+channels $|\mu,E-\epsilon_\mu;g_\mu\rangle$ the flat Markov operator is
+
+$$
+S_{\nu\mu}(E)=\delta_{\nu\mu}
+-\frac{i v_\nu v_\mu^*}{E-\epsilon_e+i\Gamma_{\rm tot}/2}.
+\tag{RS2a}
+$$
+
+Its bright eigenvalue is
+$(E-\epsilon_e-i\Gamma_{\rm tot}/2)/
+(E-\epsilon_e+i\Gamma_{\rm tot}/2)$; every dark eigenvalue is one.
+It is therefore unitary on the full optical channel space. Restricting
+to monitored rows gives the contraction and the other rows give loss
+records with their final ground states. Mismatched mode/ground pairs
+are spectators under the ideal selection rules. This derives (RS1)
+for equal guided legs and excluded total rate $\gamma$, and identifies
+what the scalar reduction omits. A real cavity with extra levels,
+intrinsic loss or polarization crosstalk needs its enlarged resolvent.
+
+For nondegenerate ground energies $\epsilon_s$, a transition
+$s\to s'$ sends a photon of frequency $\omega$ to
+$\omega+\epsilon_s-\epsilon_{s'}$. Thus frequency is part of the
+quantum record. In the task below either useful history flips exactly
+one memory from $0$ to $1$. Matching the two ground-state gaps and
+transfer functions makes their final Raman bands identical; unequal
+gaps or frequency-dependent path phases require the actual overlap
+kernel or a priced eraser. Detection of $H$ alone does not erase a
+frequency record. Reversed propagation must also return the same
+logical $H,V$ ports and couplings to each node: chirality does not
+automatically supply the same $T$ in opposite routes.
+
+**Complete surviving switch output.** Initialize $PAB$ in $|V00\rangle$.
+The ordinary product $T_BT_A$ gives
+
+$$
+t_At_B|V00\rangle+t_Ar_B|H01\rangle+r_A|H10\rangle.
+\tag{RS3}
+$$
+
+For identical $t_A=t_B=t$, $r_A=r_B=r$, a plus-prepared independent
+order helper and its $X$ measurement give the unnormalized vectors
+
+$$
+\begin{aligned}
+|\psi_+\rangle&=t^2|V00\rangle+
+ \frac{r(1+t)}2(|H10\rangle+|H01\rangle),\\
+|\psi_-\rangle&=\frac{r(1-t)}2(|H10\rangle-|H01\rangle).
+\end{aligned}
+\tag{RS4}
+$$
+
+Both $H$ flags are useful Bell pairs after a recorded local phase
+correction. Their total probability is
+
+$$
+p_S=|r|^2(1+|t|^2)
+=\beta^2[1+(1-\beta)^2]\quad(\delta=0).
+\tag{RS5}
+$$
+
+The surviving non-Bell outcome has probability $|t|^4$, and lost
+photons have probability $1-p_S-|t|^4$. These are all charged outcomes.
+Failed attempts change the spin state and require the actual
+reinitialization before a retry.
+
+If the spectral density $w(\nu)$ is normalized, both nodes have the
+same functions $t(\nu),r(\nu)$ and the routes have matched delays and
+Raman bands, (RS4) holds at every frequency. Each useful flag then
+factors into one photon wavepacket and a fixed Bell state. In this
+model, without narrowband truncation,
+
+$$
+p_S=\int d\nu\,w(\nu)|r(\nu)|^2[1+|t(\nu)|^2],
+\qquad F_S=1.
+\tag{RS6}
+$$
+
+This spectral symmetry is an assumption about the full transfer
+functions, rather than a consequence of equal carrier transmissions.
+Unequal nodes, pure dephasing, unmonitored photon-preserving records,
+port mismatch and finite helper coherence need their enlarged instrument.
+
+**Ordinary detuned serial benchmark, with its precise restriction.**
+For a monochromatic photon, the ordinary (RS3) output conditioned on $H$
+is $r_A|10\rangle+t_Ar_B|01\rangle$. A local phase corrects their
+relative argument. It is a Bell pair exactly when
+$|r_A|=|t_Ar_B|$. With common $\Gamma,\gamma$ and independently
+adjustable real node detunings this is
+
+$$
+\delta_A^2=2a\Gamma-\Gamma^2+\delta_B^2.
+\tag{RS7}
+$$
+
+The success probability is $2\Gamma^2/(a^2+\delta_A^2)$.
+It is maximized by $\delta_B=0$,
+$\delta_A^2=\Gamma^2+\Gamma\gamma$, yielding
+
+$$
+p_D=\frac{2\beta^2}{1+2\beta-\beta^2}.
+\tag{RS8}
+$$
+
+Indeed, putting $h=1-\beta$, $x=\delta_A/a$, $y=\delta_B/a$
+reduces (RS7) to $x^2-y^2=1-h^2$. The denominator $1+x^2$ is
+smallest at $y=0$, proving the stated continuous optimum. At
+$\beta=1$, A is the source's detuned partial SWAP and B its resonant
+SWAP: one photon and two ordinary interactions create a Bell pair
+deterministically without an order helper. Independent resonance tuning
+or actual frequency conversion must supply the different detunings;
+neither is free access inferred from a formula.
+This is a pointwise calibrated optimum: choosing the detunings and
+correcting the phase needs stable $\Gamma,\gamma$ and relative phase
+information. Training and reuse across its measured drift window belong
+in a cost comparison.
+
+The positive difference under loss is real but restricted:
+
+$$
+p_S-p_D=\frac{\beta^2h^2(1-h^2)}{2-h^2}>0
+\quad(0<\beta<1).
+\tag{RS9}
+$$
+
+For example $\beta=0.9$ gives $p_S=0.8181$ and
+$p_D\simeq0.81407035$. This optimizes only a fixed $V00$ input,
+one serial traversal of each node, two detunings, final $H$ herald and
+unitary phase correction. It is not an ordinary-helper optimum or a
+native rate comparison.
+
+For finite bandwidth define $A(\nu)=r_A(\nu)$,
+$B(\nu)=t_A(\nu)r_B(\nu)$ and
+$z=\int w(\nu)A(\nu)B(\nu)^*d\nu$. Tracing the photon frequency gives
+
+$$
+p_{D,H}=\int w(|A|^2+|B|^2)d\nu,\qquad
+F_{D,H}=\tfrac12+|z|/p_{D,H}.
+\tag{RS10}
+$$
+
+Here $F_{D,H}$ is Bell-state overlap (squared fidelity); when
+$p_{D,H}>0$, it optimizes one frequency-independent local phase.
+Frequency-resolved detection permits a frequency-dependent phase, but
+cannot unitarily balance unequal magnitudes. If resolved frequency and
+ideal local probabilistic spin filters are additionally granted, their
+pure two-term branch gives exact-Bell yield
+$2\int w\min(|A|^2,|B|^2)d\nu$. This follows by equalizing the two
+Schmidt weights in each resolved branch. The filter, resolution and
+latency are additional physical primitives.
+
+**Ordinary helper and source schedules must also be included.** A
+balanced coherent path can scatter at A only or B only. Its $H$ output
+is $r(|\mathrm{path\ A},10\rangle+
+|\mathrm{path\ B},01\rangle)/\sqrt2$. Erasing the path in $X$ and
+correcting the recorded sign gives an exact Bell pair with probability
+$p_1=|r|^2$, using one occupied scattering per attempt. If two independent
+source photons, failure reset and two attempt slots are available, its
+success by the second attempt is
+
+$$
+p_2=2\beta^2-\beta^4,\qquad
+p_2-p_S=2\beta^3(1-\beta)\ge0.
+\tag{RS11}
+$$
+
+Stopping after success uses at most two occupied scatterings. This
+comparison charges the additional photon and preparation, readout and
+reset slot, along with the actual separate-node connections. It does
+not settle a single-photon or source-limited clock budget. Equation (RS11)
+supplies an occupied-scattering yield comparison only after the two
+photons and herald/reset slots are granted. Unequal cycle durations
+require a complete clock budget; neither (RS9) nor (RS11) is a rate theorem.
+
+There is also an ordinary two-interaction, one-photon protocol using an
+independent helper degree $O$ preserved by both nodes. In the ideal
+literal-SWAP frame, prepare $(|O0,P0\rangle+|O1,P1\rangle)/\sqrt2$,
+with $AB=00$. Apply SWAP$(P,A)$, the known photonic CNOT$(O\to P)$,
+and SWAP$(P,B)$. The result is
+$|P0\rangle(|O0,00\rangle+|O1,11\rangle)/\sqrt2$.
+Both $O$-$X$ outcomes give a Bell pair. No second photon is needed.
+This requires real helper-preserving ports and the intermediate
+two-degree photonic operation. The switch's path or direction encoding
+does not automatically give their product extension.
+
+The ideal protocol must not be silently used for lossy $T$. For input
+$\sqrt{p_0}|O0,P0\rangle+\sqrt{p_1}|O1,P1\rangle$, the same raw
+scattering circuit gives instead
+
+$$
+\sqrt{p_0}|O0,P0,00\rangle+\sqrt{p_1}\bigl[
+t_A|O1,P0,00\rangle+r_At_B|O1,P1,10\rangle+
+r_Ar_B|O1,P0,11\rangle\bigr].
+\tag{RS12}
+$$
+
+The elastic $t_A$ term is accepted leakage, rather than a scalar
+efficiency. Optimizing actual photon/helper operations, readout and
+spin filtering with (RS1) remains necessary before assigning an advantage.
+
+**Unknown-memory SWAP has an ordinary teleportation comparator.**
+With the same ideal SWAP ports, prepare a Bell pair of flying $P$ and
+clean helper $Q$, perform SWAP$(P,A)$ then SWAP$(P,B)$, and jointly
+Bell-measure $P,Q$. For arbitrary input $|x\rangle_A|y\rangle_B$, the
+premeasurement state is
+$|\Phi^+\rangle_{AQ}|x\rangle_B|y\rangle_P$.
+For Bell states
+$|B_{mn}\rangle_{PQ}=2^{-1/2}\sum_{p=0}^1(-1)^{np}
+|p,p\mathbin\oplus m\rangle$, the branch operator on $AB$ is
+$\tfrac12(X^mZ^n)_A\operatorname{SWAP}_{AB}$.
+Applying $(Z^nX^m)_A$ gives
+
+$$
+K_{mn}=\tfrac12\operatorname{SWAP}_{AB},\qquad
+\sum_{m,n}K_{mn}(\cdot)K_{mn}^\dagger
+=\operatorname{Ad}_{\operatorname{SWAP}_{AB}}.
+\tag{RS13}
+$$
+
+The product-input calculation extends linearly to every entangled
+input and reference; all four outcomes have probability $1/4$.
+$Q$ may be a second degree of the same photon if the actual node
+preserves it. Complete joint readout of two degrees of one photon,
+local phase frames, feedforward, storage, route matching and losses
+must be supplied and charged. This is the standard entanglement-transfer
+and teleportation construction; no novelty or full noisy simulation
+claim is made. Replacing its two SWAPs by actual $T$ changes the
+instrument, just as in (RS12).
+Complete polarization/path Bell readout on one photon has an
+[experimental linear-optics precedent](https://arxiv.org/abs/quant-ph/0303125).
+That validates the operation class, while its compatibility with the
+actual SPRINT port encoding remains an additional implementation task.
+
+The useful remaining test is therefore the **lossy, finite-frequency
+Raman Bell-pair instrument**, with measured node mismatch, actual helper
+ports and the best ordinary photon/helper and source schedule on that
+same graph. Compare delivered fidelity and pairs per total time after
+calibration reuse, all flags, spin reset and helper/routing costs.
+The ideal SWAP examples are closed by ordinary constructions; the small
+restricted yield gap (RS9) is an unresolved comparator problem rather
+than an established architecture advantage.
+
+The [exact communication replay](checks/architecture/verify_communication.py)
+checks raw phase dressing, both ideal switched Bell flags, ordinary
+fanout, all four reference-complete remote-SWAP branches, and seven
+rational-loss contraction/survivor cases including every photon/order
+outcome. It also checks the yield identities (RS9), (RS11).
+Nine full radiative resolvents with unequal complex legs check unitarity,
+bright/dark eigenvectors and monitored/excluded-row loss Gram identities
+supporting (RS2a).
+The continuum transfer model, spectral symmetry, continuous detuning
+optimum, physical port extensions, loss records and resource comparison
+are analytic arguments or explicit assumptions; finite replay does not
+certify an experimental Raman instrument or a native benefit.
+
 
 ### Two-photon survivor scattering in a common continuum basis
 
@@ -2162,18 +2487,18 @@ They do not close every unequal-fraction kernel, group-velocity
 dispersion, frequency-dependent mode mixing, additional internal levels,
 photon-preserving bath record or coherent bidirectional device.
 
-The retained-spin next test must therefore keep a mechanism outside the
-diagonal photon-bus family: Raman/spin-changing scattering with its
-frequency and polarization outputs, or an explicitly retained shared
-quantum memory. Specify a heralded spin Bell-pair or gate target and
-derive the full ground-state-changing optical kernels and bath records
-for that actual device. A stimulated classical Raman rotation does not
-by itself provide a large coherent single-photon Raman branch. Compare
-ordinary spectral heralding, the parity instruments (SP1)--(SP2), the
-available fixed-order bus and spin echo (SP5)--(SP6), and all rejected
-launches at matched source, readout, memory and reset cost. Neither the
-diagonal quarter-phase example nor a quiet Markov tail supplies that
-remaining positive application.
+The [Raman comparison](#nr-r11-raman-swap) now supplies that
+ground-state-changing instrument and a useful Bell-pair target under
+explicit matched-mode hypotheses. Its ideal SWAP endpoints have ordinary
+partial-SWAP, helper-fanout and teleportation comparators. The unresolved
+case is the actual lossy finite-frequency instrument against the strongest
+ordinary photon/helper controls, source schedules and spin filters on the
+same physical graph. A stimulated classical Raman rotation does not by
+itself supply the required single-photon branch. Retained shared quantum
+memory is a distinct possibility, subject to the ordinary controls and
+native-interface test in the [architecture assessment](architecture.md).
+Neither a diagonal quarter-phase example nor a quiet Markov tail supplies
+the remaining positive application.
 
 A remaining application needs its full instrument, executable input
 code or constrained source, surviving output/flag, and a gain after
@@ -2184,7 +2509,8 @@ is an ordinary comparator, including its spectral filtering and timing
 selection. A favorable commutator or coincidence-normalized phase is
 insufficient. The linked finite replay checks an elastic state-carving
 instrument and a bin-flip example, the retained-spin parity/photon-bus
-identities (SP1)--(SP6), and full finite-emitter number, ground-vacuum,
+identities (SP1)--(SP6), the ideal Raman helper/teleportation and flat-loss
+survivor identities (RS1)--(RS13), and full finite-emitter number, ground-vacuum,
 nominal-Gram and near-dark identities supporting (NT1)--(NT2). The
 semigroup, infinite-future effect, Gaussian-code and complete-instrument
 bounds are analytic proofs. Neither they nor the continuum scattering

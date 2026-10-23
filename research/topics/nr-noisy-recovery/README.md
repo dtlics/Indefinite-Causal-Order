@@ -21,7 +21,7 @@ and from learning a scalar channel property.
 | NR-R08 | Accessible measurement records and syndrome-sector baselines | [Measurement baselines](architecture-baselines.md#nr-r08) |
 | NR-R09 | Optical loss: calibrated reductions and native record constraints | [Loss equivalence](communication.md#nr-r09) |
 | NR-R10 | Entanglement-breaking slot, control-quality wire simulation and stopping bounds | [Communication resource bounds](communication.md#nr-r10) |
-| NR-R11 | Accepted cavity and nonlinear-scattering instruments | [Scattering-instrument screens](communication.md#nr-r11) |
+| NR-R11 | Accepted cavity, Raman and nonlinear-scattering instruments | [Scattering-instrument screens](communication.md#nr-r11) |
 | NR-R12 | Exact coherent dispatch with a dephased counter and bounded-query boundary | [Conditional dispatch result](dispatch.md#nr-r12) |
 | NR-R13 | Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound | [Composite lookup screen](native-lookups.md#nr-r13) |
 | NR-R14 | Shared-bath calibration transfer and exact ordinary echo/instrument baselines | [Bath-backaction screen](backaction.md#nr-r14) |
@@ -89,7 +89,11 @@ native coherent-dispatch interface, and prediction across control histories
 in a retained quantum bath. First establish each instrument,
 available records and controls, and the best ordinary method; then
 compare useful task outputs at matched time, memory, calls and routing
-cost. The [communication note](communication.md) identifies why pure
+cost. The [Raman instrument and ordinary SWAP baselines](communication.md#nr-r11-raman-swap)
+leave the lossy finite-frequency helper/source comparison open. The
+mechanical-memory assessment separately specifies held-out storage
+against demonstrated ordinary echo/CP control and its missing coherent
+profile interface. The [communication note](communication.md) identifies why pure
 loss and the documented elastic cavity model do not suffice. The
 assessment gives explicit go/no-go tests and source-specific gaps.
 The dispatch result separates its exact hard-query boundary, achievable

@@ -743,6 +743,270 @@ def chiral_parity_examples():
                       "source/detection costs and delivered rates remain analytic.")}
 
 
+def raman_sprint_examples():
+    """Ideal helper baselines and flat symmetric accepted Raman instruments.
+
+    A node preserves the independent helper degree by hypothesis.  The
+    physical port, known Z dressings, Bell readout, loss/reset and timing
+    costs are analytic assumptions, not certified by these matrix checks.
+    """
+    def subtract(a, b):
+        return add(a, times(b, -1))
+
+    def norm2(vector):
+        out = ZERO
+        for value in vector:
+            out = add(out, multiply(conjugate(value), value))
+        assert out[1] == 0
+        return out[0]
+
+    def mv(matrix, vector):
+        return [sum_gaussian(multiply(a, b) for a, b in zip(row, vector))
+                for row in matrix]
+
+    def sum_gaussian(values):
+        out = ZERO
+        for value in values:
+            out = add(out, value)
+        return out
+
+    def bits(index, n):
+        return [(index >> (n-1-j)) & 1 for j in range(n)]
+
+    def index(bitstring):
+        out = 0
+        for bit in bitstring:
+            out = 2*out+bit
+        return out
+
+    def embed(gate, first, second, n):
+        out = zeros(2**n, 2**n)
+        for col in range(2**n):
+            source = bits(col, n)
+            local_col = 2*source[first]+source[second]
+            for local_row in range(4):
+                target = source[:]
+                target[first], target[second] = divmod(local_row, 2)
+                out[index(target)][col] = gate[local_row][local_col]
+        return out
+
+    # Complete radiative-channel rank-one Lambda resolvent at fixed total
+    # energy.  Unequal complex legs and unobserved radiative rows are kept;
+    # this does not turn dephasing or a recurrent field into disappearance.
+    resolvent_cases = resolvent_unit_entries = monitored_gram_entries = 0
+    dark_cases = 0
+    radiative_legs = (
+        (gaussian(1), gaussian(0, 2)),
+        (gaussian(F(3, 5), F(4, 5)), gaussian(F(1, 2)), gaussian(0, F(3, 2))),
+        (gaussian(1), gaussian(1, 1), gaussian(F(2, 3), F(-1, 4)),
+         gaussian(F(-2, 5), F(3, 7))),
+    )
+    for v in radiative_legs:
+        dimension = len(v)
+        gamma = norm2(v)
+        assert gamma > 0
+        vv = [[multiply(x, conjugate(y)) for y in v] for x in v]
+        for delta in (F(0), F(2, 7), F(-5, 3)):
+            denominator = delta*delta+gamma*gamma/4
+            # c=-i/(delta+i gamma/2), reconstructed by exact real fractions.
+            coefficient = gaussian(-gamma/(2*denominator), -delta/denominator)
+            scalar_denominator = gaussian(delta, gamma/2)
+            assert multiply(coefficient, scalar_denominator) == gaussian(0, -1)
+            scattering = [[add(ONE if i == j else ZERO,
+                               multiply(coefficient, vv[i][j]))
+                           for j in range(dimension)] for i in range(dimension)]
+            assert matmul(adjoint(scattering), scattering) == identity(dimension)
+            assert matmul(scattering, adjoint(scattering)) == identity(dimension)
+            resolvent_unit_entries += 2*dimension*dimension
+            bright_phase = add(ONE, times(coefficient, gamma))
+            assert multiply(bright_phase, conjugate(bright_phase)) == ONE
+            assert mv(scattering, v) == [multiply(bright_phase, x) for x in v]
+            for j in range(1, dimension):
+                dark = [ZERO]*dimension
+                dark[0], dark[j] = times(conjugate(v[j]), -1), conjugate(v[0])
+                assert sum_gaussian(multiply(conjugate(x), y) for x, y in zip(v, dark)) == ZERO
+                assert mv(scattering, dark) == dark
+                dark_cases += 1
+            # Incident photons occupy monitored channels.  The other rows
+            # are retained as loss amplitudes, whose Gram is exactly the
+            # monitored contraction defect, including off-diagonal phases.
+            for monitored in range(1, dimension):
+                accepted = [row[:monitored] for row in scattering[:monitored]]
+                lost = [row[:monitored] for row in scattering[monitored:]]
+                defect = matrix_sum([identity(monitored),
+                    scale(matmul(adjoint(accepted), accepted), -1)], monitored)
+                assert defect == matmul(adjoint(lost), lost)
+                monitored_gram_entries += monitored*monitored
+            resolvent_cases += 1
+
+    swap = zeros(4, 4)
+    cnot = zeros(4, 4)
+    for a, b in product(range(2), repeat=2):
+        swap[2*b+a][2*a+b] = ONE
+        cnot[2*a+(a ^ b)][2*a+b] = ONE
+    z_pair = [[times(value, (-1)**(bits(i, 2)[0]+bits(i, 2)[1]))
+               for value in row] for i, row in enumerate(swap)]
+    # Raw resonant SPRINT is a SWAP with known local Z_P Z_S phases.
+    raw_resonant = [row[:] for row in identity(4)]
+    raw_resonant[1][1] = raw_resonant[2][2] = ZERO
+    raw_resonant[1][2] = raw_resonant[2][1] = gaussian(-1)
+    assert raw_resonant == z_pair
+    assert matmul(raw_resonant, raw_resonant) == identity(4)
+
+    # Literal dressed SWAPs, P,A,B; order branch normalization is 1/2.
+    a, b = embed(swap, 0, 1, 3), embed(swap, 0, 2, 3)
+    source = [ZERO]*8
+    source[4] = ONE
+    ba, ab = mv(matmul(b, a), source), mv(matmul(a, b), source)
+    switched = []
+    for sign in (1, -1):
+        actual = [times(add(x, times(y, sign)), F(1, 2)) for x, y in zip(ba, ab)]
+        expected = [ZERO]*8
+        expected[2], expected[1] = gaussian(F(1, 2)), gaussian(F(sign, 2))
+        assert actual == expected and norm2(actual) == F(1, 2)
+        switched.append(actual)
+
+    # Ordinary ideal fanout with the same independent helper: O,P,A,B.
+    # The Bell input is unnormalized; the eventual O-X bra supplies the
+    # second 1/sqrt(2), so the final branch has rational factor 1/2.
+    fan_source = [ZERO]*16
+    fan_source[0] = fan_source[12] = ONE
+    fanout = matmul(embed(swap, 1, 3, 4), matmul(embed(cnot, 0, 1, 4),
+                     embed(swap, 1, 2, 4)))
+    fan_output = mv(fanout, fan_source)
+    fanout_units = 0
+    for sign in (1, -1):
+        branch = [times(add(fan_output[i], times(fan_output[8+i], sign)), F(1, 2))
+                  for i in range(8)]
+        expected = [ZERO]*8
+        expected[0], expected[3] = gaussian(F(1, 2)), gaussian(F(sign, 2))
+        assert branch == expected and norm2(branch) == F(1, 2)
+        for i, j in product(range(8), repeat=2):
+            assert multiply(branch[i], conjugate(branch[j])) == multiply(
+                expected[i], conjugate(expected[j]))
+            fanout_units += 1
+
+    # Arbitrary unknown A,B input: one flying P with independent clean Q,
+    # initial Bell(P,Q), two serial SWAPs and complete joint Bell readout.
+    # Q is the second photonic logical degree, not a new matter memory.
+    # Ordering here is P,Q,A,B.  Prepare/bra normalization multiplies to 1/2.
+    prepare = zeros(16, 4)
+    for matter, p in product(range(4), range(2)):
+        prepare[12*p+matter][matter] = ONE
+    bus = matmul(embed(swap, 0, 3, 4), embed(swap, 0, 2, 4))
+    propagated = matmul(bus, prepare)
+    corrected = []
+    teleportation_units = 0
+    for m, n in product(range(2), repeat=2):
+        bell_bra = zeros(4, 16)
+        for p, matter in product(range(2), range(4)):
+            q = p ^ m
+            bell_bra[matter][8*p+4*q+matter] = gaussian((-1)**(n*p))
+        branch = scale(matmul(bell_bra, propagated), F(1, 2))
+        correction = zeros(4, 4)
+        for aa, bb in product(range(2), repeat=2):
+            # Z^n X^m reverses the teleported X^m Z^n on memory A.
+            correction[2*(aa ^ m)+bb][2*aa+bb] = gaussian((-1)**(n*(aa ^ m)))
+        branch = matmul(correction, branch)
+        expected = scale(swap, F(1, 2))
+        assert branch == expected
+        assert matmul(adjoint(branch), branch) == scale(identity(4), F(1, 4))
+        corrected.append(branch)
+        for out_i, out_j, in_i, in_j in product(range(4), repeat=4):
+            assert multiply(branch[out_i][in_i], conjugate(branch[out_j][in_j])) == \
+                times(multiply(swap[out_i][in_i], conjugate(swap[out_j][in_j])), F(1, 4))
+            teleportation_units += 1
+    assert choi(corrected, 4) == choi([swap], 4)
+    assert matrix_sum([matmul(adjoint(k), k) for k in corrected], 4) == identity(4)
+
+    # The noisy model has raw accepted equal-state identity and odd block
+    # t I+r X.  This is not replaced by the ideal dressed-SWAP circuit.
+    betas = (F(0), F(1, 10), F(1, 3), F(1, 2), F(7, 10), F(9, 10), F(1))
+    lossy_units = contraction_cases = 0
+    records = []
+    for beta in betas:
+        t, r = 1-beta, -beta
+        node = identity(4)
+        node[1][1] = node[2][2] = gaussian(t)
+        node[1][2] = node[2][1] = gaussian(r)
+        rejection = matrix_sum([identity(4), scale(matmul(adjoint(node), node), -1)], 4)
+        # Exact PSD factorization: 2 beta(1-beta) |01+10><01+10|.
+        loss_vector = [ZERO, ONE, ONE, ZERO]
+        expected_rejection = zeros(4, 4)
+        add_outer(expected_rejection, loss_vector, 2*beta*(1-beta))
+        assert rejection == expected_rejection and 2*beta*(1-beta) >= 0
+        aa, bb = embed(node, 0, 1, 3), embed(node, 0, 2, 3)
+        baa, abb = matmul(bb, aa), matmul(aa, bb)
+        ra, rb = embed(rejection, 0, 1, 3), embed(rejection, 0, 2, 3)
+        accepted_effect = scale(matrix_sum([matmul(adjoint(baa), baa),
+                                             matmul(adjoint(abb), abb)], 8), F(1, 2))
+        reject_effect = matrix_sum([identity(8), scale(accepted_effect, -1)], 8)
+        psd_decomposition = scale(matrix_sum([ra, matmul(adjoint(aa), matmul(rb, aa)),
+                                             rb, matmul(adjoint(bb), matmul(ra, bb))], 8), F(1, 2))
+        assert reject_effect == psd_decomposition
+        contraction_cases += 1
+        va, vb = mv(baa, source), mv(abb, source)
+        total = bell = F(0)
+        flag_probabilities = []
+        for sign in (1, -1):
+            vector = [times(add(x, times(y, sign)), F(1, 2)) for x, y in zip(va, vb)]
+            expected = [ZERO]*8
+            expected[4] = gaussian(t*t if sign == 1 else 0)
+            expected[2] = gaussian(r*(1+sign*t)/2)
+            expected[1] = gaussian(r*(t+sign)/2)
+            assert vector == expected
+            # Resolve every photon P and order-X outcome.  P=0 is exact
+            # Bell, while P=1,+ is a non-Bell residual and is not accepted.
+            expected_bell = r*r*(1+sign*t)**2/2
+            actual_bell = norm2(vector[:4])
+            actual_nonbell = norm2(vector[4:])
+            assert actual_bell == expected_bell
+            assert actual_nonbell == (t**4 if sign == 1 else 0)
+            if actual_bell:
+                assert vector[0] == vector[3] == ZERO
+                assert vector[1] == times(vector[2], sign)
+            total += norm2(vector)
+            bell += actual_bell
+            flag_probabilities.append(str(actual_bell))
+            for i, j in product(range(8), repeat=2):
+                assert multiply(vector[i], conjugate(vector[j])) == multiply(
+                    expected[i], conjugate(expected[j]))
+                lossy_units += 1
+        assert bell == beta*beta*(1+(1-beta)**2)
+        assert total == bell+t**4 <= 1
+        # Restricted helper-free serial detuning optimum.  The continuous
+        # optimum proof is analytic; these identities guard its arithmetic.
+        serial_optimum = 2*beta*beta/(2-t*t)
+        assert bell-serial_optimum == beta*beta*t*t*(1-t*t)/(2-t*t)
+        two_which_node_attempts = 2*beta*beta-beta**4
+        assert two_which_node_attempts-bell == 2*beta**3*(1-beta)
+        records.append({"beta": str(beta), "Bell_flags": flag_probabilities,
+                        "total_Bell_probability": str(bell),
+                        "restricted_serial_detuning_optimum": str(serial_optimum),
+                        "two_which_node_attempts_probability": str(two_which_node_attempts),
+                        "surviving_nonBell_probability": str(t**4),
+                        "rejected_loss_probability": str(1-total)})
+    return {"full_radiative_Lambda_resolvent_cases": resolvent_cases,
+            "full_radiative_unitarity_entries": resolvent_unit_entries,
+            "full_radiative_dark_vector_cases": dark_cases,
+            "monitored_loss_Gram_entries": monitored_gram_entries,
+            "ideal_resonant_local_phase_guard": 1,
+            "ideal_switch_Bell_flags": 2,
+            "ideal_ordinary_fanout_CP_coefficients": fanout_units,
+            "ordinary_remote_SWAP_Bell_outcomes": len(corrected),
+            "ordinary_remote_SWAP_CP_matrix_unit_coefficients": teleportation_units,
+            "flat_lossy_contraction_factorizations": contraction_cases,
+            "flat_lossy_complete_survivor_CP_coefficients": lossy_units,
+            "flat_lossy_Bell_probabilities": records,
+            "scope": ("Exact finite full-radiative rank-one Lambda resolvents and "
+                      "monitored loss-Gram identities; ideal same-helper ordinary Bell fanout and reference-complete "
+                      "remote-SWAP teleportation, with known local Z dressings. Flat "
+                      "symmetric accepted Raman/loss branch identities do not assert "
+                      "that those ideal ordinary protocols dominate the noisy switch. "
+                      "Actual helper-preserving ports, finite-frequency records, loss "
+                      "dilation, controls, readout and delivered rates remain analytic.")}
+
+
 def main():
     losses = [loss_example(d, x, lx, y, ly) for d, x, lx, y, ly in (
         (2,F(3,5),F(4,5),F(5,13),F(12,13)),
@@ -762,6 +1026,7 @@ def main():
         "random_receiver_native_baselines":random_receiver_examples(),
         "late_record_guard_examples":late_record_guard_examples(),
         "chiral_parity_examples":chiral_parity_examples(),
+        "raman_sprint_examples":raman_sprint_examples(),
         "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and random-receiver phase/normalized-bus isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 

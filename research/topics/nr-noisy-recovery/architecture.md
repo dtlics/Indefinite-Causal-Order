@@ -323,6 +323,59 @@ non-Markovian effects in ordinary emission spectra. Such a model does not by its
 coherence over nanosecond order routing. Pulse profiles and complete
 two-history overlaps remain necessary in either regime.
 
+### A coherent mechanical memory and its ordinary control benchmark
+
+[Bozkurt et al.](https://doi.org/10.1038/s41567-025-02975-w)
+([primary preprint](https://arxiv.org/html/2412.08006v1)) demonstrate a
+transmon-coupled silicon mechanical oscillator with state transfer and
+nonclassical state tomography. Its intrinsic energy lifetime is about
+$25\,\mathrm{ms}$; measured coherence of the zero/one-phonon code is
+$64\,\mu\mathrm{s}$, extended by ordinary Hahn echo to
+$562\,\mu\mathrm{s}$ and two-pulse Carr--Purcell control to
+$1.02\,\mathrm{ms}$. These are distinct performance measures. The
+qubit-mediated preparation fidelity is $0.711$, and oscillator B's
+coupled qubit has $T_1/T_2^*=1.55/1.05\,\mu\mathrm{s}$. Extra transfers
+and control operations therefore require their actual errors and durations.
+The demonstrated preparation, swaps, rotations and readout already provide
+strong ordinary storage controls.
+
+Other long-lived phononic environments establish different resources.
+[Odeh et al.](https://doi.org/10.1038/s41567-024-02740-5)
+([primary preprint](https://arxiv.org/html/2312.01031v1)) observe population
+memory in a dense weakly coupled defect bath, described by Solomon
+equations. A roughly $34\,\mu\mathrm{s}$ defect population lifetime does
+not establish an isolated coherent exchange bus. Their ordinary hole-burning
+and ground/excited probe sequences are reset/history comparators.
+[Fechant et al.](https://arxiv.org/html/2610.21853v1) infer intrinsic TLS
+relaxation exceeding one second from pump--probe data, while leaving
+intrinsic coherence open and describing overdamped exchange. Detuning,
+active qubit reset and retained jump-conditioned records are ordinary
+available resources; the lifetime fit does not certify one-second quantum
+storage or coherent order control.
+
+The coherent oscillator supplies a concrete task: preserve a loaded
+zero/one-code state over declared storage durations. Fix a training budget
+to choose between ordinary swap--store--read, demonstrated echo/CP and a
+proposed two-profile strategy. Freeze those controls, then measure storage
+entanglement fidelity against a reference on held-out durations or drift
+windows. Match input code, total elapsed storage, output state and final
+reset tolerance. Charge training, every successful and failed production
+launch, transfer/control pulses, helper preparation/readout, idle/routing
+time and restoration of the retained memory. Passive waiting and active
+swap-and-qubit-reset are both ordinary comparators, with their actual
+thermal floor, transfer error and reset time.
+
+The missing interface is coherent choice between two unknown joint
+interaction profiles. Classical DC, flux or Stark settings do not supply
+it. Establish that choice physically and reconstruct the phase-resolved
+helper/oscillator instrument, retaining leakage, microscopic memory and
+output-field records. If the available operation is the
+[native selector in NR-R14](backaction.md#native-coherent-settings-records-and-the-physical-ledger),
+its ordinary chronological implementation already reproduces the full
+instrument with the same retained memory. A different routed interface
+must specify its real ports and delays. No held-out task or total-cost
+advantage has yet been established on this hardware.
+
 ### Encoded bosonic storage and available ordinary controls
 
 Bosonic loss and Gaussian shift correction are concrete memory bottlenecks.
@@ -645,6 +698,12 @@ physical graph. A Markov bath does not alone imply resolved histories:
 overlapping photon excitation profiles can emit at the same laboratory
 times. Compute their actual overlap from the pulse and preceding-node
 response, rather than substituting a dephasing rate for a two-history overlap.
+
+The [Raman exchange screen](communication.md#nr-r11-raman-swap) adds
+same-helper ordinary ideal Bell-generation, remote-SWAP and detuned-serial
+baselines. Its ideal comparison leaves actual loss, frequency conversion
+and the required local coherent ports unresolved; those resources belong
+in the complete delivered-state comparison.
 
 The finite two-frequency candidate has failed this stronger ordinary
 screen: checks at each node remove all cross-bin jumps, including two

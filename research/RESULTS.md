@@ -179,7 +179,7 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R08 | [Accessible measurement records and syndrome-sector baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08) |  |
 | NR-R09 | [Optical loss: calibrated reductions and native record constraints](../research/topics/nr-noisy-recovery/communication.md#nr-r09) |  |
 | NR-R10 | [Entanglement-breaking slot, control-quality wire simulation and stopping bounds](../research/topics/nr-noisy-recovery/communication.md#nr-r10) |  |
-| NR-R11 | [Accepted cavity and nonlinear-scattering instruments](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
+| NR-R11 | [Accepted cavity, Raman and nonlinear-scattering instruments](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
 | NR-R12 | [Exact coherent dispatch with a dephased counter and bounded-query boundary](../research/topics/nr-noisy-recovery/dispatch.md#nr-r12) |  |
 | NR-R13 | [Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound](../research/topics/nr-noisy-recovery/native-lookups.md#nr-r13) |  |
 | NR-R14 | [Shared-bath calibration transfer and exact ordinary echo/instrument baselines](../research/topics/nr-noisy-recovery/backaction.md#nr-r14) |  |

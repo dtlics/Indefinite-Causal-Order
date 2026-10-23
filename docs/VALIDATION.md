@@ -218,4 +218,15 @@ extend the full-Haar certificate to a symmetry-restricted physical prior.
 These checks do not constitute a measured instrument, a new
 fault-tolerance threshold or an architecture advantage.
 
+NR-R11 also replays ideal Raman helper fanout and all four corrected
+remote-SWAP teleportation branches, including reference matrix units.
+Finite full-radiative Lambda resolvents and flat symmetric lossy
+survivor instruments are checked with exact Gaussian fractions. The
+continuous detuning optimum, frequency-mode symmetry and full physical
+loss/port model remain analytic arguments or declared hypotheses.
+Neither an ideal helper construction nor a restricted serial yield gap
+certifies dominance for the actual noisy helper interface or a native
+Bell-pair rate. The mechanical-memory hardware screen is a primary-source
+assessment and a held-out test specification, not a new measured result.
+
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.
