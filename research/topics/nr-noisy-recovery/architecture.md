@@ -54,6 +54,12 @@ Classical addressing, extreme dimension/inventory, fixture time and the
 missing native process remain substantial assumptions. A QA stream can
 justify the access cut only when unavailable packages cannot actually be
 queried coherently; a controller's chosen classical policy is insufficient.
+Independent flagged loss adds a separate service constraint. In the
+specified HIGH dephasing/erasure model, survival at most $2/3$ makes the
+production channel antidegradable; every unassisted fixed-block logical
+qubit code then has all-attempt Bell fidelity at most $3/4$. The explicit
+five-use phase code has a stricter loss tolerance. These model statements
+cannot be inferred from a reported efficiency alone.
 
 The [general capacity witness](methods/unital-entropy-capacity.md)
 applies to all unital channels, using entanglement fidelity and the
@@ -88,7 +94,12 @@ and an ordinary entanglement-first comparison with spare matter qubits.
 Its scalar reflected-sector comparison proves ordinary saturation of
 average concurrence and a narrow Bell-yield interval at the cited
 operating point. Coherent spectral readout needs a separate full-record
-analysis. Encoded recovery, resolved loss records and matched control/clock costs
+analysis. A fixed-marginal rank reduction now supplies the optimal
+Bell-assistance formula for an arbitrary fully accessible purifying
+photon helper, with at most eight effective measurement outcomes.
+A certified full-Gaussian ordinary witness includes the temporal modes;
+its joint analyzer and filtering costs still need a physical ledger.
+Encoded recovery, resolved loss records and matched control/clock costs
 remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
 separately excludes exact heralded recovery in its infinite-oscillator
 model and supplies ordinary source-preparation comparisons; it leaves
@@ -559,6 +570,13 @@ fixed gauge trace. Retaining the physical gauge coherently can preserve
 additional recovery information, as exact ordinary counterexamples show.
 Its energy ledger includes transient occupation. A finite-cost decoder,
 equal-energy optimization and full coherent Gaussian recovery remain open.
+The separate [heat-code cutoff certificate](methods/heat-gkp-certification.md)
+uses the standard oscillator heat envelope with its full Gram normalizer.
+It bounds input and Gaussian-circuit output photon tails uniformly over
+logical/reference inputs, including transient squeezing. A common
+ensemble mean-energy budget and controlled finite-Fock error make a
+full-coherent recovery calculation possible; no solved fidelity optimum
+or native implementation follows from those certificates.
 
 The [non-Gaussian cat-reservoir comparison](architecture-baselines.md#nr-r06-cat-reservoir-parity)
 retains the actual warm bath and finite buffer. An ordinary coherent

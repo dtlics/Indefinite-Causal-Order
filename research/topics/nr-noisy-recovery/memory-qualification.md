@@ -637,6 +637,18 @@ calibrated ideal code has all-attempt Bell fidelity $459/512>7/8$;
 perturbation and validation budgets are explicit. Thus sufficiently
 large $M$ can amortize survivor calibration in this model.
 
+The component also prices a separate flagged-loss extension. Any erased
+carrier destroys the particular five-use phase code's logical coherence;
+its exact ideal recovery curve reaches the $7/8$ all-attempt target only
+above survival $0.99077813$, with an exact rational root bracket supplied.
+More generally, the stated HIGH production channel
+with independent erasure is antidegradable for $\eta\le2/3$. Every
+unassisted fixed-block logical-qubit code then has Bell fidelity at most
+$3/4$. Ordinary efficiency checks can prefilter loss-bad devices, so
+the residual rare-good population must be defined after those checks.
+These conclusions require the full specified loss map, rather than an
+efficiency number alone.
+
 This is a conditional query/service separation. Mounting, optical flux,
 parallel ordinary probes, known control work, physical exposure schedules
 and the complete native routing process still determine any actual

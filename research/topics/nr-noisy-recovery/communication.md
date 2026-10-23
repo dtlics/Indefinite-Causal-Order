@@ -813,6 +813,14 @@ universal average-concurrence bound. A certified ordinary Bell factory
 leaves less than 0.104% relative room for a switch improvement at the
 specified resonant scalar point. This is not a finite-pulse rate result:
 coherent spectral readout can invalidate a pointwise frequency bound.
+For a pure reflected state, a fixed-marginal rank reduction and the
+credited rank-two assistance theorem give the exact Bell yield from an
+arbitrary fully accessible photon purifier. At most eight effective
+helper outcomes suffice, followed by priced local filters. A separate
+interval certificate gives an ordinary full-Gaussian witness with
+Bell probability greater than $0.36675027$ per launch in the stated
+elastic model. It requires coherent polarization/temporal-mode analysis;
+unresolved inaccessible records do not satisfy that premise.
 Actual router records, encoded recovery and matched physical clocks
 remain open comparisons.
 

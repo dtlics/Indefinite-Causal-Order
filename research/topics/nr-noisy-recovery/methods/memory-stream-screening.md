@@ -506,3 +506,238 @@ alternative must be resolved from that platform. The theorem by itself
 does not supply any of those physical facts, and no native advantage
 is established here.
 
+## Independent flagged loss: two finite service obstructions
+
+The following extension changes the production promise explicitly; it does
+not follow from a reported retrieval efficiency. Write $\lambda$ for survival
+to distinguish it from the learning failure budget $\eta$ above. Assume
+state-independent flagged erasure, fresh independent noise on every use, and
+
+$$
+\begin{aligned}
+\mathcal E_{t,U}&=(1-t)\mathrm{Id}+t\Delta_U,\\
+\mathcal N_{\lambda,t,U}(\rho)
+ &=\lambda\mathcal E_{t,U}(\rho)
+ \oplus(1-\lambda)\operatorname{Tr}(\rho)|e\rangle\langle e|,
+ \qquad 0\le\lambda,t\le1.
+\end{aligned}
+\tag{L1}
+$$
+
+The surviving HIGH in (S1) has $t=1/2$. Loss is visible to the receiver,
+and all attempts, including erasures, enter the service score. Two different
+statements follow: a converse for every unassisted block code in a sufficient
+loss region, and a sharper loss threshold for the particular five-use
+encoding in (S14). Neither statement modifies the ideal promise in (S1)--(S16).
+
+### A full-dimensional antidegrading map
+
+Put $P_j=|u_j\rangle\langle u_j|$ and
+$\rho_{jj}=\langle u_j|\rho|u_j\rangle$. The Kraus operators
+$\sqrt{1-t}I,\sqrt t P_1,\ldots,\sqrt t P_D$ give the complement
+
+$$
+\mathcal E_{t,U}^c(\rho)=\sum_j\rho_{jj}|\phi_j\rangle\langle\phi_j|,
+\qquad |\phi_j\rangle=\sqrt{1-t}|0\rangle+\sqrt t|j\rangle.
+\tag{L2}
+$$
+
+All $D+1$ environment label vectors are orthogonal. In particular,
+$\langle\phi_i|\phi_j\rangle=1-t$ for $i\ne j$, as required for the
+system's off-diagonal multiplier. A complement of (L1) is isometrically
+equivalent to
+
+$$
+\mathcal N^c_{\lambda,t,U}(\rho)
+ =\lambda\mathcal E_{t,U}^c(\rho)\oplus(1-\lambda)\rho.
+\tag{L3}
+$$
+
+For example, choose retained-branch Kraus operators
+$\sqrt\lambda K_a$ and loss Kraus operators
+$\sqrt{1-\lambda}|e\rangle\langle u_j|$. Their cross blocks vanish because
+the output signal and erasure sectors are orthogonal, and the loss
+environment block is the full input state, including its coherences.
+
+If $\lambda<1$, process the loss-copy block by transmitting it with
+probability $a=\lambda(1-t)/(1-\lambda)$ and erasing it otherwise. In the
+other block, measure in the environment label basis, prepare $P_j$ on
+outcome $j>0$, and output erasure on outcome $0$. This is CPTP whenever
+$a\le1$. Its signal output is
+$\lambda(1-t)\rho+\lambda t\Delta_U(\rho)$; the remaining trace is exactly
+$1-\lambda$. Hence
+
+$$
+\boxed{\lambda\le\frac1{2-t}
+ \ \Longrightarrow\ \mathcal N_{\lambda,t,U}\text{ is antidegradable}.}
+\tag{L4}
+$$
+
+This sufficient region holds for every $D$ and $U$; no necessity claim is
+made outside it. The endpoint $\lambda=0$ is immediate. At $t=1$, all
+$\lambda\le1$ are covered; for $\lambda=t=1$ omit the absent loss block
+instead of evaluating $0/0$. At $t=0$ the criterion is the ordinary erasure
+threshold $\lambda\le1/2$. The antidegrading map may depend on $U$: its
+existence is a converse, not experimental access to the hidden basis.
+
+This is the standard dephasing-plus-erasure mechanism. On two pointer
+states, the dephasing probability is $p=t/2$ and the erasure probability is
+$q=1-\lambda$. The qubit boundary
+$q\ge(1-2p)/[2(1-p)]$ and an antidegrading construction appear in
+[Leditzky, Leung and Smith, PRL 121, 160501 (2018), Appendix C](https://arxiv.org/pdf/1806.08327).
+Equations (L2)--(L4) give a direct full-$D$ sufficient construction here;
+no new antidegradation mechanism or optimal boundary is claimed.
+
+### Every unassisted finite block has a Bell-fidelity ceiling in (L4)
+
+Antidegradability gives $Q(\mathcal N)=0$ for unassisted asymptotic
+transmission. A separate extension argument gives the finite endpoint
+needed here. Let a code consist of an arbitrary CPTP encoder, $L$ independent
+uses $\mathcal N^{\otimes L}$, and a CPTP logical-qubit decoder. Every
+input-bearing system must traverse those uses; there is no protected
+bypass, preshared encoder--decoder entanglement, or backward assistance.
+Classical training may select the code before the unknown input arrives.
+A heralded decoder is completed to a TP map and its failures are counted.
+The converse is pointwise in $U$ and in the fixed code: averaging over
+classical training records, including records obtained by native offline
+tests, preserves it. A receiver--sender entangled program or assistance
+created by a feedback protocol is outside this block-code premise.
+
+Take a Stinespring output $BE$ of $\mathcal N$ and apply its antidegrader
+to $E$, obtaining $BB'$. Both reduced channels equal $\mathcal N$;
+averaging this extension with its swapped version makes it symmetric.
+Tensor the extension $L$ times, apply the single encoder first, and apply
+the same decoder separately to the two output banks. The normalized
+reference--output state $\omega_{RBB'}$ has both logical marginals equal
+to the code's Choi state. With qubit Bell projectors
+$P=\Phi_{RB}\otimes I_{B'}$ and $Q=\Phi_{RB'}\otimes I_B$,
+
+$$
+2F_e=\operatorname{Tr}[(P+Q)\omega]
+ \le\|P+Q\|_\infty=\frac32,
+\qquad \boxed{F_e\le\frac34.}
+\tag{L5}
+$$
+
+The general logical-dimension norm proof is owned by
+[the supplied-code component, (DC3)](memory-code-verification.md#finite-block-logical-fidelity-has-a-low-channel-ceiling);
+its $K=2$ case gives (L5). The exact eight-dimensional guard independently
+reconstructs the two Bell projectors, their overlap, spectral polynomial
+and a maximizing eigenvector. Here the new application is the
+loss-specific extension (L2)--(L4).
+The antidegradability/extendibility equivalence is standard
+([Myhr and Lütkenhaus, Lemma 5](https://arxiv.org/html/0812.3667)); the
+Bell-sharing bound is a case of the singlet-monogamy/cloning bounds of
+[Kay, Kaszlikowski and Ramanathan, PRL 103, 050501 (2009)](https://arxiv.org/abs/0901.3626).
+
+At $t=1/2$, $\lambda\le2/3$ therefore excludes the all-attempt $7/8$
+logical-qubit endpoint for every such unassisted block code, at every
+finite block length. This is stronger than merely $Q=0$. It does not
+exclude success-conditional heralded branches, assisted entanglement
+generation with retries, protected input-bearing storage, or a deployment
+that calls a native higher-order instrument online. Those are different
+resources or channels. No conclusion about them follows from (L5).
+
+### Exact erasure sensitivity of the five-use encoding
+
+Now fix the exactly calibrated five-carrier encoding
+$|0_L\rangle=|+\rangle^{\otimes5}$,
+$|1_L\rangle=|-\rangle^{\otimes5}$ on two true pointer states.
+The noise in (L1) with $t=1/2$ is independent $Z$ error of probability
+$1/4$ followed by independent erasure. If any carrier is erased,
+tracing it kills the encoded off-diagonal matrix unit in every phase-error
+branch: the two erased $X$-basis labels are orthogonal. The complete
+reference--output channel on such a branch is therefore entanglement
+breaking. In particular, even an ideal decoder cannot exceed $1/2$
+Bell fidelity on that branch.
+
+With no erasure, phase-error strings $s$ and their complements share a
+repetition syndrome and differ by a logical Pauli. The optimum decoder
+chooses the more probable member, hence errors of weight at most two,
+giving $f_5=459/512$. This is optimal for this fixed encoding over all
+CPTP decoders, not merely the chosen majority decoder: distinct syndrome
+blocks are orthogonal, and in a block with unnormalized logical Pauli
+weights $a,b$, any recovery with Kraus operators $R_k$ has
+$F_e=\tfrac14\sum_k(a|\operatorname{Tr}R_k|^2+
+b|\operatorname{Tr}R_kX|^2)\le\max(a,b)$.
+The inequality follows by adding the other two Pauli terms and using
+$\sum_k R_k^\dagger R_k=I$; applying the more likely inverse attains it.
+
+If $r<5$ carriers survive, their commuting $X$-basis records are $r$
+independent binary symmetric samples of the logical bit. Optimal classical
+guessing, followed by logical-state preparation, is also the optimal
+quantum decoder: for each classical record $x$, its contribution to
+$F_e$ is at most $\tfrac14\max\{p(x|0),p(x|1)\}$. Thus the optimum
+branch fidelities, including $r=0$, and the exact total are
+
+$$
+\begin{aligned}
+(f_0,f_1,f_2,f_3,f_4,f_5)
+ &=\left(\frac14,\frac38,\frac38,\frac{27}{64},
+          \frac{27}{64},\frac{459}{512}\right),\\
+F_{\rm five}(\lambda)
+ &=\sum_{r=0}^5\binom5r\lambda^r(1-\lambda)^{5-r}f_r\\
+ &=\frac14+\frac58\lambda-\frac54\lambda^2
+   +\frac{55}{32}\lambda^3-\frac{85}{64}\lambda^4
+   +\frac{451}{512}\lambda^5.
+\end{aligned}
+\tag{L6}
+$$
+
+Because all erasure-branch $f_r\le1/2$, a simpler necessary condition is
+
+$$
+F_{\rm five}(\lambda)\le\frac12+\frac{203}{512}\lambda^5,
+\qquad F_{\rm five}\ge\frac78
+ \ \Longrightarrow\ \lambda^5\ge\frac{192}{203}.
+\tag{L7}
+$$
+
+The latter threshold is $\lambda\ge0.9889197221\ldots$. The exact
+curve (L6) is strictly increasing on $(0,1)$, since its Bernstein
+coefficients are nondecreasing and some adjacent differences are positive.
+It reaches $7/8$ only at $\lambda=0.9907781304\ldots$; exact rational
+evaluations bracket this root between $0.99077813$ and $0.99077814$.
+These numbers assume perfect calibration and controls for this specified
+encoding. Other encodings above the region in (L4) are not ruled out.
+Small learned-code perturbations may be bounded by the earlier
+diamond-distance ledger, but (L6) is not an identity for arbitrary
+perturbed encoders or noise models.
+
+### What a physical QA pool must pass first
+
+[Meng et al., *Efficient integrated quantum memory for light*](https://arxiv.org/html/2511.05928v1)
+report $69.8(1.6)\%$ efficiency for heralded single photons at $2\,\mu$s,
+and $51.3(2)\%$ average efficiency over twenty temporal modes at
+$10\,\mu$s. These are distinct operating points, not a channel
+certificate for (L1). A mode average establishes neither uniform
+state-independent survival on arbitrary superpositions nor a worst-mode
+upper bound, and the experiment does not impose the surviving
+$\mathcal E_{1/2,U}$ law. As illustrative substitutions in (L6), uniform
+$\lambda=.513$ gives $F_{\rm five}\simeq.4130$ and uniform
+$\lambda=.698$ gives $.4924$. The reported efficiencies do not meet
+this particular code's near-unit survival criterion; they do not prove
+zero capacity or a universal code obstruction for that actual platform.
+
+Ordinary launch/flag counting can screen loss failures before a hidden-basis
+test. Under a calibrated independent Bernoulli survival law, separating
+candidates by additive margin $\Delta$ from a named survival threshold
+uses $O(\Delta^{-2}\log(M/\delta))$ attempts per candidate for family-wise
+error $\delta$. Every failed launch, preparation, flag readout, reset and
+fixture visit counts. Bright pulses, multiple modes and parallel testers
+can reduce windows only under a priced flux/hardware model and the
+appropriate correlation law. Such a test certifies the survival statistic,
+not the surviving production map.
+
+Consequently the hard geometric inventory is the residual pool after
+ordinary loss/noise/public-mode qualification. If observed loss already
+reveals which devices are bad, a hard-prior lower bound on $M$ opaque
+geometry candidates cannot be charged to those easily rejected devices.
+A native geometry certificate also cannot supply the missing lossy code.
+The next physical candidate must first furnish a production-law certificate
+and an erasure-aware, all-attempt service at its actual efficiency, then
+price screening, survivor calibration, failed attempts, storage deadline
+and deployment against the strongest ordinary probes. The independent-loss
+calculation supplies finite failure criteria; it does not establish a
+finite native architecture advantage.
+

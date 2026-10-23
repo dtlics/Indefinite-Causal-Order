@@ -42,12 +42,23 @@ derives a normalizable code, reduced all-control recovery bounds and
 complete coherent-gauge counterexamples. Its fixed-controller recovery
 SDP is a method, not a solved Gaussian frontier or native decoder.
 Finite guards do not establish equal-energy optimality. The
+[heat-code cutoff component](../research/topics/nr-noisy-recovery/methods/heat-gkp-certification.md)
+adds outward rational interval certificates for full Gram normalization,
+uniform exponential moments and source/output photon tails, including
+transient squeezing and a common ensemble mean-energy ledger. Its
+continuous/operator identities remain analytic. This is a controlled
+truncation method, not a solved recovery comparison or physical decoder.
+The
 [spin-phase component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md)
 also checks scattering, full entanglement-first gate/resource branches,
 scalar concurrence, a rational Bell-yield interval and coherent-spectral
 scope guards. Universal comparisons, continuum loss and full-space
 recovery obstructions remain analytic; no native router or rate ordering
-is certified. Full Choi twirls in the general-channel replay support the
+is certified. Fixed-marginal rank reduction, helper POVM and local-filter
+guards support the arbitrary accessible-purifier Bell-assistance proof.
+A separate outward interval certificate integrates the full declared
+Gaussian pulse, with analytic strip and tail bounds. Its physical joint
+mode analyzer remains an additional resource. Full Choi twirls in the general-channel replay support the
 credited ordinary fidelity-only bound without a unitality premise; its
 relative-entropy and coding proof remains analytic.
 
@@ -57,6 +68,11 @@ Its exact guards support probability/stopping and complete code identities;
 C6, the all-size selection reduction, continuous prior and concentration
 arguments remain analytic. Its conditional classical-address query saving
 is not a certified native platform, finite crossover or wall-time gain.
+Its independent-erasure extension checks the specific phase-code loss
+guard and antidegrading/extendibility identities. The analytic all-block
+fidelity converse requires the stated independent loss map and
+unassisted fixed-block service; it does not follow from an efficiency
+measurement or constrain accepted-branch fidelity alone.
 
 The measurement replay also checks complete recorded parity-braid branches,
 initialized-ancilla effects and tracked frame corrections at dimensions

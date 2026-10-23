@@ -12,7 +12,7 @@ if not __debug__:
 from fractions import Fraction as F
 from itertools import product
 import json
-from math import isqrt
+from math import comb, isqrt
 
 
 def require(condition: bool, message: str) -> None:
@@ -273,6 +273,213 @@ def five_use_code() -> tuple[int, F]:
     return matrix_units, correct
 
 
+def zeros(rows: int, columns: int) -> list[list[F]]:
+    return [[F(0) for _ in range(columns)] for _ in range(rows)]
+
+
+def matmul(left: list[list[F]], right: list[list[F]]) -> list[list[F]]:
+    require(len(left[0]) == len(right), "matrix multiplication dimensions")
+    return [[sum((left[i][k]*right[k][j] for k in range(len(right))), F(0))
+             for j in range(len(right[0]))] for i in range(len(left))]
+
+
+def linear_combination(terms: tuple[tuple[F, list[list[F]]], ...]) -> list[list[F]]:
+    rows, columns = len(terms[0][1]), len(terms[0][1][0])
+    require(all(len(matrix) == rows and len(matrix[0]) == columns
+                for _, matrix in terms), "linear-combination dimensions")
+    return [[sum((weight*matrix[i][j] for weight, matrix in terms), F(0))
+             for j in range(columns)] for i in range(rows)]
+
+
+def flagged_loss_antidegrader() -> tuple[int, int]:
+    """Complete complex-linear matrix-unit actions, including lost coherences.
+
+    A weighted Kraus is stored as (squared amplitude, real coefficient matrix),
+    so its CP action and completeness are exact even for irrational square roots.
+    Rational cross terms below reconstruct the actual retained complement.
+    """
+    matrix_units = coherence_units = 0
+    for dimension in (2, 3, 4):
+        for t, cross in ((F(0), F(0)), (F(1, 5), F(2, 5)),
+                         (F(1, 2), F(1, 2)), (F(4, 5), F(2, 5)),
+                         (F(1), F(0))):
+            require(cross*cross == t*(1-t), "complement square-root coefficient")
+            boundary = 1/(2-t)
+            for survival in (F(0), boundary/2, 3*boundary/4, boundary):
+                # Environment: retained labels 0..D, then lost input 0..D-1.
+                environment = 2*dimension+1
+                lost_start = dimension+1
+                a = survival*(1-t)/(1-survival) if survival < 1 else F(0)
+                require(0 <= a <= 1 and survival <= boundary,
+                        "antidegrader CP region and endpoint convention")
+                kraus = []
+                transmit = zeros(dimension+1, environment)
+                for j in range(dimension):
+                    transmit[j][lost_start+j] = 1
+                kraus.append((a, transmit))
+                for j in range(dimension):
+                    lost_failure = zeros(dimension+1, environment)
+                    lost_failure[dimension][lost_start+j] = 1
+                    kraus.append((1-a, lost_failure))
+                label_zero = zeros(dimension+1, environment)
+                label_zero[dimension][0] = 1
+                kraus.append((F(1), label_zero))
+                for j in range(dimension):
+                    prepare_pointer = zeros(dimension+1, environment)
+                    prepare_pointer[j][j+1] = 1
+                    kraus.append((F(1), prepare_pointer))
+                effect = zeros(environment, environment)
+                for weight, k in kraus:
+                    for i, j in product(range(environment), repeat=2):
+                        effect[i][j] += weight*sum(
+                            (k[r][i]*k[r][j] for r in range(dimension+1)), F(0))
+                require(effect == [[F(i == j) for j in range(environment)]
+                                   for i in range(environment)],
+                        "explicit weighted-Kraus antidegrader completeness")
+                for i, j in product(range(dimension), repeat=2):
+                    # E_t^c(E_ij) only sees the input diagonal; its 0,j cross
+                    # terms are retained rather than silently dephased away.
+                    complement = zeros(environment, environment)
+                    if i == j:
+                        complement[0][0] = survival*(1-t)
+                        complement[0][i+1] = survival*cross
+                        complement[i+1][0] = survival*cross
+                        complement[i+1][i+1] = survival*t
+                    complement[lost_start+i][lost_start+j] = 1-survival
+                    output = zeros(dimension+1, dimension+1)
+                    for weight, k in kraus:
+                        transpose = [list(column) for column in zip(*k)]
+                        term = matmul(matmul(k, complement), transpose)
+                        for r, s in product(range(dimension+1), repeat=2):
+                            output[r][s] += weight*term[r][s]
+                    forward = zeros(dimension+1, dimension+1)
+                    forward[i][j] = survival*(1-t)
+                    if i == j:
+                        forward[i][i] += survival*t
+                        forward[dimension][dimension] = 1-survival
+                    require(output == forward,
+                            "antidegrader equals flagged production on full matrix unit")
+                    require(sum((output[r][r] for r in range(dimension+1)), F(0))
+                            == int(i == j), "all output flags preserve matrix-unit trace")
+                    matrix_units += 1
+                    coherence_units += int(i != j)
+    require(F(1)/(2-F(1, 2)) == F(2, 3), "HIGH full-D sufficient loss threshold")
+    return matrix_units, coherence_units
+
+
+def qubit_bell_sharing_guard() -> int:
+    """Exact 8x8 projector algebra; tensor/encoder closure is analytic."""
+    labels = list(product((0, 1), repeat=3))
+    p, q = zeros(8, 8), zeros(8, 8)
+    for i, (r, b, c) in enumerate(labels):
+        for j, (rr, bb, cc) in enumerate(labels):
+            p[i][j] = F(int(r == b and rr == bb and c == cc), 2)
+            q[i][j] = F(int(r == c and rr == cc and b == bb), 2)
+    require(matmul(p, p) == p and matmul(q, q) == q,
+            "Bell-sharing operators are exact orthogonal projectors")
+    require(matmul(matmul(p, q), p) == linear_combination(((F(1, 4), p),))
+            and matmul(matmul(q, p), q) == linear_combination(((F(1, 4), q),)),
+            "Bell projectors have one-half isometry overlap")
+    a = linear_combination(((F(1), p), (F(1), q)))
+    identity = [[F(i == j) for j in range(8)] for i in range(8)]
+    first = linear_combination(((F(2), a), (F(-1), identity)))
+    second = linear_combination(((F(2), a), (F(-3), identity)))
+    require(matmul(matmul(a, first), second) == zeros(8, 8),
+            "exact spectral polynomial with roots zero, one-half, three-halves")
+    vector = [[F(2 if bits == (0, 0, 0) else
+                 1 if bits in ((1, 1, 0), (1, 0, 1)) else 0)] for bits in labels]
+    require(matmul(a, vector) == linear_combination(((F(3, 2), vector),)),
+            "explicit top eigenvector certifies projector norm three-halves")
+    require(F(3, 2)/2 == F(3, 4) < F(7, 8),
+            "all-attempt logical-qubit Bell ceiling excludes target")
+    return 8
+
+
+def erased_five_use_code() -> tuple[int, tuple[F, ...], int]:
+    labels = list(product((0, 1), repeat=5))
+    matrix_units = 0
+    for erased in labels:
+        lost = [i for i, flag in enumerate(erased) if flag]
+        kept = [i for i, flag in enumerate(erased) if not flag]
+        for error in labels:
+            for a, b in product((0, 1), repeat=2):
+                ket = tuple(a ^ error[i] for i in range(5))
+                bra = tuple(b ^ error[i] for i in range(5))
+                factor = int(all(ket[i] == bra[i] for i in lost))
+                # This is the whole surviving matrix unit, not a population-
+                # only test: the erased ket/bra inner product is explicit.
+                partial_trace = ({(tuple(ket[i] for i in kept),
+                                   tuple(bra[i] for i in kept)): F(1)}
+                                 if factor else {})
+                if lost and a != b:
+                    require(partial_trace == {},
+                            "any lost carrier kills the encoded reference coherence")
+                elif a == b:
+                    require(sum(partial_trace.values(), F(0)) == 1,
+                            "each erased diagonal branch remains trace one")
+                else:
+                    require(not lost and len(partial_trace) == 1,
+                            "no-loss logical coherences are retained")
+                matrix_units += 1
+    fidelities = []
+    for r in range(5):
+        maximum_likelihood = F(0)
+        for bits in product((0, 1), repeat=r):
+            probabilities = [F(1, 4)**sum(bit != a for bit in bits)
+                             * F(3, 4)**sum(bit == a for bit in bits)
+                             for a in (0, 1)]
+            maximum_likelihood += max(probabilities)
+        fidelities.append(maximum_likelihood/4)
+    # Every no-loss syndrome pairs a string and its all-bit complement.
+    # Summing the larger unnormalized probability proves the ML optimum.
+    no_loss = F(0)
+    for representative in product((0, 1), repeat=4):
+        error = (0,)+representative
+        weight = sum(error)
+        p0 = F(1, 4)**weight*F(3, 4)**(5-weight)
+        p1 = F(1, 4)**(5-weight)*F(3, 4)**weight
+        no_loss += max(p0, p1)
+    fidelities.append(no_loss)
+    expected = (F(1, 4), F(3, 8), F(3, 8), F(27, 64), F(27, 64), F(459, 512))
+    require(tuple(fidelities) == expected, "complete fixed-encoding erasure branch optima")
+    require(all(left <= right for left, right in zip(fidelities, fidelities[1:]))
+            and fidelities[0] < fidelities[1], "strictly increasing Bernstein curve")
+
+    def exact_score(survival: F) -> F:
+        return sum((comb(5, r)*survival**r*(1-survival)**(5-r)*fidelities[r]
+                    for r in range(6)), F(0))
+
+    # Independently expand each Bernstein term into its ordinary polynomial.
+    coefficients = [F(0)]*6
+    for r, value in enumerate(fidelities):
+        for k in range(6-r):
+            coefficients[r+k] += comb(5, r)*comb(5-r, k)*(-1)**k*value
+    require(coefficients == [F(1, 4), F(5, 8), -F(5, 4), F(55, 32),
+                             -F(85, 64), F(451, 512)],
+            "exact fixed-five-code polynomial expansion")
+    evaluations = 0
+    for survival in [F(i, 100) for i in range(101)]+[
+            F(513, 1000), F(349, 500), F(99077813, 100000000),
+            F(99077814, 100000000)]:
+        score = exact_score(survival)
+        polynomial = sum((value*survival**k for k, value in enumerate(coefficients)), F(0))
+        upper = F(1, 2)+F(203, 512)*survival**5
+        require(score == polynomial and score <= upper,
+                "erasure optimum equals polynomial and obeys branchwise upper bound")
+        evaluations += 1
+    require(F(7, 8)-F(1, 2) == F(203, 512)*F(192, 203),
+            "exact necessary fifth-power survival threshold")
+    require(F(98891972, 100000000)**5 < F(192, 203)
+            < F(98891973, 100000000)**5,
+            "exact necessary survival root bracket")
+    require(exact_score(F(99077813, 100000000)) < F(7, 8)
+            < exact_score(F(99077814, 100000000)), "exact target root bracket")
+    require(F(4130, 10000) < exact_score(F(513, 1000)) < F(4131, 10000)
+            and F(4924, 10000) < exact_score(F(349, 500)) < F(4925, 10000),
+            "illustrative uniform-survival substitutions, not platform certificates")
+    return matrix_units, expected, evaluations
+
+
 def qstar(d: int) -> int:
     for _ in range(4):
         d = isqrt(d)
@@ -286,6 +493,9 @@ def verify() -> dict:
     sequential = sequential_noise_ledgers()
     volume_maps, gap_inequalities = pointer_gap_guards()
     matrix_units, fidelity = five_use_code()
+    antidegrader_units, coherence_units = flagged_loss_antidegrader()
+    bell_dimension = qubit_bell_sharing_guard()
+    erased_units, branch_fidelities, erasure_evaluations = erased_five_use_code()
     require(qstar(100**16-1) == 0 and qstar(100**16) == 1,
             "asymptotic C6 threshold is not a finite-device guarantee")
     require(qstar(2**106) == 0 and qstar(2**107) == 1,
@@ -301,11 +511,19 @@ def verify() -> dict:
         "pointer_gap_inequality_cases": gap_inequalities,
         "five_use_logical_matrix_units": matrix_units,
         "five_use_bell_fidelity": str(fidelity),
+        "flagged_loss_antidegrader_matrix_units": antidegrader_units,
+        "flagged_loss_antidegrader_coherence_units": coherence_units,
+        "bell_sharing_projector_dimension": bell_dimension,
+        "erased_five_use_logical_matrix_units": erased_units,
+        "fixed_five_use_erasure_branch_fidelities": [str(value) for value in branch_fidelities],
+        "fixed_five_use_erasure_curve_evaluations": erasure_evaluations,
         "scope": (
             "Finite exact probability/cap, native pool, likelihood-prefix, "
-            "simplex-map and reference-complete repetition-code guards. "
+            "simplex-map, reference-complete repetition/erasure-code, full-matrix-unit "
+            "flagged-loss antidegrader and eight-dimensional Bell-sharing guards. "
             "C6, the all-size selection reduction, continuous simplex volume, "
-            "concentration, spectral perturbation, synthesis/runtime and native "
+            "concentration, spectral perturbation, all-block extension closure, "
+            "synthesis/runtime and native "
             "physical interfaces remain analytic; no coherent-index or "
             "finite-architecture advantage is certified.")
     }

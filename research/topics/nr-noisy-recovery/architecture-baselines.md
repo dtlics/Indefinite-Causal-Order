@@ -3993,6 +3993,15 @@ show that coherent gauge information can aid recovery, equally in ordinary
 order. The full Gaussian recovery optimization and equal-energy optimum
 remain open; a reduced-decoder bound does not settle them.
 
+The [heat-code cutoff component](methods/heat-gkp-certification.md)
+supplies a separate full-output calculation method for the standard
+oscillator heat-envelope GKP family. Its raw Mehler Gram matrix fixes
+normalization on every logical superposition. Outward interval bounds
+certify input and Gaussian-circuit photon tails, the exact projection-polar
+Fock prefix, transient squeezing and a common ensemble mean-energy budget.
+They control truncation error before a recovery optimization; no recovery
+fidelity comparison or finite-cost physical encoder/decoder is established.
+
 <a id="nr-r06-terminal-noise"></a>
 
 ### Fixed terminal local noise limits raw full-register switch throughput

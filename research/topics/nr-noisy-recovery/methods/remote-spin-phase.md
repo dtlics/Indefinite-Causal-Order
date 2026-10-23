@@ -13,7 +13,11 @@ entanglement-first ordinary baseline with explicit extra resources. A scalar
 reflected-sector comparison gives an exact average-concurrence closure and
 a certified narrow Bell-yield interval. Native
 routing, clocks, general cavity loss and optimal fault-tolerant rates
-remain separate. This comparison has not been formalized in Lean.
+remain separate. An arbitrary-purifying-helper argument below extends the
+Bell-yield formula to pure finite-pulse states, and a separate
+[validated continuum checker](../checks/architecture/verify_remote_spin_pulse.py)
+certifies one ordinary Gaussian-pulse lower bound. This comparison has
+not been formalized in Lean.
 
 ## Physical task and declared interfaces
 
@@ -1004,8 +1008,10 @@ $$
 This invocation requires a pure scalar reflected state and the
 prescribed helper measurement and local Schmidt filters. Their local
 meters or ancillas, feedforward and failed branches are charged. The
-three-qubit theorem does not make the analogous cut sufficient for an
-arbitrary four-mode switch helper or a mixed finite-bandwidth state.
+three-qubit theorem alone does not establish the analogous formula for
+a larger helper. The fixed-marginal argument below proves that extension
+when the entire purifying helper is accessible. An arbitrary mixed
+finite-bandwidth state with inaccessible records remains outside it.
 
 An exact rational lower witness is
 $$
@@ -1079,11 +1085,336 @@ silently be applied after coherent spectral erasure. It is a minimal
 scope guard, not a claim that a particular cavity supplies these ideal
 mode selectivities.
 
-The exact replay covers (RS30), ordinary saturation, the rational
-Bell-yield witness, the local known-gate compiler and online two-CZ
-protocol, and (RS38). It does not optimize the full switched flagged
-instrument, prove exact Bell-yield equality, or validate a finite-pulse
-router. A remaining native benefit must survive the actual spectral
-scattering and loss-record dilation, the strongest ordinary spectral
-and local controls, source/filter rejection, any supplied spare-qubit
-factory or code, and complete optical, classical and memory clocks.
+## Bell assistance with an arbitrary accessible purifying helper
+
+Let $|\Psi\rangle_{ABF}$ be a pure, possibly unnormalized reflected
+state, where $A,B$ are qubits and $F$ contains **every accessible
+purifying mode**. Set $\rho=\operatorname{Tr}_F|\Psi\rangle\!\langle\Psi|$,
+$p=\operatorname{Tr}\rho\le1$, and let $\rho_A,\rho_B$ be its
+unnormalized spin marginals. One generalized measurement on $F$, broadcast
+of its outcome, and outcome-dependent local spin filters and unitaries
+can produce a known exact Bell pair with maximum joint probability
+$$
+Y(\rho)=2\min\{\lambda_{\min}(\rho_A),
+                    \lambda_{\min}(\rho_B)\}.
+\tag{RS39}
+$$
+All normalization and reflection weights are inside $\rho$: the yield
+per reflected photon is $Y/p$ when $p>0$, and $Y=0$ when $p=0$.
+Filter failures and all other rejected launches are counted. This is a
+resource-factory statement, not an unknown-input remote-gate compiler.
+
+Here is a proof for arbitrary helper dimension, rather than an invocation
+of the three-qubit theorem beyond its domain. For an unnormalized pure
+two-qubit vector $v$, the optimal exact Bell-conversion weight is
+$e_2(v)=2\lambda_{\min}(\operatorname{Tr}_B|v\rangle\!\langle v|)$.
+If its Schmidt weights are $\lambda_+\ge\lambda_-$, a local filter
+attenuating the larger Schmidt amplitude gives Bell success $2\lambda_-$.
+Optimality follows from the smaller-Schmidt-weight monotone; see
+[Vidal, Phys. Rev. Lett. **83**, 1046 (1999)](https://doi.org/10.1103/PhysRevLett.83.1046).
+Refining a helper measurement gives a pure ensemble of $\rho$, and
+every such ensemble is realizable on a purification by the
+[Hughston–Jozsa–Wootters theorem, Phys. Lett. A **183**, 14–18 (1993)](https://doi.org/10.1016/0375-9601(93)90880-9).
+Thus the optimization is
+$\max_{\rho=\sum_k v_kv_k^\dagger}\sum_k e_2(v_k)$.
+For positive matrices $X_k$,
+$\sum_k\lambda_{\min}(X_k)\le\lambda_{\min}(\sum_kX_k)$.
+Apply this to both marginal ensembles to obtain the upper bound (RS39).
+Equivalently, the two qubit-versus-rest cut monotones bound even general
+LOCC collaboration, not just the helper-first protocol used for attainment.
+
+For the matching lower bound normalize $\rho$ to trace one. If its rank
+is $r\ge3$, Hermitian operators supported on its range form a real
+space of dimension $r^2\ge9$. The map
+$X\mapsto(\operatorname{Tr}_B X,\operatorname{Tr}_A X)$ has image
+dimension at most $4+4-1=7$, because its two traces agree. There is
+therefore a nonzero supported Hermitian $X$ with both partial traces zero.
+It is traceless and indefinite. Positivity of $\rho$ on its support
+makes $\{t:\rho+tX\succeq0\}$ a bounded closed interval
+$[t_-,t_+]$, with $t_-<0<t_+$. Both endpoint states lose rank and keep
+both marginals, and
+$$
+\rho=\frac{-t_-}{t_+-t_-}(\rho+t_+X)
+      +\frac{t_+}{t_+-t_-}(\rho+t_-X).
+\tag{RS40}
+$$
+Each endpoint would remain positive beyond the endpoint if it were still
+full rank on the old support, proving the rank drop. Starting from rank
+at most four, at most two splits along each branch give at most four
+rank-at-most-two states $\sigma_j$, all with the **same two marginal
+matrices** as $\rho$. This is the elementary two-qubit fixed-marginal
+rank argument underlying the extremal-rank bound in
+[Parthasarathy, Ann. Inst. H. Poincaré Probab. Statist. **41**, 257–268 (2005), Theorem 2.5](https://www.numdam.org/article/AIHPB_2005__41_3_257_0.pdf).
+
+For each $\sigma_j$, [Pollock–Wang–Chitambar's rank-two theorem and its
+proof](https://arxiv.org/html/2010.11431v2) supply
+an ensemble of at most two pure vectors whose total Bell yield is the
+right side of (RS39). That value is the same for every $j$, precisely
+because (RS40) preserved both marginals. Combining their weighted
+ensembles gives at most eight vectors of $\rho$ with that yield. HJW
+implements this ensemble by one measurement on the original $F$; it
+need not physically realize the intermediate mixed-state decomposition.
+Then apply each vector's optimal local filter. This proves (RS39),
+including its unnormalized form. The extension is a derived combination
+of the cited fixed-marginal and rank-two results; no priority claim is
+made for that combination.
+
+The eight rank-one helper effects sum to the identity **on the occupied
+Schmidt support**, whose dimension is at most four. On a larger or
+infinite $F$, add the zero-probability complementary effect, giving at
+most nine total effects, or absorb that complement into an old effect,
+which then need not be rank one on the full space. Eight counts nonzero
+helper outcomes, not later filter success/failure leaves. A general POVM
+may require additional analyzer modes or a local Naimark ancilla. Knowing
+the two marginals gives the optimum value, not the calibrated optical
+mode functions needed to implement it.
+
+In particular,
+$$
+Y=p\quad\Longleftrightarrow\quad
+\rho_A=\rho_B=\frac p2 I.
+\tag{RS41}
+$$
+Sufficiency also has a direct construction. A normalized two-qubit state
+with these marginals is
+$(I\otimes I+\sum_{ij}T_{ij}\sigma_i\otimes\sigma_j)/4$, with real
+$T$. A real singular-value decomposition, absorbing reflection signs
+into its diagonal, is implemented by proper rotations from local spin
+unitaries. It makes the state Bell diagonal. Its Bell eigenensemble is
+obtained by measuring the corresponding orthonormal Schmidt modes of any
+purification. At most four nonzero projective helper outcomes suffice
+in this special case; known local corrections fix the Bell frame, and
+no lossy local filter is needed. This does not say that an unmeasured
+spin marginal is a pure Bell state.
+
+Purity and full access are essential. An inaccessible source mixture,
+motion, recoil, weak-pulse extra photons or bath records can make $ABF$
+mixed. For example, $I_{AB}/4$ independent of $F$ has both marginals
+maximally mixed but no helper-created entanglement. A bucket detector or
+a restricted polarization/time-bin readout also need not realize the
+optimal coherent mode POVM. In either case (RS39)'s marginal expression
+remains a cut upper bound; the attainment claim does not apply.
+
+## Exact reduction of the pure finite-pulse optimization
+
+For a normalized incident spectral amplitude $f(\nu)$, write a pure
+elastic reflected state as
+$$
+|\Psi\rangle=\sum_{ab}c_{ab}|ab\rangle
+       \int d\nu\, f(\nu)|v_{ab}(\nu),\nu\rangle_F,
+\qquad
+\rho_{ab,a'b'}=c_{ab}c_{a'b'}^*
+ \int d\nu\,|f(\nu)|^2
+    \langle v_{a'b'}(\nu)|v_{ab}(\nu)\rangle.
+\tag{RS42}
+$$
+The helper can contain polarization, frequency, temporal and orthogonal
+order modes. Despite its infinite dimension, the spin Gram matrix has
+rank at most four, so (RS39) applies. For an ordinary $AB$ route,
+$v_{ab}(\nu)=R_{B,b}(\nu)U(\nu)R_{A,a}(\nu)\chi(\nu)$.
+Only the two integrated two-by-two marginals are needed to evaluate the
+optimal helper/filter yield. No average-amplitude replacement is made.
+
+For fixed $\rho$, this has the exact small SDP and dual
+$$
+\begin{aligned}
+Y&=\max_y\{y:\rho_A-\tfrac y2I\succeq0,
+                    \ \rho_B-\tfrac y2I\succeq0\}\\
+ &=\min_{Y_A,Y_B\succeq0,\ \operatorname{Tr}Y_A+
+             \operatorname{Tr}Y_B=1}
+  2\operatorname{Tr}(Y_A\rho_A)+2\operatorname{Tr}(Y_B\rho_B).
+\end{aligned}
+\tag{RS43}
+$$
+The projector onto the smaller marginal eigenvalue on the limiting side,
+and zero on the other side, attains the dual. For a qubit marginal
+$\rho_j=(pI+\mathbf r_j\cdot\boldsymbol\sigma)/2$, this is equivalently
+$Y=p-\max_j\|\mathbf r_j\|$. An affine source search is an attainable
+SDP only if every feasible source setting still gives a pure or
+accessibly purified $ABF$ state. Coherently prepared spectral intensities
+can meet that premise; an uncontrolled classical source mixture cannot
+be substituted as though its inaccessible label were a free helper.
+Spin preparations and optical-unitary choices can leave a nonconvex
+outer optimization, and floating grids do not certify its optimum.
+
+The same reduction supplies a strong switch comparator without searching
+over every helper POVM. At fixed source and optical controls, let its
+pure state be
+$\sqrt w|0\rangle_C|\psi_{AB}\rangle+
+e^{i\varphi}\sqrt{1-w}|1\rangle_C|\psi_{BA}\rangle$.
+Tracing the orthogonal order labels gives
+$\rho_j(w)=w\rho_j^{AB}+(1-w)\rho_j^{BA}$ for each spin.
+Consequently its optimum full-helper Bell yield is a one-dimensional
+concave function $p(w)-\max_j\|\mathbf r_j(w)\|$, or a small
+second-order-cone optimization in $w\in[0,1]$. A known relative phase
+$\varphi$ is a local unitary on the helper and does not change that
+optimum. The interior can exceed both endpoint yields: it retains a
+coherent purifying order label, while an ordinary classical lottery only
+gives the average of its branch yields. This is a comparison method,
+not an ordinary domination theorem or a native advantage claim.
+
+## A validated ordinary Gaussian-pulse Bell yield
+
+An explicit normalizable finite-bandwidth example uses the pure
+one-photon elastic model (RS19), the reported Table S1 rates, and only
+an ordinary $AB$ route with frequency-independent real controls. Let
+$\nu=(\omega-\omega_0)/(2\pi)$ in MHz and express each amplitude
+decay rate in the same units, so the common $2\pi$ cancels. Define
+$$
+r_{j,a}(\nu)=1-
+ \frac{2\kappa_{r,j}(\gamma_j-i\nu)}
+ { (\kappa_j-i\nu)(\gamma_j-i\nu)+a g_j^2},\qquad
+R_{j,a}(\nu)=\operatorname{diag}(r_{j,a}(\nu),r_{j,0}(\nu)),
+\tag{RS44}
+$$
+with $a=1$ bright and $a=0$ dark. The exact parameter tuples
+$(g,\kappa,\kappa_r,\gamma)$ are
+$(38/5,5/2,23/10,3)$ for $A$ and
+$(38/5,14/5,12/5,3)$ for $B$, in MHz. These are the parameter-model
+values cited above, not new measured yields or a model of all cavity
+imperfections.
+
+Prepare each spin as $\cos\alpha_j|0\rangle+\sin\alpha_j|1\rangle$,
+the photon polarization as
+$\chi=(\cos\chi_0,\sin\chi_0)^{\mathsf T}$, and between the two
+reflections apply
+$U_\theta=\begin{pmatrix}\cos\theta&\sin\theta\\-
+\sin\theta&\cos\theta\end{pmatrix}$.
+The exact angles in radians and incident spectral intensity are
+$$
+\begin{gathered}
+(\alpha_A,\alpha_B,\chi_0,\theta)=\frac1{10^{16}}
+(8005482133044127,7631314280924895,
+ 7885503202769666,31166396848875224),\qquad
+\sigma=\frac{11993}{64000}\ \mathrm{MHz},\\
+|f(\nu)|^2=\frac{e^{-\nu^2/(2\sigma^2)}}{\sqrt{2\pi}\sigma}.
+\end{gathered}
+\tag{RS45}
+$$
+The eight components of the complete spin–polarization vector are
+$w_{ab,\ell}(\nu)=
+ (\cos\alpha_A,\sin\alpha_A)_a
+ (\cos\alpha_B,\sin\alpha_B)_b
+ [R_{B,b}(\nu)U_\theta R_{A,a}(\nu)\chi]_\ell$.
+The Gaussian intensity FWHM in time is
+$\sqrt{2\ln2}/(2\pi\sigma)$, approximately $1\,\mu\mathrm s$;
+it is not a compact temporal support or a complete protocol clock.
+
+The [continuum interval checker](../checks/architecture/verify_remote_spin_pulse.py)
+proves, with rational outward rounding and an analytic integration error,
+$$
+0.36675027396793<p<0.36675027396795,
+\qquad
+Y_{\mathrm{ord}}>\frac{36675027}{10^8}=0.36675027
+\quad\text{per launched photon}.
+\tag{RS46}
+$$
+It bounds every integrated $X,Z$ Bloch component in absolute value by
+$2\times10^{-15}$. All preparations and optics are real and
+$r(-\nu)=r(\nu)^*$, so $w(-\nu)=w(\nu)^*$.
+The integrated spin $Y$ components are exactly zero by oddness. The
+last inequality follows from (RS43), using
+$\|(r_x,0,r_z)\|\le |r_x|+|r_z|$ and the certified lower bound on
+$p$. It does **not** infer exact Bell states from nearly mixed
+marginals: the arbitrary-helper theorem and its outcome-dependent
+Schmidt filters supply exact Bell states and include filter rejection.
+No exact locally-maximally-mixed root or numerical optimizer is assumed.
+
+For completeness, the continuum error used in this replay has a direct
+bound. Put $G(z)=e^{-z^2/(2\sigma^2)}$ and use the analytic strip
+$|\operatorname{Im}z|\le a=1/10$ MHz. Equation (RS44) is analytic
+there, because
+$$
+\operatorname{Re}\!\left(\kappa_j-iz+
+              \frac{a' g_j^2}{\gamma_j-iz}\right)
+ \ge\kappa_j-\frac1{10}>0\qquad(a'\in\{0,1\}).
+$$
+It also gives $|r_{j,a'}(z)|\le1+2\kappa_{r,j}/(\kappa_j-1/10)<3$
+for both stations. The two-reflection vector therefore has
+$\|w(z)\|\le9$ throughout the strip, as does $w(-z)$.
+For $O=I,Z_A,X_A,Z_B,X_B$ the continuation of the real-frequency
+kernel is $w(-z)^{\mathsf T}O w(z)$, of absolute value at most $81$.
+This treats the conjugate factor analytically, rather than treating a
+nonanalytic $|r(z)|^2$ as holomorphic. The normalization kernel $1$
+satisfies the same loose bound.
+
+On **each** boundary, the absolute integral of a Gaussian-weighted
+kernel is at most
+$81e^{a^2/(2\sigma^2)}\sqrt{2\pi}\sigma<243$.
+Indeed $0.18<\sigma<0.19$, $\pi<4$ give
+$\sqrt{2\pi}\sigma<1$, and $a^2/(2\sigma^2)<1$ with $e<3$.
+Contour shifting, or equivalently applying the Poisson formula and
+bounding each nonzero Fourier mode by the appropriate boundary integral,
+gives infinite trapezoid error at spacing $h=1/100$ MHz bounded by
+$$
+\frac{243+243}{e^{2\pi a/h}-1}
+ <\frac{486}{2^{60}-1}.
+\tag{RS47}
+$$
+Here $2\pi a/h=20\pi>60>60\ln2$, using $\pi>3$ and
+$\ln2<1$; no decimal approximation to that exponential is trusted.
+
+The finite sum keeps the 601 nodes $kh$, $-300\le k\le300$.
+On the real axis the reflection is contractive: writing its denominator
+as $d=\kappa-i\nu+a'g^2/(\gamma-i\nu)$ gives
+$\operatorname{Re}d\ge\kappa\ge\kappa_r$ and hence
+$|1-2\kappa_r/d|\le1$. Thus every real kernel above has absolute
+value at most one. Beyond $3$ MHz the Gaussian is less than $2^{-113}$,
+since $9/(2\sigma^2)>113$ and $e>2$. The ratio of successive omitted
+node weights is less than $2/3$: its exponent is at least
+$601h^2/(2\sigma^2)>1/2$, and $e^{1/2}>3/2$.
+The omitted **discrete** two-sided tail is consequently less than
+$2h\,2^{-113}/(1-2/3)<2^{-100}$. Combined with (RS47), the uniform
+absolute error for each unnormalized integral is
+$E=486/(2^{60}-1)+2^{-100}$.
+
+The replay encloses the finite sums on a $10^{-28}$ rational grid with
+outward rounding for every operation. Sine/cosine and the Gaussian use
+40-term alternating Taylor sums with the first omitted term as an error
+bound; for $e^{-x}$ it first reduces $0\le x<256$ by $256$ and
+squares eight times. All Gaussian nodes and reflection real/imaginary
+parts are rational. It widens the normalization integral and every
+numerator by $E$, proves the normalization interval is positive, and
+only then divides intervals. Positive-frequency doubling is justified
+by the real-control conjugation symmetry above. These steps certify the
+continuum inequalities, rather than interpreting agreement between
+quadrature cutoffs as a proof.
+
+## Physical resources and verification scope
+
+The arbitrary-helper protocol assumes a pure incident photon and the
+complete reflected polarization–frequency purifier. Generalized coherent
+measurement on its at-most-four-dimensional occupied Schmidt span can
+require calibrated temporal/spectral mode conversion, phase references,
+additional detector ports, quantum memory and feedforward. The arbitrary
+helper proof allows at most eight nonzero measurement outcomes and then
+local filters with their own success/failure records. Mathematical mode
+compression does not establish that a given cavity/router preserves
+those modes or that ordinary timestamp detection implements the POVM.
+The fixed Gaussian witness uses no exact-LMM claim and retains these
+filter costs. Supplying only a more restricted detector leaves a
+different optimization.
+
+The yield (RS46) includes the two model reflection probabilities and the
+filter failures. It excludes unmodeled source, fiber, mode-matching,
+detector, wrapper and local-control losses. Their measured costs and the
+source/filter calibration precision must be added before claiming a
+physical rate. A Gaussian has temporal tails; finite readout windows
+require a separate truncation/error budget. The cavity's actual spectral
+and loss-record dilation, available classical timestamps, local spare
+qubits, storage over the entire analysis/feedback time, and the strongest
+ordinary spectral controls must be matched. No universal finite-bandwidth
+comparison, native gate advantage, hardware yield or fault-tolerant
+throughput follows from this declared ideal-model factory bound.
+
+The existing exact finite replay covers (RS30), ordinary saturation, the
+rational scalar Bell-yield witness, the known-gate compiler and online
+two-CZ protocol, and (RS38). Its additional Gaussian-rational example
+checks a rank-four state, two rank-three and four rank-two same-marginal
+endpoints, an explicit complete eight-outcome helper POVM, exact Bell
+filtering of joint weight $2/5$, and filter failure $3/5$. It guards
+normalization and nontrivial complex marginals; the dimension-count proof
+and the cited rank-two theorem establish (RS39) in general. The separate
+continuum replay certifies only (RS46) in the stated scattering model.
+Neither replay validates a native coherent mode analyzer, optimizes every
+switched flagged instrument, or formalizes these arguments in Lean.

@@ -28,11 +28,13 @@ REPO = HERE.parents[3]
 BUILD = REPO / "_build" / "noisy-recovery"
 RECORD = HERE / "validation.json"
 SCHEMA = "noisy-recovery-validation-v1"
-SCOPE = "Finite exact replay and symbolic integer/rational identities, with separately scoped numerical scalar guards, supporting the linked proofs; no new Lean kernel audit."
+SCOPE = "Finite exact replay, symbolic integer/rational identities and outward rational interval certificates, with separately scoped numerical scalar guards, supporting the linked analytic proofs; no new Lean kernel audit."
 
 JOBS = (
     ("architecture-memory-stream-screening", "architecture/verify_memory_stream_screening.py", (),
-     "Exact optimistic-cap, selection/stopping, native rejection/likelihood, pointer-gap, perturbation and five-use code guards; C6, all-size direct sums, concentration and physical stream/access costs analytic."),
+     "Exact optimistic-cap, selection/stopping, native rejection/likelihood, pointer-gap, perturbation, full five-use erasure and antidegrading/extendibility guards; C6, all-size reductions, concentration and physical stream/access costs analytic."),
+    ("architecture-heat-gkp-tails", "architecture/verify_heat_gkp_tails.py", (),
+     "Outward rational interval certificates for heat-code Gram matrices, all-input moments, projection-polar source and Gaussian-control photon tails; continuum/operator identities analytic, no recovery SDP or native implementation certified."),
     ("architecture-code-bootstrap", "architecture/verify_code_bootstrap.py", (),
      "Exact self-switch, projection/Petz and framed-qubit echo instruments, moments, cost and normalized history-rank/completeness guards; C6, universal history/interface and coding proofs analytic."),
     ("architecture-bosonic-logical-frontier", "architecture/verify_bosonic_logical_frontier.py", (),
@@ -42,7 +44,9 @@ JOBS = (
     ("architecture-general-channel-entropy", "architecture/verify_unital_entropy.py", (),
      "Exact Kraus/Choi, mixed-adjoint energy, nonunitality, pinching, spectral-tail, full-flag and Clifford-twirl identities; entropy integration, relative-entropy convexity and coding analytic."),
     ("architecture-remote-spin-phase", "architecture/verify_remote_spin_phase.py", (),
-     "Exact spin-gate/four-mode/erasure maps, scattering/rank-loss, scalar concurrence, rational Bell-yield, two-CZ/known-gate and coherent-spectrum guards; universal comparisons, continuum loss, native ports and clocks analytic."),
+     "Exact spin-gate/four-mode/erasure maps, scattering/rank-loss, scalar concurrence, rational Bell-yield, two-CZ/known-gate, coherent-spectrum and full-helper rank/POVM/filter guards; universal comparisons, continuum loss, native ports and clocks analytic."),
+    ("architecture-remote-spin-pulse", "architecture/verify_remote_spin_pulse.py", (),
+     "Outward rational interval integration of the declared full Gaussian cavity-response witness, with analytic strip and tail error bounds; arbitrary-helper attainment proof and physical analyzer/control costs remain analytic."),
     ("architecture-orthogonal-unitary-entropy", "architecture/verify_orthogonal_entropy.py", (),
      "Exact non-Pauli unitary error bases, Choi entry-permutation/commutator identities, spectral tails and full target-dependent flags; entropy integration and capacity achievability analytic."),
     ("architecture-approx-unitary-capacity", "architecture/verify_approx_unitary_capacity.py", (),

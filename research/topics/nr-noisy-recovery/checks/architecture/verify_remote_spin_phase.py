@@ -4,7 +4,9 @@ Arithmetic is in Q[exp(i*pi/8)] with standard-library fractions. All spin
 matrix-unit coefficients and explicit unequal-module loss histories are
 checked. Gaussian rationals also guard the scalar-concurrence determinant
 factorization; the rational Bell-yield witness and known-gate compilers are
-replayed exactly. The native port, calibration, timing and general scattering/RUS
+replayed exactly. A full-rank fixed-marginal reduction and an eight-outcome
+helper POVM with local-filter failure accounting guard the arbitrary-helper
+assistance proof. The native port, calibration, timing and general scattering/RUS
 comparisons remain analytic scope, not certified by finite replay.
 Import is silent; no files are written.
 """
@@ -663,6 +665,195 @@ def phase_bell_witness():
             "relative_improvement_strict_upper": "13/12500"}
 
 
+# Exact full-rank example of fixed-marginal splitting and helper extraction.
+helper_ZERO=ConcG()
+helper_ONE=ConcG(1)
+
+
+def helper_zeros(r,c):
+    return [[helper_ZERO for _ in range(c)] for _ in range(r)]
+
+
+def helper_eye(n):
+    out=helper_zeros(n,n)
+    for j in range(n): out[j][j]=helper_ONE
+    return out
+
+
+def helper_diag(vals):
+    out=helper_zeros(len(vals),len(vals))
+    for j,v in enumerate(vals): out[j][j]=conc_cast(v)
+    return out
+
+
+def helper_add(a,b):
+    return [[x+y for x,y in zip(ar,br)] for ar,br in zip(a,b)]
+
+
+def helper_scale(a,s):
+    return [[x*s for x in row] for row in a]
+
+
+def helper_dag(a):
+    return [[a[j][i].conj() for j in range(len(a))] for i in range(len(a[0]))]
+
+
+def helper_mul(a,b):
+    return [[sum((a[i][k]*b[k][j] for k in range(len(b))),helper_ZERO)
+             for j in range(len(b[0]))] for i in range(len(a))]
+
+
+def helper_kron(a,b):
+    return [[a[i//len(b)][j//len(b[0])]*b[i%len(b)][j%len(b[0])]
+             for j in range(len(a[0])*len(b[0]))]
+            for i in range(len(a)*len(b))]
+
+
+def helper_vec(vals):
+    return [[conc_cast(x)] for x in vals]
+
+
+def helper_outer(v):
+    return helper_mul(v,helper_dag(v))
+
+
+def helper_trace(a):
+    return sum((a[j][j] for j in range(len(a))),helper_ZERO)
+
+
+def helper_rank(a):
+    b=[row[:] for row in a]
+    r=0
+    for col in range(len(b[0])):
+        piv=next((j for j in range(r,len(b)) if b[j][col]!=helper_ZERO),None)
+        if piv is None: continue
+        b[r],b[piv]=b[piv],b[r]
+        den=b[r][col]
+        b[r]=[x/den for x in b[r]]
+        for j in range(len(b)):
+            if j!=r and b[j][col]!=helper_ZERO:
+                v=b[j][col]
+                b[j]=[x-v*y for x,y in zip(b[j],b[r])]
+        r+=1
+        if r==len(b): break
+    return r
+
+
+def helper_ptr_a(a):
+    return [[sum((a[2*i+j][2*i+k] for i in range(2)),helper_ZERO)
+             for k in range(2)] for j in range(2)]
+
+
+def helper_ptr_b(a):
+    return [[sum((a[2*i+j][2*k+j] for j in range(2)),helper_ZERO)
+             for k in range(2)] for i in range(2)]
+
+
+def helper_require(condition,message):
+    if not condition: raise AssertionError(message)
+
+
+def helper_real_trace(a):
+    t=helper_trace(a)
+    helper_require(t.i==0,'helper_trace must be real')
+    return t.r
+
+
+def helper_conjugate(a,u):
+    return helper_mul(helper_mul(u,a),helper_dag(u))
+
+
+def helper_verify():
+    if not __debug__:
+        raise RuntimeError('Do not run exact replay with Python optimization enabled')
+    d=[F(4,25),F(1,25),F(4,25),F(16,25)]
+    rho=helper_diag(d)
+    xe=helper_zeros(4,4); xe[0][3]=xe[3][0]=ConcG(F(8,25))
+    xo=helper_zeros(4,4); xo[1][2]=ConcG(0,F(2,25)); xo[2][1]=xo[1][2].conj()
+    helper_require(helper_ptr_a(xe)==helper_ptr_b(xe)==helper_zeros(2,2),'even perturbation marginals')
+    helper_require(helper_ptr_a(xo)==helper_ptr_b(xo)==helper_zeros(2,2),'odd perturbation marginals')
+    helper_require(helper_rank(rho)==4,'initial helper_rank four')
+    rank2={}
+    rank3={}
+    for s in (-1,1):
+        rs=helper_add(rho,helper_scale(xe,s)); rank3[s]=rs
+        helper_require(helper_rank(rs)==3,'first endpoint helper_rank three')
+        # Support containment of the second perturbation, in exact row helper_rank.
+        helper_require(helper_rank([a+b for a,b in zip(rs,xo)])==3,'second direction in support')
+        for t in (-1,1):
+            rst=helper_add(rs,helper_scale(xo,t)); rank2[s,t]=rst
+            e=helper_vec([F(2,5),0,0,s*F(4,5)])
+            o=helper_vec([0,F(1,5),ConcG(0,-t*F(2,5)),0])
+            helper_require(rst==helper_add(helper_outer(e),helper_outer(o)),'positive helper_rank-two factorization')
+            helper_require(helper_rank(rst)==2,'helper_rank-two endpoint')
+            helper_require(helper_ptr_a(rst)==helper_ptr_a(rho) and helper_ptr_b(rst)==helper_ptr_b(rho),
+                    'both endpoint marginals preserved')
+        helper_require(helper_scale(helper_add(rank2[s,-1],rank2[s,1]),F(1,2))==rs,
+                'second endpoint average')
+    helper_require(helper_scale(helper_add(rank3[-1],rank3[1]),F(1,2))==rho,'first endpoint average')
+    # Both directions have maximal endpoints at +/-1: beyond them the
+    # relevant 2x2 principal determinant is negative.
+    for direction,pair in ((xe,(0,3)),(xo,(1,2))):
+        beyond=helper_add(rho,helper_scale(direction,2)); i,j=pair
+        determinant=beyond[i][i]*beyond[j][j]-beyond[i][j]*beyond[j][i]
+        helper_require(determinant.i==0 and determinant.r<0,'maximal endpoint witness')
+    comm=helper_add(helper_mul(rank2[1,1],rank2[-1,1]),helper_scale(helper_mul(rank2[-1,1],rank2[1,1]),-1))
+    helper_require(comm!=helper_zeros(4,4),'example includes noncommuting helper_rank-two pieces')
+
+    # Rational non-Clifford rotations make the A marginal complex and the
+    # B marginal nondiagonal, while preserving all preceding properties.
+    ua=[[ConcG(F(3,5)),ConcG(0,F(4,5))],[ConcG(0,F(4,5)),ConcG(F(3,5))]]
+    ub=[[ConcG(F(5,13)),ConcG(F(12,13))],[ConcG(-F(12,13)),ConcG(F(5,13))]]
+    helper_require(helper_mul(helper_dag(ua),ua)==helper_eye(2) and helper_mul(helper_dag(ub),ub)==helper_eye(2),'local unitaries')
+    u=helper_kron(ua,ub); rotated=helper_conjugate(rho,u)
+    helper_require(helper_ptr_b(rotated)==helper_conjugate(helper_diag([F(1,5),F(4,5)]),ua),'A spectrum')
+    helper_require(helper_ptr_a(rotated)==helper_conjugate(helper_diag([F(8,25),F(17,25)]),ub),'B spectrum')
+    helper_require(helper_ptr_b(rotated)[0][1].i!=0 and helper_ptr_a(rotated)[0][1]!=helper_ZERO,
+            'nontrivial complex/nondiagonal marginals')
+    helper_require(helper_rank(rotated)==4,'helper_rank unchanged by local rotations')
+
+    # A fixed purification has coefficient matrix W=U sqrt(D). Its helper
+    # measurement vector m creates the AB vector W helper_conjugate(m).
+    w=helper_mul(u,helper_diag([F(2,5),F(1,5),F(2,5),F(4,5)]))
+    effect_sum=helper_zeros(4,4); ensemble_sum=helper_zeros(4,4)
+    filtered_sum=helper_zeros(4,4); success=F(0); count=0
+    fa=helper_conjugate(helper_diag([1,F(1,2)]),ua); ff=helper_kron(fa,helper_eye(2))
+    for s in (-1,1):
+        for t in (-1,1):
+            ms=[helper_vec([F(1,2),0,0,s*F(1,2)]),
+                helper_vec([0,F(1,2),ConcG(0,t*F(1,2)),0])]
+            targets=[helper_vec([F(1,5),0,0,s*F(2,5)]),
+                     helper_vec([0,F(1,10),ConcG(0,-t*F(1,5)),0])]
+            for m,target in zip(ms,targets):
+                effect_sum=helper_add(effect_sum,helper_outer(m))
+                mv=helper_vec([r[0].conj() for r in m])
+                v=helper_mul(w,mv)
+                helper_require(v==helper_mul(u,target),'HJW conditional vector')
+                ensemble_sum=helper_add(ensemble_sum,helper_outer(v))
+                bell=helper_mul(ff,v); br=helper_outer(bell); weight=helper_real_trace(br)
+                helper_require(weight>0,'nonzero accepted branch')
+                helper_require(helper_ptr_a(br)==helper_scale(helper_eye(2),weight/2) and
+                        helper_ptr_b(br)==helper_scale(helper_eye(2),weight/2),'exact Bell branch')
+                filtered_sum=helper_add(filtered_sum,br); success+=weight; count+=1
+    helper_require(count==8 and effect_sum==helper_eye(4),'complete eight-outcome POVM')
+    helper_require(ensemble_sum==rotated,'complete pure ensemble reconstruction')
+    helper_require(success==F(2,5),'marginal-bound Bell extraction attained')
+    helper_require(filtered_sum==helper_conjugate(rotated,ff),'filter success map normalization')
+    # Filter failure is explicitly charged; F^dagger F plus its positive
+    # complement equals identity. The complement has known factorization.
+    fcomp=helper_conjugate(helper_diag([0,F(3,4)]),ua)
+    helper_require(helper_add(helper_mul(helper_dag(fa),fa),fcomp)==helper_eye(2),'filter contraction/complement')
+    failure=helper_real_trace(helper_mul(helper_kron(fcomp,helper_eye(2)),rotated))
+    helper_require(failure==F(3,5) and success+failure==1,'all-launch accounting')
+    return {'status': 'passed', 'arithmetic': 'Gaussian rational, stdlib',
+            'initial_rank': 4, 'rank3_endpoints': 2, 'rank2_pieces': 4,
+            'helper_povm_outcomes_on_occupied_support': count,
+            'bell_probability': str(success),
+            'filter_failure_probability': str(failure)}
+
+
+
+
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
@@ -681,7 +872,8 @@ def verify():
             "two_CZ_online_full_choi_branches": phase_two_cz_replay(),
             "known_local_switch_compiler_cases": phase_known_switch_replay(),
             "exact_scalar_Bell_yield_witness": phase_bell_witness(),
-            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities; native ports, calibration and clocks remain analytic"}
+            "arbitrary_helper_rank_reduction_example": helper_verify(),
+            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, and a full-rank helper POVM/filter example; the universal assistance proof, native ports, calibration and clocks remain analytic"}
 
 
 if __name__ == "__main__":
