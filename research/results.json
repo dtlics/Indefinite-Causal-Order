@@ -1048,6 +1048,30 @@
           "target": "C6-R01"
         }
       ]
+    },
+    {
+      "id": "NR-R09",
+      "topic": "NR",
+      "title": "Absorbing optical loss is serial erasure plus a receiver-preparable flag",
+      "canonical_path": "research/topics/nr-noisy-recovery/communication.md#nr-r09"
+    },
+    {
+      "id": "NR-R10",
+      "topic": "NR",
+      "title": "Entanglement-breaking slot, control-quality wire simulation and stopping bounds",
+      "canonical_path": "research/topics/nr-noisy-recovery/communication.md#nr-r10"
+    },
+    {
+      "id": "NR-R11",
+      "topic": "NR",
+      "title": "Elastic local-node instruments have no extra order syndrome",
+      "canonical_path": "research/topics/nr-noisy-recovery/communication.md#nr-r11"
+    },
+    {
+      "id": "NR-R12",
+      "topic": "NR",
+      "title": "Exact coherent dispatch with a dephased counter and bounded-query boundary",
+      "canonical_path": "research/topics/nr-noisy-recovery/dispatch.md#nr-r12"
     }
   ]
 }

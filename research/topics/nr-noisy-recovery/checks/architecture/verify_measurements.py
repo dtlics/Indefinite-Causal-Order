@@ -58,6 +58,17 @@ def kron(a, b):
             for i in range(len(a) * len(b))]
 
 
+def block_diagonal(a, b):
+    n = len(a)
+    assert len(b) == n
+    out = zero(2 * n)
+    for i in range(n):
+        for j in range(n):
+            out[i][j] = a[i][j]
+            out[n + i][n + j] = b[i][j]
+    return out
+
+
 def binary_pvm(h):
     return [scale(add(eye(len(h)), scale(h, F(s))), F(1, 2))
             for s in (1, -1)]
@@ -136,6 +147,38 @@ def trace_filter_check(h):
     return d * d
 
 
+def full_switch_check(p, q):
+    """Exact complete-control Choi and routing checks for the finite examples."""
+    d = len(p)
+    identity = eye(d)
+    control_identity = eye(2)
+    w = block_diagonal(mul(q, p), mul(p, q))
+    components = [eye(2 * d), kron(control_identity, p),
+                  kron(control_identity, q), w]
+    for u in components:
+        assert mul(transpose(u), u) == eye(2 * d)
+
+    physical_kraus = [block_diagonal(mul(l, k), mul(k, l))
+                      for k in binary_pvm(p) for l in binary_pvm(q)]
+    physical_choi = choi(physical_kraus)
+    assert physical_choi == scale(choi(components), F(1, 4))
+    assert tr(physical_choi) == 1
+    # Each weighted successful component has CP coefficient 1/529.
+    success_choi = scale(choi(components), F(1, 529))
+    assert success_choi == scale(physical_choi, F(4, 529))
+    assert tr(success_choi) == F(4, 529)
+
+    # Registers are ordered control, data, dummy.  Both control histories
+    # end with the same P on the dummy, so off-diagonal control survives.
+    first = block_diagonal(kron(p, identity), kron(identity, p))
+    middle = kron(control_identity, kron(q, identity))
+    last = block_diagonal(kron(identity, p), kron(p, identity))
+    routed = mul(mul(last, middle), first)
+    assert routed == block_diagonal(kron(mul(q, p), p), kron(mul(p, q), p))
+    return {"dimension": d, "complete_control_Choi_identity": "passed",
+            "three_slot_control_data_dummy_identity": "passed"}
+
+
 def main():
     z = [[F(1), F(0)], [F(0), F(-1)]]
     x = [[F(0), F(1)], [F(1), F(0)]]
@@ -150,6 +193,7 @@ def main():
          (F(1, 4), F(1, 2), F(1, 4))),
     )
     rows = []
+    full_switch_rows = []
     involutions = {}
     for name, p, q, expected in binary_cases:
         actual = metrics(binary_pvm(p), binary_pvm(q))
@@ -160,10 +204,18 @@ def main():
         assert tr(mul(mul(mul(q, p), q), p)) / d == tau
         for h in (p, q):
             involutions[tuple(map(tuple, h))] = h
+        full_switch_row = full_switch_check(p, q)
+        full_switch_row["case"] = name
+        full_switch_rows.append(full_switch_row)
         rows.append({"case": name, "dimension": d,
                      "Choi_cross_overlap_and_sequential_Bell_return": str(actual[0]),
                      "switch_visibility_and_record_return": str(actual[1]),
                      "switch_minus": str(actual[2]), "tau": str(tau)})
+
+    # Also exercise non-diagonal P in the repeated first/final slots.
+    full_switch_row = full_switch_check(q_angle, p4)
+    full_switch_row["case"] = "rational-angle-reversed"
+    full_switch_rows.append(full_switch_row)
 
     # Exact rational 4x4 Walsh basis supplies a non-binary rank-one example.
     h2 = [[F(1), F(1)], [F(1), F(-1)]]
@@ -200,10 +252,24 @@ def main():
     assert four_successes == F(1, 4096)
     assert full_attempt_cost == 16384 and early_abort_cost == 4680
 
+    branch_weights = [F(1, 529), F(8, 529), F(8, 529), F(512, 529)]
+    component_success = [F(1), success, success, success**3]
+    assert sum(branch_weights, F(0)) == 1
+    assert [a * b for a, b in zip(branch_weights, component_success)] == [F(1, 529)] * 4
+    full_switch_success = sum((a * b for a, b in zip(branch_weights, component_success)), F(0))
+    component_cost = [F(0), F(1), F(1), 1 + success + success**2]
+    full_switch_cost = sum((a * b for a, b in zip(branch_weights, component_cost)), F(0))
+    no_abort_cost = branch_weights[1] + branch_weights[2] + 3 * branch_weights[3]
+    assert full_switch_success == F(4, 529)
+    assert full_switch_cost == F(600, 529)
+    assert full_switch_cost / full_switch_success == 150
+    assert no_abort_cost / full_switch_success == 388
+
     report = {
         "status": "passed", "arithmetic": "standard-library Fraction matrices",
         "scope": ("Finite exact PVM/Choi/record/commutator examples and balanced-binary "
-                  "filter CP identities; scalar rank and retry arithmetic. Analytic "
+                  "filter CP identities, full-control binary-switch Choi/routing examples, "
+                  "and scalar rank/branch/retry arithmetic. Analytic "
                   "generalization and physical access assumptions remain in architecture-baselines.md."),
         "examples": rows, "finite_rank_scaling_checks": rank_checks,
         "balanced_binary_filter_examples": len(involutions),
@@ -211,6 +277,13 @@ def main():
         "four_filter_success_probability": str(four_successes),
         "expected_calls_per_retained_scalar_sample_full_attempts": str(full_attempt_cost),
         "expected_calls_per_retained_scalar_sample_early_abort": str(early_abort_cost),
+        "full_binary_switch_examples": full_switch_rows,
+        "full_binary_switch_branch_probabilities": list(map(str, branch_weights)),
+        "full_binary_switch_component_success_probabilities": list(map(str, component_success)),
+        "full_binary_switch_success_probability": str(full_switch_success),
+        "full_binary_switch_expected_calls": str(full_switch_cost),
+        "full_binary_switch_calls_per_retained_fresh_input_output": str(full_switch_cost / full_switch_success),
+        "full_binary_switch_calls_per_retained_output_without_early_abort": str(no_abort_cost / full_switch_success),
         "limitations": ["No hardware runtime, detector-noise, generic bath, or optimal-strategy proof.",
                         "No all-dimensional representation theorem or Lean formalization is replayed."],
     }

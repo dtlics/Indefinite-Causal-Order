@@ -56,6 +56,12 @@ JOBS = (
      "Exact finite-frame calibration score, threshold, rejection and query-crossover arithmetic; cited learner not implemented."),
     ("architecture-measurements", "architecture/verify_measurements.py", (),
      "Exact small measurement/Choi, record-return and trace-filter identities with syndrome-sector scaling constants."),
+    ("architecture-communication", "architecture/verify_communication.py", (),
+     "Exact full-Choi absorbing-loss and noisy-control-wire identities, tight qubit activation and elastic-node examples; capacity/stopping proofs analytic."),
+    ("architecture-native-checks", "architecture/verify_native_checks.py", (),
+     "Exact finite native-layer Pauli-check and read-only classical-bit-oracle comparison examples; hardware gate faults and general proofs analytic."),
+    ("architecture-dispatch", "architecture/verify_dispatch.py", (),
+     "Exact full flagged-Choi dispatch correction, classical-indexed interface and three/four-call routing examples; query obstruction and physical costs analytic."),
 )
 
 

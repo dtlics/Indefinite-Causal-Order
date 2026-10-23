@@ -134,6 +134,212 @@ This gives $FE$ and $EF$ coherently. The argument requires the two $E$
 calls to be the same repeatable unitary. It is not valid for fresh
 unobserved Kraus labels or independently drifting first/last calls.
 
+### Known Clifford layers admit cheaper ordinary parity checks
+
+Full clean synthesis and process-basis readout are not always needed. Let
+the total ideal data operation be a **known Clifford** $C$ on $n$ qubits,
+while the actual fixed physical block is any CPTP map
+$\mathcal G=\mathcal N\circ\operatorname{Ad}_C$. This includes arbitrary
+coherent or non-Pauli faults inside the block; it does not assume a final
+Pauli noise layer. The physical map must remain $\mathcal G$ when the
+helper checks are present. Unmodelled helper-induced crosstalk is excluded.
+
+Choose a uniform Hermitian Pauli $Q$ and compute the known Pauli
+$P=C^\dagger QC$. Prepare an ancilla in $|+\rangle$, apply controlled-$P$
+before $\mathcal G$ and controlled-$Q$ after it, and accept the $X=+1$
+outcome. If $E_i$ are Kraus operators of $\mathcal N$, the accepted
+relative Kraus operator is
+
+$$
+\mathsf P_Q(E_i)=\frac{E_i+QE_iQ}{2},
+$$
+
+because $Q(E_iC)P=QE_iQC$. The circuit keeps the native oracle order
+fixed and uses no controlled unknown oracle, inverse module, error record
+or full clean $C$ implementation. For $k$ checks around the same execution,
+use $k$ ancillas and opposite pre/post ordering. Pauli conjugations commute
+as superoperators, so each relative Kraus operator is projected by the
+$k$ maps $\mathsf P_{Q_j}$ even when the checks anticommute as matrices.
+
+Expand $E_i=\sum_T e_{iT}T$ in the orthonormal Pauli basis, with
+$e_{iT}=D^{-1}\operatorname{Tr}(T^\dagger E_i)$. Trace preservation gives
+$\sum_{iT}|e_{iT}|^2=1$. The identity coefficient survives every check;
+each nonidentity Pauli commutes with an independent uniform check with
+probability $1/2$. For Bell input, Pauli orthogonality removes all coherent
+cross terms in the acceptance trace. Consequently, writing
+$f=F_e(\mathcal N)=\sum_i|e_{iI}|^2$, the averaged accepted Bell metrics are
+
+$$
+q=f,\qquad p=f+2^{-k}(1-f),\qquad
+\mathsf S=2q-p=(1+2^{-k})f-2^{-k}.
+$$
+
+These equalities hold for arbitrary fixed CPTP noise. Its conditional
+accepted channel need not be a Pauli channel, and its success probability
+can depend on the payload; $p$ here is the Bell-input acceptance. For
+example, one-qubit reset noise has $f=1/4$ and one-check Bell acceptance
+$5/8$, while its acceptance is $3/4$ on $|0\rangle$ and $1/2$ on
+$|1\rangle$. Thus these scalars do not imply an arbitrary-input
+conditional-channel or diamond-distance guarantee.
+
+For $f\ge0.81$, one check scores at least $0.715$ and two at least
+$0.7625$, using the same native block calls. These compare guaranteed
+scores with NR-R01's switch lower bound; they do not assert superiority
+over the actual optimized switch for every known instance. Publishing
+the Clifford target also changes NR-R01's information assumptions.
+
+With arbitrary connectivity, each controlled Pauli string costs at most
+$n$ CNOT-equivalent gates plus one-qubit basis changes. Thus the extra
+entangling cost is at most $2kn$, with $k$ ancillas and $k$ readouts,
+independent of the compiled depth of $C$. Connectivity, ancilla retention,
+readout latency and helper errors remain physical costs. Independent
+ancilla phase dephasing with visibility $\nu$, and $a=(1+\nu)/2$, gives
+
+$$
+q=fa^k,\qquad p=fa^k+2^{-k}(1-f),\qquad
+\mathsf S=fa^k-2^{-k}(1-f).
+$$
+
+At $f\ge0.81$ and $\nu=0.97$, the one/two-check lower bounds are
+$0.70285$ and $0.73838225$. This is a scalar control-phase model, not
+a general fault-tolerance statement. Extra helper-location half-diamond
+errors $\epsilon_\ell$ decrease the score by at most
+$2\sum_\ell\epsilon_\ell$, by telescoping the complete flagged circuit
+and using a score observable of norm at most one.
+
+The filtering mechanism is established
+[Pauli check sandwiching](https://www.nature.com/articles/s41598-023-28109-x)
+and [coherent Pauli checks](https://arxiv.org/abs/2212.03937).
+[Spatio-temporal stabilizers](https://arxiv.org/html/2112.13904v2) likewise
+use known circuit symmetries for input-independent checks. Their helper
+accuracy assumptions must be costed alongside switch routing. Ordinary
+[black-box error filtration](https://arxiv.org/html/2210.10733v2) and
+[superposed computation](https://arxiv.org/html/2304.08529v2) also produce
+physical quantum outputs using coherent paths. A two-copy filter of the
+complete $AB$ computation uses four primitive module calls, so it is not
+a two-call simulator, but it belongs in a throughput or expected-cost
+comparison.
+
+Two implementation boundaries are immediate. If a public Clifford frame
+$U$ conjugates single-qubit $X,Y,Z$, then the target $UZU^\dagger$ is a
+known Pauli string and needs at most $n$ clean single-qubit Paulis. If
+the native modules literally compile $UXU^\dagger$ and $UYU^\dagger$
+from the same available length-$G$ word for $U$, direct
+$UZU^\dagger$ uses $2G+1$ gates, versus $4G+2$ for an unfused execution
+of both modules before routing. The boundary-noise theorem does not turn these counts into an
+internal-gate noise theorem. Generic non-Clifford targets can lack cheap
+transported checks, but expensive full synthesis alone does not establish
+a native-device advantage.
+
+### Read-only bit-query QRAM has cheap common checks
+
+Consider classical Boolean read-only query oracles
+$O_f|x,y\rangle=|x,y\mathbin\oplus f(x)\rangle$, with $a$ address
+qubits and one target qubit. Set $A=O_f$, $B=O_g$ and $C=BA=AB$ for
+arbitrary unknown functions $f,g$. These are commuting Hermitian
+involutions. This model does not describe writable quantum memory or
+loading arbitrary quantum amplitudes.
+
+Every such oracle commutes with the $a+1$ known checks
+$Z_{\mathrm{address},j}$ and $X_{\mathrm{target}}$. Their common
+eigenbasis is $|x\rangle\otimes|\pm_X\rangle$. Let $H$ be the
+$D=2^{a+1}$-element group they generate and let
+
+$$
+\Pi_H(E)=D^{-1}\sum_{h\in H}hEh
+$$
+
+be the Hilbert-Schmidt orthogonal projection onto the maximal abelian
+algebra diagonal in that basis. This algebra contains $A,B,C$ without
+requiring their truth tables. Pre/post controlled checks around the native
+order $A$ then $B$, accepting all plus outcomes, implement $\Pi_H$ on
+the relative error. The cost is exactly the same two native calls,
+$2(a+1)$ CNOT-equivalent check gates, $a+1$ ancillas and their readout;
+no database-dependent synthesis, inverse or calibration is used. Ideal
+helpers and sufficient connectivity are explicit premises.
+
+For accepted relative Kraus operators $L_i$, the target-$C$ Bell metrics are
+
+$$
+q=D^{-2}\sum_i|\operatorname{Tr}L_i|^2,\qquad
+p=D^{-1}\sum_i\|L_i\|_2^2,\qquad \mathsf S=2q-p.
+$$
+
+Suppose only $A$ is noisy, with arbitrary CPTP error Kraus operators
+$E_i$ after $A$, and $B$ is ideal. The plain plus-port switch has accepted
+Kraus operators
+
+$$
+\frac{BE_iA+E_iAB}{2}
+=\mathsf S_B(E_i)C,\qquad
+\mathsf S_B=\frac{\mathrm{id}+\operatorname{Ad}_B}{2}.
+$$
+
+Because $B$ is a Hermitian involution, $\mathsf S_B$ is the orthogonal
+projection onto its commutant. The ordinary checker's relative operators
+are $\Pi_H(BE_iB)=\Pi_H(E_i)$. The range of $\Pi_H$ is contained in
+that of $\mathsf S_B$, so
+$\|\Pi_H(E_i)\|_2\le\|\mathsf S_B(E_i)\|_2$.
+Both preserve $\operatorname{Tr}E_i$. Therefore the ordinary checker
+has exactly the same $q$ and no larger $p$, giving at least as high a
+Bell score. If only $B$ is noisy, the proof uses $\mathsf S_A$ instead.
+With no fault both implement $C$ with $p=q=1$.
+
+For independent module mixtures
+
+$$
+\mathcal E=(1-\epsilon_A)\operatorname{Ad}_A
+ +\epsilon_A\mathcal N_A\circ\operatorname{Ad}_A,
+\qquad
+\mathcal F=(1-\epsilon_B)\operatorname{Ad}_B
+ +\epsilon_B\mathcal N_B\circ\operatorname{Ad}_B,
+$$
+
+where $\mathcal N_A,\mathcal N_B$ are fixed CPTP maps, the no-fault
+and two single-fault branches obey this dominance. Only the double-fault
+branch remains, with probability $\epsilon_A\epsilon_B$. Each flagged
+score lies in $[-1,1]$, hence
+
+$$
+\mathsf S_{\mathrm{switch},+}-\mathsf S_{\mathrm{checks}}
+\le2\epsilon_A\epsilon_B.
+$$
+
+The $\epsilon$'s are stochastic mixture weights, not arbitrary diamond
+errors. Thus the plain plus switch has no first-order advantage over
+these checks in this model; this is not an upper bound on every ICO
+protocol. Helper deviation $\delta_{\mathrm{check}}$ in half-diamond
+distance adds at most $2\delta_{\mathrm{check}}$ to the right side.
+The noise maps must remain fixed when the helpers are added.
+
+The double-fault residual is necessary. With one address qubit,
+$f=0$, $g(x)=x$, and a post-target-$Z$ fault on both modules, the ordinary
+relative error is $Z_{\mathrm{address}}$ and passes all checks, with
+$(p,q,\mathsf S)=(1,0,-1)$. The plus-switch relative Kraus operator is
+$(I+Z_{\mathrm{address}})/2$, with $(p,q,\mathsf S)=(1/2,1/4,0)$.
+This refutes all-orders dominance of this checker; it does not show
+advantage over all ordinary strategies for that simple instance.
+
+For post-module **single-site Pauli** faults, the one string
+$Q=(\prod_j Z_{\mathrm{address},j})X_{\mathrm{target}}$ reduces the
+helper requirement to one ancilla and $2(a+1)$ check gates. It
+anticommutes with every detectable single-site fault (address $X/Y$ or
+target $Y/Z$); the remaining address $Z$ and target $X$ faults commute
+with both oracles and pass the plus switch too. Conjugating a fault through
+the other oracle preserves this check syndrome. Thus the same branchwise
+and finite-residual comparison holds when each conditional fault map is
+a mixture of those weight-one Paulis. This refinement does not cover
+arbitrary single-module noise or faults propagated through unspecified
+internal QRAM gates; use the full algebra checker for the former.
+
+These are ordinary symmetry-check consequences, not a new QRAM correction
+mechanism. QRAM is also a motivation in the
+[ordinary black-box filtration analysis](https://arxiv.org/html/2210.10733v2),
+which explicitly prices memory and control faults. Neither unknown
+database size nor a deep native query alone excludes a cheap ordinary
+check. A hardware comparison must include connectivity, helper memory,
+router loss and latency, plus the desired physical-output metric.
+
 <a id="nr-r07"></a>
 
 ## NR-R07 — The efficient finite-frame family admits polynomial-query reused calibration
@@ -382,6 +588,77 @@ Fixed-budget concentration is also possible. The constants are large,
 but independent of $D$; there is no rank-one C6-style exponential
 scaling for this binary scalar problem. This filter does not provide
 free retries on a unique data payload or a high-yield recovery channel.
+
+### A three-call heralded simulator reproduces the full balanced-binary switch
+
+The same filter gives a stronger ordinary baseline than a scalar estimator.
+For memoryless $E_P,E_Q$ with fixed traceless Hermitian involutions $P,Q$,
+there is an ordinary instrument using at most **three total calls** whose
+successful subchannel is exactly
+
+$$
+\mathcal S_{\rm success}=\frac4{529}\,\mathsf{Switch}(E_P,E_Q).
+$$
+
+This equality retains the input order control, arbitrary data and every
+entangled reference. No commutation promise or knowledge of $P,Q$ is needed.
+Put
+
+$$
+W_{P,Q}=|0\rangle\langle0|\otimes QP+
+        |1\rangle\langle1|\otimes PQ.
+$$
+
+Kraus invariance permits using $\{I/\sqrt2,P/\sqrt2\}$ and
+$\{I/\sqrt2,Q/\sqrt2\}$ for the unread Lüders channels, giving the full
+channel identity
+
+$$
+\mathsf{Switch}(E_P,E_Q)=\frac14\left[
+\operatorname{Ad}_I+\operatorname{Ad}_{I_C\otimes P}
++\operatorname{Ad}_{I_C\otimes Q}+\operatorname{Ad}_{W_{P,Q}}\right].
+$$
+
+The four components have ordinary heralded implementations with respective
+success probabilities $1,1/8,1/8,1/512$. The middle two use the one-call
+filter above. For the last, extract $P,Q,P$ in that fixed slot order and
+use the three-call unitary routing described earlier: the first $P$ acts
+on data in control branch zero and a dummy in branch one; the final $P$
+uses the opposite routing, while $Q$ acts on data. The joint unitary is
+$W_{P,Q}\otimes P_{\rm dummy}$. The dummy therefore factors identically
+in both control branches and can be discarded. Each successful filter
+has Choi rank one, so its environment also factors independently of the
+entire query input; it leaves no hidden route record on success. This
+justifies composition on control-data-reference entanglement, not merely
+on classical control values.
+
+Choose these four classical branches with probabilities
+$(1,8,8,512)/529$ and discard the branch label. Each successful component
+then has weight $1/529$, proving the claimed full-channel submap and its
+input-independent success $p=4/529$. Known swaps are coherently controlled;
+the unknown module identity is never selected coherently. Abort the
+three-filter branch at its first failed filter. With $t=1/8$, the exact
+expected module-call count is
+
+$$
+c=\frac{8+8+512(1+t+t^2)}{529}=\frac{600}{529},
+\qquad \frac cp=150.
+$$
+
+The ratio is a cost per retained output across fresh supplied inputs.
+Failures can destroy an irreplaceable payload, so they cannot be retried
+freely on that same state. The failure instrument is not a simulation
+of the switch. The proof requires fresh memoryless calls to the same
+$P,Q$, clean known routing and Bell ancillas; equal one-call marginals of
+a shared or drifting bath do not suffice.
+
+For comparison, the known universal teleportation-based postselected
+simulator uses one call per arbitrary channel with success $1/D^2$
+([Chiribella et al.](https://doi.org/10.1103/PhysRevA.88.022318);
+[later explicit comparison](https://www.nature.com/articles/s41467-025-64996-6)).
+The structured three-call bound above is dimension independent, but it
+does not settle deterministic, two-call or high-yield performance, or
+establish a hardware-runtime advantage.
 
 ### Compatibility is not logical correctness
 

@@ -31,6 +31,20 @@ replay does not implement that learner or determine its asymptotic
 constant. These checks do not establish hardware efficiency, source
 priority, a general memory-process model or an architecture advantage.
 
+The [communication note](../research/topics/nr-noisy-recovery/communication.md)
+has exact finite checks of absorbing-vacuum loss, sector-preserving noisy-wire
+factorizations, and elastic-node commutation. Schmidt-number, relative-entropy
+and finite-mean stopping arguments remain analytic; no channel-capacity theorem
+is inferred from finite sampling. The native-layer checks likewise assume
+their stated ideal helper operations and leave actual helper noise and routing
+cost to the application comparison.
+
+The [conditional dispatch result](../research/topics/nr-noisy-recovery/dispatch.md)
+has finite exact flagged-output and routing checks. Its universal exact
+query lower bound depends on the cited unitary-switch no-go theorem.
+No approximate-fidelity, expected-cost or runtime lower bound, physical
+dispatcher validation, or new correction-mechanism priority is recorded.
+
 `prepare_verification.py` derives the current import closure and endpoint list offline. It rejects missing local modules and dependency cycles; the wrappers also check endpoint identities and allowed axioms. Their offline checks are separate from running Lean.
 
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

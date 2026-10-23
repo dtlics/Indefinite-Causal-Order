@@ -24,15 +24,30 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_fault_simulation.py` | Finite exact orthogonal-process and full switched-output examples for the calibrated classical-fault baseline NR-R06. |
 | `architecture/verify_reuse.py` | Rational threshold, spectral-gap, recovered-score and training/rejection crossover arithmetic for NR-R07. The collective learning algorithm and its asymptotic constants are cited inputs, not computed by this replay. |
 | `architecture/verify_measurements.py` | Small exact Lüders PVM examples, Choi overlaps, recorded return probabilities, binary trace-filter identities and syndrome-sector scaling constants for NR-R08. |
+| `architecture/verify_communication.py` | Full Choi equalities for six absorbing-vacuum examples, sixteen rank-one-channel/noisy-qubit-wire factorizations, four rank-two protected-factor factorizations and four tight qubit-activation examples, plus an elastic-node instrument and a bus-mixing counterexample. The general entanglement, finite-mean and capacity proofs are analytic. |
+| `architecture/verify_native_checks.py` | Exact finite known-Clifford Pauli-check and classical-bit-oracle comparisons with non-Pauli noise; no fitted helper-gate or hardware-runtime model. |
+| `architecture/verify_dispatch.py` | Thirty-six reference-complete flagged counter/data Choi examples at data dimensions 2 and 3, the fully dephased indexed-unitary identity, and three-call/parallel four-call dummy factorizations for NR-R12. The exact universal query obstruction uses the cited analytic no-go theorem. |
 
 The five modules in `algebra/` form the shared exact engine. `brauer_exact_replay.py` derives diagram multiplication, adjoints, traces and identity insertions directly from pairings. `brauer_objective.py` constructs canonical Gaussian-integer objectives; `brauer_weingarten.py` inverts their permutation Gram system over fractions. `brauer_sos_certificate.py` checks the actual tensor-operator sum-of-squares residual and its norm margin. The main checker independently verifies every objective Gram equation and reconstructs every certificate slack. Both dimension-8 certificate JSONs are required inputs; search diagnostics and cached slacks cannot substitute for a successful replay.
 
 These checks complement the canonical mathematical proofs. Their finite or polynomial identities do not independently prove representation-sector completeness, stopping-time reductions, physical access assumptions, or approximate-design norm transfer. Those arguments remain in the linked method notes and theorem. This package performs no solver search, floating-point feasibility test, hardware experiment or new Lean kernel audit. Numerical discovery scripts, repeated audit narratives and search caches are intentionally absent.
 
 The architecture jobs support the [ordinary baselines](../architecture-baselines.md),
-not a positive application claim. Their examples do not prove the
+and [communication bounds](../communication.md), not a positive application claim.
+Their examples do not prove the
 all-input simulation by sampling, implement Threshold Search, or establish
 a useful native-device cost advantage. The general proofs and interface
 conditions remain in that canonical note. The
 [application assessment](../architecture.md) states the remaining gaps
 and concrete next tests.
+
+The communication and native-check replays share Gaussian-rational matrix
+helpers with `verify_fault_simulation.py`; all those inputs are copied and
+hashed together. Full matrix identities cover the tested reference-complete
+channels. Finite examples do not establish the all-history entropy ledger,
+Schmidt-number theorem, a general loss convention or a native noise budget.
+
+The [dispatch proof](../dispatch.md) distinguishes a hard worst-case exact
+query count from fidelity, expected cost, parallel latency and reuse.
+Its replay does not establish a quantitative ordinary approximation gap
+or a valid coherent-use interface for a physical processor.

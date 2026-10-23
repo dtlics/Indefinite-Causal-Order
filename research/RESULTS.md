@@ -177,3 +177,7 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R06 | [Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06) |  |
 | NR-R07 | [Polynomial-query calibration of the reused finite-frame family](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r07) |  |
 | NR-R08 | [Accessible measurement records and syndrome-sector baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08) |  |
+| NR-R09 | [Absorbing optical loss is serial erasure plus a receiver-preparable flag](../research/topics/nr-noisy-recovery/communication.md#nr-r09) |  |
+| NR-R10 | [Entanglement-breaking slot, control-quality wire simulation and stopping bounds](../research/topics/nr-noisy-recovery/communication.md#nr-r10) |  |
+| NR-R11 | [Elastic local-node instruments have no extra order syndrome](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
+| NR-R12 | [Exact coherent dispatch with a dephased counter and bounded-query boundary](../research/topics/nr-noisy-recovery/dispatch.md#nr-r12) |  |

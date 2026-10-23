@@ -4,10 +4,11 @@
 
 The current results establish an advantage in a specified fresh-frame recovery
 game. They do **not** yet establish a useful advantage for calibrating or
-operating persistent hardware. The most promising next investigation starts
-from the actual instrument and available controls of an unmonitored multimode
-channel, then asks whether switch measurements improve a deployed decision.
-No checked architecture currently meets all the required assumptions.
+operating persistent hardware. The next investigations start from complete
+device instruments and available controls, then ask whether switched outputs
+improve a deployed decision. Current screens cover multimode calibration,
+network entanglement and native computational layers. No checked architecture
+currently meets all the required assumptions.
 
 ## What is established
 
@@ -196,12 +197,102 @@ pointer channel.
    routing and control overhead erase the benefit. A finite hardware gain
    would still require a separate argument for any asymptotic claim.
 
-The remaining assumptions are substantial: a useful persistent pointer-like
+The multimode calibration candidate still requires a useful persistent pointer-like
 channel, inaccessible records, no cheap pointer preparation/readout,
 insufficient ordinary calibration within its drift window, and a realizable
 coherent-order interface whose extra information predicts a useful action.
 The checked primary sources establish individual ingredients and important
-ordinary workarounds, not this combination. The next result should resolve
-those assumptions on a named device before extending the recovery theorem
-into an architecture claim. This is a bounded assessment, not an exhaustive
+ordinary workarounds, not this combination. These assumptions need resolution
+on a named device before extending the recovery theorem into an architecture
+claim. This is a bounded assessment, not an exhaustive
 novelty or priority claim.
+
+## Distributed-computing link screen
+
+Delivering a stored Bell pair for a remote gate is a concrete architecture
+objective. [Main et al.](https://doi.org/10.1038/s41586-024-08404-x) demonstrate
+distributed trapped-ion computation through a heralded optical link;
+[Knaut et al.](https://doi.org/10.1038/s41586-024-07252-z) demonstrate networked
+nanophotonic memory nodes. The output to compare is a usable matter Bell pair
+per wall-clock time, including waiting-induced memory error.
+
+The [communication results](communication.md) give three precise screens.
+Pure absorbing-vacuum loss produces the ordinary serial erasure channel plus
+a receiver-preparable flag (NR-R09). A genuinely independent EB slot gives a
+one-ebit-per-use rank ceiling; mandatory control dephasing also admits an exact
+known-channel simulation with one equally dephased qubit wire (NR-R10).
+This does not grant a free wire to every abstract switch placement. Nor can
+the local Bell-label readout of NR-R06 be imported across separated labs
+without paying for joining the halves.
+
+The elastic accepted state-carving operators in the named cavity-node model
+preserve a common photon time-bin label and act on disjoint memories.
+Consequently they commute Kraus by Kraus, and the entire accepted switched
+instrument is already ordinary serial processing (NR-R11). Elastic contrast
+errors and local spin errors preserving those labels supply no extra order
+syndrome. Mode-changing scattering is a different hypothesis, not a conclusion
+from the documented elastic model.
+
+The remaining narrow optical candidate is retained inelastic spectral
+scattering followed by a downstream frequency-dependent reflection. A
+[quantum-dot waveguide analysis](https://doi.org/10.1038/s41534-023-00717-5)
+identifies near-carrier incoherent scattering that cannot simply be removed
+with a distant spectral filter. This is a different platform, and does not
+establish that a switched circuit improves its Bell-pair yield. The next
+calculation must keep outgoing frequency, which-time bath records, local
+spin resets and actual photon heralds. Compare ordinary frequency-resolved
+selection, commuting spectral-phase check sandwiches and coherent same-order
+delayed paths, as well as both serial orders. In a two-frequency model, a
+before/after controlled frequency-$Z$ check preserves a diagonal elastic
+instrument and rejects cross-bin jumps. Its spectral resolution, pulse
+reshaping, additional delay and helper faults must be included. If bath
+emissions resolve the two histories, a switch's rejection of
+half the scattered events can be ordinary path error filtration. Charge
+extra loops, stabilization, conversion and control coherence on the same
+physical graph. A Markov bath does not alone imply resolved histories:
+overlapping photon excitation profiles can emit at the same laboratory
+times. Compute their actual overlap from the pulse and preceding-node
+response, rather than substituting a dephasing rate for a two-history overlap.
+
+The finite two-frequency candidate has failed this stronger ordinary
+screen: checks at each node remove all cross-bin jumps, including two
+shifts that return to the original bin and evade a single global check.
+This requires two helper qubits and four controlled spectral phases;
+it does not exclude a finite hardware tradeoff with one order control.
+The exact projection identity is replayed in the communication checks.
+It is not a continuum scattering calculation or a fit to the named
+experiment. Resolve the measured frequency kernel and price these
+helpers before treating the formal noncommutation as an application.
+
+## Native computation and coherent dispatch
+
+The [native-check baselines](architecture-baselines.md#nr-r06) also prevent
+promoting a known Clifford layer or a read-only classical-bit lookup merely
+because recompiling its full unitary is expensive. Cheap transported checks
+can use the same native calls. Helper gates, their noise and memory must be
+costed, rather than assumed free by either implementation.
+
+A separate conditional construction concerns coherent subroutine dispatch
+through a dephased program register. The
+[quantum control machine](https://arxiv.org/abs/2304.15000) motivates coherent
+control-flow semantics, but is a theoretical architecture and does not supply
+a native faulty instruction interface. The familiar self-switch correction
+for anticommuting random unitaries already appears in
+[Chiribella and Kristjánsson](https://arxiv.org/abs/1812.05292).
+The [dispatch result NR-R12](dispatch.md) gives the exact correction and
+the full-output ordinary two-versus-three-call boundary for its opaque
+indexed-unitary interface. It also includes a four-call ordinary simulation
+in two parallel rounds. Writing the prior mechanism as program-counter
+recovery does not establish novelty or a hardware benefit. A surviving
+dispatch proposal must specify its native
+ports, distinct switchable noisy slots, reusable calibration, direct compiled
+and ordinary three/four-call simulations, parallel execution and controller
+occupancy. Repeating one noisy processor at two fixed chronological times
+does not by itself supply a switch of two independent noisy slots.
+Conversely, quasistatic counter-phase noise can cancel in two ordinary
+repetitions. A proposed temporal-noise model must preserve the required
+switch coherence without inadvertently granting that ordinary echo.
+
+The next useful result must resolve one of these microscopic interface and
+matched-cost questions. The present exclusions and idealized constructions
+remain intermediate research evidence.

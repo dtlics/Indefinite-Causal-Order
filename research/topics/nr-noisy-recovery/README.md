@@ -19,6 +19,10 @@ and from learning a scalar channel property.
 | NR-R06 | Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories | [Fault simulation](architecture-baselines.md#nr-r06) |
 | NR-R07 | Polynomial-query calibration of the reused finite-frame family | [Reuse baseline](architecture-baselines.md#nr-r07) |
 | NR-R08 | Accessible measurement records and syndrome-sector baselines | [Measurement baselines](architecture-baselines.md#nr-r08) |
+| NR-R09 | Absorbing optical loss is serial erasure plus a receiver-preparable flag | [Loss equivalence](communication.md#nr-r09) |
+| NR-R10 | Entanglement-breaking slot, control-quality wire simulation and stopping bounds | [Communication resource bounds](communication.md#nr-r10) |
+| NR-R11 | Elastic local-node instruments have no extra order syndrome | [Cavity-instrument screen](communication.md#nr-r11) |
+| NR-R12 | Exact coherent dispatch with a dephased counter and bounded-query boundary | [Conditional dispatch result](dispatch.md#nr-r12) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -59,12 +63,18 @@ not extend to reused devices after calibration; the ordinary reuse
 baseline is in NR-R07. Calibrated classical Pauli faults and recorded
 Lüders measurements have the ordinary baselines in NR-R06 and NR-R08.
 
-The next application question is whether a physical unmonitored
-multimode or pointer-algebra workload supplies the required interface
-and a useful decision before drift. First establish its instrument,
-pilot/readout access and best ordinary calibration method; then compare
-held-out task error at matched time, memory, calls and routing cost.
-The assessment gives explicit go/no-go tests and source-specific gaps.
+The next application questions concern a physical unmonitored multimode
+workload, retained inelastic scattering in a matter-photon link, and a
+native coherent-dispatch interface. First establish each instrument,
+available records and controls, and the best ordinary method; then
+compare useful task outputs at matched time, memory, calls and routing
+cost. The [communication note](communication.md) identifies why pure
+loss and the documented elastic cavity model do not suffice. The
+assessment gives explicit go/no-go tests and source-specific gaps.
+The dispatch result is an exact universal query statement with a known
+correction mechanism. Native slot realization, approximation, expected
+cost, parallel execution, compilation and calibration reuse still need
+an architecture comparison; its query count alone is not a runtime gain.
 Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.
