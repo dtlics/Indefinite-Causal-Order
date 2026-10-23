@@ -16,12 +16,12 @@ and from learning a scalar channel property.
 | NR-R03 | Obstruction to a uniform-frame local-noise guarantee | [Scoped counterexample](obstructions.md#nr-r03) |
 | NR-R04 | Exact unknown-unitary implementation is impossible from full-support noisy queries | [Support argument](obstructions.md#nr-r04) |
 | NR-R05 | Destructive rejection and finite offline-program limits | [Failure and retrieval boundaries](obstructions.md#nr-r05) |
-| NR-R06 | Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories | [Fault simulation](architecture-baselines.md#nr-r06) |
+| NR-R06 | Native checks, calibrated faults and ordinary path baselines | [Fault and check comparisons](architecture-baselines.md#nr-r06) |
 | NR-R07 | Polynomial-query calibration of the reused finite-frame family | [Reuse baseline](architecture-baselines.md#nr-r07) |
 | NR-R08 | Accessible measurement records and syndrome-sector baselines | [Measurement baselines](architecture-baselines.md#nr-r08) |
 | NR-R09 | Absorbing optical loss is serial erasure plus a receiver-preparable flag | [Loss equivalence](communication.md#nr-r09) |
 | NR-R10 | Entanglement-breaking slot, control-quality wire simulation and stopping bounds | [Communication resource bounds](communication.md#nr-r10) |
-| NR-R11 | Commuting accepted cavity and two-photon scattering instruments | [Scattering-instrument screens](communication.md#nr-r11) |
+| NR-R11 | Accepted cavity and nonlinear-scattering instruments | [Scattering-instrument screens](communication.md#nr-r11) |
 | NR-R12 | Exact coherent dispatch with a dephased counter and bounded-query boundary | [Conditional dispatch result](dispatch.md#nr-r12) |
 | NR-R13 | Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound | [Composite lookup screen](native-lookups.md#nr-r13) |
 | NR-R14 | Shared-bath calibration transfer and exact ordinary echo/instrument baselines | [Bath-backaction screen](backaction.md#nr-r14) |
@@ -93,6 +93,12 @@ The [phase-calibration benchmark](metrology.md) independently certifies a
 known finite-query switch advantage, but preserves its hard two-call scope.
 Longer ordinary rounds, emitted timing records and coherent bath reuse
 change that comparison. A native calibration-rate advantage remains open.
+The [scattering result](communication.md#nr-r11) now includes unequal-rate
+and photon-preserving bath-record comparisons. Conditional spectral
+filtering, pair-preserving readout and ordinary delayed/reused paths must
+be compared on the complete output. Recent two-dot experiments motivate
+a joint physical device model rather than assumed independent swapped
+slots. The assessment records that concrete next test.
 Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.

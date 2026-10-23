@@ -85,8 +85,18 @@ switch optimization remain analytic. Achievable readout, retained-memory
 echo and longer ordinary feedback comparisons delimit the benchmark;
 no expected-cost, sustained calibration-rate or native-device advantage
 is inferred. Same-unitary physical-path checks also distinguish
-quasistatic coins from independent clock noise. The two-photon continuum
-commutation proof in NR-R11 uses a common scattering basis and is analytic,
-without a claimed frequency-grid certificate or hardware fit.
+quasistatic coins from independent clock noise. Its known-basis and
+number-lowering cases now test physical Bell metrics, nonzero Choi cross
+terms, the exact no-loss CP remainder and explicit double-fault/parity
+limitations. The all-dimension proofs and native helper costs remain analytic.
+
+The two-photon proofs in NR-R11 use the complete scattering basis and
+resolvent kernel. The unequal-rate relative-mode gate, normalizable-pulse
+target-amplitude identity, photon-preserving readout, known-dressing reuse,
+time-record instrument reduction and uniform tail bound are analytic.
+The existing finite communication replay does not certify those continuum
+arguments, actual phonon overlaps, a native pulse-tail bound, a physical
+pair router or a hardware performance advantage. No frequency-grid
+certificate or fitted single-mode gate is claimed.
 
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

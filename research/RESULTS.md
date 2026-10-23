@@ -174,12 +174,12 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R03 | [Obstruction to a uniform-frame local-noise guarantee](../research/topics/nr-noisy-recovery/obstructions.md#nr-r03) |  |
 | NR-R04 | [Exact unknown-unitary implementation is impossible from full-support noisy queries](../research/topics/nr-noisy-recovery/obstructions.md#nr-r04) |  |
 | NR-R05 | [Destructive rejection and finite offline-program limits](../research/topics/nr-noisy-recovery/obstructions.md#nr-r05) |  |
-| NR-R06 | [Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06) |  |
+| NR-R06 | [Native checks, calibrated faults and ordinary path baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06) |  |
 | NR-R07 | [Polynomial-query calibration of the reused finite-frame family](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r07) |  |
 | NR-R08 | [Accessible measurement records and syndrome-sector baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08) |  |
 | NR-R09 | [Absorbing optical loss is serial erasure plus a receiver-preparable flag](../research/topics/nr-noisy-recovery/communication.md#nr-r09) |  |
 | NR-R10 | [Entanglement-breaking slot, control-quality wire simulation and stopping bounds](../research/topics/nr-noisy-recovery/communication.md#nr-r10) |  |
-| NR-R11 | [Commuting accepted cavity and two-photon scattering instruments](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
+| NR-R11 | [Accepted cavity and nonlinear-scattering instruments](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
 | NR-R12 | [Exact coherent dispatch with a dephased counter and bounded-query boundary](../research/topics/nr-noisy-recovery/dispatch.md#nr-r12) |  |
 | NR-R13 | [Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound](../research/topics/nr-noisy-recovery/native-lookups.md#nr-r13) |  |
 | NR-R14 | [Shared-bath calibration transfer and exact ordinary echo/instrument baselines](../research/topics/nr-noisy-recovery/backaction.md#nr-r14) |  |

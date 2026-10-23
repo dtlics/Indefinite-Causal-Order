@@ -1022,7 +1022,7 @@
     {
       "id": "NR-R06",
       "topic": "NR",
-      "title": "Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories",
+      "title": "Native checks, calibrated faults and ordinary path baselines",
       "canonical_path": "research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06"
     },
     {
@@ -1064,7 +1064,7 @@
     {
       "id": "NR-R11",
       "topic": "NR",
-      "title": "Commuting accepted cavity and two-photon scattering instruments",
+      "title": "Accepted cavity and nonlinear-scattering instruments",
       "canonical_path": "research/topics/nr-noisy-recovery/communication.md#nr-r11"
     },
     {

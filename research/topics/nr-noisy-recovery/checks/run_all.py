@@ -59,7 +59,7 @@ JOBS = (
     ("architecture-communication", "architecture/verify_communication.py", (),
      "Exact full-Choi absorbing-loss and noisy-control-wire identities, tight qubit activation and elastic-node examples; capacity/stopping proofs analytic."),
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
-     "Exact finite native-layer, classical-bit-oracle and qutrit address checks, plus same-unitary quasistatic Bell scores and iid-clock full Choi comparisons; physical routing costs analytic."),
+     "Exact finite native-layer, bit-oracle, qutrit address, known-basis single-fault and number-lowering checks, plus same-unitary quasistatic Bell scores and iid-clock full Choi comparisons; physical costs analytic."),
     ("architecture-dispatch", "architecture/verify_dispatch.py", (),
      "Exact full flagged-Choi dispatch, event-head/clock/reuse models, temporal phase-path equivalences and three/four-call routing; Gaussian fronts and physical costs analytic."),
     ("architecture-dispatch-baselines", "architecture/verify_dispatch_baselines.py", (),

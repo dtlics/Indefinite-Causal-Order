@@ -2,7 +2,7 @@
 
 [Architecture assessment](architecture.md) · [Local baselines](architecture-baselines.md) · [References](references.md) · [Checks](checks/README.md)
 
-These results distinguish an abstract switch placement from a physical network cut. Local operations, classical communication (LOCC), encoding, quantum memory, distillation and rejected attempts belong in the comparator. A usable control wire across a cut is an additional communication resource; an abstract provider-owned order control does not automatically supply that wire. The proofs below are analytic, with finite identities replayed by the linked checks. The continuum scattering argument uses the cited spectral representation and is not a finite replay. They have not been formalized in Lean, and no priority claim is made.
+These results distinguish an abstract switch placement from a physical network cut. Local operations, classical communication (LOCC), encoding, quantum memory, distillation and rejected attempts belong in the comparator. A usable control wire across a cut is an additional communication resource; an abstract provider-owned order control does not automatically supply that wire. The proofs below are analytic, with finite identities replayed by the linked checks. The continuum scattering and reservoir-support arguments use the specified dilations and are not finite replays. They have not been formalized in Lean, and no priority claim is made.
 
 <a id="nr-r09"></a>
 
@@ -238,7 +238,7 @@ Control coherence as a communication resource has prior thermodynamic treatment,
 
 <a id="nr-r11"></a>
 
-## NR-R11 — Commuting accepted cavity and two-photon scattering instruments
+## NR-R11 — Accepted cavity and nonlinear-scattering instruments
 
 Let a photon bus have a common set of orthogonal mode projectors $T_h$.
 Two stations with independent slot environments act on disjoint matter
@@ -430,19 +430,647 @@ processor with its interleaved Mach–Zehnder operations, phonon dephasing,
 or its coincidence-normalized efficiencies. In particular, pulse bandwidth
 is an input choice, not by itself a second scattering operator.
 
-### Scope beyond the common-basis instruments
+### The complete relative-coordinate kernel
 
-Mode-changing scattering, unresolved frequency dynamics, multiphoton
-events, order-dependent arrival times and a shared bath can violate (9).
-For example, a bus-bin flip before one station's contraction generally
-breaks commutation. Equations (10)–(14) close a particular nonlinear
-two-photon case despite individual-frequency redistribution; they do not
-close unequal monitored couplings, group-velocity dispersion or other
-relative-frequency phases, frequency-dependent mode mixing,
-photon-preserving phonon records, other internal levels or coherent
-bidirectional feedback. A proposed effect from those terms needs its full
-instrument and an actual improvement after ordinary tuning, spectral/timing
-filtering, routing and rejected-attempt costs. The finite replay verifies
-an elastic state-carving example and a bin-flip counterexample; the
-continuum closure is the analytic spectral proof above, not a fitted
-experimental model or a discretized verification.
+The same representation permits an explicit calculation when monitored
+couplings differ. Write the accepted operator as
+$K_{\Gamma,\Omega,\kappa}$ when its dependence on $\Gamma$ matters.
+For $\operatorname{Im}z>0$, away from the removable bound pole, the
+resolvent in (12) has kernel
+
+$$
+G_{\Gamma,z}(y,y')=
+\frac{e^{iz|y-y'|}+r_{\Gamma,z}e^{iz(y+y')}}{2iz},
+\qquad
+r_{\Gamma,z}=\frac{z+i\Gamma/2}{z-i\Gamma/2}.
+\tag{15}
+$$
+
+Both terms solve $(\partial_y^2+z^2)G=0$ away from $y=y'$ and
+decay at infinity. The first derivative jumps by one at $y=y'$, and
+$\partial_yG(0,y')/G(0,y')=iz(r-1)/(r+1)=-\Gamma/2$.
+These properties give the Green function of $z^2-H_\Gamma$.
+Multiplying by $-2i\Gamma z-\Gamma^2$ cancels the apparent bound pole
+and gives the regular accepted field operator
+
+$$
+\begin{aligned}
+(K_{\Gamma,\Omega,\kappa}(E)f)(y)
+={}&f(y)-\Gamma\!\left(1-\frac{i\Gamma}{2z}\right)
+ \int_0^\infty e^{iz|y-y'|}f(y')\,dy'\\
+&-\Gamma\!\left(1+\frac{i\Gamma}{2z}\right)e^{izy}
+ \int_0^\infty e^{izy'}f(y')\,dy'.
+\end{aligned}
+\tag{16}
+$$
+
+Here $z\ne0$ since $\kappa\ge\Gamma>0$. Equation (16) therefore
+also supplies the continuous value at the cancelled pole. It is the
+full two-photon kernel, including the bound contribution, rather than
+a product of single-photon phases.
+
+For $f_\beta(y)=e^{-\beta y}$ with $\operatorname{Re}\beta>0$,
+the two integrals can be evaluated without a spectral cutoff:
+
+$$
+\begin{aligned}
+K(E)f_\beta&=A_\beta f_\beta+B_\beta e^{izy},\\
+A_\beta&=1+\frac{-2i\Gamma z-\Gamma^2}{\beta^2+z^2},
+&B_\beta&=-\frac{\Gamma(2\beta-\Gamma)}{\beta^2+z^2}.
+\end{aligned}
+\tag{17}
+$$
+
+Indeed the first integral in (16) is
+$e^{izy}/(\beta+iz)+2iz e^{-\beta y}/(\beta^2+z^2)$ and the
+second is $1/(\beta-iz)$. Substitution proves (17). For
+$\beta=\Gamma/2$, use the cancelled expression
+$A_\beta=(z-3i\Gamma/2)/(z+i\Gamma/2)$ and $B_\beta=0$;
+other coincident-exponent cases use the corresponding continuous,
+polynomial-times-exponential limit. Norms and matrix elements of finite
+exponential sums follow from
+$\langle f_\beta,f_\eta\rangle=(\bar\beta+\eta)^{-1}$.
+Equations (15)–(17) are direct consequences of the cited scattering
+representation, not identities attributed to an experimental SWITCH.
+
+### Unequal couplings: a real relative-mode gate and its serial endpoint
+
+Take lossless forward scattering, $\kappa_j=\Gamma_j$, at a common
+resonance $\Omega$. At $E=2\Omega$, the continuum eigenvalue in
+(11) is one and the bound eigenvalue is minus one. Thus
+
+$$
+K_j=I-2|b_j\rangle\langle b_j|,
+\qquad b_j(y)=\sqrt{\Gamma_j}e^{-\Gamma_j y/2}.
+\tag{18}
+$$
+
+For unequal positive rates, define a real orthonormal relative-mode code
+
+$$
+\begin{gathered}
+c=\langle b_A,b_B\rangle=
+ \frac{2\sqrt{\Gamma_A\Gamma_B}}{\Gamma_A+\Gamma_B},
+\qquad d=\sqrt{1-c^2},\\
+e_0=b_A,\qquad e_1=(b_B-cb_A)/d,\qquad
+J=|e_1\rangle\langle e_0|-|e_0\rangle\langle e_1|.
+\end{gathered}
+\tag{19}
+$$
+
+$J$ is a unitary quarter turn on this two-dimensional code. Multiplying
+the two reflections in its basis gives
+
+$$
+\begin{aligned}
+K_BK_A&=(2c^2-1)I+2cdJ,&
+K_AK_B&=(2c^2-1)I-2cdJ,\\
+M_+&=(2c^2-1)I,&M_-&=2cdJ,
+\end{aligned}
+\qquad M_\pm=(K_BK_A\pm K_AK_B)/2.
+\tag{20}
+$$
+
+These restrictions are on the code; $M_-$ vanishes on its orthogonal
+complement. Unequal monitored rates therefore genuinely evade (13).
+The minus outcome applies a heralded unitary with code-independent
+success $4c^2(1-c^2)$. Its maximum is one at $c^2=1/2$, or
+$\Gamma_B/\Gamma_A=3\pm2\sqrt2$. At exactly that endpoint,
+however, $K_BK_A=J$ and $K_AK_B=-J$: ordinary serial scattering
+already performs the target gate deterministically. The relative sign
+is observable in the controller without improving this payload gate.
+
+This code is one qubit encoded in **two-photon relative modes**. It is
+not two independently encoded rail qubits. Its input modes are already
+correlated; an arbitrary coherent encoder into them has not been
+demonstrated in the named device. A fixed desired spectral state also
+cannot be credited as an advantage over an ordinary source allowed to
+prepare that same state freely.
+
+### Normalizable pulses and exact correct-output mass
+
+A fixed total-energy delta state is not a physical pulse. For any
+normalized $G\in L^2(\mathbb R,dE)$, use the reference-entangled input
+and target
+
+$$
+\begin{aligned}
+|\Psi_G\rangle&=\int dE\,G(E)|E\rangle
+ \otimes\frac{e_0|0\rangle_R+e_1|1\rangle_R}{\sqrt2},\\
+|\Psi_{G,J}\rangle&=(I_{E,R}\otimes J)|\Psi_G\rangle.
+\end{aligned}
+\tag{21}
+$$
+
+The actual minus output has $M_-(E)$ in each energy fiber and can leave
+the code. Its subnormalized acceptance and target-test probabilities are
+
+$$
+\begin{aligned}
+p_-&=\int dE\,|G(E)|^2\,
+ \frac{\|M_-(E)e_0\|^2+\|M_-(E)e_1\|^2}{2},\\
+q_-&=\left|\int dE\,|G(E)|^2\,
+ \frac{\langle e_1|M_-(E)e_0\rangle
+       -\langle e_0|M_-(E)e_1\rangle}{2}\right|^2.
+\end{aligned}
+\tag{22}
+$$
+
+The square is outside the integral because the target retains coherent
+total-energy amplitudes. $q_-/p_-$ is conditional fidelity for the
+specified reference input; it is not a normalized channel fidelity when
+the success effect depends on the code input.
+
+There is an exact ordinary comparison for every such $G$. The kernel
+(16) is complex symmetric under transpose, defined with respect to
+complex conjugation in the relative-coordinate representation. Hence
+$(K_BK_A)^T=K_AK_B$. Compressing to the real basis $e_0,e_1$
+preserves this transpose, while $J^T=-J$. Consequently, pointwise in $E$,
+
+$$
+\frac12\operatorname{Tr}_{\rm code}(J^\dagger K_AK_B)
+=-\frac12\operatorname{Tr}_{\rm code}(J^\dagger K_BK_A),
+\qquad
+\frac12\operatorname{Tr}_{\rm code}(J^\dagger M_-)
+=\frac12\operatorname{Tr}_{\rm code}(J^\dagger K_BK_A).
+\tag{23}
+$$
+
+Transposing the product reverses its order and transposing $J^\dagger$
+changes its sign; cyclicity of this finite code trace proves both
+equalities. No physical transposition operation is assumed. Integrating
+the complex amplitudes in (23) proves
+$q_-=q_{BA}$ for the same target (21), where $q_{BA}$ is ordinary
+serial processing's target-test probability. The flag can reject
+unwanted output mass and raise conditional quality; it does not increase
+correct-output mass for this benchmark. This statement does not cover
+every spectral target or arbitrary gate input.
+
+The finite-pulse gate approaches (20) continuously. The bounded spectral
+values (11), with the cancelled bound value, are operator-norm continuous
+near $E=2\Omega$. Their products and code restrictions therefore are
+continuous. For normalized pulse densities concentrating at that energy,
+dominated convergence gives $p_-\to4c^2d^2$,
+$q_-\to4c^2d^2$ and a success effect tending to $4c^2d^2I$
+uniformly on the code. Thus normalizable pulses can approximate the
+relative-mode gate, including the serial endpoint. Narrowing the total
+energy requires longer coherent pulse and routing/storage windows; this
+limit makes no fixed-time accuracy claim. No numerical continuum
+truncation is needed for these conclusions.
+
+### A photon-preserving flag, its yield, and the logical-sector test
+
+Terminal coincidence detection consumes both photons. A more restricted
+passive flag can retain them. Suppose a valid **whole-pair path encoding**
+has already produced
+$(|20\rangle_{ab}\otimes v_0+|02\rangle_{ab}\otimes v_1)/\sqrt2$,
+where $v_0=K_BK_A\psi$, $v_1=K_AK_B\psi$ and the internal pair
+state is symmetric. On a balanced beam splitter,
+
+$$
+\begin{aligned}
+|20\rangle_{ab}&\longmapsto
+ \tfrac12|20\rangle_{cd}+\tfrac1{\sqrt2}|11\rangle_{cd}
+ +\tfrac12|02\rangle_{cd},\\
+|02\rangle_{ab}&\longmapsto
+ \tfrac12|20\rangle_{cd}-\tfrac1{\sqrt2}|11\rangle_{cd}
+ +\tfrac12|02\rangle_{cd}.
+\end{aligned}
+\tag{24}
+$$
+
+If exactly two photons were launched, none were lost and a detector
+ideally resolves vacuum in discarded port $d$, its no-click event leaves
+both photons in $c$ with amplitude
+$(v_0+v_1)/(2\sqrt2)=M_+\psi/\sqrt2$. A known relative
+pair-path phase $\pi$, obtainable as $\pi/2$ per photon, selects
+$M_-/\sqrt2$ instead. The useful yield is **half** the abstract
+control-outcome yield. For the minus benchmark (22), its acceptance and
+target masses are $p_-/2,q_-/2$. The all-attempt score assigning
+$+1$ to a target-test pass, $-1$ to a failed accepted output and zero
+to rejection is then $q_--p_-/2$. At the narrow-pulse unit-yield
+endpoint it tends to $1/2$, whereas serial processing's score
+$2q_{BA}-1$ tends to one. By continuity, this passive readout loses
+to serial for sufficiently narrow normalizable pulses at that endpoint.
+
+Unmonitored loss or detector inefficiency can instead make no-click
+accept one or zero retained photons. A valid-pair flag then needs an
+additional number check or independently flagged erasure interface,
+with its resources charged. Hong–Ou–Mandel preparation supplies the
+assumed pair-path state only for suitable indistinguishable symmetric
+inputs; it is not an arbitrary unknown two-qubit encoder. A separate
+order ancilla may be measured destructively while preserving the target
+photons, but its coupling, routing and readout are additional hardware.
+
+There is also an immediate dual-rail obstruction for the bare emitter
+model. If only logical $|11\rangle$ sends two photons through the
+nonlinear arm and the other basis states send zero or one, the vacuum
+block is identity and the one-photon blocks are commuting multiplication
+operators $t_j(k)$. The minus map annihilates the $00,01,10$ logical
+components even when $\Gamma_A\ne\Gamma_B$. It is therefore a
+filter, not a heralded controlled-phase gate on an arbitrary logical
+input. The plus map must balance all logical amplitudes and their full
+spectral shapes. Added mode mixing can change this sector argument and
+requires its own full-code calculation.
+
+### Known linear dressing and an exact two-reuse ordinary baseline
+
+Unequal rates with equal monitored fraction have a further exact
+comparison. For $a>0$, real $\delta$, define a normalized one-photon
+frequency transformation and its symmetric two-photon action
+
+$$
+\begin{aligned}
+(L_{a,\delta}f)(k)&=a^{-1/2}f((k-\delta)/a),\\
+(\mathcal L\psi)(E,u)&=a^{-1}\psi((E-2\delta)/a,u/a),
+\qquad u=(k_1-k_2)/2.
+\end{aligned}
+\tag{25}
+$$
+
+Both are unitary with the displayed Jacobians. If
+$\Gamma_B=a\Gamma_A$, $\kappa_B=a\kappa_A$ and
+$\Omega_B=a\Omega_A+\delta$, then
+
+$$
+K_B=\mathcal L K_A\mathcal L^\dagger
+\tag{26}
+$$
+
+on the complete normalizable two-photon space. To prove this, put
+$E'=(E-2\delta)/a$, so $z_B(E)=az_A(E')$.
+The relative-coordinate unitary $T_af(y)=\sqrt a f(ay)$ maps
+the Robin boundary condition for $\Gamma_A$ to that for
+$a\Gamma_A$, and
+$H_{a\Gamma_A}T_a=a^2T_aH_{\Gamma_A}$.
+Its continuum spectral values scale by $a^2$, and it maps the
+normalized bound vector to $b_{a\Gamma_A}$. Each numerator and
+denominator in (11) scales by $a^2$, and the bound amplitude has
+the same invariance. Together with the total-energy Jacobian in (25)
+this proves (26) on both spectral sectors and the full direct integral.
+The one-photon amplitude has the same covariance and the vacuum is
+fixed, so the identity also respects the zero/one/two-photon sectors.
+
+More generally let a reusable accepted single-Kraus primitive be $K$
+and a second module be $B=PKQ$, for executable known unitary field
+operations $P,Q$. Two chronological calls to $K$ satisfy
+
+$$
+\begin{aligned}
+&\operatorname{diag}_C(P,I)(I_C\otimes K)
+ \operatorname{diag}_C(Q,P)(I_C\otimes K)
+ \operatorname{diag}_C(I,Q)\\
+&\hspace{25mm}=\operatorname{diag}_C(PKQK,KPKQ)
+ =\operatorname{diag}_C(BK,KB).
+\end{aligned}
+\tag{27}
+$$
+
+Multiplication of the two control blocks proves the identity. It needs
+neither knowledge nor an inverse of $K$. In (26), take
+$P=\mathcal L$, $Q=\mathcal L^\dagger$. For every
+control–field input and inaccessible reference, (27) reproduces the
+entire subnormalized accepted switched output, including its probability,
+any final control basis, and later decoder or spectral filter. Known
+interleaved linear dressing can therefore create noncommutativity
+without creating a capability gap against this available reuse circuit.
+
+This is an accepted single-Kraus identity, not a simulator of arbitrary
+successful phonon records or all rejected instruments. Its two primitive
+visit opportunities are charged even on rejected runs; an occupied-pass
+or adaptive-shutdown convention needs its own accounting. Coherent
+frequency compression/expansion of an unknown output waveform is a
+physical transformation, not merely preparation of a narrower input
+laser pulse. A time lens, inverse conversion, controlled known optics,
+return loop, emitter recovery and their losses, bandwidth and latency
+must be available and priced. The nonlinear output's spectral tails also
+belong in a finite-band approximation. For two contractions $M,N$,
+$\|\operatorname{Ad}_M-\operatorname{Ad}_N\|_\diamond
+\le(\|M\|+\|N\|)\|M-N\|$ follows by expanding their
+difference into two left/right multiplication maps; it bounds such a
+uniform operator approximation before any postselection normalization.
+No such device approximation is certified here. Different monitored
+fractions or genuinely different nonlinear primitives need not satisfy
+(26) or an executable dressing assumption.
+
+### Vacuum routing and the cost of a third scheduled window
+
+Even without known dressing, the specified vacuum-stable survivor model
+admits a useful ordinary scheduling comparison. Use chronological
+windows $A_{\rm early},B_{\rm middle},A_{\rm late}$.
+In one coherent path arm the pair visits early $A$ and then $B$;
+in the other it visits $B$ and then late $A$. An unused $A$ window
+receives vacuum. Delay and recombine the output modes and phases.
+
+On the two-survivor sector, each occupied station returns to ground
+and every unmonitored radiative environment is in the same vacuum.
+The unused window acts trivially on vacuum. The two surviving branch
+operators are therefore precisely $K_BK_A$ and $K_AK_B$, and the
+resulting controlled accepted instrument is the desired one for every
+input/reference. There is no additional occupied nonlinear traversal,
+dummy photon pair or extra survival factor. The construction requires
+stationarity between the two $A$ windows and matched timing/modes.
+
+It uses **three scheduled windows**, rather than two abstract calls,
+and may require longer storage and more routing. Each arm still has
+one occupied $A$ and one occupied $B$ traversal. This is not a
+two-query definite-order comb simulation. The same coherent pair-path
+access and stable vacuum interface must be physically available, and
+all optical losses and delays remain charged. Photon-preserving bath
+records, residual station excitation, resolved arrival-time records or
+shared feedback can invalidate its survivor premise. Neither these
+loops nor (27)'s full frequency controls are inferred from the
+one-emitter Nielsen experiment.
+
+### Photon-preserving Markov records: the complete routed instrument
+
+Adding emitter dephasing need not remove the photons, so a surviving
+pair alone no longer selects a single bath Kraus operator. A tractable
+optical density-matrix model is supplied by
+[Bundgaard-Nielsen et al.](https://arxiv.org/html/2604.18036v2),
+including one- and two-photon Fock-pulse scattering, emitter pure
+dephasing and off-chip radiative loss. The following vacuum-reservoir
+dilation and routed-instrument comparison specify additional physical
+assumptions; they are not inferred from a reduced master equation or
+asserted as an experimental implementation by that source.
+
+Retain the guided optical field in the payload and let $H_{\rm QED}$
+include its coupling to a two-level emitter. Couple independent vacuum
+white reservoirs through
+$L_\phi=\sqrt{\gamma_\phi}\,n_e$, $n_e=|e\rangle\langle e|$,
+and radiative loss operators
+$L_\ell=\sqrt{\kappa_\ell}\,\sigma_-$.
+This convention gives a bare coherence decay $\gamma_\phi/2$ from
+$\gamma_\phi\mathcal D[n_e]$.
+Put $H_{\rm eff}=H_{\rm QED}-(i/2)\sum_cL_c^\dagger L_c$.
+The complete reservoir record
+$r=((c_1,t_1),\ldots,(c_m,t_m))$, $t_1<\cdots<t_m$,
+has optical Kraus operator
+
+$$
+K_r=\langle g|U_{\rm eff}(T,t_m)L_{c_m}
+ U_{\rm eff}(t_m,t_{m-1})\cdots L_{c_1}
+ U_{\rm eff}(t_1,0)|g\rangle.
+\tag{28}
+$$
+
+Summing/integrating all channel-labelled absolute-time Fock records,
+including the empty record, gives the full optical map after the emitter
+has returned to ground; the empty amplitude is
+$K_\varnothing=\langle g|U_{\rm eff}(T,0)|g\rangle$.
+At finite $T$, any residual excited-state
+output must also be retained to complete the instrument. Dephasing
+records preserve optical photon number; radiative-loss records do not.
+For input photon number at most two, the full output therefore includes
+zero-, one- and two-photon sectors. No surviving-pair normalization is
+performed.
+
+For a physical two-history comparison impose all of the following
+interface conditions. The stations have independent reservoirs and a
+stationary, inactive ground/vacuum state. The early and late active
+reservoir supports at each station are disjoint. Every nonempty record
+then distinguishes the two histories; the empty reservoir state is
+common with the **same phase**. The routed optical outputs and known
+propagation phases are matched. Moreover, an independent helper must
+coherently route the **whole payload**, remain readable even if payload
+photons are lost, and be available and charged in both circuits.
+This last premise is necessary for a tensor-control instrument on all
+zero/one/two-photon sectors: payload-only path encoding disappears on
+vacuum, and a beam splitter acting on $|2\rangle$ creates split-pair
+terms rather than an ideal whole-pair history router. Without that
+interface, restrict the physical statement to a specified two-survivor
+sector and separately define its loss completion.
+
+Let $\Phi_A,\Phi_B$ be the complete optical channels,
+$M=\Phi_B\circ\Phi_A$, $N=\Phi_A\circ\Phi_B$, and let
+$A_\varnothing,B_\varnothing$ be their empty-record amplitudes.
+Assume in addition
+
+$$
+K=B_\varnothing A_\varnothing
+ =A_\varnothing B_\varnothing.
+\tag{29}
+$$
+
+For stationary asymptotic no-record Markov scattering, the dephasing
+term simply adds $\gamma_\phi$ to the imaginary excited-state
+broadening: $\kappa_{\rm eff}=\kappa_{\rm rad}+\gamma_\phi$.
+Thus (29) follows in the equal-monitored-$\Gamma$ model from (11)–(13),
+also on vacuum and the commuting one-photon frequency blocks. This
+observation does **not** show that an arbitrary finite gate/reset or
+windowed approximation retains (29). An exactly gated interface must
+verify both its empty-product equality and its record-support premise.
+
+Only the empty record contributes to the cross-history map. For
+initial independent helper $|+\rangle$, the physical routed output
+is consequently
+
+$$
+\frac12
+\begin{pmatrix}
+ M(\rho)&K\rho K^\dagger\\
+ K\rho K^\dagger&N(\rho)
+\end{pmatrix}_C,
+\qquad
+\mathcal I_\pm=
+ \frac{M+N\pm2\operatorname{Ad}_K}{4}.
+\tag{30}
+$$
+
+The latter are the subnormalized maps after an $X$ measurement.
+All maps may be tensored with an arbitrary reference identity. Positivity
+also follows directly: $M-\operatorname{Ad}_K$ and
+$N-\operatorname{Ad}_K$ are sums over nonempty bath records.
+These are full optical instruments, not just control probabilities.
+
+### An ordinary temporal filter matches the measured instrument
+
+Run fixed order $AB$ in two coherent arms at different times:
+$A_1B_2$ and $A_2B_3$. Under the same record assumptions their
+diagonal optical maps are $M,M$, and their sole common bath record
+is the empty product $K$. The corresponding $X$ maps are
+$\mathcal J_{AB,\pm}=(M\pm\operatorname{Ad}_K)/2$.
+Fixed order $BA$ similarly gives
+$\mathcal J_{BA,\pm}=(N\pm\operatorname{Ad}_K)/2$.
+A fair independent classical choice between these two ordinary
+experiments therefore gives
+
+$$
+\frac{\mathcal J_{AB,\pm}+\mathcal J_{BA,\pm}}2
+=\mathcal I_\pm.
+\tag{31}
+$$
+
+This proves equality on every target/reference input, including the
+entire $X$-labelled density matrix, losses, input-dependent survival
+and every later spectral or logical measurement. Composing a common
+two-survivor projection preserves it; detecting the two photons still
+consumes them. The ordinary party may retain its classical order choice.
+Its unmeasured control–target state need not equal (30): its diagonal
+control blocks are equal rather than $M,N$. Equation (31) therefore
+screens this measured order filter, not arbitrary coherent processing
+of the unmeasured helper.
+
+The switch histories $A_1B_2,B_1A_2$ use two windows; the ordinary
+filters use three. Both have four possible spacetime visits and two
+occupied station traversals per arm. The extra delay, helper coherence,
+whole-payload routing, reset, mode matching and losses must be charged.
+This is an ordinary physical timing construction, not a hard-two-query
+comb theorem. For independent calibrated control dephasing, use the
+nonnegative visibility convention $0\le v_S,v_F\le1$. The
+interference term in (30) is
+$2v_S\operatorname{Ad}_K$. The ordinary filter matches it only if
+its visibility $v_F=v_S$, or if $v_F\ge v_S$ and extra deliberate
+dephasing reduces it. Equal visibility over an extra window is not
+automatic. Record-dependent or payload-dependent helper noise requires
+its own instrument.
+
+There is an exact mismatch formula when (29) fails. Set
+$D_0=B_\varnothing A_\varnothing$ and
+$D_1=A_\varnothing B_\varnothing$, keeping disjoint nonempty
+records and the same diagonal maps $M,N$. The switch cross terms are
+$D_0(\cdot)D_1^\dagger$ and $D_1(\cdot)D_0^\dagger$.
+The randomized ordinary filters instead have
+$\operatorname{Ad}_{D_0}+\operatorname{Ad}_{D_1}$ as their
+interference sum. Hence, for their full classical-$X$-flag maps
+$\mathcal F,\mathcal I$,
+
+$$
+\mathcal F_+-\mathcal I_+
+=\tfrac14\operatorname{Ad}_{D_0-D_1},\qquad
+\mathcal F_--\mathcal I_-
+=-\tfrac14\operatorname{Ad}_{D_0-D_1},\qquad
+\|\mathcal F-\mathcal I\|_\diamond
+=\tfrac12\|D_0-D_1\|^2.
+\tag{32}
+$$
+
+The first two identities follow by expanding
+$(D_0-D_1)\rho(D_0-D_1)^\dagger$. The two flag blocks have
+opposite copies of the same CP map, whose diamond norm is
+$\|D_0-D_1\|^2$; their trace norms add, proving the last
+identity. Equal visibility $0\le v\le1$ multiplies the discrepancy by $v$.
+This is a quadratic approximation bound, not an exclusion of a useful
+noncommuting minus output: that output may be precisely the mass in
+(32). An approximate comparison must retain it.
+
+### Uniform tail errors and the finite-window qualification
+
+Gaussian inputs and spontaneous-emission tails are not compactly
+supported. A short Lindblad correlation time does not prove the strict
+record-support premise. Instead, on a declared input Hilbert space,
+write each route isometry as
+$V_s=K_s\otimes|\mathrm{vac}\rangle+W_s$, $s=0,1$,
+where $W_s$ has nonvacuum reservoir support. Suppose $P_0,P_1$
+are orthogonal nonvacuum reservoir projectors for the assigned windows
+and uniformly
+
+$$
+\|(I-P_s)W_s\|^2\le\delta_s.
+\tag{33}
+$$
+
+Let $G_s=P_sW_s$. The unwanted cross map is
+$\Delta_{01}(\rho)=\operatorname{Tr}_E[W_0\rho W_1^\dagger]$.
+Orthogonality gives
+$\operatorname{Tr}_E[G_0\rho G_1^\dagger]=0$, so expand
+its difference as
+
+$$
+\Delta_{01}(\rho)=\operatorname{Tr}_E\!\left[
+ (W_0-G_0)\rho W_1^\dagger
+ +G_0\rho(W_1-G_1)^\dagger\right].
+$$
+
+For any such cross map,
+$\|\operatorname{Tr}_E[A(\cdot)B^\dagger]\|_\diamond
+\le\|A\|\|B\|$: its bilinear trace dual is
+$X\mapsto B^\dagger(X\otimes I_E)A$, and the same
+operator-norm bound holds at every ancilla size. Since all Stinespring
+pieces here have norm at most one,
+$\|\Delta_{01}\|_\diamond\le\sqrt{\delta_0}+\sqrt{\delta_1}$.
+The reversed cross map has the same bound. The two $X$ outcomes
+change by their sum divided by four and its negative. Thus the full
+classical-flag instrument differs from its same-diagonal, vacuum-cross
+version by
+
+$$
+\|\mathcal I_{\rm actual}-\mathcal I_{\rm vac}\|_\diamond
+\le\sqrt{\delta_0}+\sqrt{\delta_1}.
+\tag{34}
+$$
+
+The corresponding half-diamond bound is half this value. Apply the
+same argument separately to each physical ordinary filter; triangle
+inequality then compares it with the switch, including any independently
+bounded empty-product and helper errors. These are subnormalized
+instrument bounds; rare postselection does not give a yield-independent
+conditional-fidelity bound. Small pairwise overlaps of
+selected bath wavepackets do not imply (33) for their complete spans.
+If a tail estimate holds only for a specified state family rather than
+uniformly on the input space, the conclusion is the corresponding
+state/record trace-distance bound, not an unrestricted diamond bound.
+
+For compact optical drive ending at $t_{\rm end}$ and no later input,
+excited population decays at the total radiative rate, so population
+remaining after a guard interval $g$ is at most
+$e^{-\kappa_{\rm rad}g}$. Pure dephasing does not alter this
+population equation. For two photons in one Gaussian temporal mode,
+a one-photon outside-window probability $\epsilon$ gives pair
+outside-window probability $1-(1-\epsilon)^2\le2\epsilon$.
+These observations can contribute to a specified tail estimate; they
+do not prove (33) for two cascaded scatterers, because the first changes
+the pulse entering the second. A native uniform $\delta_s$ and the
+finite-window empty-product mismatch remain uncharacterized here.
+
+Nor does this white-reservoir model identify a semiconductor's actual
+acoustic bath. [Tighineanu et al.](https://doi.org/10.1103/PhysRevLett.120.257401)
+show that confined waveguides and membranes can have low-frequency
+phonon decoherence different from bulk. A short bulk memory estimate
+therefore does not establish early/late record orthogonality in a
+particular membrane. A non-Markovian application requires its actual
+two-history bath kernel and comparison with the same ordinary spectral
+and temporal filters; a fitted linewidth alone supplies neither.
+
+### Scope of the device mapping
+
+Actual two-emitter demonstrations do not automatically supply these two
+independent slots. [Hallacy et al.](https://arxiv.org/html/2511.07640v1)
+provide independently tunable chiral quantum dots with spin-dependent
+correlations; the opposite-helicity transitions couple predominantly
+to opposite propagation directions. For a fixed selected transition,
+reversal exchanges monitored rates $\Gamma_{j,R}$ and
+$\Gamma_{j,L}$, as well as spatial order. Aligning two identical
+slot instruments would require an explicit coherent compensation that
+also erases branch-dependent spin and bath records.
+[Hansen et al.](https://arxiv.org/html/2605.18525v1) instead exploit a
+collectively coupled bidirectional emitter system. Its reflected fields
+and emitter–emitter coupling require a joint scattering dilation,
+rather than the independent forward-product assumption. These
+platforms motivate a different model; their terminal correlation data
+do not establish a photon-preserving order flag or the gate above.
+
+### Boundary of the scattering reductions
+
+Mode-changing scattering, multiphoton events, order-dependent arrival
+times and a shared bath can violate (9). A bus-bin flip before one
+station's contraction is already a finite counterexample to that
+common-label premise. Equations (10)–(14) close the equal-monitored-rate
+survivor case despite individual-frequency redistribution. Unequal rates
+can be noncommuting, but (18)–(27) give explicit operational and ordinary
+screens for the stated relative-mode target and known-dressing family.
+They do not close every unequal-fraction kernel, group-velocity
+dispersion, frequency-dependent mode mixing, additional internal levels,
+photon-preserving bath record or coherent bidirectional device.
+
+A remaining application needs its full instrument, executable input
+code or constrained source, surviving output/flag, and a gain after
+ordinary pulse/detuning optimization, spectral and temporal filtering,
+reuse, routing and rejected-attempt costs. The
+[existing passive energy-time-entangled pair source](https://doi.org/10.1038/s41567-024-02543-8)
+is an ordinary comparator, including its spectral filtering and timing
+selection. A favorable commutator or coincidence-normalized phase is
+insufficient. The linked finite replay checks an elastic state-carving
+instrument and a bin-flip example; the continuum proofs here are analytic
+and are not certified by finite frequency-grid sampling, a hardware fit
+or a Lean formalization.

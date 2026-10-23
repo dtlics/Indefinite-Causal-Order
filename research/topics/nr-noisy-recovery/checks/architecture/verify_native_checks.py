@@ -464,17 +464,208 @@ def replay_self_channel_routes():
     return metric_cases, instrument_cases
 
 
+def diagonal_part(k):
+    out = zeros(len(k), len(k))
+    for x in range(len(k)):
+        out[x][x] = k[x][x]
+    return out
+
+
+def physical_bell_metrics(kraus, target):
+    """Compute p/q directly from normalized physical Choi matrices."""
+    j = native_choi(kraus)
+    ideal = native_choi([(F(1), target)])
+    p = trace(j)
+    q = inner(vectorize(ideal), vectorize(j))
+    require(p[1] == q[1] == 0, "Bell probabilities became complex.")
+    relative = [(w, matmul(adjoint(target), k)) for w, k in kraus]
+    require((p[0], q[0]) == pq(relative), "Physical and relative Bell metrics differ.")
+    return p[0], q[0]
+
+
+def copied_label_zero_kraus(k, labels, modulus):
+    """Explicit coherent copy, physical Kraus, uncopy, then zero readout.
+
+    Labels can be complete basis indices or photon-number values.  No input
+    label is measured.  The reference-complete effective Kraus is extracted
+    from the full data-plus-syndrome operator, not assumed to be diagonal.
+    """
+    d = len(k)
+    copy = zeros(d*modulus, d*modulus)
+    for x, label in enumerate(labels):
+        for r in range(modulus):
+            copy[x*modulus+(r+label) % modulus][x*modulus+r] = ONE
+    full = matmul(adjoint(copy), matmul(tensor(k, identity(modulus)), copy))
+    return [[full[x*modulus][y*modulus] for y in range(d)] for x in range(d)]
+
+
+def diagonal_ideals(d):
+    pairs = [
+        (ONE, ONE),
+        (gaussian(F(3, 5), F(4, 5)), gaussian(0, 1)),
+        (gaussian(F(5, 13), F(12, 13)), gaussian(F(7, 25), F(24, 25))),
+        (gaussian(F(8, 17), F(15, 17)), gaussian(F(20, 29), F(21, 29))),
+    ]
+    a, b = zeros(d, d), zeros(d, d)
+    for x in range(d):
+        a[x][x], b[x][x] = pairs[x]
+    require_tp([(F(1), a)])
+    require_tp([(F(1), b)])
+    require(matmul(a, b) == matmul(b, a), "Ideal diagonal layers fail to commute.")
+    return a, b
+
+
+def replay_known_basis_layers():
+    count = cross_term_cases = 0
+    for n in (1, 2):
+        d = 2**n
+        a, b = diagonal_ideals(d)
+        target = matmul(b, a)
+        errors = arbitrary_noise(n)
+        for faulty_first in (True, False):
+            switched, checked, offdiagonal, minus = [], [], [], []
+            for weight, e in errors:
+                if faulty_first:
+                    first = matmul(b, matmul(e, a))
+                    second = matmul(matmul(e, a), b)
+                else:
+                    first = matmul(matmul(e, b), a)
+                    second = matmul(a, matmul(e, b))
+                k = scaled(plus(first, second), F(1, 2))
+                diagonal = copied_label_zero_kraus(first, range(d), d)
+                require(diagonal == diagonal_part(first) == diagonal_part(k),
+                        "Known-basis physical check does not match switch diagonal.")
+                switched.append((weight, k))
+                checked.append((weight, diagonal))
+                offdiagonal.append((weight, plus(k, scaled(diagonal, -1))))
+                minus.append((weight, scaled(plus(first, scaled(second, -1)), F(1, 2))))
+            require_tp(switched+minus)
+            ps, qs = physical_bell_metrics(switched, target)
+            po, qo = physical_bell_metrics(checked, target)
+            extra_p = trace(native_choi(offdiagonal))
+            require(qo == qs and gaussian(ps-po) == extra_p and po <= ps,
+                    "Known-basis one-fault p/q comparison failed.")
+            cross = plus(native_choi(checked), native_choi(offdiagonal))
+            if native_choi(switched) != cross:
+                cross_term_cases += 1
+            count += 1
+        # Include both non-Pauli/nonunital fault channels, not only the
+        # single-fault sectors, in the conservative independent-event bound.
+        for ea, eb in ((F(1, 10), F(3, 10)), (F(1, 2), F(1, 2))):
+            aes = [(1-ea, identity(d))]+[(ea*w, e) for w, e in errors]
+            bfs = [(1-eb, identity(d))]+[(eb*w, e) for w, e in errors]
+            switched, checked = [], []
+            for wa, e in aes:
+                for wb, f in bfs:
+                    first = matmul(matmul(f, b), matmul(e, a))
+                    second = matmul(matmul(e, a), matmul(f, b))
+                    switched.append((wa*wb, scaled(plus(first, second), F(1, 2))))
+                    checked.append((wa*wb, diagonal_part(first)))
+            ps, qs = physical_bell_metrics(switched, target)
+            po, qo = physical_bell_metrics(checked, target)
+            require(2*qo-po >= 2*qs-ps-2*ea*eb, "Known-basis double-fault bound failed.")
+            count += 1
+    require(cross_term_cases > 0, "Examples missed coherent Choi cross terms.")
+    # Two faults can reverse the ordinary comparison.  No all-orders
+    # dominance is inferred from the one-fault identities.
+    a, b = diagonal_ideals(2)
+    x = pauli_basis(1)[1]
+    first = matmul(matmul(x, b), matmul(x, a))
+    second = matmul(matmul(x, a), matmul(x, b))
+    ps, qs = physical_bell_metrics([(F(1), scaled(plus(first, second), F(1, 2)))],
+                                  matmul(b, a))
+    po, qo = physical_bell_metrics([(F(1), diagonal_part(first))], matmul(b, a))
+    require(2*qs-ps > 2*qo-po, "Missing double-fault limitation witness.")
+    return count, cross_term_cases
+
+
+def number_loss_example(d, offset):
+    triples = [(3, 4, 5), (5, 12, 13), (7, 24, 25), (9, 40, 41)]
+    target, nojump, jump = zeros(d, d), zeros(d, d), zeros(d, d)
+    target[0][0] = nojump[0][0] = ONE
+    for n in range(1, d):
+        a, b, c = triples[offset+n-1]
+        phase = gaussian(F(a, c), F(b, c))
+        target[n][n] = phase
+        nojump[n][n] = times(phase, F(a, c))
+        jump[n-1][n] = times(phase, F(b, c))
+    phase_error = identity(d)
+    for n in range(1, d, 2):
+        phase_error[n][n] = gaussian(0, 1)
+    ks = []
+    for k, shift in ((nojump, 0), (jump, 1)):
+        ks.append((F(9, 25), k, shift))
+        ks.append((F(16, 25), matmul(phase_error, k), shift))
+    require_tp([(w, k) for w, k, _ in ks])
+    return target, ks
+
+
+def replay_number_diagonal_loss():
+    count = 0
+    for d in (2, 3, 4):
+        a, aks = number_loss_example(d, 0)
+        b, bks = number_loss_example(d, 1)
+        target = matmul(b, a)
+        switched, checked, no_loss, loss, minus = [], [], [], [], []
+        for wa, ka, la in aks:
+            for wb, kb, lb in bks:
+                first, second = matmul(kb, ka), matmul(ka, kb)
+                k = scaled(plus(first, second), F(1, 2))
+                accepted = copied_label_zero_kraus(first, range(d), d)
+                switched.append((wa*wb, k))
+                checked.append((wa*wb, accepted))
+                minus.append((wa*wb, scaled(plus(first, scaled(second, -1)), F(1, 2))))
+                if la+lb == 0:
+                    require(first == second == accepted,
+                            "No-loss modular-number circuit changed a diagonal Kraus.")
+                    no_loss.append((wa*wb, k))
+                else:
+                    require(accepted == zeros(d, d), "Positive loss passed modular number.")
+                    require(trace(matmul(adjoint(target), k)) == ZERO,
+                            "Lowering Kraus has nonzero target Bell overlap.")
+                    loss.append((wa*wb, k))
+                count += 1
+        require_tp(switched+minus)
+        require(native_choi(checked) == native_choi(no_loss),
+                "Complete ordinary no-loss Choi identity failed.")
+        require(native_choi(switched) == plus(native_choi(no_loss), native_choi(loss)),
+                "Complete switched CP loss remainder failed.")
+        ps, qs = physical_bell_metrics(switched, target)
+        po, qo = physical_bell_metrics(checked, target)
+        require(qo == qs and po <= ps and 2*qo-po >= 2*qs-ps,
+                "Number-diagonal loss signed Bell comparison failed.")
+        require(qo*ps >= qs*po, "Conditional Bell fidelity comparison failed.")
+    # A genuine two-photon jump defeats parity, even though full number
+    # difference still detects it.  First-order parity protection therefore
+    # requires a single-photon weak-loss law, not merely nonnegative shifts.
+    two_loss = zeros(3, 3)
+    two_loss[0][2] = gaussian(F(4, 5))
+    no_two_loss = identity(3)
+    no_two_loss[2][2] = gaussian(F(3, 5))
+    require_tp([(F(1), no_two_loss), (F(1), two_loss)])
+    require(copied_label_zero_kraus(two_loss, (0, 1, 0), 2) == two_loss,
+            "Two-photon loss unexpectedly triggered parity.")
+    require(copied_label_zero_kraus(two_loss, range(3), 3) == zeros(3, 3),
+            "Full modular number missed a two-photon jump.")
+    return count
+
+
 def main():
     pcs_cases = replay_pcs()
     read_cases = replay_read_oracles()
     router_cases = replay_qutrit_router()
     self_metric_cases, self_instrument_cases = replay_self_channel_routes()
+    known_basis_cases, coherent_cross_cases = replay_known_basis_layers()
+    loss_cases = replay_number_diagonal_loss()
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
         "qutrit_router_flagged_kraus_identities": router_cases,
         "self_channel_quasistatic_full_choi_metric_cases": self_metric_cases,
         "self_channel_iid_full_control_choi_cases": self_instrument_cases,
+        "known_basis_fault_full_choi_cases": known_basis_cases,
+        "known_basis_coherent_cross_term_cases": coherent_cross_cases,
+        "number_diagonal_loss_kraus_pair_cases": loss_cases,
         "scope": "Finite replay; general projection, costs and physical hypotheses are analytic.",
     }, sort_keys=True))
 

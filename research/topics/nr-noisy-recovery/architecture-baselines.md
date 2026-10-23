@@ -11,7 +11,7 @@ and noise model before making that comparison.
 
 <a id="nr-r06"></a>
 
-## NR-R06 — Calibrated orthogonal-unitary faults admit exact ordinary simulation
+## NR-R06 — Native checks, calibrated faults and ordinary path baselines
 
 ### Physical hypothesis
 
@@ -389,6 +389,191 @@ coherent address mixing, a bit flip, diagonal phase noise and nonunital
 $2\to1$ leakage. It also checks the one-postcheck projection and absence
 of a diagonal-phase alarm. These operator equalities imply complete-channel
 equalities on the tested examples; the general algebra is given above.
+
+### Distinct commuting layers in a known basis admit ordinary fault checks
+
+Let $A=\operatorname{diag}(a_x)$ and $B=\operatorname{diag}(b_x)$ be two
+distinct ideal unitaries in a **known executable basis**, with target
+$W=BA=AB$ on a $D$-dimensional payload. Their phases need not be known,
+learned or cleanly synthesized. For accepted Kraus operators $L_k$, write
+
+$$
+p=\frac1D\sum_k\operatorname{Tr}(L_k^\dagger L_k),\qquad
+q=\frac1{D^2}\sum_k|\operatorname{Tr}(W^\dagger L_k)|^2,
+\qquad \mathsf S=2q-p.
+$$
+
+These are the acceptance, Bell-good weight and signed Bell reward used
+above. They count rejection as zero reward. A conditional Bell fidelity
+$q/p$ is defined when $p>0$; these scalars do not imply an arbitrary-input
+conditional-channel or diamond-distance guarantee.
+
+Use the standard independent-slot channel model for the switch and the
+same fixed native maps for the ordinary execution. The helper interactions
+must leave those maps unchanged. A retained shared bath, order-dependent
+arrival times or helper-induced crosstalk needs a joint physical process
+model; marginal channels alone do not establish this comparison.
+
+Prepare a clean $D$-level syndrome register and use
+$C_{\rm cp}|x\rangle|r\rangle=|x\rangle|r+x\bmod D\rangle$
+before an ordinary $A$-then-$B$ execution, followed by
+$C_{\rm cp}^\dagger$. Accept syndrome zero. For any physical Kraus matrix $M$,
+
+$$
+\langle0|C_{\rm cp}^\dagger(M\otimes I)C_{\rm cp}|0\rangle
+=\mathsf D(M),\qquad
+\mathsf D(M)=\sum_x|x\rangle\langle x|M|x\rangle\langle x|.
+$$
+
+The input label is never measured. In a no-fault execution the syndrome
+returns to a fixed pure state, preserving arbitrary payload/reference
+coherences. For a computational-basis $n$-qubit block, $n$ data-to-ancilla
+CNOTs before and after implement the same zero-syndrome projection by
+copying XOR labels, with $n$ clean ancillary qubits.
+
+Suppose only $A$ is faulty, with native channel
+$\mathcal N_A\circ\operatorname{Ad}_A$ and arbitrary Kraus $E_k$ for
+$\mathcal N_A$; $B$ is ideal. The switch-plus Kraus is
+
+$$
+K_k=\frac{BE_kA+E_kAB}{2}
+=\frac{BE_kB^\dagger+E_k}{2}W.
+$$
+
+Its diagonal part is $D_k=\mathsf D(E_k)W$, exactly the accepted ordinary
+Kraus $\mathsf D(BE_kA)$. Write $K_k=D_k+O_k$, where $O_k$ is strictly
+off-diagonal. Hilbert--Schmidt orthogonality gives
+$\operatorname{Tr}(D_k^\dagger O_k)=0$, while diagonality of $W$ gives
+$\operatorname{Tr}(W^\dagger O_k)=0$. Hence
+
+$$
+q_{\rm ord}=q_{\rm sw},\qquad
+p_{\rm sw}-p_{\rm ord}=\frac1D\sum_k\|O_k\|_{\rm HS}^2\ge0.
+$$
+
+The same proof holds when only $B$ is faulty, interchanging $A$ and $B$;
+the ordinary order remains $A$ then $B$. No inverse native call, error
+record or knowledge of either phase spectrum is needed. The fault can
+occur inside the module: the representation relative to its unitary
+ideal is always a CPTP channel. These are Bell-metric identities, not a
+CP decomposition: diagonal/off-diagonal Choi cross terms may remain.
+
+If actual independent stochastic fault events have probabilities
+$\epsilon_A,\epsilon_B$, with the ideal unitary on each no-fault event,
+the no-fault and single-fault sectors obey
+$\mathsf S_{\rm ord}\ge\mathsf S_{\rm sw}$. Every Bell reward is in
+$[-1,1]$, so the double-fault sector yields the all-orders bound
+
+$$
+\mathsf S_{\rm ord}\ge\mathsf S_{\rm sw}-2\epsilon_A\epsilon_B.
+$$
+
+This removes a leading-order switched signed-Bell improvement in that
+stochastic model; it does not compare arbitrary coherent systematic
+fault amplitudes, optimize double-fault processing, or bound all protocols
+that recover from both switch outcomes. The check costs $2n$ CNOTs in
+the stated bit basis, plus syndrome storage/readout. An arbitrary unknown
+common eigenbasis is outside that inexpensive implementation. Helper
+noise, connectivity, crosstalk and the native routing cost remain material.
+
+### Number-diagonal nonlinear layers admit an exact loss check
+
+The comparison strengthens for number-diagonal gates with only loss and
+diagonal phase noise. Let $N$ have nonnegative integer eigenvalues up to
+$N_{\max}$ on the allowed input space, and assume a Kraus representation
+refined into definite nonnegative shifts,
+
+$$
+[N,A_i]=-\ell_i A_i,\qquad [N,B_j]=-m_jB_j,
+\qquad \ell_i,m_j\ge0.
+$$
+
+Require every zero-shift $A_i,B_j$ to be diagonal in the same complete
+basis as the ideal $A,B$. For several modes this can be the joint
+occupation basis, with $N$ total photon number. Total-number preservation
+alone does not ensure the required joint diagonality.
+
+These hypotheses include pure loss **during** number-diagonal Kerr,
+SNAP or cross-Kerr evolution: no-jump propagators are diagonal,
+annihilation jumps lower number, and intervening diagonal factors do
+not change that shift. Diagonal phase-noise trajectories remain diagonal.
+They do not include heating, return leakage, number-preserving mode
+mixing, or every error of a driven nonlinear ancilla.
+
+The switch-plus Kraus
+$K_{ij,+}=(B_jA_i+A_iB_j)/2$ has shift $\ell_i+m_j$. If this is zero,
+both labels are zero and their commuting Kraus give $K_{ij,+}=B_jA_i$.
+If it is positive, $K_{ij,+}$ is strictly lowering, so
+$\operatorname{Tr}(W^\dagger K_{ij,+})=0$ for diagonal $W=BA$.
+
+For an ordinary check choose $M>N_{\max}$, coherently add the initial
+$N\bmod M$ to a clean $M$-level register, execute the same two native
+modules in fixed order, and coherently subtract the final number. Accept
+syndrome zero. Each surviving trajectory writes
+$\ell_i+m_j\bmod M$ to the register. A nonzero lowering trajectory loses
+at most $N_{\max}$ photons, so zero syndrome is precisely no loss.
+The procedure reads neither the initial nor the final number separately;
+successful trajectories preserve input-number superpositions.
+
+Let $\mathcal F_0$ be the accepted ordinary operation. The **complete**
+accepted switched map has the reference-preserving CP decomposition
+
+$$
+\mathcal F_{{\rm sw},+}=\mathcal F_0+\mathcal G_{\rm loss},
+$$
+
+where the lowering Kraus of $\mathcal G_{\rm loss}$ have zero target
+Bell overlap. Thus at every noise strength in this model,
+
+$$
+q_0=q_{{\rm sw},+},\qquad p_0\le p_{{\rm sw},+},\qquad
+\mathsf S_0\ge\mathsf S_{{\rm sw},+},\qquad
+\frac{q_0}{p_0}\ge\frac{q_{{\rm sw},+}}{p_{{\rm sw},+}}
+$$
+
+when the denominators are nonzero. The signed-reward comparison counts
+rejection as zero; the conditional-fidelity comparison is reported together
+with its acceptance probability. They compare zero-loss acceptance with
+the switch's plus filter; they do not exclude recovery of loss sectors using a bosonic code,
+or assert optimality over both switched flags and arbitrary recovery.
+
+For a multimode code with fixed total number $N_0$, every loss maps into a
+sector orthogonal to the ideal output. The same good-weight identity then
+holds for **every pure encoded payload/reference**, and a final
+nondestructive number check suffices. Fixed-total-number dual-rail codes
+with nonlinear entangling phase gates are nontrivial examples; a
+single-mode fixed-number phase alone would only be a global phase.
+For arbitrary-number inputs the Bell statement above is the asserted
+fidelity comparison, since a lowering operator can have nonzero overlap
+with an individual number-superposed payload.
+
+One clean parity ancilla gives a cheaper first-order comparator: coherently
+copy parity before and uncopy after, accepting no parity change. This
+rejects every single loss. For weak **single-photon** damping with the
+probability of two or more losses $O(\epsilon^2)$, missed positive even
+loss is second order. A two-photon jump of probability $O(\epsilon)$ does
+not meet that premise. On a fixed-parity code, only the final check is
+needed. The full number check needs a register of at least
+$\lceil\log_2(N_{\max}+1)\rceil$ qubits or its oscillator equivalent,
+with coherent number-controlled interactions, decoding and readout; it
+is not a free operation on traveling light.
+
+[Heeres et al.](https://arxiv.org/abs/1503.01496) demonstrate nonlinear
+number-selective cavity phase control, including Kerr-phase compensation.
+[Sun et al.](https://arxiv.org/abs/1311.2534) demonstrate repeated QND
+photon-parity monitoring with a dispersive ancillary qubit.
+[de Graaf et al.](https://arxiv.org/abs/2406.14621) demonstrate a mid-circuit
+erasure check on a dual-rail cavity qubit with an explicit error budget.
+These make ordinary charge checks relevant native comparators, without
+establishing a noiseless coherent before/after gadget or a stored-state
+quantum router. Ancilla-record correction and
+[path-independent gates](https://arxiv.org/abs/1911.12240) also belong in a
+cavity comparison. The checks above are applications of established
+[spatiotemporal circuit checks](https://arxiv.org/abs/2112.13904) and
+[symmetric channel verification](https://arxiv.org/abs/2503.13114), without
+a mechanism-priority claim. Native helper faults, time/energy, actual
+coherent order routing and the complete environmental history determine
+the remaining hardware frontier.
 
 ### Matched noisy copies admit an ordinary same-order path comparator
 

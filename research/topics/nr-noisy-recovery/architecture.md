@@ -35,6 +35,36 @@ native mode controls changes the inference problem.
 
 ## Real workloads and the model mismatch
 
+### Fresh private frames and delegated computation
+
+Privacy can explain why a recovery provider lacks a frame key, but it does
+not by itself establish NR-R01's complete interface. The natural Clifford
+variant is already covered by [NR-R06](architecture-baselines.md#nr-r06):
+Clifford-conjugated Pauli axes with physical Pauli noise are channels in
+the public Pauli basis. Ordinary Bell queries sample their actual error
+labels and simulate the full switch without learning or revealing the key.
+Frame freshness does not remove that simulation. NR-R01 instead requires
+its much stronger approximate sixth-design condition; Clifford frames alone
+do not satisfy the theorem's premise.
+
+Ordinary blind computation also need not conceal every error record.
+[Baranes et al.](https://arxiv.org/html/2505.21621v1) let the server extract
+syndromes while the client tracks a private Pauli frame and decodes the
+communicated outcomes. This is a specific interactive architecture, not a
+universal optimality claim, but it prevents treating blindness as a general
+ban on checks or feedforward. The
+[distributed solid-state experiment of Wei et al.](https://doi.org/10.1126/science.adu6894)
+uses photon measurements and client records for blind matter-qubit gates;
+it does not supply NR-R01's two coherent opaque module ports.
+
+A surviving delegated-computation proposal must justify why the source is
+offline after issuing the scrambled challenge, why no useful frame-correlated
+program or native check can be provided, and how the efficient sixth-design
+module circuit retains the stated post-module noise model. It must then
+compare a useful confidential computation or recovery task with ordinary
+blind error correction, including communication and client latency. The
+existing privacy protocols do not currently provide that application.
+
 ### Gate-layer calibration and scheduling
 
 Choosing echo settings, concurrent gate groups and recalibration times is a
@@ -377,6 +407,18 @@ because recompiling its full unitary is expensive. Cheap transported checks
 can use the same native calls. Helper gates, their noise and memory must be
 costed, rather than assumed free by either implementation.
 
+Distinct commuting modules need not have identical ideal unitaries. When
+their common eigenbasis is known and accessible, an ordinary coherent
+basis-label check rejects off-diagonal single faults with the same Bell-good
+weight as the switched plus branch. The first-order comparison does not
+extend to arbitrary double faults, and copying a general basis label can
+need a full register of helpers. For number-diagonal Kerr or SNAP operations,
+a modular-number check supplies a more specific ordinary loss test; one
+parity helper detects every first-order photon loss. These are existing
+verification resources, not free controls for an unknown eigenbasis or
+unavailable traveling-photon QND measurements. NR-R06 states their exact
+scope, double-fault counterexample and native costs.
+
 The [recorded parity-braid screen in NR-R08](architecture-baselines.md#nr-r08)
 compares an ordinary three-parity-measurement braid with a specified balanced
 switch construction using mean six parity measurements and two control
@@ -530,14 +572,51 @@ includes spectral-mode distortion. A fitted nonlinear fringe phase is not
 by itself a reusable controlled-phase channel. Two matched independent
 modules and an order router cannot be assumed from that experiment.
 
-The next calculation must retain the joint two-photon frequency kernel,
-emitter/phonon records and all loss outcomes. First apply the
-[accepted-scattering commutation screen in NR-R11](communication.md#nr-r11)
-to any proposed bare detuning-only pair. For a pair outside that screen,
-compare direct pulse/detuning optimization, spectral-mode selection and
-ordinary coherent checks on the same output. Specify how the order flag
-is read while preserving both computational photons; coincidence data
-after destructive detection is not a delivered quantum gate. A useful
-endpoint is a declared two-photon state or logical gate fidelity per
-launch and per unit time, with source, routing, selection and reset costs.
-This is an instrument-construction target, not an established advantage.
+The [scattering comparisons in NR-R11](communication.md#nr-r11) now separate
+three cases. Bare detuning-only pairs with common monitored coupling commute
+on the entire accepted two-photon field. Unequal couplings escape that
+identity and give a conditional gate on a specified correlated relative-mode
+code. Its best resonant endpoint is already ordinary serial scattering;
+for the stated finite-pulse target, a kernel-transpose identity preserves
+the same correct-output weight in the ordinary order. Conditional error
+rejection alone is therefore insufficient. The minus branch also annihilates
+the vacuum and one-photon sectors, preventing its use as a heralded dual-rail
+controlled-phase gate in the specified routing. An ideal whole-pair passive
+vacuum herald retains both photons at half the abstract branch yield;
+unmonitored loss can falsely herald missing photons. An independent order
+ancilla can be measured without consuming the targets, but its preparation,
+coupling, storage and readout must be supplied and charged.
+
+Photon-preserving bath noise is a separate case. If nonvacuum bath records
+resolve the early and late windows while the empty-record products commute,
+ordinary randomized same-order delayed paths reproduce the complete measured
+order-flag and photon-output instrument. This comparison uses three global
+windows instead of two, with the same two occupied traversals; its extra
+delay, route loss and visibility matter. A Markov model alone does not imply
+disjoint records for finite pulses with long scattering tails. The proof
+gives an error bound conditional on a uniform record-tail estimate, but the
+native two-emitter estimate remains to be calculated. Retained phonon modes,
+overlapping histories and coherent inter-emitter feedback are not closed by
+that reduction.
+
+There are now more specific physical starting points than an assumed pair
+of copies of Nielsen's processor.
+[Hallacy et al.](https://arxiv.org/abs/2511.07640) independently tune two
+chiral dots in a shared waveguide and measure spin-dependent photon
+correlations. Reversing propagation exchanges directional couplings and
+optical transitions; it does not automatically supply the same two local
+modules in reverse order. [Hansen et al.](https://arxiv.org/abs/2605.18525)
+demonstrate collective few-photon transport through coupled emitters with
+both forward and backward outputs. Their device is a joint scatterer, so
+its coherent reflection and shared dynamics cannot be replaced by a product
+of independent forward channels.
+
+The next test is the full input-output model of one such actual device.
+Prespecify a useful detuning or spin-setting decision, or a delivered
+few-photon state/gate, and compare ordinary phase/correlation measurements,
+pulse optimization, spectral selection and coherent delayed paths. Retain
+all output ports, emitter and phonon records, and the valid-output herald.
+If a reversed route changes the local interaction, compare that physical
+process directly rather than importing the abstract channel-SWITCH bound.
+Charge source, routing, storage, reset, selection and every rejected launch.
+A significant advantage on this nonlinear platform remains unestablished.

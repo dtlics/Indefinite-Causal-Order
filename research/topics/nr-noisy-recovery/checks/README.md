@@ -25,7 +25,7 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_reuse.py` | Rational threshold, spectral-gap, recovered-score and training/rejection crossover arithmetic for NR-R07. The collective learning algorithm and its asymptotic constants are cited inputs, not computed by this replay. |
 | `architecture/verify_measurements.py` | Small exact Lüders PVM examples, Choi overlaps, recorded return probabilities, binary trace-filter identities and syndrome-sector scaling constants for NR-R08. Initialized-ancilla parity examples at dimensions 4 and 8 check all recorded braid branches and frame corrections, with a full unread-control Choi identity at dimension 4 and retry-cost arithmetic. |
 | `architecture/verify_communication.py` | Full Choi equalities for six absorbing-vacuum examples, sixteen rank-one-channel/noisy-qubit-wire factorizations, four rank-two protected-factor factorizations and four tight qubit-activation examples, plus an elastic-node instrument and a bus-mixing counterexample. The general entanglement, finite-mean and capacity proofs are analytic. |
-| `architecture/verify_native_checks.py` | Exact finite known-Clifford Pauli-check and classical-bit-oracle comparisons with non-Pauli noise; twenty paired flagged-Kraus identities for qutrit-router address checks, leakage projection and diagonal-phase blindness; same-ideal-unitary Bell-score and full clock-noise Choi comparisons at dimensions 2 and 4. No fitted helper-gate or hardware-runtime model. |
+| `architecture/verify_native_checks.py` | Exact finite known-Clifford Pauli-check and classical-bit-oracle comparisons with non-Pauli noise; twenty paired flagged-Kraus identities for qutrit-router address checks, leakage projection and diagonal-phase blindness; same-ideal-unitary Bell-score and full clock-noise Choi comparisons at dimensions 2 and 4. Eight known-basis fault/full-Choi cases include four nonzero coherent-cross witnesses, and 48 number-lowering Kraus-pair cases test the complete accepted CP decomposition. Explicit double-fault and two-photon-loss examples guard the single-fault/parity limits. No fitted helper-gate or hardware-runtime model. |
 | `architecture/verify_dispatch.py` | Thirty-six reference-complete flagged counter/data Choi examples at data dimensions 2 and 3; 96 temporal phase-path identities; nine event-head, three clock-time and six fresh-repeat/rewind cases; the indexed-unitary identity and three/four-call dummy factorizations. Gaussian decoder and whole-frontier arguments remain analytic. |
 | `architecture/verify_dispatch_baselines.py` | Forty-eight full accepted-Choi mean-cost examples and twelve hard-two controlled-teleportation examples at data dimensions 2 and 3. Rebuilds CP/TP projector certificates, exact Bell/diamond witnesses and heralded counter-dephasing maps. It does not optimize the positive-cost frontier or compute the qualitative converse's margin. |
 | `architecture/verify_lookups.py` | Full-address Choi identities for all 340 Boolean table pairs at address dimensions 1–4, both measured flags, conditional correction and rejection accounting; the four-truth-pattern balanced-switch junk-erasure projector. The general scoped erasure bound and native access assumptions remain analytic. |
@@ -75,5 +75,9 @@ The metrology job uses no installed optimizer or floating-point feasibility
 decision. Its JSON provenance is attribution, not a trusted assertion of
 positivity. The three-query construction is an ordinary achievable lower
 bound; the two-query certificate is not an expected-cost or information-rate
-converse. The continuum two-photon common-basis argument in NR-R11 is
-analytic and is not certified by a finite frequency-grid replay.
+converse. The continuum two-photon common-basis, unequal-rate kernel,
+finite-pulse target-amplitude, photon-preserving herald, known-dressing
+reuse, and bath-record/tail arguments in NR-R11 are analytic. They are
+not certified by a finite frequency-grid replay or by the existing small
+elastic-node examples. No native pulse-tail or phonon-overlap estimate is
+recorded as proved by these checks.
