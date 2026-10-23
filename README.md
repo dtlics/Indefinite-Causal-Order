@@ -10,6 +10,7 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | Noisy physical recovery and its expected-query comparison | [Recovery topic](research/topics/nr-noisy-recovery/README.md) |
 | Architecture applications, strongest ordinary baselines, and next tests | [Application assessment](research/topics/nr-noisy-recovery/architecture.md) |
 | Communication cuts, optical loss and control-resource bounds | [Communication results](research/topics/nr-noisy-recovery/communication.md) |
+| Coherent dispatch, ordinary recovery and microscopic temporal models | [Dispatch result](research/topics/nr-noisy-recovery/dispatch.md) |
 | Selected formal theorem statements and hypotheses | [Theorem map](proofs/lean/THEOREMS.txt) |
 | Lean proofs and exact finite certificates | [Proof project](proofs/lean/README.md) |
 | Literature context and access-model distinctions | [References](references/README.md) |

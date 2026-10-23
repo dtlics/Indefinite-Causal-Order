@@ -243,12 +243,92 @@ def replay_read_oracles():
     return count
 
 
+def replay_qutrit_router():
+    """Full operator identities for an address-controlled two-exit router.
+
+    Registers: qutrit address, input bus, left bus, right bus. The logical
+    address is 0/2; level 1 is leakage and the chosen unitary completion
+    leaves its buses alone. Equality is checked Kraus by Kraus, including
+    both flags, so no restriction to unentangled test inputs is used.
+    """
+    def index(address, incoming, left, right):
+        return 8*address+4*incoming+2*left+right
+
+    router = zeros(24, 24)
+    for address, incoming, left, right in product(range(3), range(2), range(2), range(2)):
+        before = index(address, incoming, left, right)
+        if address == 0:
+            after = index(address, left, incoming, right)
+        elif address == 2:
+            after = index(address, right, left, incoming)
+        else:
+            after = before
+        router[after][before] = ONE
+    require(matmul(adjoint(router), router) == identity(24), "Router completion is not unitary.")
+
+    code, code_injection = zeros(24, 24), zeros(24, 16)
+    for logical, address in enumerate((0, 2)):
+        for data in range(8):
+            code[8*address+data][8*address+data] = ONE
+            code_injection[8*address+data][8*logical+data] = ONE
+    leak = plus(identity(24), scaled(code, -1))
+    q_er = plus(scaled(code, 2), scaled(identity(24), -1))
+    q_logic_a = identity(3)
+    q_logic_a[2][2] = gaussian(-1)
+    q_logic = tensor(q_logic_a, identity(8))
+    for q in (q_er, q_logic):
+        require(matmul(q, q) == identity(24), "Address check is not an involution.")
+        require(matmul(q, router) == matmul(router, q), "Ideal router changes its address check.")
+
+    damping0 = identity(3)
+    damping0[2][2] = gaussian(F(3, 5))
+    damping1 = zeros(3, 3)
+    damping1[1][2] = gaussian(F(4, 5))
+    flip = identity(3)
+    flip[0][0] = flip[2][2] = ZERO
+    flip[0][2] = flip[2][0] = ONE
+    rotation = identity(3)
+    rotation[0][0] = rotation[2][2] = gaussian(F(3, 5))
+    rotation[0][2] = gaussian(F(-4, 5))
+    rotation[2][0] = gaussian(F(4, 5))
+    noises = [
+        [(F(1), q_logic)],
+        [(F(1), tensor(k, identity(8))) for k in (damping0, damping1)],
+        [(F(1), tensor(flip, identity(8)))],
+        [(F(1), tensor(rotation, identity(8)))],
+    ]
+    comparisons = 0
+    for noise_number, noise in enumerate(noises):
+        require_tp(noise)
+        actual = [(weight, matmul(k, router)) for weight, k in noise]
+        require_tp(actual)
+        for _, k in actual:
+            for q, sign in product((q_er, q_logic), (1, -1)):
+                switched = scaled(plus(matmul(q, k), scaled(matmul(k, q), sign)), F(1, 2))
+                checked = scaled(plus(k, scaled(matmul(matmul(q, k), q), sign)), F(1, 2))
+                require(matmul(q, switched) == checked,
+                        "Known-address switch/check full instrument equality failed.")
+                comparisons += 1
+            for sign, projector in ((1, code), (-1, leak)):
+                checked = scaled(plus(k, scaled(matmul(matmul(q_er, k), q_er), sign)), F(1, 2))
+                require(matmul(checked, code_injection) == matmul(matmul(projector, k), code_injection),
+                        "One-postcheck nondestructive code/leakage flag identity failed.")
+            if noise_number == 0:
+                for q in (q_er, q_logic):
+                    minus = scaled(plus(k, scaled(matmul(matmul(q, k), q), -1)), F(1, 2))
+                    require(matmul(minus, code_injection) == zeros(24, 16),
+                            "Address-diagonal phase noise spuriously triggers an order syndrome.")
+    return comparisons
+
+
 def main():
     pcs_cases = replay_pcs()
     read_cases = replay_read_oracles()
+    router_cases = replay_qutrit_router()
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
+        "qutrit_router_flagged_kraus_identities": router_cases,
         "scope": "Finite replay; general projection, costs and physical hypotheses are analytic.",
     }, sort_keys=True))
 

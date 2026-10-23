@@ -342,6 +342,56 @@ router loss and latency, plus the desired physical-output metric.
 
 <a id="nr-r07"></a>
 
+### Qutrit-router address checks do not require a Clifford payload
+
+The logical router in
+[Zhang et al., Eq. (1)](https://arxiv.org/abs/2505.13958) is
+
+$$
+R=|L\rangle\langle L|\otimes\operatorname{SWAP}_{I,L}
+ +|R\rangle\langle R|\otimes\operatorname{SWAP}_{I,R},
+$$
+
+with the two address values encoded in qutrit levels $0,2$. It leaves the
+address unchanged, so every address-diagonal Hermitian involution $Q$
+commutes with the ideal logical gate. A chosen full-space completion may
+leave leakage level $1$ alone. This does not require $R$ to be Clifford.
+For any fixed actual route channel with Kraus operators $K_i$, switching
+that channel with the known $Q$ and measuring the order control in $X$
+gives $(QK_i\pm K_iQ)/2$. A fixed output $Q$ transforms these into
+
+$$
+\frac{K_i\pm QK_iQ}{2}.
+$$
+
+These are exactly the two Kraus families from one ordinary route call
+between controlled-$Q$ gates on a single plus-prepared helper, followed by
+its $X$ measurement. The complete flagged quantum instrument agrees,
+including arbitrary reference entanglement. This is the transported-check
+baseline above, specialized to a cheap native symmetry. It assumes that
+the same actual route map applies in the tested contexts; helper noise and
+control-induced crosstalk require a joint model in both implementations.
+
+For leakage detection, take
+$Q_{\rm er}=|0\rangle\langle0|-|1\rangle\langle1|+|2\rangle\langle2|$.
+On code-supported input, the pre-check is the identity and can be omitted.
+One ordinary controlled-$Q_{\rm er}$ **after** the route, with helper
+$X$ readout, yields $P_{02}K_i$ or $P_1K_i$. Its successful code projection
+preserves coherence between levels $0,2$; no address value is read.
+This is a proposed nondestructive binary check, not a demonstrated ability
+to recycle the experiment's terminal address readout. Its controlled
+qutrit phase, helper, measurement and delay all count in a hardware budget.
+Conversely, pure address-diagonal phase faults commute with these checks
+and with the logical router. Neither their switch commutator nor this
+ordinary check supplies a phase-fault syndrome.
+
+The native-check replay verifies twenty exact paired flagged-Kraus
+identities for a full qutrit-address/three-qubit-bus router, including
+coherent address mixing, a bit flip, diagonal phase noise and nonunital
+$2\to1$ leakage. It also checks the one-postcheck projection and absence
+of a diagonal-phase alarm. These operator equalities imply complete-channel
+equalities on the tested examples; the general algebra is given above.
+
 ## NR-R07 — The efficient finite-frame family admits polynomial-query reused calibration
 
 This theorem concerns the local-noise family of NR-R01 with a **fixed

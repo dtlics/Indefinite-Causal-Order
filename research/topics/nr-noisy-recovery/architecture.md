@@ -257,8 +257,11 @@ response, rather than substituting a dephasing rate for a two-history overlap.
 The finite two-frequency candidate has failed this stronger ordinary
 screen: checks at each node remove all cross-bin jumps, including two
 shifts that return to the original bin and evade a single global check.
-This requires two helper qubits and four controlled spectral phases;
-it does not exclude a finite hardware tradeoff with one order control.
+Two local check sandwiches use four controlled spectral phases. Their
+accepted branch can reuse one helper sequentially after plus-port selection
+and reset; two simultaneously retained helpers are not a necessary cost.
+The physical routing, selection and reset still count. This does not exclude
+a finite hardware tradeoff with one order control.
 The exact projection identity is replayed in the communication checks.
 It is not a continuum scattering calculation or a fit to the named
 experiment. Resolve the measured frequency kernel and price these
@@ -293,6 +296,85 @@ Conversely, quasistatic counter-phase noise can cancel in two ordinary
 repetitions. A proposed temporal-noise model must preserve the required
 switch coherence without inadvertently granting that ordinary echo.
 
-The next useful result must resolve one of these microscopic interface and
-matched-cost questions. The present exclusions and idealized constructions
-remain intermediate research evidence.
+The dispatch note now gives an explicit consistent dilation: private,
+coherent visit heads select retained independent fault coins by invocation
+number. Both switch histories finish with the same heads, while ordinary
+repeats consume fresh coins. This requires protected quantum event memories,
+reversible addressing and no exported timestamps. With ideal routing and
+equal exponential head dephasing, visibility $0.97$ requires head $T_2$
+about $66$ times the separation between visits. It resolves logical
+consistency without establishing a cheap native module. Rewind, coin readout
+and reset controls cannot be withheld if the operator actually has them.
+
+The same note supplies a stronger physical comparison for time-varying
+classical phase fields. Ordinary paths that revisit one station in each
+arm produce the same corrected quantum output for every phase history as
+paths that interchange stations. For independent identical centered Gaussian
+fields, the ordinary alternatives match the best all-outcome postdecoder;
+with nonnegative temporal correlation, ordinary same-order filtering also
+dominates the entire accepted Bell-fidelity frontier. These statements
+require the specified vacuum extension, local delay loops and matched loss
+and helper assumptions. They do not cover nonclassical bath backaction.
+
+Noncommuting conditional dynamics have a real constituent model:
+[Taminiau et al.](https://arxiv.org/html/1309.5452) give electron-controlled
+nuclear Hamiltonians $H_0=\omega_L I_z$ and
+$H_1=(\omega_L+A_\parallel)I_z+A_\perp I_x$. An electron flip after
+conditional free evolution has the algebraic dispatcher form.
+[Hernández-Gómez et al.](https://arxiv.org/html/1808.08222) distinguish
+coherently coupled nuclei from a residual stochastic bath and show when
+classical bath predictions fail under changed controls. Neither source
+supplies two matched routable processors acting on the same nuclear target,
+the required coherent vacuum interface, or an event-indexed fault reservoir.
+Two NV centres with separate attached memories cannot be substituted for
+that missing port. Their calibrated decoupling sequences remain ordinary
+competitors, not evidence for switch recovery.
+
+The application must also require the target computation. A standard XOR
+lookup squares to the identity; stationary analog evolution squares to a
+direct evolution for twice as long. The Quantum Control Machine's
+implementation uses fixed, known primitive gates (§5.3, footnote 5), so
+its program counter does not establish unknown reusable subroutine ports.
+[Oracle Distillation](https://arxiv.org/abs/2609.31596) is a current ordinary
+weak-query/QEC comparator for structured unknown Boolean families. It grants
+ideal helper operations and memory and leaves physical QRAM noise shaping
+open; it is not a theorem for arbitrary unknown unitaries or a demonstrated
+native processor.
+
+The [composite-lookup screen](native-lookups.md) tests a different useful
+target: a clean phase marking the intersection of two classical datasets.
+Measurement-based uncomputation gives an exact ordinary protocol with
+mean $2.5$ reads; immediate rejection allows $80\%$ perfect accepted output
+at mean two reads. The obvious balanced switch followed by junk-only
+erasure succeeds at most one third of the time. A maintained intersection
+table is a further ordinary baseline when the operator owns both datasets.
+That displayed switch protocol should therefore not be pursued as a winner.
+
+A [superconducting coherent-router demonstration](https://arxiv.org/abs/2505.13958)
+provides a concrete small testbed for route–call–return instruments,
+including terminal address erasure selection. Its address readout and
+classical discard of level-$1$ shots do not demonstrate a nondestructive
+binary code-space measurement preserving an unknown address. Data sites
+start in physical $|0\rangle$, not an orthogonal vacuum sector. Applying
+arbitrary unknown leaf gates also changes unselected sites and can leave
+which-address junk; a known leaf phase preserving $|0\rangle$ is a different,
+more structured interface.
+
+There is already a precise ordinary screen for the router's address-fault
+alarm. Its ideal controlled swaps leave the address unchanged. Switching a
+fixed noisy route with a known diagonal address involution has exactly the
+same full flagged instrument as an ordinary controlled-phase check sandwich
+using one route call. On code-supported inputs, code-versus-leakage detection
+needs only a single controlled phase after the route. Pure diagonal address
+dephasing triggers neither construction. The
+[native address-check proof](architecture-baselines.md#nr-r06) and exact
+qutrit replay state the shared-map and helper-cost conditions.
+
+The next native calculation must use the actual noisy gate sequence and
+preserved output registers, including leakage, unselected-site states and
+reset/readout records. Compare the measured cost of the single post-check
+and full check sandwich with any proposed order router. An exclusive switch
+claim cannot follow from granting it a clean known symmetry or a coherent
+vacuum port absent from the ordinary hardware. A surviving task must also
+beat direct compiled control, conditional uncomputation and reuse. No present
+screen establishes that advantage.

@@ -42,8 +42,20 @@ cost to the application comparison.
 The [conditional dispatch result](../research/topics/nr-noisy-recovery/dispatch.md)
 has finite exact flagged-output and routing checks. Its universal exact
 query lower bound depends on the cited unitary-switch no-go theorem.
-No approximate-fidelity, expected-cost or runtime lower bound, physical
-dispatcher validation, or new correction-mechanism priority is recorded.
+Ordinary achievable approximation curves have finite Choi/projector checks;
+the zero-query minimax proof and fixed-dimension qualitative expected-cost
+gap are analytic. No evaluated positive-cost approximation converse, runtime
+advantage, physical dispatcher validation or new correction-mechanism
+priority is recorded. Temporal event-head and classical-phase replays fix
+their full occupied/vacuum models. Gaussian optimal-decoder and whole
+acceptance-frontier proofs remain analytic and do not fit a hardware bath.
+
+The [composite-lookup proof](../research/topics/nr-noisy-recovery/native-lookups.md)
+has complete-address exact Choi checks for all table pairs through dimension
+four and a saturating junk-erasure projector. Its $1/3$ upper bound concerns
+the displayed balanced switch and fixed junk-only cleanup, not general
+switch protocols. No optimized ordinary query frontier or native QRAM cost
+advantage is inferred from that replay.
 
 `prepare_verification.py` derives the current import closure and endpoint list offline. It rejects missing local modules and dependency cycles; the wrappers also check endpoint identities and allowed axioms. Their offline checks are separate from running Lean.
 

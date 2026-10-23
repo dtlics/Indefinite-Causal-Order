@@ -176,6 +176,145 @@ def ordinary_routing_checks(v0, v1, w):
             "Four-call two-round/two-dummy factorization failed.")
 
 
+def temporal_phase_checks(u, z, w):
+    """Two-window classical fields, with an occupied/vacuum path interface.
+
+    Each phase is the square of a rational point on the unit circle so the
+    half-sum residual also has Gaussian-rational entries. The check compares
+    the retained quantum channel after prescribed feedback and flag disposal,
+    rather than claiming equality of the two flagged instruments.
+    """
+    d = len(u)//2
+    a = gaussian(F(3, 5), F(4, 5))
+    b = gaussian(F(5, 13), F(12, 13))
+    c = gaussian(F(8, 17), F(-15, 17))
+    phases = [
+        (ONE, ONE, a, a), (a, a, b, b),
+        (ONE, a, ONE, b), (a, b, c, ONE),
+        (a, c, b, a), (b, a, c, b),
+        (c, b, a, ONE), (b, c, a, b),
+    ]
+
+    def phase_gate(value):
+        return diagonal_blocks(
+            [[multiply(x, value) for x in row] for row in identity(d)],
+            [[multiply(x, conjugate(value)) for x in row] for row in identity(d)])
+
+    def readout(first, second, kappa):
+        unflagged, flagged = [], []
+        for initial_sign, flag in product(range(2), repeat=2):
+            weight = (1+kappa)/2 if initial_sign == 0 else (1-kappa)/2
+            sign = -1 if (initial_sign+flag) % 2 else 1
+            k = scaled(plus(first, scaled(second, sign)), F(1, 2))
+            if flag:
+                k = matmul(z, k)
+            unflagged.append((weight, k))
+            flagged.append((weight, flag_embed(k, flag)))
+        return normalized_choi(unflagged), normalized_choi(flagged)
+
+    cases = distinct_instruments = 0
+    for qa1, qa2, qb1, qb2 in phases:
+        modules = [matmul(phase_gate(multiply(q, q)), u)
+                   for q in (qa1, qa2, qb1, qb2)]
+        a1, a2, b1, b2 = modules
+        switched = (matmul(b2, a1), matmul(a2, b1))
+        same_order = (matmul(a2, a1), matmul(b2, b1))
+        residual = multiply(multiply(qa2, conjugate(qa1)),
+                            multiply(qb2, conjugate(qb1)))
+        target = matmul(phase_gate(residual), w)
+        for kappa in (F(0), F(97, 100), F(1)):
+            actual, switch_flag = readout(*switched, kappa)
+            ordinary, ordinary_flag = readout(*same_order, kappa)
+            expected = normalized_choi([
+                ((1+kappa)/2, target),
+                ((1-kappa)/2, matmul(z, target)),
+            ])
+            require(actual == expected == ordinary,
+                    "Temporal phase switch and ordinary path filter differ.")
+            require_tp_choi(actual, 2*d, 2*d)
+            distinct_instruments += switch_flag != ordinary_flag
+            cases += 1
+    require(distinct_instruments > 0,
+            "Examples must distinguish discarded-flag from full-instrument equality.")
+    return cases
+
+
+def event_head_checks(u, z, w):
+    """Explicit occupied-window visit addressing; private coins are retained.
+
+    A head's intermediate 0/1 coherence is dephased by a random Z. The
+    final common head state is checked before reducing to payload Kraus
+    matrices. Rewinding a head and allocating coins by clock time are
+    separately tested alternatives, not alternative descriptions of one port.
+    """
+    cases = clock_cases = reuse_cases = 0
+    for p in (F(1, 10), F(1, 2), F(9, 10)):
+        probabilities = (1-p, p)
+        choices = (u, matmul(z, u))
+        for la, lb in ((F(1), F(1)), (F(49, 50), F(97, 100)), (F(0), F(1))):
+            actual = []
+            for sa, sb, ea, eb in product(range(2), repeat=4):
+                weight = probabilities[sa]*probabilities[sb]
+                weight *= ((1+la)/2 if ea == 0 else (1-la)/2)
+                weight *= ((1+lb)/2 if eb == 0 else (1-lb)/2)
+                products = []
+                for branch in (0, 1):
+                    heads = [0, 0]
+                    coins = [sa, sb]
+                    output = identity(len(u))
+                    for window, station in enumerate((branch, 1-branch)):
+                        require(heads[station] == 0, "Switch revisited a station.")
+                        output = matmul(choices[coins[station]], output)
+                        heads[station] += 1
+                        if window == 0:
+                            output = scaled(output, (-1)**(ea*heads[0]+eb*heads[1]))
+                    require(heads == [1, 1], "Final event heads retain arrival order.")
+                    products.append(output)
+                for flag in (0, 1):
+                    k = scaled(plus(products[0], scaled(products[1], (-1)**flag)), F(1, 2))
+                    if flag:
+                        k = matmul(z, k)
+                    actual.append((weight, flag_embed(k, flag)))
+            expected, _, _ = corrected_switch_kraus(u, z, p, la*lb)
+            require(normalized_choi(actual) == normalized_choi(expected),
+                    "Visit-head dilation differs from the effective-visibility instrument.")
+            cases += 1
+
+        # A different port assigns independent fault coins to all four CLOCK
+        # windows. Its prescribed decoder leaves the ordinary two-call noise.
+        clock = []
+        for a1, a2, b1, b2 in product(range(2), repeat=4):
+            weight = probabilities[a1]*probabilities[a2]*probabilities[b1]*probabilities[b2]
+            forward = matmul(choices[b2], choices[a1])
+            reverse = matmul(choices[a2], choices[b1])
+            for flag in (0, 1):
+                k = scaled(plus(forward, scaled(reverse, (-1)**flag)), F(1, 2))
+                if flag:
+                    k = matmul(z, k)
+                clock.append((weight, k))
+        alpha, beta = (1-p)**2+p*p, 2*p*(1-p)
+        require(normalized_choi(clock) == normalized_choi([(alpha, w), (beta, matmul(z, w))]),
+                "Fresh clock-time coins spuriously realize perfect self-switch correction.")
+        clock_cases += 1
+
+        for rewind in (False, True):
+            repeated = []
+            for first, second in product(range(2), repeat=2):
+                coins, head = (first, second), 0
+                output = identity(len(u))
+                for visit in (0, 1):
+                    if visit and rewind:
+                        head = 0
+                    output = matmul(choices[coins[head]], output)
+                    head += 1
+                repeated.append((probabilities[first]*probabilities[second], output))
+            expected = [(F(1), w)] if rewind else [(alpha, w), (beta, matmul(z, w))]
+            require(normalized_choi(repeated) == normalized_choi(expected),
+                    "Fresh-repeat/retained-tape-rewind distinction failed.")
+            reuse_cases += 1
+    return cases, clock_cases, reuse_cases
+
+
 def replay_pair(v0, v1):
     d = len(v0)
     require(len(v1) == d, "Subroutine dimensions disagree.")
@@ -191,6 +330,7 @@ def replay_pair(v0, v1):
     require(matmul(u, u) == w, "Multiplexor square does not contain the two orders.")
     classical_index_check(u, z, v0, v1)
     ordinary_routing_checks(v0, v1, w)
+    temporal_cases = temporal_phase_checks(u, z, w)
     jw = normalized_choi([(F(1), w)])
     zw = matmul(z, w)
     count = 0
@@ -234,19 +374,29 @@ def replay_pair(v0, v1):
             require(normalized_choi(extracted) == normalized_choi([(F(1), v)]),
                     "Classical program value did not extract a noiseless subroutine.")
         count += 1
-    return count
+    return count, temporal_cases
 
 
 def main():
-    cases = pairs_checked = 0
+    cases = temporal_cases = pairs_checked = 0
     for d in [2, 3]:
         for v0, v1 in pairs(d):
-            cases += replay_pair(v0, v1)
+            flagged, temporal = replay_pair(v0, v1)
+            cases += flagged
+            temporal_cases += temporal
             pairs_checked += 1
+    v0, v1 = next(pairs(2))
+    u = multiplexor(v0, v1)
+    z = diagonal_blocks(identity(2), scaled(identity(2), -1))
+    head_cases, clock_cases, reuse_cases = event_head_checks(u, z, matmul(u, u))
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian rational, standard library",
         "target_dimensions": [2, 3], "noncommuting_unitary_pairs": pairs_checked,
         "full_flagged_choi_cases": cases,
+        "classical_phase_trajectory_choi_cases": temporal_cases,
+        "event_head_flagged_choi_cases": head_cases,
+        "clock_time_choi_cases": clock_cases,
+        "fresh_repeat_and_rewind_choi_cases": reuse_cases,
         "p": ["0", "1/2", "9/10"], "kappa": ["0", "97/100", "1"],
         "scope": "Finite full-channel replay; universal no-go and physical slots are analytic inputs.",
     }, sort_keys=True))

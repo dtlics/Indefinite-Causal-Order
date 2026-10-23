@@ -23,6 +23,7 @@ and from learning a scalar channel property.
 | NR-R10 | Entanglement-breaking slot, control-quality wire simulation and stopping bounds | [Communication resource bounds](communication.md#nr-r10) |
 | NR-R11 | Elastic local-node instruments have no extra order syndrome | [Cavity-instrument screen](communication.md#nr-r11) |
 | NR-R12 | Exact coherent dispatch with a dephased counter and bounded-query boundary | [Conditional dispatch result](dispatch.md#nr-r12) |
+| NR-R13 | Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound | [Composite lookup screen](native-lookups.md#nr-r13) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -71,10 +72,13 @@ compare useful task outputs at matched time, memory, calls and routing
 cost. The [communication note](communication.md) identifies why pure
 loss and the documented elastic cavity model do not suffice. The
 assessment gives explicit go/no-go tests and source-specific gaps.
-The dispatch result is an exact universal query statement with a known
-correction mechanism. Native slot realization, approximation, expected
-cost, parallel execution, compilation and calibration reuse still need
-an architecture comparison; its query count alone is not a runtime gain.
+The dispatch result separates its exact hard-query boundary, achievable
+ordinary approximation families, qualitative fixed-dimension mean-cost
+gap and microscopic temporal models. Its correction mechanism is known.
+Native slot cost, useful approximation margins, parallel execution,
+compilation and calibration reuse still need an architecture comparison.
+The displayed composite-lookup switch fails the ordinary uncomputation
+screen. These query statements alone are not deployed runtime gains.
 Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.

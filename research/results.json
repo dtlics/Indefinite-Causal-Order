@@ -1072,6 +1072,12 @@
       "topic": "NR",
       "title": "Exact coherent dispatch with a dephased counter and bounded-query boundary",
       "canonical_path": "research/topics/nr-noisy-recovery/dispatch.md#nr-r12"
+    },
+    {
+      "id": "NR-R13",
+      "topic": "NR",
+      "title": "Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound",
+      "canonical_path": "research/topics/nr-noisy-recovery/native-lookups.md#nr-r13"
     }
   ]
 }

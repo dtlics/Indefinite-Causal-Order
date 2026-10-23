@@ -61,7 +61,11 @@ JOBS = (
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
      "Exact finite native-layer Pauli-check and read-only classical-bit-oracle comparison examples; hardware gate faults and general proofs analytic."),
     ("architecture-dispatch", "architecture/verify_dispatch.py", (),
-     "Exact full flagged-Choi dispatch correction, classical-indexed interface and three/four-call routing examples; query obstruction and physical costs analytic."),
+     "Exact full flagged-Choi dispatch, event-head/clock/reuse models, temporal phase-path equivalences and three/four-call routing; Gaussian fronts and physical costs analytic."),
+    ("architecture-dispatch-baselines", "architecture/verify_dispatch_baselines.py", (),
+     "Exact full-Choi achievable ordinary mixed-cost and hard-two teleportation families, CP/TP projector certificates and diamond witnesses; zero-query minimax and qualitative converse analytic."),
+    ("architecture-lookups", "architecture/verify_lookups.py", (),
+     "Exact full-address Choi identities for ordinary measurement-uncomputation and balanced-switch garbage erasure; finite instances, no optimized architecture frontier."),
 )
 
 

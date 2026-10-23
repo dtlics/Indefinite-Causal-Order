@@ -9,8 +9,9 @@
 This result specializes an established self-switch correction mechanism to
 a two-instruction quantum dispatcher. It gives an exact universal query
 comparison for a full coherent quantum output. It does **not** establish a
-hardware application, a latency advantage, or a quantitative approximation
-or expected-cost lower bound. The correction mechanism and the underlying
+hardware application, a latency advantage, or an evaluated approximation
+or expected-cost lower bound. Its ordinary constructions and qualitative
+fixed-dimension converse have separate scopes. The correction mechanism and the underlying
 unitary-switch obstruction are prior results; the interface reduction below
 states precisely what they imply here.
 
@@ -210,6 +211,263 @@ $2/3$ if success/failure/rejection are scored $+1/-1/0$. Nor does the
 exact no-go alone provide a numerical bound on optimal approximate
 two-query simulation.
 
+### Ordinary approximations and average query cost
+
+These are ordinary achievable protocols for the full controlled-order channel
+$W=\operatorname{diag}(BA,AB)$, with data dimension $d\ge2$. They use
+known gates, clean memory, controlled routing, and classical selection of the
+queried subroutine. Under complete counter dephasing those subroutine calls
+are extracted by preparing the physical query counter in a fixed basis state.
+Their helper operations have physical costs even though they consume no
+unknown-module queries. A hard cap on calls per job and an average call budget
+are different resource constraints.
+
+Use normalized Choi matrices throughout. For an accepted map let $p$ be its
+Choi trace and $q$ its overlap with the pure target Choi state
+$\Phi_W$. Conditional entanglement fidelity is $q/p$; signed Bell reward
+is $2q-p$. Half-diamond error is one half the diamond norm distance between
+normalized channels. The constructions below have input-independent yields.
+
+#### A minimax zero-query channel and explicit average-cost curves
+
+Put $D=2d$, $r=2d^2-1$, and $m=1/r$. For a known orthogonal data Weyl
+basis $\{Q_j\}_{j=0}^{d^2-1}$, with $Q_0=I$, define $\Gamma_*$ as
+the uniform mixture of the $r$ known unitary channels
+
+$$
+\{I_P\otimes Q_j:0\le j<d^2\}\ \cup\
+\{Z_P\otimes Q_j:1\le j<d^2\}.
+$$
+
+Let $\Pi$ project onto vectorized counter-block-diagonal operators, and
+let $\Phi_Z$ denote the normalized Choi projector of $Z_P\otimes I$.
+Then $J(\Gamma_*)=m\Pi_*$, where $\Pi_*=\Pi-\Phi_Z$ is an orthogonal
+projector of rank $r$. Every target lies in this support: it is block
+diagonal and
+$\operatorname{Tr}[(Z_P\otimes I)^\dagger W]=\operatorname{Tr}BA-\operatorname{Tr}AB=0$.
+Consequently
+
+$$
+J(\Gamma_*)-m\Phi_W=m(\Pi_*-\Phi_W)\succeq0.
+$$
+
+Both normalized Choi matrices have output marginal $I_D/D$. Thus
+$(\Gamma_*-m\operatorname{Ad}_W)/(1-m)$ is CPTP. This gives a
+half-diamond upper bound $1-m$; the Bell input attains it, because
+$(1-m)\Phi_W$ and $m(\Pi_*-\Phi_W)$ are the orthogonal positive and
+negative parts of $\Phi_W-J(\Gamma_*)$. Pointwise for every $A,B$,
+
+$$
+F_e(\Gamma_*,W)=m,\qquad
+\tfrac12\|\Gamma_*-\operatorname{Ad}_W\|_\diamond=1-m.
+$$
+
+This zero-query guarantee is minimax optimal over the complete unknown-pair
+family. To see this, with probability $1/r$ choose $A=B=I$. Otherwise
+choose $M$ uniformly among the nonidentity data Weyls, choose $A$ Haar
+independently, and set $B=MA^\dagger$. The two target blocks are then
+$M$ and $AMA^\dagger$. Uniform nonidentity Weyls have isotropic second
+moment on traceless operators; Haar conjugation has the same moment, and
+the cross-block moment vanishes because $\mathbb E_A AMA^\dagger=0$.
+Including the identity case yields
+$\mathbb E\Phi_W=\Pi_*/r=J(\Gamma_*)$. For any zero-query channel
+$\Lambda$, positivity and $\operatorname{Tr}J(\Lambda)=1$ give
+$\mathbb EF_e(\Lambda,W)\le m$. Some pair therefore has fidelity at
+most $m$, and Bell projection gives half-diamond error at least $1-m$.
+The displayed channel attains both bounds on every pair. This witness prior
+is deliberately correlated; it is not the independent-Haar pair prior.
+
+The exact ordinary three-call routing circuit can now be used with an
+independent probability $s=c/3$, with $\Gamma_*$ used otherwise.
+For $0\le c\le3$, this always-accept channel has mean cost $c$ and,
+uniformly over the unknown pair and all external references,
+
+$$
+F_e=s+(1-s)m,\qquad \delta_\diamond=(1-s)(1-m).
+$$
+
+For $c=2,d=2$, these values are $5/7$ and $2/7$. It matches or
+improves the prescribed switch decoder's fidelity and half-diamond error
+when $\kappa\le1/3+2/[3(2d^2-1)]$, which is $3/7$ for qubit data.
+This compares two specified implementations, not their optimized frontiers.
+
+More generally, to prescribe acceptance $\pi\in[0,1]$ and budget
+$c\in[0,3]$, put $s=\min(\pi,c/3)$. Run and accept the exact circuit
+with probability $s$, use and accept $\Gamma_*$ with probability
+$\pi-s$, and otherwise reject without a call. The accepted map has
+
+$$
+q=m\pi+(1-m)s,\quad F_{e,\mathrm{acc}}=m+(1-m)s/\pi,\quad
+\delta_{\diamond,\mathrm{acc}}=(1-s/\pi)(1-m),\quad
+\mathbb EN=3s\le c.
+$$
+
+The conditional formulas require $\pi>0$. Running the exact circuit
+with probability $2/3$ and otherwise rejecting gives mean cost two,
+$p=q=2/3$, and signed reward $2/3$. The mean-two always-accept
+qubit channel has signed reward only $3/7$. Under the *different*
+independent-Haar pair prior, identity fallback instead gives average fidelity
+$2/3+1/(3d^2)$, or $3/4$ for qubits, because
+$\operatorname{Tr}W=2\operatorname{Tr}BA$ and
+$\mathbb E|\operatorname{Tr}BA|^2=1$. That is an average guarantee, not
+the uniform $5/7$ guarantee or a $2/7$ diamond guarantee. No positive
+query-cost curve here is asserted optimal.
+
+#### A hard-two-query controlled-teleportation family
+
+This family uses the standard
+[postselected teleportation simulation](https://arxiv.org/html/0912.0195v4),
+with an initial counter instrument selecting the chronological order.
+Its displayed achievable constants are not claimed to optimize that
+larger class of simulations or to establish a new mechanism's priority.
+
+Choose $a,b\ge0$ with $a^2+b^2=1$. Apply the known counter instrument
+$D_0=\operatorname{diag}(a,b)$, $D_1=\operatorname{diag}(b,a)$.
+Select chronological oracle order $A,B$ on outcome zero and $B,A$ on
+outcome one. On the first order branch, prepare $\Phi_{RS}$, swap data
+$T$ with $S$ controlled on $P=1$, query $A$ on $T$, undo
+that controlled swap, query $B$ on $T$, swap $T,S$ on $P=1$,
+and Bell-measure $R,S$. With the Bell convention that outcome $j$
+inserts a Weyl $Q_j$, the full effective Kraus operators, including the
+initial instrument, are
+
+$$
+\begin{aligned}
+K_0&=\operatorname{diag}(aBA,(b/d)AB),&
+K_j&=|1\rangle\langle1|\otimes(b/d)AQ_jB\quad(j\ne0),\\
+K'_0&=\operatorname{diag}((b/d)BA,aAB),&
+K'_j&=|0\rangle\langle0|\otimes(b/d)BQ_jA\quad(j\ne0).
+\end{aligned}
+$$
+
+The two order outcomes are classical. Their effects sum to identity, so the
+complete instrument is TP. Retaining only identity Bell outcomes gives
+
+$$
+p=a^2+b^2/d^2,\qquad q=(a+b/d)^2/2,\qquad
+2q-p=2ab/d.
+$$
+
+Its normalized accepted channel, relative to $W$, is counter dephasing
+with visibility $2ab/(dp)$. Thus its conditional fidelity is $q/p$
+and half-diamond error is $1-q/p$. At $a=b=1/\sqrt2,d=2$, the yield
+is $5/8$, conditional fidelity $9/10$, half-diamond error $1/10$,
+and signed reward $1/2$. At $a=b/d$, it is the exact target with
+yield $2/(d^2+1)$. This adaptive initial-order instrument is outside a
+fixed-order success-probability bound.
+
+For an all-outcome channel, apply the same known traceless data unitary
+$R$ after every nonidentity Bell outcome; for example a cyclic shift.
+Weyl Parseval gives, for every $A$,
+$\sum_{j\ne0}|\operatorname{Tr}(A^\dagger RAQ_j)|^2=d^2$, and the
+same identity holds for $B$. Consequently, for every unknown pair,
+
+$$
+F_e=\frac{a^2}{2}+\frac{ab}{d}+\frac{b^2}{d^2}=:f(a,b;d).
+$$
+
+This also gives the exact half-diamond error $1-f$. For completeness,
+conjugate the output by $W^\dagger$, write $\Phi_I,\Phi_Z$ for the
+normalized full-system identity and counter-Z Choi projectors, and let
+$\Pi_z$ project onto all vectorized operators supported in counter block
+$z$. Let $e_z$ be the normalized identity direction in that block and
+$h_z$ the normalized direction of the corresponding conjugate of $R$.
+The two vectors are orthogonal because $\operatorname{Tr}R=0$. Directly
+summing the Kraus projectors yields
+
+$$
+J=f\Phi_I+
+\left[\frac{(a-b/d)^2}{2}+\frac{b^2}{2d^2}\right]\Phi_Z+
+\frac{b^2}{2d^2}\sum_{z=0}^1(\Pi_z-|e_z\rangle\langle e_z|-|h_z\rangle\langle h_z|).
+$$
+
+Each residual summand is an orthogonal projector; its support is orthogonal
+to $\Phi_I$. The complement, normalized by $1-f$, is CPTP because
+the original and target Choi marginals agree. The resulting convex-channel
+decomposition proves the upper bound $1-f$, and the target Bell test
+attains it. Optimizing this *family* gives the largest eigenvalue of
+$\left(\begin{smallmatrix}1/2&1/(2d)\\1/(2d)&1/d^2\end{smallmatrix}\right)$.
+For qubit data its fidelity is $(3+\sqrt5)/8$ and its exact half-diamond
+error is $(5-\sqrt5)/8$. These are achievable values, not an optimal
+hard-two-query converse. Nonidentity failures have a counter-subspace kernel,
+so this instrument does not support free retry on the original arbitrary
+input.
+
+The standard-library replay `checks/architecture/verify_dispatch_baselines.py`
+checks the full normalized Choi, TP, projector/PSD certificates, accepted
+maps, and fidelity/diamond formulas on four rational noncommuting pairs at
+$d=2,3$, without floating-point arithmetic. It checks three rationally
+represented filter ratios, including the equal-amplitude and exact-success
+settings. Irrational optimizer values and the all-dimension proofs are
+analytic claims, not finite-sample conclusions.
+
+#### A qualitative average-cost separation at each fixed dimension
+
+Here fix the module noise at $p=1/2$, so (4) supplies the classically
+indexed subroutine access used in the proof. The statements below do not
+automatically cover every interior $p$ or the physical vacuum ports.
+
+The exact two-query impossibility does imply a qualitative approximate
+separation under a fresh independent-Haar pair prior, but does not by itself
+give an explicit noise threshold. Here is the required transfer argument.
+
+First, any terminal branch that never queried one of the two gates obeys
+$\bar q\le\bar p/d^2$. To prove this, condition on the queried gate
+$A$. Averaging the normalized target Choi over the unqueried Haar gate
+$B$ gives, in the two matched counter blocks,
+$$
+\mathbb E_B\Phi_W=\frac1{2d^2}
+\begin{pmatrix}I&R_A\\R_A^\dagger&I\end{pmatrix},
+$$
+where $R_A$ is unitary. Its eigenvalues are $1/d^2$ and zero. The
+matrix entries, for row $(a,b)$ and column $(c,e)$, are
+$(R_A)_{ab,ce}=A_{eb}\overline{A_{ca}}$; summing over $c,e$ gives
+$R_AR_A^\dagger=I$ by unitarity of $A$. The
+branch's accepted Choi operator is positive and independent of $B$, so
+its overlap is at most its trace divided by $d^2$. This permits arbitrary
+memory, postselection, and repeated calls to the other gate. In particular
+every terminal history with at most one query has nonpositive signed reward.
+
+Let $S_2(d)$ be the optimum Haar-average signed reward over every ordinary
+protocol with a hard two-call cap, arbitrary memory, early stopping,
+accept/reject outputs, and classical adaptive gate labels. This optimum is
+attained: padding stopped histories with discarded dummy queries represents
+all such instruments by a fixed finite-dimensional classical-control tree
+of positive combs satisfying closed linear normalization constraints. The
+accepted comb is constrained by a normalized total comb, $C_{\rm acc}\preceq
+C_{\rm tot}$. The set is compact, and the integrated objective is linear and continuous.
+Arbitrarily large ancillary memories and classical record alphabets do not
+enlarge this finite-dimensional Choi set.
+
+If $S_2(d)=1$, nonnegativity of
+$1-(2q-p)=(1-p)+2(p-q)$, continuity in $A,B$, and full support of Haar
+measure force $p=q=1$ for every pair. Positivity then forces the full Choi
+operator to equal the pure target, giving a deterministic universal exact
+two-query implementation. The exact NR-R12 no-go excludes that possibility.
+Therefore $S_2(d)<1$ for each fixed $d$.
+
+Now allow any classical stopping rule with $\mathbb EN\le2$, including
+unbounded rare tails, with every query and rejection charged. Nontermination
+is scored as rejection; finite expected oracle count alone does not exclude
+infinite computation using no further oracle. Let
+$r=\Pr(N\le1)$ and $u=\Pr(N\ge3)$, evaluated in the Haar/Bell
+experiment. Since $\mathbb EN\ge2-2r+u$, one has $u\le2r$.
+The short-terminal reward bound gives $\bar R\le1-r$. Truncate the
+protocol after query two and reject every history about to query again.
+Its reward is at most $S_2(d)$, and restoring the long histories can add
+at most $u$. Thus
+$$
+\bar R\le\min\{1-r,S_2(d)+2r\}\le\frac{2+S_2(d)}3<1.
+$$
+
+This proves a positive margin below perfect-switch reward for each fixed
+dimension in this ideal query model. It provides no evaluated margin,
+dimension-uniform bound, hardware advantage, or numerical robustness
+threshold. In particular, the achievable mean-two reward $2/3$ remains
+an ordinary lower bound. A coherent path-occupation cost, frame-correlated
+advice, persistent training across jobs, or extra controlled oracle ports
+would be different resource models.
+
 ### Residual phase error from an imperfect external control
 
 For the prescribed unmodified external order control, let its state be
@@ -271,8 +529,87 @@ same bit $s$ persists for two ordinary visits, then
 $(Z^sU)^2=(-1)^sW$, so those two visits already implement $W$ perfectly.
 A proposed physical dilation must support the switch's early/late slot
 coherence without silently granting this repeated-use cancellation to
-the ordinary circuit. No such device/noise construction is established
-by the channel equations alone.
+the ordinary circuit. The channel equations alone do not establish that
+resource. The event-indexed construction below resolves logical consistency,
+but does not identify a native processor offering it cheaply.
+
+**An explicit coherent event memory.** A consistent engineered dilation
+uses a private visit head $Q_m$ and independent retained fault coins
+$E_{m,k}$ at each station $m=A,B$. Initially the head is $0$ and every
+coin is diagonal with probabilities $(1-p,p)$. An occupied visit applies
+
+$$
+|k\rangle_{Q_m}|s_m\rangle_E|\psi\rangle
+\longmapsto |k+1\rangle_{Q_m}|s_m\rangle_E
+ Z^{s_{m,k}}U|\psi\rangle. \tag{7}
+$$
+
+The vacuum sector acts as the identity, including on the head and tape.
+The coin is selected by visit number, not by laboratory time. For a
+bounded horizon $M$, supply $M$ independent coins and $M+1$ head states;
+complete the head shift unitarily on unused states and forbid exhaustion.
+An infinite reusable memoryless channel requires fresh reservoir blocks,
+not silent wraparound. Coin preparation, addressing and refresh count.
+
+In history $0$ the early visit advances $Q_A$ and the late visit advances
+$Q_B$; history $1$ reverses them. Both histories finish with heads
+$|1,1\rangle$ and unchanged tapes. For each fixed tape trajectory their
+payload products are $K_{s_{B,0}}K_{s_{A,0}}$ and
+$K_{s_{A,0}}K_{s_{B,0}}$, respectively, where $K_s=Z^sU$.
+Tracing these common final environment states gives exactly the product
+switch of (2), including every control/data/reference input. On ordinary
+repeated occupied calls, the next unexposed independent coin is used even
+conditional on the accessible past. Thus this same port has the fresh-call
+comb law. Reusing one stable coin would instead give the ordinary echo;
+rewinding the head without replacing its tape grants that bypass, and
+reading a used coin grants a direct correction syndrome.
+
+The intermediate heads are $|1,0\rangle$ and $|0,1\rangle$ in the two
+histories. They must retain coherence until their reversible alignment;
+a classical detector or dissipative increment exports an arrival-time
+record. If their $|0\rangle\langle1|$ coherences acquire independent
+factors $\lambda_A,\lambda_B$, and the remaining path visibility is $v$,
+(5) holds with $\kappa=v\lambda_A\lambda_B$. The prescribed decoder's
+half-diamond error is $(1-v\lambda_A\lambda_B)/2$. With
+$\lambda_m=e^{-\Delta t/T_{2,m}}$ and ideal routing, visibility $0.97$
+requires
+
+$$
+\Delta t/T_{2,A}+\Delta t/T_{2,B}\le-\ln(0.97).
+$$
+
+The equal-head threshold is $2\Delta t/[-\ln(0.97)]\simeq65.66\Delta t$;
+$66\Delta t$ is sufficient. This is coherence storage, not stability of a classical count.
+If each complete occupied/vacuum station-window macro has additional
+half-diamond error $\epsilon_{m,t}$ on the correlated head/tape inputs,
+a four-macro hybrid adds at most $\sum_{m,t}\epsilon_{m,t}$, plus routing
+errors. Occupied-channel tomography alone does not certify this norm.
+Already modeled storage errors must not be charged twice.
+
+These are explicit extra resources: protected heads, reversible occupation
+triggers, stable private coins, quantum addressing, no exported timestamp,
+and a specified reset policy. Nondestructive photon–matter coupling has
+been demonstrated by [Reiserer et al.](https://arxiv.org/abs/1311.3625) and
+[Niemietz et al.](https://arxiv.org/abs/2103.14677), but those experiments
+do not supply the full head/tape dispatcher. The construction instantiates
+the environmental-memory issue already present in the
+[trajectory framework](https://arxiv.org/html/1812.05292), rather than a
+new correction mechanism. An operator's actual rewind, readout and routing
+controls must be admitted to the ordinary comparison. Granting unrestricted
+coherent routing on the full microscopic ports also grants the chronological
+circuit implementing this construction; the abstract causal-order query
+comparison and a hardware comparison are different statements.
+
+**Clock-indexed phase bits are different.** If the four station/window
+events instead use independent bits with occupied unitary $Z^sU$ and the
+same identity-on-vacuum extension, the two histories use disjoint bits.
+Their diagonal payload map is
+$\alpha\operatorname{Ad}_W+\beta\operatorname{Ad}_{ZW}$ and their
+cross-history map is $(1-2p)^2\operatorname{Ad}_W$: each averaged
+two-gate product is $(1-2p)W$. Substitution into the $X$ measurement and
+$Z$ feedback leaves exactly that ordinary diagonal map. It gives no
+correction gain. This assertion fixes the vacuum phase convention;
+one-call dephasing marginals alone do not fix it.
 
 **Parallel ordinary baseline.** The query saving is not automatically a
 latency saving on two native processors. Four ordinary calls implement
@@ -327,6 +664,142 @@ across later jobs; all training and synthesis costs must be amortized
 within the actual drift window. No result here bounds that reusable
 hardware frontier.
 
+### Time-varying classical phase fields: a matched ordinary construction
+
+There is a second precise microscopic model, distinct from (7). Let the
+occupied gate at station $j$ in window $t$ be
+
+$$
+K_{j,t}=e^{-i\theta_{j,t}Z}U,
+$$
+
+with identity action on vacuum. The four real phases are classical fields
+independent of the chosen path, with no extra arrival records, backaction,
+loss or internal data errors. A stochastic global phase relative to vacuum
+would be an additional specified noise process. Equal occupied dephasing
+channels are insufficient to assert this extension.
+
+For any two arms $e^{-ixZ}W$ and $e^{-iyZ}W$, the plus Kraus operator is
+$\cos[(x-y)/2]e^{-i(x+y)Z/2}W$. After minus-$Z$ feedback the minus Kraus
+operator is $-i\sin[(x-y)/2]e^{-i(x+y)Z/2}W$. Retaining both outcomes
+therefore gives that same unitary channel for each fixed trajectory.
+The physical switched histories $B_2A_1,A_2B_1$ have angles
+$\theta_{B,2}-\theta_{A,1}$ and
+$\theta_{A,2}-\theta_{B,1}$, so their corrected output is
+
+$$
+\operatorname{Ad}_{e^{-irZ}W},\qquad
+r=\frac{\theta_{A,2}-\theta_{A,1}+\theta_{B,2}-\theta_{B,1}}2. \tag{8}
+$$
+
+An ordinary coherent path filter uses histories $A_2A_1$ and $B_2B_1$.
+Their angles are $\theta_{A,2}-\theta_{A,1}$ and
+$\theta_{B,2}-\theta_{B,1}$, so the same measurement and feedback give
+exactly (8), trajectory by trajectory and including any reference.
+The flag distributions need not agree. With identical external visibility
+$v$, both corrected sums additionally acquire the same phase channel
+$[(1+v)\mathrm{id}+(1-v)\operatorname{Ad}_Z]/2$.
+
+Both physical circuits use two installations, two windows, four potential
+station/window interactions, two occupied payload visits, one coherent path
+qubit, one $X$ readout and one conditional $Z$. Interwindow crosslinks in
+the switched circuit become local delay loops in the ordinary circuit.
+Their actual loss, delay and stabilization costs must be measured; neither
+permutation is intrinsically an additional entangling gate. This comparison
+requires those local loops and the stated coherent vacuum access. It is not
+a two-query simulation in the earlier channel-only interface.
+
+**Optimal Gaussian decoding, including accepted outputs.** Suppose the two
+stations are independent copies of a centered Gaussian pair
+$(\theta_1,\theta_2)$, with equal variance $\sigma^2$ and correlation
+$\rho\in[-1,1]$. Define
+
+$$
+s=\frac{\theta_{B,2}+\theta_{B,1}-\theta_{A,2}-\theta_{A,1}}2,
+\quad k_r=e^{-2\sigma^2(1-\rho)},\quad k_s=e^{-2\sigma^2(1+\rho)}.
+$$
+
+Then $r,s$ are independent Gaussians, with variances
+$\sigma^2(1-\rho)$ and $\sigma^2(1+\rho)$. The switched isometry before
+averaging is
+
+$$
+e^{-irZ}\bigl[\cos s\,|+\rangle I-i\sin s\,|-\rangle Z\bigr]W.
+$$
+
+Symmetry makes the averaged $X$-basis off-diagonal block zero. Thus even
+a joint quantum postdecoder receives a classical flag: its true value
+$t$ has probabilities $(1+(-1)^t k_s)/2$, and the payload has $Z^t$
+followed by independent dephasing of bias $k_r$. External visibility $v$
+flips that flag with probability $(1-v)/2$. For a generic true-flag bias
+$k$, the reported flag masses and conditional signed payload biases are
+
+$$
+m_\pm(k)=\frac{1\pm vk}{2},\qquad
+b_+(k)=\frac{k_r(v+k)}{1+vk},\qquad
+b_-(k)=\frac{k_r(k-v)}{1-vk}. \tag{9}
+$$
+
+Omit any zero-mass flag. Correct the more probable $I/Z$
+error in each flag. This attains
+
+$$
+F_{\mathrm{sw,opt}}=\frac{1+k_r\max(v,k_s)}2,
+\qquad
+\epsilon_{\mathrm{sw,opt}}=\frac{1-k_r\max(v,k_s)}2. \tag{10}
+$$
+
+These are optima over arbitrary CPTP postdecoders for entanglement fidelity
+and half-diamond distance, not only over a specified syndrome rule. For
+payload dimension $n=2d$, Hilbert–Schmidt orthogonality of $I,Z$ gives
+
+$$
+\sum_\ell\bigl(|\operatorname{Tr}C_\ell|^2+
+|\operatorname{Tr}C_\ell Z|^2\bigr)
+\le n\sum_\ell\operatorname{Tr}C_\ell^\dagger C_\ell=n^2
+$$
+
+for any decoder. Hence its fidelity on either flagged $I/Z$ mixture is
+at most the larger mixture weight. A trace-decreasing accepted decoder
+replaces the last expression by $n^2p$: both hidden components have
+maximally mixed payload marginal on the Bell test. Scaled unitary
+corrections attain the bound. The Bell input also lower-bounds the diamond
+error by $1-F$; the corrected dephasing channel attains equality.
+
+Ordinary cross-station serial processing has visibility
+$e^{-4\sigma^2}=k_rk_s$. Ordinary same-order path filtering with minus-$Z$
+feedback has visibility $vk_r$. Choosing the better ordinary procedure
+matches (10) for every $\rho$. This choice presumes calibrated field
+parameters and the same native controls. It is a recovery comparison, not
+a parameter-independent simulator for an unknown noise-estimation task.
+
+For $\rho\ge0$ the ordinary path filter is stronger still. Its independent
+differential phase is
+$[(\theta_{A,2}-\theta_{A,1})-(\theta_{B,2}-\theta_{B,1})]/2$,
+with variance $\sigma^2(1-\rho)$, so its flag bias is $k=k_r\ge k_s$.
+Write $f_\pm(k)=(1+|b_\pm(k)|)/2$. At Bell-input acceptance yield $p$,
+the exact maximal unnormalized correct Bell mass is
+
+$$
+Q_k(p)=
+\begin{cases}
+p f_+(k),&0\le p\le m_+(k),\\
+m_+(k)f_+(k)+(p-m_+(k))f_-(k),&m_+(k)\le p\le1.
+\end{cases} \tag{11}
+$$
+
+The preceding Kraus bound includes arbitrary accepted payload filters;
+accepting the higher-fidelity flag first attains every point. As $k$
+increases, its top fidelity $f_+$, available mass $m_+$, and total
+$Q_k(1)=[1+k_r\max(v,k)]/2$ all increase. Before the larger breakpoint
+the top ordinary segment dominates; beyond it the difference is affine
+with nonnegative endpoint values. Consequently
+$Q_{k_r}(p)\ge Q_{k_s}(p)$ for all $p$. This covers the full Bell
+acceptance–fidelity frontier, including the signed reward $2Q-p$.
+For negative $\rho$, (10) is still matched, but no complete low-yield
+frontier comparison is claimed here. Unequal or phase-dependent loss,
+non-Gaussian backaction and nonclassical baths require new instruments.
+
 ### Verification and unresolved extension
 
 [The exact replay](checks/architecture/verify_dispatch.py) uses only
@@ -338,6 +811,15 @@ $p\in\{0,1/2,9/10\}$ and $\kappa\in\{0,97/100,1\}$. It also checks
 factorization. These finite examples check signs, normalization and
 reference coherence; the general algebra and the cited unitary-switch
 no-go are analytic dependencies. This result is not formalized in Lean.
+
+The same replay checks 96 full quantum-output Choi identities for (8),
+including rational phase trajectories, static fields and imperfect
+controls. It deliberately distinguishes the two flag instruments.
+Nine exact event-head cases retain the reported flag, three clock-indexed
+cases check the failed correction, and six reuse/rewind cases check the
+fresh-reservoir premise. The Gaussian integrals, optimal-decoder and
+whole-frontier arguments are analytic; finite replay does not fit a
+hardware bath or establish a protected event-memory implementation.
 
 Higher-dimensional cyclic counters and cyclic instruction orders are a
 possible next question. Their resource-optimality, prior overlap and
