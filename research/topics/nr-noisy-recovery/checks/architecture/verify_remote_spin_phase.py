@@ -8,12 +8,14 @@ replayed exactly. A full-rank fixed-marginal reduction and an eight-outcome
 helper POVM with local-filter failure accounting guard the arbitrary-helper
 assistance proof. Coherent frequency guards also check the constant-control
 four-mode normal form and coefficient-independent eigen-source survivor
-compiler. The native port, calibration, timing and general scattering/RUS
+compiler. Reflected-gate fixtures guard continuous local phase corrections,
+complex covariance orientation, prescribed flags and the balanced-attenuation
+upper witness. The native port, calibration, timing and general scattering/RUS
 comparisons remain analytic scope, not certified by finite replay.
 Import is silent; no files are written.
 """
 from fractions import Fraction as F
-from itertools import product
+from itertools import combinations, product
 import json
 
 if not __debug__:
@@ -1160,6 +1162,230 @@ def eigen_verify():
 
 
 
+# Exact continuous local-Z gate cone and balanced reflected family.
+def gate_transpose(a):return [list(row) for row in zip(*a)]
+def gate_covariance(vectors):return [[eigen_inner(w,v) for w in vectors] for v in vectors]
+def gate_schur(a,b):return [[x*y for x,y in zip(ar,br)] for ar,br in zip(a,b)]
+
+
+def gate_determinant(a):
+    a=[row[:] for row in a];out=ConcG(1)
+    for j in range(len(a)):
+        p=next((k for k in range(j,len(a)) if a[k][j]!=0),None)
+        if p is None:return ConcG()
+        if p!=j:a[p],a[j]=a[j],a[p];out=-out
+        d=a[j][j];out=out*d
+        for k in range(j+1,len(a)):
+            c=a[k][j]/d
+            a[k]=[x-c*y for x,y in zip(a[k],a[j])]
+    return out
+
+
+def gate_psd(a):
+    assert a==helper_dag(a)
+    for size in range(1,len(a)+1):
+        for inds in combinations(range(len(a)),size):
+            d=gate_determinant([[a[i][j] for j in inds] for i in inds])
+            assert d.i==0 and d.r>=0
+
+
+def gate_partial_transpose(a):
+    return [[a[2*(j//2)+i%2][2*(i//2)+j%2] for j in range(4)] for i in range(4)]
+
+
+def gate_phase_cone(omega,p):
+    gate_psd(omega);gate_psd(gate_partial_transpose(omega))
+    assert all(omega[i][i]==p for i in range(4))
+    assert omega[0][1]==omega[2][3] and omega[0][2]==omega[1][3]
+
+
+def gate_pauli_phases():
+    return [[ConcG(1),ConcG(b),ConcG(a),ConcG(a*b)] for a in (1,-1) for b in (1,-1)]
+
+
+def gate_phase_subspace_basis():
+    out=[helper_eye(4)]
+    for pairs in (((0,1),(2,3)),((0,2),(1,3)),((0,3),),((1,2),)):
+        for coefficient in (ConcG(1),ConcG(0,1)):
+            a=[[ConcG() for _ in range(4)] for _ in range(4)]
+            for i,j in pairs:a[i][j]=coefficient;a[j][i]=coefficient.conj()
+            out.append(a)
+    return out
+
+
+def gate_balanced_family():
+    # The physical resonance tuning is checked exactly for several C>0.
+    for C in (F(1,3),F(1),F(3,2),F(7,3),F(100)):
+        eta=(C+1)/(C+2)
+        dark=1-2*eta;bright=1-2*eta/(1+C)
+        assert dark==-C/(C+2) and bright==C/(C+2)
+        assert F(1,2)<eta<1
+        kappa, gamma = F(5, 2), F(3)
+        g2 = C*kappa*gamma
+        kappa_r = eta*kappa
+        assert kappa-kappa_r == kappa/(C+2)
+        assert 1-2*kappa_r/kappa == dark
+        assert 1-2*kappa_r*gamma/(kappa*gamma+g2) == bright
+    # Two tuned resonant amplitudes, plus harmless known common gate_pauli_phases.
+    alpha=ConcG(-F(3,7))*ConcG(F(3,5),F(4,5))
+    beta=ConcG(-F(7,13))*ConcG(F(5,13),F(12,13))
+    amplitude=alpha*beta;p0=(amplitude*amplitude.conj()).r
+    assert p0==F(9,169)
+    PA=helper_diag([0,1,0,1]);PB=helper_diag([0,0,1,1]);I=helper_eye(4)
+    source=[ConcG(F(1,2)) for _ in range(4)]
+    vectors=[]
+    for a in (0,1):
+        A=eigen_scale(alpha,helper_add(I,eigen_scale(-2*a,PA)))
+        for b in (0,1):
+            B=eigen_scale(beta,helper_add(I,eigen_scale(-2*b,PB)))
+            vectors.append(conc_mv(helper_mul(B,A),source))
+    cov=gate_covariance(vectors)
+    assert cov==eigen_scale(p0,I)
+    # Two separately preserved gate flags with fixed relative weights.
+    targets=[[ConcG(1),ConcG(1),ConcG(1),ConcG(0,1)],[ConcG(1),ConcG(1),ConcG(1),ConcG(0,-1)]]
+    roots=[F(3,5),F(4,5)]
+    total=[[ConcG() for _ in range(4)] for _ in range(4)]
+    measurement=[];corrected=[]
+    # B0 is the unitary Walsh matrix: the actual bus-row matrix is amplitude*B0.
+    B0=eigen_scale(F(1,2),[[ConcG((-1)**(a*pa+b*pb)) for pa,pb in ((0,0),(1,0),(0,1),(1,1))]
+                     for a,b in ((0,0),(0,1),(1,0),(1,1))])
+    assert helper_mul(B0,helper_dag(B0))==I
+    for target,root in zip(targets,roots):
+        pl=p0*root*root;omega=eigen_scale(pl,I)
+        gate_phase_cone(omega,pl)
+        total=helper_add(total,gate_schur(eigen_outer(target),omega))
+        flag_corrected=[]
+        for v in gate_pauli_phases():
+            t=[ConcG(F(3,13)*root/2)*u*z for u,z in zip(target,v)]
+            # t=B m*, so m*=B0^dagger t/amplitude.
+            aconj=[z/amplitude for z in conc_mv(helper_dag(B0),t)]
+            m=[z.conj() for z in aconj];measurement.append(m)
+            actual=[eigen_inner(m,bus) for bus in vectors]
+            assert actual==t
+            fixed=[z*y for z,y in zip(v,actual)]
+            assert fixed==[ConcG(F(3,13)*root/2)*u for u in target]
+            flag_corrected.append(eigen_outer(fixed))
+        cp=[[sum(mat[i][j] for mat in flag_corrected) for j in range(4)] for i in range(4)]
+        assert cp==eigen_scale(pl,eigen_outer(target))
+        corrected.append(pl)
+    assert total==cov and sum(corrected)==p0
+    effect=[[sum(m[i]*m[j].conj() for m in measurement) for j in range(4)] for i in range(4)]
+    assert effect==I
+    # Fixed/eigen_outer dual Z=|00><00|; V=Z-I/4 is orthogonal to the phase subspace.
+    Z=helper_diag([1,0,0,0]);V=helper_add(Z,eigen_scale(-F(1,4),I))
+    gate_psd(Z)
+    assert all(helper_trace(helper_mul(V,b))==0 for b in gate_phase_subspace_basis())
+    assert helper_trace(helper_mul(Z,cov))==p0
+    # A local output Z correction cannot turn inverse-CS into CS.
+    ratio=lambda u:u[0]*u[3]/(u[1]*u[2])
+    assert ratio(targets[0])==ConcG(0,1) and ratio(targets[1])==ConcG(0,-1)
+    return {'optimal_reflected_gate_probability':str(p0),'preserved_gate_flag_probabilities':[str(p) for p in corrected],
+            'measurement_refinements':len(measurement),'dual_objective':str(p0)}
+
+
+def gate_range_and_pauli_dual():
+    u=[ConcG(1),ConcG(1),ConcG(1),ConcG(0,1)];z=ConcG(F(3,5),F(4,5))
+    v=[ConcG(1),z,ConcG(1),z];k=[a*b for a,b in zip(u,v)]
+    omega=eigen_outer(v);gate_phase_cone(omega,F(1));cov=eigen_outer(k)
+    assert gate_schur(eigen_outer(u),omega)==cov
+    # G_jk=<v_k|v_j>, not the conventional column Gram. This complex
+    #fixture makes the wrong transpose violate a 2x2 PSD principal minor.
+    assert gate_covariance([[z] for z in k]) == cov
+    dummy_rho = eigen_scale(F(1, 4), eigen_outer(k))
+    assert eigen_scale(4, dummy_rho) == cov
+    wrong = helper_add(gate_transpose(cov), eigen_scale(-1, cov))
+    d = gate_determinant([[wrong[i][j] for j in (0, 1)] for i in (0, 1)])
+    assert d.i == 0 and d.r < 0
+    # Continuous local-B correction is exact with probability one.
+    assert [a*b.conj() for a,b in zip(k,v)]==u
+    projection=helper_add(helper_eye(4),eigen_scale(-F(1,4),cov))
+    assert projection==helper_dag(projection) and helper_mul(projection,projection)==projection
+    Z=eigen_scale(F(5,4),projection);gate_psd(Z)
+    assert helper_trace(helper_mul(Z,cov))==0
+    values=[]
+    for p in gate_pauli_phases():
+        atom=[a*b for a,b in zip(u,p)]
+        value=eigen_inner(atom,conc_mv(Z,atom))
+        assert value.i==0 and value.r>=1
+        values.append(value.r)
+    assert sorted(values)==[F(1),F(4),F(5),F(5)]
+    return {'continuous_phase_probability':1,'Pauli_only_probability':0,
+            'Pauli_dual_atom_values':[str(x) for x in values],
+            'scope':'abstract rank-one gate_covariance fixture, not a claimed native scattering realization'}
+
+
+def gate_orthogonal_tag_family():
+    # Two fresh registers of one preserved four-mode carrier. The rational
+    # amplitudes and source components avoid an algebraic-number dependency.
+    parameters=[(F(9,25),F(16,25),F(4,5),F(3,5),F(12,25),
+                 ConcG(F(3,5),F(4,5)),F(25,9),F(17,25)),
+                (F(25,169),F(144,169),F(12,13),F(5,13),F(60,169),
+                 ConcG(F(5,13),F(12,13)),F(169,25),F(97,169))]
+    local_vectors=[];local_roots=[]
+    for u,v,a,b,root,phase,C,eta in parameters:
+        assert a*a+b*b==1 and b*b==u/(u+v)
+        assert root*root==u*v and v>=u>0
+        assert 1-2*eta==-u and 1-2*eta/(1+C)==v
+        assert F(1,2)<eta<=(C+1)/(C+2)
+        states=[[phase*(-u)*a,phase*(-u)*b],
+                [phase*(-u)*a,phase*v*b]]
+        assert eigen_inner(states[0],states[1])==0
+        assert eigen_inner(states[0],states[0])==u*u
+        assert eigen_inner(states[1],states[1])==root*root
+        local_vectors.append(states);local_roots.append([u,root])
+    vectors=[[x*y for x in local_vectors[0][a] for y in local_vectors[1][b]]
+             for a in (0,1) for b in (0,1)]
+    roots=[x*y for x in local_roots[0] for y in local_roots[1]]
+    d=[r*r for r in roots];p=min(d);sqrtp=roots[0]
+    assert p==F(81,28561) and sqrtp*sqrtp==p
+    pointers=[[z/r for z in v] for v,r in zip(vectors,roots)]
+    assert gate_covariance(pointers)==helper_eye(4)
+    cov=gate_covariance(vectors)
+    assert cov==helper_diag(d)
+    target=[ConcG(1),ConcG(F(3,5),F(4,5)),
+            ConcG(F(5,13),F(12,13)),ConcG(0,1)]
+    measurement=[];fixed_covariances=[]
+    for signs in gate_pauli_phases():
+        coefficients=[sqrtp*t.conj()*s/(2*r)
+                      for t,s,r in zip(target,signs,roots)]
+        m=[sum((c*e[i] for c,e in zip(coefficients,pointers)),ConcG())
+           for i in range(4)]
+        measurement.append(m)
+        actual=[eigen_inner(m,v) for v in vectors]
+        assert actual==[sqrtp*t*s/2 for t,s in zip(target,signs)]
+        fixed=[s*z for s,z in zip(signs,actual)]
+        fixed_covariances.append(eigen_outer(fixed))
+    effect=[[sum((m[i]*m[j].conj() for m in measurement),ConcG())
+             for j in range(4)] for i in range(4)]
+    expected=[[sum((p/r**2*e[i]*e[j].conj()
+                     for r,e in zip(roots,pointers)),ConcG())
+               for j in range(4)] for i in range(4)]
+    assert effect==expected
+    gate_psd(helper_add(helper_eye(4),eigen_scale(-1,effect)))
+    success=[[sum((a[i][j] for a in fixed_covariances),ConcG())
+              for j in range(4)] for i in range(4)]
+    # Equality of every diagonal-Kraus matrix-unit coefficient proves the
+    # accepted CP map also on arbitrary reference-entangled spin inputs.
+    assert success==eigen_scale(p,eigen_outer(target))
+    assert cov[0][0]==p
+    gate_phase_cone(eigen_scale(p,helper_eye(4)),p)
+    gate_psd(helper_add(cov,eigen_scale(-p,helper_eye(4))))
+    return {'reflected_gate_probability':str(p),
+            'success_refinements':len(measurement),'spin_matrix_unit_coefficients':16,
+            'photon_failure_effect':'positive semidefinite',
+            'scope':'two independently addressed registers of one preserved four-mode carrier, calibrated single-frequency generalized photon readout; no no-click acceptance or harmless retry'}
+
+
+def gate_verify():
+    return {'status': 'passed',
+            'balanced_reflected_gate_family': gate_balanced_family(),
+            'orthogonal_tag_reflected_gate_family': gate_orthogonal_tag_family(),
+            'continuous_phase_range_and_orientation': gate_range_and_pauli_dual(),
+            'scope': 'exact reflected-sector gate covariance, continuous-phase, accepted-flag, balancing and weak-dual guards; no hardware loss/RUS completion or numerical optimization'}
+
+
+
+
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
@@ -1181,7 +1407,8 @@ def verify():
             "arbitrary_helper_rank_reduction_example": helper_verify(),
             "constant_control_four_mode_normal_form": bus_verify(),
             "eigen_source_survivor_compiler": eigen_verify(),
-            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms and eigen-source survivor compilers; universal proofs, native ports, calibration and clocks remain analytic"}
+            "reflected_diagonal_gate_cone": gate_verify(),
+            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms, eigen-source survivor compilers and reflected diagonal-gate cone/balancing witnesses; universal proofs, native ports, calibration and clocks remain analytic"}
 
 
 if __name__ == "__main__":

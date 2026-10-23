@@ -66,6 +66,9 @@ support the constant-optics four-mode reduction and the specified
 coefficient-independent survivor compiler. Their all-spectrum proofs
 remain analytic; lost-environment records and adaptive intermediate
 controls are outside those comparisons.
+Additional finite guards support the continuous local-phase gate cone
+and the balanced/opposite-phase ordinary gate constructions. The declared
+one-pass reflected-success ceiling and cone completeness remain analytic.
 A separate outward interval certificate integrates the full declared
 Gaussian pulse, with analytic strip and tail bounds. Its physical joint
 mode analyzer remains an additional resource. Full Choi twirls in the general-channel replay support the
@@ -90,6 +93,12 @@ four and eight. The ordinary three-measurement construction is a cited
 baseline with an explicit analytic proof. Its comparison to the specified
 switch protocol counts retries and permits the same output frame convention;
 it does not optimize all coherent measurement protocols or model detector faults.
+The [delivered-photon screen](../research/topics/nr-noisy-recovery/architecture-baselines.md#pbs-delivered-output)
+adds exact two-photon PBS sectors, coherent path instruments and
+uniform post-interaction loss/false-herald guards. Its same-graph
+known-control argument is analytic. These checks do not fit source,
+detector or storage parameters, supply unknown-input injection, or
+certify a delivered experimental rate.
 
 The [communication note](../research/topics/nr-noisy-recovery/communication.md)
 has exact finite checks of absorbing-vacuum loss, sector-preserving noisy-wire

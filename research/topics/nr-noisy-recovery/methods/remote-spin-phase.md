@@ -238,6 +238,106 @@ two occupied interactions; that does not imply equal clocks, loss or
 routing hardware. The single-polarization match (RS4)–(RS6) does not
 need this stronger port.
 
+### Balanced attenuation attains the accepted reflected-gate ceiling
+
+The same construction closes a whole lossy family. Suppose the two
+surviving reflections are a known ideal controlled π phase times a
+common scalar at each station: the dark/bright amplitudes are
+$\alpha,-\alpha$ at $A$ and $\beta,-\beta$ at $B$. Known photon
+wrappers put the ideal parts into the $X,Z$ convention above. Then
+(RS7)–(RS8) are simply multiplied by $\alpha\beta$:
+$$
+K_{uv}=\frac{\alpha\beta}{2}Z_A^uZ_B^v U,
+\qquad p_0=|\alpha\beta|^2.
+\tag{RS8a}
+$$
+Thus every prescribed known diagonal unitary on arbitrary unknown $ABR$
+is attained with joint launch probability $p_0$. All four surviving
+outcomes are accepted after local Pauli corrections; physical missing
+photons still count as failures. This is a single-attempt gate weight;
+rejected spins may be damaged, so it is not a harmless-retry rate.
+
+This also gives an upper bound for any switch in the declared one-pass
+diagonal-reflection architecture whose accepted flags require a surviving
+reflected carrier. On the dark–dark spin input $00$,
+each history is $\alpha\beta$ times normalized photon evolution,
+even for an entangled control–polarization source or an accessible source
+purifier. Total surviving weight is $p_0$. Every accepted unitary flag
+has the same probability on every input, so its total accepted yield
+is at most $p_0$. The ordinary construction saturates this bound, including
+any prescribed mixture of diagonal-unitary flags by choosing the known
+readout basis with the required classical probabilities. This is an
+accepted reflected-gate ceiling, not an equality of no-click spin states.
+No-click acceptance is outside this bound. It assumes
+one visit to each station, no free bypass and no intermediate data-spin
+encoding or control that changes the diagonal interaction model.
+
+If the same balanced relation holds **pointwise** over a pulse, with
+common factors $\alpha(\nu),\beta(\nu)$ and frequency-preserving optics,
+replace $p_0$ by $\int|f(\nu)\alpha(\nu)\beta(\nu)|^2d\nu$.
+The surviving spectral envelope is common to all four photon labels,
+so the constant spatial-mode basis (RS7) suffices; this family requires
+no additional coherent spectral sorter. Frequency conversion changes
+the frequencies encountered by the stations and needs its own bound.
+
+There is a physical single-frequency balancing line in the resonant
+input–output model (RS19). For cooperativity
+$C=g^2/(\kappa\gamma)>0$, set
+$$
+\frac{\kappa_r}{\kappa}=\frac{C+1}{C+2},\qquad
+r_0=1-2\frac{\kappa_r}{\kappa}=-\frac{C}{C+2},\qquad
+r_1=1-\frac{2\kappa_r/\kappa}{1+C}=+\frac{C}{C+2}.
+\tag{RS8b}
+$$
+Here $\kappa,\gamma$ are the amplitude decay rates used in (RS19),
+and $\kappa-\kappa_r=\kappa/(C+2)>0$. This is a resonance condition
+on model parameters; it neither asserts that the measured modules lie
+on that line nor extends their equality to a finite-bandwidth cavity
+pulse. General routed loss/emission records and actual optical, local
+control and storage costs remain separate.
+
+The photon readout can close a larger **single-frequency** opposite-phase
+family without data-spin filters. Write the two amplitudes at station
+$j$ as $-u_j,+v_j$, with $0<u_j,v_j\le1$, after removing a known common
+phase. Give each station a fresh independently addressable two-state
+register of the same four-mode photon, using the preserved ports and
+a known between-station mode swap. In that register choose
+bright-projector population $x_j=u_j/(u_j+v_j)$. The two spin-conditioned
+photon vectors are
+$$
+|f_{j0}\rangle=-u_j\bigl(\sqrt{1-x_j}|0\rangle+\sqrt{x_j}|1\rangle\bigr),
+\qquad
+|f_{j1}\rangle=-u_j\sqrt{1-x_j}|0\rangle+v_j\sqrt{x_j}|1\rangle.
+$$
+Their inner product vanishes, and their squared norms are
+$d_{j0}=u_j^2$, $d_{j1}=u_jv_j$. Thus the four joint vectors are
+$|f_{ab}\rangle=\sqrt{d_{Aa}d_{Bb}}\,|e_{ab}\rangle$ for an
+orthonormal photon basis. Set
+$p=\min_{ab}d_{Aa}d_{Bb}$, and for target phases $t_{ab}$, $|t_{ab}|=1$,
+use the four photon measurement vectors
+$$
+|m_{rs}\rangle=\sum_{a,b}
+ \frac{\sqrt p\,t_{ab}^*(-1)^{ra+sb}}
+      {2\sqrt{d_{Aa}d_{Bb}}}|e_{ab}\rangle.
+\tag{RS8c}
+$$
+Their effects sum to $\operatorname{diag}_{e}(p/(d_{Aa}d_{Bb}))\preceq I$;
+the positive complement supplies reflected failure outcomes. Every
+success branch is $\sqrt p\,Z_A^rZ_B^s\operatorname{diag}(t_{ab})/2$,
+so local Pauli feedback gives the exact target on arbitrary $ABR$ with
+total launch probability $p$. When $v_j\ge u_j$ at both stations,
+$p=u_A^2u_B^2$ saturates the same accepted reflected-gate ceiling.
+Indeed the dark–dark input has exactly that total surviving weight,
+which bounds every input-independent accepted unitary instrument.
+In (RS19) this includes the resonant range
+$1/2<\kappa_r/\kappa\le(C+1)/(C+2)$, not just its balanced endpoint.
+The two independently addressed photon registers and generalized
+measurement require the declared four-mode interface, calibrated source
+and readout, additional failure ports and their losses. A polarization-only
+module does not supply them. Frequency-dependent amplitude ratios require
+different source balances; (RS8c) alone is not a finite-pulse compiler.
+No-click branches remain excluded and rejected spin data need not survive.
+
 ## A common diagonal bath preserves the detected comparison
 
 A limited correlated-noise extension is exact. Let a common spin/bath
@@ -1583,14 +1683,150 @@ diagonal gate, (RS7)–(RS8) already provide the stronger endpoint check
 under four-mode ports; no additional remote query or nonlinear
 interaction between independent photons is hidden in that readout.
 
+## Exact accepted diagonal-gate instruments and local phase corrections
+
+The gate task can be tested directly on unknown data, instead of
+optimizing a known-state factory. Index spin labels by $j=00,01,10,11$.
+Let $v_j$ be the pure surviving photon vector, including every accessible
+frequency, path and polarization mode, for that label. Use the
+**Kraus covariance**
+$G_{jk}=\langle v_k|v_j\rangle$, so tracing the photon multiplies
+the spin matrix unit $|j\rangle\!\langle k|$ by $G_{jk}$.
+This is the transpose of the conventional column Gram $V^\dagger V$.
+For a photon readout with diagonal spin Kraus vectors $k_m$,
+$G=\sum_m k_mk_m^\dagger$. Equivalently $G=4\rho_{++}$ for the
+unnormalized output of the same channel on the dummy input $++$.
+That identity computes the channel; it does not reset or prepare the
+unknown payload. No normalization by reflected-photon probability is made.
+Accepted flags in this section require a surviving reflected carrier;
+physical no-click outcomes are not accepted by this model.
+
+For continuous local $Z$ phases define
+$q(\theta_A,\theta_B)=(1,e^{i\theta_B},e^{i\theta_A},
+e^{i(\theta_A+\theta_B)})^{\mathsf T}$.
+Their conic covariance hull $\mathcal K$ has the exact description
+$$
+\begin{gathered}
+\Omega\succeq0,\qquad \Omega^{T_B}\succeq0,\qquad
+\operatorname{diag}\Omega=p(1,1,1,1),\\
+\Omega_{01}=\Omega_{23},\qquad \Omega_{02}=\Omega_{13},
+\qquad p=\frac{\operatorname{Tr}\Omega}{4},
+\qquad
+\mathcal K=\left\{\sum_r w_r q_rq_r^\dagger:w_r\ge0\right\}.
+\end{gathered}
+\tag{RS54}
+$$
+The two equalities are complex, with zero-based indices. Necessity
+follows from each product phase vector. For sufficiency, when $p>0$,
+$\Omega/(4p)$ is a two-qubit PPT state and therefore separable by
+[Horodecki, Horodecki and Horodecki, Phys. Lett. A **223**, 1–8 (1996)](https://arxiv.org/abs/quant-ph/9605038).
+The linear equalities in (RS54) remove every Pauli coefficient containing
+$Z$, leaving the nine-dimensional real space
+$\mathcal E=\operatorname{span}\{I,X,Y\}^{\otimes2}$.
+In a separable product decomposition, project each local Bloch vector
+onto its $XY$ disk. This leaves $\Omega$ unchanged, and each disk state
+is a mixture of pure equatorial states. This is a decomposition argument,
+not an assumed physical flattening channel. It gives the asserted phase
+vectors; at $p=0$ positivity forces $\Omega=0$. At most nine phase
+atoms suffice per flag by Carathéodory in the normalized eight-dimensional
+affine hull. The reflected positive remainder needs at most four
+rank-one vectors on the occupied helper support, with a zero-probability
+complement effect if the full helper is larger. These counts exclude
+physical loss records. Four Pauli masks alone do not describe this cone.
+
+Fix the accepted flag dictionary **before** optimization: flag $\ell$
+is the known diagonal unitary $U_\ell=D_{u_\ell}$, with
+$|u_{\ell,j}|=1$. With arbitrary terminal photon measurement and only
+output local phase corrections, the exact accepted maps
+$p_\ell\operatorname{Ad}_{U_\ell}$ are achievable if and only if
+$$
+G-\sum_\ell D_{u_\ell}\Omega_\ell D_{u_\ell}^\dagger\succeq0,
+\qquad \Omega_\ell\in\mathcal K,
+\qquad\operatorname{diag}\Omega_\ell=p_\ell(1,1,1,1).
+\tag{RS55}
+$$
+For necessity, a successful corrected unitary channel has rank-one
+Choi matrix, so every hidden corrected success Kraus operator is a
+scalar multiple of $U_\ell$. Before its inverse local phase correction,
+its vector is a scalar multiple of $D_{u_\ell}q_r$. These vectors sum
+to the displayed covariances; the other photon outcomes add a positive
+remainder. For sufficiency, decompose every $\Omega_\ell$ into phase
+atoms and the positive remainder into vectors. Together they factor
+the actual $G$. The same purification/ensemble correspondence used in
+(RS39) realizes these vectors by a POVM on the pure accessible photon
+program. Applying each inverse local phase gives exactly the prescribed
+diagonal Kraus operators. Equality on all spin matrix units proves
+the maps on every unknown $ABR$. The success probability is the
+input-independent $\sum_\ell p_\ell$ per launch, including reflection
+and readout rejection. Prescribed relative weights require the additional
+constraints $p_\ell=r_\ell p$; they must not be optimized away.
+In particular, $\operatorname{CS}$ and $\operatorname{CS}^\dagger$
+are different unknown-input gates, not one target related by a free
+output local phase.
+
+The positive remainder supplies rejected **reflected** readout maps.
+Physical no-reflection spin states and emission records require their
+actual dilation and are not determined by this covariance. Counting
+their probability as failure does not make an unknown rejected payload
+repairable or justify repeat-until-success. An inaccessible source
+mixture also invalidates the attainment proof; a classical lottery
+between orders cannot be given a coherent cross-order purifier by merely
+summing its Gram matrices. Such a lottery has separate readout constraints
+for each order and shared launch probabilities. An aggregated covariance
+can be used as an upper relaxation only when that additional access has
+not been physically supplied.
+
+For a single uncorrected target branch the specialization is
+$$
+G-puu^\dagger\succeq0,
+\qquad
+p_{\max}=\frac1{u^\dagger G^+u}\quad
+\text{if }u\in\operatorname{ran}G;
+\qquad p_{\max}=0\text{ otherwise}.
+\tag{RS56}
+$$
+The range condition also holds for every refined phase vector in (RS55).
+It matters for rank-deficient programs and cannot be replaced by a
+finite Pauli-only test. A genuinely complex covariance must not be
+transposed while keeping the target vectors unchanged.
+
+There are simple exact upper witnesses, independent of a solver's status.
+For a weighted accepted payoff $\sum_\ell w_\ell p_\ell$, let $Z\succeq0$
+and, for each flag, give a decomposition
+$$
+D_{u_\ell}^\dagger ZD_{u_\ell}-\frac{w_\ell}{4}I
+ =A_\ell+(B_\ell)^{T_B}+W_\ell,
+\qquad A_\ell,B_\ell\succeq0,\quad W_\ell\perp\mathcal E.
+\tag{RS57}
+$$
+Taking traces against $\Omega_\ell$ in (RS54) and then using the
+positive remainder in (RS55) proves
+$\sum_\ell w_\ell p_\ell\le\operatorname{Tr}(ZG)$.
+For total unitary yield, $Z=|00\rangle\!\langle00|$ and
+$W=Z-I/4\perp\mathcal E$ give
+$\sum p_\ell\le G_{00}$, precisely the dark–dark witness in (RS8a).
+No claimed numerical optimizer or small eigenvalue tolerance enters
+this weak-duality proof.
+
+Substituting $G(x,Y)=4\rho_{++}(x,Y)$ from (RS49) into (RS55) yields
+an exact finite SDP over all source, constant four-mode optics, terminal
+readout and local phase feedback in that declared coherent-bus class.
+The dummy spin preparation is fixed, so there is no gate-task outer
+optimization over data populations. Both chronological words remain
+ordinary comparisons. Extra intermediate data controls, encodings,
+memories, bypass paths, local nonunitary filters and different temporal
+or spectral interfaces are not upper-bounded by this restricted SDP.
+Their availability and costs must be included in a practical comparison.
+
 ## Physical resources and verification scope
 
 The arbitrary-helper protocol assumes a pure incident photon and the
 complete reflected polarization–frequency purifier. Generalized coherent
 measurement on its at-most-four-dimensional occupied Schmidt span can
 require calibrated temporal/spectral mode conversion, phase references,
-additional detector ports, quantum memory and feedforward. The arbitrary
-helper proof allows at most eight nonzero measurement outcomes and then
+additional detector ports, quantum memory and feedforward. The
+Bell-assistance proof (RS39) allows at most eight nonzero helper outcomes
+and then
 local filters with their own success/failure records. Mathematical mode
 compression does not establish that a given cavity/router preserves
 those modes or that ordinary timestamp detection implements the POVM.
@@ -1625,7 +1861,11 @@ The finite replay also checks (RS48)–(RS50) on nine coherent two-frequency
 examples, including complex compressions, zero/one source occupancy,
 singular effects and all spin-state entries. Exact coefficient-vector and
 coherent-frequency guards check the eigenstate-source compiler. These
-finite cases support the general proofs; they do not supply native
+finite cases also guard complex gate-covariance orientation, continuous
+local phases versus a Pauli-only restriction, separate accepted gate flags,
+the exact dark–dark dual witness, and the balanced and orthogonal-tag
+reflected-gate constructions. They support the general proofs; they do not
+supply native
 four-mode ports, an adaptive ordinary upper bound or a physical loss and
 clock completion. A further native gate comparison must retain arbitrary
 unknown $ABR$, the complete rejected instrument, and the strongest paid

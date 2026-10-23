@@ -10,6 +10,8 @@ if not __debug__:
     raise RuntimeError("Exact measurement checks require assertions; do not use -O.")
 
 from fractions import Fraction as F
+from itertools import product
+from math import factorial
 import json
 
 from verify_fault_simulation import (
@@ -17,6 +19,7 @@ from verify_fault_simulation import (
     add as gadd, times as gscale, zeros as gzeros, identity as geye,
     adjoint as gadjoint, matmul as gmul, vectorize as gvec,
     inner as ginner, add_outer as gadd_outer,
+    multiply as gproduct, conjugate as gconjugate,
 )
 
 
@@ -406,6 +409,152 @@ def shared_frequency_checks():
     return rows
 
 
+def verify_photonic_pbs():
+    """Reference-complete two-photon mode actions, with explicit loss flags.
+
+    Normalized balanced path couplers contribute 1/sqrt(2) per photon.
+    Store their integer matrices and multiply the two-photon creation
+    coefficients by 1/2; all amplitudes then stay Gaussian-rational.
+    This is a finite guard, not a fit to the optical experiment.
+    """
+    def waveplate(u, start):
+        m = geye(8)
+        for i, j in product(range(2), repeat=2):
+            m[start+i][start+j] = u[i][j]
+        return m
+
+    def network(u):
+        # S0H,V; S1H,V; A0H,V; A1H,V. PBS reflection phases compensated.
+        pbs = geye(8)
+        for i, j in ((1, 5), (3, 7)):
+            pbs[i], pbs[j] = pbs[j], pbs[i]
+        paths = geye(8)
+        for i, j in ((0, 2), (1, 3), (4, 6), (5, 7)):
+            paths[i][i], paths[i][j] = GONE, GONE
+            paths[j][i], paths[j][j] = GONE, gaussian(-1)
+        m = gmul(paths, gmul(waveplate(u, 2), gmul(pbs, waveplate(u, 0))))
+        assert gmul(gadjoint(m), m) == [[gscale(x, 2) for x in row] for row in geye(8)]
+        return m
+
+    def output(m, logical):
+        # Source psi_S D_A path-EPR has creation amplitude 1/2 per term;
+        # the two normalized path couplers contribute another factor1/2.
+        state = {}
+        for branch, pol in product(range(2), repeat=2):
+            s, a = 2*branch+logical, 4+2*branch+pol
+            for r, t in product(range(8), repeat=2):
+                value = gscale(gproduct(m[r][s], m[t][a]), F(1, 4))
+                if value != GZERO:
+                    key = tuple(int(k == r)+int(k == t) for k in range(8))
+                    state[key] = gadd(state.get(key, GZERO), value)
+        return {key: value for key, value in state.items() if value != GZERO}
+
+    def weight(occupation):
+        out = 1
+        for n in occupation:
+            out *= factorial(n)
+        return out
+
+    def inner(left, right, ancilla_number=None):
+        result = GZERO
+        for key, value in left.items():
+            if ancilla_number is None or sum(key[4:]) == ancilla_number:
+                result = gadd(result, gscale(gproduct(gconjugate(value),
+                               right.get(key, GZERO)), weight(key)))
+        return result
+
+    def accepted(left, right, eta):
+        # Global PNR count1 after independent uniform ancilla loss:
+        # effect on NA=n is n*eta*(1-eta)^(n-1). Lost photons are traced.
+        result = {}
+        for x, cx in left.items():
+            n = sum(x[4:])
+            if not n:
+                continue
+            probability = n*eta*(1-eta)**(n-1)
+            for y, cy in right.items():
+                if x[4:] == y[4:]:
+                    key = (x[:4], y[:4])
+                    value = gscale(gproduct(cx, gconjugate(cy)),
+                                   weight(x[4:])*probability)
+                    result[key] = gadd(result.get(key, GZERO), value)
+        return {key: value for key, value in result.items() if value != GZERO}
+
+    gates = [geye(2), [[GZERO, GONE], [GONE, GZERO]],
+             [[GONE, GZERO], [GZERO, gaussian(-1)]],
+             [[gaussian(F(3, 5)), gaussian(F(4, 5))],
+              [gaussian(-F(4, 5)), gaussian(F(3, 5))]],
+             [[gaussian(F(3, 5)), gaussian(0, F(4, 5))],
+              [gaussian(0, F(4, 5)), gaussian(F(3, 5))]],
+             [[GONE, GZERO], [GZERO, gaussian(0, 1)]]]
+    units = records = loss_cases = 0
+    vacuum = (0, 0, 0, 0)
+    for u in gates:
+        assert gmul(gadjoint(u), u) == geye(2)
+        states = [output(network(u), logical) for logical in range(2)]
+        for logical in range(2):
+            for key in states[logical]:
+                assert sum(key) == 2
+                if sum(key[4:]) == 2:
+                    # Ancilla H/V preserved by path couplers: two distinct
+                    # polarization detector channels in the ideal failure.
+                    assert key[4]+key[6] == key[5]+key[7] == 1
+        for i, j in product(range(2), repeat=2):
+            assert inner(states[j], states[i]) == gaussian(int(i == j))
+            assert inner(states[j], states[i], 1) == gaussian(F(int(i == j), 2))
+            v = gscale(gadd(gproduct(u[1][i], gconjugate(u[1][j])),
+                           gaussian(int(i == j == 1))), F(1, 2))
+            assert inner(states[j], states[i], 2) == gscale(v, F(1, 2))
+            units += 1
+            for p, b, q, s in product(range(2), repeat=4):
+                key = [0]*8
+                key[2*q+s] = 1
+                key[4+2*p+b] = 1
+                first = u[b][i] if s == b else GZERO
+                second = gscale(u[s][b], (-1)**(p+q)) if i == b else GZERO
+                expected = gscale(gadd(first, second), F(1, 4))
+                assert states[i].get(tuple(key), GZERO) == expected
+                records += 1
+            for eta in (F(0), F(1, 2), F(4, 5), F(1)):
+                assert 0 <= eta <= 1 and 0 <= 2*eta*(1-eta) <= 1
+                channel = accepted(states[i], states[j], eta)
+                false = gscale(v, eta*(1-eta))
+                assert channel.get((vacuum, vacuum), GZERO) == false
+                one_trace = GZERO
+                for (x, y), value in channel.items():
+                    if x == y and sum(x) == 1:
+                        one_trace = gadd(one_trace, value)
+                assert one_trace == gaussian(eta*F(int(i == j), 2))
+                for tau in (F(1, 2), F(9, 10), F(1)):
+                    missing = gadd(false, gscale(one_trace, 1-tau))
+                    delivered = gscale(one_trace, tau)
+                    assert gadd(delivered, missing) == gadd(one_trace, false)
+                    loss_cases += 1
+    ratio_cases = 0
+    for eta, tau, v in product((F(0), F(1, 2), F(4, 5), F(1)),
+                               (F(1, 2), F(9, 10), F(1)),
+                               (F(0), F(1, 4), F(1, 2), F(3, 4), F(1))):
+        delivered = tau*eta/2
+        missing = (1-tau)*eta/2+eta*(1-eta)*v
+        herald = eta/2+eta*(1-eta)*v
+        assert delivered+missing == herald
+        if eta:
+            assert delivered/herald == tau/(1+2*(1-eta)*v)
+            assert delivered/herald >= tau/(3-2*eta)
+        else:
+            assert delivered == missing == herald == 0
+        ratio_cases += 1
+    # The lossless global-threshold statement fails after an arbitrary
+    # polarization analyzer: H^dagger V^dagger -> (H^dagger²-V^dagger²)/2.
+    assert 2*F(1, 2)**2+2*F(-1, 2)**2 == 1
+    return {"status": "passed", "unitary_settings": len(gates),
+            "logical_matrix_units": units,
+            "resolved_creation_amplitude_records": records,
+            "loss_branch_matrix_unit_cases": loss_cases,
+            "conditional_delivery_ratio_cases": ratio_cases,
+            "scope": "Exact normalized two-photon eight-mode PBS/path model and uniform post-PBS loss flags; no hardware source/dark/efficiency/latency certificate."}
+
+
 def main():
     from material_pointer_clock import verify_material_pointer_clock
     from mechanical_pointer_strength import verify_mechanical_pointer_strength
@@ -519,6 +668,7 @@ def main():
                   "filter CP identities, full-control binary-switch Choi/routing examples, "
                   "recorded parity-gate/ancilla branch and frame identities, "
                   "shared-frequency marginal/joint full-Choi and control counterexamples, "
+                  "two-photon PBS/path Fock actions and uniform post-PBS loss flags, "
                   "and scalar rank/branch/retry arithmetic. Analytic "
                   "generalization and physical access assumptions remain in architecture-baselines.md."),
         "examples": rows, "finite_rank_scaling_checks": rank_checks,
@@ -542,6 +692,7 @@ def main():
         "recorded_parity_gate_switch_expected_control_preparations_or_resets": "2",
         "recorded_parity_gate_ordinary_parity_measurements": "3",
         "shared_frequency_examples": shared_frequency_rows,
+        "photonic_local_measurement": verify_photonic_pbs(),
         "material_pointer_clock": verify_material_pointer_clock(),
         "mechanical_pointer_strength": verify_mechanical_pointer_strength(),
         "mechanical_pointer_clock": verify_mechanical_pointer_clock(),

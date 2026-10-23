@@ -5631,6 +5631,135 @@ Each summand equals $\operatorname{Tr}[(P_aQ_bP_a)^2]\ge0$.
 This concerns measurement-projector compatibility; commuting averaged
 channels alone do not imply $v=1$.
 
+<a id="pbs-delivered-output"></a>
+
+### A local photonic measurement needs a delivered-output herald
+
+[Valibouse et al., arXiv:2604.11878v1](https://arxiv.org/html/2604.11878v1)
+implement local polarization readout inside a switch using a path-entangled
+SPDC pair, PBS interactions and an ancilla-path eraser. They characterize
+the selected output with two-photon coincidences. This supplies a real
+measurement interface; it does not by itself certify a target photon
+available after an ancilla-only success flag. The following finite model
+separates that question from control visibility.
+
+Use a normalized source
+$|\psi\rangle_S|D\rangle_A(|00\rangle_{CP}+|11\rangle_{CP})/\sqrt2$,
+where $|D\rangle=(|H\rangle+|V\rangle)/\sqrt2$ and $C,P$ are the two
+photons' paths. Choose compensated PBS phases so that $H$ transmits and
+$V$ exchanges system and ancilla ports. In one path, before recombination,
+the complete creation-operator output is
+
+$$
+\frac1{\sqrt2}\left(
+ \alpha s_H^\dagger a_H^\dagger+
+ \beta s_V^\dagger a_V^\dagger+
+ \alpha s_H^\dagger s_V^\dagger+
+ \beta a_H^\dagger a_V^\dagger\right)|\mathrm{vac}\rangle.
+\tag{VM1}
+$$
+
+Thus the selected one-system/one-ancilla sector has mass $1/2$;
+the two failure sectors have photon numbers $(N_S,N_A)=(2,0),(0,2)$.
+Both path recombiners preserve these totals. With exactly two input
+photons, no loss/dark counts, and an ancilla number measurement giving
+total $N_A=1$, one target photon remains. A terminal target detection is
+therefore not fundamentally necessary in that idealization. Fixed $H/V$
+ancilla analysis and a global veto on multiple clicks also suffice with
+perfect threshold detectors: the two-ancilla failure photons have opposite
+polarizations, even after path recombination. An arbitrary ancilla
+polarization rotation can bunch them into the same detector; that
+threshold-detector statement then fails.
+
+Let known Alice waveplate unitary $U$ act before Bob in path $0$ and after
+Bob in path $1$. Write $P_b=|b\rangle\langle b|$, $b=H,V$. With balanced
+path recombiners, the lossless good Kraus operator for ancilla path $p$
+and polarization $b$, in target output path $q$, is
+
+$$
+\langle q|K_{p,b}
+ =\frac14\big[P_bU+(-1)^{p+q}UP_b\big],
+\qquad \sum_{p,b}K_{p,b}^\dagger K_{p,b}=I/2.
+\tag{VM2}
+$$
+
+These are unnormalized operations on arbitrary inputs and passive
+references, not conditional-state normalization conventions. Keeping
+ancilla path $p$ in the record preserves the instrument; a known path
+frame correction can erase its sign. The target's path control remains
+quantum data. Reading a classical control flag without consuming that
+photon requires its actual measurement interface.
+
+Now assume only an exact input pair, uniform independent per-photon
+post-PBS ancilla transmission/detection efficiency $\eta$, independent target
+survival $\tau$ after the interaction, no dark counts, and acceptance on
+exactly one detected ancilla photon across all ports. Define
+
+$$
+v_\rho=\frac12\operatorname{Tr}
+ [P_V(U\rho U^\dagger+\rho)],\qquad 0\le v_\rho\le1.
+$$
+
+The two-ancilla failure sector has mass $v_\rho/2$. Losing exactly one
+of its photons imitates a good herald while leaving target vacuum.
+Consequently the all-attempt masses are
+
+$$
+\begin{aligned}
+G_{\rm delivered}&=\tau\eta/2,\\
+F_{\rm vacuum}&=(1-\tau)\eta/2+\eta(1-\eta)v_\rho,\\
+H_{\rm accepted}&=\eta/2+\eta(1-\eta)v_\rho,\\
+\Pr(N_S=1\mid\mathrm{accepted})
+ &=\frac{\tau}{1+2(1-\eta)v_\rho}
+ \ge\frac{\tau}{3-2\eta},\qquad\eta>0.
+\end{aligned}
+\tag{VM3}
+$$
+
+The same model holds for the fixed-$H/V$ threshold implementation with a
+global multiple-click veto and independent losses. Number resolution does
+not prevent two photons becoming one through loss. Mode-dependent
+efficiencies, selected detector branches, dark counts, imperfect overlap
+and multipair inputs need their own complete instrument. Loss before the
+PBS also matters: an ancilla-only input can click while leaving no target,
+and a lone input system photon can be routed into an ancilla detector.
+The public [analysis archive](https://zenodo.org/records/19334935) contains
+singles and system--ancilla coincidence counts, with relative channel
+efficiency corrections. It does not provide an absolute loss/dark/source
+model or certify an ancilla-only delivered-output yield.
+
+There is a strong ordinary comparator on these known settings. On the
+eight polarization/path modes the ideal passive matrix is
+$M=(H_S\oplus H_A)U_{S1}B U_{S0}$, with $B$ the two PBS permutations.
+Chronological known waveplates and PBS/path couplings implement this same
+matrix. Its second quantization $\Gamma(M)$ agrees on the entire Fock
+space, including vacuum and failed two-photon branches; attaching the
+same loss channels and detector maps at the same physical locations
+preserves the complete accepted/rejected instrument. This is a
+setting-dependent known-control implementation on the physical mode
+graph, not a fixed causally separable black-box process or a simulation
+of the paper's causal witness for arbitrary inserted operations. The
+simpler ordinary single-PBS measurement also implements (VM1), with the
+same local false-herald mechanism. No native survivor advantage follows
+from the present selected-state test.
+
+The demonstrated source sets $|\psi\rangle$ with waveplates after deriving
+path entanglement from the same SPDC pair. This is a prepared-state
+interface, not demonstrated injection of an independent unknown or
+reference-entangled data photon. Such a data task must charge its actual
+state-injection interface. A delivered-state preparation task is already
+meaningful, but must charge every source attempt, rejected record, route
+loss and ancillary detector. A record-dependent operation also needs a
+target hold time at least
+$\max\{0,T_A+T_{\rm det}+T_{\rm logic}+T_{\rm drive}-T_S\}$, where
+$T_A,T_S$ are the last ancilla and target arrival times. The added storage
+loss and deadline count for both routes. The decisive next test is an
+ancilla-only herald followed by a later target operation, reporting
+missing/multiple-photon accepted mass and delivered-state fidelity against
+this ordinary comparator. A Bell-good delivered weight additionally needs
+the separately supplied reference/data-injection interface. Neither that
+timed test nor a measured native rate advantage is established here.
+
 ### One shared frequency does not automatically provide two unread meters
 
 For elastic dispersive sections driven by the same photon, write their

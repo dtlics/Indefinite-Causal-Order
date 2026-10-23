@@ -104,6 +104,13 @@ constant-optics bus class, reducing the fixed-spin comparison to a small
 attainable optimization. A coefficient-independent reverse-order compiler
 also matches the stated eigen-source survivor instrument. Neither result
 supplies a completion of the loss records or bounds adaptive spin controls.
+An exact local-phase correction cone also makes the unknown-input gate
+test finite. For the specified resonant opposite-phase responses,
+ordinary photon preparation and readout attain the declared one-pass
+ceiling for accepted reflected gates. This does not settle arbitrary
+unequal responses or finite-bandwidth hardware rates. The next test
+is a certified gate-cone comparison at unbalanced responses using full
+pulse integrals, followed by the actual control, loss and clock ledger.
 Encoded recovery, resolved loss records and matched control/clock costs
 remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
 separately excludes exact heralded recovery in its infinite-oscillator
@@ -1036,6 +1043,18 @@ The exact projection identity is replayed in the communication checks.
 It is not a continuum scattering calculation or a fit to the named
 experiment. Resolve the measured frequency kernel and price these
 helpers before treating the formal noncommutation as an application.
+
+### A local measurement must leave a usable output
+
+The [delivered-photon screen](architecture-baselines.md#pbs-delivered-output)
+tracks every photon-number sector of the recent local-measurement
+implementation. An ideal ancilla-only herald can leave a target photon;
+ancilla loss can also turn a two-ancilla failure into a false success with
+target vacuum. Coincidence-selected states alone do not certify the
+delivered output. The comparison includes the ordinary known-control
+optical graph, source/data injection, detector records and the target
+delay needed for feedforward. It supplies a concrete instrument test,
+without establishing a native rate advantage.
 
 ### Private key detection
 
