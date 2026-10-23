@@ -69,6 +69,14 @@ controls are outside those comparisons.
 Additional finite guards support the continuous local-phase gate cone
 and the balanced/opposite-phase ordinary gate constructions. The declared
 one-pass reflected-success ceiling and cone completeness remain analytic.
+Exact eight-mode guards additionally retain coherent frequency and
+reference matrix units, complete joint readout and the four-window
+ordinary survivor. They check the direct three-window construction with
+an explicitly supplied larger middle port and a finite-pulse rank
+obstruction for a four-mode middle port. The general program-attainment,
+compression and common-frame timing proofs remain analytic. These
+guards do not validate native station ports, inaccessible emission
+records, physical buffers or throughput.
 A separate outward interval certificate integrates the full declared
 Gaussian pulse, with analytic strip and tail bounds. Its physical joint
 mode analyzer remains an additional resource. Full Choi twirls in the general-channel replay support the

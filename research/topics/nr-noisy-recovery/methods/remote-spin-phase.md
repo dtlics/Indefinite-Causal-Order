@@ -21,6 +21,9 @@ not been formalized in Lean. For fixed coherent controls, the full-pulse
 ordinary factory also has the exact four-mode reduction and marginal SDP
 below. A separate eigenstate-source construction matches complete coherent
 survivors without assuming frequency-independent reflection amplitudes.
+A stronger decorated eight-mode interface attains independent coherent
+order programs; its same-port ordinary compiler uses four global windows,
+with a separately qualified three-window merged-port option.
 
 ## Physical task and declared interfaces
 
@@ -1818,6 +1821,268 @@ memories, bypass paths, local nonunitary filters and different temporal
 or spectral interfaces are not upper-bounded by this restricted SDP.
 Their availability and costs must be included in a practical comparison.
 
+## Eight preserved modes attain two independent coherent-order programs
+
+The two ordinary moment cones can be combined exactly in a stronger
+**decorated** coherent-order interface. Let $F$ be a four-dimensional
+photon program space and $C$ a distinct order qubit: eight actual
+preserved photon modes are supplied. At station $j=A,B$, assume the
+same native spin-controlled reflected operator in both visit windows,
+
+$$
+\mathsf R_j(\nu)=\sum_{s=0}^1|s\rangle\!\langle s|_j\otimes
+ [\alpha_j(\nu)I_F+s\delta_j(\nu)\Pi_j],
+\qquad \operatorname{rank}\Pi_j=\operatorname{rank}(I-\Pi_j)=2.
+\tag{RS58}
+$$
+
+All scalar response functions are common to the two order arms.
+They are not independent design variables. For each arm $o$, known
+frequency-independent photon wrappers $V_{j,o}$ can realize any
+rank-two $P_{j,o}=V_{j,o}^\dagger\Pi_jV_{j,o}$. Indeed conjugating
+$\mathsf R_j$ by $I_j\otimes V_{j,o}$ gives exactly
+$\sum_s|s\rangle\langle s|_j\otimes
+[\alpha_jI_F+s\delta_jP_{j,o}]$. This is an operator identity on
+unknown spin/reference inputs. It neither replaces the unknown
+spin interaction by a known photon matrix nor controls a copied spin.
+The branch-dependent known optics are additional controls around the
+same physical scattering slot, not part of a bare four-mode switch.
+
+Use homogeneous ordinary variables
+$\gamma_o\ge0$, $0\le x_o\le\gamma_o$ and
+$0\preceq Y_o\preceq\operatorname{diag}(x_o,\gamma_o-x_o)$,
+with $\gamma_0+\gamma_1=1$. Let $\Phi_{AB}(\gamma,x,Y)$ denote the
+linear Kraus-covariance map obtained from (RS49) on the dummy $++$
+input, multiplied by four, with
+$D_x=\operatorname{diag}(x,\gamma-x)$; define $\Phi_{BA}$ by the
+physical reverse word. The dummy input only computes the channel.
+Actual unknown data are not prepared in $++$.
+
+For $\gamma_o>0$, (RS50) supplies a pure source $\phi_o\in F$
+and rank-two station projectors realizing
+$(x_o/\gamma_o,Y_o/\gamma_o)$. At $\gamma_o=0$ the inequalities
+force $x_o=Y_o=0$. Prepare the single pure photon
+$\sum_o\sqrt{\gamma_o}e^{i\chi_o}|o\rangle_C\phi_o$
+with one common spectral envelope $f(\nu)$.
+The two reflected words and their complete pure photon program are
+
+$$
+\begin{aligned}
+K_{0,ab}&=(\alpha_BI+b\delta_BP_{B,0})
+          (\alpha_AI+a\delta_AP_{A,0}),\\
+K_{1,ab}&=(\alpha_AI+a\delta_AP_{A,1})
+          (\alpha_BI+b\delta_BP_{B,1}),\\
+g_{ab}&=\int d\nu\,f(\nu)|\nu\rangle
+ \sum_{o=0}^1\sqrt{\gamma_o}e^{i\chi_o}
+ |o\rangle_C K_{o,ab}(\nu)\phi_o,\\
+G&=\Phi_{AB}(\gamma_0,x_0,Y_0)+
+   \Phi_{BA}(\gamma_1,x_1,Y_1).
+\end{aligned}
+\tag{RS59}
+$$
+
+There is no second launch-weight factor in the homogeneous maps.
+Orthogonality of the order labels proves the last line, including
+all finite-pulse integrals. Its channel action on every spin matrix
+unit is multiplication by $G_{jk}$, so it covers arbitrary unknown
+$ABR$. Independent branch choices of projectors are legitimate
+because known block-diagonal photon optics implement their independent
+conjugations of the same native $\Pi_j$.
+
+For this pure fully accessible photon program, (RS55) with one
+aggregate residual is exact: decompose each accepted phase-cone
+covariance and the positive remainder, and realize that ensemble by
+the terminal photon POVM on the actual purification. Local phase
+feedback then gives every prescribed unitary flag on unknown $ABR$.
+Consequently the two independent homogeneous moment programs are
+attainable in this declared eight-mode interface. A classical order
+lottery can have the same reduced $G$ but lacks its coherent purifier;
+it retains separate per-order readout constraints and shared launch
+probabilities. The summed residual alone does not establish classical
+attainment.
+
+Giving a fixed-order ordinary processor eight or more modes does not
+enlarge its constant-control class. Before its second encounter the
+source occupies only the two fixed directions $P_A\phi$ and
+$(I-P_A)\phi$. Its second bright projector enters through a
+two-dimensional effect compression, already realized by (RS50) in four
+modes. Matching the four feature-vector Gram matrices gives one
+frequency-independent support isometry for all scalar response
+combinations, including cross-frequency blocks. Terminal readout
+absorbs that isometry. This proves saturation of a *single fixed word*;
+it does not merge the two different word cones into one.
+
+### Same ports, physical windows and the stronger ordinary schedule
+
+If each station truly has simultaneous $F4$ ports, the decorated
+native schedule has two encounter macro-windows: in the first,
+$C=0$ visits $A$ and $C=1$ visits $B$; in the second, their
+destinations are exchanged. A station sees only one order alternative
+per window. Sources, branch-specific wrappers, interstation routes,
+output holds and coherent joint readout must all preserve the eight
+external modes.
+
+The same per-visit $F4$ hardware has a safe definite-order repeated
+schedule
+
+$$
+\begin{array}{c|cccc}
+&1&2&3&4\\ \hline
+C=0&A_0&B_0&\text{hold}&\text{hold}\\
+C=1&\text{hold}&\text{hold}&B_1&A_1 .
+\end{array}
+\tag{RS60}
+$$
+
+Only one four-mode arm enters a station at a time. Place precisely the
+desired branch wrappers at its occupied visits, coherently delay the
+other arm and align both at one common finish. Each history occupies
+one $A$ and one $B$ encounter; there are four global query
+opportunities, rather than two. With the same reflected operators in
+the common spin/path frame, its entire survivor is exactly (RS59).
+Every terminal photon measurement and its retained-spin CP map
+therefore agree on arbitrary $ABR$, not just their scalar yield.
+
+The generic full-joint argument is owned by
+[(MC4)--(MC5)](../architecture-baselines.md#nr-r08-material-pointer-clock).
+In its interaction-picture notation, (RS60) replaces the second
+ordinary word by $G_A(3\tau)G_B(2\tau)$, while the two-window
+word is $G_A(\tau)G_B(0)$, both followed by the same actual idle
+evolution to the common finish. Time-independent joint writes and
+vacuum opportunities with no extra preparation/reset/slot record
+are sufficient for equality of complete instruments.
+Merely equal reflected scalar responses establish only the survivor
+identity here. Emission fields, route-dependent bath evolution,
+noncommuting spin idle, timestamps and mandatory resets need their
+actual dilation. Known compensation pulses are additional data
+controls, not implicit photon wrappers.
+
+A direct three-window $A_0$--$B_{\rm middle}$--$A_1$ survivor compiler
+needs an important port qualification: both order branches meet $B$ in its
+middle window, whereas the native schedule exposes only one $F4$
+arm per station/window. Across a generic finite pulse its pre-$B$
+feature span is three-dimensional: the two $C=0$ directions after
+$A$, plus the unvisited $C=1$ source direction. Its required bright
+compression can be
+
+$$
+K=K_0\oplus k_1=\tfrac12 I_3,\qquad
+\operatorname{rank}K=\operatorname{rank}(I-K)=3.
+\tag{RS61}
+$$
+
+For a frequency-independent isometric compression of this prescribed
+pre-$B$ program, any physical rank-two bright/rank-two dark
+projector has both ranks at most two. Thus (RS61) cannot fit that
+four-mode station port. In general a compression $K$ can be
+embedded into two bright and two dark modes exactly when both
+ranks are at most two: stack square roots of $K$ and $I-K$ in
+their respective ranges to obtain an isometry. The example needs
+at least six modes; an actual replicated $C2\otimes F4$ middle
+port is sufficient. External bypass modes alone do not increase
+the rank of a single native spin-dependent scattering difference.
+
+| Direct survivor compiler | Additional condition beyond one $F4$ port per visit |
+|---|---|
+| Four windows (RS60) | Coherent input/output holds and repeatable common-frame survivor |
+| Three windows, constant controls | A sufficient merged port, or the proved bright/dark rank condition |
+| One calibrated monochromatic point | The actual two pre-$B$ spin-conditional vectors span at most two; bespoke four-mode compression may suffice |
+| Finite-pulse frequency-dependent compression | A separately supplied causal spectral processor, with its bandwidth, calibration, loss and latency |
+
+The monochromatic case is not a normalizable finite-duration pulse.
+At that calibrated point the combined pre-$B$ vectors
+$v_a=\sqrt{\gamma_0}|0\rangle A_a\phi_0+
+\sqrt{\gamma_1}|1\rangle\phi_1$ span a space $W$ of dimension
+at most two. The desired projector $P_{B,\rm total}$ then has
+$\dim(W+P_{B,\rm total}W)\le4$; its two-dimensional compression
+admits the rank-two dilation (RS50). Known photon isometries before
+and after the actual $B$ encounter can restore the prescribed
+survivor without learning the unknown spin. These optics depend
+on the calibrated program, not on its actual spin label.
+For finite pulses with nonconstant $\alpha_A(\nu)$ and nontrivial
+$\delta_A(\nu)$, the constant-control three-dimensional feature span
+can occur, so that case cannot be substituted silently.
+Serializing the two middle visits in time avoids merged simultaneous
+ports but pays their physical sub-windows; renaming them one macro
+does not remove that clock.
+This port obstruction concerns that direct response-uniform survivor
+compiler. It is not a lower bound against every three-window algorithm
+or a different program with covariance-equivalent terminal instruments.
+
+### Station and readout interfaces remain physical assumptions
+
+A single spatial cavity port with two polarizations does not supply
+(RS58) merely by adding a bypass rail. Its spin-dependent difference
+on polarization has rank one; padding with unaffected modes preserves
+that rank. Known conjugations cannot turn it into the required
+rank-two difference on $F4$, and bypass has a different dark scalar
+response. Duplicating cavities with independent spins likewise does
+not duplicate an unknown payload without paid coherent data transfer
+or encoding.
+
+A time-bin spectator through the same input mirror is a possible
+realization of $I_{\rm time}\otimes R_j$ only with a preserved
+orthogonal modal encoding, identical spin frames and scalar kernels.
+Delayed pulses $f(\nu)$ and $e^{i\nu\Delta}f(\nu)$ are not automatically
+independent copies of a frequency register. Their accepted
+cross-spin/bin overlap is
+$\int d\nu\,|f(\nu)|^2r_a(\nu)^*r_b(\nu)e^{i\nu\Delta}$,
+which need not vanish from identical bin settings or input-bin
+orthogonality. The full temporal encoding and scattering must
+preserve the required orthogonality, or retain an overlap/tail error
+budget. General $U(4)$ mixing between early
+and late bins requires causal buffering: an early output depending
+on a late input must wait at least their separation. Passive edge
+bins cannot be discarded while calling the wrapper deterministic.
+Pulse width, cavity ringdown, router switching and guard intervals
+then split each encounter macro into physical arrival windows.
+If order and internal program are both temporal labels they need
+four distinct orthogonal bins, not two labels reused as two tensor
+factors. A demonstrated
+[time-bin/polarization switch](https://arxiv.org/abs/2305.19386)
+supplies evidence for coherent routing techniques; it does not
+demonstrate this shared-spin four- or eight-mode station interface.
+
+The accepted reflected photon must also remain a pure accessible
+program. Photon survival does not by itself rule out unobserved
+motion, phonon, fluorescence, pump or timing records correlated
+with spin, arm or internal mode. If such records are inaccessible,
+their covariance decomposition is not necessarily attainable by a
+photon-only POVM. Joint spectral readout, any additional Naimark
+ports/detectors, phase locking and stored-spin local feedback
+remain charged. The stronger ordinary comparisons also include
+actual intermediate instruments, data controls, spare memories
+and entanglement-first payload-safe routes when the device supplies
+them; the fixed-word SDP is not their universal upper bound.
+
+For a specified attempt/failure-handling protocol, write its model
+accepted weights as $p_S,p_F$ and its additional transmissions and
+complete cycle times as $\eta_o,\tau_o$. Necessary comparisons are
+
+$$
+R_S=\frac{p_S\eta_S}{\tau_S},\qquad
+R_F=\frac{p_F\eta_F}{\tau_F},\qquad
+R_4=\frac{p_S\eta_4}{\tau_4},
+\tag{RS62}
+$$
+
+with a corresponding $R_3$ only when its merged-port/compression
+premise is supplied. The repeated schedule matches the ideal survivor
+weight $p_S$ but has its own losses and clock. Even a strict ideal
+two-window versus fixed-word yield gap is therefore not a gate-rate
+advantage. Rejected unknown data may be damaged, so these expressions
+do not establish harmless retries. No measured native implementation,
+all-loss compiler or strongest-ordinary optimum follows from this
+eight-mode attainment theorem.
+For illustrative equal transmissions, $p_S>0$, $t>0$ and common
+overhead $T_0\ge0$, set
+$\tau_S=T_0+2t$ and $\tau_4=T_0+4t$: then
+$R_S/R_4=(T_0+4t)/(T_0+2t)$, so a $20\%$ rate increase requires
+$T_0\le8t$.
+For the qualified three-window comparator
+$\tau_3=T_0+3t$, the same illustrative threshold is $T_0\le3t$;
+these are conditional clock sensitivities, not fitted device claims.
+
 ## Physical resources and verification scope
 
 The arbitrary-helper protocol assumes a pure incident photon and the
@@ -1870,3 +2135,13 @@ four-mode ports, an adaptive ordinary upper bound or a physical loss and
 clock completion. A further native gate comparison must retain arbitrary
 unknown $ABR$, the complete rejected instrument, and the strongest paid
 ordinary source, optics, local controls and memory resources.
+The added decorated-bus guards check independent same-spin projector
+conjugations, pure eight-mode sources, full coherent two-frequency
+spin/reference matrix units and joint photon-readout CP coefficients.
+They match the safe four-window survivor and the three-window variant
+with its explicitly supplied eight-mode middle port. A three-dimensional
+bright/dark compression fixture guards the generic six-mode requirement;
+padding polarization with bypass modes guards the rank-one obstruction.
+These finite identities support (RS58)–(RS62); physical station ports,
+surviving-bath purity, time-bin wrappers, common-finish dynamics and
+actual gate rates remain the stated analytic and device premises.

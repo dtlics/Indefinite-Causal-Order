@@ -108,9 +108,20 @@ An exact local-phase correction cone also makes the unknown-input gate
 test finite. For the specified resonant opposite-phase responses,
 ordinary photon preparation and readout attain the declared one-pass
 ceiling for accepted reflected gates. This does not settle arbitrary
-unequal responses or finite-bandwidth hardware rates. The next test
-is a certified gate-cone comparison at unbalanced responses using full
-pulse integrals, followed by the actual control, loss and clock ledger.
+unequal responses or finite-bandwidth hardware rates. Two independent
+coherent-order programs are now exactly attainable in a declared
+eight-mode interface. A repeated ordinary route matches their full
+survivor on unknown spin/reference inputs: four windows suffice with
+the same four-mode port per visit; three require a merged port or a
+proved program compression. A calibrated monochromatic compression
+and a response-uniform finite-pulse compiler have different port
+requirements. The next test is a matched rate and fidelity comparison
+against both the best fixed word and this repeated route, using actual
+port bandwidth, coherent storage, transmission, complete cycle times
+and failed-payload handling. A small ideal yield gap alone does not
+establish a practical gain. Outcome-dependent local filters must also
+be supplied to both sides; the local-phase cone does not optimize that
+larger instrument class.
 Encoded recovery, resolved loss records and matched control/clock costs
 remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
 separately excludes exact heralded recovery in its infinite-oscillator

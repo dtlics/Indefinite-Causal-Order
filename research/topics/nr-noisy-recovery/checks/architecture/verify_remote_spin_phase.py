@@ -1386,6 +1386,215 @@ def gate_verify():
 
 
 
+def decorated_bus_verify():
+    """Eight actual C2 tensor F4 modes, known wrappers and safe clock guards.
+
+    Full survivor vectors imply every terminal measurement and every unknown
+    ABR input. Finite fixtures also retain two coherent frequencies and test a
+    complete joint mode POVM. The four-window compiler uses only one occupied
+    F4 encounter per arm/window. Its three-window variant explicitly supplies
+    the stronger simultaneous C2 tensor F4 middle station port.
+    """
+    identity = helper_eye(4)
+    zero = helper_zeros(4, 4)
+    native = helper_diag([1, 1, 0, 0])
+
+    def direct_sum(a, b):
+        return bus_block(a, zero, zero, b)
+
+    def node(alpha, bright, spin, projector):
+        return helper_add(eigen_scale(alpha, identity),
+                          eigen_scale((bright-alpha)*spin, projector))
+
+    def projector(v):
+        conc_unitary(v)
+        p = helper_mul(helper_mul(helper_dag(v), native), v)
+        assert p == helper_dag(p) and helper_mul(p, p) == p
+        assert helper_rank(p) == 2 and helper_rank(helper_add(identity, eigen_scale(-1, p))) == 2
+        return p
+
+    phase = helper_diag([1, ConcG(0, 1), 1, ConcG(0, -1)])
+    wrappers = [
+        helper_mul(conc_plane(4, 0, 2), phase),
+        helper_mul(conc_plane(4, 1, 3, F(5, 13), F(12, 13)),
+                   conc_plane(4, 0, 3)),
+        helper_mul(phase, conc_plane(4, 0, 3, F(5, 13), F(12, 13))),
+        helper_mul(conc_plane(4, 0, 2, F(8, 17), F(15, 17)),
+                   conc_plane(4, 1, 2)),
+    ]
+    # Each arm has independently chosen A/B projectors, all conjugate to
+    # the SAME rank-two native primitive; coefficients remain common.
+    pa0, pa1, pb0, pb1 = [projector(v) for v in wrappers]
+    assert pa0 != pa1 and pb0 != pb1
+    assert helper_mul(pa0, pb0) != helper_mul(pb0, pa0)
+    assert helper_mul(pa1, pb1) != helper_mul(pb1, pa1)
+    first_wrap = direct_sum(wrappers[0], wrappers[3])
+    second_wrap = direct_sum(wrappers[2], wrappers[1])
+    middle_wrap = direct_sum(wrappers[2], wrappers[3])
+    for v in (first_wrap, second_wrap, middle_wrap):
+        conc_unitary(v)
+    responses = [
+        (ConcG(-F(4, 5), F(1, 10)), ConcG(F(3, 5), -F(1, 5)),
+         ConcG(-F(2, 3), F(1, 6)), ConcG(F(3, 4), F(1, 8))),
+        (ConcG(-F(3, 5), -F(1, 5)), ConcG(F(2, 3), F(1, 6)),
+         ConcG(-F(5, 7), -F(1, 7)), ConcG(F(4, 5), -F(1, 10))),
+    ]
+    assert all(x.conc_norm2() <= 1 for values in responses for x in values)
+    spectral = [ConcG(F(3, 5)), ConcG(0, F(4, 5))]
+    assert conc_norm2(spectral) == 1
+    sources = [
+        ([ConcG(F(3, 5)), ConcG(), ConcG(0, F(4, 5)), ConcG()],
+         [ConcG(), ConcG(F(5, 13)), ConcG(), ConcG(0, F(12, 13))],
+         [ConcG(F(3, 5)), ConcG(0, F(4, 5))]),
+        ([ConcG(F(5, 13)), ConcG(F(12, 13)), ConcG(), ConcG()],
+         [ConcG(F(8, 17)), ConcG(), ConcG(F(15, 17)), ConcG()],
+         [ConcG(0, F(5, 13)), ConcG(F(12, 13))]),
+    ]
+    # Two complete known readout bases genuinely mix frequency, order and F.
+    readout_a = helper_mul(conc_plane(16, 0, 12), conc_plane(16, 2, 7))
+    readout_b = helper_mul(conc_plane(16, 5, 15, F(5, 13), F(12, 13)),
+                           conc_plane(16, 1, 10))
+    readout_b = helper_mul(helper_diag([ConcG(0, 1) if j % 3 == 0 else 1
+                                        for j in range(16)]), readout_b)
+    for u in (readout_a, readout_b):
+        conc_unitary(u)
+    readouts = [[F(3, 5)*x for x in row] for row in readout_a]
+    readouts += [[F(4, 5)*x for x in row] for row in readout_b]
+    assert helper_mul(helper_dag(readouts), readouts) == helper_eye(16)
+    vectors = reference_units = readout_coefficients = native_conjugations = 0
+    preserved_middle = 0
+    for phi0, phi1, control in sources:
+        assert conc_norm2(phi0) == conc_norm2(phi1) == conc_norm2(control) == 1
+        source = [control[0]*x for x in phi0]+[control[1]*x for x in phi1]
+        assert conc_norm2(source) == 1 and helper_rank([phi0, phi1]) == 2
+        switched, ordinary = [[] for _ in AB], [[] for _ in AB]
+        for values, frequency_amplitude in zip(responses, spectral):
+            alpha, bright_a, beta, bright_b = values
+            for label, (a, b) in enumerate(AB):
+                raw_a = node(alpha, bright_a, a, native)
+                raw_b = node(beta, bright_b, b, native)
+                a0, a1 = node(alpha, bright_a, a, pa0), node(alpha, bright_a, a, pa1)
+                b0, b1 = node(beta, bright_b, b, pb0), node(beta, bright_b, b, pb1)
+                for raw, effective, v in zip((raw_a, raw_a, raw_b, raw_b),
+                                             (a0, a1, b0, b1), wrappers):
+                    assert helper_mul(helper_mul(helper_dag(v), raw), v) == effective
+                    native_conjugations += 1
+                macro_first = helper_mul(helper_mul(helper_dag(first_wrap),
+                                        direct_sum(raw_a, raw_b)), first_wrap)
+                macro_second = helper_mul(helper_mul(helper_dag(second_wrap),
+                                         direct_sum(raw_b, raw_a)), second_wrap)
+                target = conc_mv(macro_second, conc_mv(macro_first, source))
+                expected = ([control[0]*x for x in conc_mv(b0, conc_mv(a0, phi0))]
+                            + [control[1]*x for x in conc_mv(a1, conc_mv(b1, phi1))])
+                assert target == expected
+                # Fixed global A0-B0-B1-A1: vacuum identity on the held arm.
+                actual = source
+                for window in (direct_sum(a0, identity), direct_sum(b0, identity),
+                               direct_sum(identity, b1), direct_sum(identity, a1)):
+                    actual = conc_mv(window, actual)
+                assert actual == target
+                # A0-Bmiddle-A1 is checked ONLY with a simultaneously
+                # preserved C2 tensor F4 middle port, bright/dark rank4/4.
+                middle = helper_mul(helper_mul(helper_dag(middle_wrap),
+                                    direct_sum(raw_b, raw_b)), middle_wrap)
+                assert middle == direct_sum(b0, b1)
+                three = conc_mv(direct_sum(identity, a1), conc_mv(
+                    middle, conc_mv(direct_sum(a0, identity), source)))
+                assert three == target
+                preserved_middle += 1
+                switched[label] += [frequency_amplitude*x for x in target]
+                ordinary[label] += [frequency_amplitude*x for x in actual]
+                vectors += 1
+        assert any(v[k] != 0 and v[k+8] != 0 for v in switched for k in range(8))
+        # Explicit sparse |ab,r><a'b',s| blocks retain every photon mode,
+        # including cross-frequency coherence, and leave the reference intact.
+        for j, k, r, s in product(range(4), range(4), range(2), range(2)):
+            left = {(r, s, m, n): switched[j][m]*switched[k][n].conj()
+                    for m in range(16) for n in range(16)}
+            right = {(r, s, m, n): ordinary[j][m]*ordinary[k][n].conj()
+                     for m in range(16) for n in range(16)}
+            assert left == right
+            reference_units += 1
+        cov = helper_zeros(4, 4)
+        for row in readouts:
+            ks = [sum((x*y for x, y in zip(row, v)), ConcG()) for v in switched]
+            ko = [sum((x*y for x, y in zip(row, v)), ConcG()) for v in ordinary]
+            for j, k in product(range(4), repeat=2):
+                assert ks[j]*ks[k].conj() == ko[j]*ko[k].conj()
+                cov[j][k] += ks[j]*ks[k].conj()
+                readout_coefficients += 1
+        assert cov == gate_covariance(switched)
+    assert helper_rank(direct_sum(native, native)) == 4
+    # A generic finite-pulse pre-B span is THREE-dimensional. Its desired
+    # K=I3/2 compression has both K and I-K rank3; an F4 rank2/2 port
+    # cannot supply it. This prevents silently merging the two B visits.
+    half = F(1, 2)
+    qb = helper_scale(bus_block(helper_eye(2), helper_eye(2),
+                               helper_eye(2), helper_eye(2)), half)
+    assert helper_mul(qb, qb) == qb and helper_rank(qb) == 2
+    balanced = ConcG(F(1, 2), F(1, 2))
+    balanced_wrap = bus_block(helper_scale(helper_eye(2), balanced),
+                             helper_scale(helper_eye(2), balanced),
+                             helper_scale(helper_eye(2), -balanced.conj()),
+                             helper_scale(helper_eye(2), balanced.conj()))
+    conc_unitary(balanced_wrap)
+    assert helper_mul(helper_mul(helper_dag(balanced_wrap), native), balanced_wrap) == qb
+    merged = direct_sum(qb, qb)
+    feature_basis = [[ConcG(j == k) for j in range(8)] for k in (0, 1, 4)]
+    phi0 = [ConcG(F(3, 5)), ConcG(F(4, 5)), ConcG(), ConcG()]
+    p0 = helper_diag([1, 0, 1, 0])
+    permutation = [[ConcG(j == (0, 2, 1, 3)[i]) for j in range(4)] for i in range(4)]
+    conc_unitary(permutation)
+    assert helper_mul(helper_mul(helper_dag(permutation), native), permutation) == p0
+    phi1 = [ConcG(1), ConcG(), ConcG(), ConcG()]
+    pre = []
+    for a, alpha in ((0, F(1, 3)), (0, F(2, 5)), (1, F(1, 3))):
+        first = conc_mv(node(ConcG(alpha), ConcG(alpha+F(1, 2)), a, p0), phi0)
+        pre.append([F(3, 5)*x for x in first]+[F(4, 5)*x for x in phi1])
+    assert helper_rank(pre) == 3 and helper_rank(feature_basis+pre) == 3
+    compression = [[conc_inner(x, conc_mv(merged, y)) for y in feature_basis]
+                   for x in feature_basis]
+    assert compression == helper_scale(helper_eye(3), half)
+    assert helper_rank(compression) == 3
+    assert helper_rank(helper_add(helper_eye(3), helper_scale(compression, -1))) == 3
+    assert 3 > 2 and 3+3 == 6
+    q6 = helper_scale(bus_block(helper_eye(3), helper_eye(3),
+                               helper_eye(3), helper_eye(3)), half)
+    assert helper_mul(q6, q6) == q6 and helper_rank(q6) == 3
+    # Padding a two-polarization spin difference by bypass rails retains rank1,
+    # whereas the explicitly supplied F4 native port needs rank2.
+    padded_difference = helper_diag([1, 0, 0, 0])
+    assert helper_rank(padded_difference) == 1 and helper_rank(native) == 2
+    assert helper_rank(helper_mul(helper_mul(helper_dag(wrappers[0]),
+                            padded_difference), wrappers[0])) == 1
+    padded_dark = helper_diag([F(1, 3), F(1, 3), 1, 1])
+    assert helper_rank(helper_add(padded_dark, helper_scale(identity, -F(1, 3)))) == 2
+    # The same spectral kernel on two orthogonal temporal inputs need not
+    # preserve their accepted modal orthogonality (vectors unnormalized).
+    temporal_u, temporal_v = [ConcG(1), ConcG(1)], [ConcG(1), ConcG(-1)]
+    spectral_filter = helper_diag([1, F(1, 2)])
+    assert conc_inner(temporal_u, temporal_v) == 0
+    filtered_u, filtered_v = conc_mv(spectral_filter, temporal_u), conc_mv(spectral_filter, temporal_v)
+    assert [filtered_u, filtered_v] == [[ConcG(1), ConcG(F(1, 2))],
+                                        [ConcG(1), ConcG(-F(1, 2))]]
+    assert conc_inner(filtered_u, filtered_v) == F(3, 4)
+    return {'status': 'passed', 'arithmetic': 'Gaussian rational, stdlib',
+            'independent_rank_two_arm_projectors': 4, 'normalized_pure_sources': len(sources),
+            'native_same_spin_conjugations': native_conjugations,
+            'full_eight_mode_frequency_spin_vectors': vectors,
+            'coherent_two_frequency_spin_vectors': len(sources)*len(AB),
+            'arbitrary_reference_matrix_units': reference_units,
+            'joint_mode_readout_matrix_unit_coefficients': readout_coefficients,
+            'four_window_survivor_compiler_vectors': vectors,
+            'three_window_vectors_with_explicit_eight_mode_middle_port': preserved_middle,
+            'generic_middle_feature_dimension': 3, 'generic_middle_minimum_port_dimension': 6,
+            'padded_polarization_rank_obstructions': 1,
+            'common_spectral_filter_bin_overlap_obstructions': 1,
+            'scope': 'decorated C2 tensor F4 coherent survivor and safe four-window compiler; '
+                     'three-window equality only with supplied simultaneous middle tensor port; '
+                     'no generic F4 merged visit, loss/emission completion or physical clock validation'}
+
+
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
@@ -1408,7 +1617,8 @@ def verify():
             "constant_control_four_mode_normal_form": bus_verify(),
             "eigen_source_survivor_compiler": eigen_verify(),
             "reflected_diagonal_gate_cone": gate_verify(),
-            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms, eigen-source survivor compilers and reflected diagonal-gate cone/balancing witnesses; universal proofs, native ports, calibration and clocks remain analytic"}
+            "decorated_eight_mode_bus": decorated_bus_verify(),
+            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms, eigen-source survivor compilers and reflected diagonal-gate cone/balancing witnesses, decorated eight-mode coherent survivors and safe four-window compiler, with merged-port rank guards; universal proofs, native ports, calibration and clocks remain analytic"}
 
 
 if __name__ == "__main__":
