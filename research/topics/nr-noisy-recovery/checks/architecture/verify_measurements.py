@@ -12,6 +12,13 @@ if not __debug__:
 from fractions import Fraction as F
 import json
 
+from verify_fault_simulation import (
+    ZERO as GZERO, ONE as GONE, gaussian as gaussian,
+    add as gadd, times as gscale, zeros as gzeros, identity as geye,
+    adjoint as gadjoint, matmul as gmul, vectorize as gvec,
+    inner as ginner, add_outer as gadd_outer,
+)
+
 
 def zero(d: int) -> list[list[F]]:
     return [[F(0) for _ in range(d)] for _ in range(d)]
@@ -278,6 +285,127 @@ def recorded_parity_gate_check(p, q, s_parity):
             "complete_instruments": "passed"}
 
 
+def shared_frequency_checks():
+    """Exact zero-Fourier-coefficient integration for one common phase.
+
+    A_phi=sum_i exp(-i*i*phi) E_i and B_phi=sum_j exp(-i*j*phi) F_j.
+    Uniform phi kills unequal exponents, not unequal history labels.
+    Gaussian-rational DFT projectors avoid numerical roots or integration.
+    """
+    def plus(a, b):
+        return [[gadd(x, y) for x, y in zip(r, s)] for r, s in zip(a, b)]
+
+    def scaled(a, scalar):
+        return [[gscale(x, scalar) for x in row] for row in a]
+
+    def trace(a):
+        value = GZERO
+        for i in range(len(a)):
+            value = gadd(value, a[i][i])
+        return value
+
+    def check_tp_choi(j, d):
+        assert j == gadjoint(j)
+        for i in range(d):
+            for k in range(d):
+                value = GZERO
+                for out in range(d):
+                    value = gadd(value, j[d*i+out][d*k+out])
+                assert value == gaussian(F(i == k, d))
+
+    roots = [gaussian(1), gaussian(0, 1), gaussian(-1), gaussian(0, -1)]
+    rows = []
+    for d in (2, 4):
+        computational = []
+        fourier = []
+        for i in range(d):
+            p = gzeros(d, d)
+            p[i][i] = GONE
+            computational.append(p)
+            fourier.append([[gscale(roots[(4 // d * i * (r-c)) % 4], F(1, d))
+                             for c in range(d)] for r in range(d)])
+        for pvm in (computational, fourier):
+            total = gzeros(d, d)
+            for i, p in enumerate(pvm):
+                assert gadjoint(p) == p and gmul(p, p) == p
+                total = plus(total, p)
+                for j, q in enumerate(pvm):
+                    if i != j:
+                        assert gmul(p, q) == gzeros(d, d)
+            assert total == geye(d)
+            marginal = gzeros(d*d, d*d)
+            for p in pvm:
+                gadd_outer(marginal, gvec(p), F(1, d))
+            check_tp_choi(marginal, d)
+            assert gmul(marginal, marginal) == scaled(marginal, F(1, d))
+
+        # Each marginal uses distinct integer exponents, so uniform-phase
+        # integration gives exactly its displayed rank-one pinching PVM.
+        words = [gmul(q, p) for p in computational for q in fourier]
+        vectors = [gvec(k) for k in words]
+        for i, v in enumerate(vectors):
+            for j, w in enumerate(vectors):
+                assert ginner(v, w) == gaussian(F(i == j, d))
+        coefficients = [gzeros(d, d) for _ in range(2*d-1)]
+        sizes = [0]*(2*d-1)
+        for i in range(d):
+            for j in range(d):
+                coefficients[i+j] = plus(coefficients[i+j], words[d*i+j])
+                sizes[i+j] += 1
+        assert sizes == list(range(1, d+1)) + list(range(d-1, 0, -1))
+
+        # Build complete normalized Choi operators. Independent records keep
+        # one Kraus operator per pair; the shared phase groups equal sums.
+        independent = gzeros(d*d, d*d)
+        for v in vectors:
+            gadd_outer(independent, v, F(1, d))
+        assert independent == scaled(geye(d*d), F(1, d*d))
+        check_tp_choi(independent, d)
+        actual = gzeros(d*d, d*d)
+        support = gzeros(d*d, d*d)
+        positive = gzeros(d*d, d*d)
+        cvectors = [gvec(c) for c in coefficients]
+        for s, v in enumerate(cvectors):
+            for t, w in enumerate(cvectors):
+                assert ginner(v, w) == gaussian(F(sizes[s], d) if s == t else 0)
+            gadd_outer(actual, v, F(1, d))
+            gadd_outer(support, v, F(d, sizes[s]))
+            gadd_outer(positive, v, F(sizes[s]-1, d*sizes[s]))
+        assert trace(actual) == GONE
+        check_tp_choi(actual, d)
+        assert gmul(support, support) == support
+        assert trace(support) == gaussian(2*d-1)
+        kernel = plus(geye(d*d), scaled(support, F(-1)))
+        signed = plus(positive, scaled(kernel, F(-1, d*d)))
+        assert plus(actual, scaled(independent, F(-1))) == signed
+        assert gmul(positive, kernel) == gzeros(d*d, d*d)
+        distance = F(d*d-(2*d-1), d*d)
+        assert trace(positive) == gaussian(distance)
+        assert trace(scaled(kernel, F(1, d*d))) == gaussian(distance)
+
+        # Full shared-phase control coherence on I/d, with control0=BA,
+        # control1=AB. The same exponent's reverse coefficient is C_s^dagger.
+        visibility = GZERO
+        for c in coefficients:
+            visibility = gadd(visibility, gscale(trace(gmul(c, c)), F(1, d)))
+        expected = gaussian(F(1, 4)) if d == 2 else gaussian(F(3, 8), F(5, 16))
+        assert visibility == expected
+        independent_visibility = F(1, d)
+        minus = (1-visibility[0])/2
+        assert minus == (F(3, 8) if d == 2 else F(5, 16))
+        rows.append({"dimension": d,
+                     "marginal_channels": "both exact rank-one pinches",
+                     "joint_Gram_block_sizes": sizes,
+                     "joint_Choi_rank": 2*d-1,
+                     "joint_Choi_half_trace_distance_from_independent": str(distance),
+                     "shared_control_coherence_on_maximally_mixed_input":
+                         {"real": str(visibility[0]), "imag": str(visibility[1])},
+                     "independent_control_coherence": str(independent_visibility),
+                     "shared_switch_minus": str(minus),
+                     "independent_switch_minus": str((1-independent_visibility)/2)})
+    return rows
+
+
 def main():
     z = [[F(1), F(0)], [F(0), F(-1)]]
     x = [[F(0), F(1)], [F(1), F(0)]]
@@ -378,11 +506,14 @@ def main():
     assert full_switch_cost / full_switch_success == 150
     assert no_abort_cost / full_switch_success == 388
 
+    shared_frequency_rows = shared_frequency_checks()
+
     report = {
-        "status": "passed", "arithmetic": "standard-library Fraction matrices",
+        "status": "passed", "arithmetic": "standard-library rational and Gaussian-rational matrices",
         "scope": ("Finite exact PVM/Choi/record/commutator examples and balanced-binary "
                   "filter CP identities, full-control binary-switch Choi/routing examples, "
                   "recorded parity-gate/ancilla branch and frame identities, "
+                  "shared-frequency marginal/joint full-Choi and control counterexamples, "
                   "and scalar rank/branch/retry arithmetic. Analytic "
                   "generalization and physical access assumptions remain in architecture-baselines.md."),
         "examples": rows, "finite_rank_scaling_checks": rank_checks,
@@ -405,6 +536,7 @@ def main():
         "recorded_parity_gate_switch_expected_control_readouts": "2",
         "recorded_parity_gate_switch_expected_control_preparations_or_resets": "2",
         "recorded_parity_gate_ordinary_parity_measurements": "3",
+        "shared_frequency_examples": shared_frequency_rows,
         "limitations": ["No hardware runtime, detector-noise, generic bath, or optimal-strategy proof.",
                         "No all-dimensional representation theorem or Lean formalization is replayed."],
     }

@@ -280,6 +280,87 @@ def frequency_check_example():
             "scope":"Exact two-bin phase-check algebra only; spectral resolution, pulse reshaping, bath overlaps and helper costs not supplied."}
 
 
+def reset_kraus(factor):
+    """Replacement map with state factor factor*factor^dagger."""
+    d = len(factor)
+    operators = []
+    for column in range(d):
+        for incoming in range(d):
+            k = zeros(d, d)
+            for outgoing in range(d):
+                k[outgoing][incoming] = factor[outgoing][column]
+            operators.append(k)
+    assert matrix_sum([matmul(adjoint(k), k) for k in operators], d) == identity(d)
+    return operators
+
+
+def reset_cycle_example(first_factor, second_factor, label):
+    """Compare full Choi operators without assuming a cross-term formula.
+
+    The standard switch uses B*A in control0 and A*B in control1.
+    The ordinary circuit prepares tau_A,omega_B, applies the register cycle
+    (a,s,b)->(b,a,s) in control0 and identity in control1, then retains A.
+    Direct resource-state contraction includes arbitrary quantum control.
+    """
+    d, m = len(first_factor), 2 * len(first_factor)
+    es, fs = reset_kraus(first_factor), reset_kraus(second_factor)
+    switched = choi([diagonal_blocks(matmul(f, e), matmul(e, f))
+                    for e in es for f in fs], m)
+    tau = matmul(first_factor, adjoint(first_factor))
+    omega = matmul(second_factor, adjoint(second_factor))
+    ordinary = zeros(m * m, m * m)
+    for c in range(2):
+        for cc in range(2):
+            for s in range(d):
+                for ss in range(d):
+                    for a in range(d):
+                        for aa in range(d):
+                            for b in range(d):
+                                for bb in range(d):
+                                    row = (b, a, s) if c == 0 else (a, s, b)
+                                    col = (bb, aa, ss) if cc == 0 else (aa, ss, bb)
+                                    if row[1:] != col[1:]:
+                                        continue
+                                    i = c*d + row[0] + m*(c*d + s)
+                                    j = cc*d + col[0] + m*(cc*d + ss)
+                                    value = times(multiply(tau[a][aa], omega[b][bb]), F(1, m))
+                                    ordinary[i][j] = add(ordinary[i][j], value)
+    assert switched == ordinary
+    for i in range(m):
+        for j in range(m):
+            value = ZERO
+            for output in range(m):
+                value = add(value, switched[output + m*i][output + m*j])
+            assert value == gaussian(F(1, m) if i == j else 0)
+    noncommuting = matmul(tau, omega) != matmul(omega, tau)
+    if "distinct" in label:
+        assert noncommuting
+    return {"case": label, "data_dimension": d,
+            "reset_states_noncommuting": noncommuting,
+            "full_control_input_allowed": True,
+            "normalized_choi_dimension": m*m,
+            "full_choi_entries_compared": (m*m)**2,
+            "trace_preserving": True, "exact_full_choi_residual": "0",
+            "scope": "Two fixed-order replacement calls, two controlled swaps and two auxiliary registers; no bath-output heat ledger."}
+
+
+def reset_cycle_examples():
+    values = {"1": ONE, "-1": gaussian(-1),
+              "i": gaussian(0, 1), "-i": gaussian(0, -1)}
+    def factor(rows, denominator):
+        return [[times(values[x], F(1, denominator)) for x in row.split()]
+                for row in rows]
+    a2 = factor(["1 1", "1 i"], 2)
+    b2 = factor(["1 1", "1 -i"], 2)
+    a3 = factor(["1 1 1", "1 i -1", "i 1 -i"], 3)
+    b3 = [[conjugate(x) for x in row] for row in a3]
+    return [reset_cycle_example(a, b, label) for a, b, label in (
+        (a2, a2, "identical complex qubit resets"),
+        (a2, b2, "distinct complex qubit resets"),
+        (a3, a3, "identical complex qutrit resets"),
+        (a3, b3, "distinct complex qutrit resets"))]
+
+
 def main():
     losses = [loss_example(d, x, lx, y, ly) for d, x, lx, y, ly in (
         (2,F(3,5),F(4,5),F(5,13),F(12,13)),
@@ -295,7 +376,8 @@ def main():
         "rank_two_slot_factorizations":[rank_two_slot_example(k) for k in visibilities],
         "elastic_node_example":elastic_node_example(),
         "frequency_check_example":frequency_check_example(),
-        "scope":"Finite full-Choi identities and instrument/isometry checks. General rank, LOCC, capacity, entropy-ledger and stopping proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
+        "replacement_reset_cycle_examples":reset_cycle_examples(),
+        "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and instrument/isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger and stopping proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 
 if __name__ == "__main__":

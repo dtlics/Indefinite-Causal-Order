@@ -236,6 +236,144 @@ Known switch activation genuinely beats ordinary EB-channel networks with no add
 
 Control coherence as a communication resource has prior thermodynamic treatment, including [Liu, Ebler and Dahlsten](https://arxiv.org/abs/2205.07406); the current bounds use the explicit EB/product-channel and cut assumptions above. A practical gain still requires a named wiring graph, allowed mode encoders, actual control transport, loss, reset and memory costs. No new deployed-link advantage follows solely from the channel activation or these reductions.
 
+### Complete replacement channels have an exact ordinary realization
+
+There is a stronger ordinary reduction for the special case of two independent, memoryless replacement channels,
+
+$$
+\mathcal A(X)=\tau\operatorname{Tr}X,
+\qquad \mathcal B(X)=\omega\operatorname{Tr}X.
+$$
+
+The states $\tau,\omega$ may be different, unknown and noncommuting. With the switch convention in (3), write an arbitrary control–target input as $\sum_{c,d}|c\rangle\langle d|\otimes X_{cd}$. The complete output blocks are
+
+$$
+Y_{00}=\omega\operatorname{Tr}X_{00},\qquad
+Y_{11}=\tau\operatorname{Tr}X_{11},\qquad
+Y_{01}=\omega X_{01}\tau,\qquad
+Y_{10}=\tau X_{10}\omega.
+$$
+
+For example, replacement Kraus operators $A_{ab}=F|a\rangle\langle b|$ and $B_{cd}=G|c\rangle\langle d|$, with $FF^\dagger=\tau$ and $GG^\dagger=\omega$, give these blocks by direct summation. The formula extends to an arbitrary inaccessible reference $R$: replace each trace by $\operatorname{Tr}_S$ and each multiplication by $\tau\otimes I_R$ or $\omega\otimes I_R$ on the retained copy of $S$.
+
+An ordinary circuit reproduces this whole quantum channel with one call to each replacement map. Store the actual input $S$ and query $\mathcal A,\mathcal B$ in a fixed order on two auxiliary registers $A,B$, producing $\tau_A,\omega_B$. Their initial states may be arbitrary. In register order $A,S,B$, define
+
+$$
+V|a,s,b\rangle=|b,a,s\rangle,\qquad
+U=|0\rangle\langle0|_C\otimes V
+  +|1\rangle\langle1|_C\otimes I.
+$$
+
+Apply $U$ and retain $A$. For $Z=\tau\otimes X\otimes\omega$,
+
+$$
+\begin{aligned}
+\operatorname{Tr}_{SB}(VZV^\dagger)&=\omega\operatorname{Tr}X,&
+\operatorname{Tr}_{SB}Z&=\tau\operatorname{Tr}X,\\
+\operatorname{Tr}_{SB}(VZ)&=\omega X\tau,&
+\operatorname{Tr}_{SB}(ZV^\dagger)&=\tau X\omega.
+\end{aligned}
+$$
+
+For example, the last expression's $(a,a')$ entry is $\sum_{s,b}\tau_{a,s}X_{s,b}\omega_{b,a'}$. The same contraction holds when the entries of $X$ are operators on $R$. Applying it to the four control blocks proves equality for arbitrary control–input–reference correlations, all later flags, and coherent downstream use. This does not require learning either replacement state.
+
+The cycle is two controlled register SWAPs: first exchange $S,B$, then $A,S$, on control zero. The resource account is two replacement calls, the same supplied control, two additional $D$-level registers, input retention, those two Fredkin gates, and any exchanges needed to restore a prescribed output port. There is no extra pure $D$-level initial state. For equal register Hamiltonians and a control Hamiltonian diagonal in its control basis, the displayed $U$ commutes with the total bare Hamiltonian; this does not make its physical implementation or storage free. A single fixed bath-contact port requires the corresponding real routing and memory.
+
+The identical-bath thermalization identity and a controlled-SWAP bath circuit appear already in [Felce and Vedral, PRL **125**, 070603 (2020)](https://arxiv.org/html/2003.00794v3). The full constant-channel unfolded ordinary circuit is explicitly established by [Xue et al., PRL **137**, 030404 (2026)](https://arxiv.org/html/2511.04028v2), who distinguish that equality from the convenience of their free-space photonic implementation. [Capela et al., PRA **107**, 062208 (2023)](https://arxiv.org/html/2208.03205v2) likewise compare thermodynamic claims with stronger ordinary replacement and environment-memory processes. These are prior mechanisms, not new priority claims here.
+
+Equality concerns the retained control and working substance. An abstract channel does not specify a reservoir's final heat record, correlations or restoration cost, so it does not by itself prove equal refrigerator heat or coefficient of performance. Partial thermalization, correlated bath uses and inaccessible input storage are distinct models. If the independent actual channels lie within half-diamond distances $\epsilon_A,\epsilon_B$ of the promised replacement maps, each two-call implementation is within $\epsilon_A+\epsilon_B$ of its ideal channel. Their discrepancy is at most $2(\epsilon_A+\epsilon_B)$ before including helper errors. This bound is on unnormalized outputs; rare conditioning can amplify the conditional error.
+
+### Thermal sources, the clean control and ordinary population filters
+
+For identical reset states, a separately prepared plus control and an initially thermal source $\rho=\tau$ give the two physical unnormalized outputs
+
+$$
+\sigma_\pm=\frac{\tau\pm\tau^3}{2},\qquad
+p_\pm=\frac{1\pm\operatorname{Tr}\tau^3}{2}.
+$$
+
+Their nonselective source is $\tau$. When $\tau=\operatorname{diag}(t_i)$ is known, the same pure degenerate flag qubit implements this source-specific instrument without another bath contact:
+
+$$
+|i\rangle|0\rangle\longmapsto
+|i\rangle\left[
+\sqrt{\frac{1+t_i^2}{2}}\,|{+}\mathrm{flag}\rangle+
+\sqrt{\frac{1-t_i^2}{2}}\,|{-}\mathrm{flag}\rangle\right].
+$$
+
+Measure the flag. Each energy-conditioned rotation extends to a unitary; it commutes with the source Hamiltonian for a degenerate flag. The required spectral knowledge and conditional gates are real resources, especially for a large unknown system. One reset suffices if a fresh $\tau$ must first be prepared. The arbitrary-input cycle above removes this source restriction with different storage and gate costs. Simpler definite-order controlled-phase purification is also explicit in [Goldberg and Heshami, J. Phys. Commun. **7**, 015003 (2023), Section VI](https://arxiv.org/html/2108.08853v3).
+
+A no-work qubit example exposes the same purity budget. Let $S,B_1,B_2$ each start in $\operatorname{diag}(g,e)$, $g=1-e$, $0<e\le1/2$, with identical gap $\Delta$. Give the ordinary circuit the same pure **degenerate** control bit, rotated from plus to zero. On bits ordered $C,S,B_1,B_2$, exchange only
+
+$$
+|0,1,0,0\rangle\leftrightarrow|1,0,0,1\rangle,
+\qquad
+|0,1,0,1\rangle\leftrightarrow|1,0,1,1\rangle.
+$$
+
+Both transpositions conserve total $S,B_1,B_2$ excitation. Their control-one destinations initially have zero weight. The only remaining source-excited weights are $ge^2$ and $e^3$, giving unconditional excited population $e^2$, without postselection or temperature estimation. The two bath copies require the same two reset calls. The switched-plus source instead has
+
+$$
+p_S=1-\frac32ge,\qquad
+e_S=\frac{e+e^3}{2-3ge},\qquad
+e_S-e^2=\frac{e(1-e)(1-e+3e^2)}{2-3ge}>0.
+$$
+
+The known four-register permutation and restoration of its consumed clean bit must be charged. A nondegenerate control needs its appropriate drive/work account. This is a retained-source population comparison with the plus branch, not an optimum over both switch outcomes or a full refrigerator cycle.
+
+### Thermal bosonic inputs and native number checks
+
+A retained-mode state-preparation comparison can be made without temperature learning. Let
+
+$$
+\tau_r=(1-r)\sum_{n\ge0}r^n|n\rangle\langle n|,
+\quad 0<r<1,\qquad z=1+r+r^2.
+$$
+
+For the switched-plus output of two identical complete resets on this thermal input, define acceptance $p_S$, joint accepted-vacuum probability $q_S$, conditional vacuum fidelity $F_S=q_S/p_S$, and conditional mean occupation $\bar n_S$. Exact infinite sums give
+
+$$
+\begin{aligned}
+\operatorname{Tr}\tau_r^3&=\frac{(1-r)^2}{z},&
+p_S&=\frac{2-r+2r^2}{2z},&
+q_S&=\frac{(1-r)+(1-r)^3}{2},\\
+\bar n_S&=
+\frac{r/(1-r)+(1-r)^3r^3/(1-r^3)^2}{2p_S}.
+\end{aligned}
+$$
+
+An ordinary QND parity check uses the same clean plus qubit, controlled $e^{i\pi N}$ and an $X$ measurement. Its retained-mode Kraus operators are $\Pi_{\rm even},\Pi_{\rm odd}$, so accepting even gives
+
+$$
+p_P=\frac1{1+r},\quad q_P=1-r,\quad
+F_P=1-r^2,\quad \bar n_P=\frac{2r^2}{1-r^2}.
+$$
+
+All four comparisons are strict for $0<r<1$:
+
+$$
+\begin{aligned}
+p_P-p_S&=\frac{r(1-r)(1+2r)}{2(1+r)z}>0,\\
+q_P-q_S&=\frac{(1-r)-(1-r)^3}{2}>0,\\
+F_P-F_S&=\frac{r(1-r)(1+3r^2-r^3)}{2-r+2r^2}>0,\\
+\bar n_S-\bar n_P&=
+\frac{r(1+4r^2+2r^3+2r^4)}{(1+r)z(2-r+2r^2)}>0.
+\end{aligned}
+$$
+
+These are nonthermal conditional states; “cooler” here refers to the displayed occupation and vacuum criteria. The comparison also holds for the explicitly all-attempt signed vacuum reward $R=2q-p$:
+
+$$
+R_P-R_S=
+\frac{r(1-r)(3+4r+4r^2-2r^4)}{2(1+r)z}>0.
+$$
+
+No reset contact is needed on the already thermal source, and the check does not resolve its exact initial photon number. An ideal binary vacuum predicate is another ordinary option: $p_V=q_V=1-r$, with exact vacuum on success. More generally, a QND filter with initial vacuum mass $t_0$ obeys $q\le\min\{t_0,p\}$. This bound is attainable by accepting vacuum first and then a chosen fraction of nonvacuum records, giving the frontier $q_{\rm ord}(p)=\min\{t_0,p\}$. Thus it can match $p_S$ with $q_{\rm ord}(p_S)\ge q_S$. The desired acceptance mixing requires the corresponding calibration; the parity inequalities themselves do not.
+
+These controls have real retained-cavity implementations. [Sun et al., Nature **511**, 444–448 (2014)](https://arxiv.org/abs/1311.2534) demonstrate repeated ancilla-assisted QND photon parity. [Hutin et al., PRX Quantum **6**, 010321 (2025), Appendix F.3](https://arxiv.org/html/2409.05557v1) implement vacuum heralding using a 20-microsecond selective qubit pulse and readout, with residual initialization error. They establish relevant native access, not free ideal gates. A finite device comparison must include parity/selective-control duration, readout and reset, cavity loss, rejected outputs, all attempts and any source replenishment. It must also compare available ordinary active cooling, rather than only unassisted equilibrium contacts. No native throughput, heat/COP or general-channel dominance is asserted by these ideal retained-state formulas.
+
+The [communication checker](checks/architecture/verify_communication.py) compares normalized full Choi matrices of the two-reset controlled-cycle circuit and the standard switch for identical and distinct complex states in dimensions two and three. It verifies arbitrary quantum input control, noncommuting reset states and trace preservation using exact Gaussian fractions. The arbitrary-dimensional identities, thermal inequalities and thermodynamic access/heat qualifications above remain analytic; this is not a new Lean audit or a measured hardware advantage.
+
 <a id="nr-r11"></a>
 
 ## NR-R11 — Accepted cavity and nonlinear-scattering instruments
@@ -1044,11 +1182,116 @@ $\Gamma_{j,L}$, as well as spatial order. Aligning two identical
 slot instruments would require an explicit coherent compensation that
 also erases branch-dependent spin and bath records.
 [Hansen et al.](https://arxiv.org/html/2605.18525v1) instead exploit a
-collectively coupled bidirectional emitter system. Its reflected fields
-and emitter–emitter coupling require a joint scattering dilation,
-rather than the independent forward-product assumption. These
-platforms motivate a different model; their terminal correlation data
-do not establish a photon-preserving order flag or the gate above.
+collectively coupled bidirectional emitter system. A minimal coherent
+one-photon model can be stated directly from the single-excitation
+Hamiltonian in [Henke et al., Appendix F.1](https://arxiv.org/html/2604.06410v1)
+and its left/right emitted-field phases. It already distinguishes this
+joint scatterer from two independent forward slots.
+
+In this paragraph, let $\Gamma_j$ denote **total population decay**,
+$\gamma_j=\beta_j\Gamma_j$ its guided part, and $\omega_j$ the emitter
+transition frequency. Assume initial $|gg\rangle$, reciprocal coupling,
+a flat Markov waveguide, and no pure-dephasing or spectral-diffusion bath.
+Put $z=e^{i\phi}$, $|z|=1$, and $g=\sqrt{\gamma_1\gamma_2}/2$. The bare
+effective Hamiltonian and guided rows are
+
+$$
+H_{\rm eff}=\begin{pmatrix}
+\omega_1-i\Gamma_1/2&-igz\\
+-igz&\omega_2-i\Gamma_2/2
+\end{pmatrix},\qquad
+L_R=\left(\sqrt{\gamma_1/2},\sqrt{\gamma_2/2}\,z^{-1}\right),\qquad
+L_L=\overline{L_R}.
+\tag{35}
+$$
+
+The square roots in (35) are $\sqrt{\gamma_j/2}$, so the two directions
+together contribute decay $\gamma_j$. Local nonguided rows
+$\sqrt{\Gamma_j-\gamma_j}\langle j|$ complete a radiation matrix $W$
+with $H_{\rm eff}=H_{\rm sys}-iW^\dagger W/2$ and Hermitian
+$H_{\rm sys}$. For running frequency $\omega$, the one-photon scattering
+matrix, with free propagation deembedded, is
+
+$$
+S(\omega)=I-iW(\omega I-H_{\rm eff})^{-1}W^\dagger.
+\tag{36}
+$$
+
+Here $R,L$ label propagation directions. Thus $S_{RR},S_{LL}$ are the
+two physical cross-port transmissions, while $S_{LR},S_{RL}$ are
+reflections. For real frequency, $M-M^\dagger=iW^\dagger W$ with
+$M=\omega I-H_{\rm eff}$ implies $S^\dagger S=I$ on all radiation
+ports; tracing out nonguided ports leaves the expected contraction.
+
+Set $a_j=\omega-\omega_j+i\Gamma_j/2$. The resolvent denominator is
+$D=a_1a_2+g^2z^2$ and its off-diagonal adjugate entries are $-igz$.
+Direct contraction gives
+$L_R\operatorname{adj}(M)L_R^\dagger
+=(\gamma_1a_2+\gamma_2a_1)/2-ig^2(1+z^2)$; the left contraction is
+identical. Consequently
+
+$$
+T_R(\omega)=T_L(\omega)
+=\frac{(a_1-i\gamma_1/2)(a_2-i\gamma_2/2)}
+       {a_1a_2+g^2z^2}
+=\frac{t_1(\omega)t_2(\omega)}
+       {1-r_1(\omega)r_2(\omega)z^2},\qquad
+t_j=1-\frac{i\gamma_j}{2a_j},\quad
+r_j=-\frac{i\gamma_j}{2a_j}.
+\tag{37}
+$$
+
+The denominator is the reciprocal round-trip feedback. A literal
+geometric series converges for $|r_1r_2|<1$; its rational expression
+extends to nonsingular lossless limits. Omitting it gives the independent
+forward cascade $t_1t_2$, which describes a different network unless
+returns are suppressed or demonstrably negligible. Reference planes at
+the emitter ends add the same one-pass propagation phase to both
+transmissions. They do not equate the two reflection amplitudes:
+reciprocity fixes cross-port transmission, while an asymmetric pair can
+have different same-port reflections.
+
+For a normalizable one-photon spectral envelope $f$, transmission is the
+operator $(M_Tf)(\omega)=T(\omega)f(\omega)$, with mass
+$\int|Tf|^2d\omega$. Therefore (37) gives
+$M_{T_R}=M_{T_L}$ on **finite pulses**, after known reference phases,
+delays and output modes are matched. A hypothetical balanced coherent
+comparison of the transmitted directions has
+$(M_{T_R}-M_{T_L})/2=0$. Equal classical spectra alone do not supply that
+coherent routing interface. Nor is this equality a statement about the
+reflected instrument, photon-preserving inelastic output or unobserved
+bath records. Directional radiation from a separately prepared excited
+state does not contradict this initial-ground-state transmission result.
+
+The rational transfer in (37) is nonzero almost everywhere and tends to
+one at large frequency. Its isolated monochromatic zeros therefore do
+not create a nontrivial $L^2$ pulse kernel. At ideal dark-mode points,
+cancel removable resolvent factors before taking the limit. If retardation
+is relevant, the linear transfer network must retain $z(\omega)$ and
+the propagation phase; a constant-phase Markov Hamiltonian is not a
+measured delay bound.
+
+Known phase or delay correction cannot generally turn (37) into
+$t_1t_2$, since feedback changes moduli as well as phase. A formal
+transmitted-mode filter has ratio
+$F=(t_1t_2)/T=1-r_1r_2z^2$. It is a no-gain spectral contraction only
+where $|F|\le1$; a scaled contraction can incur additional selection loss.
+Physical filtering also needs its causal implementation and resource
+cost. This observation does not exclude arbitrary ordinary processing of
+all accessible ports. A useful detuning/phase decision or delivered state
+must still be compared with ordinary transmission/reflection measurements,
+pulse optimization, spectral selection and coherent delayed paths.
+
+The sources' reported linewidths, guided fractions, coupling phase,
+dephasing, diffusion and Fano parameters identify a starting model;
+they are not fitted by (35)–(37). In particular, pure dephasing cannot
+in general be replaced by photon disappearance while preserving the
+one-photon instrument. The enlarged native bath and nonlinear
+two-photon dilation remain to be characterized. This coherent-component
+calculation neither supplies two independently callable slots nor
+establishes a new switch, a photon-preserving order flag, the gate above,
+or a hardware advantage. The two-photon proofs preceding this subsection
+retain their explicitly stated independent-slot hypotheses.
 
 ### Boundary of the scattering reductions
 

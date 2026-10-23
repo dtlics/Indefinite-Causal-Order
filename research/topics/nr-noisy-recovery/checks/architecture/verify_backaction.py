@@ -5,6 +5,9 @@ no floating point, third-party packages, or generated files. Full flagged
 Choi equalities include every bath input and any passive reference. Finite
 examples and algebraic counterexamples do not certify a general hardware
 advantage, a complete noise model, or exclusion of every classical bath.
+The exchange example additionally replays the full controlled sensor map,
+diamond-norm factor identities and normalized Choi Gram data, with no access
+to the defect output. The generic norm bound remains an analytic proof.
 """
 from fractions import Fraction as F
 from pathlib import Path
@@ -281,16 +284,213 @@ def symbolic_ramsey_checks():
             "static_classical_echo_fidelity": "1"}
 
 
+def exchange_backaction_checks():
+    """Exact joint exchange model and full controlled-channel norm factors.
+
+    The generic completely bounded cross-map norm inequality is proved in
+    backaction.md. Here all finite matrix identities, input matrix units,
+    Gram data and an attaining input are checked with Gaussian fractions.
+    No inaccessible bath output is supplied to either discriminator.
+    """
+    q, mm, dag, kron = gaussian, matmul, adjoint, tensor
+    i2 = identity(2)
+    x = [[ZERO, ONE], [ONE, ZERO]]
+    y = [[ZERO, q(0, -1)], [q(0, 1), ZERO]]
+    z = [[ONE, ZERO], [ZERO, q(-1)]]
+    p = [[ZERO, ZERO], [ZERO, ONE]]
+    jump = [[ZERO, ONE], [ZERO, ZERO]]
+    phase = [[ONE, ZERO], [ZERO, q(0, 1)]]
+
+    def imaginary_scale(a, coefficient):
+        return [[multiply(q(0, coefficient), v) for v in row] for row in a]
+
+    def coupling(axis):
+        block = plus(scaled(i2, F(2, 3)),
+                     imaginary_scale(plus(axis, scaled(z, 2)), F(-1, 3)))
+        out = identity(4)
+        for r, rr in enumerate([2, 1]):
+            for c, cc in enumerate([2, 1]):
+                out[rr][cc] = block[r][c]
+        return out
+
+    def bath_kraus(unitary, d=2):
+        # Matrix order is accessible input/output (C,S if present), then E.
+        return [[[unitary[2*o+e][2*i] for i in range(d)]
+                 for o in range(d)] for e in range(2)]
+
+    def channel(kraus, rho):
+        out = zeros(len(kraus[0]), len(kraus[0]))
+        for k in kraus:
+            out = plus(out, mm(mm(k, rho), dag(k)))
+        return out
+
+    def units(d):
+        for r, c in product(range(d), repeat=2):
+            out = zeros(d, d)
+            out[r][c] = ONE
+            yield out
+
+    def vec(a):
+        return [a[r][c] for c in range(len(a[0])) for r in range(len(a))]
+
+    def dot(a, b):
+        out = ZERO
+        for left, right in zip(a, b):
+            out = add(out, multiply(conjugate(left), right))
+        return out
+
+    a_joint = coupling(x)
+    b_joint = [coupling(y), coupling(scaled(y, -1))]
+    for u in [a_joint, *b_joint]:
+        require_unitary(u)
+    qp = kron(phase, i2)
+    require(b_joint[0] == mm(dag(qp), mm(a_joint, qp)),
+            "Positive joint phase-conjugation relation failed.")
+    require(b_joint[1] == mm(qp, mm(a_joint, dag(qp))),
+            "Negative joint phase-conjugation relation failed.")
+    single = [bath_kraus(u) for u in [a_joint, *b_joint]]
+    marginal0 = [[ONE, ZERO], [ZERO, q(F(2, 3), F(-2, 3))]]
+    marginal1 = scaled(jump, F(1, 3))
+    for rho in units(2):
+        expected = channel([marginal0, marginal1], rho)
+        require(all(channel(ks, rho) == expected for ks in single),
+                "Isolated complete sensor channels are not identical.")
+
+    amplitude = F(7, 9)
+    t, b = 1-amplitude, (1+amplitude)/2
+    gamma = 1-amplitude**2
+    d = [[ONE, ZERO], [ZERO, q(b)]]
+    d_bad = [[ONE, ZERO], [ZERO, q(amplitude)]]
+    full, fixed_plus, ordinary, effects = [], [], [], []
+    expected_ab = [imaginary_scale(z, -1),
+                   imaginary_scale(plus(plus(scaled(x, 4), scaled(y, -4)),
+                                        scaled(z, 7)), F(-1, 9))]
+    expected_ba = [imaginary_scale(plus(plus(scaled(x, 4), scaled(y, 4)),
+                                        scaled(z, 7)), F(-1, 9)),
+                   imaginary_scale(z, -1)]
+    for index, b_model in enumerate(b_joint):
+        raw_ab, raw_ba = mm(a_joint, b_model), mm(b_model, a_joint)
+        for raw, expected in [(raw_ab, expected_ab[index]), (raw_ba, expected_ba[index])]:
+            require([[raw[rr][cc] for cc in [2, 1]] for rr in [2, 1]] == expected,
+                    "One-excitation product formula failed.")
+        ab, ba = mm(qp, raw_ab), mm(qp, raw_ba)
+        good = ab if index == 0 else ba
+        require(good == kron(i2, phase), "Full joint good memory word is not local on E.")
+        bad = ba if index == 0 else ab
+        bad_kraus = bath_kraus(bad)
+        require(bad_kraus[0] == d_bad and
+                mm(dag(bad_kraus[1]), bad_kraus[1]) == scaled(p, gamma),
+                "Bad word is not the stated amplitude-damping channel.")
+        ordinary.append(bath_kraus(ab))
+        ks = bath_kraus(diagonal_blocks(ba, ab), 4)
+        full.append(ks)
+        # Plus-control embedding omits sqrt(2); Choi weights below restore it.
+        fixed_plus.append([[[add(k[o][i], k[o][2+i]) for i in range(2)]
+                            for o in range(4)] for k in ks])
+        effect = mm(dag(ab), ba)
+        effects.append([[effect[2*r][2*c] for c in range(2)] for r in range(2)])
+        expected0 = diagonal_blocks(d_bad, i2) if index == 0 else diagonal_blocks(i2, d_bad)
+        require(ks[0] == expected0, "Full input no-jump controlled Kraus formula failed.")
+    require(effects[0] == effects[1] == d_bad,
+            "Control-only cross effect differs between hidden signs.")
+    require((1-(1+amplitude)/2)/2 == F(1, 18), "Control minus probability failed.")
+
+    l1, r1 = kron(i2, scaled(jump, b)), kron(z, scaled(jump, t))
+    l2, r2 = kron(i2, d), kron(z, scaled(p, -t))
+
+    def elementary(rho):
+        return plus(mm(mm(l1, rho), dag(r1)), mm(mm(l2, rho), dag(r2)))
+
+    for rho in units(4):
+        difference = plus(channel(full[0], rho), scaled(channel(full[1], rho), -1))
+        require(difference == plus(elementary(rho), dag(elementary(dag(rho)))),
+                "Full control/sensor channel factorization failed.")
+    left = plus(mm(dag(l1), l1), mm(dag(l2), l2))
+    right = plus(mm(dag(r1), r1), mm(dag(r2), r2))
+    require(left == kron(i2, [[ONE, ZERO], [ZERO, q(2*b*b)]]),
+            "Left cross-map norm factor failed.")
+    require(right == kron(i2, scaled(p, 2*t*t)) and 2*b*b > 1 and 2*b*t == gamma,
+            "Right cross-map norm factor failed.")
+    # The same no-control factors bound ordinary id versus amplitude damping.
+    for rho in units(2):
+        elem = plus(scaled(mm(mm(jump, rho), dag(jump)), t*b),
+                    scaled(mm(mm(d, rho), p), -t))
+        sharp = plus(scaled(mm(mm(jump, dag(rho)), dag(jump)), t*b),
+                     scaled(mm(mm(d, dag(rho)), p), -t))
+        delta = plus(channel(ordinary[1], rho), scaled(channel(ordinary[0], rho), -1))
+        require(delta == plus(elem, dag(sharp)), "Ordinary norm factorization failed.")
+
+    # Exact Choi Gram data, with TP checks on the full matrices.
+    v0, v1 = vec(full[0][0]), vec(full[1][0])
+    n, m = dot(v0, v0), dot(v0, v1)
+    require(n == dot(v1, v1) == q(F(292, 81)) and m == q(F(32, 9)),
+            "Full Choi no-jump Gram matrix failed.")
+    require(n[0]**2-m[0]**2 == F(16*145, 81**2), "Choi radical discriminant failed.")
+    for index in [0, 1]:
+        jump_vec = vec(full[index][1])
+        require(dot(jump_vec, jump_vec) == q(gamma) and
+                dot(jump_vec, v0) == dot(jump_vec, v1) == ZERO,
+                "Choi jump Gram data failed.")
+        require_tp_choi(normalized_choi([(F(1), k) for k in full[index]]), 4, 4)
+        require_tp_choi(normalized_choi([(F(1, 2), k) for k in fixed_plus[index]]), 2, 4)
+        require(dot(vec(fixed_plus[index][0]), vec(fixed_plus[index][0])) == n,
+                "Fixed-plus Choi norm failed.")
+    require(dot(vec(full[0][1]), vec(full[1][1])) == ZERO and
+            dot(vec(fixed_plus[0][0]), vec(fixed_plus[1][0])) == m,
+            "Cross-hypothesis Choi Gram data failed.")
+    # Fixed-plus jump vectors also occupy distinct control sectors.
+    for index in [0, 1]:
+        fv = vec(fixed_plus[index][1])
+        require(dot(fv, fv) == q(gamma) and all(
+            dot(fv, vec(fixed_plus[other][0])) == ZERO for other in [0, 1]),
+            "Fixed-plus Choi jump orthogonality failed.")
+    require(dot(vec(fixed_plus[0][1]), vec(fixed_plus[1][1])) == ZERO,
+            "Fixed-plus Choi jumps are not orthogonal.")
+    ov0, ov1 = vec(ordinary[0][0]), vec(ordinary[1][0])
+    n0, n1, overlap = dot(ov0, ov0)[0], dot(ov1, ov1)[0], dot(ov0, ov1)
+    require((n0+n1)**2-4*(overlap[0]**2+overlap[1]**2) == F(16*145, 81**2),
+            "Ordinary Choi discriminant differs.")
+    for index, ks in enumerate(ordinary):
+        fidelity = sum((trace(k)[0]**2+trace(k)[1]**2 for k in ks), F(0))/4
+        require(fidelity == (F(1) if index == 0 else F(64, 81)),
+                "Serial memory fidelity failed.")
+    od = plus(channel(ordinary[0], p), scaled(channel(ordinary[1], p), -1))
+    require(od == [[q(-gamma), ZERO], [ZERO, q(gamma)]], "Ordinary attaining input failed.")
+    fd = scaled(plus(channel(fixed_plus[0], p), scaled(channel(fixed_plus[1], p), -1)), F(1, 2))
+    require(all(fd[r][c] == ZERO for r, c in product(range(4), repeat=2) if r != c)
+            and sum(abs(fd[r][r][0]) for r in range(4))/2 == gamma,
+            "Full output attaining input failed.")
+
+    # Different early/late joint blocks and nontrivial persistent-bath gap.
+    a1, b1, a2, b2, gap = a_joint, b_joint[0], b_joint[1], a_joint, b_joint[0]
+    selector1, selector2 = diagonal_blocks(a1, b1), diagonal_blocks(a2, b2)
+    flip = kron(x, identity(4))
+    chronological = mm(flip, mm(selector2, mm(flip, mm(kron(i2, gap), selector1))))
+    require(chronological == diagonal_blocks(mm(b2, mm(gap, a1)), mm(a2, mm(gap, b1))),
+            "Clock-dependent native selector compilation failed.")
+    return {"isolated_channels": "identical complex amplitude damping",
+            "good_memory_entanglement_fidelity": "1", "bad_memory_entanglement_fidelity": "64/81",
+            "control_only_effect": ["1", "7/9"], "maximally_mixed_sensor_minus_probability": "1/18",
+            "full_arbitrary_control_input_half_diamond": str(gamma),
+            "ordinary_serial_half_diamond": str(gamma),
+            "normalized_choi_half_trace_distance": "(8+sqrt(145))/81",
+            "equal_prior_optimal_success": str((1+gamma)/2),
+            "full_input_matrix_units": 16, "clock_dependent_selector_identity": True,
+            "scope": "Finite joint model and norm-factor replay; analytic diamond inequality, no fitted hardware or all-adaptive ordinary converse."}
+
+
 def main():
     cases = sum(echo_check(a, b) for d in [2, 3] for a, b in pairs(d))
     example = heldout_counterexample()
     contrast = record_correlation_check()
     symbolic = symbolic_ramsey_checks()
+    exchange = exchange_backaction_checks()
     print(json.dumps({"status": "passed", "flagged_full_choi_cases": cases,
                       "data_dimensions": [2, 3], "arithmetic": "exact Gaussian rational",
                       "ordinary_three_window_record_contrast": contrast,
                       "symbolic_ramsey_and_storage": symbolic,
-                      "scope": "Exact finite full-instrument replay and scalar polynomial counterexamples; general access and physical-cost statements remain analytic.",
+                      "exchange_backaction": exchange,
+                      "scope": "Exact finite full-instrument, exchange-channel norm-factor and scalar polynomial replay; generic norm inequalities, access and physical-cost statements remain analytic.",
                       "counterexample": example}, sort_keys=True))
 
 

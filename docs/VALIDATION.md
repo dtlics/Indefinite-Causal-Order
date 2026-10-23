@@ -104,6 +104,12 @@ has exact causal primal/dual null-event witnesses and a native adaptive
 realization. Its all-ordinary optimized local limit also uses an analytic
 compactness and classical query-choice reduction. This is a strict two-call
 comparison, not a mean-cost converse or a demonstrated fresh-frame meter.
+The same owner now gives a calibrated one-memory ordinary reuse protocol.
+Its exact code, syndrome and differential-channel identities are replayed;
+the finite-sample concentration and averaged local-information scaling
+are analytic. The bound concerns increasingly long rounds at a shrinking
+positive nominal angle, with all calibration queries counted. It supplies
+no uniform estimation-risk gain, numeric onset, or noisy-helper guarantee.
 The [braided-magic result](../research/topics/nr-noisy-recovery/braided-magic.md)
 has exact gate-branch, full flagged raw-state, visibility and Pauli-loop
 identities. Protected Ising closure, the complete physical braid phase,
@@ -118,5 +124,14 @@ published recursion. These are analytic proofs; finite replay does not
 establish them or an experimental efficiency. Reported optical component
 transmissions are not a measurement of the full ordinary echo. None of
 these checks establishes a new architecture advantage or source priority.
+
+The current native-interface checks also include exact shared-spectral
+Choi/control counterexamples, excitation-exchange schedule and
+discrimination identities, and full reset-channel ordinary simulations.
+The all-dimension bandwidth--delay bound, terminal fixed-site-noise
+bound, thermal filtering inequalities and reciprocal emitter scattering
+model are complete analytic arguments in their respective owners.
+Their finite checks do not constitute a measured instrument, a new
+fault-tolerance threshold or an architecture advantage.
 
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

@@ -15,7 +15,7 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | Noisy phase calibration, finite-query precision and native memory costs | [Metrology benchmark](research/topics/nr-noisy-recovery/metrology.md) |
 | Displacement calibration, energy bookkeeping and ordinary optical loops | [Geometric calibration](research/topics/nr-noisy-recovery/geometric-calibration.md) |
 | Braided magic and physical coherent-trajectory resources | [Braided-magic screen](research/topics/nr-noisy-recovery/braided-magic.md) |
-| Drifting measurement alignment and exact two-query limits | [Alignment benchmark](research/topics/nr-noisy-recovery/alignment.md) |
+| Drifting measurement alignment, exact two-query limits and calibrated reuse | [Alignment benchmark](research/topics/nr-noisy-recovery/alignment.md) |
 | Selected formal theorem statements and hypotheses | [Theorem map](proofs/lean/THEOREMS.txt) |
 | Lean proofs and exact finite certificates | [Proof project](proofs/lean/README.md) |
 | Literature context and access-model distinctions | [References](references/README.md) |

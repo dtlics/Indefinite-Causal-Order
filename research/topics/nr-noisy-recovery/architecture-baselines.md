@@ -697,6 +697,197 @@ clock full-control/payload Choi equalities at $d=2,4$, including commuting,
 anticommuting and non-Clifford examples. It also checks the relative-vacuum
 phase counterexample; the general proofs are the algebra above.
 
+<a id="nr-r06-terminal-noise"></a>
+
+### Fixed terminal local noise limits raw full-register switch throughput
+
+This bound concerns one standard two-slot channel switch on a full
+$D$-dimensional payload, with an independent control initialized in
+$|+\rangle$. The slots $\mathcal A,\mathcal B$ are independent CPTP maps
+on that payload. The complete output control and data may undergo an
+arbitrary trace-nonincreasing accepted decoder $\mathcal R$ into a
+$D$-dimensional output. This includes both switch flags, coherent joint
+decoding, clean postprocessing ancillas, discarded decoder registers and
+heralded recovery. The inaccessible reference is passive. No copy or
+encoding of the input has been retained in a noiseless side register
+before the noisy slots, and the control initially carries no payload data.
+
+Let $|\Phi_D\rangle=D^{-1/2}\sum_x|x\rangle_R|x\rangle_T$,
+$\Phi_D=|\Phi_D\rangle\langle\Phi_D|$, and let $W$ be any target
+unitary. For the complete accepted map $\mathcal L$, define
+
+$$
+p=\operatorname{Tr}[(\mathrm{id}_R\otimes\mathcal L)(\Phi_D)],
+\qquad
+q=\langle W|(\mathrm{id}_R\otimes\mathcal L)(\Phi_D)|W\rangle,
+\qquad
+|W\rangle=(I\otimes W)|\Phi_D\rangle.
+\tag{T1}
+$$
+
+Thus $q/p$ is the fidelity of the normalized accepted Bell state, when
+$p>0$. This definition remains valid for input-dependent success; it does
+not assert that the conditioned operation is a linear channel on every
+payload. Nor does $q$ assert a literal classical correct-gate component
+in a Kraus decomposition.
+
+**Depolarizing-slot bound.** Write
+$\Omega_D(X)=\operatorname{Tr}(X)I/D$. For every CPTP $\mathcal B$ and
+every accepted decoder as above,
+
+$$
+q\bigl(\operatorname{SWITCH}(\Omega_D,\mathcal B)\bigr)
+\le \frac{2}{D^2}.
+\tag{T2}
+$$
+
+To prove it, choose $K_{ab}=|a\rangle\langle b|/\sqrt D$ as Kraus
+operators for $\Omega_D$, and let $B_j$ be Kraus operators for
+$\mathcal B$. The raw switched Kraus operators are
+
+$$
+S_{abj}=\frac{|0\rangle\otimes B_jK_{ab}
+                 +|1\rangle\otimes K_{ab}B_j}{\sqrt2}.
+$$
+
+Absorb $W^\dagger$ into each decoder Kraus operator and write that
+operator as a row of two blocks, $R_\ell=(X_\ell,Y_\ell)$.
+Trace nonincrease implies
+$\sum_\ell X_\ell^\dagger X_\ell\le I$ and
+$\sum_\ell Y_\ell^\dagger Y_\ell\le I$. Cyclicity of the trace and
+$\sum_{ab}|\operatorname{Tr}(Z|a\rangle\langle b|)|^2
+=\|Z\|_{\rm HS}^2$ give the exact expression
+
+$$
+q=\frac1{2D^3}\sum_{j,\ell}
+       \|X_\ell B_j+B_jY_\ell\|_{\rm HS}^2.
+\tag{T3}
+$$
+
+Put $s_X=\sum_{j,\ell}\|X_\ell B_j\|_{\rm HS}^2$ and
+$s_Y=\sum_{j,\ell}\|B_jY_\ell\|_{\rm HS}^2$.
+Using $\sum_j B_j^\dagger B_j=I$,
+
+$$
+\begin{aligned}
+s_X&=\sum_j\operatorname{Tr}\!\left[
+B_j^\dagger\Bigl(\sum_\ell X_\ell^\dagger X_\ell\Bigr)B_j\right]
+\le D,\\
+s_Y&=\sum_\ell\operatorname{Tr}\!\left[
+Y_\ell^\dagger\Bigl(\sum_j B_j^\dagger B_j\Bigr)Y_\ell\right]
+\le D.
+\end{aligned}
+$$
+
+The squared-norm inequality then gives
+$q\le(s_X+s_Y)/D^3\le2/D^2$. In particular, $\mathcal B$ need not be
+unital or random unitary. The proof is pointwise in the target $W$ and
+does not require the physical decoder to know its matrix.
+
+Suppose a declared independent control-dephasing channel, applied before
+decoding, multiplies the order off-diagonal blocks by real
+$0\le\nu\le1$. Equation (T3) instead becomes
+
+$$
+q=\frac{s_X+s_Y+2\nu\operatorname{Re}
+\sum_{j,\ell}\langle X_\ell B_j,B_jY_\ell\rangle_{\rm HS}}{2D^3}
+\le\frac{1+\nu}{D^2},
+\tag{T4}
+$$
+
+by global Cauchy--Schwarz and $s_X,s_Y\le D$. A measured interference
+visibility alone does not establish this full control-noise model.
+
+**Terminal-noise transfer.** Use normalized Choi states
+$j_{\mathcal N}=(\mathrm{id}\otimes\mathcal N)(\Phi_D)$, so that
+$j_{\Omega_D}=I/D^2$. If $\mu=\|j_{\mathcal N}\|_\infty$, then
+
+$$
+\mathcal N\le_{\rm CP}D^2\mu\,\Omega_D.
+$$
+
+For $\mathcal A=\mathcal N\circ\mathcal A_{\rm pre}$ with any CPTP
+$\mathcal A_{\rm pre}$ on the same payload, precomposition preserves
+this inequality and
+$\Omega_D\circ\mathcal A_{\rm pre}=\Omega_D$. Positivity and linearity
+of the standard switch in its $\mathcal A$ slot, followed by the
+accepted decoder and positive Bell test, therefore imply
+
+$$
+q\le\min\{1,(1+\nu)\mu\}.
+\tag{T5}
+$$
+
+The comparison map $D^2\mu\Omega_D$ need not be trace preserving;
+complete positivity is sufficient for the inequality. Interchanging
+the two slots gives the same bound from a terminal noise layer in
+$\mathcal B$.
+
+For $D=2^n$ and a terminal independent layer
+$\mathcal N=\mathcal N_{\rm loc}^{\otimes n}$, normalized Choi states
+tensor up to a wire permutation. Consequently
+
+$$
+q\le\min\{1,(1+\nu)\mu_{\rm loc}^{n}\},
+\qquad
+\mu_{\rm loc}=\|j_{\mathcal N_{\rm loc}}\|_\infty.
+\tag{T6}
+$$
+
+For unequal site channels the product $\prod_i\mu_i$ replaces
+$\mu_{\rm loc}^n$. Two useful fixed-rate examples are:
+
+- A local Pauli channel has Choi eigenvalues equal to its Pauli
+  probabilities, so $\mu_{\rm loc}=p_{\max}$. For identity-dominant
+  total error probability $\epsilon$ this is $1-\epsilon$.
+- A local amplitude-damping channel of damping probability $\gamma$
+  has normalized Choi eigenvalues
+  $1-\gamma/2,\gamma/2,0,0$, so $\mu_{\rm loc}=1-\gamma/2$.
+  This includes a nonunital, off-diagonal fault model.
+
+If Bell-input acceptance is at least $p_0>0$ and accepted Bell fidelity
+is at least $F_0>0$, (T6) requires
+
+$$
+p_0F_0\le(1+\nu)\mu_{\rm loc}^{n}.
+\tag{T7}
+$$
+
+Thus a raw two-slot switch with one independent order qubit cannot
+maintain both positive yield and positive universal-gate Bell quality
+at a fixed local rate with $\mu_{\rm loc}<1$ as the full register grows.
+For amplitude damping, keeping $p_0,F_0$ constant requires
+$\gamma=O(1/n)$ in the small-rate regime. Deterministic coherent unitary
+faults have $\mu_{\rm loc}=1$ and give no such scaling conclusion.
+
+This is a raw full-register obstruction, **not a fault-tolerance
+threshold or a no-go theorem for encoded logical computation**. Earlier
+compiled faults and gates may be arbitrary in
+$\mathcal A_{\rm pre}$, but the finite terminal product layer is an
+exact premise. Simultaneous interacting Hamiltonian evolution and local
+Lindblad damping do not automatically factor this way. A proposed
+Trotter replacement needs its complete-process error bound. The result
+also does not cover an initially data-carrying control, retained input
+paths, exposed reservoirs, correlated two-slot baths, or a smaller
+logical payload encoded in a larger physical register. Clean ancillas
+introduced only for postprocessing are already covered by the decoder.
+The bound does not exclude a small finite-register benefit or useful
+local-observable simulation despite poor global Bell fidelity.
+
+Ideal commutation and knowledge of the common basis were never used in
+(T2)–(T7). Thus hidden many-body eigenvectors alone cannot evade this
+specified fixed-rate scaling bound. Conversely, a physical coherent
+Hamiltonian controller is not automatically the independent-slot process
+in its proof. [Vasilyev et al.](https://doi.org/10.1103/PRXQuantum.1.020302)
+propose $H_{\rm spin}\otimes|0\rangle\langle0|$ using a Rydberg clock
+atom, with explicit blockade and emission limitations;
+[Morong et al.](https://doi.org/10.1103/PRXQuantum.4.010334) experimentally
+protect interacting ion dynamics using ordinary synchronized dynamical
+decoupling. The former does not demonstrate a noisy-channel switch, and
+the latter does not correct arbitrary Markov relaxation. Their actual
+controls, inactive branches, emitted records and helper noise belong in
+the [native-device comparison](architecture.md).
+
 <a id="nr-r07"></a>
 
 ## NR-R07 — The efficient finite-frame family admits polynomial-query reused calibration
@@ -857,6 +1048,229 @@ $$
 Each summand equals $\operatorname{Tr}[(P_aQ_bP_a)^2]\ge0$.
 This concerns measurement-projector compatibility; commuting averaged
 channels alone do not imply $v=1$.
+
+### One shared frequency does not automatically provide two unread meters
+
+For elastic dispersive sections driven by the same photon, write their
+spatial transformations at frequency $\omega$ as $A(\omega),B(\omega)$.
+Tracing frequency after one visit gives, for example,
+$E(\rho)=\int p(\omega)A(\omega)\rho A(\omega)^\dagger d\omega$.
+The physical two-section channel instead contains the **same-frequency**
+average
+
+$$
+\Phi(\rho)=\int p(\omega)B(\omega)A(\omega)\rho
+ A(\omega)^\dagger B(\omega)^\dagger d\omega.
+$$
+
+Composing the individually reduced channels uses two independent frequency
+averages. They need not agree. In particular, complete dephasing in each
+section does not establish independent unread records or the standard
+independent-channel switch of those two marginals.
+
+There is an exact all-dimensional example. Let $E_i=|e_i\rangle\langle e_i|$
+and $F_j=|f_j\rangle\langle f_j|$, $0\le i,j<D$, be mutually unbiased
+rank-one PVMs, and set
+
+$$
+A_\phi=\sum_i e^{-\mathrm i i\phi}E_i,\qquad
+B_\phi=\sum_j e^{-\mathrm i j\phi}F_j,\qquad
+\phi\sim\operatorname{Unif}[0,2\pi].
+$$
+
+Each section separately is a perfect pinching channel. For the joint
+process, histories $(i,j)$ and $(k,l)$ have overlap
+$1_{i+j=k+l}$. Its joint Gram matrix therefore has $2D-1$ all-ones blocks
+of sizes
+$m_s=1,2,\ldots,D-1,D,D-1,\ldots,1$. The normalized composed Choi state
+has eigenvalues $m_s/D^2$, with $D^2-(2D-1)$ additional zeros; the
+independent MUB composition has Choi state $I_{D^2}/D^2$. Since every
+$m_s\ge1$, their half trace distance is exactly
+
+$$
+\frac12\left\|j_\Phi-\frac{I_{D^2}}{D^2}\right\|_1
+=1-\frac{2D-1}{D^2}.
+\tag{M1}
+$$
+
+Even the control calibration can change. On data input $I/D$, and with
+control zero assigned $B_\phi A_\phi$, its off-diagonal coherence factor is
+$v=D^{-1}\int\operatorname{Tr}[(A_\phi B_\phi)^\dagger
+B_\phi A_\phi]\,d\phi/(2\pi)$. Computational/Fourier bases give
+$v=1/4$ at $D=2$, hence $p_{X,-}=3/8$ rather than the independent-channel
+value $1/4$. At $D=4$, using Fourier entries $e^{2\pi irj/4}/2$, they give
+$v=(24+20i)/64$ and $p_{X,-}=5/16$, rather than $v=1/4$ and $p_{X,-}=3/8$.
+Exchanging the order or Fourier convention conjugates the complex value.
+These quoted coherences use $I/D$; a general input can change their
+imaginary part. The exact replay verifies the full marginal and composed
+Choi matrices, not only this scalar diagnostic.
+
+### A quantitative bandwidth--delay cost for independent delay records
+
+The shared-frequency mechanism can also implement two independent meters
+if its **joint** records have sufficient capacity. The following bound
+specifies that cost for controlled delays; it is not a general fiber or
+channel-implementation impossibility theorem.
+
+Take a normalized source wavefunction $f(\omega)$ with spectral support in
+$[\omega_c-B/2,\omega_c+B/2]$. Here $B$ is angular-frequency **hard support
+width**, not a full width at half maximum or a reported $-20$ dB bandwidth.
+Assume $D\ge2$ and $B>0$.
+Let $\Omega|\omega\rangle=\omega|\omega\rangle$ be the frequency operator.
+The delayed states and the two controlled interactions are
+
+$$
+|\eta_\tau\rangle=\int f(\omega)e^{-i\omega\tau}|\omega\rangle d\omega,
+\quad
+U_A=\sum_i E_i\otimes e^{-i\Omega a_i},\quad
+U_B=\sum_j F_j\otimes e^{-i\Omega b_j}.
+\tag{M2}
+$$
+
+The source is initially independent of data and its passive reference.
+The same frequency register is retained between layers, with no extra
+independent label record. Write $\tau_{ij}=a_i+b_j$ and let
+$T=\max_{ij}\tau_{ij}-\min_{ij}\tau_{ij}$; shift all delays so they lie in
+$[0,T]$. This shift is an environment unitary and changes no channel.
+$T$ is a maximum relative controlled delay or record extent, not
+automatically the single-shot wall time of a stationary stream.
+
+Put $M=D^2$ and $K_{ji}=F_jE_i$. Mutual unbiasedness gives
+$\operatorname{Tr}(K_{lk}^\dagger K_{ji})=
+\delta_{ik}\delta_{jl}/D$. Thus the vectors
+$|u_{ij}\rangle=\sqrt D\,\operatorname{vec}(K_{ji})$ form an orthonormal
+basis, where $\operatorname{vec}$ is unnormalized. Acting on a normalized
+maximally entangled input gives the exact purification
+
+$$
+|J\rangle=\frac1{\sqrt M}\sum_{ij}
+ |u_{ij}\rangle|\eta_{\tau_{ij}}\rangle.
+\tag{M3}
+$$
+
+Consequently the normalized data Choi spectrum is the joint Gram spectrum
+divided by $M$, and equals the nonzero spectrum of
+$\Xi=M^{-1}\sum_{ij}|\eta_{\tau_{ij}}\rangle
+\langle\eta_{\tau_{ij}}|$. The independent MUB composition is completely
+depolarizing, $\Omega_D(X)=\operatorname{Tr}(X)I/D$, with Choi state $I_M/M$.
+It is realized **exactly if and only if the full $M$-state joint Gram
+matrix is $I_M$**. Orthogonal $D$-state records for each layer separately
+do not suffice, as (M1) illustrates.
+
+For two delays separated by $h$, removing the central-frequency phase gives
+
+$$
+\operatorname{Re}\!\left[e^{i\omega_c h}
+ \langle\eta_0|\eta_h\rangle\right]
+\ge\cos(B|h|/2)>0\qquad(|h|<\pi/B).
+$$
+
+Exact orthogonal records must therefore be separated by at least $\pi/B$.
+Sorting all $M$ delays proves
+
+$$
+BT\ge\pi(D^2-1).
+\tag{M4}
+$$
+
+This is attainable within a factor two: a rectangular density
+$|f(\omega)|^2=1/B$ on the band has overlap
+$e^{-i\omega_c h}\operatorname{sinc}(Bh/2)$. With $\Delta=2\pi/B$, choose
+$a_i=iD\Delta$ and $b_j=j\Delta$. Then all $D^2$ sums are distinct lattice
+points and mutually orthogonal, with $BT=2\pi(D^2-1)$. This ideal spectral
+rectangle does not also provide a finite temporal-support pulse or a lossless
+delay line. In ordinary-frequency units $B=2\pi\Delta\nu$, (M4) reads
+$\Delta\nu T\ge(D^2-1)/2$.
+
+The scaling remains necessary for approximate composition. Let
+$\delta=\tfrac12\|\Phi-\Omega_D\|_\diamond$. For every integer $R\ge1$,
+
+$$
+\boxed{\quad
+\delta\ge1-\frac{R}{D^2}
+ -\left[\frac{(BT/4)^R}{R!}\right]^2.
+\quad}
+\tag{M5}
+$$
+
+To prove it, center delay at $\tau_c=T/2$ and put $L=BT/4$. The subspace
+
+$$
+\mathcal S_R=\operatorname{span}\{
+e^{-i\Omega\tau_c}(\Omega-\omega_c)^k|f\rangle:0\le k<R\}
+$$
+
+has dimension at most $R$. Up to a scalar phase, every delay state is
+$e^{-i\Omega\tau_c}e^{-i(\Omega-\omega_c)(\tau-\tau_c)}|f\rangle$.
+The real-axis integral Taylor remainder obeys
+$|e^{-ix}-\sum_{k<R}(-ix)^k/k!|\le|x|^R/R!$, with no $e^{|x|}$ factor.
+Since $|x|\le L$, its orthogonal projector $Q_R$ has uniform leakage
+$\|(I-Q_R)\eta_\tau\|\le\epsilon_R=L^R/R!$. Therefore
+$\operatorname{Tr}(Q_R\Xi)\ge1-\epsilon_R^2$.
+
+The Ky Fan principle and (M3) put at least this much mass in the largest
+$R$ eigenvalues of $j_\Phi$. Their projector has probability $R/M$ on
+$I_M/M$, so
+$\tfrac12\|j_\Phi-I_M/M\|_1\ge1-\epsilon_R^2-R/M$.
+The Choi input is allowed in the diamond norm, proving (M5). For $R\ge M$
+the displayed lower bound is merely trivial. This argument controls the
+whole channel and does not assume entrywise small joint-record overlaps.
+
+For $0<\epsilon\le1/2$, $R!\ge(R/e)^R$ shows that
+$R=\lceil\max\{eBT/2,\log_2(1/\epsilon),1\}\rceil$ makes
+$\epsilon_R\le\epsilon$. Thus
+
+$$
+BT\ge\frac2e\left[D^2(1-\delta-\epsilon^2)
+             -\log_2(1/\epsilon)-1\right].
+\tag{M6}
+$$
+
+For example, $\delta\le1/4$ and $D\ge2$ require
+$BT>(D^2-2)/e$: set $\epsilon=1/2$; (M5) forces
+$\lceil\max\{eBT/2,1\}\rceil\ge D^2/2$, hence $eBT/2>D^2/2-1$.
+The sharper exact bound (M4) and the robust bounds are separate statements;
+no optimal approximate time--bandwidth constant is claimed.
+
+An initially mixed source is covered by purifying it once to
+$|\Psi\rangle_{ER}$ and replacing $|\eta_\tau\rangle$ by
+$(e^{-i\Omega\tau}\otimes I_R)|\Psi\rangle$ everywhere. The same
+polynomial orbit has dimension at most $R$, regardless of inert purifier
+dimension. If only spectral mass $1-\zeta$ lies in the selected width-$B$
+interval, use its band-projected source in $\mathcal S_R$. Orthogonality
+of the spectral complement yields the explicit replacement
+
+$$
+\delta\ge1-\frac R{D^2}-\zeta
+ -(1-\zeta)\left[\frac{(BT/4)^R}{R!}\right]^2.
+\tag{M7}
+$$
+
+Thus a measured spectral width without a tail-mass guarantee is not the
+hard-support premise of (M4)--(M6). For ideal stationary illumination, or a
+frequency-diagonal state in a finite frequency-bin model, the local states
+$e^{-i\Omega\tau}\rho_Ee^{i\Omega\tau}$ can all
+equal $\rho_E$ even though their **purified** overlaps differ. The proof
+does not turn such a source into accessible arrival-time labels. A
+triggered pure pulse with resolved delays is a different measurement
+interface. Independent source resets, additional spatial or polarization
+records, non-delay couplings and new per-slot baths require their actual
+joint dilation; they are not excluded by this shared-clock theorem.
+
+An input-specific output check is also weaker: every channel (M2) is
+random unitary and fixes $I/D$, including at $T=0$. A $D^2$ requirement
+cannot follow from that test. It needs the channel/Choi guarantee above.
+
+Real multimode spectral averaging is therefore an instrument question.
+[Li, Ryczkowski and Genty](https://doi.org/10.1364/OE.558061) study hundreds
+of supported fiber modes using broadband ASE and an ordinary spatial
+coherence interferometer. That does not establish hidden rank-one meters,
+two independent discarded records or an inaccessible production encoder.
+Frequency-resolved or narrowband pilots, native mode preparation and
+ordinary coherence/survival tests remain matched comparators. The
+[hardware assessment](architecture.md) retains their access, stability,
+loss and downstream-task costs; no blanket multimode-fiber no-go or
+measured switch advantage follows from (M1)--(M7).
 
 ### Stable accessible records give an exact three-call statistic
 
@@ -1163,7 +1577,9 @@ useful accessible-output decision.
 The proofs above are analytic deductions under their explicit models.
 The architecture checks linked in [the replay map](checks/README.md)
 verify small exact measurement examples, scalar calibration crossovers,
-and orthogonality/filter identities; they are not a proof of hardware
+orthogonality/filter identities and shared-frequency Choi/control
+counterexamples; the all-dimensional bandwidth--delay argument remains
+the analytic proof (M2)--(M7). The checks are not a proof of hardware
 costs or a new optimal-strategy SDP. The ordinary learning algorithm is
 a cited mathematical input. None of these results is a new
 Lean-formalized theorem or a claim of priority for Bell learning,

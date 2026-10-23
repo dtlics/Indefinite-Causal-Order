@@ -55,9 +55,9 @@ JOBS = (
     ("architecture-reuse", "architecture/verify_reuse.py", (),
      "Exact finite-frame calibration score, threshold, rejection and query-crossover arithmetic; cited learner not implemented."),
     ("architecture-measurements", "architecture/verify_measurements.py", (),
-     "Exact small measurement/Choi, record-return and trace-filter identities, syndrome-sector constants and recorded parity-braid branch/frame/retry comparisons."),
+     "Exact measurement/Choi, record-return and shared-spectral counterexamples, syndrome-sector constants and recorded parity-braid comparisons; bandwidth--delay proofs analytic."),
     ("architecture-communication", "architecture/verify_communication.py", (),
-     "Exact full-Choi absorbing-loss and noisy-control-wire identities, tight qubit activation and elastic-node examples; capacity/stopping proofs analytic."),
+     "Exact full-Choi absorbing-loss, noisy-control-wire and arbitrary-control reset-cycle identities, tight activation and elastic-node examples; capacity, thermal and continuum device proofs analytic."),
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
      "Exact finite native-layer, bit-oracle, qutrit address, known-basis single-fault and number-lowering checks, plus same-unitary quasistatic Bell scores and iid-clock full Choi comparisons; physical costs analytic."),
     ("architecture-dispatch", "architecture/verify_dispatch.py", (),
@@ -67,13 +67,13 @@ JOBS = (
     ("architecture-lookups", "architecture/verify_lookups.py", (),
      "Exact full-address Choi identities for ordinary measurement-uncomputation and balanced-switch garbage erasure; finite instances, no optimized architecture frontier."),
     ("architecture-backaction", "architecture/verify_backaction.py", (),
-     "Exact full flagged-Choi echo/switch examples, held-out memory and ordinary record contrasts, and polynomial Ramsey/storage counterexamples; all-dimension instrument proofs and hardware access remain analytic."),
+     "Exact flagged-Choi echo, held-out memory, excitation-exchange schedule/discrimination factors and native-selector identities; all-dimension instrument/norm proofs and hardware access remain analytic."),
     ("architecture-metrology", "architecture/verify_metrology.py", (),
      "Exact two-query adaptive phase/AD dual feasibility, achievable full-output Fisher information and visibility/erasure arithmetic, ordinary memory/rate boundaries; process and hardware arguments remain analytic."),
     ("architecture-braided-magic", "architecture/verify_braided_magic.py", (),
      "Exact Ising quarter-braid branches, stabilizer target bound, both flagged ordinary controlled-S state identities under matched helper visibility, physical-S half-exchange yield and Pauli-loop closures; native trajectories, phases and factory costs remain analytic."),
     ("architecture-alignment", "architecture/verify_alignment.py", (),
-     "Exact Haar-Choi sectors, causal primal/dual null-event certificates, native adaptive realization and ordinary reuse/visibility identities; optimized local-limit and physical-interface arguments remain analytic."),
+     "Exact Haar-Choi sectors, causal null-event witnesses, native adaptive realization, general-axis one-memory QEC/syndrome and differential-coherence identities; calibrated averaged-information scaling and physical costs analytic."),
 )
 
 

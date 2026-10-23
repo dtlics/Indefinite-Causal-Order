@@ -32,11 +32,24 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_backaction.py` | Eight reference-complete flagged echo/switch Choi identities at bath dimensions 2 and 3; a rational pair with equal first-echo flagged bath outputs but unequal uninterrupted two-cycle memory fidelity; an ordinary three-window record contrast; and three polynomial families for complete Ramsey equivalence, reversed storage preference and passive classical echo loss. The all-dimension instrument, known-intervention simulation and physical control assumptions remain analytic. |
 | `architecture/verify_metrology.py` | Reconstructs the hard-two-query adaptive phase/amplitude-damping dual from Kraus derivatives and one rational witness JSON. Rational square-root intervals and a complete exact LDL reconstruction certify its 16-dimensional LMI. Also checks explicit joint-readout Fisher information, visibility/loss thresholds, the plain-switch/retained-echo polynomial, regular echo arithmetic and the feasible three-query feedback recurrence. Tester semantics, covariance/concavity, complete native instruments and physical costs remain analytic. |
 | `architecture/verify_braided_magic.py` | Exact quarter-braid gate branches, the extremal stabilizer overlap, both complete flagged raw-state ensembles for five rational helper visibilities, the physical-$S$ half-exchange yield and exposure count, and sixteen Pauli-loop closures. The protected-resource closure, complete physical phase, native position histories and logical factory costs remain analytic. |
-| `architecture/verify_alignment.py` | Reconstructs the joint Haar-Choi sectors and exact ordinary adaptive null-event primal/dual certificates with Gaussian integers and rational arithmetic. Checks the native isometry/projector realization, pointwise null event, reversed wire convention, multi-copy coefficients and visibility identities. The uniform optimized local-information limit, classical query-choice reduction and fresh-frame hardware promise remain analytic. |
+| `architecture/verify_alignment.py` | Reconstructs the joint Haar-Choi sectors and exact ordinary adaptive null-event primal/dual certificates with Gaussian integers and rational arithmetic. Checks the native isometry/projector realization, pointwise null event, reversed wire convention, multi-copy coefficients and visibility identities. Also checks the general-axis two-controlled-Z code, its full syndrome channels, known-plane binomial information and differential coherence identities. The optimized hard-cap local limit, calibration concentration and growing-round averaged-information proof remain analytic; no finite onset or hardware promise is certified. |
 
 The five modules in `algebra/` form the shared exact engine. `brauer_exact_replay.py` derives diagram multiplication, adjoints, traces and identity insertions directly from pairings. `brauer_objective.py` constructs canonical Gaussian-integer objectives; `brauer_weingarten.py` inverts their permutation Gram system over fractions. `brauer_sos_certificate.py` checks the actual tensor-operator sum-of-squares residual and its norm margin. The main checker independently verifies every objective Gram equation and reconstructs every certificate slack. Both dimension-8 certificate JSONs are required inputs; search diagnostics and cached slacks cannot substitute for a successful replay.
 
 These checks complement the canonical mathematical proofs. Their finite or polynomial identities do not independently prove representation-sector completeness, stopping-time reductions, physical access assumptions, or approximate-design norm transfer. Those arguments remain in the linked method notes and theorem. This package performs no solver search, floating-point feasibility test, hardware experiment or new Lean kernel audit. Numerical discovery scripts, repeated audit narratives and search caches are intentionally absent.
+
+The measurement job also checks the complete shared-frequency Choi and
+order-control counterexamples at dimensions two and four. The general
+bandwidth--delay, approximate-rank and spectral-tail arguments in NR-R08
+remain analytic. The backaction job now includes excitation-exchange
+matrix-unit identities, discrimination-norm factors, Choi Gram spectra
+and the clock-dependent native-selector comparison. The general norm
+proof and the physical selector remain explicit assumptions/arguments.
+The communication job checks full reference-complete reset simulations
+for identical and distinct noncommuting states at dimensions two and
+three. Its thermal inequalities and the reciprocal two-emitter continuum
+model are analytic. The terminal-noise bound in NR-R06 is an analytic
+CP-order and Hilbert--Schmidt norm proof, rather than a sampled threshold.
 
 The architecture jobs support the [ordinary baselines](../architecture-baselines.md),
 [communication bounds](../communication.md) and
@@ -86,8 +99,11 @@ recorded as proved by these checks.
 
 The [alignment benchmark](../alignment.md) proves its all-ordinary strict
 two-call local limit analytically using the replayed causal witnesses and
-a compactness argument. The same certificate is not a mean-cost converse;
-longer ordinary rounds remain feasible. The
+a compactness argument. The same certificate is not a mean-cost converse.
+The calibrated-reuse construction has exact code/channel replays, while
+its concentration, uniform derivative and rare-launch information bounds
+are analytic. It keeps all calibration calls and distinguishes a growing
+positive-angle family from every fixed experiment at the exact null. The
 [braided-magic result](../braided-magic.md) checks full flagged state
 identities, rather than equating selected fidelities alone. Those finite
 checks do not certify a coherent anyon trajectory or its physical phase.

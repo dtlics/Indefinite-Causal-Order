@@ -157,6 +157,120 @@ def supplementary_checks(K, R):
             'visibility_crossover':'nu^2 > 9/(16-7 cos(theta)^2)'}
 
 
+def qec_checks():
+    # Gaussian rational matrix arithmetic, local to the two-qubit code replay.
+    def z(n):return [[(F(0),F(0)) for _ in range(n)] for _ in range(n)]
+    def ident(n):return [[(F(i==j),F(0)) for j in range(n)] for i in range(n)]
+    def sm(c,A):return [[gm(c,x) for x in row] for row in A]
+    def am(A,B):return [[ga(x,y) for x,y in zip(a,b)] for a,b in zip(A,B)]
+    def mm(A,B):
+        return [[sumg(gm(x,y) for x,y in zip(a,b)) for b in zip(*B)] for a in A]
+    def adj(A):return [[gc(x) for x in col] for col in zip(*A)]
+    def kt(A,B):
+        return [[gm(a,B[k][l]) for a in ar for l in range(len(B))]
+                for ar in A for k in range(len(B))]
+    def sumg(xs):
+        out=(F(0),F(0))
+        for x in xs:out=ga(out,x)
+        return out
+    def traceg(A):return sumg(A[i][i] for i in range(len(A)))
+    def conjugate(A,T):return mm(mm(A,T),adj(A))
+    I=ident(2); O=z(2)
+    X=[[(0,0),(1,0)],[(1,0),(0,0)]]
+    Y=[[(0,0),(0,-1)],[(0,1),(0,0)]]
+    Z=[[(1,0),(0,0)],[(0,0),(-1,0)]]
+    CZ=ident(4);CZ[3][3]=(-1,0)
+    # Wire order is (probe S, memory A). Both sensor vectors are unnormalized;
+    # their sandwich has the factor 1/2, with no irrational square roots.
+    plus=[(1,0),(0,1)]; minus=[(1,0),(0,-1)]
+    def syndrome(P,ket):
+        A=mm(mm(CZ,kt(P,I)),CZ)
+        return [[gm((F(1,2),0),sumg(
+            gm(gm(gc(ket[s]),A[2*s+a][2*t+b]),plus[t])
+            for s in range(2) for t in range(2)))
+            for b in range(2)] for a in range(2)]
+    expected=[(I,O),(O,sm((0,1),Z)),(Z,O),(O,I)]
+    branches=[]
+    for P,(p,m) in zip([I,X,Y,Z],expected):
+        pair=(syndrome(P,plus),syndrome(P,minus))
+        assert pair==(p,m)
+        branches.append(pair)
+    # These coefficient tests prove the displayed Kraus form for arbitrary
+    # real a_x,a_y,a_z by linearity, rather than sampling physical axes.
+    for u in range(1,4):
+        assert am(mm(adj(branches[u][0]),branches[u][0]),
+                  mm(adj(branches[u][1]),branches[u][1]))==I
+        for v in range(u+1,4):
+            cross=z(2)
+            for j in range(2):
+                cross=am(cross,am(mm(adj(branches[u][j]),branches[v][j]),
+                                 mm(adj(branches[v][j]),branches[u][j])))
+            assert cross==O
+    units=[]
+    for a,b in product(range(2),repeat=2):
+        T=z(2);T[a][b]=(1,0);units.append((a,b,T))
+    coefficients=0
+    for a,b,T in units:
+        # The constant contribution is T/2. On diagonal matrix units the
+        # squared-axis coefficients are all T/2. For off-diagonal units
+        # they are (-T/2,-T/2,T/2), with xz coefficient +/-iT.
+        for u in range(1,4):
+            Q=sm((F(1,2),0),am(conjugate(branches[u][0],T),
+                              conjugate(branches[u][1],T)))
+            sign=1 if a==b or u==3 else -1
+            assert Q==sm((F(sign,2),0),T)
+            coefficients+=1
+        for u in range(1,4):
+            for v in range(u+1,4):
+                Q=z(2)
+                for j in range(2):
+                    Q=am(Q,am(mm(mm(branches[u][j],T),adj(branches[v][j])),
+                              mm(mm(branches[v][j],T),adj(branches[u][j]))))
+                Q=sm((F(1,2),0),Q)
+                target=sm((0,1 if a==0 else -1),T) if a!=b and (u,v)==(1,3) else O
+                assert Q==target
+                coefficients+=1
+    # Therefore unit norm reduces the off-diagonal multiplier exactly to
+    # a_z^2+i*a_x*a_z; the diagonal entries are fixed.
+    def channel(lam,T):
+        Q=[row[:] for row in T]
+        Q[0][1]=gm(lam,T[0][1]);Q[1][0]=gm(gc(lam),T[1][0])
+        return Q
+    # 0,1,i span an affine complex multiplier. Matrix-unit checks on these
+    # basis values establish the general separately affine composition.
+    differential=0
+    for ln,lm in product([(0,0),(1,0),(0,1)],repeat=2):
+        r=gm(gc(ln),lm)
+        for _,_,T in units:
+            Q=channel(lm,conjugate(X,channel(ln,conjugate(X,T))))
+            assert Q==channel(r,T)
+            differential+=1
+    # Known-plane error syndrome is an exact unitary phase. Its occurrence
+    # probability is 1/2 on every state, including states with a reference.
+    c,s=F(3,5),F(4,5)
+    U=am(sm((c,0),I),sm((0,s),Z))
+    assert mm(adj(U),U)==I
+    assert sm((F(1,2),0),mm(adj(U),U))==sm((F(1,2),0),I)
+    w=(c,s); power=(1,0)
+    for m in range(33):
+        if m:power=gm(power,gm(w,w))
+        # rho_01=w^(2m)/2 and dot(rho_01)=i*m*w^(2m).
+        d=z(2);d[0][1]=gm((0,m),power);d[1][0]=gc(d[0][1])
+        assert gm((2,0),traceg(mm(d,d)))==(F(4*m*m),F(0))
+    for k in range(1,65):
+        moments=sum(F(comb(k,m)*4*m*m,2**k) for m in range(k+1))
+        assert moments==k*k+k
+    return {'status':'passed', 'general_axis_circuit':'two CZ gates and probe Y readout',
+            'general_axis_matrix_unit_coefficients_checked':coefficients,
+            'coherence_multiplier':'a_z*(a_z+i*a_x)',
+            'differential_matrix_unit_basis_checks':differential,
+            'differential_multiplier':'conjugate(lambda(n))*lambda(m)',
+            'known_plane_conditional_qfi_cases':33,
+            'known_plane_binomial_moment_cases':64,
+            'known_plane_optimal_qfi':'k^2+k',
+            'scope':'Exact finite circuit/coefficient and moment identities; covariant localization, uniform derivative bound and large-k FI guarantee are analytic, with no numerical k0 claim'}
+
+
 def main():
     I=[(1,0),(0,0),(0,0),(1,0)]
     X=[(0,0),(1,0),(1,0),(0,0)]
@@ -221,7 +335,7 @@ def main():
     assert tr(matmul(Hp,Kp))==1
     assert iszero(sub(reverse_qubits(slack,4),sub(kron(Rp,eye(2)),scale(alpha,Kp))))
     extra=supplementary_checks(K,R)
-    result=dict(status='passed',scope='Exact finite primal/dual, native realization and pointwise/cost identities for NR-R18; general statistical and physical arguments remain analytic',
+    result=dict(status='passed',scope='Exact finite primal/dual, native realization, pointwise/cost and one-memory QEC circuit identities for NR-R18; general statistical and physical arguments remain analytic',
                 port_order=['outF','inF','outE','inE'],optimal_null_tester_alpha=str(alpha),
                 converted_port_order=['inE','outE','inF','outF'],wire_conversion='Reverse all four qubits; reverse three qubits of R and two qubits of Z',
                 optimal_null_event_probability='(9/64) sin(theta)^2',
@@ -234,6 +348,7 @@ def main():
                 dual_gram_vectors=[a,b,c],dual_gram_weights=['1/96','2/96','2/96'],
                 passed=['Bell sector projectors and exact orthogonal completeness','C0 kernel and C90 null weight','causal normalization prefix','R positive definite','causal tester slack PSD','native projective effect identity','dual PSD Gram form','dual objective normalization','both causal dual prefix equalities','complementary slackness','explicit wire-order reversal and converted prefix identities'])
     result['supplementary']=extra
+    result['qec_reuse_exact_identities']=qec_checks()
     print(json.dumps({k:v for k,v in result.items() if k not in ['primal_normalization_matrix_16R','dual_gram_vectors']},indent=2))
 
 

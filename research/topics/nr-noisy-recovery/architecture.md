@@ -97,10 +97,18 @@ rules rather than import a hard two-query bound as a throughput theorem.
 The [drifting measurement-alignment benchmark NR-R18](alignment.md) makes
 that distinction in an unread-meter model. It proves a finite advantage
 under a strict two-call cap, with an exact ordinary adaptive certificate.
-Ordinary background-free tests already have the same small-angle scaling;
-longer rounds and accessible consistent measurement labels change the
-comparison again. Fixed control background destroys the ideal local
-null advantage. An application must explain why two modules share a frame
+Ordinary background-free tests already have the same small-angle scaling.
+The [calibrated-reuse construction](alignment.md#nr-r18-calibrated-reuse)
+is stronger under an expected-call budget: within-round calibration and
+one clean memory give quadratically growing local information at a
+shrinking positive nominal angle. Randomly launching those longer rounds
+makes the information grow even at mean cost two, with every calibration
+call counted. This keeps the strict two-call theorem intact and requires
+increasing frame stability, memory lifetime and accurate known controls.
+It does not establish a uniform estimation-error or time advantage.
+Accessible consistent measurement labels also change the comparison.
+Fixed control background destroys the ideal local null advantage. An
+application must explain why two modules share a frame
 throughout a round, why it is fresh before the next round, and why useful
 records and pilots are unavailable. Existing polarization tracking and
 recorded-meter experiments do not yet supply that full interface.
@@ -113,6 +121,16 @@ signal even when ordinary repeated sequences amplify their generators.
 calibrated orthogonal-unitary faults and a continuous-angle scalar example.
 These do not settle hardware cost: Bell probes require preparation, storage
 and readout, while the switch requires coherent routing and a clean control.
+
+There is also a fixed-rate limitation for raw full-register computation.
+The [terminal-noise bound in NR-R06](architecture-baselines.md#nr-r06-terminal-noise)
+allows arbitrary recovery on both the quantum control and data. A terminal
+tensor-product noise layer still makes its accepted correct universal-gate
+weight decrease exponentially with register size. This includes amplitude
+damping and does not require a known common eigenbasis. A surviving
+large-register application must therefore state its logical encoding or
+different useful observable. The proof assumes an actual terminal layer;
+it does not replace a continuously interacting open-system calculation.
 
 ### Displacement-area calibration with a complete optical budget
 
@@ -178,6 +196,16 @@ target-sequence calibration and pump/reset/record tests remain comparators.
 This is a calibration-transport screen, not an architecture advantage or a
 general exclusion of unknown joint interventions.
 
+The [excitation-exchange example in NR-R14](backaction.md#nr-r14) now
+tests that broader setting explicitly. Two cold-spectator models have
+identical isolated sensor channels and identical complete order-control
+readout, but require opposite gate orders to preserve memory. Retaining
+the quantum sensor output distinguishes them, with the same optimal
+score already attained by an ordinary serial experiment. A native
+coherent selector, when it is actually supplied, also has a chronological
+implementation. Neither reduced-channel calibration nor a phase-complete
+order fringe alone determines the useful production schedule.
+
 There is a named optical testbed with a longer-lived oscillator:
 [Spinnler et al.](https://doi.org/10.1038/s41467-024-53882-2) couple a quantum
 dot to a phononic-crystal mode with frequency $1.466\,\mathrm{GHz}$,
@@ -237,6 +265,29 @@ use known symmetry and control structure;
 [direct unknown-subspace discovery](https://doi.org/10.1103/PhysRevA.86.052101)
 is also an ordinary baseline. A large protected sector is not evidence of
 many hidden measurement outcomes.
+
+A spectral bath needs a separate independence test. The
+[shared-clock result in NR-R08](architecture-baselines.md#nr-r08) gives
+two perfectly dephasing sections whose joint spatial channel is far from
+their independent composition. It also bounds the bandwidth times delay
+span needed for one shared frequency register to emulate independent
+MUB measurements. The quadratic dimension cost is robust in diamond
+distance. This concerns controlled delays with bounded spectral support;
+separate material baths can supply different records. A reported spectral
+width alone is insufficient, and delay span is not automatically the
+clock period of a stationary source.
+
+Actual large-mode interconnects already use targeted ordinary tools.
+[Li, Ryczkowski and Genty](https://doi.org/10.1364/OE.558061) measure
+spatial coherence and vary source bandwidth;
+[Engineer et al.](https://doi.org/10.1103/bwd5-wx7j) certify channel
+dimension with a small set of calibrated preparation/measurement bases.
+Those production encoders, narrowband or spectral pilots, and readout
+records must be included before claiming a hidden-basis advantage.
+For stationary frequency-diagonal illumination, purification can carry
+a record even while the outgoing local frequency state does not reveal
+the pointer label. Readable arrival labels require a physical measurement
+model, rather than an inference from bandwidth.
 
 ## Why a photonic implementation needs an instrument-first test
 
@@ -338,6 +389,25 @@ ordinary workarounds, not this combination. These assumptions need resolution
 on a named device before extending the recovery theorem into an architecture
 claim. This is a bounded assessment, not an exhaustive
 novelty or priority claim.
+
+## Cooling and reset-based state preparation
+
+Complete thermal resets are a useful retained-state benchmark, but
+[NR-R10](communication.md#nr-r10) gives a full ordinary simulation
+using the same two channel calls, even for different unknown reset
+states. Input storage and two controlled register exchanges replace
+order control. Their actual duration, memory error and coupling must
+be priced on the same device. For thermal bosonic inputs, native parity
+or vacuum filtering supplies a stronger ordinary state-preparation
+comparison than unassisted equilibrium contacts. The clean helper,
+all rejected trials and replenishment belong in both accounts.
+
+Equality of retained states does not establish equality of bath heat
+or refrigerator performance. Those claims require final reservoir
+records and restoration work. A new cooling candidate should specify
+its incomplete or correlated relaxation instrument and compare it with
+ordinary measurement, active cooling and input-memory controls; a
+lower conditional temperature after full resets does not suffice.
 
 ## Distributed-computing link screen
 
@@ -665,6 +735,15 @@ demonstrate collective few-photon transport through coupled emitters with
 both forward and backward outputs. Their device is a joint scatterer, so
 its coherent reflection and shared dynamics cannot be replaced by a product
 of independent forward channels.
+
+The [reciprocal two-emitter model in NR-R11](communication.md#nr-r11)
+now supplies an explicit one-photon starting point using the measured
+device geometry. Its transmission includes coherent multiple reflections,
+so multiplying independent single-emitter transmissions misses feedback.
+Opposite transmission directions nevertheless agree in the specified
+bare reciprocal model. Reflections, two-photon interactions and inelastic
+bath records require their own complete operators; directional emission
+from an excited pair is a different initial-state experiment.
 
 The next test is the full input-output model of one such actual device.
 Prespecify a useful detuning or spin-setting decision, or a delivered

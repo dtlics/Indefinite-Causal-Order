@@ -96,6 +96,14 @@ The [phase-calibration benchmark](metrology.md) independently certifies a
 known finite-query switch advantage, but preserves its hard two-call scope.
 Longer ordinary rounds, emitted timing records and coherent bath reuse
 change that comparison. A native calibration-rate advantage remains open.
+The shared-spectrum analysis in NR-R08 now specifies a joint-record
+test and a bandwidth--delay resource bound before treating two optical
+sections as independent unread measurements. NR-R06 separately bounds
+raw full-register correct-output weight at fixed terminal site noise;
+logical encodings and continuous interacting noise remain distinct.
+The full-reset ordinary simulation in NR-R10 and the excitation-exchange
+decision counterexample in NR-R14 sharpen the remaining state-preparation
+and memory-calibration targets without claiming a native advantage.
 The [scattering result](communication.md#nr-r11) now includes unequal-rate
 and photon-preserving bath-record comparisons. Conditional spectral
 filtering, pair-preserving readout and ordinary delayed/reused paths must
@@ -104,8 +112,12 @@ a joint physical device model rather than assumed independent swapped
 slots. The assessment records that concrete next test.
 The [alignment benchmark](alignment.md) separates a strict two-call
 advantage from measurement-record access, ordinary reuse and control
-backgrounds. Its fresh shared-frame assumptions still need a physical
-two-meter realization. The [displacement-calibration result](geometric-calibration.md)
+backgrounds. Its calibrated one-memory ordinary construction at shrinking
+positive angles rules out treating that strict cap as the unrestricted
+mean-query frontier; the longer frame-stability and helper costs remain
+explicit. Its fresh
+shared-frame assumptions still need a physical two-meter realization. The
+[displacement-calibration result](geometric-calibration.md)
 identifies a more concrete optical comparison: measure the complete
 ordinary conditional-displacement echo and switched instrument at the
 same setting, including every loss, parity helper, repeat pass and phase

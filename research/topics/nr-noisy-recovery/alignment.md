@@ -8,7 +8,7 @@
 
 Two unread qubit dephasers with a fresh unknown common orientation admit an ordinary two-query alignment alarm with exactly zero false positives. The best ordinary alarm has probability $9\sin^2\theta/64$, whereas the ideal switch control alarm has probability $\sin^2\theta/4$. The optimal ordinary one-sided local Fisher-information limit is $9/16$; the switch control readout attains limit $1$. Thus the difference is a constant factor under a hard two-query cap. A proposed vanishing-versus-constant ordinary/switch information scaling is false.
 
-Longer ordinary rounds remove any uniform positive margin inferred from that hard-cap result: a simple family, randomized to have two expected queries, approaches local information $1$. Accessible Lüders records already attain information $1$ with two ordinary queries. Any fixed imperfect switch-control visibility makes its information vanish at alignment. These results do not establish an alignment-throughput advantage or a native hardware application. The fresh-frame, unread-record and coherent-order interfaces require separate physical justification. The analytic proofs and exact rational replay below have not been formalized in Lean or externally peer reviewed.
+Long ordinary rounds change the comparison more substantially. Within-round calibration and differential quantum error correction achieve $\Omega(k^2)$ classical information at nominal angle $1/k$ using $O(k)$ calls and one persistent clean memory qubit. Rarely launching such a round gives exactly two expected queries and information $\Omega(k)$, unbounded near alignment. This does not strengthen a fixed-length zero-false-positive alarm: the positive-angle and unbounded-length limits do not commute. Accessible Lüders records already attain information $1$ with two ordinary queries, and any fixed imperfect switch-control visibility makes its information vanish at alignment. These results establish no native throughput advantage; frame lifetime, clean-memory duration, helper gates and readout remain material. The analytic proofs and exact rational replay below have not been formalized in Lean or externally peer reviewed.
 
 ### Model, parameter and query count
 
@@ -265,7 +265,7 @@ F_{\mathrm{mean}\,2}=1-\frac{1-2^{1-k}}{k-1}\longrightarrow1
 \tag{16}
 $$
 
-Thus no uniform strict positive mean-cost information margin follows from the hard-two theorem. Equation (16) is an achievable family, not an upper bound on all long adaptive strategies. Within-round frame stability, longer latency and memory costs must be specified before excluding such branches. Fresh frames prevent amortizing their common orientation across different rounds; they do not prevent using extra probes inside a stable round.
+Thus no uniform strict positive mean-cost information margin follows from the hard-two theorem. Equation (16) is an achievable family, not the ordinary mean-cost frontier: the calibrated coherent strategy below has unbounded optimized information near alignment. Within-round frame stability, longer latency and memory costs must be specified before excluding long branches. Fresh frames prevent amortizing their common orientation across different rounds; they do not prevent using extra probes inside a stable round.
 
 If consistent oriented Lüders records $a,b\in\{\pm1\}$ are accessible, ordinary E then F on $I/2$ instead has
 
@@ -287,13 +287,254 @@ $$
 
 Every fixed $\nu<1$ gives a false-alarm floor and $F_{S,X}^{\nu}\to0$ at alignment. For $0<z<1$, it exceeds even the attainable ordinary readout (11) precisely when $\nu^2>9/(16-7z)$. At $\nu=.97$ this requires $\theta\gtrsim.288$ radians. This is a necessary comparison against one ordinary measurement, not a finite-angle converse for the full optimum. Detector/filter false alarms in the ordinary helpers require the same accounting; subtracting a calibrated mean background does not remove its shot noise. General meter noise need not reduce to the single visibility parameter in (18).
 
+<a id="nr-r18-calibrated-reuse"></a>
+
+### Within-round calibration and differential QEC change the mean-cost frontier
+
+For every sufficiently large integer $k$, there is an ordinary experiment
+with deterministic cost $N_k=O(k)$ and an averaged binary readout satisfying
+$F_k(1/k)\ge k^2/16$. The common frame is freshly redrawn before this
+experiment and remains fixed during it. All its calibration calls count.
+The result uses no oracle meter records, controlled unknown oracle,
+unknown inverse or previous-round calibration. Its persistent quantum
+memory is one clean qubit, in addition to the probe qubit.
+
+This is a constructive use of an established metrological mechanism.
+[Zhou and Jiang](https://doi.org/10.1103/PRXQuantum.2.010343) prove a
+discrete-channel Kraus-span criterion and construct logical-dephasing QEC
+reductions. For $K_0=I/\sqrt2$, $K_1=(\cos\theta Z+\sin\theta X)/\sqrt2$
+at zero, their generator is $i\sum_jK_j^\dagger\dot K_j=-Y/2$, outside
+$\operatorname{span}_{\mathbb R}\{I,Z\}$.
+[Liu and Yang, Section 3.3](https://arxiv.org/html/2403.09519v3) explicitly
+study dephasing-direction estimation and ordinary control with zero or
+one ancilla. [Chen et al.](https://doi.org/10.1103/PhysRevLett.133.190801)
+study adaptive QEC for informative parameter-dependent noise. Those
+results provide method context. The fresh common-frame localization,
+unknown tangent average and mean-budget conclusion require the following
+separate proof.
+
+**Exact one-memory code.** Choose a known orthonormal local frame
+$(x,y,z)$ and a probe $S$ with memory $A$. Encode
+
+$$
+|0_L\rangle=|+y\rangle_S|0\rangle_A,
+\qquad |1_L\rangle=|-y\rangle_S|1\rangle_A.
+\tag{19}
+$$
+
+The stabilizer is $Y_SZ_A$; $Z_S$ takes the code to its orthogonal
+syndrome space, and $Y_S$ restricts to $Z_L$. For any unit physical axis
+$a=(a_x,a_y,a_z)$, query $\mathcal E_a$, measure that known syndrome and
+correct $Z_S$ on the error syndrome. After summing the inaccessible
+original Kraus label, the exact logical Kraus operators are
+
+$$
+\frac I{\sqrt2},\qquad
+\frac{a_yZ_L}{\sqrt2},\qquad
+\frac{a_zI+i a_xZ_L}{\sqrt2}.
+\qquad
+\lambda(a)=a_z(a_z+i a_x).
+\tag{20}
+$$
+
+Here $\lambda(a)$ multiplies $|0_L\rangle\langle1_L|$, while logical
+populations are fixed. Indeed its coherence coefficient is
+$[1-a_y^2+(a_z+i a_x)^2]/2=\lambda(a)$.
+
+Only two qubits are needed for an implementation. Prepare $S$ in
+$|+y\rangle$, apply controlled-$Z_S$ with control $A$, query the named
+dephaser on $S$, undo that controlled-$Z_S$, then read $S$ in $Y$ and
+reset it. The $Y=+$ branch has Kraus $I/\sqrt2,a_yZ_A/\sqrt2$; the
+$Y=-$ branch has $(a_zI+i a_xZ_A)/\sqrt2$. The logical output is already
+in $A$. Thus each query costs two known controlled gates, probe
+preparation/readout/reset and persistent memory. Below the probe record
+may be discarded after this prescribed decoding.
+
+For a known great circle $a=(\sin\phi,0,\cos\phi)$, the two probe
+outcomes are fair: one is identity and the other is
+$e^{i\phi Z_L}$. Keeping the outcomes of $k$ calls gives
+$M\sim\operatorname{Bin}(k,1/2)$ known phase applications. A logical
+plus input has conditional QFI $4M^2$, so
+
+$$
+F_{\rm known\ plane}(k)=4\mathbb E M^2=k^2+k.
+\tag{21}
+$$
+
+This is optimal for that one-parameter known-plane channel family:
+granting the hidden fair identity/nonidentity flags strengthens every
+ordinary strategy, and $M$ nonidentity unitary queries have generator
+norm at most $M$, hence QFI at most $4M^2$. Waiting for one nonidentity
+syndrome also supplies a clean logical phase at mean cost two calls,
+with harmless identity on every preceding outcome. If a common great
+circle is known but its absolute angle $\phi$ is unknown, phases from
+$\mathcal E_\phi$ and $\mathcal F_{\phi+\theta}$ cancel that offset
+after a logical-$X$ conjugation, at mean cost four calls per relative
+phase. The Haar model does not give that known plane.
+
+**Charged covariant localization.** Write
+$n=Rz_0$, $t=Rx_0$, and $m_\theta=\cos\theta\,n+\sin\theta\,t$
+for Haar $R$. Conditional on $n$, the tangent $t$ is uniform in
+$n^\perp$. Use $L$ Bell probes of E only. Read each known
+identity-versus-Pauli process flag $h$, with $\Pr(h=1)=1/2$. In the
+Pauli sector use the covariant POVM
+$3|u\rangle\!\rangle\langle\!\langle u|\,d\mu(u)$ on the real
+three-dimensional process space, where $\mu$ is uniform sphere measure.
+It is implemented by a known random rotated Pauli process basis and
+recording its observed direction $u$. Its normalization follows from
+$\int |u\rangle\!\rangle\langle\!\langle u|\,d\mu=I_3/3$.
+Conditional on $h=1$, its density is $3(n\cdot u)^2$, giving
+
+$$
+\mathbb E[uu^T\mid h=1,n]=\frac{I+2nn^T}{5},\qquad
+M_L=\frac1L\sum_{s=1}^L\left(5h_su_su_s^T-\frac I2\right),
+\quad \mathbb E[M_L\mid n]=nn^T.
+\tag{22}
+$$
+
+Each sample matrix entry has range length at most five. Hoeffding on
+nine entries and $\|Z\|_{\rm op}\le3\max_{ab}|Z_{ab}|$ imply
+$\Pr(\|M_L-nn^T\|_{\rm op}>\epsilon\mid n)
+\le18e^{-2L\epsilon^2/225}$.
+For $\epsilon\le1/4$ a top eigenvector $\widehat n$ obeys
+$\sin\angle(\widehat n,n)\le\epsilon/(1-\epsilon)$: its eigenvalue
+is at least $1-\epsilon$, and projecting its eigenvector equation
+perpendicular to $n$ gives this inequality. Its distance from one sign
+of $n$ is at most $2\epsilon$. Taking $\epsilon=\delta/4$ therefore
+gives the uniform conservative bound
+
+$$
+\Pr\!\left(\min_{s=\pm1}\|\widehat n-sn\|>\delta\mid n\right)
+\le18e^{-L\delta^2/1800}.
+\tag{23}
+$$
+
+Fix
+
+$$
+\delta_k=\frac1{4\sqrt k},\quad \eta=\frac1{1000},\quad
+L_k=\left\lceil28800k\log(18000)\right\rceil.
+\tag{24}
+$$
+
+All $L_k$ queries count, including identity flags. The good localization
+event $G_k$ then has probability at least $1-\eta$. Choose the code's
+$z=\widehat n$, a known random perpendicular $x$, and $y=z\times x$.
+Its axis sign is immaterial. Conditional on the true $n$ and all this
+E-only training, $t$ is still uniform in $n^\perp$. The training law is
+independent of $\theta$. The matrix in (22) can be accumulated
+classically; no growing quantum program is retained.
+
+**Differential accumulation.** Let $\mathcal G_a$ denote (20).
+Initialize memory $A$ in logical plus and execute $k$ ordinary cycles
+$\mathcal G_{m_\theta}\circ\operatorname{Ad}_{X_L}\circ
+\mathcal G_n\circ\operatorname{Ad}_{X_L}$.
+Each uses one E and one F call, in fixed chronological order.
+Logical-$X$ conjugation replaces $\lambda(n)$ by its complex conjugate.
+The exact conditional memory coherence and averaged binary readout are
+
+$$
+r_\theta^k=[\lambda(n)^*\lambda(m_\theta)]^k,
+\quad C_k(\theta)=\mathbb E\operatorname{Re}r_\theta^k,
+\quad p_+(\theta)=\frac{1+C_k(\theta)}2.
+\tag{25}
+$$
+
+The expectation includes every training and probe outcome. At alignment
+the common coherent phase cancels. On $G_k$, choose the harmless sign
+with $n_z>0$ and put $a=|\lambda(n)|^2=n_z^2(1-n_y^2)$. Then
+
+$$
+a\ge1-2\delta_k^2,\qquad a^k\ge1-2k\delta_k^2=\frac78.
+\tag{26}
+$$
+
+Thus localization error leaves bounded contrast, rather than being
+assumed zero. To bound the actual averaged slope, set
+$b(n,t)=d\lambda_n[t]/\lambda(n)$. Parametrize
+$t=R_n(\cos\psi\,x+\sin\psi\,y)$, using the continuous minimal
+rotation from local $z$ to $n$. Uniformly on $G_k$,
+$b=i\cos\psi+O(k^{-1/2})$ and $|\lambda(n)|$ is bounded away from zero.
+For $\theta=c/k$, with $c$ in a fixed compact neighborhood of one,
+Taylor expansion gives
+$\lambda(m_\theta)/\lambda(n)=1+\theta b+O(\theta^2)$ and its
+derivative $b+O(\theta)$, uniformly in training data and tangent.
+The uniform binomial limit and its derivative therefore yield
+
+$$
+\left.\frac1k\partial_\theta\operatorname{Re}r_\theta^k
+\right|_{\theta=c/k}
+=a^k\operatorname{Re}(e^{cb}b)+O(k^{-1/2}+k^{-1}).
+\tag{27}
+$$
+
+At $c=1$, tangent averaging makes its main term $-a^k A_1$, where
+$A_1=\mathbb E_\psi[\cos\psi\sin(\cos\psi)]=J_1(1)\ge7/16$.
+The last inequality follows from
+$x\sin x\ge x^2-x^4/6$ for $|x|\le1$ and the moments $1/2,3/8$.
+On the bad localization event, $|\lambda|\le1$ and
+$|\partial_\theta\lambda(m_\theta)|\le2$, so
+$|\partial_\theta\operatorname{Re}r_\theta^k|\le2k$.
+This bound also justifies differentiation under all expectations.
+The good/bad probabilities are independent of $\theta$, and consequently
+
+$$
+\limsup_{k\to\infty}\frac{C_k'(1/k)}k
+\le-(1-\eta)\frac78\frac7{16}+2\eta<-0.38.
+$$
+
+There is therefore a finite $k_0$ such that, for $k\ge k_0$,
+
+$$
+|C_k'(1/k)|\ge\frac k4,\qquad
+F_k(1/k)=\frac{C_k'(1/k)^2}{1-C_k(1/k)^2}\ge\frac{k^2}{16}.
+\tag{28}
+$$
+
+This is the information of the actual averaged binary likelihood,
+not an average of inaccessible conditional-frame QFIs. The constants
+in (24) are deliberately loose; no numerical $k_0$ or small-$k$ optimum
+is asserted.
+
+**Mean-only cost.** The deterministic round costs
+$N_k=L_k+2k=O(k)$. Launch it with probability $\pi_k=2/N_k$ and otherwise
+use no queries, retaining the launch bit. At the chosen operating point
+hold $k,L_k,\pi_k$ and the complete adaptive algorithm fixed when
+differentiating. All launch, training and readout outcomes count. Then
+
+$$
+\mathbb E N=2,\qquad
+F_{\rm mean\,2}(1/k)=\pi_kF_k(1/k)
+\ge\frac{k^2}{8N_k}=\Omega(k).
+\tag{29}
+$$
+
+The uniform proof also applies with $k=\lfloor1/\theta_0\rfloor$ at
+any sufficiently small positive nominal $\theta_0$, since
+$k\theta_0\to1$. Thus optimized ordinary information at mean cost two
+is at least $\Omega(1/\theta_0)$ near alignment. A finite first resource
+moment alone need not bound local Fisher information; see also the
+distinct phase-estimation context of
+[Rivas and Luis](https://doi.org/10.1088/1367-2630/14/9/093052).
+Equation (29) does not claim uniform global mean-square precision with
+two expected calls.
+
+For every fixed $k$, finite localization has a nonzero residual
+dephasing background, $C_k(0)<1$. Evenness gives $C_k'(0)=0$ and
+$F_k(\theta)\to0$ as $\theta\to0$. Equation (29) chooses a longer
+experiment for a smaller positive nominal angle; it does not interchange
+these limits or give a zero-false-positive alarm. The all-length exact-null
+optimization remains a different question.
+
 ### Physical and verification scope
 
 The model assumes a shared arbitrary orientation that is fresh between rounds yet stable across both order histories; independent unread meters for each query; no accessible frame-control words or reusable pointer records; and coherent recombination of the same slot-labeled meter histories. None is implied merely by observing polarization drift or by fitting two reduced dephasing channels. Unreset shared baths, distinct visit timestamps and chronological records require their full instrument, as discussed in [the bath screen](backaction.md). If the ordinary experiment can fit more probes in the same stability window, a hard two-query deadline needs a measured resource reason. If both outcome labels exist in the switch apparatus, (17) is a mandatory baseline.
 
 The independent-Bell comparator uses two entangled probes and a joint process-sector/interference measurement; the adaptive optimum uses the known memory/isometry/projector in (9)–(10). Their preparations, failures, loss, visibility, latency and readout must be charged against the router and coherent-meter requirements of the switch. This note supplies no measured cost advantage, deployed drift model or fault-tolerance claim. It is an exact statistical benchmark and a counterexample to an overstrong scaling premise.
 
-The standalone [alignment replay](checks/architecture/verify_alignment.py), run with `python -S -B`, uses only Gaussian integers and rational arithmetic. It rebuilds the six complete Bell/spin projectors; both endpoint Choi operators; the primal causal normalization and PSD slacks; the explicit dual Gram factors, directed trace equalities and wire-order conversion; the native spectral/projector identities; the parallel recoupling identity; a rational-axis pointwise null case; 144 multicopy count pairs and balanced mean-cost identities; and rational visibility/Fisher identities. It prints JSON, writes no files and rejects `-O`. The continuous Haar law, representation irreducibility, compact local-information argument, query-tree reduction, all-size combinatorics and physical interface conditions are analytic proofs above, rather than claims established by finite sampling. No numerical optimizer is a verification dependency.
+The calibrated strategy additionally needs $O(k)$ preparation/readout/reset steps and known two-qubit gates, one memory kept coherent through the signal stage, and the same common frame throughout all $N_k$ calls. Its training and signal stages can reuse the same two qubits. Persistent helper noise or a fixed per-cycle phase error can destroy the contrast in (26); the proof assumes those helpers are ideal. Long latency, frame stability and clean-memory time are free only in the query-count model. A physical deadline, bounded frame lifetime or charged helper operations can exclude the rare long branches in (29), but those restrictions require a separate device model and comparison.
+
+The standalone [alignment replay](checks/architecture/verify_alignment.py), run with `python -S -B`, uses only Gaussian integers and rational arithmetic. It rebuilds the six complete Bell/spin projectors; both endpoint Choi operators; the primal causal normalization and PSD slacks; the explicit dual Gram factors, directed trace equalities and wire-order conversion; the native spectral/projector identities; the parallel recoupling identity; a rational-axis pointwise null case; 144 multicopy count pairs and balanced mean-cost identities; and rational visibility/Fisher identities. Its QEC extension checks the complete two-controlled-gate syndrome circuit, all general-axis matrix-unit coefficients in (20), the differential coherence identity in (25), known-plane conditional QFI and finite binomial moments. It prints JSON, writes no files and rejects `-O`. The continuous Haar law, representation irreducibility, compact local-information argument, query-tree reduction, all-size combinatorics, covariant concentration bound, uniform Taylor/derivative estimates and resulting asymptotic guarantee are analytic proofs above, rather than claims established by finite sampling. In particular the replay supplies no numerical value of $k_0$. No numerical optimizer is a verification dependency.
 
 The underlying switch measurement-incompatibility statistic is established
 prior work; see the [literature comparison](references.md) and
