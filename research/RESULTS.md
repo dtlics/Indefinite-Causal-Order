@@ -187,4 +187,4 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R16 | [Displacement-area calibration and native ordinary controls](../research/topics/nr-noisy-recovery/geometric-calibration.md#nr-r16) |  |
 | NR-R17 | [Braided magic, coherent trajectory resources and ordinary factories](../research/topics/nr-noisy-recovery/braided-magic.md#nr-r17) |  |
 | NR-R18 | [Drifting measurement alignment: exact two-query limit and reuse costs](../research/topics/nr-noisy-recovery/alignment.md#nr-r18) |  |
-| NR-R19 | [Unknown odd couplers: exact two-query correction and ordinary limits](../research/topics/nr-noisy-recovery/backaction.md#nr-r19) |  |
+| NR-R19 | [Unknown odd couplers: exact correction and expected-query fidelity limits](../research/topics/nr-noisy-recovery/backaction.md#nr-r19) |  |

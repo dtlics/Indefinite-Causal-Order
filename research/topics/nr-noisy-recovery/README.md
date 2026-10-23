@@ -29,7 +29,7 @@ and from learning a scalar channel property.
 | NR-R16 | Displacement-area calibration and native ordinary controls | [Geometric calibration](geometric-calibration.md#nr-r16) |
 | NR-R17 | Braided magic, coherent trajectory resources and ordinary factories | [Braided magic](braided-magic.md#nr-r17) |
 | NR-R18 | Drifting measurement alignment: exact two-query limit and reuse costs | [Alignment benchmark](alignment.md#nr-r18) |
-| NR-R19 | Unknown odd couplers: exact two-query correction and ordinary limits | [Coupler benchmark](backaction.md#nr-r19) |
+| NR-R19 | Unknown odd couplers: exact correction and expected-query fidelity limits | [Coupler benchmark](backaction.md#nr-r19) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -67,8 +67,12 @@ The [architecture assessment](architecture.md) owns the application
 requirements and next-test protocol. A significant architecture benefit
 has not been established. In particular, the fresh-frame converse does
 not extend to reused devices after calibration; the ordinary reuse
-baseline is in NR-R07. Calibrated classical Pauli faults and recorded
-Lüders measurements have the ordinary baselines in NR-R06 and NR-R08.
+baseline is in NR-R07. NR-R06 also closes deterministic bare-switch recovery
+for calibrated Pauli and tensor-product qutrit Weyl noise using one helper
+and checks on at most two physical sites. Its common preparation/final-control
+noise extension preserves the comparison under its specified ordering;
+in-circuit correlated faults and heralded tasks require separate analysis.
+Recorded Lüders measurements have the ordinary baseline in NR-R08.
 
 The next application questions concern a physical unmonitored multimode
 workload, retained inelastic scattering in a matter-photon link, a
@@ -117,11 +121,21 @@ ideal-GKP fidelity benchmark. Finite-energy and heralded tasks remain open.
 The full-reset ordinary simulation in NR-R10 and the excitation-exchange
 decision counterexample in NR-R14 sharpen the remaining state-preparation
 and memory-calibration targets without claiming a native advantage.
+NR-R10 preserves the prior random-receiver locality advantage while giving
+conditional ordinary parity-check and travelling-bus comparisons. Their
+controller ports and protected transport must be established on the actual
+network; abstract order control does not supply a free wire.
 The separate unknown-coupler benchmark NR-R19 gives exact two-query
-correction and a full ordinary hard-two converse for data dimension at
-least three. Known-parity and Abelian subfamilies admit two-query ordinary
-wrappers, and the general family admits a three-call simulation. A useful
-approximation gap and a native unknown-coupler interface remain unproved.
+correction, a full hard-two converse for data dimension at least three,
+and a certified qutrit prior-average fidelity ceiling for arbitrary
+terminating ordinary strategies with mean query budget two. Its fresh
+prior and lack of oracle-dependent advice are essential. An executable
+address-selective reflection closes the task even if its matrix is unknown;
+persistent-reflection calibration supplies another ordinary route. The
+general family also admits a three-call simulation. The remaining target
+is a useful native interface with the complete register routed through
+both modules, a justified drift window and a matched primitive-level
+comparison including calibration, clean memory, delays and routing loss.
 The [scattering result](communication.md#nr-r11) now includes unequal-rate
 and photon-preserving bath-record comparisons. Conditional spectral
 filtering, pair-preserving readout and ordinary delayed/reused paths must

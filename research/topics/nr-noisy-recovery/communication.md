@@ -422,6 +422,207 @@ Known switch activation genuinely beats ordinary EB-channel networks with no add
 
 Control coherence as a communication resource has prior thermodynamic treatment, including [Liu, Ebler and Dahlsten](https://arxiv.org/abs/2205.07406); the current bounds use the explicit EB/product-channel and cut assumptions above. A practical gain still requires a named wiring graph, allowed mode encoders, actual control transport, loss, reset and memory costs. No new deployed-link advantage follows solely from the channel activation or these reductions.
 
+<a id="nr-r10-random-receiver"></a>
+
+### Random receivers require a physical controller graph
+
+The bipartite simulator (7) does not settle a distributed locality task.
+[Bhattacharya et al., PRX Quantum **2**, 020350 (2021)](https://doi.org/10.1103/PRXQuantum.2.020350)
+([full protocol and Appendices D--E](https://arxiv.org/html/2012.15459v1))
+give a prior positive example: a sender encodes an unknown qubit across
+$n$ receivers before knowing which receiver will later be chosen. The
+receivers then localize it using LOCC. A global switch of two products of
+$\mathcal N_{XY}(\rho)=(X\rho X+Y\rho Y)/2$ permits this through EB
+slots, whereas adding noiseless side channels to only a proper subset
+does not. Their arbitrary-controlled-operation ordinary construction and
+their odd-$n$ obstruction for the specified controlled permutations are
+different resource comparisons. Their proposed one-photon realization
+simulates receiver sites with different degrees of freedom; it is not
+a spatial network demonstration.
+
+The following conditional constructions identify ordinary comparators
+for concrete controller interfaces. They preserve that prior separation
+and do not infer free quantum wires from control lines.
+
+**Distributed controls implementing one global flag.** Let local switches
+have Kraus operators
+
+$$
+S_i=P_0^{C_i}\otimes F_{b_i}E_{a_i}
+       +P_1^{C_i}\otimes E_{a_i}F_{b_i}.
+$$
+
+If the controls start in
+$|G_n\rangle_C=(|0^n\rangle+|1^n\rangle)/\sqrt2$, their joint action on
+an arbitrary payload is
+
+$$
+\frac{|0^n\rangle\otimes K_0+|1^n\rangle\otimes K_1}{\sqrt2},
+\qquad K_0=\bigotimes_iF_{b_i}E_{a_i},\quad
+K_1=\bigotimes_iE_{a_i}F_{b_i}.
+\tag{RR1}
+$$
+
+For local $X$-measurement outcomes $\mathbf x$, the payload Kraus is
+$2^{-(n+1)/2}[K_0+(-1)^{|\mathbf x|}K_1]$. There are $2^{n-1}$
+patterns of each parity. Summing each parity therefore gives exactly
+the corresponding global-switch flag map, on every input/reference.
+This supplies an explicit implementation using $n$ local order registers
+and their coherent repetition state. Its generation, distribution,
+memory, route loss and readout are physical resources. The identity does
+not prove independently usable noiseless control transport: the complete
+switched noise may act on order coherence. If independently declared
+local $Z$-dephasing visibilities are $\nu_i$, the repetition coherence is
+$\kappa=\prod_i\nu_i$. In the specified ideal $\mathcal N_{XY}$/GHZ code,
+the imperfect parity flag then leaves logical $Z$ error $(1-\kappa)/2$
+and entanglement fidelity $(1+\kappa)/2$. This assumes that full noise
+model; a measured fringe alone does not establish it.
+
+**An ordinary parity sandwich for the known noise alphabet.** Suppose the
+actual interface also supplies known controlled operations before and
+after the two serial product channels, with the same controller retained
+coherently. For the $X/Y$ Kraus alphabets, put $e_i=a_i\oplus b_i$.
+Each $F_{b_i}E_{a_i}$ is a scalar times $Z^{e_i}$, and reversing that
+pair multiplies it by $(-1)^{e_i}$. With $Q=X^{\otimes n}$, consequently
+
+$$
+K_1=(-1)^{|\mathbf e|}K_0=QK_0Q.
+\tag{RR2}
+$$
+
+Let $C_Q=P_0^C\otimes I+P_1^C\otimes Q$. Apply $C_Q$, the two actual
+channels in a fixed order on the payload, then $C_Q$ again. The resulting
+ordinary Kraus operator is
+
+$$
+C_Q(I_C\otimes K_0)C_Q
+ =P_0^C\otimes K_0+P_1^C\otimes QK_0Q
+ =P_0^C\otimes K_0+P_1^C\otimes K_1.
+\tag{RR3}
+$$
+
+This is the full switched channel, before encoding, flags or decoding;
+it does not estimate the individual errors. Known, possibly nonuniform
+exogenous probabilities on the same Kraus alphabet do not change this
+branchwise identity. With a distributed repetition control, controlled-$Q$
+on its code is implemented by the local controlled-$X_i$ gates from
+$C_i$ to $D_i$. The comparator uses the same $2n$ noisy elementary slots,
+two such known checks per payload and the actual control distribution and
+storage. It is not free LOCC when the control exists only centrally.
+Its premise includes a serial channel on the payload while that control
+is retained: a path switch alone does not grant a common fixed-order
+rail, a bypass, or an environment-independent control extension. Those
+ports and records must be checked in the native graph. This is a
+specified-noise check construction, not a universal ordinary simulation
+of spatially distributed unknown channels.
+
+**A travelling Fredkin bus has a separate ordinary fanout protocol.**
+Consider a physical bus qubit $C$ that can carry the input from the source
+and visit every receiver before the recipient is chosen. At each receiver
+it can control a SWAP of two configurable local target qubits; local
+preparation and $X$ readout are available. This is a stronger stated
+interface, not a consequence of the abstract global switch.
+
+At receiver $i$ prepare $T_i=0,A_i=1$. Fredkin sends
+
+$$
+(\alpha|0\rangle+\beta|1\rangle)_C|0,1\rangle_{T_iA_i}
+ \longmapsto
+ \alpha|0,0,1\rangle+\beta|1,1,0\rangle.
+\tag{RR4}
+$$
+
+An $X$ measurement of $A_i$ with outcome $m_i\in\{0,1\}$ leaves,
+up to its constant $1/\sqrt2$ factor and a global sign,
+$Z_C^{m_i}(\alpha|0,0\rangle+\beta|1,1\rangle)_{CT_i}$.
+The $Z_C$ frames commute with subsequent bus-controlled swaps, so their
+correction can be deferred. After all $n$ visits measure $C$ in $X$ with
+outcome $b$. If $V_n|c\rangle=|c^n\rangle$, the complete branch map is
+
+$$
+K_{\mathbf m,b}
+ =2^{-(n+1)/2}(-1)^{|\mathbf m|}
+       V_n Z^{b\oplus (|\mathbf m|\bmod2)}.
+\tag{RR5}
+$$
+
+Thus all $2^{n+1}$ branches have input-independent probability
+$2^{-(n+1)}$, and a known local $Z$ removes their logical frame.
+Linearity gives the same isometry for any reference-entangled input.
+The parties retain the GHZ encoding until the later receiver choice,
+then use the other receivers' local $X$ outcomes and their classical
+parity to recover the message. No recipient was needed when the bus
+travelled, and no branch is rejected.
+
+The cost is one coherent bus visit and one Fredkin per receiver, two
+initialized local target qubits and one auxiliary measurement per visit,
+a final bus measurement, classical messages and retained receiver memory.
+The bus transport, errors and source loading must be supplied and charged.
+If the same configurable Fredkin and known single-qubit gates are available
+at the source, loading has an explicit constant construction. Write
+$F=\operatorname{Fredkin}_{C;T,A}$. Then
+
+$$
+FZ_TFZ_T=P_0^C\otimes I+P_1^C\otimes Z_TZ_A.
+\tag{RR6}
+$$
+
+On $A=0$ this is $\mathrm{CZ}_{CT}$ and returns $A$ unchanged.
+Hadamards give CNOT, Hadamards on both systems reverse its direction,
+and three CNOTs give source SWAP, costing six Fredkins and known rotations.
+This optional loading circuit assumes those actual source ports.
+The extra local targets and intermediate measurements in (RR4)--(RR6)
+are absent from the fixed-payload controlled-permutation comparison;
+they do not contradict it. Nor is this an assertion that every optical
+order router can be reconfigured as a receiver-local Fredkin bus.
+
+**Pre-existing entanglement and complete cut maps.** If Alice actually
+shares an $(n+1)$-party GHZ state with the candidate receivers, she can
+teleport her input into its repetition-code block by a local Bell
+measurement and broadcast the Pauli frame, allowing the same late choice.
+Its preparation, heralding, distribution and memory are charged. A GHZ
+state only among the receivers is a different resource: without an
+Alice share it cannot move an input across an otherwise entirely EB
+Alice-versus-receivers cut. A provider-fixed control also need not expose
+Alice's required encoding or Bell-measurement port.
+
+One elementary graph test is useful. If a receiver cut is initially
+separable, every actual transmitted quantum system crossing it undergoes
+an EB map on its complete degrees of freedom, and all remaining
+operations are local or classical across it, the final reference/receiver
+state remains separable. Refine each crossing map into measure-and-prepare
+terms; every term and every later local operation preserves separability,
+including adaptive branches and local memories. Perfect communication
+to that receiver would instead deliver an EPR pair. Therefore a native
+random-receiver implementation must identify, at every relevant cut,
+the non-EB complete map, initial entanglement, coherent nonlocal operation
+or channel memory that invalidates that premise. This test does not
+identify a separately usable noiseless wire: complete path/vacuum/time
+extensions and provider-fixed placement must still be analyzed.
+
+There are real ordinary network baselines. [Pompili et al.](https://doi.org/10.1126/science.abg1919)
+demonstrate three-node solid-state multipartite entanglement using remote
+links, memory, local logic and real-time feedforward. A more recent
+[three-atom network](https://arxiv.org/html/2606.32006v1) sequentially
+uses photonic entanglement swapping and heralded storage; it reports
+$77(1)\%$ GHZ fidelity, lifetime above $200\,\mu$s and $0.16\%$
+generation efficiency. Its nominal generation rate excludes technical
+duty limitations. These experiments expose light--matter and memory
+costs; neither implements the global switch or validates an ideal
+$\mathcal N_{XY}$ spoke. In the bare one-share-per-receiver GHZ code,
+tracing out any lost share removes the logical off-diagonal, so all-share
+survival under independent loss is the product of the transmissions.
+Other loss-tolerant codes need a separate matched ordinary comparison.
+
+The next native test is a complete spatial graph with source ports,
+controller locations, all quantum paths and records, followed by a
+late-choice delivered-fidelity/rate comparison with the applicable
+check sandwich, bus fanout or pre-entanglement method. The conditional
+identities above supply no general hardware no-go, no new priority claim,
+and no demonstrated native random-receiver advantage. Their universal
+proofs are analytic; the communication replay checks finite phase,
+code, branch and Fredkin identities, not the physical controller graph.
+
 ### Complete replacement channels have an exact ordinary realization
 
 There is a stronger ordinary reduction for the special case of two independent, memoryless replacement channels,

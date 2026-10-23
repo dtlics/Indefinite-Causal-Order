@@ -231,6 +231,60 @@ internal-gate noise theorem. Generic non-Clifford targets can lack cheap
 transported checks, but expensive full synthesis alone does not establish
 a native-device advantage.
 
+### Transported Pauli checks also screen SPAM-gauge calibration
+
+Unlearnable Pauli components in Clifford-gate calibration are a real
+application bottleneck. [Cheng et al.](https://arxiv.org/html/2606.29638v2)
+resolve additional components using mid-circuit measurements, with
+explicit preparation assumptions and tests of Markovianity. Their
+ordinary measurement-based method belongs in this comparison. The
+coherent-check interface above supplies another ordinary comparator
+when its helper and controlled Paulis are available; using PCS outcomes
+for characterization is already an
+[established application](https://paragon.cs.northwestern.edu/papers/2024-QCE-PCSCharacterization.pdf).
+
+For a fixed physical channel
+$\mathcal E=\Lambda\circ\operatorname{Ad}_G$, with known Clifford $G$
+and Pauli noise $\Lambda(\cdot)=\sum_a p_aP_a(\cdot)P_a$, let $P$ be
+the desired Pauli and $Q=G^\dagger PG$. The ordinary controlled-$Q$ /
+$\mathcal E$ / controlled-$P$ sandwich has branch relation
+
+$$
+P(P_aG)Q=\chi(P,P_a)P_aG,
+\qquad \lambda_P=\sum_ap_a\chi(P,P_a).
+$$
+
+Consequently its reduced control cross block is multiplied by $\lambda_P$
+for every input data block, including a passive reference. Repeating the
+same sandwich $m$ times under independent, fixed Pauli noise gives
+$\lambda_P^m$, so fixed endpoint helper SPAM has the form
+$A\lambda_P^m+B$. Learning from this model requires nonzero contrast
+$A$, stationary endpoint maps and a stationary repeated instrument.
+The eigenvalue is signed: negative $\lambda_P$ alternates with length
+parity, and even lengths alone cannot determine its sign. Each round
+uses one actual $\mathcal E$ call and
+$\operatorname{wt}(P)+\operatorname{wt}(Q)$ local controlled-Pauli gates;
+transport through an entangling $G$ can make $Q$ high weight.
+
+In contrast, the switch of $\mathcal E$ with the known $P$, in the cross
+orientation $L_a=PP_aG$, $R_a=P_aGP$, has reduced cross effect
+$\sum_ap_aR_a^\dagger L_a=\lambda_P P Q$. A maximally mixed data probe
+therefore has zero fringe whenever $Q\ne\pm P$, including the
+support-changing cases that motivate the gauge problem. A known
+eigenprobe supplies a different preparation reference, which must be
+costed. This calculation excludes that mixed-probe proposal; it is not
+a converse for all switch-assisted calibration protocols.
+
+Unknown per-round helper visibility $h$ yields $(h\lambda_P)^m$, which
+length fitting alone cannot separate: $(\lambda_P,h)=(3/5,5/6)$ and
+$(2/3,3/4)$ both give $1/2$ per round. Temporal correlations also invalidate
+the power law: an anticommuting error persistent over both rounds with
+probability $1/5$ gives two-round coherence $1$, whereas independent
+errors with the same marginal give $9/25$. Thus the ordinary check does
+not remove the need for an actual helper-noise and temporal-process
+model. No native switch advantage follows from the restricted
+tomographic gauge alone.
+
 ### Read-only bit-query QRAM has cheap common checks
 
 Consider classical Boolean read-only query oracles
@@ -1548,6 +1602,384 @@ For at most $N$ independent paired uses of this same channel interface, with the
 
 The theorem concerns the declared terminal noise and discarded systems. It does not cover simultaneous interacting Lindblad evolution without a process approximation bound, correlated slot baths/replacement events, exposed fault records, later access to discarded sites, or an encoded logical decoder that processes the full physical register **before** discarding it. A fixed local observable can be bounded by (T9); a global code must be analyzed with its actual decoding circuit. This extends the local-output screen beyond independent spectators while retaining those distinctions. The [known-basis checks](#distinct-commuting-layers-in-a-known-basis-admit-ordinary-fault-checks) also furnish ordinary pre/post syndrome comparators, while the [calibration-transfer screen](backaction.md#nr-r14) explains why a changed conditional statistic alone does not establish restoration. Such application mechanisms must be scored at their actual helper, time and acceptance costs, rather than inferred from a changed fringe or poor global Bell fidelity.
 
+<a id="nr-r06-deterministic-pauli-weyl"></a>
+
+### A single ordinary check closes deterministic Pauli-noise recovery
+
+Consider two noise modules whose realized errors are known Pauli strings
+$E_a,F_b$. Allow an arbitrary input-independent joint law $p_{ab}$, rather
+than requiring independent errors, provided the same realized pair is used
+in both coherent histories and the ordinary serial calls sample that same
+law at matched settings and times. Pauli products in the two orders are
+the same net Pauli up to phase. A bare switch with an initially independent
+plus control therefore has a full channel of the form
+
+$$
+\rho\longmapsto\sum_e p_e\,\sigma_e^C\otimes W_e\rho W_e^\dagger,
+\qquad p_e=\sum_{(a,b):\,F_bE_a\propto W_e}p_{ab},
+\tag{DW1}
+$$
+
+where the distinct $W_e$ belong to an orthogonal unitary error basis and
+$\sigma_e$ are normalized one-qubit states. Several histories with the
+same net error may yield mixed $\sigma_e$. The same description applies
+to finite-dimensional Weyl errors, whose products likewise differ only
+by phases. It need not apply to noise around arbitrary ideal gates: if
+the two histories yield different net operators rather than one $W_e$
+times two scalars, (DW1) is not justified.
+
+The utility here is **unconditional entanglement fidelity** for identity
+storage after an arbitrary deterministic joint control/data recovery.
+The initial control contains no data encoding. The priors and relevant
+error labels are calibrated; learning them and selecting controls are
+additional costs. This is not a parameter-independent simulator of an
+unknown family or a heralded fidelity/yield comparison.
+
+**The switch can identify at most two dominant errors.** Complete the
+$W_e$ to a $d^2$-element orthogonal unitary error basis. Expand each recovery
+Kraus operator as
+$K_r=\sum_f\langle v_{rf}|_C\otimes W_f^\dagger$. The normalized Bell
+fidelity formula and $\operatorname{Tr}(W_f^\dagger W_e)=d\delta_{fe}$
+give
+
+$$
+F_e=\sum_e p_e\operatorname{Tr}(M_e\sigma_e),\qquad
+M_e=\sum_r|v_{re}\rangle\langle v_{re}|\ge0.
+$$
+
+Taking the normalized partial data trace of
+$\sum_rK_r^\dagger K_r=I_C\otimes I_d$ gives $\sum_fM_f=I_C$.
+Conversely, any such POVM followed by the guessed $W_e^\dagger$ correction
+realizes its label-guessing score. Zero-prior outcomes can be merged with
+supported ones, so optimal recovery equals minimum-error discrimination
+of $\{p_e,\sigma_e\}$. Since $\sigma_e\le I$ and $M_e\le I$,
+
+$$
+F_{e,\mathrm{switch}}\le
+\sum_e p_e\min\{1,\operatorname{Tr}M_e\}
+\le p_{(1)}+p_{(2)}.
+\tag{DW2}
+$$
+
+The last step distributes total weight at most two, with at most one per
+label, among descending priors.
+
+For Pauli strings, let $W_1,W_2$ be two most likely distinct net errors.
+They differ on some qubit $j$. Choose a known **single-qubit** Pauli $Q_j$
+anticommuting with their relative Pauli at that qubit. Their conjugation
+characters are opposite:
+$Q_j^\dagger W_iQ_j=\chi_iW_i$, $\chi_1=-\chi_2\in\{1,-1\}$.
+Apply controlled-$Q_j$, the same two actual noise calls in serial order,
+then controlled-$Q_j^\dagger$. Error $e$ gives helper state
+$(|0\rangle+\chi_e|1\rangle)/\sqrt2$ and the same data error $W_e$.
+An $X$ measurement perfectly distinguishes the two chosen errors. Correct
+$W_1$ or $W_2$ on its corresponding outcome. All outcomes return a quantum
+output; contributions from the other orthogonal errors have zero Bell
+fidelity. Thus
+
+$$
+F_{e,\mathrm{ordinary}}\ge p_{(1)}+p_{(2)}
+\ge F_{e,\mathrm{switch}}.
+\tag{DW3}
+$$
+
+Only one helper and two local controlled-Pauli gates are needed around
+the serial calls, independently of the register size. The known final
+Pauli correction is a product of single-qubit gates or an explicitly
+permitted Pauli frame. No data-sized Bell reference, inverse unknown
+query, controlled unknown module or mid-circuit data measurement is used.
+This is a use of the ordinary coherent-check mechanism above, with both
+outcomes corrected rather than postselected. It does not make the checks,
+helper memory or calibration physically noiseless.
+
+An exact correlated two-qubit example makes the comparison strict.
+Enumerate $(I,X,Y,Z)^{\otimes2}$ lexicographically from zero and set
+
+$$
+p_{ab}=\frac{1+50\mathbf1_{a=b=0}+30\mathbf1_{a=1,\,b=3}}{336}.
+$$
+
+This has all 256 histories and is not a product law. The net-error
+control states are $X_C$ diagonal, so their optimal discrimination value
+is the sum of the largest masses in the plus and minus sectors:
+$F_{e,\mathrm{switch}}=13/42$. The two dominant net errors are $I\otimes I$
+and $I\otimes Y$; a single $I\otimes X$ check distinguishes them and gives
+$F_{e,\mathrm{ordinary}}=1/3$. The finite replay checks the complete
+switched/CQ channel identity on all 16 input matrix units, not just
+this fidelity number.
+
+**Cyclic qudit Weyl errors give an explicit near-dominance bound.** Let
+$X|j\rangle=|j+1\bmod d\rangle$, $Z|j\rangle=\omega^j|j\rangle$,
+$\omega=e^{2\pi i/d}$, and $W_{x,z}=X^xZ^z$. For $Q=X^uZ^v$,
+
+$$
+Q^\dagger W_{x,z}Q=\omega^{uz-vx}W_{x,z}.
+$$
+
+If the two dominant labels differ by $\Delta=(x,z)\ne(0,0)$, put
+$g=\gcd(d,x,z)$ and $r=d/g\ge2$. Bezout's identity implies that the
+available relative characters are exactly the $r$th roots of unity:
+the residues $uz-vx\pmod d$ form precisely the subgroup generated by
+$g$. Choose relative phase $2\pi\lfloor r/2\rfloor/r$. The two helper
+states then have overlap zero for even $r$, or
+$c=\sin(\pi/(2r))$ for odd $r$.
+
+Write $a=p_{(1)}$, $b=p_{(2)}$. The Helstrom measurement of just those two
+helper states, followed by their inverse-error corrections, is a valid
+ordinary deterministic recovery with
+
+$$
+F_{e,\mathrm{ordinary}}\ge
+\frac{a+b+\sqrt{(a+b)^2-4ab c^2}}2
+\ge\alpha_r(a+b)\ge\alpha_r F_{e,\mathrm{switch}},
+\quad
+\alpha_r=\begin{cases}1&r\text{ even},\\
+\cos^2(\pi/(4r))&r\text{ odd}.
+\end{cases}
+\tag{DW4}
+$$
+
+For the second inequality use $4ab\le(a+b)^2$; for odd $r$,
+$(1+\sqrt{1-c^2})/2=\cos^2(\pi/(4r))$. The first expression follows by
+diagonalizing $a|\psi_1\rangle\langle\psi_1|-b|\psi_2\rangle
+\langle\psi_2|$: its trace is $a-b$ and determinant
+$-ab(1-c^2)$. Other errors cannot contribute negatively to the delivered
+Bell fidelity.
+
+For odd prime $d$, every nonzero label difference has $r=d$, so the
+multiplicative shortfall is $\pi^2/(16d^2)+O(d^{-4})$. For composite $d$,
+an odd difference order may be a small divisor; a large ambient dimension
+alone does not give that scaling. If $d$ is a power of two all nonzero
+orders are even, giving exact dominance in (DW4). If $d$ has odd divisors,
+the worst nontrivial odd order is its smallest odd prime divisor. In
+particular all odd orders are at least three, giving the universal
+factor $\cos^2(\pi/12)$, but this factor is not an exact no-advantage
+theorem for arbitrary odd-order Weyl laws.
+
+**Tensor-product qutrit Weyl errors admit exact dominance.** There is a
+stronger statement for $n$ qutrits with local $ZX=\omega XZ$,
+$\omega=e^{2\pi i/3}$. Their labels form $\mathbb F_3^{2n}$ and all
+commutator phases are cube roots of unity. Write
+$\rho_k=|\psi_k\rangle\langle\psi_k|$ with
+$|\psi_k\rangle=(|0\rangle+\omega^k|1\rangle)/\sqrt2$.
+Every conditional switched-control state in (DW1) lies in the convex hull
+of $\rho_0,\rho_1,\rho_2$.
+
+Fix an optimal switched-recovery POVM $M_e$. For each label choose a color
+$k_e$ maximizing $\operatorname{Tr}(M_e\rho_k)$, breaking ties arbitrarily.
+Let $G_k=\{e:k_e=k\}$, $N_k=\sum_{e\in G_k}M_e$, and for each nonempty
+group choose $e_k\in G_k$ with largest prior $r_k=p_{e_k}$. Positivity
+and convexity give
+
+$$
+F_{e,\mathrm{switch}}\le
+\sum_e p_e\operatorname{Tr}(M_e\rho_{k_e})
+\le\sum_k r_k\operatorname{Tr}(N_k\rho_k).
+\tag{DW5}
+$$
+
+The $N_k$ form a POVM; empty groups have zero effect. Define the weighted
+trine-guessing value
+$G(a,b,c)=\max_{\{T_k\}}[a\operatorname{Tr}(T_0\rho_0)+
+b\operatorname{Tr}(T_1\rho_1)+c\operatorname{Tr}(T_2\rho_2)]$, where
+the maximum is over three-outcome qubit POVMs and weights need not sum
+to one. This function is coordinatewise nondecreasing. It is also
+symmetric: $\operatorname{diag}(1,\omega)$ cyclically permutes the trine
+states and $X_C$ sends $k\mapsto-k$; these unitaries generate all six
+permutations, and the POVM can be conjugated and relabeled accordingly.
+The at most three selected labels $e_k$ are distinct, as they come from
+disjoint groups. Their descending priors are therefore bounded termwise
+by the global three largest priors, padding with zero if necessary. Thus
+(DW5), symmetry and monotonicity imply
+
+$$
+F_{e,\mathrm{switch}}\le G(p_{(1)},p_{(2)},p_{(3)}).
+\tag{DW6}
+$$
+
+Take the three global most likely distinct net-error labels, adding any
+zero-prior labels if needed. There is an affine functional
+$f(e)=\ell(e)+c$ on $\mathbb F_3^{2n}$ mapping them to the distinct
+colors $0,1,2$. Subtract the first point. If the two difference vectors
+are independent, solve the two color constraints using an invertible
+$2\times2$ coordinate minor. If they are dependent, the three distinct
+points exhaust an affine line over $\mathbb F_3$; the two differences
+are opposites, as are the prescribed color increments $1,2$. One
+nonzero coordinate then solves the constraint. The two-point and
+one-point cases need only one coordinate or a constant. Equivalently,
+every permutation of the three elements of $\mathbb F_3$ is affine.
+
+In each case $\ell$ has at most two nonzero coordinates. The nondegenerate
+Weyl commutator form identifies $\ell$ with a known Weyl $Q$ supported
+on at most **two physical qutrits**. An ordinary controlled-$Q$ /
+serial-call / controlled-$Q^\dagger$ echo gives helper state
+$\rho_{\ell(e)}$. Absorb the known offset $c$ into its final POVM or
+a known helper phase. Perform an optimal trine POVM for the three largest
+priors and correct their corresponding errors. The selected labels
+contribute exactly $G(p_{(1)},p_{(2)},p_{(3)})$; all other orthogonal
+errors contribute zero Bell fidelity. This is a deterministic TP
+recovery, proving ordinary dominance of (DW6).
+
+In fact this is the **exact optimum among single controlled-Weyl echoes**
+with arbitrary final helper POVM and inverse-error correction. For any
+such echo, all labels in one character class have identical helper state,
+so only the maximum prior in each of its three classes matters. Those
+three maxima are bounded after sorting by the global three largest
+priors, giving the same upper bound $G(p_{(1)},p_{(2)},p_{(3)})$. The
+affine construction above attains it.
+
+It needs one coherent helper through the noisy calls and at most four
+local controlled-Weyl gates, independently of $n$, plus the final
+three-outcome helper POVM and known error corrections. Implementing that
+POVM can require postprocessing ancillas, which are additional resources.
+Only the **three dominant net-error labels and priors** need to be
+calibrated; the ordinary construction does not require $\sigma_e$, the
+switch's optimal recovery, or a search through a full distribution.
+Once those labels are known, finding the required coordinate minor
+is elementary classical linear algebra, and the final discrimination
+optimization is a three-state qubit problem. Obtaining reliable dominant
+labels is nevertheless a real calibration task, with its actual probe,
+memory, sample and classical-computation costs. No efficient general
+learning guarantee follows from the interpolation proof. Calibration,
+measurement and all rejected learning samples are not free. Cyclic
+dimension $3^n$ Weyl operators
+have higher-order central phases and are a different error group; this
+ternary proof does not apply to them merely because their Hilbert-space
+dimension is the same.
+
+The four-error $I/X$ then $I/Z$ family is stronger still. Its switch has
+three common plus-control labels and one phase-shifted $ZX$ label. With
+$r_0=\max\{(1-p)(1-q),p(1-q),(1-p)q\}$ and $t=pq$, optimal switch fidelity
+is $[r_0+t+\sqrt{(r_0-t)^2+4r_0t\sin^2(\pi/d)}]/2$. Each difference
+between $ZX$ and a common label has a coordinate equal to one, so an
+ordinary echo can replace $\sin^2(\pi/d)$ by
+$\sin^2(\pi\lfloor d/2\rfloor/d)$. This dominates for every $d\ge2$
+and is strictly better for $d\ge4$ when $r_0t>0$. No primality assumption
+is needed for that special support.
+
+For a fair independent $I/X$ then $I/Z$ pair on one qutrit, the switch
+value is $(2+\sqrt3)/8\simeq0.4665$. The ordinary trine construction
+attains $1/2$: the three selected priors are $1/4$ and the POVM is
+$T_k=(2/3)\rho_k$. This also saturates its single-echo upper bound since
+$\sum_k\operatorname{Tr}T_k=2$ and $\rho_k\le I_C$.
+
+### Common preparation faults and final control noise preserve the comparison
+
+The Pauli and tensor-qutrit deterministic comparison survives an arbitrary
+**common final CPTP channel on the control alone**, with a precise ordering.
+Let the control be prepared in the same fixed state $\rho_C$, independently
+of the unknown payload and its reference. For $m=2$ (Pauli) or $m=3$
+(tensor-qutrit Weyl), put
+
+$$
+D_k=\operatorname{diag}(1,e^{2\pi i k/m}),\qquad
+\rho_k=D_k\rho_CD_k^\dagger,\qquad
+\tau_k=\mathcal N_C(\rho_k).
+\tag{DN1}
+$$
+
+The switch is the bare controlled-order operation. Its conditional control
+states are convex combinations of the $m$ orbit vertices $\rho_k$;
+after the stipulated final noise they are convex combinations of $\tau_k$.
+The ordinary echo uses the same physical noise calls, control preparation
+and final $\mathcal N_C$. The final noise acts after its controlled checks
+and any chosen known helper phase, and **before** arbitrary joint recovery
+or any retained measurement record. Data-correlated helper faults,
+in-circuit noise, pre-noise decoding, or copying the helper into another
+protected memory are different models. A fixed common final control frame
+can be included in $\mathcal N_C$.
+
+For nonnegative weights $a_1,\ldots,a_m$, define
+
+$$
+H_{\mathcal N,\rho_C}(a_1,\ldots,a_m)=
+\max_{\pi\in S_m}\ \max_{\{T_k\}}
+\sum_{k=0}^{m-1}a_{\pi(k+1)}\operatorname{Tr}(T_k\tau_k),
+\qquad \sum_kT_k=I_C,\quad T_k\ge0,
+\tag{DN2}
+$$
+
+where the weights need not sum to one. This value is symmetric in the
+weights by its permutation maximum and coordinatewise nondecreasing by
+positivity. No symmetry, covariance, unitality or purity of the noise
+images $\tau_k$ is assumed.
+
+The recovery-to-POVM argument applies unchanged after control-only noise.
+Fix its optimal POVM $M_e$. For each net-error label choose a vertex $k_e$
+maximizing $\operatorname{Tr}(M_e\tau_k)$. Group the effects as
+$N_k=\sum_{e:k_e=k}M_e$ and retain in each group a maximum-prior label
+with prior $r_k$. Convexity and nonnegative probabilities give
+
+$$
+F_{e,\mathrm{switch}}\le
+\sum_ep_e\operatorname{Tr}(M_e\tau_{k_e})
+\le\sum_kr_k\operatorname{Tr}(N_k\tau_k)
+\le H_{\mathcal N,\rho_C}(p_{(1)},\ldots,p_{(m)}).
+\tag{DN3}
+$$
+
+The last inequality uses the distinct selected labels, the termwise bound
+of their sorted priors by the global largest $m$ priors, and the symmetry
+and monotonicity of (DN2). Empty groups have zero effects and weights.
+
+The ordinary construction attains the final bound. For Paulis, a local
+separator maps the two dominant labels to the two orbit phases; an added
+known $Z_C$ phase chooses either assignment. For tensor-qutrit Weyl
+errors, the affine interpolation argument maps the three dominant labels
+to any permutation of the three colors. It uses a known check supported
+on at most two qutrits. Apply the constant phase offset **before**
+$\mathcal N_C$, then the optimizing POVM in (DN2), and correct the
+corresponding dominant errors. The selected labels contribute exactly
+the bound in (DN3), and other orthogonal errors contribute zero Bell
+fidelity. Conversely, any such echo yields identical noisy helper states
+within each character class, whose largest priors are bounded by the
+global largest $m$. Thus its best value is exactly (DN2), giving
+
+$$
+\max_{\mathrm{ordinary\ single\ echo}}F_e
+=H_{\mathcal N,\rho_C}(p_{(1)},\ldots,p_{(m)})
+\ge F_{e,\mathrm{switch}}.
+\tag{DN4}
+$$
+
+The same two local controlled-Pauli gates, or at most four local
+controlled-qutrit-Weyl gates, suffice during the noisy calls. The known
+control phase, final POVM, postprocessing ancillas, actual error
+corrections and their faults remain costs. Unlike a noiseless trine
+orbit, $\tau_k$ need not possess permutation symmetry; optimizing the
+assignment in (DN2) is essential. The offset cannot generally be moved
+after the noisy channel or absorbed into its final POVM.
+
+For example, take ideal plus preparation and
+$\rho_\pm=|\pm\rangle\langle\pm|$. The legitimate measure-and-prepare channel
+$\mathcal N(\rho)=\operatorname{Tr}(\rho_+\rho)I/2+
+\operatorname{Tr}(\rho_-\rho)|0\rangle\langle0|$ sends $\rho_+$ to
+$I/2$ and $\rho_-$ to a pure state. With priors $3/5,2/5$, assigning the
+larger prior to the mixed image gives optimal guessing $7/10$; swapping
+the orbit phases before the noise gives $4/5$. No post-noise unitary
+or POVM relabeling can remove that statistical difference. Likewise,
+replacement control noise makes every $\tau_k$ equal, so (DN2) reduces
+to $p_{(1)}$, not the noiseless Pauli sum $p_{(1)}+p_{(2)}$.
+
+This is a pointwise calibrated deterministic comparison. It requires the
+dominant net-error labels and priors and the relevant control-state
+images or final-decoder calibration. It does not differentiate through
+unknown settings, provide a Fisher-information converse, suppress helper
+noise for free, or reproduce the full switched instrument. Common fixed
+preparation SPAM is permitted by $\rho_C$; preparation correlated with
+the unknown payload, pre-noise classical records, and faults during
+controlled gates require their own complete instrument.
+
+All conclusions assume the complete same-net-error ensemble (DW1),
+matched exogenous error law, calibrated labels/priors and ideal specified
+checks. Unknown bases, a control initially carrying payload information,
+coherent superpositions of error labels, quantum bath backaction,
+unmodelled helper faults and time-dependent setting changes require their own instrument.
+The comparison does not reproduce the full switched channel, every
+accepted conditional output, a metrology likelihood or an adaptive future
+utility. Source/reset/calibration effort, helper lifetime, connectivity,
+readout and the actual controlled-Weyl implementation remain native costs.
+
 <a id="nr-r07"></a>
 
 ## NR-R07 — The efficient finite-frame family admits polynomial-query reused calibration
@@ -2245,7 +2677,16 @@ identities; infinite-Fock extension, Fourier and Gaussian integration
 remain analytic. The native-check replay verifies finite rectangular
 cross-map identities, norm factors, sharp SWAP witnesses and replacement
 weights for (T8)--(T15); the universal diamond, postselection and repeated-use
-arguments remain analytic. The passive-reordering replay checks finite
+arguments remain analytic. The same native-check replay verifies the
+complete fixed-plus two-qubit correlated-Pauli channel on all input
+matrix units, local separators, cyclic Weyl character images, ternary
+affine assignments and noisy-control grouped-POVM examples for
+(DW1)--(DW6) and (DN1)--(DN4). Recovery-to-POVM reduction,
+all-dimensional dominance and sparse interpolation remain analytic;
+finite examples do not certify a general noise model or native
+performance. It also checks transported-Pauli calibration branch and
+cross-effect identities and the helper/temporal counterexamples above.
+The passive-reordering replay checks finite
 seed symmetrizer, dimension/weight, qutrit second-design and CP-overlap
 identities; representation decomposition, Haar integration and all-mode
 variance bounds (PR2)--(PR5) remain analytic. The anisotropic compiler

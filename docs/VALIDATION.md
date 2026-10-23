@@ -145,11 +145,31 @@ decomposition, Haar identity and dimension-independent variance bounds
 remain analytic. No native source or detector efficiency is certified.
 The anisotropic characteristic-function obstruction and ideal-GKP
 deterministic-fidelity comparison are analytic, with explicit ideal-code
-and syndrome-port assumptions. NR-R19 has finite exact corrected-channel
-and ordinary-wrapper checks; its all-ordinary dimension-at-least-three
-converse uses analytic orbit, polynomial and causal-circuit arguments.
-No finite replay establishes a quantitative approximation gap, a
-finite-energy GKP bound or a native unknown-coupler implementation.
+and syndrome-port assumptions. NR-R06 also has exact finite Pauli/Weyl
+separator, sparse qutrit interpolation and common-final-control-noise
+checks. Its arbitrary-register deterministic recovery comparisons use
+the complete analytic recovery-to-POVM and vertex-grouping proofs; they
+do not model faults throughout the check gates. The conditional NR-R10
+network comparisons have full control/data parity identities and all-branch
+travelling-bus checks. Their physical controller ports, protected transport
+and source-loading resources remain explicit assumptions.
+
+NR-R19 has finite exact corrected-channel and ordinary-wrapper checks;
+its all-ordinary dimension-at-least-three exact converse uses analytic
+orbit, polynomial and causal-circuit arguments. Its separate qutrit
+rank-one-reflection expected-query fidelity certificate is replayed with
+standard-library integer and rational arithmetic. The verifier checks
+invariant pairings and basis independence, highest-weight raising kernels
+and dimension completeness, reconstructs the retained causal equations
+and objective, and checks dual positivity and the residual norm allowance.
+The full prior/covariance inclusion, physical trace bounds and reduction
+of arbitrary terminating strategies to the stopping relaxation are
+analytic proof inputs. This is an unconditional prior-average Bell score
+with expected cost averaged over the same prior and Bell input, without
+oracle-dependent initial advice. It is not a calibrated persistent-device
+throughput bound or an optimal ordinary frontier. Native coupler access,
+primitive errors, routing costs and a finite-energy GKP bound remain
+unverified.
 These checks do not constitute a measured instrument, a new
 fault-tolerance threshold or an architecture advantage.
 

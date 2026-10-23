@@ -461,9 +461,9 @@ A remaining positive target must specify an unknown joint intervention family an
 The [exact checker](checks/architecture/verify_backaction.py) replays finite reference-inclusive $X/Y$ echo instruments, the rational held-out counterexample, the maximal ordinary record contrast, polynomial identities for the calibration/storage example, and all input matrix units for the exchange-channel factorization with its Choi Gram data. The all-dimension operator, norm and linearity arguments are the proofs above; the finite cases are not a general formalization, a hardware demonstration, a sample-optimality theorem, or a no-go for every shared-bath application.
 
 <a id="nr-r19"></a>
-## NR-R19 — Unknown odd couplers: exact two-query correction and ordinary limits
+## NR-R19 — Unknown odd couplers: exact correction and expected-query fidelity limits
 
-This is a separate unknown-gate benchmark, rather than a strengthening of the shared-bath claims in NR-R14. Two commuting Hermitian couplers admit exact correction of unknown static station phases with two queries and a surviving order helper. For data dimension $d\ge3$, the full ordinary circuit model specified below cannot implement the same unknown target exactly with a hard cap of two named queries. An ordinary three-query construction is exact. Known couplers, restricted qubit links and supplied coherent selectors have stronger ordinary baselines. No useful approximate gap or native device advantage follows from the exact query separation.
+This is a separate unknown-gate benchmark, rather than a strengthening of the shared-bath claims in NR-R14. Two commuting Hermitian couplers admit exact correction of unknown static station phases with two queries and a surviving order helper. For data dimension $d\ge3$, the full ordinary circuit model specified below cannot implement the same unknown target exactly with a hard cap of two named queries. A separately certified qutrit prior gives a quantitative ordinary fidelity bound even for arbitrary variable-length receivers with expected cost two. An ordinary three-query construction is exact. Known couplers, restricted qubit links and supplied coherent selectors have stronger ordinary baselines. A native device advantage remains unestablished.
 
 ### Coupler family and the complete corrected output
 
@@ -509,7 +509,7 @@ Its target entanglement fidelity is $(1+\nu)/2$ and its half-diamond error is $(
 Several ordinary closures are essential to the scope of the task.
 
 * If the useful address is classical, (35) differs from $W$ only by a sectorwise global phase. The task must preserve coherence between the two address sectors.
-* If $H$ is known and its conditional application is available at its actual cost, put $M=\operatorname{diag}(H,I)$. Direct block multiplication gives $MA_\alpha MA_\alpha=W$, and also $MB_\beta MB_\beta=W$. These are ordinary two-query implementations, independent of $U$ and the static phase. Manufacturing $B$ from an accessible known $H$ does not justify withholding that control from the comparator.
+* An executable address-selective reflection $M=\operatorname{diag}(H,I)$ gives an ordinary two-query wrapper even when its matrix is unknown; see (NC1) and the [native-interface comparison](#nr-r19-native-interface). Its actual controls and primitive costs belong to both strategies.
 * Even unknown $H$ does not save a natural Abelian qubit family. Let $U=e^{i\varphi Z}$ with unknown $\varphi$ and let unknown $H$ anticommute with the known $Z$. Hold the useful logical address in ordinary memory. A fixed physical input address $1$ at $A$ supplies $P=U^\dagger$, and input address $0$ at $B$ supplies $Q=UH$, each up to a harmless global station phase. For known logical-controlled $X$, $C_X$, use $Q$ first, then $C_X$, then $P$, then $C_X$. Since $XPX=U$ and $HU^\dagger=UH$,
   $$C_X(I\otimes P)C_X(I\otimes Q)
       =\operatorname{diag}(PQ,UQ)=W.\tag{38}$$
@@ -579,12 +579,446 @@ For $B$ first, name its first slot $P$ and the later $A$ slot $Q$. Directions $B
 
 The prior impossibility used here is [Chiribella et al., *Quantum computations without definite causal structure*, Phys. Rev. A **88**, 022318 (2013)](https://doi.org/10.1103/PhysRevA.88.022318), [full text §§III.7–IV, Lemma 4 and Theorem 3](https://arxiv.org/html/0912.0195v4). Theorem 3 excludes the one-call-each fixed-order classical SWITCH; Lemma 4 starts from unitary inputs and its following remark extends the argument beyond qubits. For completeness, the unitary-to-channel qualification can also be bridged directly. Any alleged ordinary universal unitary SWITCH has path operators bilinear in $P,Q$, proportional to $\operatorname{diag}(QP,PQ)$ on unitaries. At fixed $P$, the connected spanning set $U(d)$ and the eigenvector argument of step 2 make each scalar independent of $Q$; fixing $Q$ makes it independent of $P$. Bilinearity therefore extends the identity with a constant scalar to all complex $P,Q$. Substituting arbitrary channel Kraus operators gives the usual SWITCH channel, and discarding the surviving control gives precisely the forbidden classical supermap. This proves that the independent-unitary circuit obtained in (42) contradicts the cited theorem and completes the hard-two obstruction.
 
+<a id="nr-r19-mean-query"></a>
+
+### A quantitative qutrit bound with arbitrary expected-query stopping
+
+A separate expected-query theorem adds a quantitative finite-dimensional
+comparison under a specified prior. Set $d=3$,
+$H=I-2|h\rangle\langle h|$, with $h$ Haar, and take independent Haar
+$U\in U(3)$ and independent uniform $\alpha,\beta$. Each station phase
+is **static for the entire job**, including repeated visits. Let
+$j_{\mathcal E}=(\mathrm{id}\otimes\mathcal E)(\Phi_6)$ and define
+
+$$
+F=\mathbb E_{U,h,\alpha,\beta}
+  \operatorname{Tr}(j_{\mathcal E}j_{\operatorname{Ad}_W}).
+\tag{Q1}
+$$
+
+This is the unconditional Bell entanglement fidelity on the complete
+useful address/data input. Every outcome counts. A terminating TP output
+process is required; an identifiable rejection can be completed by any
+output. Permit arbitrary clean memory, known joint instruments, coherent
+routing of each fixed-name query, classical adaptive query names and
+stopping, and arbitrarily long later rounds. Initial advice and memory
+are independent of the sampled oracles. All training and repeated visits
+within the job count in $N$. The budget $\mathbb E N\le2$ may be averaged
+over this prior and the maximally mixed logical input, the marginal of
+the Bell test. Consequently the result also covers the stronger uniform
+per-instance/per-input mean-budget requirement. A free coherent selector
+between names or a known coherent vacuum extension remains outside the
+specified interface.
+
+For every such ordinary receiver,
+
+$$
+F\le B_3:=\frac{1316218008181259}{1728000000000000}
+       <0.761701.
+\tag{Q2}
+$$
+
+This is a conservative certified ceiling, not an optimized mean-cost
+frontier. Its proof consists of the following analytic reduction and one
+[standard-library exact certificate replay](checks/coupler/verify_mean_query_certificate.py)
+with a [single current witness](checks/coupler/mean_query_certificate.json).
+No numerical solver or third-party library is needed to verify (Q2).
+
+**Missing-station paths retain their actual static noise.** For a fixed
+reflection signature put $t=\operatorname{Tr}H/d$. Conjugation averaging
+gives, on the Hilbert--Schmidt vector space,
+
+$$
+\mathbb E_H\frac{|H\rangle\!\rangle\langle\!\langle H|}{d}
+ =t^2\frac{|I\rangle\!\rangle\langle\!\langle I|}{d}
+ +\frac{1-t^2}{d^2-1}
+  \left(I-\frac{|I\rangle\!\rangle\langle\!\langle I|}{d}\right).
+\tag{Q3}
+$$
+
+Indeed, write $H=tI+H_0$. The traceless part has zero mean and its
+conjugation representation is irreducible. Schur averaging is scalar on
+that sector; trace one fixes its coefficient. Equivalently, expanding
+$H=I-2|h\rangle\langle h|$ and the pure-state second moment gives (Q3)
+directly. The map $L_U(X)=\operatorname{diag}(X,UXU^\dagger)/\sqrt2$
+is a Hilbert--Schmidt isometry and sends the averaged Choi operator in
+(Q3) to $\mathbb E_H j_W$. For the qutrit rank-one orbit both eigenvalues
+in (Q3) equal $\lambda=1/9$. Thus any CP subchannel that depends on
+$U,\alpha$ but not on $H$ has averaged Bell-good weight at most
+$\lambda\operatorname{Tr}j_{\rm CP}$. This grants the complete $A$
+matrix for free and includes arbitrary genuine repeated-$A$ histories.
+For $B$-only histories set $V=UH$: $V$ is Haar and independent of $H$,
+the complete $B$ oracle depends only on $V,\beta$, and
+$W=\operatorname{diag}(H,VHV^\dagger)$. The same bound applies.
+Probabilities are unnormalized Choi probabilities; no input-independent
+acceptance or vanishing of approximate missing-station paths is assumed.
+
+**First names and the exact covariance.** Swapping $A,B$ sends
+$U\mapsto UH$, $H\mapsto H$ and exchanges $\alpha,\beta$, leaving $W$
+and the complete prior unchanged. Rename the oracle calls inside every
+first-$B$ classical instrument branch. Its average score and cost become
+those of a first-$A$ branch under this parameter bijection. Combining
+these pre-query instruments permits first $A$ without loss, while
+retaining their initial classical labels. Their probabilities may depend
+on the input; no scalar first-branch assumption is used.
+
+Take independent Haar $P,Q$, set $U=QP^\dagger$, $H=PH_*P^\dagger$,
+where $H_*=\operatorname{diag}(-1,1,1)$, and write
+$G=\operatorname{diag}(P,Q)$. All of $A,B,W$ are simultaneous conjugates
+by $G$ of their values at $U=I,H=H_*$. This generates exactly the stated
+independent $U,H$ prior. Random known port conjugations twirl a receiver
+under $U(3)\times U(3)$ while preserving its average score, cost and
+ordinary resources. The invariant comb's objective is therefore evaluated
+at that single canonical point, rather than by a sampled Haar integral.
+Complex conjugation is also feasible and preserves the real canonical
+objective and constraints, so averaging permits real symmetric invariant
+variables without losing an optimum.
+
+**All two-query instruments and control sectors.** For an $AB$ prefix,
+independently averaging its once-used station phases measures the query
+address direction before each unknown data action. Grant these records.
+Direction $j=0$ goes from physical address $0$ to $1$, and $j=1$ reverses
+it. The initial direction instrument and the second direction choice may
+depend arbitrarily on the input and first output. This averaging is used
+only for the different-name prefix and for probabilities at a cut before
+a repeated query; it does not replace repeated static phases by iid noise.
+
+For each $j_0,j_1$ let $R_{j_0j_1}$ be a terminal comb with data ports
+$[D_{\rm out},O_2,I_2,O_1,I_1,D_{\rm in}]$. Retain **all four** useful
+control blocks $(c_{\rm out},c_{\rm in})\in\{0,1\}^2$, including wrong
+control outputs. On one such block its representation assignments are
+
+$$
+[(c_{\rm out},+),(1-j_1,-),(j_1,+),
+ (1-j_0,-),(j_0,+),(c_{\rm in},-)],
+\tag{Q4}
+$$
+
+where a pair specifies which $U(3)$ group acts and whether it acts in
+the fundamental or conjugate representation. In particular the query
+outputs carry the link-dual representations. Independent group phases
+make the intermediate tester matrices block diagonal in $c_{\rm in}$;
+the surviving terminal control coherences remain in $R$. There is no
+restriction to logical-control-preserving circuits.
+
+Let $S_{j_0j_1,c}$ have ports $[I_2,O_1,I_1,D_{\rm in}]$, let $T_{j_0,c}$
+have $[I_1,D_{\rm in}]$, and let $A_{j_0,c}$ have
+$[O_1,I_1,D_{\rm in}]$. The latter tester aggregates the post-first-query
+decision to stop or use only $A$ before a possible third visit. Let
+$C_{j_0j_1,c}$ have $[O_2,I_2,O_1,I_1,D_{\rm in}]$ and represent an $AB$
+continuation beyond two queries; let $Z_c$ be an initial zero-query
+tester. All are PSD, with inherited representations from (Q4), and
+the complete causal constraints are
+
+$$
+\begin{aligned}
+\sum_{c_{\rm out}}\operatorname{Tr}_{D_{\rm out}}
+ R_{j_0j_1}[c_{\rm out},c]+C_{j_0j_1,c}
+ &=I_{O_2}\otimes S_{j_0j_1,c},\\
+\sum_{j_1}\operatorname{Tr}_{I_2}S_{j_0j_1,c}+A_{j_0,c}
+ &=I_{O_1}\otimes T_{j_0,c},\\
+\sum_{j_0}\operatorname{Tr}_{I_1}T_{j_0,c}+Z_c&=I_{D_{\rm in}}.
+\end{aligned}
+\tag{Q5}
+$$
+
+These are unrestricted memory-comb and instrument constraints after the
+stated grants. At the canonical point $A$ acts as $I$ and $B$ as $H_*$
+in either data direction. For $R$, the target vector has entries
+$z[(c,c);a,q,q,p,p,a]=(H_*)_{aa}(H_*)_{qq}$ and zero elsewhere. Its
+terminal score is $z^TRz/(2d)^2$. For the $A$ tester use vectors
+$v_a[p,p,a]=1$; for $C$ use $v_a[q,q,p,p,a]=(H_*)_{qq}$. Each tester
+probability is $\sum_a v_a^T(\cdot)v_a/(2d)$, while the zero-query
+probability is $\operatorname{Tr}Z/(2d)$. Thus both the objective and
+the budget use the complete Bell test and its input marginal.
+
+**The unbounded stopping reduction.** Write $p_R,p_A,p_C,p_Z$ for the
+four unnormalized Bell-input probabilities, which sum to one. Fix
+$\mu\ge0$. After the first $A$, any eventual terminal history still
+missing $B$ has score at most $\lambda$ times its probability and cost
+at least one. A history choosing another $A$ and eventually using $B$
+has $N\ge3$; grant it perfect output at cost three. Whatever the stopping
+decision after the second $A$, the whole aggregated tester therefore has
+reward at most $\max(\lambda-\mu,1-3\mu)p_A$ in $F-\mu\mathbb EN$.
+For an $AB$ prefix, retain its actual terminal score $F_R$ at cost two;
+grant every continuation perfect output at cost three. Initial stops
+have reward at most $\lambda p_Z$. Consequently
+
+$$
+F-\mu\mathbb EN\le F_R-2\mu p_R
+ +\max(\lambda-\mu,1-3\mu)p_A+(1-3\mu)p_C+\lambda p_Z.
+$$
+
+Using $\mathbb EN\le2$ and eliminating $p_R$ gives the exact objective
+upper relaxation
+
+$$
+F\le F_R+\max(\lambda+\mu,1-\mu)p_A
+ +(1-\mu)p_C+(\lambda+2\mu)p_Z.
+\tag{Q6}
+$$
+
+No later query cap or independent-repeat assumption appears. Later phase
+recurrence, arbitrarily long adaptive rounds and their postprocessing
+are covered by the perfect-output continuation grant. At
+$\mu=13/40$, $\lambda=1/9$, the three probability rewards in (Q6) are
+$27/40,27/40,137/180$ respectively.
+
+**Complete invariant positivity, rather than a circuit ansatz.** The
+witness specifies real symmetric contraction diagrams: each fundamental
+tensor index is paired with a conjugate index of the same group, with
+the transpose added when required. These are invariant operators. Their
+integer Gram matrices are rebuilt by counting connected components of
+paired diagrams, and full rank modulo an integer proves independence.
+
+For each representation, the replay verifies integer highest-weight
+vectors. Their weights are dominant, their columns are independent, and
+every simple-root raising generator annihilates them. The fundamental
+raising action replaces $i+1$ by $i$ with coefficient one; the conjugate
+action replaces $i$ by $i+1$ with coefficient minus one. The sum of each
+multiplicity times its exact Weyl dimension equals the entire port-space
+dimension, proving completeness. If these multiplicities are $m_\gamma$,
+restriction of an invariant real symmetric operator to these spaces is
+injective into $\bigoplus_\gamma\operatorname{Sym}_{m_\gamma}(\mathbb R)$.
+The chosen independent diagram count equals
+$\sum_\gamma m_\gamma(m_\gamma+1)/2$, so it spans the **entire** real
+symmetric commutant. No allowed invariant circuit direction is omitted.
+Positivity on every highest-weight multiplicity space is equivalent to
+positivity of the full invariant matrix. Nonorthogonal vector bases are
+used as congruences; they are not treated as orthonormal.
+
+**Exact dual and residual verification.** There are 30 matrix families,
+740 independent diagram coefficients and 220 highest-weight blocks. The
+single witness stores 90 genuine scalar rows of (Q5) by their port
+addresses. The replay reconstructs their coefficients and right sides,
+so selecting those rows can only relax the full physical constraints.
+It rebuilds all highest-weight projections and the objective above.
+
+Let $x$ collect the diagram coefficients, $Ex=b$ the retained equations,
+and $P_j(x)\succeq0$ their highest-weight positivity constraints. The
+witness gives rational $y$ and positive definite rational $Y_j$, checked
+by exact LDL arithmetic. Rebuild the rational residual
+$r=E^Ty-c-\sum_jP_j^*(Y_j)$. Weak duality gives
+$c^Tx\le b^Ty+|r^Tx|$. For each matrix family with diagram Gram $G$,
+the witness supplies $h$ satisfying **exactly** $Gh=r$. Its operator
+representer $K=\sum_i h_iB_i$ obeys
+$\|K\|_{\rm HS}^2=r^TG^{-1}r=r^Th$ and
+$r^Tx=\operatorname{Tr}(K R)$. The full physical constraints (Q5) give
+the trace bounds
+
+$$
+\operatorname{Tr}R_{j_0j_1}\le2d^3,\quad
+\operatorname{Tr}S,\operatorname{Tr}A\le d^2,\quad
+\operatorname{Tr}T,\operatorname{Tr}Z\le d,\quad
+\operatorname{Tr}C\le d^3.
+\tag{Q7}
+$$
+
+For fixed $c$, taking traces in (Q5) gives
+$\sum_{j_0}\operatorname{Tr}T_{j_0,c}+\operatorname{Tr}Z_c=d$,
+$\sum_{j_1}\operatorname{Tr}S_{j_0j_1,c}
++\operatorname{Tr}A_{j_0,c}=d\operatorname{Tr}T_{j_0,c}$, and
+$\sum_{c_{\rm out}}\operatorname{Tr}R_{j_0j_1}[c_{\rm out},c]
++\operatorname{Tr}C_{j_0j_1,c}=d\operatorname{Tr}S_{j_0j_1,c}$.
+Every term is nonnegative. Bounding each term by its containing sum
+gives (Q7), with the factor two for $R$ coming from its two input-control
+sectors.
+
+Positivity bounds the residual contribution by
+$\|K\|_{\rm HS}\operatorname{Tr}R$ family by family. Integer square
+roots with outward rational rounding bound each norm. This certificate
+uses the physical trace bounds, even if the selected scalar equations
+alone describe a larger artificial relaxation. The exact dual objective
+is $1316216539325963/1728000000000000$ and the complete residual allowance
+is $53127/62500000000$; their sum is (Q2). Solver convergence, floating
+point eigenvalues and a numerical primal optimum are not proof inputs.
+
+**Achievable comparisons and the remaining application gap.** Ordinary
+serial order followed by useful-address dephasing gives $F=1/2$ for
+every phase and unknown target. Running the exact three-query ordinary
+construction with probability $2/3$ and otherwise returning the input
+gives mean two and
+$F=2/3+(\operatorname{Tr}H/d)^2/3=19/27$ for this prior. Thus it is
+included below the conservative ceiling (Q2). Under only the declared
+helper-dephasing model (37), the switch has $F=(1+\nu)/2$, and exceeds
+every ordinary receiver in this expected-query model whenever
+$\nu>2B_3-1$, approximately $0.523400473$. This is a finite oracle
+fidelity separation with arbitrarily long ordinary rounds already
+included, rather than an inference from the exact two-call cap.
+
+The prior is a substantive premise. An executable conditional $H$ gate
+closes the task even if its classical matrix is unknown, and a training
+state learned from persistent devices changes initial independence.
+Learning must be charged across the actual reuse window. The rank-one
+family also has zero-query fidelity $(1-2/d)^2\to1$ in large dimension;
+this qutrit certificate supplies no constant asymptotic advantage.
+Routing loss, phase drift, helper gates, coherent storage and a physical
+unknown-coupler pair remain additional native requirements. The theorem
+does not establish their availability or a laboratory-time saving.
+
 ### Dimension, physical assumptions and verification boundary
 
-The full qubit problem is unresolved by this proof. Its rank-one reflection orbit is traceless and spans only $\mathfrak{sl}_2$, so step 2 cannot reach $I$ or all unitary $V$. Also $\deg\det U=2$, so step 3 does not force a degree-two coefficient to vanish. The $SU(2)$ identity $YU^TY=U^\dagger$ does not itself grant an ordinary physical transpose query. Equation (38) is a real ordinary qubit closure, rather than a general qubit converse. No quantitative approximate-fidelity or expected-cost frontier is supplied here.
+The full qubit problem is unresolved by the exact proof above. Its rank-one reflection orbit is traceless and spans only $\mathfrak{sl}_2$, so step 2 cannot reach $I$ or all unitary $V$. Also $\deg\det U=2$, so step 3 does not force a degree-two coefficient to vanish. The $SU(2)$ identity $YU^TY=U^\dagger$ does not itself grant an ordinary physical transpose query. Equation (38) is a real ordinary qubit closure, rather than a general qubit converse. The quantitative certificate (Q2) concerns only its stated qutrit prior, and does not optimize an approximate-fidelity or expected-cost frontier.
 
-A native Hermitian hopping Hamiltonian $g\left(\begin{smallmatrix}0&U^\dagger\\U&0\end{smallmatrix}\right)$ is consistent with $A$: a calibrated pulse of duration $\pi/(2g)$ gives $-iA$. It assumes flat singular values, a calibrated pulse area and no additional onsite terms. A second link $UH$ with unknown exact $H^2=I$ is additional correlated structure, not generic disorder. A proposed device must explain why its relation and spectrum persist while $H$ is unknown and unavailable to ordinary controls. Generic reciprocal optical propagation supplies a transpose in reciprocal port bases, rather than automatically an adjoint; any reverse-access claim needs its actual port and polarization model. These algebraic observations do not supply a native unknown qutrit-or-higher pair or a working temporal router.
+<a id="nr-r19-native-interface"></a>
+
+### Native reflection access, persistent calibration and physical couplers
+
+**An unknown executable reflection already suffices.** Matrix knowledge
+of $H$ is stronger than the ordinary wrapper needs. If the native
+address-selective operation $M=\operatorname{diag}(H,I)$ is executable,
+even with unknown $H$, then
+
+$$
+MAM=B,\qquad MA_\alpha MA_\alpha=W,
+\qquad MB_\beta MB_\beta=W.
+\tag{NC1}
+$$
+
+The first identity is direct block multiplication. Since $[M,Z_C]=0$
+and $\{A,Z_C\}=\{B,Z_C\}=0$, the two station phase factors cancel in
+each repeated-query word, leaving $MAMA=BA$ or $MBMB=AB$. This is a full
+operator identity for every input/reference; it does not estimate any
+matrix. An unknown $H$ oracle on $D$ alone does not automatically provide
+this address-selective $M$: controlled access to an unknown operation is
+additional phase-sensitive data.
+
+If $B_\beta$ is physically synthesized as $MA_\beta M$, switching it with
+$A_\alpha$ consumes two hopping-core pulses and two $M$ pulses in each
+history. Equation (NC1) uses exactly the same primitive counts, without
+order routing or an extra helper. It requires the repeated $A_\alpha$
+stability already used by the three-query upper bound. Timing, faulty
+pulses, leakage, records and idle noise can change the actual comparison;
+equal ideal counts are not equality of noisy instruments. Conversely, a
+sealed opaque $B$ does not expose $M$ merely because its matrix factors
+this way. A positive native proposal must specify which access is real.
+
+Bright-state reflections supply a concrete ordinary primitive. The
+[quantum Householder proposal](https://doi.org/10.1103/PhysRevA.74.022323)
+([explicit $N$-pod model, §II.3](https://arxiv.org/html/0708.2811v1))
+couples degenerate ground states to one excited level with a common
+envelope and fixed relative amplitudes/phases. A resonant rms area
+$2(2k+1)\pi$ returns the excited population and produces
+$I-2|h\rangle\langle h|$ on the ground manifold. Repeating that pulse
+need not require knowing the stable bright vector. Implementing $M$
+still requires actual selectivity to the $C=0$ manifold. The proposal
+does not demonstrate a full unknown NR-R19 pair or its router.
+
+**Persistent $H$ has an ordinary calibration port.** Prepare physical
+address $C=0$ and run $B_\beta A_\alpha$. Its action on $D$ is
+$e^{i\delta}H$, hence exactly the channel $\operatorname{Ad}_H$,
+independent of the unknown station phase. Ordinary channel calibration
+can therefore learn a persistent $H$ without first learning $U$ or
+$\delta$, provided its preparation, reference and readout ports are
+available and every training visit is charged. No optimal sample bound
+is asserted.
+
+The unavoidable global-sign ambiguity is harmless. If two involutions
+have the same unitary channel, $H'=e^{i\theta}H$ and Hermiticity forces
+$H'=\pm H$. Replacing $H$ by $-H$ changes the wrapper output to $-W$,
+the same target channel. More quantitatively, let an executable compiled
+involution $\widehat H$ satisfy
+$\min_{s=\pm1}\|\widehat H-sH\|\le\epsilon$, and set
+$\widehat M=\operatorname{diag}(\widehat H,I)$. Unitary telescoping gives
+
+$$
+\|\widehat M A_\alpha\widehat M A_\alpha-sW\|
+ \le2\epsilon,\qquad
+\frac12\|\operatorname{Ad}_{\widehat M A_\alpha\widehat M A_\alpha}
+                 -\operatorname{Ad}_W\|_\diamond\le2\epsilon.
+\tag{NC2}
+$$
+
+The operator bound replaces the two $\widehat M$ factors one at a time;
+all other factors have norm one. The channel bound follows from
+$\|\operatorname{Ad}_V-\operatorname{Ad}_{V'}\|_\diamond
+\le2\|V-V'\|$, with global sign discarded. Converting an experimental
+calibration error into the stated operator estimate and pricing controlled
+gate synthesis require their actual model. Once compiled, the wrapper
+can tolerate a new unknown $U$ and static station phase in each job if
+$H$ persists and $A$ repeats within that job. Rapid phase drift alone is
+therefore insufficient for a durable advantage; its $H$ drift window,
+training and helper cost must be compared explicitly.
+
+**A general hopping matrix has extra spectral requirements.** For an
+invertible coupling $K=L\Sigma R^\dagger$ between two $d$-state
+manifolds, the resonant constant Hamiltonian
+$G_K=\left(\begin{smallmatrix}0&K^\dagger\\K&0\end{smallmatrix}\right)$
+has propagator
+
+$$
+e^{-itG_K}=\begin{pmatrix}
+R\cos(t\Sigma)R^\dagger&-iR\sin(t\Sigma)L^\dagger\\
+-iL\sin(t\Sigma)R^\dagger&L\cos(t\Sigma)L^\dagger
+\end{pmatrix}.
+\tag{NC3}
+$$
+
+Conjugation by $\operatorname{diag}(R,L)$ reduces the Hamiltonian to
+independent blocks $\sigma_jX$, proving the formula. Complete exchange
+of both arbitrary manifolds requires $\cos(t\sigma_j)=0$ for every $j$:
+$t\sigma_j=(2n_j+1)\pi/2$. A flat spectrum is sufficient; special
+odd-commensurate spectra also work, with their sine signs included in
+the transfer unitary. Generic unknown spectra do not obey a common
+exact pulse condition. A rank-one bright-state reflection is not an
+exchange of two full $d$-dimensional manifolds. The
+[multimanifold Morris--Shore treatment](https://arxiv.org/html/0802.4246v1)
+explicitly has generally different bright-pair couplings. Adiabatic or
+composite pulse constructions can change this constant-coupling screen,
+but need full-input propagators, durations and ordinary controls.
+
+**Stationary settings and reciprocal optical ports are distinct interfaces.**
+If the physical order helper coherently selects two coupling settings on
+the same stationary register, its supplied selector is subject to the
+chronological identity (32). It already implements the two controlled
+products in two ordinary windows, retaining the actual bath and records.
+A mobile packaged-gate implementation instead has to receive and return
+the complete useful $C\otimes D$ register. Hopping of a particle between
+two laboratory sites does not by itself provide that port.
+
+Nor does reversing a generic reciprocal multimode device provide an
+adjoint. In orthonormal reciprocal propagating port bases, a reflectionless
+lossless forward matrix $T$ has scattering matrix
+$S=\left(\begin{smallmatrix}0&T^T\\T&0\end{smallmatrix}\right)$, by
+[Lorentz reciprocity](https://doi.org/10.1103/PhysRevA.87.013838)
+([complete modal qualifications](https://arxiv.org/html/1301.2458v1)).
+If this equals $e^{i\gamma}A_\alpha(V)$, block comparison gives
+$T=e^{i(\gamma-\alpha)}V$ and
+
+$$
+T^T=e^{2i\gamma}T^\dagger,
+\qquad T=e^{i\gamma}O,\quad O\text{ real orthogonal}.
+\tag{NC4}
+$$
+
+Transposing the first relation gives $T=e^{2i\gamma}T^*$, so
+$e^{-i\gamma}T$ is real and unitary, proving the second. Thus generic
+reciprocal transport does not supply the full unknown $U(d)$ family by
+opposite propagation alone. Generalized/nonorthogonal or evanescent modes
+need their actual weighted reciprocity relation; nonreciprocal engineering
+is a separate possibility. The present full-$U(d)$ converse does not
+automatically settle a real-orthogonal subfamily.
+
+Finally, passive number-preserving mobile gates have a vacuum sector.
+If a coherent stationary vacuum-preserving extension is actually available,
+the ordinary three-query construction can use a vacuum dummy. Each
+history then has only two occupied module traversals despite three query
+windows; the extra cost can be coherent delay and routing rather than
+an unavoidable third photon-medium interaction. Active noise, input-dependent
+records or different repeated interactions require a complete dummy model.
+These native screens preserve the opaque-port exact query theorem and
+give stronger comparators for specified hardware. They establish no
+physical impossibility for every coupler family or measured architecture
+advantage.
 
 The remaining architecture target must specify that pair, a useful coherent address input, full temporal dilations and emitted records, an independent surviving helper, all routing/storage/control costs, phase stability across repeats and any calibration reuse. Pulse, idle, preparation, cooling, leakage and rejected launches enter the same physical ledger on both sides. Known $H$, classical addresses, a supplied selector, or destructive helper/payload readout changes or closes the endpoint. A significant finite advantage on such a native workload remains open.
 
 The shared [exact checker](checks/architecture/verify_backaction.py) separately reports NR-R19. It replays noncommuting rational examples in data dimensions two and three, all address/data matrix units for the corrected and visibility-limited channels, phase drift, known-$H$ wrappers, whole-pair ambiguity, selector compilation, and the unknown-$H$ Abelian qubit counterprotocol. These finite identities support transcription and scope checks. The connected-orbit, determinant, operational normalization and no-SWITCH reduction above are analytic proofs, not conclusions inferred from a finite optimizer or the replay.
+
+The separate [mean-query certificate](checks/coupler/verify_mean_query_certificate.py)
+reconstructs the complete finite invariant bases, highest-weight kernels
+and dimensions, scalar causal rows, objective, rational positive duals
+and residual Gram equations for (Q2). The analytic prior, covariance,
+stopping inclusion and trace bounds (Q3)--(Q7) supply its connection to
+all ordinary receivers; the replay does not establish hardware access,
+an amortized calibration advantage or a new Lean theorem.

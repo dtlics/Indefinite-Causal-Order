@@ -24,7 +24,7 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_fault_simulation.py` | Finite exact orthogonal-process and full switched-output examples for the calibrated classical-fault baseline NR-R06; full-control unnormalized-Fock loss/amplifier coefficients, controlled-number phases and Gaussian/Weyl coefficients; passive two-photon seed weights and signed-estimator coefficients; qutrit second-design and CP-overlap identities. Infinite-Fock extension, Fourier/Gaussian integration, representation/Haar/variance proofs and native helper costs remain analytic. |
 | `architecture/verify_reuse.py` | Rational threshold, spectral-gap, recovered-score and training/rejection crossover arithmetic for NR-R07. The collective learning algorithm and its asymptotic constants are cited inputs, not computed by this replay. |
 | `architecture/verify_measurements.py` | Small exact Lüders PVM examples, Choi overlaps, recorded return probabilities, binary trace-filter identities and syndrome-sector scaling constants for NR-R08. Initialized-ancilla parity examples at dimensions 4 and 8 check all recorded braid branches and frame corrections, with a full unread-control Choi identity at dimension 4 and retry-cost arithmetic. |
-| `architecture/verify_communication.py` | Full Choi equalities for six absorbing-vacuum examples, sixteen rank-one-channel/noisy-qubit-wire factorizations, four rank-two protected-factor factorizations and four tight qubit-activation examples, plus an elastic-node instrument and a bus-mixing counterexample. The general entanglement, finite-mean and capacity proofs are analytic. |
+| `architecture/verify_communication.py` | Full Choi equalities for six absorbing-vacuum examples, sixteen rank-one-channel/noisy-qubit-wire factorizations, four rank-two protected-factor factorizations and four tight qubit-activation examples, plus an elastic-node instrument and a bus-mixing counterexample. Also checks the conditional global-Pauli parity compiler, all travelling-Fredkin-bus branches and source-loading identities. The general entanglement, finite-mean, capacity and physical network-access proofs are analytic. |
 | `architecture/verify_native_checks.py` | Exact finite known-Clifford Pauli-check and classical-bit-oracle comparisons with non-Pauli noise; twenty paired flagged-Kraus identities for qutrit-router address checks, leakage projection and diagonal-phase blindness; same-ideal-unitary Bell-score and full clock-noise Choi comparisons at dimensions 2 and 4. Eight known-basis fault/full-Choi cases include four nonzero coherent-cross witnesses, and 48 number-lowering Kraus-pair cases test the complete accepted CP decomposition. Explicit double-fault and two-photon-loss examples guard the single-fault/parity limits. No fitted helper-gate or hardware-runtime model. Also checks common-replacement reduced cross maps, both rectangular Kraus norm factors, sharp interacting SWAP examples and nonuniform replacement weights. Universal diamond/postselection arguments remain analytic. |
 | `architecture/verify_dispatch.py` | Thirty-six reference-complete flagged counter/data Choi examples at data dimensions 2 and 3; 96 temporal phase-path identities; nine event-head, three clock-time and six fresh-repeat/rewind cases; the indexed-unitary identity and three/four-call dummy factorizations. Gaussian decoder and whole-frontier arguments remain analytic. |
 | `architecture/verify_dispatch_baselines.py` | Forty-eight full accepted-Choi mean-cost examples and twelve hard-two controlled-teleportation examples at data dimensions 2 and 3. Rebuilds CP/TP projector certificates, exact Bell/diamond witnesses and heralded counter-dephasing maps. It does not optimize the positive-cost frontier or compute the qualitative converse's margin. |
@@ -33,6 +33,7 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_metrology.py` | Reconstructs the hard-two-query adaptive phase/amplitude-damping dual from Kraus derivatives and one rational witness JSON. Rational square-root intervals and a complete exact LDL reconstruction certify its 16-dimensional LMI. Also checks explicit joint-readout Fisher information, visibility/loss thresholds, the plain-switch/retained-echo polynomial, regular echo arithmetic and the feasible three-query feedback recurrence. Tester semantics, covariance/concavity, complete native instruments and physical costs remain analytic. |
 | `architecture/verify_braided_magic.py` | Exact quarter-braid gate branches, the extremal stabilizer overlap, both complete flagged raw-state ensembles for five rational helper visibilities, the physical-$S$ half-exchange yield and exposure count, and sixteen Pauli-loop closures. The protected-resource closure, complete physical phase, native position histories and logical factory costs remain analytic. |
 | `architecture/verify_alignment.py` | Reconstructs the joint Haar-Choi sectors and exact ordinary adaptive null-event primal/dual certificates with Gaussian integers and rational arithmetic. Checks the native isometry/projector realization, pointwise null event, reversed wire convention, multi-copy coefficients and visibility identities. Also checks the general-axis two-controlled-Z code, its full syndrome channels, known-plane binomial information and differential coherence identities. The optimized hard-cap local limit, calibration concentration and growing-round averaged-information proof remain analytic; no finite onset or hardware promise is certified. |
+| `coupler/verify_mean_query_certificate.py` with `coupler/mean_query_certificate.json` | Qutrit rank-one NR-R19 ordinary expected-two-query fidelity ceiling. Rebuilds all 740 invariant basis matrices, checks highest-weight kernels and dimension completeness for 220 blocks, reconstructs 90 retained causal equations and the normalized objective, and verifies rational dual positivity and the residual allowance. The fresh-prior/covariance inclusion, physical trace bounds and arbitrary stopping reduction remain analytic. |
 
 The five modules in `algebra/` form the shared exact engine. `brauer_exact_replay.py` derives diagram multiplication, adjoints, traces and identity insertions directly from pairings. `brauer_objective.py` constructs canonical Gaussian-integer objectives; `brauer_weingarten.py` inverts their permutation Gram system over fractions. `brauer_sos_certificate.py` checks the actual tensor-operator sum-of-squares residual and its norm margin. The main checker independently verifies every objective Gram equation and reconstructs every certificate slack. Both dimension-8 certificate JSONs are required inputs; search diagnostics and cached slacks cannot substitute for a successful replay.
 
@@ -58,6 +59,11 @@ is inferred from these replays.
 The anisotropic compiler obstruction and ideal-GKP deterministic-fidelity
 comparison in NR-R06 are analytic. No finite-energy GKP approximation or
 heralded-frontier certificate is asserted.
+The native-check job also checks local Pauli separators, Weyl-character
+images, sparse tensor-qutrit color interpolation, recovery-to-POVM examples
+and common-preparation/final-control-noise identities. The arbitrary-register
+dominance proofs remain analytic; a common final control channel is not
+a model of correlated faults throughout the check gates.
 
 The architecture jobs support the [ordinary baselines](../architecture-baselines.md),
 [communication bounds](../communication.md) and
@@ -91,6 +97,17 @@ full flagged Choi matrices rather than control probabilities alone. Its
 finite counterexamples do not fit a device bath, certify every form of
 nonclassical noise, or prove a sampling advantage. The general native-echo
 and known-intervention simulation proofs remain in NR-R14.
+
+The separate NR-R19 mean-query certificate has no optimizer, array-package
+or pickle dependency. It rebuilds the stated invariant model data from
+checkable diagrams, vectors and causal-row addresses. Numerical discovery
+outputs are not proof inputs. Its bound concerns unconditional Bell
+fidelity and mean query cost averaged over the same declared fresh prior
+and Bell input. It includes arbitrary terminating longer-round ordinary
+strategies under that budget, but not free oracle-dependent training advice
+or amortized reuse of a learned reflection. The native reflection,
+calibration, hopping-spectrum and reciprocal-port screens are analytic
+interface comparisons, not measurements of a coupler or its routing cost.
 
 The [metrology benchmark](../metrology.md) credits the existing finite-query
 separation and gives a direct weak-duality proof for the saved witness.

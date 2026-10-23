@@ -3,11 +3,12 @@
 Standard library only; Gaussian-rational arithmetic reuses the fault-simulation
 matrix helpers. Examples include coherent, nonunital CPTP noise, rather than
 only Pauli mixtures. General projection and physical-cost arguments are
-analytic inputs, not certified by these finite examples. Terminal common-replacement checks include arbitrary global CPTP preprocessing, direct reduced cross maps and sharp SWAP examples; their universal norm bounds remain analytic. No files are written.
+analytic inputs, not certified by these finite examples. Terminal common-replacement checks include arbitrary global CPTP preprocessing, direct reduced cross maps and sharp SWAP examples; their universal norm bounds remain analytic. Calibrated Pauli/Weyl recovery checks include correlated histories, sparse qutrit phase assignments and common final control noise. General recovery/POVM and all-dimensional dominance proofs remain analytic. No files are written.
 """
 
 from fractions import Fraction as F
-from itertools import product
+from itertools import combinations, permutations, product
+from math import gcd
 import json
 import sys
 
@@ -800,6 +801,483 @@ def replay_terminal_replacement():
     return {'status': 'passed', 'arithmetic': 'exact Gaussian rational fractions', 'replacement_channel_examples': cases, 'direct_physical_reduced_cross_map_matrix_units': matrix_units, 'rectangular_cross_factor_both_column_sums': 'd I', 'swap_effects': {'d2': 'SWAP/2', 'd3': 'SWAP/3'}, 'swap_reduced_map': 'I_R Tr(SWAP X)/d^2', 'nonuniform_qudit_replacement_expansions': 3, 'scope': 'Finite CPTP preprocessing, direct cross-map, sharpness and convex-weight identities; universal cb/diamond and postselection proofs remain analytic.'}
 
 
+def replay_transported_pauli_calibration():
+    """Input-independent ordinary cross trace and mixed-probe switch blindness."""
+    ps = pauli_basis(2)
+    g = zeros(4, 4)
+    for a, b in product(range(2), repeat=2):
+        g[2*a+(a ^ b)][2*a+b] = ONE
+    require(matmul(g, g) == identity(4), "Calibration CNOT is not involutory.")
+    raw = [1000, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    weights = [F(value, sum(raw)) for value in raw]
+    relations = cross_units = effect_entries = blind = 0
+    for p in ps:
+        q = matmul(adjoint(g), matmul(p, g))
+        blocks, signs = [], []
+        for error in ps:
+            left = matmul(error, g)
+            right = matmul(p, matmul(left, q))
+            chi = dw_sign_comm(p, error)
+            require(right == scaled(left, chi), "Transported Pauli check failed.")
+            blocks.append((left, right))
+            signs.append(chi)
+            relations += 1
+        eigenvalue = sum(w*s for w, s in zip(weights, signs))
+        effect = zeros(4, 4)
+        for weight, error in zip(weights, ps):
+            eg = matmul(error, g)
+            term = matmul(adjoint(matmul(eg, p)), matmul(p, eg))
+            effect = plus(effect, scaled(term, weight))
+        require(effect == scaled(matmul(p, q), eigenvalue),
+                "Known-Pauli switch has the wrong cross effect.")
+        effect_entries += 16
+        if q != p and q != scaled(p, -1):
+            require(trace(effect) == ZERO, "Mixed-probe switch is not blind.")
+            blind += 1
+        for row, column in product(range(4), repeat=2):
+            unit = zeros(4, 4)
+            unit[row][column] = ONE
+            actual = ZERO
+            for weight, (left, right) in zip(weights, blocks):
+                actual = add(actual, times(trace(matmul(left, matmul(unit,
+                                                                      adjoint(right)))),
+                                           weight))
+            require(actual == times(trace(unit), eigenvalue),
+                    "Ordinary cross trace depends on the input data.")
+            cross_units += 1
+    lam1, helper1, lam2, helper2 = F(3, 5), F(5, 6), F(2, 3), F(3, 4)
+    require(lam1 != lam2 and lam1*helper1 == lam2*helper2 == F(1, 2),
+            "Helper-target identifiability counterexample changed.")
+    for length in range(9):
+        require((lam1*helper1)**length == (lam2*helper2)**length,
+                "Length fitting resolved identical product decays.")
+    p_error = F(1, 5)
+    persistent = (1-p_error)+p_error*(-1)**2
+    independent = (1-2*p_error)**2
+    require((persistent, independent) == (F(1), F(9, 25)),
+            "Temporal-correlation counterexample changed.")
+    return {
+        "status": "passed", "arithmetic": "exact Gaussian rational",
+        "CNOT_Pauli_branch_relations": relations,
+        "reduced_cross_block_matrix_units": cross_units,
+        "known_Pauli_switch_effect_entries": effect_entries,
+        "maximally_mixed_blind_transported_Paulis": blind,
+        "equal_helper_target_product_decay_lengths": 9,
+        "persistent_two_step_control_coherence": str(persistent),
+        "independent_two_step_control_coherence": str(independent),
+        "scope": "Finite transported-check, cross-effect and process counterexamples; no general calibration or native advantage claim.",
+    }
+
+
+def dw_sign_comm(q, e):
+    character = trace(matmul(matmul(q, e), matmul(q, e)))[0]/len(q)
+    require(character in [-1, 1], "Pauli commutator is not a sign.")
+    return character
+
+
+def dw_add_matrix_unit(out, left, right, row, column, weight):
+    left_column = [(i, r[row]) for i, r in enumerate(left) if r[row] != ZERO]
+    right_column = [(j, r[column]) for j, r in enumerate(right)
+                    if r[column] != ZERO]
+    for i, x in left_column:
+        for j, y in right_column:
+            out[i][j] = add(out[i][j], times(multiply(x, conjugate(y)), weight))
+
+
+def replay_deterministic_pauli_weyl():
+    """Finite DW1--DW4 guards; recovery/POVM and dimension bounds are analytic."""
+    ps, d = pauli_basis(2), 4
+    local_indices = [1, 2, 3, 4, 8, 12]
+    separator_pairs = 0
+    for i, j in product(range(16), repeat=2):
+        if i == j:
+            continue
+        require(any(dw_sign_comm(ps[k], ps[i]) != dw_sign_comm(ps[k], ps[j])
+                    for k in local_indices), "No local Pauli separator found.")
+        separator_pairs += 1
+
+    # Full support, with two correlated boosts: this is not a product law.
+    raw = [[F(1+50*(a == b == 0)+30*(a == 1 and b == 3))
+            for b in range(16)] for a in range(16)]
+    total = sum(sum(row) for row in raw)
+    law = [[x/total for x in row] for row in raw]
+    require(law[0][0]*law[1][1] != law[0][1]*law[1][0],
+            "Correlated Pauli example became a product law.")
+    mass_plus, mass_minus = [F(0)]*16, [F(0)]*16
+    histories = []
+    for a, b in product(range(16), repeat=2):
+        k0, k1 = matmul(ps[b], ps[a]), matmul(ps[a], ps[b])
+        chi = dw_sign_comm(ps[a], ps[b])
+        require(k1 == scaled(k0, chi), "Pauli order histories disagree.")
+        matches = []
+        for e, pe in enumerate(ps):
+            phase = times(trace(matmul(adjoint(pe), k0)), F(1, d))
+            if phase != ZERO:
+                require(phase in [ONE, gaussian(-1), gaussian(0, 1),
+                                  gaussian(0, -1)], "Invalid Pauli phase.")
+                require(k0 == [[multiply(phase, x) for x in row] for row in pe],
+                        "Wrong net Pauli label.")
+                matches.append(e)
+        require(len(matches) == 1, "Net Pauli label is not unique.")
+        e = matches[0]
+        (mass_plus if chi == 1 else mass_minus)[e] += law[a][b]
+        histories.append((law[a][b], k0+k1))
+
+    input_units = 0
+    for row, column in product(range(d), repeat=2):
+        direct, cq = zeros(2*d, 2*d), zeros(2*d, 2*d)
+        for probability, stack in histories:
+            dw_add_matrix_unit(direct, stack, stack, row, column, probability/2)
+        for e, pe in enumerate(ps):
+            for sign, weight in [(1, mass_plus[e]), (-1, mass_minus[e])]:
+                stack = pe+scaled(pe, sign)
+                dw_add_matrix_unit(cq, stack, stack, row, column, weight/2)
+        require(direct == cq, "Complete switched Pauli CQ channel differs.")
+        input_units += 1
+
+    priors = [a+b for a, b in zip(mass_plus, mass_minus)]
+    dominant = sorted(range(16), key=lambda e: priors[e], reverse=True)[:2]
+    separator = next(k for k in local_indices
+                     if dw_sign_comm(ps[k], ps[dominant[0]]) !=
+                     dw_sign_comm(ps[k], ps[dominant[1]]))
+    ordinary_fidelity = sum(priors[e] for e in dominant)
+    # These control states are X diagonal, so guessing is exactly classical.
+    switch_fidelity = max(mass_plus)+max(mass_minus)
+    require((switch_fidelity, ordinary_fidelity) == (F(13, 42), F(1, 3)),
+            "Correlated Pauli fidelity witness changed.")
+
+    weyl_images = 0
+    for dim in range(2, 21):
+        for x, z in product(range(dim), repeat=2):
+            if x == z == 0:
+                continue
+            g = gcd(dim, gcd(x, z))
+            order = dim//g
+            image = {(u*z-v*x) % dim for u, v in product(range(dim), repeat=2)}
+            require(image == {g*k for k in range(order)},
+                    "Weyl-character image differs from its gcd subgroup.")
+            target = g*(order//2)
+            require(target in image, "Nearest antipodal character unavailable.")
+            require(2*target == dim-(g if order % 2 else 0),
+                    "Wrong nearest antipodal character.")
+            weyl_images += 1
+    return {
+        "status": "passed", "arithmetic": "exact Gaussian rational and integer",
+        "two_qubit_ordered_error_pairs_with_local_separator": separator_pairs,
+        "nonproduct_joint_histories": len(histories),
+        "complete_fixed_plus_switch_input_matrix_units": input_units,
+        "dominant_error_labels": dominant, "single_qubit_check_label": separator,
+        "switch_optimal_deterministic_fidelity": str(switch_fidelity),
+        "ordinary_deterministic_fidelity": str(ordinary_fidelity),
+        "finite_Weyl_nonzero_difference_images": weyl_images,
+        "Weyl_dimensions": "2..20, all nonzero differences",
+        "scope": "Finite CQ transcription, local separators and character images; recovery-to-POVM and all-dimension bounds remain analytic.",
+    }
+
+
+# Eisenstein rationals a+b*omega, omega^2+omega+1=0. These are not the
+# Gaussian-rational pairs used by the existing fault-simulation helpers.
+TRI_ZERO, TRI_ONE, TRI_OMEGA = (F(0), F(0)), (F(1), F(0)), (F(0), F(1))
+
+
+def tri_add(x, y):
+    return (x[0]+y[0], x[1]+y[1])
+
+
+def tri_multiply(x, y):
+    a, b = x
+    c, d = y
+    return (a*c-b*d, a*d+b*c-b*d)
+
+
+def tri_conjugate(x):
+    return (x[0]-x[1], -x[1])
+
+
+def tri_power(k):
+    out = TRI_ONE
+    for _ in range(k % 3):
+        out = tri_multiply(out, TRI_OMEGA)
+    return out
+
+
+def tri_matrix(rows):
+    return [[(F(x), F(0)) for x in row] for row in rows]
+
+
+def tri_plus(a, b):
+    return [[tri_add(x, y) for x, y in zip(ra, rb)] for ra, rb in zip(a, b)]
+
+
+def tri_scale(a, value):
+    return [[(x[0]*value, x[1]*value) for x in row] for row in a]
+
+
+def tri_cscale(a, value):
+    return [[tri_multiply(x, value) for x in row] for row in a]
+
+
+def tri_matmul(a, b):
+    return [[tri_add(tri_multiply(a[i][0], b[0][j]),
+                     tri_multiply(a[i][1], b[1][j]))
+             for j in range(2)] for i in range(2)]
+
+
+def tri_adjoint(a):
+    return [[tri_conjugate(a[j][i]) for j in range(2)] for i in range(2)]
+
+
+def tri_trace(a):
+    return tri_add(a[0][0], a[1][1])
+
+
+def tri_real(x):
+    require(x[1] == 0, "Expected an exactly real Eisenstein rational.")
+    return x[0]
+
+
+def tri_score(a, b):
+    return tri_real(tri_trace(tri_matmul(a, b)))
+
+
+def tri_phase(k):
+    return [[TRI_ONE, TRI_ZERO], [TRI_ZERO, tri_power(k)]]
+
+
+def tri_orbit(rho, k):
+    phase = tri_phase(k)
+    return tri_matmul(tri_matmul(phase, rho), tri_adjoint(phase))
+
+
+def tri_dot(a, b):
+    return sum(x*y for x, y in zip(a, b)) % 3
+
+
+def tri_sparse_functional(v, w, a, b):
+    """Solve q.v=a,q.w=b with at most two coordinates over F3."""
+    for i, j in combinations(range(len(v)), 2):
+        determinant = (v[i]*w[j]-v[j]*w[i]) % 3
+        if determinant:
+            inverse = determinant  # Both nonzero elements of F3 are self inverse.
+            q = [0]*len(v)
+            q[i] = inverse*(a*w[j]-v[j]*b) % 3
+            q[j] = inverse*(v[i]*b-a*w[i]) % 3
+            require((tri_dot(q, v), tri_dot(q, w)) == (a, b),
+                    "Sparse affine interpolation failed.")
+            return tuple(q)
+    require(any(v) and tuple(w) == tuple((-x) % 3 for x in v)
+            and b == -a % 3, "Invalid collinear ternary differences.")
+    i = next(i for i, x in enumerate(v) if x)
+    q = [0]*len(v)
+    q[i] = a*v[i] % 3
+    require((tri_dot(q, v), tri_dot(q, w)) == (a, b),
+            "Collinear affine interpolation failed.")
+    return tuple(q)
+
+
+def replay_qutrit_affine_recovery():
+    """Finite DW5--DW6 guards; all-n grouping and interpolation are analytic."""
+    plus_state = tri_matrix([[F(1, 2), F(1, 2)], [F(1, 2), F(1, 2)]])
+    flip = tri_matrix([[0, 1], [1, 0]])
+    symmetries, state_identities = set(), 0
+    for shift, reflection in product(range(3), range(2)):
+        rotation = tri_phase(shift)
+        u = tri_matmul(rotation, flip) if reflection else rotation
+        permutation = tuple((shift+(-k if reflection else k)) % 3
+                            for k in range(3))
+        symmetries.add(permutation)
+        for k in range(3):
+            require(tri_matmul(tri_matmul(u, tri_orbit(plus_state, k)),
+                               tri_adjoint(u)) == tri_orbit(plus_state, permutation[k]),
+                    "Trine permutation is not a unitary symmetry.")
+            state_identities += 1
+    require(len(symmetries) == 6, "Not all trine permutations are covered.")
+    trine = [tri_orbit(plus_state, k) for k in range(3)]
+    fair_ordinary = sum(F(1, 4)*tri_score(tri_scale(rho, F(2, 3)), rho)
+                        for rho in trine)
+    require(fair_ordinary == F(1, 2), "Fair qutrit recovery witness changed.")
+
+    points = list(product(range(3), repeat=2))
+    assignments = 0
+    for count in [1, 2, 3]:
+        for chosen in combinations(points, count):
+            for colors in permutations(range(3), count):
+                solutions = [(q, c) for q in points for c in range(3)
+                             if all((tri_dot(q, p)+c) % 3 == k
+                                    for p, k in zip(chosen, colors))]
+                require(any(sum(x != 0 for x in q) <= 2 for q, _ in solutions),
+                        "Selected qutrit labels cannot receive distinct colors.")
+                assignments += 1
+
+    vectors = [v for v in product(range(3), repeat=4) if any(v)]
+    sparse_cases = independent = collinear = 0
+    for v, w in product(vectors, repeat=2):
+        if v == w:
+            continue
+        for a in [1, 2]:
+            q = tri_sparse_functional(v, w, a, -a % 3)
+            require(sum(x != 0 for x in q) <= 2 and
+                    sum(any(q[2*j:2*j+2]) for j in range(2)) <= 2,
+                    "Affine check exceeds the two-qutrit support bound.")
+            sparse_cases += 1
+        if w == tuple((-x) % 3 for x in v):
+            collinear += 1
+        else:
+            independent += 1
+    return {
+        "status": "passed", "arithmetic": "exact F3 integers and Eisenstein rationals",
+        "weighted_trine_unitary_permutations": len(symmetries),
+        "trine_state_identities": state_identities,
+        "single_qutrit_selected_point_color_assignments": assignments,
+        "two_qutrit_sparse_functional_color_assignments": sparse_cases,
+        "ordered_independent_difference_pairs": independent,
+        "ordered_collinear_difference_pairs": collinear,
+        "fair_binary_ordinary_fidelity": str(fair_ordinary),
+        "scope": "Finite trine symmetry and sparse affine interpolation; all-n grouped-POVM dominance remains analytic.",
+    }
+
+
+def replay_common_control_noise():
+    """Finite DN1--DN4 grouping, top-prior replacement and physical phase guards."""
+    ident, empty = tri_matrix([[1, 0], [0, 1]]), tri_matrix([[0, 0], [0, 0]])
+    plus_state = tri_matrix([[F(1, 2), F(1, 2)], [F(1, 2), F(1, 2)]])
+    minus_state = tri_matrix([[F(1, 2), F(-1, 2)], [F(-1, 2), F(1, 2)]])
+    z0, z1 = tri_matrix([[1, 0], [0, 0]]), tri_matrix([[0, 0], [0, 1]])
+
+    def measure_prepare(rho):
+        # Manifestly CPTP: X+ -> maximally mixed, X- -> |0>.
+        pplus = tri_trace(tri_matmul(plus_state, rho))
+        pminus = tri_trace(tri_matmul(minus_state, rho))
+        return tri_plus(tri_cscale(tri_scale(ident, F(1, 2)), pplus),
+                        tri_cscale(z0, pminus))
+
+    u = tri_matrix([[F(3, 5), F(-4, 5)], [F(4, 5), F(3, 5)]])
+    r = tri_matrix([[F(5, 13), F(-12, 13)], [F(12, 13), F(5, 13)]])
+    k0 = tri_matrix([[1, 0], [0, F(3, 5)]])
+    k1 = tri_matrix([[0, F(4, 5)], [0, 0]])
+    weighted_kraus = [(F(2, 5), u), (F(3, 5), tri_matmul(k0, r)),
+                     (F(3, 5), tri_matmul(k1, r))]
+    total = empty
+    for weight, k in weighted_kraus:
+        total = tri_plus(total, tri_scale(tri_matmul(tri_adjoint(k), k), weight))
+    require(total == ident, "Common control-noise example is not TP.")
+
+    def mixed_rotation_damping(rho):
+        out = empty
+        for weight, k in weighted_kraus:
+            out = tri_plus(out, tri_scale(tri_matmul(tri_matmul(k, rho),
+                                                   tri_adjoint(k)), weight))
+        return out
+
+    labels = list(product(range(3), repeat=2))
+    raw = [(a, b, F(1+17*(a == (0, 0) and b == (1, 0))
+                    +11*(a == (0, 1) and b == (1, 1))+3*(a == b)))
+           for a, b in product(labels, repeat=2)]
+    total_weight = sum(weight for _, _, weight in raw)
+    law = [(a, b, weight/total_weight) for a, b, weight in raw]
+    base_povms = [
+        [tri_scale(tri_orbit(plus_state, k), F(2, 3)) for k in range(3)],
+        [tri_scale(z0, F(1, 3)), tri_scale(plus_state, F(2, 3)),
+         tri_plus(tri_scale(z1, F(1, 3)), tri_scale(minus_state, F(2, 3)))],
+    ]
+    for base in base_povms:
+        require(tri_plus(tri_plus(base[0], base[1]), base[2]) == ident,
+                "Common-noise base POVM is not normalized.")
+
+    guards = state_images = phase_checks = 0
+    for prep in [plus_state, tri_matrix([[F(3, 5), F(1, 5)],
+                                        [F(1, 5), F(2, 5)]])]:
+        vertices = [tri_orbit(prep, k) for k in range(3)]
+        masses, unnormalized = [F(0)]*9, [empty for _ in labels]
+        for a, b, probability in law:
+            e = ((a[0]+b[0]) % 3, (a[1]+b[1]) % 3)
+            i = labels.index(e)
+            k = (a[1]*b[0]-b[1]*a[0]) % 3
+            masses[i] += probability
+            unnormalized[i] = tri_plus(unnormalized[i],
+                                       tri_scale(vertices[k], probability))
+        require(sum(masses) == 1, "Qutrit joint law is not normalized.")
+        for channel in [measure_prepare, mixed_rotation_damping]:
+            noisy_vertices = [channel(v) for v in vertices]
+            require(all(tri_trace(tau) == TRI_ONE for tau in noisy_vertices),
+                    "Noisy control vertex is not normalized.")
+            state_images += 3
+            noisy_errors = [channel(rho) for rho in unnormalized]
+            for base in base_povms:
+                effects = [tri_scale(base[i % 3], F(i//3+1, 6)) for i in range(9)]
+                total_effect = empty
+                for effect in effects:
+                    total_effect = tri_plus(total_effect, effect)
+                require(total_effect == ident, "Nine-effect POVM is not normalized.")
+                value = sum(tri_score(m, rho) for m, rho in zip(effects, noisy_errors))
+                colors = [max(range(3), key=lambda k: tri_score(m, noisy_vertices[k]))
+                          for m in effects]
+                first_bound = sum(masses[i]*tri_score(effects[i], noisy_vertices[colors[i]])
+                                  for i in range(9))
+                grouped, selected = [empty, empty, empty], {}
+                for i, color in enumerate(colors):
+                    grouped[color] = tri_plus(grouped[color], effects[i])
+                    if color not in selected or masses[i] > masses[selected[color]]:
+                        selected[color] = i
+                second_bound = sum(masses[i]*tri_score(grouped[k], noisy_vertices[k])
+                                   for k, i in selected.items())
+                require(value <= first_bound <= second_bound,
+                        "Noisy-vertex grouping inequality failed.")
+                # Replace the group maxima by globally dominant priors, keeping
+                # the same vertices and effects. No noise-image symmetry is used.
+                sorted_colors = sorted(selected, key=lambda k: masses[selected[k]],
+                                       reverse=True)
+                top = sorted(range(9), key=lambda i: masses[i], reverse=True)
+                targets = dict(zip(sorted_colors, top))
+                replacement = sum(masses[i]*tri_score(grouped[k], noisy_vertices[k])
+                                  for k, i in targets.items())
+                require(replacement >= second_bound,
+                        "Global dominant priors decreased the grouped score.")
+                q, offset = next((q, c) for q in labels for c in range(3)
+                                 if all((tri_dot(q, labels[i])+c) % 3 == k
+                                        for k, i in targets.items()))
+                ordinary = F(0)
+                for k, i in targets.items():
+                    physical = channel(tri_orbit(tri_orbit(prep, tri_dot(q, labels[i])),
+                                                 offset))
+                    require(physical == noisy_vertices[k],
+                            "Phase assignment was not applied before control noise.")
+                    phase_checks += 1
+                    ordinary += masses[i]*tri_score(grouped[k], physical)
+                require(ordinary == replacement and ordinary >= value,
+                        "Ordinary noisy-control recovery failed its bound.")
+                guards += 1
+
+    # A noncovariant binary channel: a phase after N cannot swap its images.
+    z = tri_matrix([[1, 0], [0, -1]])
+    mixed, pure = measure_prepare(plus_state), measure_prepare(minus_state)
+    require(mixed == tri_scale(ident, F(1, 2)) and pure == z0,
+            "Noncovariant image example changed.")
+    require(measure_prepare(tri_matmul(tri_matmul(z, plus_state), z)) !=
+            tri_matmul(tri_matmul(z, mixed), z), "Noise became phase covariant.")
+
+    def classical_binary(first, second):
+        return sum(max(F(3, 5)*tri_real(first[j][j]),
+                       F(2, 5)*tri_real(second[j][j])) for j in range(2))
+
+    wrong, optimized = classical_binary(mixed, pure), classical_binary(pure, mixed)
+    require((wrong, optimized) == (F(7, 10), F(4, 5)),
+            "Pre-noise phase-assignment witness changed.")
+    return {
+        "status": "passed", "arithmetic": "exact Eisenstein rationals",
+        "different_CPTP_control_channels": 2,
+        "fixed_common_control_preparations": 2,
+        "nine_effect_POVMs_per_channel_preparation": len(base_povms),
+        "physical_qutrit_joint_histories": len(law),
+        "noisy_vertex_images": state_images,
+        "convex_grouping_top_prior_and_ordinary_recovery_guards": guards,
+        "physical_before_noise_phase_assignment_checks": phase_checks,
+        "noncovariant_wrong_assignment_fidelity": str(wrong),
+        "noncovariant_optimized_before_noise_assignment_fidelity": str(optimized),
+        "scope": "Finite channel-image, grouped-POVM, top-prior and phase-ordering guards; general H_N optimum and all-n dominance remain analytic. No native performance is certified.",
+    }
+
+
 def main():
     pcs_cases = replay_pcs()
     read_cases = replay_read_oracles()
@@ -808,8 +1286,12 @@ def main():
     known_basis_cases, coherent_cross_cases = replay_known_basis_layers()
     loss_cases = replay_number_diagonal_loss()
     replacement_cases = replay_terminal_replacement()
+    calibration_cases = replay_transported_pauli_calibration()
+    deterministic_cases = replay_deterministic_pauli_weyl()
+    affine_cases = replay_qutrit_affine_recovery()
+    common_control_cases = replay_common_control_noise()
     print(json.dumps({
-        "status": "passed", "arithmetic": "exact Gaussian rational, standard library",
+        "status": "passed", "arithmetic": "exact Gaussian and Eisenstein rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
         "qutrit_router_flagged_kraus_identities": router_cases,
         "self_channel_quasistatic_full_choi_metric_cases": self_metric_cases,
@@ -818,7 +1300,11 @@ def main():
         "known_basis_coherent_cross_term_cases": coherent_cross_cases,
         "number_diagonal_loss_kraus_pair_cases": loss_cases,
         "terminal_replacement_contraction": replacement_cases,
-        "scope": "Finite projection, routing, loss and terminal-replacement cross-map replay; general cb/diamond, costs and physical hypotheses remain analytic.",
+        "transported_pauli_calibration": calibration_cases,
+        "deterministic_pauli_weyl_recovery": deterministic_cases,
+        "qutrit_affine_recovery": affine_cases,
+        "common_control_noise_recovery": common_control_cases,
+        "scope": "Finite projection, routing, loss, replacement and calibrated Pauli/Weyl recovery replay; general cb/diamond, recovery/POVM dominance, all-n interpolation, costs and physical hypotheses remain analytic.",
     }, sort_keys=True))
 
 

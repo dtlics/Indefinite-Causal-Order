@@ -2,8 +2,11 @@
 
 Uses Gaussian rationals from the existing exact matrix engine. All reports go
 to stdout. This does not replay the all-history entropy/capacity argument.
+Random-receiver examples also use exact Pauli-phase exponents and normalized
+measurement-branch coefficients; physical controller graphs remain analytic.
 """
 from fractions import Fraction as F
+from itertools import product
 from math import isqrt
 import json
 
@@ -361,6 +364,108 @@ def reset_cycle_examples():
         (a3, b3, "distinct complex qutrit resets"))]
 
 
+def random_receiver_examples():
+    """Finite global-parity and clean-Fredkin-bus identities, not free ports."""
+    pairs_checked = control_units = code_pairs = code_units = 0
+    for n in range(1, 8):
+        for a, b in product(product(range(2), repeat=n), repeat=2):
+            error = tuple(x ^ y for x, y in zip(a, b))
+            parity = sum(error) % 2
+            # At each site X Y=iZ, Y X=-iZ; equal factors multiply to I.
+            forward = sum(y-x for x, y in zip(a, b)) % 4
+            reverse = (-forward) % 4
+            assert (reverse-forward) % 4 == 2*parity
+            switched = [forward, reverse]
+            # Controlled X^tensor n conjugates the common Z^error product.
+            ordinary = [forward, (forward+2*parity) % 4]
+            for r, c in product(range(2), repeat=2):
+                assert (switched[r]-switched[c]) % 4 == (ordinary[r]-ordinary[c]) % 4
+                control_units += 1
+                # Code basis |0^n>,|1^n>: the read parity and one Z correct it.
+                assert ((sum(error)+parity)*(r-c)) % 2 == 0
+                code_units += 1
+            code_pairs += 1
+            pairs_checked += 1
+
+    bus_branches = bus_basis_coefficients = bus_matrix_units = 0
+    probabilities = {}
+    for n in range(1, 9):
+        branch_probability = F(1, 2**(n+1))
+        total_probability = F(0)
+        for measurements, bus_x in product(product(range(2), repeat=n), range(2)):
+            parity = sum(measurements) % 2
+            signs = []
+            for c in range(2):
+                # Omitted common amplitude is 2^(-(n+1)/2). Each local
+                # auxiliary starts in 1 and is measured in its X basis.
+                raw = (sum(m*(1-c) for m in measurements)+bus_x*c) % 2
+                corrected = (raw+(parity+bus_x)*c) % 2
+                assert corrected == parity
+                signs.append(corrected)
+                bus_basis_coefficients += 1
+            for r, c in product(range(2), repeat=2):
+                assert (signs[r]-signs[c]) % 2 == 0
+                bus_matrix_units += 1
+            # Every corrected Kraus is a scalar times the same isometry;
+            # this is its exact K^dagger K weight, independent of input.
+            total_probability += branch_probability
+            bus_branches += 1
+        assert total_probability == 1
+        probabilities[str(n)] = str(branch_probability)
+
+    fredkin_basis_states = 0
+    for c, t, a in product(range(2), repeat=3):
+        # F Z_T F Z_T = P0 I + P1 Z_T Z_A; F swaps targets only if c=1.
+        t_after, a_after = ((a, t) if c else (t, a))
+        phase = (t+t_after) % 2
+        t_final, a_final = ((a_after, t_after) if c else (t_after, a_after))
+        assert (t_final, a_final) == (t, a)
+        assert phase == (c*(t+a)) % 2
+        if a == 0:
+            assert phase == c*t
+        fredkin_basis_states += 1
+
+    # All Hadamards occur in even pairs, so these complete local SWAP
+    # synthesis identities use Gaussian rationals without square roots.
+    i2, x, _, z = pauli_basis(1)
+    hraw = matrix_sum([x, z], 2)
+    cz = diagonal_blocks(i2, z)
+    target_h = tensor(i2, hraw)
+    cnot = scale(matmul(target_h, matmul(cz, target_h)), F(1, 2))
+    expected_cnot = diagonal_blocks(i2, x)
+    assert cnot == expected_cnot
+    both_h = tensor(hraw, hraw)
+    reverse_cnot = scale(matmul(both_h, matmul(cnot, both_h)), F(1, 4))
+    swap = matmul(cnot, matmul(reverse_cnot, cnot))
+    expected_swap = zeros(4, 4)
+    for c, t in product(range(2), repeat=2):
+        expected_swap[2*t+c][2*c+t] = ONE
+    assert swap == expected_swap
+
+    return {
+        "product_channel_sites_n": list(range(1, 8)),
+        "module_label_Pauli_string_pairs": pairs_checked,
+        "full_control_matrix_unit_phase_coefficients": control_units,
+        "GHZ_code_error_and_correction_pairs": code_pairs,
+        "GHZ_code_matrix_unit_coefficients": code_units,
+        "clean_bus_sites_n": list(range(1, 9)),
+        "clean_bus_measurement_branches": bus_branches,
+        "clean_bus_basis_coefficients": bus_basis_coefficients,
+        "clean_bus_corrected_logical_matrix_unit_coefficients": bus_matrix_units,
+        "clean_bus_branch_probability_by_n": probabilities,
+        "clean_bus_total_branch_probability_per_n": "1",
+        "Fredkin_CZ_complete_basis_actions": fredkin_basis_states,
+        "local_source_CNOT_reverse_CNOT_and_SWAP_identities": 3,
+        "source_SWAP_Fredkin_count": 6,
+        "scope": ("Exact finite Pauli/control/code phases, normalized clean-bus "
+                  "branch isometries and local Fredkin-to-CZ/SWAP synthesis. "
+                  "Universal identities, late-choice LOCC correctness, physical "
+                  "controller ports, bus/fanout graph, channel extensions and "
+                  "hardware costs remain analytic assumptions/proofs. No free "
+                  "side-wire equivalence or native advantage is certified."),
+    }
+
+
 def main():
     losses = [loss_example(d, x, lx, y, ly) for d, x, lx, y, ly in (
         (2,F(3,5),F(4,5),F(5,13),F(12,13)),
@@ -377,7 +482,8 @@ def main():
         "elastic_node_example":elastic_node_example(),
         "frequency_check_example":frequency_check_example(),
         "replacement_reset_cycle_examples":reset_cycle_examples(),
-        "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and instrument/isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger and stopping proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
+        "random_receiver_native_baselines":random_receiver_examples(),
+        "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and random-receiver phase/normalized-bus isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 
 if __name__ == "__main__":

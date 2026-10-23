@@ -12,7 +12,7 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | Communication cuts, optical loss and control-resource bounds | [Communication results](research/topics/nr-noisy-recovery/communication.md) |
 | Coherent dispatch, ordinary recovery and microscopic temporal models | [Dispatch result](research/topics/nr-noisy-recovery/dispatch.md) |
 | Bath backaction, calibration transfer and ordinary echo/record controls | [Shared-bath screen](research/topics/nr-noisy-recovery/backaction.md) |
-| Unknown odd couplers, exact two-query correction and ordinary limits | [Coupler benchmark](research/topics/nr-noisy-recovery/backaction.md#nr-r19) |
+| Unknown odd couplers, exact correction and expected-query fidelity limits | [Coupler benchmark](research/topics/nr-noisy-recovery/backaction.md#nr-r19) |
 | Noisy phase calibration, finite-query precision and native memory costs | [Metrology benchmark](research/topics/nr-noisy-recovery/metrology.md) |
 | Displacement calibration, energy bookkeeping and ordinary optical loops | [Geometric calibration](research/topics/nr-noisy-recovery/geometric-calibration.md) |
 | Braided magic and physical coherent-trajectory resources | [Braided-magic screen](research/topics/nr-noisy-recovery/braided-magic.md) |
@@ -38,7 +38,7 @@ Each result has one canonical owner. The result index and topic READMEs provide 
 
 The recovery topic contains an analytic physical-output theorem, its exact replay dependencies, and scoped obstructions. It is separate from the manuscript's existing simulation and decision results and has not been formalized in Lean.
 
-Its architecture assessment distinguishes the fresh-frame theorem from persistent calibration and real device interfaces. Exact ordinary fault simulation, finite-family reuse learning, and measurement-record baselines rule out several proposed extensions under their stated models. A substantial architecture application remains open.
+Its architecture assessment distinguishes fresh-oracle theorems from persistent calibration and real device interfaces. The unknown-coupler benchmark includes certified expected-query fidelity limits; calibrated Pauli/qutrit recovery, finite-family reuse, measurement records and conditional network controls supply strong ordinary baselines. A substantial architecture application remains open.
 
 Checkpoint collections, repeated reviews, old drafts, and packaging history are not part of the repository. Revisions belong in ordinary Git commits to the canonical files.
 

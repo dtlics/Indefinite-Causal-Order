@@ -1112,7 +1112,7 @@
     {
       "id": "NR-R19",
       "topic": "NR",
-      "title": "Unknown odd couplers: exact two-query correction and ordinary limits",
+      "title": "Unknown odd couplers: exact correction and expected-query fidelity limits",
       "canonical_path": "research/topics/nr-noisy-recovery/backaction.md#nr-r19"
     }
   ]

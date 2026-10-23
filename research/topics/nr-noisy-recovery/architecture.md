@@ -192,6 +192,19 @@ other ordinary quadratures can expose sign correlations that it misses.
 These scoped screens are recorded in
 [NR-R06](architecture-baselines.md#nr-r06).
 
+For deterministic storage under calibrated Pauli noise, an ordinary echo
+with one helper and two local controlled-Pauli gates attains at least the
+bare switch's best entanglement fidelity. Tensor-product qutrit Weyl noise
+has a corresponding construction supported on at most two qutrits. The
+[full comparison](architecture-baselines.md#nr-r06-deterministic-pauli-weyl)
+includes common control preparation faults and a common final control-noise
+channel, with the helper phase applied before that noise. The dominant error
+labels, corrections and decoder still require calibration, and the check
+gates have real errors. Noise around arbitrary ideal gates need not obey
+the shared-net-error model used by this theorem. The next storage comparison
+therefore needs the actual gate sequence, in-circuit helper faults and a
+useful output or heralded frontier beyond these closed models.
+
 Quantum correlations do not by themselves remove ordinary alternatives:
 [two-qubit quantum-noise spectroscopy](https://doi.org/10.1103/PRXQuantum.1.010305)
 accesses cross spectra under its noise model without entangled preparation
@@ -228,13 +241,30 @@ The [unknown-coupler benchmark NR-R19](backaction.md#nr-r19) is a separate
 oracle family. A switch corrects arbitrary static station phases in two
 queries; an exact ordinary implementation with at most two queries is
 impossible for data dimension at least three, even with arbitrary known
-controls and memory. This is an analytic query statement. Known parity,
-a supplied coherent setting selector, or an Abelian qubit subfamily gives
-ordinary shortcuts; one extra unitary query also suffices for the general
-family. No quantified useful approximation margin or physical source of
-the unknown couplers has been established. A native application must
-justify address coherence and actual access, and charge repeated-device
-calibration, clean memory, control operations and all routing records.
+controls and memory. The qutrit rank-one-reflection ensemble also has a
+certified finite Bell-fidelity margin against arbitrary terminating ordinary
+strategies with mean query budget two. This budget is averaged over the
+stated fresh prior and Bell input; prior oracle-dependent advice changes
+the model. The exact bound, stopping reduction and certificate are owned
+by NR-R19.
+
+An executable address-selective reflection gives an ordinary two-query
+wrapper even when its matrix is unknown. Persistent reflection data can
+also be learned through a classical-address port independently of the
+station phases. A supplied coherent setting selector or an Abelian qubit
+subfamily gives further shortcuts, and the general family admits a
+three-call simulation. In passive mobile devices the extra nominal query
+can use a vacuum dummy, so its physical penalty needs an occupied-path
+calculation. Generic manifold hopping and reciprocal reverse propagation
+do not automatically implement the promised unknown couplers.
+
+The next native test needs packaged modules receiving the complete coherent
+address/data register, a useful task requiring that address coherence,
+and an explanation of why the ordinary reflection wrapper is unavailable.
+Measure the reflection drift window and the full switched instrument, then
+compare ordinary calibration reuse and three-window routing at matched
+primitive operations, delay, clean memory, loss and retained records. No
+complete device/task combination with a convincing benefit has been verified.
 
 There is a named optical testbed with a longer-lived oscillator:
 [Spinnler et al.](https://doi.org/10.1038/s41467-024-53882-2) couple a quantum
@@ -520,6 +550,18 @@ known-channel simulation with one equally dephased qubit wire (NR-R10).
 This does not grant a free wire to every abstract switch placement. Nor can
 the local Bell-label readout of NR-R06 be imported across separated labs
 without paying for joining the halves.
+
+The [random-receiver comparison in NR-R10](communication.md#nr-r10)
+preserves the existing locality advantage against its restricted side-wire
+network. It also gives a full-channel ordinary parity sandwich when the
+controller can act before and after every noisy target, and an ordinary GHZ
+distribution protocol when a clean travelling Fredkin bus and local auxiliary
+measurements are physically available. Neither access pattern follows from
+an abstract global switch. The next network test must specify the actual
+controller transport/fanout graph, where the unknown message is loaded,
+which receivers are spatially separate, and every source, local gate,
+measurement, communication and memory cost. Encoding several receivers in
+one photon's degrees of freedom does not establish that distributed interface.
 
 The elastic accepted state-carving operators in the named cavity-node model
 preserve a common photon time-bin label and act on disjoint memories.
