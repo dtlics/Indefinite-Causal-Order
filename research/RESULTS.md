@@ -173,7 +173,7 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R02 | [Global replacement-noise gate-product recovery and exact finite certificates](../research/topics/nr-noisy-recovery/global-noise.md#nr-r02) |  |
 | NR-R03 | [Obstruction to a uniform-frame local-noise guarantee](../research/topics/nr-noisy-recovery/obstructions.md#nr-r03) |  |
 | NR-R04 | [Exact unknown-unitary implementation is impossible from full-support noisy queries](../research/topics/nr-noisy-recovery/obstructions.md#nr-r04) |  |
-| NR-R05 | [Destructive rejection and finite offline-program limits](../research/topics/nr-noisy-recovery/obstructions.md#nr-r05) |  |
+| NR-R05 | [Rejection, stochastic rewinding and finite-program limits](../research/topics/nr-noisy-recovery/obstructions.md#nr-r05) |  |
 | NR-R06 | [Native checks, calibrated faults and ordinary path baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06) |  |
 | NR-R07 | [Polynomial-query calibration of the reused finite-frame family](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r07) |  |
 | NR-R08 | [Accessible measurement records and syndrome-sector baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08) |  |
@@ -184,3 +184,6 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R13 | [Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound](../research/topics/nr-noisy-recovery/native-lookups.md#nr-r13) |  |
 | NR-R14 | [Shared-bath calibration transfer and exact ordinary echo/instrument baselines](../research/topics/nr-noisy-recovery/backaction.md#nr-r14) |  |
 | NR-R15 | [Noisy phase calibration: certified two-call benchmark and native-memory boundary](../research/topics/nr-noisy-recovery/metrology.md#nr-r15) |  |
+| NR-R16 | [Displacement-area calibration and native ordinary controls](../research/topics/nr-noisy-recovery/geometric-calibration.md#nr-r16) |  |
+| NR-R17 | [Braided magic, coherent trajectory resources and ordinary factories](../research/topics/nr-noisy-recovery/braided-magic.md#nr-r17) |  |
+| NR-R18 | [Drifting measurement alignment: exact two-query limit and reuse costs](../research/topics/nr-noisy-recovery/alignment.md#nr-r18) |  |

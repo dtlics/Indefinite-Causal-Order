@@ -15,7 +15,7 @@ and from learning a scalar channel property.
 | NR-R02 | Global replacement-noise gate-product recovery and exact finite certificates | [Global-noise result](global-noise.md#nr-r02) |
 | NR-R03 | Obstruction to a uniform-frame local-noise guarantee | [Scoped counterexample](obstructions.md#nr-r03) |
 | NR-R04 | Exact unknown-unitary implementation is impossible from full-support noisy queries | [Support argument](obstructions.md#nr-r04) |
-| NR-R05 | Destructive rejection and finite offline-program limits | [Failure and retrieval boundaries](obstructions.md#nr-r05) |
+| NR-R05 | Rejection, stochastic rewinding and finite-program limits | [Failure, stopping and retrieval boundaries](obstructions.md#nr-r05) |
 | NR-R06 | Native checks, calibrated faults and ordinary path baselines | [Fault and check comparisons](architecture-baselines.md#nr-r06) |
 | NR-R07 | Polynomial-query calibration of the reused finite-frame family | [Reuse baseline](architecture-baselines.md#nr-r07) |
 | NR-R08 | Accessible measurement records and syndrome-sector baselines | [Measurement baselines](architecture-baselines.md#nr-r08) |
@@ -26,6 +26,9 @@ and from learning a scalar channel property.
 | NR-R13 | Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound | [Composite lookup screen](native-lookups.md#nr-r13) |
 | NR-R14 | Shared-bath calibration transfer and exact ordinary echo/instrument baselines | [Bath-backaction screen](backaction.md#nr-r14) |
 | NR-R15 | Noisy phase calibration: certified two-call benchmark and native-memory boundary | [Metrology benchmark](metrology.md#nr-r15) |
+| NR-R16 | Displacement-area calibration and native ordinary controls | [Geometric calibration](geometric-calibration.md#nr-r16) |
+| NR-R17 | Braided magic, coherent trajectory resources and ordinary factories | [Braided magic](braided-magic.md#nr-r17) |
+| NR-R18 | Drifting measurement alignment: exact two-query limit and reuse costs | [Alignment benchmark](alignment.md#nr-r18) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -99,6 +102,19 @@ filtering, pair-preserving readout and ordinary delayed/reused paths must
 be compared on the complete output. Recent two-dot experiments motivate
 a joint physical device model rather than assumed independent swapped
 slots. The assessment records that concrete next test.
+The [alignment benchmark](alignment.md) separates a strict two-call
+advantage from measurement-record access, ordinary reuse and control
+backgrounds. Its fresh shared-frame assumptions still need a physical
+two-meter realization. The [displacement-calibration result](geometric-calibration.md)
+identifies a more concrete optical comparison: measure the complete
+ordinary conditional-displacement echo and switched instrument at the
+same setting, including every loss, parity helper, repeat pass and phase
+calibration. Component transmissions alone do not establish that comparison.
+The [braided-magic screen](braided-magic.md) requires a complete physical
+phase and trajectory model, with ordinary loop/interferometer factories
+included. The [rewinding analysis](obstructions.md#nr-r05) distinguishes
+almost-sure completion from finite mean cost and delivered success under
+loss. None of these screens establishes a native architecture benefit.
 Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.

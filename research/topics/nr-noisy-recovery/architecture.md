@@ -7,8 +7,9 @@ game. They do **not** yet establish a useful advantage for calibrating or
 operating persistent hardware. The next investigations start from complete
 device instruments and available controls, then ask whether switched outputs
 improve a deployed decision. Current screens cover calibration transport,
-multimode optics, network entanglement, private key detection and native
-computational layers. A quantum bath or a cheaper control readout is not
+multimode optics, displacement calibration, measurement alignment, network
+entanglement, private key detection, braided magic and native computational
+layers. A quantum bath or a cheaper control readout is not
 enough: the comparison must include native reference encodings, ordinary
 echo and spectral checks, and every accepted and rejected outcome. No checked
 architecture currently meets all the required assumptions.
@@ -93,6 +94,17 @@ ordinary two-visit echo that beats the independent-slot switch. The next
 comparison must therefore use actual reset, timing, return and interrogation
 rules rather than import a hard two-query bound as a throughput theorem.
 
+The [drifting measurement-alignment benchmark NR-R18](alignment.md) makes
+that distinction in an unread-meter model. It proves a finite advantage
+under a strict two-call cap, with an exact ordinary adaptive certificate.
+Ordinary background-free tests already have the same small-angle scaling;
+longer rounds and accessible consistent measurement labels change the
+comparison again. Fixed control background destroys the ideal local
+null advantage. An application must explain why two modules share a frame
+throughout a round, why it is fresh before the next round, and why useful
+records and pilots are unavailable. Existing polarization tracking and
+recorded-meter experiments do not yet supply that full interface.
+
 A switch minus probability measures Kraus-commutator information, which need
 not equal a useful scheduling quantity. Commuting channel superoperators can
 produce a nonzero signal. Weak coherent errors can produce a fourth-order
@@ -101,6 +113,28 @@ signal even when ordinary repeated sequences amplify their generators.
 calibrated orthogonal-unitary faults and a continuous-angle scalar example.
 These do not settle hardware cost: Bell probes require preparation, storage
 and readout, while the switch requires coherent routing and a clean control.
+
+### Displacement-area calibration with a complete optical budget
+
+Transverse optical displacement experiments provide a concrete signal
+and a real implementation, rather than only a calibration analogy. The
+[displacement result NR-R16](geometric-calibration.md) compares their
+one-use interface with the published ordinary conditional-force echo,
+a bus-returning loop and classically varied shot orders. Initial probe
+energy, maximum energy, repeatable component values and access to later
+preparation are different resources. An initial-energy bound with the
+same oracle order in every shot does not settle a reusable two-setting
+calibration experiment. Native cavity conditional-displacement signal
+processing is also an ordinary hardware comparator.
+
+The next finite test is the complete single-photon optical echo, including
+polarization-controlled spatial parity, repeat passes, aperture, source
+conditioning and every detector port. Measure its launch-normalized
+information or global calibration error against the switch at the same
+number of displacement elements and drift window. NR-R16 gives the local
+loss/visibility threshold and identifies which measured component facts
+still fall short of a full comparison. No new native gain follows from
+those component values alone.
 
 ### Correlated dephasing and live quantum memories
 
@@ -427,6 +461,27 @@ measurement reduces the latter mean to $11/2$, with the same control cost.
 Both use Pauli and syndrome tracking; any correction needed to return an
 untracked physical output must still be implemented and costed. These are
 counts for the displayed protocols, not an optimal architecture bound.
+
+The [unitary-braid magic result NR-R17](braided-magic.md) concerns a
+different endpoint: a useful non-Clifford gate or raw logical magic state.
+Protected Ising braids and fusion records alone cannot supply its coherent
+order router. A proposed hybrid spin/position interface also enables
+ordinary loop and exchange-interferometer factories; their complete
+physical Abelian phases and position-selection losses are essential.
+The next comparison needs a named anyon/charge model, a complete
+trajectory instrument and distilled/injected logical output at fixed
+error per factory space and time. An ideal magic witness or a non-Abelian
+fringe does not establish that cost advantage.
+
+The [rewinding-cost analysis in NR-R05](obstructions.md#nr-r05) supplies
+another stopping boundary. A particular published adaptive walk completes
+almost surely but has infinite mean query count, and independent loss
+reduces its delivered success. The tested fixed-axis optical evolution
+also admits an ordinary Pauli echo. Compare known-perturbation checks,
+ordinary extra-query routing and modern unitary-inversion protocols
+before translating a conditional rewinding experiment into a useful
+recovery-rate claim. This finding concerns the stated walk and access
+model, rather than every quantum rewinding algorithm.
 
 Unknown analogue internals do not automatically prevent ordinary checks.
 If a known implementable involution commutes with the ideal Hamiltonian,

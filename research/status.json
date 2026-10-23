@@ -63,7 +63,7 @@
       "slug": "nr-noisy-recovery",
       "title": "Noisy physical recovery with expected-query bounds",
       "status": "analytic-with-exact-certificates",
-      "qualification": "Physical-output theorem for fresh frames and specified noise/control models; exact replays and scoped ordinary calibration, measurement, network and shared-bath baselines. Architecture benefit remains open; not Lean-formalized or externally peer reviewed.",
+      "qualification": "Physical-output theorem for fresh frames and specified noise/control models; exact recovery, phase/alignment benchmarks and scoped ordinary calibration, measurement, network, magic and shared-bath baselines. Architecture benefit remains open; not Lean-formalized or externally peer reviewed.",
       "dossier": "topics/nr-noisy-recovery/README.md"
     }
   ]

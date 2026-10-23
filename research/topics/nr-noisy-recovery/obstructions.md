@@ -173,7 +173,7 @@ branch.
 
 <a id="nr-r05"></a>
 
-## NR-R05 — Rejection and offline-program limits
+## NR-R05 — Rejection, stochastic rewinding and finite-program limits
 
 ### The rejected global-noise switch branch destroys target-reference entanglement
 
@@ -281,6 +281,261 @@ with probability $1/D^2$, and its other outcomes are not generally
 correctable after an unknown gate. More sophisticated retrieval needs
 its own resource accounting. This finite-program result does not
 classify every online encoding retaining quantum memory during queries.
+
+### A particular unitary rewinding recursion has infinite mean overhead
+
+This statement concerns the explicit unitary random-walk recursion in
+Appendix A of [Trillo, Dive and Navascués](https://arxiv.org/html/2205.01131v1),
+not every quantum rewinding or inversion algorithm. Its target is a
+closed qubit, with fixed repeatable unitaries $W,V$. A complete
+interferometric module $Q$ has Kraus operators
+$[V,W]/2$ and $\{V,W\}/2$. Write
+
+$$
+pI=\frac14[V,W]^\dagger[V,W],\qquad 0<p<1.
+$$
+
+The scalar probability follows directly by writing, up to global phases,
+$W=\cos a\,I-i\sin a\,\mathbf n\cdot\boldsymbol\sigma$ and
+$V=\cos b\,I-i\sin b\,\mathbf m\cdot\boldsymbol\sigma$:
+
+$$
+p=\sin^2a\,\sin^2b\,[1-(\mathbf n\cdot\mathbf m)^2].
+$$
+
+Consequently the port probabilities remain $p,1-p$ after every previous
+outcome, including for a target entangled with an inaccessible reference.
+Let $H$ count $Q$ modules until the walk first completes one corrected
+commutator, and put $f(z)=\mathbb E z^H$. More explicitly, write the
+walk's vertices as $\underline{k},\overline{k}$ for $k\in\mathbb Z$.
+From $\underline{k}$ it moves to $\overline{k}$ with probability $p$
+or $\underline{k+1}$ with probability $1-p$; from $\overline{k}$ it
+moves to $\underline{k}$ with probability $p$ or $\overline{k-1}$
+with probability $1-p$. Here $H$ is the first passage from
+$\underline0$ to $\overline0$, and $g(z)$ is the generating function
+for the first passage from $\underline0$ to $\underline1$.
+First-step conditioning, translation/reflection symmetry and the strong
+Markov property give
+
+$$
+f=pz+(1-p)zfg,\qquad g=(1-p)z+pzfg.
+$$
+
+Thus $g=(1-p)z/(1-pzf)$ and
+
+$$
+pzf^2-[1+(2p-1)z^2]f+pz=0.
+$$
+
+The solution with $f(0)=0$ is
+
+$$
+f(z)=\frac{1+(2p-1)z^2-
+\sqrt{(1-z^2)[1-(2p-1)^2z^2]}}{2pz}.
+\tag{1}
+$$
+
+The full recursion completes two such passages. The first-passage times
+are independent copies by the strong Markov property and the fixed scalar
+port probabilities, even though the target state changes. Hence, for its
+total module count $N=H_1+H_2$,
+
+$$
+F(z):=\mathbb E z^N=f(z)^2.
+\tag{2}
+$$
+
+$N$ excludes the deliberate long forward-evolution interval. Each $Q$
+module itself contains one $W$ and one $V$ call; a module is not a single
+elementary traversal. With $c=\sqrt{2(1-p)/p}$, expansion at $z=1$ yields
+
+$$
+f(z)=1-c\sqrt{1-z}+O(1-z),\qquad
+F(z)=1-2c\sqrt{1-z}+O(1-z).
+\tag{3}
+$$
+
+Therefore $F(1^-)=1$ but $F'(1^-)=\infty$: the recursion terminates
+almost surely and has **infinite expected module count** for every
+$0<p<1$. Positivity of the probability coefficients justifies identifying
+the derivative limit with the first moment. At $p=1$, $N=2$;
+at $p=0$, the commutator event never occurs.
+
+The parity can be handled without treating the singularity at $z=-1$
+as an independent tail. Since $N$ is even, let
+$G(w)=F(\sqrt w)=\mathbb E w^{N/2}$. Equation (3) gives
+
+$$
+\sum_{j\ge0}\Pr(N/2>j)w^j
+=\frac{1-G(w)}{1-w}
+=2\sqrt{\frac{1-p}{p}}(1-w)^{-1/2}+O(1).
+$$
+
+In (1), the other square-root singularity in $w$ lies at
+$1/(2p-1)^2>1$, or is absent when $p=1/2$. Expanding the analytic factor
+at $w=1$ and using the coefficient asymptotic
+$\operatorname{coeff}_{w^j}(1-w)^{-1/2}\sim1/\sqrt{\pi j}$ proves
+
+$$
+\Pr(N>m)\sim\frac{2c}{\sqrt\pi}\,m^{-1/2},\qquad
+\mathbb E\min(N,m)\sim\frac{4c}{\sqrt\pi}\sqrt m.
+\tag{4}
+$$
+
+In particular the smallest high-confidence cap obeys
+$m_\delta\sim8(1-p)/(\pi p\delta^2)$ as the allowed terminal failure
+$\delta\downarrow0$, for fixed $p$. These are asymptotic formulas, not
+finite-cap confidence certificates. They are consistent with the
+published fixed-confidence duration $T+O(1)$: that statement fixes the
+confidence and noncommutation scale before varying the rewound time $T$.
+It does not assert finite mean overhead or uniform cost as $p\downarrow0$.
+
+### Independent module loss gives an exact delivered-success law
+
+Assume every complete $Q$ module has an independent, state- and
+port-independent survival probability $\ell$. A lost target is unusable.
+The lossless outcome history of length $N$ survives with probability
+$\ell^N$, so the eventual delivered-rewind probability is exactly
+
+$$
+P_{\mathrm{delivered}}=F(\ell)=f(\ell)^2,
+\qquad
+1-F(\ell)=2c\sqrt{1-\ell}+O(1-\ell).
+\tag{5}
+$$
+
+This delivery law does not require immediate loss detection. If loss is
+immediately heralded and $L$ is the index of the first failed module,
+the number of attempted modules, including the failed one, satisfies
+
+$$
+\begin{aligned}
+\mathbb E\min(N,L)
+&=\sum_{k\ge1}\Pr(N\ge k)\ell^{k-1}\\
+&=\frac{1-F(\ell)}{1-\ell}.
+\end{aligned}
+\tag{6}
+$$
+
+With a deterministic cap $m$, delivery is
+$\sum_{n\le m}\Pr(N=n)\ell^n$, and the corresponding expected attempted
+count is $\sum_{k=1}^m\Pr(N\ge k)\ell^{k-1}$. If loss is not immediately
+heralded, actual scheduled hardware use needs its own stopping rule.
+For example, $p=1/2$, $\ell=0.99$ gives delivered probability
+$0.752744904$ and mean $24.7255096$ attempted modules under immediate
+loss stopping. Source, detector and deliberate-wait losses are additional.
+
+This is a uniform independent-erasure model, not a fit to an optical
+apparatus. Port-dependent attenuation, polarization leakage, drift,
+imperfect readout and environmental records require their full
+instruments. A lost arbitrary input cannot be restarted; trials on fresh
+prepared inputs serve a different task. Equations (1)–(6) make no
+infinite-mean claim about other resetting or rewinding algorithms.
+
+### Restored optical output and the strongest admitted ordinary controls
+
+[Schiansky et al.](https://doi.org/10.1364/OPTICA.469109) demonstrate
+$[U,V]U^n[U,V]$ for $n=1,2,3$, using polarization waveplates, a Sagnac
+path control and electro-optic routing. Their successful conditional
+outputs have mean state fidelity above $0.95$. Anticommutator outputs are
+discarded; the adaptive correction is proposed rather than implemented.
+The [archived experiment, Section IV and Appendix A](https://arxiv.org/html/2205.01122v1)
+specifies the tested family
+
+$$
+U_j=e^{-i\arcsin(j/10)Z},\quad j=1,\ldots,10,
+\qquad
+V_k=\cos(k\pi/11)Z+\sin(k\pi/11)Y.
+$$
+
+For every member of this family, every $n$ and every input/reference,
+
+$$
+XU_j^nX=U_j^{-n}.
+\tag{7}
+$$
+
+Two fixed known polarization flips therefore give an exact ordinary
+echo without identifying $j$ or postselecting. This is a consequence of
+the tested ensemble, not a refutation of universal unknown-axis
+rewinding. The experiment's restricted sequential comparator permits
+positive free waits and the designated $V$, excluding arbitrary known
+waveplate controls.
+
+The same source reports approximately $400$ ns routing rise time,
+$106$, $109$ and $155$ m delays, $1.5$ dB per electro-optic pass,
+$12$ dB across eight such passes at $n=3$, and another $3.5$ dB from
+mirrors. Runs last $2.5$–$4.5\,\mu$s. The quoted $15.5$ dB contributions
+alone correspond to $10^{-1.55}\simeq0.0282$ transmission before port
+selection and other losses; this conversion is not a reported delivered
+rate. Conditional tomography and separately normalized counts do not
+establish an all-attempt service yield.
+
+Other ordinary interfaces must be distinguished explicitly:
+
+- When $V$ is known and its controlled implementation is available, the
+  [known-intervention sandwich in NR-R14](backaction.md#nr-r14), with one
+  intervention set to the identity, reproduces the entire commutator/
+  anticommutator instrument with one unknown $U$ call. It never controls
+  the unknown $U$. The actual conditional gates, delays and losses count.
+- For two unknown transferable unitary slots, the
+  [three-call ordinary construction in NR-R12](dispatch.md#nr-r12)
+  implements their complete switch, including arbitrary reference
+  coherence. It uses the sequence $U,V,U$, one clean memory of the data
+  dimension and four known controlled swaps. Replacing each short $Q$
+  this way preserves a capped rewinder's $T+O(m)$ timing form, with
+  different physical overhead. That memory/swap interface is not supplied
+  by an immobile uncontrolled target merely because coherent flight-path
+  access exists.
+- A genuine reciprocal reverse port can be stronger still.
+  [Strömberg et al.](https://doi.org/10.1103/PhysRevResearch.6.023071)
+  realize waveplate gadgets with
+  $U_{\rm bw}=P U_{\rm fw}^T P^\dagger$ for a known frame $P$.
+  The $2\times2$ identity $YU^TY=\det(U)U^{-1}$ shows that fixed
+  endpoint controls turn one such backward traversal into the inverse
+  channel. Coherently superposing directions is unnecessary for that
+  task. Reverse access, its frame correction and its loss are additional
+  physical resources; they do not follow from a one-way oracle premise.
+
+General ordinary inversion also supplies finite-cost comparators under
+its stronger circuit interface. [Quintino et al.](https://arxiv.org/html/1810.06944v3)
+use one qubit $U$ query, an entangled pair and a Bell measurement to
+implement $U^{-1}$ with probability $1/4$. A failed attempt gives
+$U^{-1}X^iZ^j|\psi\rangle$; an additional $U$ call and the known inverse
+Pauli recover the original arbitrary input, including its reference
+coherence. If $A$ is geometric with success $1/4$, the total query count
+is $2A-1$, has mean $7$, and has success
+$1-(3/4)^{\lfloor(k+1)/2\rfloor}$ by query cap $k$.
+Bell detection, coherent auxiliary storage and feedforward are charged.
+
+There is also a deterministic exact four-query qubit inverter:
+[Yoshida, Soeda and Murao](https://doi.org/10.1103/PhysRevLett.131.120602)
+give the original construction, while
+[Mo et al.](https://doi.org/10.1038/s41534-025-00979-1) give a simpler
+analytic circuit using three ancillas initialized to zero. The latter's
+four-call construction leaves two ancillas in $U$-dependent garbage that
+is traced out; zero initialization is not a claim of free clean reuse.
+Its device-noise comparison is simulated. In general dimension,
+[Chen et al., Theorem 1](https://arxiv.org/html/2403.04704v3)
+give exact deterministic inversion with at most
+$d\lceil\pi/[2\arcsin(1/d)]\rceil-1=O(d^2)$ forward calls, using
+known interleaved control and auxiliary registers. Parallel query
+layers are not a single station's elapsed time. None of these ordinary
+circuits presumes a controlled unknown $U$, but none supplies its
+ancillas, routing or gate-oracle access to a restricted native target
+for free.
+
+Applying a four-call inverter directly to a long evolution of duration
+$T$ generally consumes four long slots. This alone does not remove the
+abstract fixed-confidence $T+O(1)$ distinction. The controlled-$V$ or
+three-short-call compilations can preserve that schedule when their
+interfaces are available. For $d=2^n$, universal ordinary inversion can
+be expensive, but the qubit commutator identities do not themselves give
+a generic many-body switch rewinder. An open target's reduced noisy
+channel likewise is not a repeatable closed-qubit unitary. Thus the
+optical output is a valid useful-state demonstration, while a native
+finite-cost advantage over all controls admitted by the same device
+remains unestablished.
 
 ## Interface changes that remove the comparison
 

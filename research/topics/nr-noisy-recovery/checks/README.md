@@ -31,6 +31,8 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_lookups.py` | Full-address Choi identities for all 340 Boolean table pairs at address dimensions 1–4, both measured flags, conditional correction and rejection accounting; the four-truth-pattern balanced-switch junk-erasure projector. The general scoped erasure bound and native access assumptions remain analytic. |
 | `architecture/verify_backaction.py` | Eight reference-complete flagged echo/switch Choi identities at bath dimensions 2 and 3; a rational pair with equal first-echo flagged bath outputs but unequal uninterrupted two-cycle memory fidelity; an ordinary three-window record contrast; and three polynomial families for complete Ramsey equivalence, reversed storage preference and passive classical echo loss. The all-dimension instrument, known-intervention simulation and physical control assumptions remain analytic. |
 | `architecture/verify_metrology.py` | Reconstructs the hard-two-query adaptive phase/amplitude-damping dual from Kraus derivatives and one rational witness JSON. Rational square-root intervals and a complete exact LDL reconstruction certify its 16-dimensional LMI. Also checks explicit joint-readout Fisher information, visibility/loss thresholds, the plain-switch/retained-echo polynomial, regular echo arithmetic and the feasible three-query feedback recurrence. Tester semantics, covariance/concavity, complete native instruments and physical costs remain analytic. |
+| `architecture/verify_braided_magic.py` | Exact quarter-braid gate branches, the extremal stabilizer overlap, both complete flagged raw-state ensembles for five rational helper visibilities, the physical-$S$ half-exchange yield and exposure count, and sixteen Pauli-loop closures. The protected-resource closure, complete physical phase, native position histories and logical factory costs remain analytic. |
+| `architecture/verify_alignment.py` | Reconstructs the joint Haar-Choi sectors and exact ordinary adaptive null-event primal/dual certificates with Gaussian integers and rational arithmetic. Checks the native isometry/projector realization, pointwise null event, reversed wire convention, multi-copy coefficients and visibility identities. The uniform optimized local-information limit, classical query-choice reduction and fresh-frame hardware promise remain analytic. |
 
 The five modules in `algebra/` form the shared exact engine. `brauer_exact_replay.py` derives diagram multiplication, adjoints, traces and identity insertions directly from pairings. `brauer_objective.py` constructs canonical Gaussian-integer objectives; `brauer_weingarten.py` inverts their permutation Gram system over fractions. `brauer_sos_certificate.py` checks the actual tensor-operator sum-of-squares residual and its norm margin. The main checker independently verifies every objective Gram equation and reconstructs every certificate slack. Both dimension-8 certificate JSONs are required inputs; search diagnostics and cached slacks cannot substitute for a successful replay.
 
@@ -81,3 +83,17 @@ reuse, and bath-record/tail arguments in NR-R11 are analytic. They are
 not certified by a finite frequency-grid replay or by the existing small
 elastic-node examples. No native pulse-tail or phonon-overlap estimate is
 recorded as proved by these checks.
+
+The [alignment benchmark](../alignment.md) proves its all-ordinary strict
+two-call local limit analytically using the replayed causal witnesses and
+a compactness argument. The same certificate is not a mean-cost converse;
+longer ordinary rounds remain feasible. The
+[braided-magic result](../braided-magic.md) checks full flagged state
+identities, rather than equating selected fidelities alone. Those finite
+checks do not certify a coherent anyon trajectory or its physical phase.
+The [displacement-calibration constructions](../geometric-calibration.md)
+and [rewinding stopping/loss analysis](../obstructions.md#nr-r05) have
+explicit analytic proofs and primary-source assumptions. No finite test
+is substituted for the continuum Weyl identities, global-risk proof or
+infinite-mean stopping argument. All these canonical notes are included
+in the runner's input hashes.

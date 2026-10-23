@@ -70,6 +70,10 @@ JOBS = (
      "Exact full flagged-Choi echo/switch examples, held-out memory and ordinary record contrasts, and polynomial Ramsey/storage counterexamples; all-dimension instrument proofs and hardware access remain analytic."),
     ("architecture-metrology", "architecture/verify_metrology.py", (),
      "Exact two-query adaptive phase/AD dual feasibility, achievable full-output Fisher information and visibility/erasure arithmetic, ordinary memory/rate boundaries; process and hardware arguments remain analytic."),
+    ("architecture-braided-magic", "architecture/verify_braided_magic.py", (),
+     "Exact Ising quarter-braid branches, stabilizer target bound, both flagged ordinary controlled-S state identities under matched helper visibility, physical-S half-exchange yield and Pauli-loop closures; native trajectories, phases and factory costs remain analytic."),
+    ("architecture-alignment", "architecture/verify_alignment.py", (),
+     "Exact Haar-Choi sectors, causal primal/dual null-event certificates, native adaptive realization and ordinary reuse/visibility identities; optimized local-limit and physical-interface arguments remain analytic."),
 )
 
 

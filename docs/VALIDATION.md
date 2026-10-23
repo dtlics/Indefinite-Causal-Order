@@ -99,4 +99,24 @@ arguments, actual phonon overlaps, a native pulse-tail bound, a physical
 pair router or a hardware performance advantage. No frequency-grid
 certificate or fitted single-mode gate is claimed.
 
+The [drifting-alignment benchmark](../research/topics/nr-noisy-recovery/alignment.md)
+has exact causal primal/dual null-event witnesses and a native adaptive
+realization. Its all-ordinary optimized local limit also uses an analytic
+compactness and classical query-choice reduction. This is a strict two-call
+comparison, not a mean-cost converse or a demonstrated fresh-frame meter.
+The [braided-magic result](../research/topics/nr-noisy-recovery/braided-magic.md)
+has exact gate-branch, full flagged raw-state, visibility and Pauli-loop
+identities. Protected Ising closure, the complete physical braid phase,
+position postselection and native factory costs remain analytic conditions.
+
+The [displacement-calibration note](../research/topics/nr-noisy-recovery/geometric-calibration.md)
+proves ordinary Weyl-loop, CV shot-order and exact finite-dimensional
+global-risk constructions under explicit control and energy assumptions.
+The [rewinding-cost analysis](../research/topics/nr-noisy-recovery/obstructions.md#nr-r05)
+derives infinite mean and independent-erasure success for one specified
+published recursion. These are analytic proofs; finite replay does not
+establish them or an experimental efficiency. Reported optical component
+transmissions are not a measurement of the full ordinary echo. None of
+these checks establishes a new architecture advantage or source priority.
+
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

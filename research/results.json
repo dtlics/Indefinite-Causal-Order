@@ -1016,7 +1016,7 @@
     {
       "id": "NR-R05",
       "topic": "NR",
-      "title": "Destructive rejection and finite offline-program limits",
+      "title": "Rejection, stochastic rewinding and finite-program limits",
       "canonical_path": "research/topics/nr-noisy-recovery/obstructions.md#nr-r05"
     },
     {
@@ -1090,6 +1090,24 @@
       "topic": "NR",
       "title": "Noisy phase calibration: certified two-call benchmark and native-memory boundary",
       "canonical_path": "research/topics/nr-noisy-recovery/metrology.md#nr-r15"
+    },
+    {
+      "id": "NR-R16",
+      "topic": "NR",
+      "title": "Displacement-area calibration and native ordinary controls",
+      "canonical_path": "research/topics/nr-noisy-recovery/geometric-calibration.md#nr-r16"
+    },
+    {
+      "id": "NR-R17",
+      "topic": "NR",
+      "title": "Braided magic, coherent trajectory resources and ordinary factories",
+      "canonical_path": "research/topics/nr-noisy-recovery/braided-magic.md#nr-r17"
+    },
+    {
+      "id": "NR-R18",
+      "topic": "NR",
+      "title": "Drifting measurement alignment: exact two-query limit and reuse costs",
+      "canonical_path": "research/topics/nr-noisy-recovery/alignment.md#nr-r18"
     }
   ]
 }
