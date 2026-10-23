@@ -22,6 +22,15 @@ The selected proof-verification record reports 32 endpoints checked with Lean 4.
 
 The new NR recovery theorems have not been formalized in Lean or externally peer reviewed. Their mathematical arguments use the explicitly cited mixed-tensor decomposition and approximate-design theorem in addition to the exact certificates. The local result averages over fresh private frames, uses noise once after each whole module with rate of order `1/n`, and bounds a specified signed recovery utility. Its control tolerance is the declared scalar dephasing model. No deployed-runtime, fixed native fault-rate, persistent-frame throughput, or capacity validation is recorded.
 
+The [architecture baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md)
+add analytic fault-simulation, reused-calibration and measurement-interface
+arguments. Their exact replays check finite full-output examples,
+measurement identities and calibration-score arithmetic. The cited
+Threshold Search theorem supplies the collective learning bound; the
+replay does not implement that learner or determine its asymptotic
+constant. These checks do not establish hardware efficiency, source
+priority, a general memory-process model or an architecture advantage.
+
 `prepare_verification.py` derives the current import closure and endpoint list offline. It rejects missing local modules and dependency cycles; the wrappers also check endpoint identities and allowed axioms. Their offline checks are separate from running Lean.
 
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

@@ -57,6 +57,14 @@ These are limitations of tempting proof shortcuts. They are not unresolved premi
 
 ## Supplementary checks and open questions
 
+The [architecture assessment](../nr-noisy-recovery/architecture.md) tests
+which physical interfaces could support an application. The
+[ordinary measurement baselines](../nr-noisy-recovery/architecture-baselines.md#nr-r08)
+show why accessible stable outcome records and degenerate syndrome
+sectors require different comparisons from the rank-one, unmonitored
+hidden dephasers here. Commuting averaged channels or a compatible
+syndrome algebra alone do not certify logical correctness.
+
 The [checks](checks/) contain exact symbolic small-sector checks and a constants checker. The SymPy checks cover selected low degrees and image/cache identities; they do not certify every degree or the adaptive physical endpoint. Their recorded outputs concern those exact scripts. Run checks in an ignored build directory when they write output.
 
 The optimal ordinary-query exponent remains open. Sharpening the recording comparison or directly controlling the physical process may improve it. Descriptions of passive, parallel and weaker adaptive bounds without full model definitions or proofs are not treated here as separately established results.

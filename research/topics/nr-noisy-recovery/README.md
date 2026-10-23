@@ -16,6 +16,9 @@ and from learning a scalar channel property.
 | NR-R03 | Obstruction to a uniform-frame local-noise guarantee | [Scoped counterexample](obstructions.md#nr-r03) |
 | NR-R04 | Exact unknown-unitary implementation is impossible from full-support noisy queries | [Support argument](obstructions.md#nr-r04) |
 | NR-R05 | Destructive rejection and finite offline-program limits | [Failure and retrieval boundaries](obstructions.md#nr-r05) |
+| NR-R06 | Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories | [Fault simulation](architecture-baselines.md#nr-r06) |
+| NR-R07 | Polynomial-query calibration of the reused finite-frame family | [Reuse baseline](architecture-baselines.md#nr-r07) |
+| NR-R08 | Accessible measurement records and syndrome-sector baselines | [Measurement baselines](architecture-baselines.md#nr-r08) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -49,11 +52,22 @@ an expected oracle-call budget. Its order-control tolerance concerns
 the specified scalar dephasing model. It supplies a physical output,
 without a deployed-runtime or communication-capacity claim.
 
-Open directions include noise throughout every compiled gate, fixed
-positive per-site error rates with protected encodings, persistent-frame
-amortized workloads, hardware resource accounting, and sharper query
-frontiers. The scoped obstructions identify which extensions cannot
-follow from this standard assembly alone.
+The [architecture assessment](architecture.md) owns the application
+requirements and next-test protocol. A significant architecture benefit
+has not been established. In particular, the fresh-frame converse does
+not extend to reused devices after calibration; the ordinary reuse
+baseline is in NR-R07. Calibrated classical Pauli faults and recorded
+Lüders measurements have the ordinary baselines in NR-R06 and NR-R08.
+
+The next application question is whether a physical unmonitored
+multimode or pointer-algebra workload supplies the required interface
+and a useful decision before drift. First establish its instrument,
+pilot/readout access and best ordinary calibration method; then compare
+held-out task error at matched time, memory, calls and routing cost.
+The assessment gives explicit go/no-go tests and source-specific gaps.
+Other open directions include noise throughout compiled gates, protected
+encodings at fixed site error rates, and sharper query frontiers. These
+are open questions, not consequences of the present theorem.
 
 The [literature comparison](references.md) credits the existing filtering
 and recovery mechanisms. The bounded primary-source check does not

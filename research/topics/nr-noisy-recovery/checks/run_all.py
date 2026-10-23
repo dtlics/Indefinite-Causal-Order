@@ -50,6 +50,12 @@ JOBS = (
      "Global-depolarization recovery scalar/polynomial corollaries for qubit dimensions D=8,16,... and design loss."),
     ("local-recovery", "recovery/local_recovery.py", (),
      "Local n>=8 recovery constants, expected-cost coefficients, approximate-design loss and 97% visibility gap."),
+    ("architecture-fault-simulation", "architecture/verify_fault_simulation.py", (),
+     "Exact finite orthogonal-process and full-output simulation examples; no general hardware cost claim."),
+    ("architecture-reuse", "architecture/verify_reuse.py", (),
+     "Exact finite-frame calibration score, threshold, rejection and query-crossover arithmetic; cited learner not implemented."),
+    ("architecture-measurements", "architecture/verify_measurements.py", (),
+     "Exact small measurement/Choi, record-return and trace-filter identities with syndrome-sector scaling constants."),
 )
 
 
@@ -150,9 +156,9 @@ def main() -> int:
                         "No numerical SDP discovery, hardware experiment, novelty audit or fixed native-gate fault-tolerance claim is performed."],
     }
     report = BUILD / "report.json"
-    report.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    report.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8", newline="\n")
     if passed and args.record:
-        RECORD.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+        RECORD.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8", newline="\n")
     recorded = json.loads(RECORD.read_text(encoding="utf-8")) if RECORD.exists() else {}
     current = (recorded.get("schema") == SCHEMA and recorded.get("outcome") == "passed"
                and recorded.get("scope") == SCOPE and recorded.get("input_hashes") == after)

@@ -12,7 +12,7 @@ The eight stable topics below organize current knowledge. Each topic links to it
 | C4 | [Approximate full-switch simulation](topics/c4-approximate-switch-simulation/README.md) | recorded-formal-endpoints: Final supplied Lean package records the full-output error tradeoff and lower bounds. |
 | C5 | [Constant-gap channel-interference testing](topics/c5-interference-testing/README.md) | recorded-formal-endpoints: Final supplied Lean package records ordinary-query lower bounds; distinct single-hidden-basis proof retained. |
 | C6 | [SAME/MUB hidden dephasing and OTOCs](topics/c6-hidden-dephasing/README.md) | recorded-formal-endpoints: Final supplied Lean package records shared-Haar physical, decision and OTOC endpoints; keyed transfer remains conditional. |
-| NR | [Noisy physical recovery with expected-query bounds](topics/nr-noisy-recovery/README.md) | analytic-with-exact-certificates: Physical-output recovery theorem with exact arithmetic replays; fresh-frame average and specified noise/control models. Not Lean-formalized or externally peer reviewed. |
+| NR | [Noisy physical recovery with expected-query bounds](topics/nr-noisy-recovery/README.md) | analytic-with-exact-certificates: Physical-output theorem for fresh frames and specified noise/control models; exact replays and scoped ordinary calibration/measurement baselines. Architecture benefit remains open; not Lean-formalized or externally peer reviewed. |
 <!-- END GENERATED RESEARCH STATUS -->
 
 ## How the parts fit
@@ -22,6 +22,14 @@ The selected [paper](../paper/main.tex) presents one connected quantum-switch st
 The OTOC consequence depends on the SAME/MUB comparison and an exact identity. The keyed-device transfer retains its computational-security assumptions. The result index links these relationships without counting a change of interpretation as another independent lower-bound method.
 
 NR concerns physical state recovery through related noisy modules and an expected-call budget. Its local-noise theorem, global-replacement theorem, and scoped obstructions have distinct assumptions. The Bell and secret-state tests are operational variants of the same recovery frontier, not independent lower-bound results. Its analytic proofs and exact arithmetic checks do not add endpoints to the selected Lean project or revise the manuscript.
+
+The [architecture assessment](topics/nr-noisy-recovery/architecture.md)
+connects C6 and NR to real calibration, noise and recovery workloads.
+Its [ordinary baselines](topics/nr-noisy-recovery/architecture-baselines.md)
+account for classical fault trajectories, reused finite frames,
+measurement records and syndrome-sector rank. These are scoped
+exclusions and resource comparisons; an architecture application with a
+substantial demonstrated benefit remains open.
 
 ## Maintain current knowledge
 

@@ -174,3 +174,6 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R03 | [Obstruction to a uniform-frame local-noise guarantee](../research/topics/nr-noisy-recovery/obstructions.md#nr-r03) |  |
 | NR-R04 | [Exact unknown-unitary implementation is impossible from full-support noisy queries](../research/topics/nr-noisy-recovery/obstructions.md#nr-r04) |  |
 | NR-R05 | [Destructive rejection and finite offline-program limits](../research/topics/nr-noisy-recovery/obstructions.md#nr-r05) |  |
+| NR-R06 | [Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06) |  |
+| NR-R07 | [Polynomial-query calibration of the reused finite-frame family](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r07) |  |
+| NR-R08 | [Accessible measurement records and syndrome-sector baselines](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08) |  |

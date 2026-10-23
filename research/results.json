@@ -1018,6 +1018,36 @@
       "topic": "NR",
       "title": "Destructive rejection and finite offline-program limits",
       "canonical_path": "research/topics/nr-noisy-recovery/obstructions.md#nr-r05"
+    },
+    {
+      "id": "NR-R06",
+      "topic": "NR",
+      "title": "Exact ordinary simulation of calibrated orthogonal-unitary fault trajectories",
+      "canonical_path": "research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06"
+    },
+    {
+      "id": "NR-R07",
+      "topic": "NR",
+      "title": "Polynomial-query calibration of the reused finite-frame family",
+      "canonical_path": "research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r07",
+      "relationships": [
+        {
+          "type": "qualifies-reuse-extension",
+          "target": "NR-R01"
+        }
+      ]
+    },
+    {
+      "id": "NR-R08",
+      "topic": "NR",
+      "title": "Accessible measurement records and syndrome-sector baselines",
+      "canonical_path": "research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08",
+      "relationships": [
+        {
+          "type": "qualifies-architecture-interface",
+          "target": "C6-R01"
+        }
+      ]
     }
   ]
 }
