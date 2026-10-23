@@ -1018,6 +1018,7 @@ def raman_sprint_examples():
 
 
 def main():
+    from rydberg_memory_schur import verify_rydberg_memory_schur
     losses = [loss_example(d, x, lx, y, ly) for d, x, lx, y, ly in (
         (2,F(3,5),F(4,5),F(5,13),F(12,13)),
         (3,F(3,5),F(4,5),F(5,13),F(12,13)),
@@ -1046,6 +1047,7 @@ def main():
         "raman_direct_temporal":verify_raman_direct_temporal(),
         "raman_timed_controls":verify_raman_timed_controls(),
         "raman_temporal_tail":verify_raman_temporal_tail(),
+        "rydberg_memory_schur":verify_rydberg_memory_schur(),
         "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and random-receiver phase/normalized-bus isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 

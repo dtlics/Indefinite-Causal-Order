@@ -723,6 +723,8 @@ def andreev_native_checks():
 
 
 def main():
+    from verify_high_order_bath import verify_high_order_bath
+    from native_matter_guards import verify_native_matter_guards
     cases = sum(echo_check(a, b) for d in [2, 3] for a, b in pairs(d))
     example = heldout_counterexample()
     contrast = record_correlation_check()
@@ -738,6 +740,8 @@ def main():
                       "odd_couplers": odd_couplers,
                       "andreev_native_interface": andreev_native,
                       "passive_native_converter_guards": native_converter_checks(),
+                      "high_order_calibration_guard": verify_high_order_bath(),
+                      "native_matter_controls": verify_native_matter_guards(),
                       "scope": "NR-R14/NR-R19 exact finite full-instrument, exchange norm-factor, scalar polynomial, odd-coupler and Andreev-interface replay; universal proofs, access and physical-cost statements remain analytic.",
                       "counterexample": example}, sort_keys=True))
 

@@ -80,6 +80,28 @@ and common-preparation/final-control-noise identities. The arbitrary-register
 dominance proofs remain analytic; a common final control channel is not
 a model of correlated faults throughout the check gates.
 
+Additional modules run inside the same existing architecture jobs:
+
+- [Mechanical strength](architecture/mechanical_pointer_strength.py) checks
+  exact finite full-control partial-meter blocks and Gram/Choi witnesses;
+  [mechanical clocks](architecture/mechanical_pointer_clock.py) checks exact
+  passive-dilation/covariance and force-loop identities, with separately
+  declared numerical scalar-exponential guards. Infinite-mode thermal,
+  diamond and physical record/control arguments remain analytic.
+- [Cat reservoir parity](architecture/verify_cat_reservoir_parity.py) checks
+  finite complete maps and formal CCR/no-jump coefficients. Its normal
+  trace-class symmetry proof and finite-time remainder/access obligations
+  remain analytic; there is no finite-error frontier dominance claim.
+- [High-order bath transfer](architecture/verify_high_order_bath.py) checks
+  proper marginals and full logical Choi examples; the support theorem,
+  spectroscopy and sampling costs are analytic/source-qualified.
+- [Native matter controls](architecture/native_matter_guards.py) checks
+  holonomic, ideal-adiabatic and known-symmetry BDI identities. Physical
+  access, decay and pulse error remain device assumptions.
+- [Rydberg memory](architecture/rydberg_memory_schur.py) checks complete
+  record/reference coefficients and the shared-probe counterexample.
+  It does not fit the continuum device or certify its two-use instrument.
+
 The architecture jobs support the [ordinary baselines](../architecture-baselines.md),
 [communication bounds](../communication.md) and
 [shared-bath screen](../backaction.md), not a positive application claim.

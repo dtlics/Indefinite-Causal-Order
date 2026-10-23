@@ -201,6 +201,154 @@ $$
 
 Both have $p_-=69696/1221025$; their held-out fidelity gap is $7868399616/59636082025>0.13$, with model 2 perfect. The check compares the complete first-$X$-echo flagged bath density matrices for this specified high-temperature input. It does **not** assert equal instruments on every bath input, equal phase-resolved data, or indistinguishability against all ordinary experiments. Measuring/resetting between the two cycles changes the history and is not a test of the uninterrupted task.
 
+<a id="nr-r14-high-order-transfer"></a>
+
+### High-order bath correlations and a complete-output transfer obstruction
+
+High-order quantum bath information is accessible with ordinary native
+controls. [Xia et al., PRL **134**, 253601
+(2025)](https://doi.org/10.1103/4fdk-dblq)
+([primary paper](https://iop.cas.cn/xwzx/kydt/202507/P020250711340279270998.pdf))
+isolate second- and fourth-order time-ordered correlations of $^{13}$C
+spins near an NV center. Their fourth-order spectrum fingerprints spins
+with the same unresolved precession frequency. The model uses
+noninteracting high-temperature nuclei, DD-selected longitudinal contacts,
+sensor rotations and optical readout; it is not a demonstration for an
+arbitrary strongly interacting bath. [Meinel et al.](https://doi.org/10.1038/s41467-022-32610-8)
+also demonstrate fourth-order quantum correlations through sequential weak
+NV measurements. [Wu et al., PRL **132**, 200802
+(2024)](https://doi.org/10.1103/PhysRevLett.132.200802)
+demonstrate an ordinary sensor-channel construction selecting a fourth-order
+time-ordered correlation, with a quantum-control application. A comparison
+only to a Gaussian power-spectrum fit omits these physical alternatives.
+
+For the displayed fourth-order protocol of Xia et al., three intermediate
+sensor-channel blocks contain
+
+$$
+\mathcal P_j=\mathcal R_y(\pi/2)
+\frac{\mathcal R_x(\pi/2)-\mathcal R_{-x}(\pi/2)}2,
+$$
+
+where $\mathcal R$ denotes conjugation by a known rotation. These signed
+maps are implemented by phase cycling, rather than treated as standalone
+CPTP operations. Expanding the three differences gives eight ordinary
+chronological pulse strings, each with four bath contacts, with coefficients
+$\pm1/8$. Choosing the three signs uniformly and multiplying the terminal
+bounded sensor outcome by their product is exactly unbiased for that signed
+finite-strength sequence functional: multilinearity proves the identity
+for arbitrary intervening joint bath dynamics and reference. The measured
+functional has a leading fourth-order contribution proportional to the
+fourth power of the short contact duration. Extracting its coefficient
+still requires bounds on higher orders, DD/control errors, readout
+contrast and repeated-history preparation. For an outcome in $[-1,1]$,
+Hoeffding gives raw additive accuracy $\epsilon_{\rm raw}$ after
+$N\ge2\epsilon_{\rm raw}^{-2}\log(2/\delta)$ independent trials.
+This is not an exact finite-strength fourth derivative, nor an independent
+sample bound for an unreset persistent bath. The longitudinal port also
+retains the complete ordinary echo identity proved above.
+
+The following counterexample makes the missing calibration information
+precise, including the complete conditional quantum output. It concerns a
+stipulated untouched or freshly prepared target history, not active bath
+preparation or optimization over all protection strategies. Let an
+inaccessible four-qubit bath start in one of the pure states
+
+$$
+|G_h\rangle=\frac{|0000\rangle+h|1111\rangle}{\sqrt2},
+\qquad h\in\{+1,-1\},
+$$
+
+and supply four separate sensor/bath contact ports
+
+$$
+U_j(\theta)=\exp[-i\theta Z_S\otimes X_j],\qquad j=1,\ldots,4.
+\tag{HO1}
+$$
+
+There is no additional free bath evolution spreading a selected port's
+support to the other bath qubits. A passive reference can be entangled
+with the sensor input; the bath itself is the specified pure state.
+Known sensor $X$ pulses reverse a contact's sign and restore its frame.
+The bath is not reset between contacts in a run.
+
+Every proper bath marginal of $G_+$ equals that of $G_-$: for nonempty
+$J\subsetneq\{1,2,3,4\}$ it is
+$\bigl(|0_J\rangle\langle0_J|+|1_J\rangle\langle1_J|\bigr)/2$.
+Consequently every calibration instrument whose entire interaction is
+supported on the sensor, arbitrary accessible memories and one proper
+subset $E_J$ gives exactly the same accessible flagged quantum output
+under the two hypotheses. To prove this, include all controls, record
+buffers and measurements in a joint instrument
+$\Lambda_{SAE_J}\otimes\mathrm{id}_{E_{\bar J}}$. Its accessible output
+depends only on the common initial marginal on $SAE_J$. The argument
+allows arbitrary memory, repeated contacts, adaptive processing and coherent
+order superpositions of contacts within that same subset. It compares
+complete instruments, not only a fringe mean or an isolated sensor map.
+
+Classical adaptive choice of at most three contact ports also cannot
+distinguish the hypotheses. Refine its classical records into leaves;
+each leaf's joint Kraus operators have support on at most three bath
+qubits, so its probability and accessible state agree. Different proper
+subsets queried on independent fresh copies likewise give identical data.
+Applying enough different contacts to the same unreset bath that their
+union contains all four is outside the premise. So is a free coherent
+selector over all four port names: its ket and bra histories can jointly
+cover all four qubits with fewer calls. This is a support-based
+nonidentifiability statement, not a general three-query lower bound with
+an arbitrary coherent name selector.
+
+Now run all four contacts for storage. If $y_j\in\{+1,-1\}$ is the
+sign of contact $j$ after restoring the known sensor frame, the reduced
+sensor channel is dephasing with coherence
+
+$$
+\begin{aligned}
+L_h(y)
+&=\left\langle G_h\left|
+\prod_{j=1}^4(cI-is y_jX_j)\right|G_h\right\rangle\\
+&=c^4+h\left(\prod_{j=1}^4y_j\right)s^4,
+\qquad c=\cos(2\theta),\quad s=\sin(2\theta).
+\end{aligned}
+\tag{HO2}
+$$
+
+Indeed every nonempty proper $X$-string has expectation zero, while
+$\langle X_1X_2X_3X_4\rangle=h$. Compare the two named schedules
+$I:y=(+,+,+,+)$ and $E:y=(-,+,+,+)$, with known sensor $X$ pulses
+around the first contact for $E$. At $\theta=\pi/8$, their identity-memory
+entanglement fidelities are
+
+$$
+\begin{array}{c|cc}
+ &F_e(I)&F_e(E)\\ \hline
+h=+1&3/4&1/2\\
+h=-1&1/2&3/4.
+\end{array}
+\tag{HO3}
+$$
+
+The preferred named schedule reverses with gap $1/4$. A known final
+sensor phase correction cannot improve either zero coherence or the
+positive coherence $1/2$. Extra echo pulses have real costs; this is
+not an optimum over all DD, encoding or recovery strategies. The pure
+entangled bath is operationally equivalent to a classical parity-correlated
+field for these commuting contact ports, so the example does not certify
+genuinely noncommuting quantum backaction. Its role is the stronger
+complete-output insufficiency of a specified calibration interface.
+Calibration can also disturb or steer the bath; the argument does not
+prohibit deliberately changing the later storage environment. In
+particular it is not an impossibility theorem for bath cooling or joint
+state preparation.
+
+The [exact high-order guard](checks/architecture/verify_high_order_bath.py)
+checks all 15 proper GHZ marginals, 32 $X$ moments and 32 normalized
+logical Choi cases. At its rational phase point $c=3/5,s=4/5$, the
+optimally phase-corrected fidelities are $481/625$ and $16/25$, reversed
+by $h$, with gap $81/625$. The all-instrument support proof and the
+$\pi/8$ values above are analytic arguments, not inferences from those
+finite cases.
+
 ### Direct calibration and measurement-record prediction
 
 For a specified pure-dephasing control word $y$, restore its known sensor frame and write its actual joint evolution as $\operatorname{diag}(U_{y,0},U_{y,1})$. Ordinary preparation in $|+\rangle$ and $X/Y$ readout measure
@@ -214,6 +362,62 @@ $$
 The $X$-plus outcome is itself a Bernoulli sample with mean $F_e$. With independent repeatable initial bath/history preparations, $n\ge\log(2/\delta)/(2\epsilon^2)$ trials estimate it within $\epsilon$ with failure probability at most $\delta$. A known target **unitary** can instead be tested by a clean calibration Bell pair and the corrected Bell projector; that reference is held during the sequence and measured afterwards. This does not grant access to the arbitrary passive $R$ in (3). A finite list of $M$ schedules needs at most $O(M\epsilon^{-2}\log(M/\delta))$ direct trials by a union bound. Each trial pays for the actual schedule, pulses, duration and history preparation.
 
 This comparator avoids full bath tomography. It is not an optimal sample bound. A held-out history that cannot be run or reproduced is a distinct prediction task whose restriction must be stated. Reproducing a history of probability $p_h$ can add a factor of order $1/p_h$ in attempts. Uncontrolled persistent drift invalidates an i.i.d. error bar. A switch diagnostic consumes and changes the same bath and must establish its own transfer to the target history.
+
+For a known finite-dimensional target unitary $W$, a direct logical Bell
+test also gives a background-free ordinary alarm. Run the actual complete
+production word on one half of a clean logical Bell pair, include its
+specified decoder and exposed records, correct the known target in the
+test, and measure the Bell projector. The failure probability is
+$e=1-F_e$, independent of any microscopic bath representation. Under
+the promise $e=0$ versus $e\ge\epsilon$, declaring failure at the first
+rejected Bell test has one-sided error at most
+$(1-\epsilon)^N\le e^{-N\epsilon}$. Thus
+
+$$
+N\ge\frac{\log(1/\delta)}{\epsilon}
+\tag{HO4}
+$$
+
+actual production words suffice, given independent repeated histories.
+Preparation, logical Bell gates/readout, the known target test and the
+word's execution remain charged; identity storage needs no unknown
+inverse. If the word itself heralds, the pass probability is the
+unnormalized Bell-good weight $q$, and rejection counts in $e=1-q$.
+Conditional accepted fidelity is not this Bernoulli mean. This ordinary
+null must be included when comparing a rare-event switch signal with a
+constant-variance overlap estimator. In (HO3), ordinary sensor $X$
+readout already has means $3/4$ and $1/2$, so a separate Bell reference
+is unnecessary. Threshold $5/8$ has error at most $e^{-N/32}$; hence
+$N\ge32\log(1/\delta)$ direct four-contact words identify the preferred
+schedule. This is an achievable count, not a claim of sample optimality
+or independence for one unreset bath.
+
+For prediction across many histories, the ordinary comparator is also
+stronger than full tomography. [White, Jurcevic, Hill and Modi, PRX
+**15**, 021047 (2025)](https://doi.org/10.1103/PhysRevX.15.021047)
+([primary version](https://arxiv.org/html/2312.08454v2)) learn
+self-consistent tensor-network models including control correlations and
+bath spillage, test held-out circuits and optimize DD on IBM devices.
+One numerical example uses $6000\times1024=6{,}144{,}000$ training
+windows before validation. Useful compressed structure and variational
+fit are substantive assumptions; this is not a worst-case polynomial
+sample theorem for every bath. These costs and the actual drift window
+can be measured rather than replaced by a full-bath tomography estimate.
+
+A concrete native comparison can select two named memory/DD histories,
+use held-out logical Bell performance as the decision endpoint, and
+compare the candidate diagnostic with phase-cycled fourth-order
+spectroscopy, direct target nulls and a validated compressed-memory
+predictor. It must establish transfer across the same conditional bath
+histories, including sensor disturbance and history preparation. A
+candidate beyond the ordinary identities here needs two actual unknown
+joint sensor/bath ports outside the longitudinal echo and known-local-
+intervention closures, with a coherent routing instrument and all
+emitted-time records. Classically choosing two microwave waveforms does
+not supply that off-diagonal interface. Contact duration, readout,
+reset, helper lifetime and routing faults enter the same ledger; a
+different high-order correlator alone does not establish a cheaper
+production decision.
 
 Recorded interventions also have an exact, potentially expensive baseline. An ignored projective $X$ measurement is $\mathcal D_X=(\mathrm{id}+\operatorname{Ad}_X)/2$, including on an entangled sensor/bath state. Therefore
 
@@ -904,6 +1108,101 @@ need not require knowing the stable bright vector. Implementing $M$
 still requires actual selectivity to the $C=0$ manifold. The proposal
 does not demonstrate a full unknown NR-R19 pair or its router.
 
+<a id="nr-r19-holonomic-controls"></a>
+
+**A paired holonomic construction exposes a direct two-loop target.**
+The primary proposal of
+[Axelsson et al., *d-pod realization of nonadiabatic holonomic quantum
+computation*, arXiv:2609.16216v2, §II](https://arxiv.org/html/2609.16216v2)
+uses one auxiliary excited state and individually driven computational
+ground levels. In its resonant convention, normalize
+$|b\rangle=\sum_j\omega_j^*|j\rangle$ by $\sum_j|\omega_j|^2=1$,
+with fixed complex ratios and real common envelope:
+$G(t)=\Omega(t)(|e\rangle\langle b|+|b\rangle\langle e|)$.
+Dark vectors remain fixed. On $\operatorname{span}\{e,b\}$ the
+propagator is $\exp[-iX\int\Omega(t)dt]$, so a cyclic area $\pi$
+pulse gives minus identity there and ground action
+$F_b=I-2|b\rangle\langle b|$, returning every computational input
+from the excited level. This area's factor differs from the preceding
+Householder source's Rabi convention. A two-segment loop gives
+$I-(1+e^{-i\eta})|b\rangle\langle b|$; $\eta=0$ is the reflection.
+
+Consider a $2d$-ground-state extension, with $d=3$ requiring six ground
+states and one auxiliary. This is a proposed extension of that model,
+not an experimental NR-R19 module. Assume stable orthonormal bright
+frames $\{r_j\}$ and $\{l_j\}$ in the two known address manifolds
+are actually available, even if their data matrices are unknown. Define
+
+$$
+U=\sum_j|l_j\rangle\langle r_j|,\qquad
+v_j^-=(|0,r_j\rangle-|1,l_j\rangle)/\sqrt2.
+$$
+
+The bright vectors are orthonormal, so the d commuting reflections
+$F_j^-=I-2|v_j^-\rangle\langle v_j^-|$ multiply to
+$I-2\sum_j|v_j^-\rangle\langle v_j^-|=A(U)$ by block expansion.
+Replace just $v_k^-$ by
+$v_k^+=(|0,r_k\rangle+|1,l_k\rangle)/\sqrt2$. This reverses the
+swap sign in that paired channel, giving $B=A(UH)$ with
+$H=I-2|r_k\rangle\langle r_k|$. Thus the special correlation is
+constructed explicitly, rather than inferred from two independent
+converters. A common relative phase between the address-leg groups,
+constant across a station's d loops and static within the job, gives
+the opposite off-diagonal station phases in (34). For example replacing
+each lower leg by $e^{i\phi}l_j$ gives $e^{-i\phi Z_C}A(U)$.
+Different unknown phases per paired channel or within a pulse do not
+automatically preserve this family.
+
+Within individually cyclic rank-one loops, each station needs at least
+d loops, even up to global phase. Indeed
+$\operatorname{rank}(I-F)\le1$ for every elementary rank-one phase;
+the telescoping identity for $I-F_m\cdots F_1$ bounds its rank by m.
+But $A(U)$ has eigenvalues $\pm1$, each d times, so
+$\operatorname{rank}(I-e^{i\gamma}A(U))\ge d$ for every $\gamma$.
+The displayed construction attains this count. It is not a lower bound
+on moving-bright paths, overlapping noncyclic controls or other ancillas.
+
+The same native field controls can make the useful target much cheaper.
+If the address-1 legs of the selected k-th pulse can actually be
+disabled, a normalized cyclic pulse implements
+$M_0=I-2|0,r_k\rangle\langle0,r_k|$. Disabling address-0 instead
+implements $M_1=I-2|1,l_k\rangle\langle1,l_k|$. Therefore
+
+$$
+M_1M_0=\operatorname{diag}(H,UHU^\dagger)=W.
+\tag{HC1}
+$$
+
+This ordinary construction needs two native loops, versus $2d$ loops
+for the switched A,B histories. It uses selective physical legs,
+not a controlled call to an otherwise unknown reflection. Matrix
+knowledge of either frame is unnecessary. A common optical phase
+constant during a pulse cancels from its bright projector; the one-leg
+operations need no relative phase between addresses.
+
+Pulse normalization is a real cost. Removing half of a normalized
+paired vector while holding its remaining physical leg amplitudes
+fixed reduces the rms coupling by $\sqrt2$. Stretching each pulse
+by $\sqrt2$ restores area $\pi$ without raising those amplitudes;
+alternatively increase them by $\sqrt2$ if allowed. With equal original
+loop duration T, the first choice costs $2\sqrt2T$ for (HC1), versus
+$2dT$ for the two stations before reconfiguration, routing, storage and
+faults. On-resonance conditions, fixed retained-leg ratios, zero
+coupling before/after each loop, light shifts and auxiliary decay must
+all be checked in the actual instrument. No noisy-device timing
+optimum follows merely from this ideal duration comparison.
+
+The source programs bright states with Rabi controls; it does not give
+a fresh Haar-distributed unknown frame. A common unknown unitary basis
+change preserves orthonormality and could arise in a restricted
+degenerate-manifold rotation family. Generic dipole, amplitude or
+crosstalk errors do not preserve it or the exact A/B promise. Actual
+unknown-frame normalization is required by both strategies. The
+pointwise identity (HC1) applies whenever the paired pulses and
+leg-disable controls exist, with no distributional assumption. A sealed
+device exposing only A,B need not expose these operations; its matrix
+factorization alone does not invalidate the opaque-port theorem.
+
 **Persistent $H$ has an ordinary calibration port.** Prepare physical
 address $C=0$ and run $B_\beta A_\alpha$. Its action on $D$ is
 $e^{i\delta}H$, hence exactly the channel $\operatorname{Ad}_H$,
@@ -966,6 +1265,64 @@ exchange of two full $d$-dimensional manifolds. The
 explicitly has generally different bright-pair couplings. Adiabatic or
 composite pulse constructions can change this constant-coupling screen,
 but need full-input propagators, durations and ordinary controls.
+
+<a id="nr-r19-adiabatic-port"></a>
+
+**Adiabatic dark transfer supplies one endpoint, not automatically both.**
+[Kis et al., Phys. Rev. A **70**, 053405 (2004)](https://arxiv.org/abs/quant-ph/0412086)
+analyze STIRAP between degenerate manifolds and give conditions for
+removing an arbitrary pure or mixed input from the starting manifold.
+An explicit useful case avoids the constant-coupling condition (NC3).
+Take equally sized g,e,f manifolds, zero one-photon detuning,
+two-photon resonance, real envelopes p,s, and unknown invertible
+$J=L\Sigma R^\dagger$:
+
+$$
+G(t)=\begin{pmatrix}0&pI&0\\pI&0&sJ\\0&sJ^\dagger&0\end{pmatrix}.
+$$
+
+In the fixed frame $\operatorname{diag}(L,L,R)$, singular channel k
+has pump p and Stokes $s\sigma_k$. Under counterintuitive passage set
+$\tan\theta_k=p/(s\sigma_k)$, going from 0 to $\pi/2$.
+Its dark state is $D_k=\cos\theta_k g_k-\sin\theta_k f_k$ and
+bright state $Q_k=\sin\theta_k g_k+\cos\theta_k f_k$.
+The dark energy is zero, while $(Q_k\pm e_k)/\sqrt2$ have energies
+$\pm\Omega_k$, $\Omega_k=(p^2+s^2\sigma_k^2)^{1/2}$.
+Real fixed frames give zero Berry phase. Retaining the dynamical
+$\Phi_k=\int\Omega_kdt$, the ideal adiabatic propagator is therefore
+
+$$
+g_k\mapsto-f_k,\qquad
+f_k\mapsto\cos\Phi_k g_k-i\sin\Phi_k e_k,\qquad
+e_k\mapsto-i\sin\Phi_k g_k+\cos\Phi_k e_k.
+\tag{AD1}
+$$
+
+Thus arbitrary g input transfers by the unknown polar-frame isometry
+$-RL^\dagger$, independently of singular strengths in this ideal
+limit. But initial f input is bright, with leakage $\sin^2\Phi_k$;
+adiabaticity does not suppress its dynamical phase. On the complete
+useful $g\oplus f$ port the projected propagator is
+
+$$
+T=\begin{pmatrix}0&L\cos\Phi R^\dagger\\-RL^\dagger&0\end{pmatrix}.
+\tag{AD2}
+$$
+
+Complete exchange first requires every $\sin\Phi_k=0$. Even then
+$T^2=\operatorname{diag}(-L\cos\Phi L^\dagger,
+-R\cos\Phi R^\dagger)$ is scalar only if all cosine signs agree,
+as required for the NR-R19 adjoint-reverse involution up to common
+phase. A channel with $\Phi_k=\pi/2\pmod{2\pi}$ transfers g
+perfectly but sends its reverse f input entirely into e. Such large
+odd-half-integer phases are compatible with an adiabatic limit; a short
+$\pi/2$-area passage is not asserted adiabatic. Finite-time evolution
+adds nonadiabatic and decay errors. Composite, echoed or counterdiabatic
+protocols can change this screen but need both endpoint blocks and
+their duration and controls. Two independent devices also do not
+automatically provide the correlated second station. A finite test
+must use all three inputs in **both** endpoint manifolds and their
+reference-entangled superpositions, not just g-transfer populations.
 
 <a id="nr-r19-passive-converter"></a>
 
@@ -1262,6 +1619,88 @@ $r^\dagger r+t_{\rm LR}^\dagger t_{\rm LR}=I$. The source's
 infinitesimal-transmission relation between end indices is not an
 arbitrary-input unitary transport gate. At finite transmission, use the
 complete device scattering matrix.
+
+<a id="nr-r19-bdi-controls"></a>
+
+**Full-bright BDI contacts have a further common-symmetry closure.**
+Multiple perfectly converted channels are possible, beyond the
+single-Majorana rank screen. The multichannel model of
+[Meidan, Romito and Brouwer, Phys. Rev. Lett. **113**, 057003 (2014)](https://arxiv.org/html/1312.6367)
+has one perfect Andreev channel per protected Majorana in its
+noninteracting BDI regime. Its interacting four-channel Kondo-like
+resonance has $r_{\rm ee}=0$, $r_{\rm he}=I_4$ at zero temperature
+and energy. These are low-energy scattering statements, not a
+finite-wavepacket router. Opposite-type Majoranas can gap under
+allowed couplings, so a mixed-sign full-conversion matrix is not
+guaranteed by the topological index alone.
+
+There is a useful restricted ordinary result when the contacts share
+a **known** symmetry basis. In the phase-stripped BDI cores, (5) of
+the Diez source gives $T=r_{\rm he}=T^\dagger$ and
+$r_{\rm eh}=T^*$. If a full-Andreev core also has the NR-R19
+Hermitian odd form, its upper block must be $T^\dagger$; comparison
+forces $T^*=T$. Its data matrix O is consequently real symmetric
+orthogonal. This is an intersection of promises: a generic complex
+Hermitian BDI T does not satisfy this odd-core condition. In the
+symmetric/qutrit branch write
+
+$$
+A=X_C\otimes O_A,\qquad B=X_C\otimes O_B,
+\quad O_s^T=O_s,\quad O_s^2=I.
+$$
+
+The NR-R19 relative $H=O_AO_B$ is Hermitian iff
+$O_AO_B=O_BO_A$. It then satisfies $O_AHO_A^T=H$, so
+
+$$
+W=I_C\otimes H.
+\tag{BD1}
+$$
+
+Hold the useful address in ordinary clean memory, send the data through
+A then B at fixed physical address 0, and return the address. The
+product acts as $e^{i(\beta-\alpha)}H$ on that data, an irrelevant
+global phase, giving (BD1) exactly on every reference-entangled input
+with two named queries. Neither H nor the internal real frame must be
+learned, and no unknown address-selective reflection is invoked. The
+core model separates condensate phases as known-grading dressings
+$e^{i\alpha Z_C}$ and $e^{i\beta Z_C}$; their chiral symmetry operators
+may rotate with condensate phase. It does not impose unrotated BDI
+relations on every dressed matrix. This requires a justified common
+phase-stripped data symmetry, rather than two unrelated contact bases.
+Actual electron/hole memory and coherent data routing remain physical
+costs. No closure for every even-dimensional antisymmetric branch is
+inferred from this symmetric-core argument.
+
+A known common complex basis admits a related two-query wrapper.
+For electronic basis V and conjugate hole basis $V^*$, the real-frame
+target h is represented as $H=VhV^\dagger$ and
+$W=\operatorname{diag}(H,H^*)$. The transformed first transfer block
+is $U'=V^*O_AV^\dagger$, consistent with (AM3). With known
+$S=VV^T$, direct multiplication gives
+$S^\dagger HS=V^*hV^T=H^*$. Hence, for
+$C_S=\operatorname{diag}(I,S)$,
+
+$$
+C_S^\dagger(I\otimes H)C_S=W.
+\tag{BD2}
+$$
+
+The same fixed-physical-address two-query H action, surrounded by
+these known controlled S gates on stored address/data, implements W.
+Knowing S suffices without knowing V or H separately. If S or the
+common symmetry frame is genuinely unknown and inaccessible, (BD2)
+is not an available control; learning and reuse need their actual cost
+and drift model. A same-sign contact is $O=\pm I$ in its symmetry
+basis, but an inaccessible unknown complex basis is not thereby known.
+Neither a restricted BDI prior nor a pair of independently changing
+symmetries inherits the Haar certificate above. A finite candidate
+must establish its full-band conversion, common symmetry action and
+coherent address/storage interface before claiming a native margin.
+The [exact matter-coupler guards](checks/architecture/native_matter_guards.py)
+replay finite holonomic, ideal-adiabatic and BDI identities. The general
+control proofs, physical symmetry/phase assumptions and finite-time
+errors remain analytic.
 
 **Finite bandwidth and the specified commutator statistic.** Directly
 subtracting the zero-energy limit in (AM1) gives

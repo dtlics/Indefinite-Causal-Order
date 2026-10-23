@@ -302,4 +302,17 @@ hardware model remains a proposed combination of separately demonstrated
 primitives. A measured scalar memory lifetime is not a certified
 cross-history coherence kernel.
 
+The mechanical extension separately checks exact finite partial-meter
+control blocks, Gram/Choi witnesses, passive-dilation covariance and
+force-loop algebra. Its numerical scalar exponentials are transcription
+guards, distinct from those exact identities. Full thermal/continuum
+clock kernels, diamond and physical-control statements remain analytic.
+The cat-reservoir module checks full finite parity instruments and formal
+CCR/no-jump coefficients, with no finite-time truncation or experimental
+memory certificate. Higher-order bath, holonomic/adiabatic/BDI and Rydberg
+memory modules likewise replay their finite full-output identities;
+general support/control proofs and hardware port, phase, bath and clock
+premises are explicitly scoped in their canonical owners. None supplies
+a significant native architecture advantage.
+
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

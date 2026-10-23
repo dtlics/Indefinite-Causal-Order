@@ -271,7 +271,13 @@ also have ordinary controlled-dilation implementations. Limited echo data
 need not predict a held-out uninterrupted decoupling sequence, so direct
 target-sequence calibration and pump/reset/record tests remain comparators.
 This is a calibration-transport screen, not an architecture advantage or a
-general exclusion of unknown joint interventions.
+general exclusion of unknown joint interventions. The
+[high-order transfer test](backaction.md#nr-r14-high-order-transfer)
+strengthens this to complete diagnostic outputs on proper bath subsets.
+Ordinary fourth-order phase cycling, direct logical Bell-null tests and
+validated process-learning/DD models are the relevant comparators.
+The next target must predict many useful production histories within
+one justified drift window, with their preparation and training costs.
 
 The [excitation-exchange example in NR-R14](backaction.md#nr-r14) now
 tests that broader setting explicitly. Two cold-spectator models have
@@ -336,6 +342,16 @@ measure the complete arbitrary-input conversion and reflected/noise ports,
 then establish the second station's special correlation and full routed
 interface. These matching guards do not certify finite bandwidth or a
 native task advantage.
+
+The [holonomic native-pair construction](backaction.md#nr-r19-holonomic-controls)
+now builds the required correlation explicitly, but its individually
+driven legs also give a cheaper ordinary two-loop target without learning
+the unknown frames. The [adiabatic-port guard](backaction.md#nr-r19-adiabatic-port)
+requires both endpoint manifolds, while the
+[BDI comparison](backaction.md#nr-r19-bdi-controls) closes the stated
+common known symmetry-frame family. A surviving native coupler must
+justify why those actual controls or symmetry wrappers are absent and
+establish the complete finite-band input/reference instrument.
 
 There is a named optical testbed with a longer-lived oscillator:
 [Spinnler et al.](https://doi.org/10.1038/s41467-024-53882-2) couple a quantum
@@ -436,6 +452,14 @@ control qubit in the specified ideal diagonal-Gaussian code model. The
 argument requires an exact final syndrome while the control stays
 coherent. It supplies no finite-energy or heralded-frontier conclusion.
 
+The [non-Gaussian cat-reservoir comparison](architecture-baselines.md#nr-r06-cat-reservoir-parity)
+retains the actual warm bath and finite buffer. An ordinary coherent
+parity wrapper reads total odd-jump parity without measuring the initial
+logical parity. The small-time switch flag has distinct loss and heating
+records; it is not a certified loss-only syndrome. A useful extension
+needs the complete physical order interface and finite-time heralded
+memory frontier beyond this available ordinary record.
+
 A distinct [finite-energy Jaynes--Cummings benchmark](architecture-baselines.md#nr-r06-jc-energy)
 concerns discrimination of commuting and anticommuting rotations, with one
 noisy coherent-field gate and one ideal gate. For its physical equatorial
@@ -526,6 +550,15 @@ available pointer echo can close proposed coherence margins. The remaining
 experiment must measure noncommuting write/storage dynamics and their
 cross-history kernels, including actual echo errors, reset emissions and
 calibration reuse. A memory lifetime alone supplies no such comparison.
+The [mechanical strength test](architecture-baselines.md#nr-r08-mechanical-record-strength)
+separates nonzero record rank from useful pinching. Its
+[full-clock model](architecture-baselines.md#nr-r08-mechanical-clock)
+retains thermal purification and emitted fields, with exact closed-loop
+ordinary basis control when native inverse/force ports exist. Before a
+task comparison, certify the actual strength and complex history kernel
+at one operating point; do not combine unrelated coupling, temperature
+and linewidth values. Strong preserved-photon records outside these
+ordinary controls remain unverified.
 
 Actual large-mode interconnects already use targeted ordinary tools.
 [Li, Ryczkowski and Genty](https://doi.org/10.1364/OE.558061) measure
@@ -1143,6 +1176,13 @@ Opposite transmission directions nevertheless agree in the specified
 bare reciprocal model. Reflections, two-photon interactions and inelastic
 bath records require their own complete operators; directional emission
 from an excited pair is a different initial-state experiment.
+
+The [Rydberg stored-photon screen](communication.md#nr-r11-rydberg-memory)
+supplies another actual nonlinear memory task. Its fixed-configuration,
+independent-probe instruments commute before any records are discarded;
+an output photon deficit is not a valid success herald. A distinct next
+test needs measured non-diagonal spin-wave dynamics or shared probes,
+with ordinary mixing, retrieval and pulse controls admitted.
 
 The next test is the full input-output model of one such actual device.
 Prespecify a useful detuning or spin-setting decision, or a delivered

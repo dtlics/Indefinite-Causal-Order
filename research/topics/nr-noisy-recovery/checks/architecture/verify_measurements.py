@@ -408,6 +408,8 @@ def shared_frequency_checks():
 
 def main():
     from material_pointer_clock import verify_material_pointer_clock
+    from mechanical_pointer_strength import verify_mechanical_pointer_strength
+    from mechanical_pointer_clock import verify_mechanical_pointer_clock
     z = [[F(1), F(0)], [F(0), F(-1)]]
     x = [[F(0), F(1)], [F(1), F(0)]]
     p4 = kron(z, eye(2))
@@ -539,6 +541,8 @@ def main():
         "recorded_parity_gate_ordinary_parity_measurements": "3",
         "shared_frequency_examples": shared_frequency_rows,
         "material_pointer_clock": verify_material_pointer_clock(),
+        "mechanical_pointer_strength": verify_mechanical_pointer_strength(),
+        "mechanical_pointer_clock": verify_mechanical_pointer_clock(),
         "limitations": ["No hardware runtime, detector-noise, generic bath, or optimal-strategy proof.",
                         "No all-dimensional representation theorem or Lean formalization is replayed."],
     }

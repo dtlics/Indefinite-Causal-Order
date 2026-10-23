@@ -3618,6 +3618,133 @@ flat-node yield gap, a calibration-free minus flag and long-lived memory
 alone no longer establish the needed comparison. No significant native
 architecture benefit has been established.
 
+<a id="nr-r11-rydberg-memory"></a>
+
+### Stored-photon subtraction has a position-diagonal ordinary baseline
+
+[Murray et al., PRL **120**, 113601 (2018)](https://doi.org/10.1103/PhysRevLett.120.113601)
+give a retained-memory nonlinear task: store gate photons as Rydberg
+spin waves, scatter a probe field, and retrieve the gate field with one
+photon removed through spatial decoherence. Their
+[primary paper, Eq. (2) and Appendices A/D](https://arxiv.org/pdf/1710.10047)
+gives the fixed-$n_g$ configuration-space memory model
+
+$$
+\mathcal E_j(\rho)(x,y)=\Phi_j(x,y)\rho(x,y),\qquad
+\mathcal E_j^{n_s}(\rho)(x,y)=\Phi_j(x,y)^{n_s}\rho(x,y).
+\tag{RM1}
+$$
+
+Here $x,y$ denote configurations of all stored excitation positions.
+The source approximation neglects gate--gate and probe--probe
+interactions and evaluates the response to zeroth order in probe
+bandwidth. The following deduction is exact for a common complete
+position-preserving instrument; reduced-memory tomography alone does
+not certify that two-use instrument.
+
+**Keep the records before comparing order.** For a finite spatial
+discretization, let every optical outcome and bath record have operators
+
+$$
+A_\alpha=\sum_x a_\alpha(x)|x\rangle\langle x|,\qquad
+B_\beta=\sum_x b_\beta(x)|x\rangle\langle x|,
+\quad \sum_\alpha|a_\alpha(x)|^2=
+\sum_\beta|b_\beta(x)|^2=1.
+\tag{RM2}
+$$
+
+Thus $\Phi_A(x,y)=\sum_\alpha a_\alpha(x)\overline{a_\alpha(y)}$
+and likewise for B. These are positive Gram kernels of unit diagonal.
+All operators in (RM2) are diagonal in the same configuration basis,
+so $B_\beta A_\alpha=A_\alpha B_\beta$ for every complete record.
+The ordinary serial channel has kernel $\Phi_A(x,y)\Phi_B(x,y)$.
+The corresponding controlled-order record operator is
+
+$$
+W_{\alpha\beta}=|0\rangle\langle0|_Q\otimes B_\beta A_\alpha
+ +|1\rangle\langle1|_Q\otimes A_\alpha B_\beta
+=I_Q\otimes B_\beta A_\alpha.
+\tag{RM3}
+$$
+
+This is an equality of subnormalized operators on arbitrary memory
+inputs and inaccessible reference extensions. An independent $Q=+$
+has zero minus probability, and its plus output equals ordinary order.
+Keeping a subset of records, or making any common coherent measurement
+of accessible probe outputs afterwards, preserves the equality.
+
+The stronger retained-probe statement uses independent fresh
+probe/output/bath factors $F_AE_A$ and $F_BE_B$. A common
+population-preserving complete isometry has
+
+$$
+V_j:|x\rangle\longmapsto|x\rangle|\phi_j(x)\rangle_{F_jE_j},
+\qquad \langle\phi_j(y)|\phi_j(x)\rangle=\Phi_j(x,y).
+\tag{RM4}
+$$
+
+Either sequence maps $|x\rangle$ to
+$|x\rangle|\phi_A(x)\rangle|\phi_B(x)\rangle$ on the same labeled
+physical output factors. Equality therefore holds before any optical
+record or bath is discarded, including cross-record coherences. A
+common later retrieval, reset or readout channel preserves it. The
+same proof applies to configuration direct integrals. Across different
+excitation-number sectors it requires one common controlled isometry
+over those sectors; (RM1) alone does not certify their relative phases
+or an arbitrary optical Fock-state superposition.
+
+**A shared probe is a different joint process.** Reduced Schur
+commutation does not establish (RM4). As a small counterexample, take a
+memory qubit M, one probe E initially in $|0\rangle$, and
+
+$$
+U_A=|0\rangle\langle0|_M\otimes I_E+
+    |1\rangle\langle1|_M\otimes X_E,\qquad
+U_B=|0\rangle\langle0|_M\otimes I_E+
+    |1\rangle\langle1|_M\otimes Z_E.
+\tag{RM5}
+$$
+
+With separate fresh probes their reduced memory channels are dephasing
+and identity, which commute. With the same retained probe,
+$U_BU_A|10\rangle=-|11\rangle$ while
+$U_AU_B|10\rangle=|11\rangle$. This counterexample only identifies the
+missing product-instrument premise; it supplies no Rydberg router or
+memory-recovery advantage.
+
+Physical timestamps and idle evolution also belong to that premise.
+Different bath time bins cannot be equated by relabeling an inaccessible
+output. Motion, excitation loss or transport, non-diagonal internal
+rotations, shared retained bath modes, or retrieval/re-storage between
+contacts can invalidate (RM4). They need their actual joint instrument.
+Reversing a stationary probe direction can change which excitation
+shields the others and hence $\Phi_j$; two such independent
+position-diagonal instruments still obey (RM3). A coherent direction
+superposition of one shared probe is a different operation. A diagonal
+spatial phase imprint also commutes with (RM2); an escape requires
+genuine mixing of configurations or another non-diagonal degree of
+freedom. Any available ordinary basis rotation, echo or retrieval/pulse
+control must then remain in the comparator.
+
+**Use the actual subtraction and source ledger.** Two stored gate
+photons and one probe require at least three incident photons before
+storage, retrieval and detection losses. The experiment used weak
+coherent fields, a $4\,\mu$s storage sequence, retrieval efficiencies
+around $0.2$, and a fitted probe-scattering probability around $0.5$.
+Finite scattering can decohere more than one excitation. Appendix D's
+one-photon output-deficit statistic also counts failed storage and
+ordinary retrieval loss. It therefore does not herald that the desired
+memory manipulation occurred. Both architectures must compare the
+same accepted optical output, probe dose, storage/readout time and all
+rejected histories. Neither switched subtraction nor a measured
+architecture gain follows from this model-level closure.
+
+The exact replay uses six two-excitation configurations on four sites
+and three nontrivial complex probe models. It compares the complete
+cross-record/reference coefficients, reduced Gram kernels and coherent
+record selections, and checks the shared-probe counterexample. It is
+not a continuum fit or a certification of a laboratory two-use bath.
+
 ### Two-photon survivor scattering in a common continuum basis
 
 Nonlinear scattering need not preserve each photon's frequency, so it

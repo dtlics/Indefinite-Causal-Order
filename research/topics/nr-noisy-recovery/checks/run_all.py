@@ -28,7 +28,7 @@ REPO = HERE.parents[3]
 BUILD = REPO / "_build" / "noisy-recovery"
 RECORD = HERE / "validation.json"
 SCHEMA = "noisy-recovery-validation-v1"
-SCOPE = "Finite exact replay and symbolic integer/rational identities supporting the linked proofs; no new Lean kernel audit."
+SCOPE = "Finite exact replay and symbolic integer/rational identities, with separately scoped numerical scalar guards, supporting the linked proofs; no new Lean kernel audit."
 
 JOBS = (
     ("physical-objectives", "algebra/brauer_objective.py", ("--validate",),
@@ -51,13 +51,13 @@ JOBS = (
     ("local-recovery", "recovery/local_recovery.py", (),
      "Local n>=8 recovery constants, expected-cost coefficients, approximate-design loss and 97% visibility gap."),
     ("architecture-fault-simulation", "architecture/verify_fault_simulation.py", (),
-     "Exact orthogonal-process/full-output and bosonic coefficients, passive probe identities, complete finite Gaussian readout/noise/idler matrices, conditional records and known-control Weyl phases; universal/integral/information proofs and native costs analytic."),
+     "Exact orthogonal-process/full-output and bosonic coefficients, passive probe identities, complete finite Gaussian readout/noise/idler matrices, conditional records, known-control Weyl phases and cat parity/CCR records; universal/integral/information proofs and native costs analytic."),
     ("architecture-reuse", "architecture/verify_reuse.py", (),
      "Exact finite-frame calibration score, threshold, rejection and query-crossover arithmetic; cited learner not implemented."),
     ("architecture-measurements", "architecture/verify_measurements.py", (),
-     "Exact measurement/Choi, record-return/shared-spectral and material-pointer clock examples, syndrome-sector constants and recorded parity-braid comparisons; full clock/compiler, noise-kernel, bandwidth--delay and hardware arguments analytic."),
+     "Exact measurement/Choi, record-return/shared-spectral, material/mechanical-pointer clock and partial-meter examples, syndrome-sector constants and recorded parity-braid comparisons; full clock/compiler, thermal/noise-kernel, bandwidth--delay and hardware arguments analytic; numerical scalar clock guards separately scoped."),
     ("architecture-communication", "architecture/verify_communication.py", (),
-     "Exact absorbing-loss/wire/reset/NXY and bus identities, emitter guards, Raman/local-memory/multimode instruments, temporal source/clock and finite-tail algebra, timed-control/late-flip and phase/reciprocal/double-herald vectors, ordered kernels and cavity/source identities; continuum/instrument certificates, physical access and clock costs analytic."),
+     "Exact absorbing-loss/wire/reset/NXY and bus identities, emitter guards, Raman/local-memory/multimode instruments, temporal source/clock and finite-tail algebra, timed-control/late-flip and phase/reciprocal/double-herald vectors, ordered kernels and cavity/source identities, retained Rydberg-memory records; continuum/instrument certificates, physical access and clock costs analytic."),
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
      "Exact native-layer/bit-oracle, Pauli/Weyl/qutrit and encoded-record checks, graded tetron code flags, Jaynes-Cummings decision identities, known-basis/number-lowering faults, common control noise, Bell/clock Choi and terminal replacement/SWAP guards; universal/energy/timing/access and costs analytic."),
     ("architecture-dispatch", "architecture/verify_dispatch.py", (),
@@ -67,7 +67,7 @@ JOBS = (
     ("architecture-lookups", "architecture/verify_lookups.py", (),
      "Exact full-address Choi identities for ordinary measurement-uncomputation and balanced-switch garbage erasure; finite instances, no optimized architecture frontier."),
     ("architecture-backaction", "architecture/verify_backaction.py", (),
-     "Exact flagged-Choi echo, held-out memory, excitation-exchange, native-selector and odd-coupler identities, Majorana signature/PHS/bandwidth and passive-converter linewidth/matching/Bragg-rank guards; universal family/norm/query-converse proofs and hardware access analytic."),
+     "Exact flagged-Choi echo, held-out memory, excitation-exchange, native-selector and odd-coupler identities, Majorana signature/PHS/bandwidth and passive-converter linewidth/matching/Bragg-rank, high-order bath and holonomic/adiabatic/BDI guards; universal family/norm/query-converse proofs and hardware access analytic."),
     ("coupler-mean-query", "coupler/verify_mean_query_certificate.py", (),
      "Exact qutrit expected-two-query upper certificate: complete invariant basis, highest-weight kernels/dimensions, regenerated causal rows, rational PSD duals and residual trace bounds. Prior/covariance/stopping inclusion and physical trace bounds analytic; no native advantage."),
     ("architecture-metrology", "architecture/verify_metrology.py", (),

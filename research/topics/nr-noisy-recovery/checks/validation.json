@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-23T12:52:01+00:00",
+  "generated_utc": "2026-10-23T13:16:26+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -14,9 +14,9 @@
   "input_hash_algorithm": "sha256",
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "0579328ad4e1ee6c97072f6591191b6eab8c1c4312167340c7128432650c2b46",
-    "research/topics/nr-noisy-recovery/architecture-baselines.md": "1b58a98ae8d03ef49e3c64247a1c2af15610b725c409100b9cb71c34e3cbf52c",
-    "research/topics/nr-noisy-recovery/architecture.md": "7daf60754f22d9d7c9efc89e25a7fc04eefb09fcbba0878b19d3d5c49b7e0962",
-    "research/topics/nr-noisy-recovery/backaction.md": "e6cea406b93f6859964513f05eed019637b2e4db67e1491e3069260126e548d1",
+    "research/topics/nr-noisy-recovery/architecture-baselines.md": "e3ce697894c7efefb556dae71090253e966f2e3c52790fd3ad1f98119b5fdedb",
+    "research/topics/nr-noisy-recovery/architecture.md": "9e917890d890c78e7c85c8a80277e87e3ea2251df7ef7adde7e39ccd7aa5abeb",
+    "research/topics/nr-noisy-recovery/backaction.md": "9d880057a5d06dda02638e0f4d50209f255ef703d783acb1b9ddadea657befbb",
     "research/topics/nr-noisy-recovery/braided-magic.md": "bb6d1d48f99debb30b3ea9e44806c724e9004b464e0b216d2e3b66580aea4a44",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_dual_sharp_certificate.json": "95d061e96dd7cdf31ca311b54ac9896995312dd5e2b6407d000bd0e2ff80acaf",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_sharp_stdlib_replay.py": "0ec1caec6318efedc8eb3ca2810f594bc795677343be7214bc3f2f95c56e4d83",
@@ -29,8 +29,11 @@
     "research/topics/nr-noisy-recovery/checks/algebra/brauer_weingarten.py": "402270cb7b61e3ac1d53bba29772f4b5ffd2631d7324f39f378dbb0b593d648b",
     "research/topics/nr-noisy-recovery/checks/architecture/gaussian_readout_guards.py": "2f117dbe1a5fa2af5d0737cf7cdfe9c013ff412924f8843054a6a06bea65eb20",
     "research/topics/nr-noisy-recovery/checks/architecture/material_pointer_clock.py": "4adafaec01744fa21bab58771703dc8216f9b5f33c6f8f766cf41014e4bb8b7e",
+    "research/topics/nr-noisy-recovery/checks/architecture/mechanical_pointer_clock.py": "a7afd0adcc118877013356653eb9e1e250ca6e50c8e9aec1de2e05323cac8190",
+    "research/topics/nr-noisy-recovery/checks/architecture/mechanical_pointer_strength.py": "0b45ec614528cffaa6f82c00ff479798f2a954b4f5a5a269c168230b23896805",
     "research/topics/nr-noisy-recovery/checks/architecture/metrology_sequential_certificate.json": "93b15c8c58ed669a123c5be311cac857af8bd1634d95125cd5d651c76dadd6c7",
     "research/topics/nr-noisy-recovery/checks/architecture/native_converter_guards.py": "1d266ca614772e400f7985d186879542278c936a0ba3a79c06dc5fb259448453",
+    "research/topics/nr-noisy-recovery/checks/architecture/native_matter_guards.py": "d7ef70545c14200a41dd3b24bdc5ad785787f2768f6b6d85a86e8c7a690ebad2",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_baselines.py": "ec020d0c532aa4dacda0a84e41ffd04497c0b16009036a818544a8d60faf10d2",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_bell_certificate.json": "036a490d801df65169e7d253cdc9939abcd962483dfbe65386df00f27bcbbd32",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_direct_temporal.py": "5593c32d10c2447e257744737b9cfaeb1d0f5e31d83ebde69041d8409f28d0ff",
@@ -38,16 +41,19 @@
     "research/topics/nr-noisy-recovery/checks/architecture/raman_port_routes.py": "c5d9e3affcfaa28d1c30f088b3bcc0960bbf1bf23f69cc4dd7aac8f9312ed317",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_temporal_tail.py": "256fe85e70b4edce224f56bf135d44ce4cf0746a2a096ed79e731248eecf1d10",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_timed_controls.py": "d3dbe38ec935f92472f8c30351f2ec39c58c9323dfc44ccbf339725f8fc187fd",
+    "research/topics/nr-noisy-recovery/checks/architecture/rydberg_memory_schur.py": "b8228a829f4d4f7ffb3ce37b3918b62033ccfae88ee1168aea16b921d326d74e",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_alignment.py": "6d21a9f2a11a7841d21f4ecf2a1435911c9b426b0629cd27ddabac06d0ab592b",
-    "research/topics/nr-noisy-recovery/checks/architecture/verify_backaction.py": "35a4cfb86bc66905887814dc4d2f02bce1defb287d08799468fe9425456b5e33",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_backaction.py": "81be8f1ae5b422ee82f406151a506efa8327eee1137932dc3d041ef62eb9ddca",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_braided_magic.py": "5bebc25e2250e2c00d8d45be3083f0450bba0925cf4c317cf456215681c57268",
-    "research/topics/nr-noisy-recovery/checks/architecture/verify_communication.py": "5af11ef8167c212b4ea1bebebf80b1149168536acd39341d954c2a087de3c43b",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_cat_reservoir_parity.py": "5f943c552a821f4171c50d9937dfddeec65c025947dce489a537ab7176ffe3aa",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_communication.py": "2e20234bde9adceb122fbe2e489940e8d81711aa34e06dbea1c5dd01ec29e83c",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_conditional_readout.py": "7e7c71e237fbc9c10ec0bd786d9599d892d325cdb41887325c0d98a6f35b2b27",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_dispatch.py": "ac3d359c86d07fc478e8a68fdde1847701cc7e484ca53fc72aeb12bc5d57915d",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_dispatch_baselines.py": "9fece43e1680745cd5ce20e6a5d53f1c0683b51ddb6f9944308c6b7e7c2682e2",
-    "research/topics/nr-noisy-recovery/checks/architecture/verify_fault_simulation.py": "f2205c1f90cee261b3481f047d63eb3ef9cbf8a5d085d887781e16a7d1408934",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_fault_simulation.py": "55aaa586e6207bbbf230642c8af15516e61fce389b93a71315f9470eedb553e1",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_high_order_bath.py": "bdca151274d5fc7db49a9e8a9e2031c736d1ae50f01ce124e4cee1a5794bd31c",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_lookups.py": "68baeecf266d4a6ae9685f8952519e17496f2c5ed8ceb3d5df3019446a0e8d3f",
-    "research/topics/nr-noisy-recovery/checks/architecture/verify_measurements.py": "a2e98eab313eb6f99842bc9779fbb374845a9560f6c9e4734dea900e177155bc",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_measurements.py": "9aab53c5281eb938c12ae2435dea3b5d5bcef6b8e36ce74def84827c153a30ab",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_metrology.py": "fe3ad35d2068bffa275238651469bc379c902f6b4a63a32562ef0168460877dd",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_native_checks.py": "042f2eb9d4de063a5fdb9063840c2c067d5a9138d8c795ab3a1b85b0539acc3f",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_raman_bell_certificate.py": "f0db525e1233b3693e5282e28b32fcc37aa1a9d6e95198c818a84d39e03fe266",
@@ -60,13 +66,13 @@
     "research/topics/nr-noisy-recovery/checks/coupler/verify_mean_query_certificate.py": "2802a4c3e972a76ec0666d8d0fd996c75336bb5e6016faddf21c86ed4594d62d",
     "research/topics/nr-noisy-recovery/checks/local/verify_dimensions.py": "5af10c3fad26a66651d72c4ab42a5402f182e44d8b8b0c616c454a865a20505f",
     "research/topics/nr-noisy-recovery/checks/local/verify_structural.py": "68bd7e55c46b75504c58a2d77621b2192e1df3629979ae23d8c74917eb2e1a97",
-    "research/topics/nr-noisy-recovery/checks/README.md": "158a97c19decb453c575b7ca251ae1794b1ad1737c3b4a68ccda17263a2a115e",
+    "research/topics/nr-noisy-recovery/checks/README.md": "08f76442e09510e2fb0d80671d860e621b5556b87faf36711ce334513cbdd0b6",
     "research/topics/nr-noisy-recovery/checks/recovery/expected_cost_D8.py": "fc9944f7aff0698dd99fdce2f34eaadad42fecb3cc99cd41cffdd84bec2de1b4",
     "research/topics/nr-noisy-recovery/checks/recovery/finite_ensemble_D8.py": "fb82731ebb8c239652b65ddfc51933e266694a18ce559cef03a61ff176c40e66",
     "research/topics/nr-noisy-recovery/checks/recovery/local_recovery.py": "38958045476b075a233a1ee1f71fcde934f26f44fbb7a42da4abb30c14a11afc",
     "research/topics/nr-noisy-recovery/checks/recovery/scalable_global.py": "b1762c233496f7a1225f056305a50b795329caab01cf5099abccbf7d116a328a",
-    "research/topics/nr-noisy-recovery/checks/run_all.py": "d7af80ae00402803726d4f94e800f80ceb34d4711959eff49d4e0b5342565808",
-    "research/topics/nr-noisy-recovery/communication.md": "af478ce7a043e02e1e7245262aa6b240f6e03793e980a1188a2c7dc05bcaac05",
+    "research/topics/nr-noisy-recovery/checks/run_all.py": "87468bad285e16fa98e15d99746a3997c45d1bbd11dd2a5731fd27c7f5113bfb",
+    "research/topics/nr-noisy-recovery/communication.md": "ba2d0d3fe60a733ad725a52c55159fbc5832943242f698be0032f5bfd792bfca",
     "research/topics/nr-noisy-recovery/dispatch.md": "97982b8b9fc3733ca6ae9696b277d48dba80bab3626a727a2f6d2fa14e4232db",
     "research/topics/nr-noisy-recovery/geometric-calibration.md": "5c28de403801adb62438cf6a6e3496c8775b5ffa20cbcfff38143525a732b57a",
     "research/topics/nr-noisy-recovery/global-noise.md": "b65e344b96022b031ea1e7b6e51182cceb509d84a6a6515393198d88e898eea4",
@@ -76,7 +82,7 @@
     "research/topics/nr-noisy-recovery/metrology.md": "0e4645178bcef56d924ec3fc0f22f7b19467851faf6e07be7676ab81b2206100",
     "research/topics/nr-noisy-recovery/native-lookups.md": "c7dfb67147911198d048d9d0987714d2bf20cbd50f84030298fe5eb64e85e82e",
     "research/topics/nr-noisy-recovery/obstructions.md": "6316c7c252732af7c9eafc3018d465330e2bb4747a21daebd837113a1742b462",
-    "research/topics/nr-noisy-recovery/README.md": "24ca3ac9096eab672dbb46a673bb4262e7b09546833664520f89d25185063aa2",
+    "research/topics/nr-noisy-recovery/README.md": "29b28c66dd866c9a5eeca8a621ff1beb382c440f354f2684230e845962128c9e",
     "research/topics/nr-noisy-recovery/references.md": "c067e914fa2053073b1ae914dca10d95701c9d998390f7d8714ccbcbc4050269",
     "research/topics/nr-noisy-recovery/theorem.md": "f55ba54175170100b2f62423583ee72e92efff3fd3cb569f5c190a857de06944"
   },
@@ -158,7 +164,7 @@
     {
       "id": "architecture-fault-simulation",
       "source": "research/topics/nr-noisy-recovery/checks/architecture/verify_fault_simulation.py",
-      "scope": "Exact orthogonal-process/full-output and bosonic coefficients, passive probe identities, complete finite Gaussian readout/noise/idler matrices, conditional records and known-control Weyl phases; universal/integral/information proofs and native costs analytic.",
+      "scope": "Exact orthogonal-process/full-output and bosonic coefficients, passive probe identities, complete finite Gaussian readout/noise/idler matrices, conditional records, known-control Weyl phases and cat parity/CCR records; universal/integral/information proofs and native costs analytic.",
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-fault-simulation.log"
@@ -174,7 +180,7 @@
     {
       "id": "architecture-measurements",
       "source": "research/topics/nr-noisy-recovery/checks/architecture/verify_measurements.py",
-      "scope": "Exact measurement/Choi, record-return/shared-spectral and material-pointer clock examples, syndrome-sector constants and recorded parity-braid comparisons; full clock/compiler, noise-kernel, bandwidth--delay and hardware arguments analytic.",
+      "scope": "Exact measurement/Choi, record-return/shared-spectral, material/mechanical-pointer clock and partial-meter examples, syndrome-sector constants and recorded parity-braid comparisons; full clock/compiler, thermal/noise-kernel, bandwidth--delay and hardware arguments analytic; numerical scalar clock guards separately scoped.",
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-measurements.log"
@@ -182,7 +188,7 @@
     {
       "id": "architecture-communication",
       "source": "research/topics/nr-noisy-recovery/checks/architecture/verify_communication.py",
-      "scope": "Exact absorbing-loss/wire/reset/NXY and bus identities, emitter guards, Raman/local-memory/multimode instruments, temporal source/clock and finite-tail algebra, timed-control/late-flip and phase/reciprocal/double-herald vectors, ordered kernels and cavity/source identities; continuum/instrument certificates, physical access and clock costs analytic.",
+      "scope": "Exact absorbing-loss/wire/reset/NXY and bus identities, emitter guards, Raman/local-memory/multimode instruments, temporal source/clock and finite-tail algebra, timed-control/late-flip and phase/reciprocal/double-herald vectors, ordered kernels and cavity/source identities, retained Rydberg-memory records; continuum/instrument certificates, physical access and clock costs analytic.",
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-communication.log"
@@ -222,7 +228,7 @@
     {
       "id": "architecture-backaction",
       "source": "research/topics/nr-noisy-recovery/checks/architecture/verify_backaction.py",
-      "scope": "Exact flagged-Choi echo, held-out memory, excitation-exchange, native-selector and odd-coupler identities, Majorana signature/PHS/bandwidth and passive-converter linewidth/matching/Bragg-rank guards; universal family/norm/query-converse proofs and hardware access analytic.",
+      "scope": "Exact flagged-Choi echo, held-out memory, excitation-exchange, native-selector and odd-coupler identities, Majorana signature/PHS/bandwidth and passive-converter linewidth/matching/Bragg-rank, high-order bath and holonomic/adiabatic/BDI guards; universal family/norm/query-converse proofs and hardware access analytic.",
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-backaction.log"
@@ -260,7 +266,7 @@
       "log": "_build/noisy-recovery/logs/architecture-alignment.log"
     }
   ],
-  "scope": "Finite exact replay and symbolic integer/rational identities supporting the linked proofs; no new Lean kernel audit.",
+  "scope": "Finite exact replay and symbolic integer/rational identities, with separately scoped numerical scalar guards, supporting the linked proofs; no new Lean kernel audit.",
   "limitations": [
     "Analytic completeness, physical interface, stopping and norm-transfer arguments remain in the canonical proof notes.",
     "No numerical SDP discovery, hardware experiment, novelty audit or fixed native-gate fault-tolerance claim is performed."

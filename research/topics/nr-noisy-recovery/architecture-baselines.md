@@ -1155,6 +1155,298 @@ engineered recovery, correlated/nonstationary errors and actual gate faults
 require their complete model. No native timing or logical-performance
 advantage, or general no-go for encoded dissipative switches, is inferred.
 
+<a id="nr-r06-cat-reservoir-parity"></a>
+
+### Non-Gaussian cat reservoirs retain an ordinary jump-parity check
+
+**Device problem and task.** A non-Gaussian stabilizer is a meaningful
+memory candidate outside the additive-Gaussian compiler. It does not,
+however, make every commutator flag new error information.
+[Rousseau et al., arXiv:2502.07892
+(2025)](https://arxiv.org/html/2502.07892), implement a deformed cat
+reservoir with memory-buffer coupling
+$H/\hbar=g_2F(a)b^\dagger+g_2^*F(a)^\dagger b$,
+$F=a^2-\alpha^2+\lambda(n-\alpha^2)$, $n=a^\dagger a$.
+Reported parameters include memory loss $\kappa_1/(2\pi)=2.3$ kHz,
+thermal occupation $n_{\rm th}=0.93$, buffer loss
+$\kappa_b/(2\pi)=18.2$ MHz and $g_2/(2\pi)=1.3$ MHz.
+The quoted $\kappa_2/(2\pi)=0.37$ MHz is an estimate from buffer
+elimination. At fitted deformation $\lambda=1.04$ and mean photon number
+4.1, the measured bit-flip time is 22 s while phase-flip time is
+$1.3\,\mu$s. Their photon-number/parity tomography uses buffer readout
+and a deflation map; it does not demonstrate a retained qubit's coherent
+controlled-parity gate. Long bit-flip lifetime alone is therefore not
+the fidelity of an arbitrary unknown stored qubit.
+
+A second primary device,
+[Adinolfi et al., arXiv:2511.01027
+(2025)](https://arxiv.org/html/2511.01027), combines Kerr-cat
+Hamiltonian confinement with selective single-photon cooling through a
+lossy cavity. The measured oscillator $T_1$ is $55.7\pm0.7\,\mu$s;
+ordinary echo improves Ramsey coherence from $13.2\pm0.5$ to
+$40.9\pm1.3\,\mu$s. Cooling lowers leakage population but can worsen
+logical tunneling through warm-cavity excitation. At one stated working
+point it increases bit-flip time from 240 to $610\,\mu$s. The paper's
+effective cavity populations 0.025 for a population fit and 0.004 for a
+tunneling-threshold fit are model parameters, not one directly measured
+universal bath temperature. Its protocol waits $1.2\,\mu$s after a
+dissipation pulse for cavity photons to decay. These are real cooling,
+dephasing and reset constraints, rather than independent freely
+reorderable noise boxes.
+
+[Putterman et al., Nature **638**, 927–934
+(2025)](https://doi.org/10.1038/s41586-025-08642-7), supply a stronger
+ordinary quantum-memory comparator on a different chip: five cat storage
+modes and four transmon syndrome ancillas implement a distance-five
+repetition memory. Average bare storage $T_1$ exceeds $60\,\mu$s.
+At cat size two, measured bit-flip times exceed 1 ms and phase-flip times
+are 27–33 $\mu$s, versus 2–3 $\mu$s correction cycles. Minimum measured
+logical error per cycle is 1.65(3)% for distance five and 1.75(2)% for
+the distance-three sections. These additional modes, couplers, ancilla
+readout/reset and cycles are priced resources, not controls silently
+available to a single moon-cat device.
+
+Fix a normalizable, calibrated orthonormal code isometry $V$ and its
+physical encoding/decoding. For example, normalized even/odd cats at
+finite $\alpha\ne0$ define an orthonormal two-dimensional target code;
+the deformed device requires its own calibrated code. The formal dark
+state recurrence in the primary paper's Appendix H.2.1 is
+$\mu_{n+2}/\mu_n=[\alpha^2(1+\lambda)-\lambda n]/
+\sqrt{(n+2)(n+1)}$. For a nonterminating parity sequence its magnitude
+tends to $|\lambda|$; at generic $|\lambda|>1$ that series is not
+normalizable. Exact termination of a nonzero parity sequence requires
+$\alpha^2(1+\lambda)/\lambda$ to be a nonnegative integer of that
+parity; at most one parity can terminate. Consequently $|\lambda|>1$
+cannot give a two-dimensional normalizable dark kernel of this
+simplified $F$. Thus a fitted $\lambda=1.04$ or a truncated dark vector
+does not supply two exact infinite-Fock dark states. The measured
+finite-energy metastable code and the well-defined physical channel
+must be established with their actual high-energy completion. Let
+$J_r=(\mathrm{id}_R\otimes\Lambda_r)(\Phi_2)$ be the complete logical
+Choi output for record $r$, with actual preparation, control, noise and
+decoding included. Report $p_r=\operatorname{Tr}J_r$ and
+$q_r=\langle\Phi_2|J_r|\Phi_2\rangle$, all rejected records, elapsed
+time and reset. For an accepted set $A$, the pair
+$(p_A,q_A)=(\sum_Ap_r,\sum_Aq_r)$ gives conditional fidelity $q_A/p_A$;
+$q_A$ charges every unsuccessful launch. Input-dependent acceptance
+also requires its success effect and worst-case success probability.
+This is distinct from one logical-Pauli decay time.
+
+**The complete idle dynamics and symmetry.** Retain memory $a$, buffer
+$b$, every output line and a purification of each thermal input. The
+declared rotating-wave model uses
+
+$$
+\begin{aligned}
+H_{ab}/\hbar&=H_{\rm even}/\hbar+g_2F(a)b^\dagger+g_2^*F(a)^\dagger b,\\
+L_b&=\sqrt{\kappa_b}\,b,\qquad
+L_\downarrow=\sqrt{\kappa_1(n_{\rm th}+1)}\,a,\qquad
+L_\uparrow=\sqrt{\kappa_1n_{\rm th}}\,a^\dagger.
+\end{aligned}
+\tag{CAT1}
+$$
+
+Here $H_{\rm even}$ commutes with memory parity $\Pi=e^{i\pi n}$.
+Number detuning, Kerr terms and even-photon drives obey this premise;
+a single-photon memory drive during a gate does not. Buffer heating
+adds a jump proportional to $b^\dagger$ without changing its memory
+parity. Dephasing jumps proportional to $n$ are also even. Pump
+imperfections that add odd Hamiltonian terms must be measured and
+included rather than being called harmless calibration noise.
+
+Equation (CAT1), or its well-defined unitary field dilation, retains
+the finite buffer bandwidth and records. Only in the declared
+adiabatic-elimination regime may it be replaced by
+$L_2=\sqrt{\kappa_2}F$, $\kappa_2=4|g_2|^2/\kappa_b$; the primary
+paper states $8|g_2\alpha|\ll\kappa_b$. The estimate is not a
+uniform theorem about the full measured circuit or its strong-pump
+corrections. The Kerr-cat device's exchange term
+$a b^\dagger+a^\dagger b$ instead commutes with **joint** parity
+$\Pi_a\Pi_b$, not memory parity alone; using the theorem there requires
+joint controlled parity or an independently justified effective map.
+
+**Finite-time ordinary syndrome, including all no-jump evolution.**
+More generally let a well-defined idle Lindblad evolution have
+$[H(t),\Pi]=0$ and jumps $\Pi L_j(t)\Pi=s_jL_j(t)$,
+$s_j\in\{+1,-1\}$. Then
+$H_{\rm eff}=H-i\sum_jL_j^\dagger L_j/2$ is even. Each no-jump
+propagator commutes with $\Pi$. For every complete trajectory, including
+times and all purifying records, its Kraus operator therefore satisfies
+
+$$
+\Pi K_h\Pi=s_hK_h,\qquad
+s_h=\prod_{j\in h}s_j=(-1)^{m(h)}.
+\tag{CAT2}
+$$
+
+In (CAT1), $m$ counts the total number of memory loss **and heating**
+jumps; buffer jumps and even stabilizer jumps do not contribute. The
+identity holds on the full memory-buffer system, with identity on
+unaffected registers. It does not require access to the trajectory.
+Use one independent helper initially plus and the two known gates
+$C_\Pi=P_0\otimes I+P_1\otimes\Pi$ before and after the entire
+ordinary exposure. Since $C_\Pi^2=I$, each full Kraus becomes
+
+$$
+C_\Pi(I\otimes K_h)C_\Pi
+ =(P_0+s_hP_1)\otimes K_h,\qquad
+\mathcal E_\pm(\rho)=\sum_{h:s_h=\pm1}K_h\rho K_h^\dagger.
+\tag{CAT3}
+$$
+
+An $X$ measurement reads jump parity without measuring the unknown
+**initial** logical parity. The identity is before measurement and
+therefore extends to arbitrary helper/data/reference inputs. Every
+record, including the rejected parity if a task rejects it, is retained.
+After summing flags, the data channel is exactly the original idle
+channel. Consecutive parity-symmetric stages and simultaneous even
+stabilization obey the same result, without ideal code states or
+infinitesimal time steps.
+
+There is also a bounded-operator proof that does not exchange an
+unbounded jump expansion with a limit. If a normal CPTP map
+$\mathcal E$ is parity covariant, take any Kraus representation and
+put $K_j^\pm=(K_j\pm\Pi K_j\Pi)/2$. Direct expansion gives
+$\sum_{j,\pm}K_j^\pm\rho K_j^{\pm\dagger}
+=[\mathcal E(\rho)+\Pi\mathcal E(\Pi\rho\Pi)\Pi]/2
+=\mathcal E(\rho)$. The wrapper's two flag Kraus operators are exactly
+$K_j^\pm$. This proves (CAT3) on trace-class inputs for any such
+well-defined channel. A noncovariant channel is instead parity twirled
+by discarding this helper; it is not covered by the no-change statement.
+
+The two $C_\Pi$ gates, helper coherence for the full exposure and its
+readout are actual resources. Buffer homodyne tomography or a destructive
+final parity measurement is not evidence that these coherent gates
+exist. Conversely, if a switch proposal adds a qubit/coupler capable of
+them, they belong in its ordinary comparator. Transferring the logical
+state into a cleaner helper is a further baseline only when a physical
+transfer, helper lifetime and gates are supplied and priced.
+
+**What the small-time switch flag detects.** For a separate ideal
+two-slot screen, let $\mathcal A_{t_A}$ have jumps
+$L_-=\sqrt{\gamma_-}a$, $L_+=\sqrt{\gamma_+}a^\dagger$ and let
+$\mathcal B_{t_B}$ have $L_B=\sqrt{\kappa_2}F$.
+Keep their independent reservoir records. Write the no-jump generators
+$R_A=iH_A+\sum_\sigma L_\sigma^\dagger L_\sigma/2$ and
+$R_B=iH_B+L_B^\dagger L_B/2$, with $\hbar=1$.
+The exact ideal switch-flag Kraus operators are
+$M^\pm_{ij}=(B_jA_i\pm A_iB_j)/2$.
+Summing both flags gives
+$(\mathcal B\circ\mathcal A+\mathcal A\circ\mathcal B)/2$,
+so this is a complete instrument, not a success-only channel.
+Expand its **minus** operators on a common analytic/core domain:
+
+$$
+\begin{aligned}
+M^-_{00}&=\tfrac12t_At_B[R_B,R_A]+\text{higher mixed orders},\\
+M^-_{\sigma0}&=-\tfrac12t_B\sqrt{t_A}[R_B,L_\sigma]
+                         +\text{higher mixed orders},\\
+M^-_{0B}&=-\tfrac12t_A\sqrt{t_B}[L_B,R_A]
+                         +\text{higher mixed orders},\\
+M^-_{\sigma B}&=\tfrac12\sqrt{t_At_B}[L_B,L_\sigma]
+                         +\text{higher mixed orders}.
+\end{aligned}
+\tag{CAT4}
+$$
+
+These follow by multiplying $A_0=I-t_AR_A+O(t_A^2)$,
+$B_0=I-t_BR_B+O(t_B^2)$ and the leading jump amplitudes.
+The first three lines explicitly keep the no-jump commutators; they
+are not silently set to zero when the dissipative jumps commute.
+Multiple-jump trajectories and corrections to the one-jump trajectories
+enter higher orders. This is not an exact finite-time Kraus truncation
+or a remainder bound uniform over all finite-energy states.
+
+The CCR give
+
+$$
+[F,a]=-\lambda a,\qquad [F,a^\dagger]=2a+\lambda a^\dagger,
+\quad
+\mathcal F_-(\rho)=\frac{\kappa_2t_At_B}{4}
+\left[\gamma_-|\lambda|^2a\rho a^\dagger
+ +\gamma_+Q\rho Q^\dagger\right]+O(\epsilon^3),
+\quad Q=2a+\lambda a^\dagger,
+\tag{CAT5}
+$$
+
+where $t_A,t_B=O(\epsilon)$ and the expansion has a valid domain as
+above. At zero temperature the leading minus map is a photon-loss map
+of order $t_At_B$. The ordinary odd-parity branch has leading map
+$\gamma_-t_Aa\rho a^\dagger$. Random thinning with probability
+$\kappa_2t_B|\lambda|^2/4$ reproduces the leading selected map when
+this probability is at most one. This comparison charges the discarded
+launches. It matches that leading map only; it neither compiles the
+whole non-Gaussian switch nor dominates a finite-time heralded frontier.
+For $\lambda=0$ the loss contribution in (CAT5) vanishes, but the thermal
+heating contribution and higher no-jump terms need not vanish.
+
+**The measured bath is not loss-only.** On any state of mean photon
+number $N$, Cauchy--Schwarz gives
+$|\langle a^2\rangle|\le\sqrt{N(N+1)}$ and hence
+
+$$
+\operatorname{Tr}(Q^\dagger Q\rho)
+ =4N+|\lambda|^2(N+1)
+ +2\lambda\langle a^{\dagger2}\rangle
+ +2\lambda^*\langle a^2\rangle
+ \ge(2\sqrt N-|\lambda|\sqrt{N+1})^2.
+\tag{CAT6}
+$$
+
+At the displayed rounded moon-cat parameters $N=4.1$, $\lambda=1.04$,
+$n_{\rm th}=0.93$, the elementary bound
+$\sqrt{N(N+1)}\le4.6$ gives a lower bound 2.78016 for this expectation,
+while $|\lambda|^2N=4.43456$. Thus in the *leading effective-model*
+minus map the heating-record fraction is at least
+
+$$
+\frac{0.93(2.78016)}{1.93(4.43456)+0.93(2.78016)}
+ =0.232007\ldots>0.23.
+\tag{CAT7}
+$$
+
+This is a bound on contributions of the two orthogonal thermal bath
+records in (CAT5), not a measured switch probability, logical error rate
+or proof that every heating event is uncorrectable. It rules out
+interpreting this nominal model's flag as a loss-only syndrome. The
+primary paper also reports pump-dependent effective error rates; bare
+thermometry does not fix every pump-on $\gamma_\pm$. This calculation
+uses the declared thermal component, without fitting those extra errors.
+
+**Physical decision.** Ordinary simultaneous stabilization, bias-tuned
+encoding, echo, accessible reservoir records and repetition/syndrome
+correction are material comparators. The natural loss bath acts during
+both pulse windows; turning a pump on and off does not by itself supply
+two independent channel slots. A real controlled-order proposal must
+give the joint memory/buffer/helper/environment Hamiltonian and the
+early/late emitted wavepackets. Identifying time-distinguishable bath
+photons by a common abstract Kraus index is not a physical erasure of
+their timing. Charge any route, capture, delay, bath reset and phase
+matching needed to realize the ideal two-slot instrument.
+
+No full finite-error memory or heralded-fidelity frontier is dominated
+here. The exact baseline is the finite-time parity instrument (CAT3);
+the small-time screen shows why its non-Gaussian commutator is not by
+itself a new loss syndrome, and why thermal records matter. A positive
+application would have to exceed that ordinary record/energy/time
+frontier using a demonstrated compatible coherent interface. The next
+finite test must derive that instrument from the physical source and
+joint bath dilation, calibrate odd pump terms and thermal populations,
+and bound the finite-time, temporal-tail and mode-truncation remainders
+over the admitted code energies and gate durations. A leading-order
+commutator or a selected trajectory is insufficient. Finite-
+energy anisotropic GKP remains a separate unclosed approximate-memory
+comparison; ideal-syndrome dominance is not its finite-envelope proof.
+
+The [exact parity replay](checks/architecture/verify_cat_reservoir_parity.py)
+checks complete finite memory-buffer maps, both ordinary parity flags,
+the complete switch/mixed-order record law, formal normally ordered CCR
+commutators and all four mixed no-jump/jump coefficient families. It also
+checks the nominal thermal bound with rational arithmetic. The
+trace-class symmetry proof, trajectory convergence, finite-time
+remainders, actual coherent access and experimental utility are analytic
+or measured inputs, not consequences of a finite replay.
+
 <a id="nr-r06-readout-noise-floor"></a>
 
 ### Readout protection needs noise ports and the actual cavity response
@@ -4484,6 +4776,484 @@ counterexample and formal echo/timing identities. The universal clock,
 norm and physical-interface arguments remain the proofs above. No
 native advantage, general measurement-switch simulator or new priority
 claim follows from the construction.
+
+<a id="nr-r08-mechanical-record-strength"></a>
+
+### Mechanical record rank and useful meter strength
+
+A harmonic material pointer gives a concrete way to test the strength
+premise in (MC1), independently of the clock premise in (MC3). At one
+station take $d$ independent oscillators initially in identical thermal
+states $\theta_{\bar n}$ and the declared occupied write
+
+$$
+W_U=\sum_{j=1}^d P_j^U\otimes D_j(\alpha),\qquad
+A=|\alpha|^2,\qquad
+\operatorname{tr}[\theta_{\bar n}D(z)]
+ =e^{-(\bar n+1/2)|z|^2}.
+\tag{MW1}
+$$
+
+Vacuum triggers no force. This is an explicit controlled-displacement
+model, rather than a deduction from a driven polariton's coupling rate.
+For $i\ne j$, the two displacement factors act on different cells.
+Tracing the pointers therefore gives the exact channel
+
+$$
+\mathcal E_U=r\,\mathrm{Id}+(1-r)\Delta_U,
+\qquad r=e^{-(2\bar n+1)A}.
+\tag{MW2}
+$$
+
+For a purification of the initial thermal state, the $d$ final record
+vectors have Gram matrix $(1-r)I+rJ$. Its eigenvalues are
+$1+(d-1)r$ and $1-r$ with multiplicity $d-1$. Thus any $A>0$ gives
+rank $d$, even when the channel is arbitrarily close to identity.
+The dimension of a nonzero record span does not certify strong pinching.
+
+There is an exact error certificate, independent of basis knowledge:
+
+$$
+\frac12\|\mathcal E_U-\Delta_U\|_\diamond
+ =r(1-1/d),\qquad
+\frac12\|\mathcal E_U-\mathrm{Id}\|_\diamond
+ =(1-r)(1-1/d).
+\tag{MW3}
+$$
+
+For the lower bound, apply $\mathrm{Id}-\Delta_U$ to half a maximally
+entangled state. Its nonzero eigenvalues are $1-1/d$ and $-1/d$ with
+multiplicity $d-1$. For the upper bound, let $Z_U$ have the distinct
+$d$th-root phases in the unknown basis. The mathematical identity
+$\Delta_U=d^{-1}\sum_{k=0}^{d-1}\operatorname{Ad}(Z_U^k)$ gives
+
+$$
+\mathrm{Id}-\Delta_U
+ =(1-1/d)\left[\mathrm{Id}
+ -\frac1{d-1}\sum_{k=1}^{d-1}\operatorname{Ad}(Z_U^k)\right].
+$$
+
+The diamond norm of the difference of two channels is at most two.
+Scaling by $r$ or $1-r$ proves (MW3). This proof does not grant an
+executable unknown $Z_U$. In particular, half-diamond accuracy
+$\epsilon<1-1/d$ to a complete dephaser requires
+$A\ge\log[(1-1/d)/\epsilon]/(2\bar n+1)$.
+
+**A complete serial benchmark at weak strength.** Suppose both slots
+really supply the independent, common-frame standard channel-switch
+interface, with $\mathcal E_j=r_j\mathrm{Id}+p_j\Delta_j$ and
+$p_j=1-r_j$. This additional interface is tested by the
+[cross-history clock calculation below](#nr-r08-mechanical-clock);
+it does not follow from (MW2). Retain an arbitrary input order helper
+$C$, target and reference. Multilinearity of the switch gives
+
+$$
+\mathfrak S(\mathcal E_A,\mathcal E_B)
+ -\mathrm{Id}_C\otimes(\mathcal E_B\circ\mathcal E_A)
+ =p_Ap_B\left[
+ \mathfrak S(\Delta_A,\Delta_B)
+ -\mathrm{Id}_C\otimes(\Delta_B\circ\Delta_A)\right].
+\tag{MW4}
+$$
+
+Indeed, in the other three terms of the expansion at least one slot is
+identity. Both causal words then agree, including every control
+off-diagonal, so that term equals the corresponding serial channel
+with the helper unchanged. Both maps in the final bracket are channels;
+hence the half-diamond distance in (MW4) is at most $p_Ap_B$.
+Any fixed bounded linear task reward changes by at most $p_Ap_B$ per
+launch compared with this achievable two-call ordinary experiment.
+Optimizing its receiver only strengthens the ordinary baseline.
+The statement includes subsequent herald records and charges their
+probability; conditioning on rare events cannot remove their yield.
+It is an absolute reward bound, not a relative rate, adaptive-stopping,
+capacity or unrestricted optimality theorem. Additional routing and
+control errors need their actual instruments.
+
+For input $I/d$ and an independent helper $|+\rangle$, write
+$v=d^{-1}\sum_{ij}|\langle u_i|v_j\rangle|^4$. Then
+
+$$
+q_- =\frac{p_Ap_B}{2}(1-v).
+\tag{MW5}
+$$
+
+The SAME promise gives zero, while MUB gives
+$p_Ap_B(1-1/d)/2$. For exactly independent launches with no dark counts,
+the explicit receiver declaring MUB on the first minus has miss
+probability $(1-q_-)^N$ and zero SAME error. Its required launch count
+is $\lceil\log\delta/\log(1-q_-)\rceil$ for miss at most $\delta$,
+when $0<q_-<1$. This is an achievable receiver's cost, not a lower bound
+on every strategy. If a separately established control-dephasing model
+multiplies all cross blocks by real $\nu\in[0,1]$, the two probabilities
+become $(1-\nu)/2$ and
+$(1-\nu)/2+\nu p_Ap_B(1-1/d)/2$. Background calibration and drift then
+matter as well as raw minus counts. Physical clock kernels generally
+need more than this single scalar.
+
+**A bounded passive one-photon force example.** For a photon held
+uninterrupted under $H/\hbar=\Omega b^\dagger b+
+g n_{\mathrm{ph}}(b+b^\dagger)$, exact forced-oscillator evolution gives
+$\alpha(t)=(g/\Omega)(1-e^{-i\Omega t})$ up to sign convention,
+common rotation and the known one-photon phase. Thus
+$A\le4(g/\Omega)^2$. At zero temperature and nominal $g/\Omega=1/25$,
+
+$$
+p\le1-e^{-4/625}<4/625,\qquad
+p_Ap_B<16/390625=0.00004096.
+\tag{MW6}
+$$
+
+Even granting a perfect switch interface, the infinite-$d$ MUB-minus
+probability is then below $8/390625$ per launch. This fixed-sign,
+single uninterrupted-force guard excludes resonant modulation, repeated
+passages, bright displacement and nonlinear amplification. Hot pointers
+change $(2\bar n+1)A$ and cannot inherit the zero-temperature numbers.
+Photon escape, pulse shape and collection also require a complete
+input-output model; a loaded cavity linewidth is not by itself a
+travelling-photon loss probability.
+
+[Bera et al., Nature Communications **15**, 7115 (2024)](https://doi.org/10.1038/s41467-024-51499-z)
+([primary model and supplement](https://arxiv.org/html/2309.06765v2))
+report a polariton coupling ratio near $0.04$ and driven instabilities.
+They do not demonstrate the preserved-photon array (MW1).
+The number in (MW6) only illustrates the passive ground-state model at
+that nominal ratio. The actual operating point's temperature, loading,
+ports and drive must be measured together.
+[Sekatski, Aspelmeyer and Sangouard, PRL **112**, 080502 (2014)](https://arxiv.org/abs/1401.2357)
+propose bright displaced-light enhancement of weak single-photon
+optomechanics; that state, optical energy and control interface require
+a different instrument. Partial monitoring maps and their switched
+control-noise behavior are already studied by
+[Molitor et al., Communications Physics **7**, 373 (2024)](https://arxiv.org/abs/2405.09631).
+These identities do not establish new priority or a native application.
+
+The [exact partial-meter replay](checks/architecture/mechanical_pointer_strength.py)
+tests complete finite control-matrix blocks, Gram/Choi witnesses and
+SAME/MUB laws. The thermal oscillator, all-dimensional norm, statistical
+and physical-interface arguments are the proofs above.
+
+<a id="nr-r08-mechanical-clock"></a>
+
+### Mechanical material pointers: complete clock records and ordinary controls
+
+The preceding partial-dephaser calculation assumes a standard switch of two
+independent common-frame channel slots. A mechanical material pointer needs
+its actual two-history instrument. The following conditional model supplies
+that calculation and concrete ordinary controls; it establishes no native
+advantage.
+
+**Closed harmonic pointers at a common finish.** Let $P_i$ be station $A$'s
+photon basis projectors, with one independent oscillator per label, and define
+
+$$
+W_A=\sum_i P_i\otimes D_i(\alpha),\qquad
+D(v)=e^{v b^\dagger-v^*b},\qquad a=|\alpha|^2.
+\tag{MP1}
+$$
+
+Vacuum triggers no force. Station $B$ has projectors $Q_j$ and an independent
+pointer array. Each oscillator initially has thermal state $\theta_n$, with
+$\operatorname{tr}[\theta_nD(v)]=e^{-(n+1/2)|v|^2}$. Its purification remains
+part of the private record. For idle evolution $R(t)=e^{-i\Omega tN}$ and a
+common finish $T$,
+
+$$
+R(T-t)D_i(\alpha)R(t)
+ =R(T)D_i(\alpha e^{i\Omega t}).
+\tag{MP2}
+$$
+
+Thus a kick at $t$ writes the interaction-picture displacement
+$v_i(t)=\alpha e^{i\Omega t}e_i$. The common $R(T)$ cancels from record inner
+products; the early/late rotation does not. For purified records $r_i(t)$,
+the Weyl law $D(-w)D(v)=e^{i\operatorname{Im}(w^\dagger v)}D(v-w)$ gives
+
+$$
+\begin{aligned}
+K_{ik}(t,s)&=\langle r_k(s)|r_i(t)\rangle\\
+ &=e^{i\operatorname{Im}[v_k(s)^\dagger v_i(t)]}
+   e^{-(n+1/2)\|v_i(t)-v_k(s)\|^2}\\
+ &=q+[\kappa(t-s)-q]\delta_{ik},\\
+q&=e^{-(2n+1)a},\\
+\kappa(\Delta)&=
+ e^{ia\sin(\Omega\Delta)-(2n+1)a[1-\cos(\Omega\Delta)]}.
+\end{aligned}
+\tag{MP3}
+$$
+
+Different labels use different material cells, so their overlap is $q$ even
+across times in this isotropic closed model. The same-label clock contains
+both distinguishability and a Weyl phase. At finite $q$ the complete
+instrument is consequently not an orthogonal-record dephaser times one
+scalar visibility.
+
+Writing the two order isometries and tracing their actual records gives the
+switch's control off-diagonal map and the three-window ordinary route's map:
+
+$$
+\begin{aligned}
+\mathcal X_S(\rho)
+ &=\sum_{ijkl}K^A_{ik}(0,\tau)K^B_{jl}(\tau,0)
+                  Q_jP_i\rho Q_lP_k,\\
+\mathcal X_O(\rho)
+ &=\sum_{ijkl}K^A_{ik}(0,2\tau)K^B_{jl}(\tau,\tau)
+                  Q_jP_i\rho Q_lP_k.
+\end{aligned}
+\tag{MP4}
+$$
+
+The ordinary route occupies early $A$ on one helper branch and late $A$ on
+the other, with $B$ occupied in the middle on both branches. Both diagonal
+control blocks have the same respective one-use channels in this closed
+stationary thermal model. Together with those blocks, (MP4) specifies the
+full target/helper channel on arbitrary reference inputs and hence every
+later common measurement. For negligible $q$, the equal-label factors reduce
+to $\kappa_A(-\tau)\kappa_B(\tau)$ versus $\kappa_A(-2\tau)$. This limit
+neither removes finite-$q$ terms nor optimizes an ordinary processor.
+
+**Readable mechanics and thermal purification are distinct records.** For
+two displaced thermal states the root fidelity is
+
+$$
+F_{\rm root}\bigl(D(v)\theta_nD(v)^\dagger,
+                  D(w)\theta_nD(w)^\dagger\bigr)
+ =e^{-\|v-w\|^2/[2(2n+1)]}.
+\tag{MP5}
+$$
+
+This is the equal-covariance displacement specialization of the Gaussian
+fidelity formula of [Banchi, Braunstein and Pirandola, Eq. (9)](https://arxiv.org/html/1507.01941).
+Here $F_{\rm root}=\operatorname{tr}\sqrt{\sqrt\rho\sigma\sqrt\rho}$, so the
+coherent-state limit has the ordinary overlap rather than its square.
+For distinct labels the squared displacement difference is $2a$; hence
+$F_{\rm root}=e^{-a/(2n+1)}$ and the mechanical trace distance is at most
+$\sqrt{1-e^{-2a/(2n+1)}}$. A hot pointer can strongly dephase the photon
+while these accessible mechanical states are close. The remaining record
+can reside in the thermal purification or initially unknown phase
+fluctuations. The channel trace alone does not certify a readable label.
+
+**Damping retains a clock in emitted fields.** Now couple each oscillator
+passively to an independent Markov field, with energy damping rate $\Gamma$
+and frequency $\Omega$, retaining the entire field at the same finish. A
+kick at $t$ displaces a normalized vector $f_t$ of the initial oscillator
+and incident field modes. The passive Langevin dilation gives, for $t\ge s$,
+
+$$
+f_s^\dagger f_t=e^{-\Gamma(t-s)/2+i\Omega(t-s)}=:h(t-s).
+\tag{MP6}
+$$
+
+Indeed its initial-oscillator coefficient is
+$e^{-(\Gamma/2-i\Omega)t}$ and its causal field coefficients are
+$\sqrt\Gamma e^{-(\Gamma/2-i\Omega)(t-u)}$ for $0\le u\le t$.
+Their squared norms sum to one, and integrating their cross product gives
+(MP6). This is an identity of this passive Markov dilation, not a claim
+that every mechanical reservoir is Markovian.
+
+If oscillator and incident modes all initially have thermal occupation $n$,
+the covariance is invariant under passive mixing. The Weyl calculation now
+uses $v_i(t)=\alpha f_t$ in the independent label subspace and gives
+
+$$
+\kappa_{\rm damp}(\Delta)
+ =e^{ia\operatorname{Im}h(\Delta)
+       -(2n+1)a[1-\operatorname{Re}h(\Delta)]},\qquad
+\kappa_{\rm damp}(-\Delta)=\kappa_{\rm damp}(\Delta)^*.
+\tag{MP7}
+$$
+
+The different-label coefficient remains $q$. The complete squared
+displacement difference is
+$2a[1-e^{-\Gamma|\Delta|/2}\cos(\Omega\Delta)]$, including both final
+mechanics and emitted fields. After a full mechanical period the magnitude
+is $e^{-(2n+1)a(1-e^{-\Gamma|\Delta|/2})}<1$ when $a,\Gamma,|\Delta|>0$.
+An oscillator revival does not recover its leaked early/late record.
+
+A freshly prepared oscillator need not be in equilibrium with the field.
+For initial mechanical occupation $n_m$, incident-field occupation $n_b$
+and $t=s+\Delta\ge s$, set
+
+$$
+\begin{aligned}
+L_m&=ae^{-\Gamma s}
+ [1+e^{-\Gamma\Delta}-2e^{-\Gamma\Delta/2}\cos(\Omega\Delta)],\\
+L_{\rm tot}&=2a[1-e^{-\Gamma\Delta/2}\cos(\Omega\Delta)].
+\end{aligned}
+\tag{MP8}
+$$
+
+The same-label Weyl phase remains that of (MP7), while the real exponent is
+$-(n_b+1/2)L_{\rm tot}-(n_m-n_b)L_m$. To see this, split the displacement
+difference into its initial mechanical component of squared norm $L_m$
+and field components of total squared norm $L_{\rm tot}-L_m$, then apply
+their independent thermal characteristic functions. For different labels,
+the real exponent is
+$-(2n_b+1)a-(n_m-n_b)a(e^{-\Gamma t}+e^{-\Gamma s})$.
+These expressions retain absolute preparation time as well as separation.
+A non-Markov bath instead needs its actual response and covariance kernels;
+a scalar fitted $T_2$ does not specify them.
+
+**Ordinary waiting, forces and phase control.** In the closed
+single-frequency model, a full period makes the corresponding $f_t$ equal
+and removes that separation's clock record. Several frequencies require
+their actual common recurrence or an approximation bound. Storage, delay,
+launch rate and reset are charged. Retiming the original switch by whole
+periods defines a different timed experiment unless its complete instrument
+is preserved. With damping, (MP7) forbids an exact positive-time recurrence.
+
+An unconditional known force adds the same displacement vector to both
+histories of a linear oscillator. Their difference, and therefore the
+magnitude of their complete Gram overlap, is unchanged; Weyl phases can
+change. Independently addressed classical cell forces still add one common
+vector. Photon-label-conditioned or helper-controlled forces are additional
+access. Moreover, mechanical parity $R_\pi=e^{i\pi N}$ commutes with the
+harmonic Hamiltonian, so
+
+$$
+R_\pi e^{-i\Omega\tau N}R_\pi e^{-i\Omega\tau N}
+ =e^{-2i\Omega\tau N}.
+\tag{MP9}
+$$
+
+It is not the static-qubit echo (MC7). Parity changes a later displacement's
+sign but does not generally reverse harmonic clock evolution. Optical phase
+alone also commutes with photon number and does not reverse a radiation
+pressure number-force interaction. Any claimed force echo needs its actual
+actuator, sign change, rotation or further passage.
+
+If native controls can instead set each occupied force phase to
+$\alpha(t)=\alpha e^{-i\Omega t}$, its closed interaction-picture write is
+static. The vacuum three-window compiler then realizes the corresponding
+static two-slot switch without knowing the projectors. This is a sufficient
+control premise, not a consequence of classical pump adjustability or of
+equal one-use reduced channels. It does not by itself simulate the original
+unprogrammed (MP4), and a local phase update cannot retrieve emitted fields.
+
+A stronger exact comparator is available with coherent helper-to-pointer
+rotations. Define
+
+$$
+\begin{aligned}
+R_A&=e^{-i\Omega_A\tau N_A},&R_B&=e^{-i\Omega_B\tau N_B},\\
+S_0&=P_0^CW_BW_A+P_1^CW_AW_B,\\
+K_{\rm pre}&=P_0^CR_B+P_1^CR_A,&K_{\rm post}&=K_{\rm pre}^\dagger.
+\end{aligned}
+$$
+
+After removing the common idle factor, the original closed timed operator is
+
+$$
+S_\tau=K_{\rm post}S_0K_{\rm pre}.
+\tag{MP10}
+$$
+
+For example its $P_0^C$ block is
+$R_B^\dagger W_BW_AR_B=W_B(\tau)W_A(0)$ because $R_B$ commutes with $W_A$;
+the $P_1^C$ block is $R_A^\dagger W_AW_BR_A=W_A(\tau)W_B(0)$.
+Compile $S_0$ with phase-referenced ordinary writes, then apply these coherent
+pre/post rotations. Equality holds on every target, pointer and reference
+input, including thermal purifications and unknown bases. The required
+coherent helper-to-pointer control is stronger than classical forces or two
+opaque channel slots. Thermal invariance of a pointer marginal does not
+permit dropping $K_{\rm pre}$, which can correlate helper and pointers.
+Inaccessible mechanics or emitted fields can obstruct this comparator.
+
+**A closed displacement loop extracts ordinary basis control.** Suppose the
+actual joint $W$, its phase-referenced inverse and independently addressed
+classical pointer forces are native. For $V=\prod_jD_j(\beta_j)$,
+
+$$
+W^\dagger VWV^\dagger
+ =\sum_j e^{\beta_j\alpha^*-\beta_j^*\alpha}P_j\otimes I_E.
+\tag{MP11}
+$$
+
+On label $j$, only $D_j(\alpha)$ fails to commute with $V$; all other cell
+factors cancel. The remaining displacement commutator is the scalar shown.
+With $a>0$ and $\beta_j=i\theta_j\alpha/(2a)$ this implements the unknown-basis
+unitary $\sum_je^{i\theta_j}P_j$ and restores every pointer exactly, on all
+inputs including its thermal purification. No learning of the basis occurs.
+Global pointer parity supplies $W^\dagger=R_\pi WR_\pi$ for the actual
+instantaneous joint displacement model. Parity commutes with harmonic idle
+but inverts the kick; finite writes and intervening dynamics must still
+implement the claimed inverse.
+
+Set $\theta_j=2\pi kj/d$ with $k$ uniform in $\{0,\ldots,d-1\}$. Averaging
+the extracted unitary channel gives exactly $\Delta_P$, by the finite
+root-of-unity sum. At $B$ use an independent seed. Hold each seed fixed across
+the helper's two histories and the repeated ordinary opportunity. The
+three-window compiler then realizes each unitary switch, and averaging
+realizes the standard channel switch of the two complete dephasers. With
+identity probability $r_j$ and this random-root choice with probability
+$1-r_j$, the same construction realizes the standard switch of
+$\mathcal E_j=r_jI+(1-r_j)\Delta_j$. This follows from the random-unitary
+representation and switch multilinearity on the complete target/helper/
+reference channel, not merely on its control statistics.
+
+Each extracted unitary uses two occupied native $W/W^\dagger$ couplings.
+The worst case has six scheduled coupling opportunities and four occupied
+couplings per order history, versus two occupied weak-meter encounters in
+the proposed switch, plus forces, coherent delays and inverses. In vacuum
+$W=W^\dagger=I$, so the loop is $VV^\dagger=I$; it introduces no slot record
+under this declared closed model. Identity choices can be bypassed, while
+their physical timing and training costs remain in the attempt ledger.
+At weak $a$, the force scale is
+$\sum_j|\beta_j|^2=\sum_j\theta_j^2/(4a)$, with phases chosen modulo $2\pi$.
+Force precision, array energy, extra encounters, idle/bath leakage and reset
+must be charged. Leaked fields need not be restored by a mechanical loop.
+This is neither a two-physical-query simulator nor a simulator of the
+original timed kernels without the stated full phase-frame premises.
+
+**Continuity scope.** Distinct nonzero bosonic displacements have
+operator-norm distance two, however small the displacement difference:
+their relative displacement has the full unit-circle spectrum. Thus the
+unrestricted operator-norm bound (MC5) is generally vacuous here. With a
+fixed untouched thermal preparation, one equal-label purified write instead
+has vector mismatch $\eta=\sqrt{2-2\operatorname{Re}\kappa}$, or
+$\sqrt{2-2|\kappa|}$ after an allowed common phase alignment. Orthogonal
+photon projectors make this uniform over data/reference inputs in the
+isotropic model; station mismatches add by the triangle inequality. This is
+a preparation-restricted channel bound, not unrestricted diamond continuity
+over arbitrary pointer inputs. Its preparation and diagonal helper-control
+conditions must be checked after earlier pointer processing. In particular,
+arbitrary correlated preparations do not inherit the scalar $\eta$ bound.
+
+**Bounded primary evidence and the next test.**
+[Bera et al.](https://doi.org/10.1038/s41467-024-51499-z) measure driven
+electromechanical polaritons and instabilities below unit mean occupation.
+Their near-resonant maximum coupling is about $g/\Omega=0.04$; a separate
+device-2 point reports $g/(2\pi)=45.0\pm1.9$ kHz and
+$\kappa/(2\pi)=9$ MHz. These operating points cannot be combined. The latter
+loaded energy-decay time is about $17.7$ ns, rather than an absorption-only
+or travelling-photon loss estimate. The work demonstrates neither a
+surviving one-photon conditional displacement nor a mode-resolving array.
+[Sekatski, Aspelmeyer and Sangouard](https://arxiv.org/pdf/1401.2357) propose
+enhancement with displaced single-photon entanglement: their illustrative
+$\beta=40000$ costs about $1.6$ billion displacement photons, with about
+$4$ billion in the separate readout pulse and bare $g\tau\simeq3.8\times10^{-5}$.
+Their bright-state, feedback and re-displacement resources are ordinary
+access too; this is a proposal rather than a measured two-order array.
+
+The next useful candidate must preserve a declared photon code with at
+least three independently addressable material cells and measured response.
+Measure the complex complete cross-history kernels at $\tau,2\tau$,
+different-label coherences, survival/leakage and outgoing-field records.
+Compare both repeated-station orders, waiting, physical force/phase controls,
+the closed-loop comparator when available, direct material readout and
+pilots. Freeze controls after a fixed training budget and assess a held-out
+modal-retention/alignment task, charging all source/control energy, storage,
+reset, losses and mean completion time. The unresolved candidate is a
+strong, photon-preserving material record with a measured non-Markov response
+whose useful-task benefit survives these controls and costs. A bare
+two-history visibility margin is insufficient.
+
+The [mechanical-clock replay](checks/architecture/mechanical_pointer_clock.py)
+checks finite exact passive-dilation Gram and covariance identities, force
+translation/loop identities, parity and leaked-field counterexamples. Scalar
+exponentials are additional numerical transcription guards. Infinite-mode
+Weyl/thermal, all-input instrument and physical-control claims remain the
+analytic arguments above.
 
 ## Shared quantum baths require more than two channel marginals
 

@@ -230,6 +230,16 @@ Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.
 
+Further physical tests now have explicit owning proofs: the
+[mechanical record and clock interface](architecture-baselines.md#nr-r08-mechanical-record-strength),
+[non-Gaussian cat parity baseline](architecture-baselines.md#nr-r06-cat-reservoir-parity),
+[higher-order bath transfer test](backaction.md#nr-r14-high-order-transfer),
+[native holonomic controls](backaction.md#nr-r19-holonomic-controls) and
+[stored Rydberg-memory instrument](communication.md#nr-r11-rydberg-memory).
+Their remaining tests concern complete physical access and useful task
+outputs after ordinary controls, rather than record rank, one decay time
+or a selected commutator flag. No native benefit is established.
+
 The [literature comparison](references.md) credits the existing filtering
 and recovery mechanisms. The bounded primary-source check does not
 establish priority.

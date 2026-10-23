@@ -548,6 +548,7 @@ def passive_reordering_checks():
 
 
 def main():
+    from verify_cat_reservoir_parity import verify_cat_reservoir_parity
     from gaussian_readout_guards import verify_gaussian_readout_guards
     from verify_su11_ports import verify_su11_full_ports
     from verify_conditional_readout import (
@@ -560,6 +561,7 @@ def main():
         "arithmetic": "Python standard-library Gaussian rationals; no floating point",
         "examples": examples,
         "bosonic_compilers": bosonic_compiler_checks(),
+        "cat_reservoir_parity": verify_cat_reservoir_parity(),
         "passive_reordering": passive_reordering_checks(),
         "gaussian_readout_noise_floor": verify_gaussian_readout_guards(),
         "su11_complete_ports": verify_su11_full_ports(),
