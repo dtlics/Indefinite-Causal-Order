@@ -6,9 +6,12 @@ The current results establish an advantage in a specified fresh-frame recovery
 game. They do **not** yet establish a useful advantage for calibrating or
 operating persistent hardware. The next investigations start from complete
 device instruments and available controls, then ask whether switched outputs
-improve a deployed decision. Current screens cover multimode calibration,
-network entanglement and native computational layers. No checked architecture
-currently meets all the required assumptions.
+improve a deployed decision. Current screens cover calibration transport,
+multimode optics, network entanglement, private key detection and native
+computational layers. A quantum bath or a cheaper control readout is not
+enough: the comparison must include native reference encodings, ordinary
+echo and spectral checks, and every accepted and rejected outcome. No checked
+architecture currently meets all the required assumptions.
 
 ## What is established
 
@@ -88,6 +91,42 @@ specified. Marginal channel maps alone do not determine that interface;
 make this distinction explicit. A generic switch-based burst alarm is not
 supported by the current evidence.
 
+The [shared-bath calibration screen NR-R14](backaction.md#nr-r14) makes the
+calibration problem concrete: identical Ramsey data can require opposite
+echo-versus-no-pulse storage decisions. Under its native pure-dephasing
+coupling, however, an ordinary echo reproduces the complete phase-resolved
+switched bath/reference instrument and every later adaptive utility.
+Known sensor-only interventions around a shared unknown bath interaction
+also have ordinary controlled-dilation implementations. Limited echo data
+need not predict a held-out uninterrupted decoupling sequence, so direct
+target-sequence calibration and pump/reset/record tests remain comparators.
+This is a calibration-transport screen, not an architecture advantage or a
+general exclusion of unknown joint interventions.
+
+There is a named optical testbed with a longer-lived oscillator:
+[Spinnler et al.](https://doi.org/10.1038/s41467-024-53882-2) couple a quantum
+dot to a phononic-crystal mode with frequency $1.466\,\mathrm{GHz}$,
+quality factor $2100$, coupling $g_{\mathrm{ep}}/(2\pi)=2.9\,\mathrm{MHz}$
+and thermal occupation about $58$ at $4.2\,\mathrm K$. The corresponding
+energy-ringdown time $Q/\Omega$ is about $228\,\mathrm{ns}$, whereas the
+QD excited-state (negative-trion) lifetime is $1.18\,\mathrm{ns}$. Those
+scales permit a bath-memory calculation across optical histories; they do
+not establish coherent overlap
+of all radiative and other environmental records. The demonstrated response
+admits a classical mechanical approximation and is measured by ordinary
+photon autocorrelation spectroscopy. Sideband driving, cooling and heralding
+are further ordinary baselines. A useful comparison must keep the optical
+and mechanical outputs and their reset dynamics, rather than infer quantum
+utility from the oscillator lifetime.
+
+This engineered mode must not be conflated with a bulk acoustic bath.
+[McCutcheon's quantum-dot model](https://doi.org/10.1103/PhysRevA.93.022119)
+uses an acoustic cutoff $\omega_c=2.2\,\mathrm{ps}^{-1}$, whose inverse is a
+characteristic cutoff timescale of about $0.455\,\mathrm{ps}$, and exposes
+non-Markovian effects in ordinary emission spectra. Such a model does not by itself preserve bath
+coherence over nanosecond order routing. Pulse profiles and complete
+two-history overlaps remain necessary in either regime.
+
 ### Multimode pointer retention
 
 This is the closest operational interpretation of the main paper's fixed
@@ -153,6 +192,24 @@ tracking, with ordinary ancilla-assisted reconstruction. This supplies both
 a real verification problem and a strong ordinary comparator; its
 polarization-qubit setting does not establish an opaque high-dimensional
 pointer channel.
+
+The cost of an ordinary quantum reference is device specific. For a
+polarization-qubit target, the path qubit used as a switch control has the
+dimension of a full Bell reference. [Yoon-Ho Kim](https://doi.org/10.1103/PhysRevA.67.040301)
+demonstrated deterministic preparation and measurement of all four
+single-photon path/polarization Bell states using linear optics. A separate
+stored photon and a probabilistic two-photon Bell analyzer are therefore
+not intrinsic costs of that ordinary diagnostic.
+
+Using this encoding still requires the full path-preserving instrument
+$\mathrm{id}_{R}\otimes\mathcal E$, including off-diagonal path blocks.
+Equal reduced polarization channels on two paths do not suffice: mode
+dependence or arrival-time bath records may corrupt the reference. Native
+preparation optics, readout ports, routing and drift must be matched. This
+resource observation does not replace unknown-input recovery with destructive
+tomography, and a single path qubit is not a full reference for a
+high-dimensional target. No demonstrated high-dimensional memory gap is
+established by the qubit example.
 
 ## Go/no-go protocol
 
@@ -267,6 +324,40 @@ It is not a continuum scattering calculation or a fit to the named
 experiment. Resolve the measured frequency kernel and price these
 helpers before treating the formal noncommutation as an application.
 
+### Private key detection
+
+Quantum key distribution supplies a useful endpoint that bright classical
+channel pilots cannot replace. The
+[photonic proof of principle by Valibouse et al.](https://arxiv.org/html/2608.13561v2)
+demonstrates control-based eavesdropping detection without disclosing raw-key
+outcomes. Its measurement requires a path-entangled ancillary photon,
+postselected two-photon interactions and joint path readout. An eavesdropper
+can access the implemented control; the authors do not claim a secure
+protocol. Retained-qubit statistics are not secret-key rates.
+
+The displayed ideal selected instrument also has a substantial event cost.
+Bob's coincidence map has Kraus operators $P_j/\sqrt2$, with success $1/2$.
+For the circular system input, Alice's selected projector and the sum of
+Bob's outcomes have accepted mass $1/4$ in either order: the first order
+gives $\|P_i|L\rangle\|^2/2=1/4$, while the reverse uses
+$\sum_jP_j|L\rangle\langle L|P_j=I/2$. Keeping all control flags preserves
+that mass; unbiased same-basis sifting leaves at most
+$1/8$ retained events **per generated entangled pair**, before optical loss
+and detector inefficiency. This is a normalization bound for those selected
+operations, not a key-yield or security bound.
+
+[Spencer-Wood's ordinary two-way private-detection protocol](https://arxiv.org/html/2303.03893v3#S6)
+already adds a terminal Alice measurement after Bob returns the measured
+state. Bob can destructively measure and prepare a replacement photon in
+the recorded state; this needs a source and feedforward latency, but no
+order-erasing ancillary photon or preserved quantum reference. Its complete
+security analysis is also unresolved, so it is a resource comparator rather
+than an equally proved secure replacement. A deployable claim needs full
+security and finite-key rates against ordinary one-way, biased-basis and
+two-way methods, with source brightness, all postselection, transport,
+readout and reset charged. The current experiment establishes no such
+matched hardware advantage.
+
 ## Native computation and coherent dispatch
 
 The [native-check baselines](architecture-baselines.md#nr-r06) also prevent
@@ -274,6 +365,15 @@ promoting a known Clifford layer or a read-only classical-bit lookup merely
 because recompiling its full unitary is expensive. Cheap transported checks
 can use the same native calls. Helper gates, their noise and memory must be
 costed, rather than assumed free by either implementation.
+
+The [recorded parity-braid screen in NR-R08](architecture-baselines.md#nr-r08)
+compares an ordinary three-parity-measurement braid with a specified balanced
+switch construction using mean six parity measurements and two control
+readouts. Reading the control first and skipping a dispensable final parity
+measurement reduces the latter mean to $11/2$, with the same control cost.
+Both use Pauli and syndrome tracking; any correction needed to return an
+untracked physical output must still be implemented and costed. These are
+counts for the displayed protocols, not an optimal architecture bound.
 
 A separate conditional construction concerns coherent subroutine dispatch
 through a dephased program register. The
@@ -373,8 +473,11 @@ qutrit replay state the shared-map and helper-cost conditions.
 The next native calculation must use the actual noisy gate sequence and
 preserved output registers, including leakage, unselected-site states and
 reset/readout records. Compare the measured cost of the single post-check
-and full check sandwich with any proposed order router. An exclusive switch
-claim cannot follow from granting it a clean known symmetry or a coherent
-vacuum port absent from the ordinary hardware. A surviving task must also
-beat direct compiled control, conditional uncomputation and reuse. No present
-screen establishes that advantage.
+and full check sandwich with any proposed order router. Across these
+platforms, charge complete shot time, accepted yield and hardware occupancy;
+one control readout does not automatically beat two destructive detections.
+Calibration must be amortized within the actual drift window. An exclusive
+switch claim cannot follow from granting it a clean known symmetry or a
+coherent vacuum port absent from the ordinary hardware. A surviving task
+must also beat direct compiled control, conditional uncomputation and reuse.
+No present screen establishes that advantage.

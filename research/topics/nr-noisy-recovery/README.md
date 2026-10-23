@@ -24,6 +24,7 @@ and from learning a scalar channel property.
 | NR-R11 | Elastic local-node instruments have no extra order syndrome | [Cavity-instrument screen](communication.md#nr-r11) |
 | NR-R12 | Exact coherent dispatch with a dephased counter and bounded-query boundary | [Conditional dispatch result](dispatch.md#nr-r12) |
 | NR-R13 | Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound | [Composite lookup screen](native-lookups.md#nr-r13) |
+| NR-R14 | Shared-bath calibration transfer and exact ordinary echo/instrument baselines | [Bath-backaction screen](backaction.md#nr-r14) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -65,8 +66,9 @@ baseline is in NR-R07. Calibrated classical Pauli faults and recorded
 Lüders measurements have the ordinary baselines in NR-R06 and NR-R08.
 
 The next application questions concern a physical unmonitored multimode
-workload, retained inelastic scattering in a matter-photon link, and a
-native coherent-dispatch interface. First establish each instrument,
+workload, retained inelastic scattering in a matter-photon link, a
+native coherent-dispatch interface, and prediction across control histories
+in a retained quantum bath. First establish each instrument,
 available records and controls, and the best ordinary method; then
 compare useful task outputs at matched time, memory, calls and routing
 cost. The [communication note](communication.md) identifies why pure
@@ -79,6 +81,13 @@ Native slot cost, useful approximation margins, parallel execution,
 compilation and calibration reuse still need an architecture comparison.
 The displayed composite-lookup switch fails the ordinary uncomputation
 screen. These query statements alone are not deployed runtime gains.
+The shared-bath result makes a useful calibration failure explicit, but
+ordinary Hahn echo already produces the complete proposed order-controlled
+instrument. Known controllable measurement/reset dilations also have an
+ordinary chronological implementation. Predicting a useful held-out
+memory decision at lower total cost remains the next test, with ordinary
+phase-resolved echo, retained records and direct schedule calibration
+included.
 Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.

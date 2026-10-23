@@ -23,19 +23,21 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `recovery/local_recovery.py` | Frozen local-noise intercept, stopping coefficients, approximate-design loss, recovery reward and 97% control-visibility margin for at least eight qubits. |
 | `architecture/verify_fault_simulation.py` | Finite exact orthogonal-process and full switched-output examples for the calibrated classical-fault baseline NR-R06. |
 | `architecture/verify_reuse.py` | Rational threshold, spectral-gap, recovered-score and training/rejection crossover arithmetic for NR-R07. The collective learning algorithm and its asymptotic constants are cited inputs, not computed by this replay. |
-| `architecture/verify_measurements.py` | Small exact Lüders PVM examples, Choi overlaps, recorded return probabilities, binary trace-filter identities and syndrome-sector scaling constants for NR-R08. |
+| `architecture/verify_measurements.py` | Small exact Lüders PVM examples, Choi overlaps, recorded return probabilities, binary trace-filter identities and syndrome-sector scaling constants for NR-R08. Initialized-ancilla parity examples at dimensions 4 and 8 check all recorded braid branches and frame corrections, with a full unread-control Choi identity at dimension 4 and retry-cost arithmetic. |
 | `architecture/verify_communication.py` | Full Choi equalities for six absorbing-vacuum examples, sixteen rank-one-channel/noisy-qubit-wire factorizations, four rank-two protected-factor factorizations and four tight qubit-activation examples, plus an elastic-node instrument and a bus-mixing counterexample. The general entanglement, finite-mean and capacity proofs are analytic. |
 | `architecture/verify_native_checks.py` | Exact finite known-Clifford Pauli-check and classical-bit-oracle comparisons with non-Pauli noise; twenty paired flagged-Kraus identities for qutrit-router address checks, leakage projection and diagonal-phase blindness. No fitted helper-gate or hardware-runtime model. |
 | `architecture/verify_dispatch.py` | Thirty-six reference-complete flagged counter/data Choi examples at data dimensions 2 and 3; 96 temporal phase-path identities; nine event-head, three clock-time and six fresh-repeat/rewind cases; the indexed-unitary identity and three/four-call dummy factorizations. Gaussian decoder and whole-frontier arguments remain analytic. |
 | `architecture/verify_dispatch_baselines.py` | Forty-eight full accepted-Choi mean-cost examples and twelve hard-two controlled-teleportation examples at data dimensions 2 and 3. Rebuilds CP/TP projector certificates, exact Bell/diamond witnesses and heralded counter-dephasing maps. It does not optimize the positive-cost frontier or compute the qualitative converse's margin. |
 | `architecture/verify_lookups.py` | Full-address Choi identities for all 340 Boolean table pairs at address dimensions 1–4, both measured flags, conditional correction and rejection accounting; the four-truth-pattern balanced-switch junk-erasure projector. The general scoped erasure bound and native access assumptions remain analytic. |
+| `architecture/verify_backaction.py` | Eight reference-complete flagged echo/switch Choi identities at bath dimensions 2 and 3; a rational pair with equal first-echo flagged bath outputs but unequal uninterrupted two-cycle memory fidelity; an ordinary three-window record contrast; and three polynomial families for complete Ramsey equivalence, reversed storage preference and passive classical echo loss. The all-dimension instrument, known-intervention simulation and physical control assumptions remain analytic. |
 
 The five modules in `algebra/` form the shared exact engine. `brauer_exact_replay.py` derives diagram multiplication, adjoints, traces and identity insertions directly from pairings. `brauer_objective.py` constructs canonical Gaussian-integer objectives; `brauer_weingarten.py` inverts their permutation Gram system over fractions. `brauer_sos_certificate.py` checks the actual tensor-operator sum-of-squares residual and its norm margin. The main checker independently verifies every objective Gram equation and reconstructs every certificate slack. Both dimension-8 certificate JSONs are required inputs; search diagnostics and cached slacks cannot substitute for a successful replay.
 
 These checks complement the canonical mathematical proofs. Their finite or polynomial identities do not independently prove representation-sector completeness, stopping-time reductions, physical access assumptions, or approximate-design norm transfer. Those arguments remain in the linked method notes and theorem. This package performs no solver search, floating-point feasibility test, hardware experiment or new Lean kernel audit. Numerical discovery scripts, repeated audit narratives and search caches are intentionally absent.
 
 The architecture jobs support the [ordinary baselines](../architecture-baselines.md),
-and [communication bounds](../communication.md), not a positive application claim.
+[communication bounds](../communication.md) and
+[shared-bath screen](../backaction.md), not a positive application claim.
 Their examples do not prove the
 all-input simulation by sampling, implement Threshold Search, or establish
 a useful native-device cost advantage. The general proofs and interface
@@ -59,3 +61,9 @@ The fixed-dimension qualitative mean-cost separation, zero-query minimax
 ensemble argument and Gaussian accepted-output frontier remain analytic.
 The event-head construction fixes a coherent-use interface mathematically;
 no native implementation or measured cost is certified.
+
+The backaction job uses the same staged Gaussian-rational helpers. It checks
+full flagged Choi matrices rather than control probabilities alone. Its
+finite counterexamples do not fit a device bath, certify every form of
+nonclassical noise, or prove a sampling advantage. The general native-echo
+and known-intervention simulation proofs remain in NR-R14.

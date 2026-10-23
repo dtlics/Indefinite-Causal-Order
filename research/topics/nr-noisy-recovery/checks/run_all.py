@@ -55,7 +55,7 @@ JOBS = (
     ("architecture-reuse", "architecture/verify_reuse.py", (),
      "Exact finite-frame calibration score, threshold, rejection and query-crossover arithmetic; cited learner not implemented."),
     ("architecture-measurements", "architecture/verify_measurements.py", (),
-     "Exact small measurement/Choi, record-return and trace-filter identities with syndrome-sector scaling constants."),
+     "Exact small measurement/Choi, record-return and trace-filter identities, syndrome-sector constants and recorded parity-braid branch/frame/retry comparisons."),
     ("architecture-communication", "architecture/verify_communication.py", (),
      "Exact full-Choi absorbing-loss and noisy-control-wire identities, tight qubit activation and elastic-node examples; capacity/stopping proofs analytic."),
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
@@ -66,6 +66,8 @@ JOBS = (
      "Exact full-Choi achievable ordinary mixed-cost and hard-two teleportation families, CP/TP projector certificates and diamond witnesses; zero-query minimax and qualitative converse analytic."),
     ("architecture-lookups", "architecture/verify_lookups.py", (),
      "Exact full-address Choi identities for ordinary measurement-uncomputation and balanced-switch garbage erasure; finite instances, no optimized architecture frontier."),
+    ("architecture-backaction", "architecture/verify_backaction.py", (),
+     "Exact full flagged-Choi echo/switch examples, held-out memory and ordinary record contrasts, and polynomial Ramsey/storage counterexamples; all-dimension instrument proofs and hardware access remain analytic."),
 )
 
 

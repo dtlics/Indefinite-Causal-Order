@@ -31,6 +31,13 @@ replay does not implement that learner or determine its asymptotic
 constant. These checks do not establish hardware efficiency, source
 priority, a general memory-process model or an architecture advantage.
 
+The measurement replay also checks complete recorded parity-braid branches,
+initialized-ancilla effects and tracked frame corrections at dimensions
+four and eight. The ordinary three-measurement construction is a cited
+baseline with an explicit analytic proof. Its comparison to the specified
+switch protocol counts retries and permits the same output frame convention;
+it does not optimize all coherent measurement protocols or model detector faults.
+
 The [communication note](../research/topics/nr-noisy-recovery/communication.md)
 has exact finite checks of absorbing-vacuum loss, sector-preserving noisy-wire
 factorizations, and elastic-node commutation. Schmidt-number, relative-entropy
@@ -58,5 +65,15 @@ switch protocols. No optimized ordinary query frontier or native QRAM cost
 advantage is inferred from that replay.
 
 `prepare_verification.py` derives the current import closure and endpoint list offline. It rejects missing local modules and dependency cycles; the wrappers also check endpoint identities and allowed axioms. Their offline checks are separate from running Lean.
+
+The [shared-bath calibration screen](../research/topics/nr-noisy-recovery/backaction.md)
+has exact finite flagged-Choi echo/switch identities, a rational held-out
+memory counterexample, a maximal ordinary record-correlation example and
+symbolic polynomial calibration/storage counterexamples.
+The all-dimension instrument and known-intervention dilation identities
+are analytic. These checks establish neither a fitted bath model nor a
+switch sampling or architecture advantage. The application assessment's
+photonic and phononic resource comparisons are primary-source screens,
+not hardware experiments or new security proofs.
 
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

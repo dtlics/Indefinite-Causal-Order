@@ -182,3 +182,4 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R11 | [Elastic local-node instruments have no extra order syndrome](../research/topics/nr-noisy-recovery/communication.md#nr-r11) |  |
 | NR-R12 | [Exact coherent dispatch with a dephased counter and bounded-query boundary](../research/topics/nr-noisy-recovery/dispatch.md#nr-r12) |  |
 | NR-R13 | [Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound](../research/topics/nr-noisy-recovery/native-lookups.md#nr-r13) |  |
+| NR-R14 | [Shared-bath calibration transfer and exact ordinary echo/instrument baselines](../research/topics/nr-noisy-recovery/backaction.md#nr-r14) |  |

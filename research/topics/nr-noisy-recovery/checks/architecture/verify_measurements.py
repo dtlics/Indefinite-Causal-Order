@@ -179,6 +179,105 @@ def full_switch_check(p, q):
             "three_slot_control_data_dummy_identity": "passed"}
 
 
+def recorded_parity_gate_check(p, q, s_parity):
+    """Check every recorded branch, including the initialized ancilla sector."""
+    d = len(p)
+    identity = eye(d)
+    null = zero(d)
+    for h in (p, q, s_parity):
+        assert h == transpose(h) and mul(h, h) == identity
+    for a, b in ((p, q), (s_parity, p), (s_parity, q)):
+        assert mul(a, b) == scale(mul(b, a), F(-1))
+    r = mul(q, p)
+    assert transpose(r) == scale(r, F(-1))
+    assert mul(r, r) == scale(identity, F(-1))
+    initial = scale(add(identity, s_parity), F(1, 2))
+    other = scale(add(identity, scale(s_parity, F(-1))), F(1, 2))
+    assert mul(initial, r) == mul(r, initial)
+    target_numerator = mul(add(identity, r), initial)
+    switch_effect = null
+    ordinary_effect = null
+    unrestricted_effect = null
+    branch_totals = {(m, u): F(0) for m in (1, -1) for u in (1, -1)}
+    branch_checks = 0
+    frame_checks = 0
+    for sign_p in (1, -1):
+        pi = scale(add(identity, scale(p, F(sign_p))), F(1, 2))
+        for sign_q in (1, -1):
+            theta = scale(add(identity, scale(q, F(sign_q))), F(1, 2))
+            direct, reverse = mul(theta, pi), mul(pi, theta)
+            plus = scale(add(direct, reverse), F(1, 2))
+            minus = scale(add(direct, scale(reverse, F(-1))), F(1, 2))
+            assert plus == scale(add(add(identity, scale(p, F(sign_p))),
+                                     scale(q, F(sign_q))), F(1, 4))
+            assert minus == scale(r, F(sign_p * sign_q, 4))
+            assert mul(transpose(minus), minus) == scale(identity, F(1, 16))
+            expected_plus_effect = scale(add(add(scale(identity, F(3)),
+                                                scale(p, F(2 * sign_p))),
+                                            scale(q, F(2 * sign_q))), F(1, 16))
+            assert mul(transpose(plus), plus) == expected_plus_effect
+            for m, n in ((1, plus), (-1, minus)):
+                unrestricted_effect = add(unrestricted_effect, mul(transpose(n), n))
+                for u, projector in ((1, initial), (-1, other)):
+                    k = mul(mul(projector, n), initial)
+                    if u == 1 and m == 1:
+                        expected, probability = scale(initial, F(1, 4)), F(1, 16)
+                    elif u == 1 and m == -1:
+                        expected = scale(mul(r, initial), F(sign_p * sign_q, 4))
+                        probability = F(1, 16)
+                    elif u == -1 and m == 1:
+                        numerator = add(identity, scale(r, F(-sign_p * sign_q)))
+                        expected = scale(mul(mul(p, numerator), initial), F(sign_p, 4))
+                        probability = F(1, 8)
+                        # Remove the tracked syndrome frame, then orient the braid.
+                        framed = mul(p, k)
+                        if -sign_p * sign_q == -1:
+                            framed = mul(r, framed)
+                        assert framed == scale(target_numerator, F(sign_p, 4))
+                        frame_checks += 1
+                    else:
+                        expected, probability = null, F(0)
+                    assert k == expected
+                    effect = mul(transpose(k), k)
+                    assert effect == scale(initial, probability)
+                    switch_effect = add(switch_effect, effect)
+                    branch_totals[m, u] += probability
+                    branch_checks += 1
+            for u, projector in ((1, initial), (-1, other)):
+                k = mul(mul(projector, direct), initial)
+                orientation = sign_p * sign_q if u == 1 else -sign_p * sign_q
+                numerator = mul(add(identity, scale(r, F(orientation))), initial)
+                expected = (scale(numerator, F(1, 4)) if u == 1 else
+                            scale(mul(p, numerator), F(sign_p, 4)))
+                assert k == expected
+                effect = mul(transpose(k), k)
+                assert effect == scale(initial, F(1, 8))
+                ordinary_effect = add(ordinary_effect, effect)
+                framed = k if u == 1 else mul(p, k)
+                if orientation == -1:
+                    framed = mul(r, framed)
+                assert framed == scale(target_numerator, F(1 if u == 1 else sign_p, 4))
+                frame_checks += 1
+                branch_checks += 1
+    assert unrestricted_effect == identity
+    assert switch_effect == ordinary_effect == initial
+    assert branch_totals == {(1, 1): F(1, 4), (-1, 1): F(1, 4),
+                             (1, -1): F(1, 2), (-1, -1): F(0)}
+
+    # Full unread control channel: W=Z_control tensor R up to global sign.
+    if d == 4:
+        z_control = [[F(1), F(0)], [F(0), F(-1)]]
+        physical = [block_diagonal(mul(theta, pi), mul(pi, theta))
+                    for pi in binary_pvm(p) for theta in binary_pvm(q)]
+        known_components = [eye(2 * d), kron(eye(2), p), kron(eye(2), q),
+                            kron(z_control, r)]
+        assert choi(physical) == scale(choi(known_components), F(1, 4))
+    return {"dimension": d, "initial_sector_rank": int(tr(initial)),
+            "recorded_operator_and_probability_branches": branch_checks,
+            "explicit_braid_frame_checks": frame_checks,
+            "complete_instruments": "passed"}
+
+
 def main():
     z = [[F(1), F(0)], [F(0), F(-1)]]
     x = [[F(0), F(1)], [F(1), F(0)]]
@@ -216,6 +315,20 @@ def main():
     full_switch_row = full_switch_check(q_angle, p4)
     full_switch_row["case"] = "rational-angle-reversed"
     full_switch_rows.append(full_switch_row)
+
+    # Ancilla parity S and a logical qubit, with a protected spectator in D=8.
+    parity_gate_rows = []
+    for spectator_rank in (1, 2):
+        p_gate = kron(kron(x, x), eye(spectator_rank))
+        q_gate = kron(kron(x, z), eye(spectator_rank))
+        s_gate = kron(kron(z, eye(2)), eye(spectator_rank))
+        parity_gate_rows.append(recorded_parity_gate_check(p_gate, q_gate, s_gate))
+    switch_braid_success = F(1, 2)
+    assert 3 / switch_braid_success == 6
+    assert 1 / switch_braid_success == 2
+    adaptive_parity_count = (2 + F(3, 4)) / switch_braid_success
+    assert adaptive_parity_count == F(11, 2)
+    assert 3 / F(1) == 3
 
     # Exact rational 4x4 Walsh basis supplies a non-binary rank-one example.
     h2 = [[F(1), F(1)], [F(1), F(-1)]]
@@ -269,6 +382,7 @@ def main():
         "status": "passed", "arithmetic": "standard-library Fraction matrices",
         "scope": ("Finite exact PVM/Choi/record/commutator examples and balanced-binary "
                   "filter CP identities, full-control binary-switch Choi/routing examples, "
+                  "recorded parity-gate/ancilla branch and frame identities, "
                   "and scalar rank/branch/retry arithmetic. Analytic "
                   "generalization and physical access assumptions remain in architecture-baselines.md."),
         "examples": rows, "finite_rank_scaling_checks": rank_checks,
@@ -284,6 +398,13 @@ def main():
         "full_binary_switch_expected_calls": str(full_switch_cost),
         "full_binary_switch_calls_per_retained_fresh_input_output": str(full_switch_cost / full_switch_success),
         "full_binary_switch_calls_per_retained_output_without_early_abort": str(no_abort_cost / full_switch_success),
+        "recorded_parity_gate_examples": parity_gate_rows,
+        "recorded_parity_gate_switch_braid_success_probability": str(switch_braid_success),
+        "recorded_parity_gate_switch_expected_parity_measurements": "6",
+        "recorded_parity_gate_switch_expected_parity_measurements_skip_known_S": str(adaptive_parity_count),
+        "recorded_parity_gate_switch_expected_control_readouts": "2",
+        "recorded_parity_gate_switch_expected_control_preparations_or_resets": "2",
+        "recorded_parity_gate_ordinary_parity_measurements": "3",
         "limitations": ["No hardware runtime, detector-noise, generic bath, or optimal-strategy proof.",
                         "No all-dimensional representation theorem or Lean formalization is replayed."],
     }

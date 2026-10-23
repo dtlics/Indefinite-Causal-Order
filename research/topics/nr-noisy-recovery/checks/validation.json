@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-23T06:39:43+00:00",
+  "generated_utc": "2026-10-23T06:57:17+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -13,8 +13,9 @@
   },
   "input_hash_algorithm": "sha256",
   "input_hashes": {
-    "research/topics/nr-noisy-recovery/architecture-baselines.md": "6ce1c8988e8b9d714b3b90a288878a7e8cb198ea39d6835af85b05b1cc2677e7",
-    "research/topics/nr-noisy-recovery/architecture.md": "a18abff50a91e4aab5e25200ff0b6ce6da03c46a0c1fe8888a7cb3a8c3b8d350",
+    "research/topics/nr-noisy-recovery/architecture-baselines.md": "ea34a51522bd46bc61f74be6855befa2dfc4b937b0565764a3aa329fe12aa1ef",
+    "research/topics/nr-noisy-recovery/architecture.md": "ee290fa9848d17ec8d9ceb35cc30bdcf840e2d17d80e4af0a89fd59fe712b1a4",
+    "research/topics/nr-noisy-recovery/backaction.md": "01817690e7a8874fc818978b7c7537eca9fd2a6bf33094766ae316a9a3fdaf6d",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_dual_sharp_certificate.json": "95d061e96dd7cdf31ca311b54ac9896995312dd5e2b6407d000bd0e2ff80acaf",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_sharp_stdlib_replay.py": "0ec1caec6318efedc8eb3ca2810f594bc795677343be7214bc3f2f95c56e4d83",
     "research/topics/nr-noisy-recovery/checks/algebra/brauer_exact_certificate_D8_g1_10_deterministic_tree.json": "ec5f612df81053865952316e62d4c2a4f34cfeac44a662b9fc6706d73fb080cf",
@@ -24,22 +25,23 @@
     "research/topics/nr-noisy-recovery/checks/algebra/brauer_objective.py": "d2572a8df1843e3697ab29c3bcfff7cf6383f0bf008d6e9bbfde5433f8b0799a",
     "research/topics/nr-noisy-recovery/checks/algebra/brauer_sos_certificate.py": "c927313d7a9585b93f128f65970afc6bd60257025f37cb1d4206abf66623854e",
     "research/topics/nr-noisy-recovery/checks/algebra/brauer_weingarten.py": "402270cb7b61e3ac1d53bba29772f4b5ffd2631d7324f39f378dbb0b593d648b",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_backaction.py": "3251472e0acbb830bf2775bf1c500526c73ab48bfbedfc70c7e1869ceaf62d56",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_communication.py": "ff8102dd89c2bfe31008a6653ada1070f3d513b4edaa6a4c0148a0c5aae995b1",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_dispatch.py": "ac3d359c86d07fc478e8a68fdde1847701cc7e484ca53fc72aeb12bc5d57915d",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_dispatch_baselines.py": "9fece43e1680745cd5ce20e6a5d53f1c0683b51ddb6f9944308c6b7e7c2682e2",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_fault_simulation.py": "4fe2ced808ea4618e84a4064c17c9a4bad9a495324230600c5804b1722df8ec5",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_lookups.py": "68baeecf266d4a6ae9685f8952519e17496f2c5ed8ceb3d5df3019446a0e8d3f",
-    "research/topics/nr-noisy-recovery/checks/architecture/verify_measurements.py": "1a11f4daf585c92f352854cfb3de747660ba8855a81141019274756e2fa0840b",
+    "research/topics/nr-noisy-recovery/checks/architecture/verify_measurements.py": "af457b8b77bf1e23a39e90c6a4e41a1777564958ee96d3b697b81adfa233356d",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_native_checks.py": "01ff677a9d8a012e67cc6661a43e3c6fa66509705c466f46ce81d9a7e7f219dd",
     "research/topics/nr-noisy-recovery/checks/architecture/verify_reuse.py": "9095d0a2b2900dadbd9ed121fac40115b259d3fb7d345f77f37b81a18c95c5f4",
     "research/topics/nr-noisy-recovery/checks/local/verify_dimensions.py": "5af10c3fad26a66651d72c4ab42a5402f182e44d8b8b0c616c454a865a20505f",
     "research/topics/nr-noisy-recovery/checks/local/verify_structural.py": "68bd7e55c46b75504c58a2d77621b2192e1df3629979ae23d8c74917eb2e1a97",
-    "research/topics/nr-noisy-recovery/checks/README.md": "4a8d17ebeccd7453d65644e8750bff661c340b59bc1b2567132c144119f5e083",
+    "research/topics/nr-noisy-recovery/checks/README.md": "800c4e566b6fc0138e2e3c2c3da1d4c50d762dbbb605b7861217a5d4be1bcef1",
     "research/topics/nr-noisy-recovery/checks/recovery/expected_cost_D8.py": "fc9944f7aff0698dd99fdce2f34eaadad42fecb3cc99cd41cffdd84bec2de1b4",
     "research/topics/nr-noisy-recovery/checks/recovery/finite_ensemble_D8.py": "fb82731ebb8c239652b65ddfc51933e266694a18ce559cef03a61ff176c40e66",
     "research/topics/nr-noisy-recovery/checks/recovery/local_recovery.py": "38958045476b075a233a1ee1f71fcde934f26f44fbb7a42da4abb30c14a11afc",
     "research/topics/nr-noisy-recovery/checks/recovery/scalable_global.py": "b1762c233496f7a1225f056305a50b795329caab01cf5099abccbf7d116a328a",
-    "research/topics/nr-noisy-recovery/checks/run_all.py": "2914bad138d5d8bee23ef1c99d82770096f54659ce9f3690f2cfb4d82e883f26",
+    "research/topics/nr-noisy-recovery/checks/run_all.py": "08ba2a8f608c61ec423f31b64a580fb0dc3740e33d9771420fe30bdd71a2edbc",
     "research/topics/nr-noisy-recovery/communication.md": "1dd443d2635827a04e8692c531d6515f8fd203086183567810130fcbacc8f165",
     "research/topics/nr-noisy-recovery/dispatch.md": "97982b8b9fc3733ca6ae9696b277d48dba80bab3626a727a2f6d2fa14e4232db",
     "research/topics/nr-noisy-recovery/global-noise.md": "b65e344b96022b031ea1e7b6e51182cceb509d84a6a6515393198d88e898eea4",
@@ -48,7 +50,7 @@
     "research/topics/nr-noisy-recovery/methods/local-converse.md": "bde4df3c50776a07ba104231939b1ca2b7ce0c32d1191cc80780de3e4b9dc2c0",
     "research/topics/nr-noisy-recovery/native-lookups.md": "c7dfb67147911198d048d9d0987714d2bf20cbd50f84030298fe5eb64e85e82e",
     "research/topics/nr-noisy-recovery/obstructions.md": "666a7478271393aeb87b1c7acac684f7b961183a47da11d623387cd5ecb4d0fc",
-    "research/topics/nr-noisy-recovery/README.md": "e076592f1aa24916336709291e8c734e4e74746278e5d75b0b8871e86b624a70",
+    "research/topics/nr-noisy-recovery/README.md": "5ac3ac78f29ab31ec20e8e2f683dee4fa27c2a7c48ab5a063dfe96940b0b7234",
     "research/topics/nr-noisy-recovery/references.md": "c067e914fa2053073b1ae914dca10d95701c9d998390f7d8714ccbcbc4050269",
     "research/topics/nr-noisy-recovery/theorem.md": "f55ba54175170100b2f62423583ee72e92efff3fd3cb569f5c190a857de06944"
   },
@@ -146,7 +148,7 @@
     {
       "id": "architecture-measurements",
       "source": "research/topics/nr-noisy-recovery/checks/architecture/verify_measurements.py",
-      "scope": "Exact small measurement/Choi, record-return and trace-filter identities with syndrome-sector scaling constants.",
+      "scope": "Exact small measurement/Choi, record-return and trace-filter identities, syndrome-sector constants and recorded parity-braid branch/frame/retry comparisons.",
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-measurements.log"
@@ -190,6 +192,14 @@
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-lookups.log"
+    },
+    {
+      "id": "architecture-backaction",
+      "source": "research/topics/nr-noisy-recovery/checks/architecture/verify_backaction.py",
+      "scope": "Exact full flagged-Choi echo/switch examples, held-out memory and ordinary record contrasts, and polynomial Ramsey/storage counterexamples; all-dimension instrument proofs and hardware access remain analytic.",
+      "outcome": "passed",
+      "exit_code": 0,
+      "log": "_build/noisy-recovery/logs/architecture-backaction.log"
     }
   ],
   "scope": "Finite exact replay and symbolic integer/rational identities supporting the linked proofs; no new Lean kernel audit.",

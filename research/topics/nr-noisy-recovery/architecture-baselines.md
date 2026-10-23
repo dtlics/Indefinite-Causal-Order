@@ -710,6 +710,119 @@ The structured three-call bound above is dimension independent, but it
 does not settle deterministic, two-call or high-yield performance, or
 establish a hardware-runtime advantage.
 
+### Recorded parity measurements already give a deterministic elementary braid
+
+The binary baseline also matters for measurement-only Majorana computation.
+Consider ideal repeatable parity measurements of known Hermitian involutions
+$P,Q$ with $PQ=-QP$. Write
+$\Pi_s=(I+sP)/2$, $\Theta_t=(I+tQ)/2$, $s,t\in\{\pm1\}$, and
+$R=QP$, so $R^\dagger=-R$ and $R^2=-I$. Prepare the order control in
+plus and measure it in the $X$ basis. If both native parity records are
+retained, the complete instrument has Kraus operators
+
+$$
+N_{st,-}=\frac{\Theta_t\Pi_s-\Pi_s\Theta_t}{2}
+          =\frac{stR}{4},\qquad
+N_{st,+}=\frac{\Theta_t\Pi_s+\Pi_s\Theta_t}{2}
+          =\frac{I+sP+tQ}{4}.
+$$
+
+Thus minus has total probability $1/4$ and applies the known Pauli/parity
+$R$. It is not the elementary braid $U_+=(I+R)/\sqrt2$.
+For example, $P=i\gamma_a\gamma_b$ and $Q=i\gamma_b\gamma_c$ give
+$R=\gamma_a\gamma_c=U_+^2$, up to the convention for braid orientation.
+On unrestricted inputs the plus records are not harmless retries:
+$N_{st,+}^\dagger N_{st,+}=(3I+2sP+2tQ)/16$ depends on the input.
+If both native records are discarded, the full switch instead has the
+particularly simple channel identity
+
+$$
+\mathsf{Switch}(E_P,E_Q)=\frac14\left[
+\operatorname{Ad}_{I}+\operatorname{Ad}_{I_C\otimes P}
++\operatorname{Ad}_{I_C\otimes Q}+\operatorname{Ad}_{Z_C\otimes R}
+\right].
+$$
+
+This is an identity on the entire control-data-reference input. With a
+fresh independent control and control-only postselection, it yields a
+mixture of the known parity operations, not a coherent $I\pm R$ braid.
+Retaining native outcomes is a different instrument and is covered by
+the explicit $N_{st,\pm}$ above.
+
+A standard initialized measurement ancilla can change the conditional
+logical action, but supplies a stronger ordinary comparator at the same
+time. Let a known ancilla parity $S$ anticommute with both $P,Q$, and
+start in $S_+=(I+S)/2$. Then $[S,R]=0$; assume $R$ is non-scalar on
+this code when asking for a nontrivial logical braid. Measure $S$ after the switch,
+writing $S_-=(I-S)/2$. The four types of record branch, restricted to
+the initial code, are
+
+$$
+\begin{array}{c|c|c|c}
+\text{control}&\text{final }S& S_uN_{st,m}S_+&
+ \text{probability summed over }s,t\\\hline
++&+&S_+/4&1/4\\
+-&+&stR S_+/4&1/4\\
++&-&sP(I-stR)S_+/4&1/2\\
+-&-&0&0.
+\end{array}
+$$
+
+The last nonzero row is an elementary braid
+$U_{-st}=(I-stR)/\sqrt2$ after accounting for the known syndrome-transfer
+frame $P$. Opposite orientations differ by the Pauli $R$, since
+$R U_-=U_+$. Every probability in this table is input independent,
+including for inputs entangled with a reference. The first two rows
+leave the data unchanged up to a known Pauli and return the ancilla to
+$S_+$. Consequently this particular scheme admits valid retries: its
+braid success probability is $1/2$ per attempt, with mean two attempts.
+If every attempt uses the two switched parity measurements, one final $S$
+measurement, and one order-control readout, its mean cost is
+**six parity measurements and two control readouts**, with the ancilla
+initialization charged separately to both schemes. Reading the control
+first allows skipping $S$ on the minus branch, which is already known to
+remain in $S_+$. This reduces the per-attempt parity count to
+$2+3/4=11/4$, hence the mean to $11/2$ per successful braid; the mean
+two control readouts is unchanged. Both switch versions also require
+mean two order-control preparations/resets, which the ordinary sequence
+does not use.
+
+An ordinary sequence $P,Q,S$ already implements the braid deterministically
+up to the same Pauli/syndrome bookkeeping. Its eight outcome branches are
+
+$$
+S_+\Theta_t\Pi_s S_+=\frac{(I+stR)S_+}{4},\qquad
+S_-\Theta_t\Pi_s S_+=\frac{sP(I-stR)S_+}{4}.
+$$
+
+Each has probability $1/8$. After the known final syndrome frame, each
+is $U_+$ or $U_-$, and their difference is tracked by $R$. This costs
+**three parity measurements**, with no retry or order-control readout.
+The fixed three-measurement, software-corrected baseline is established
+by [Zheng, Dua and Jiang](https://doi.org/10.1088/1367-2630/aa50bb)
+([explicit protocol and software corrections, Sections II--III](https://arxiv.org/html/1607.07475v2));
+it supersedes a comparison solely with the earlier forced-measurement
+repeat-until-success scheme. Geometry-dependent measurement costs and
+Majorana-Pauli tracking must also be included in a hardware comparison;
+see [Tran et al.](https://doi.org/10.21468/SciPostPhys.8.6.091).
+
+The comparison accepts a classically known Pauli and syndrome frame as
+the output convention for both protocols. If a fixed physical frame is
+required, its correction or reset must be charged to both; software
+tracking is not a physical recovery operation. Neither count includes
+unmodelled detector faults, loss or readout latency. Every failed switch
+attempt is included in both retry expectations above. A native
+coherent-order interface must also be supplied: stationary Majorana data
+need coherently ordered parity-measurement couplings with device-labelled
+records and no surviving environmental order/timing record. Merely routing
+a readout probe through two stations does not establish that interface
+for overlapping parity measurements on the same data. Ordinary coherent
+probe/ancilla operations available at that interface belong in the
+matched comparator as well. These identities exclude an ideal gate-count
+advantage for the specified balanced $X$-readout construction; they are
+not an optimization over every coherent-control protocol or a hardware
+runtime/noise no-go theorem.
+
 ### Compatibility is not logical correctness
 
 An unwanted measurement of a logical $Z$ commutes with all stabilizer

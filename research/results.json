@@ -1078,6 +1078,12 @@
       "topic": "NR",
       "title": "Clean composite lookup: ordinary uncomputation and a scoped switch erasure bound",
       "canonical_path": "research/topics/nr-noisy-recovery/native-lookups.md#nr-r13"
+    },
+    {
+      "id": "NR-R14",
+      "topic": "NR",
+      "title": "Shared-bath calibration transfer and exact ordinary echo/instrument baselines",
+      "canonical_path": "research/topics/nr-noisy-recovery/backaction.md#nr-r14"
     }
   ]
 }
