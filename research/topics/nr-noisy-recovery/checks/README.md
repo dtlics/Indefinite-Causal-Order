@@ -24,7 +24,7 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_fault_simulation.py` | Finite exact orthogonal-process and full switched-output examples for the calibrated classical-fault baseline NR-R06; full-control unnormalized-Fock loss/amplifier coefficients, controlled-number phases and Gaussian/Weyl coefficients; passive two-photon seed weights and signed-estimator coefficients; qutrit second-design and CP-overlap identities. Infinite-Fock extension, Fourier/Gaussian integration, representation/Haar/variance proofs and native helper costs remain analytic. |
 | `architecture/verify_reuse.py` | Rational threshold, spectral-gap, recovered-score and training/rejection crossover arithmetic for NR-R07. The collective learning algorithm and its asymptotic constants are cited inputs, not computed by this replay. |
 | `architecture/verify_measurements.py` | Small exact Lüders PVM examples, Choi overlaps, recorded return probabilities, binary trace-filter identities and syndrome-sector scaling constants for NR-R08. Initialized-ancilla parity examples at dimensions 4 and 8 check all recorded braid branches and frame corrections, with a full unread-control Choi identity at dimension 4 and retry-cost arithmetic. |
-| `architecture/verify_communication.py` | Full Choi equalities for six absorbing-vacuum examples, sixteen rank-one-channel/noisy-qubit-wire factorizations, four rank-two protected-factor factorizations and four tight qubit-activation examples, plus an elastic-node instrument and a bus-mixing counterexample. Also checks the conditional global-Pauli parity compiler, all travelling-Fredkin-bus branches and source-loading identities; few-emitter number-operator, vacuum-ground, Gram-floor and near-dark examples; and full elastic retained-spin parity/photon-bus instruments. Raman checks cover ideal helper fanout, reference-complete remote-SWAP teleportation, full radiative resolvents and flat-loss survivor/flag identities. General entanglement, finite-mean, capacity, semigroup/record-tail, pulse-error and physical network-access proofs remain analytic. |
+| `architecture/verify_communication.py` | Full Choi equalities for six absorbing-vacuum examples, sixteen rank-one-channel/noisy-qubit-wire factorizations, four rank-two protected-factor factorizations and four tight qubit-activation examples, plus an elastic-node instrument and a bus-mixing counterexample. Also checks the conditional global-Pauli parity compiler, all travelling-Fredkin-bus branches and source-loading identities; few-emitter number-operator, vacuum-ground, Gram-floor and near-dark examples; and full elastic retained-spin parity/photon-bus instruments. Raman checks cover helper fanout, reference-complete remote SWAP, radiative resolvents, local-ancilla branch/filter identities, a rational intermediate-transfer Schmidt certificate, coefficient-independent projections, ordered field-kernel cancellation and balanced-cavity polynomial identities. General entanglement conversion, finite-mean, capacity, semigroup/record-tail, continuum design, pulse-error and physical access proofs remain analytic. |
 | `architecture/verify_native_checks.py` | Exact finite known-Clifford Pauli-check and classical-bit-oracle comparisons with non-Pauli noise; twenty paired flagged-Kraus identities for qutrit-router address checks, leakage projection and diagonal-phase blindness; same-ideal-unitary Bell-score and full clock-noise Choi comparisons at dimensions 2 and 4. Eight known-basis fault/full-Choi cases include four nonzero coherent-cross witnesses, and 48 number-lowering Kraus-pair cases test the complete accepted CP decomposition. Explicit double-fault and two-photon-loss examples guard the single-fault/parity limits. Also checks common-replacement cross maps and norm factors, sharp SWAP/nonuniform weights, calibrated Pauli/qutrit recovery, common final-control noise, encoded Pauli retained-record channels, graded tetron code flags and finite-energy Jaynes--Cummings comparison identities. Universal diamond/dominance, infinite-Fock/energy, physical timing and access arguments remain analytic; no fitted helper-gate or hardware-runtime model. |
 | `architecture/verify_dispatch.py` | Thirty-six reference-complete flagged counter/data Choi examples at data dimensions 2 and 3; 96 temporal phase-path identities; nine event-head, three clock-time and six fresh-repeat/rewind cases; the indexed-unitary identity and three/four-call dummy factorizations. Gaussian decoder and whole-frontier arguments remain analytic. |
 | `architecture/verify_dispatch_baselines.py` | Forty-eight full accepted-Choi mean-cost examples and twelve hard-two controlled-teleportation examples at data dimensions 2 and 3. Rebuilds CP/TP projector certificates, exact Bell/diamond witnesses and heralded counter-dephasing maps. It does not optimize the positive-cost frontier or compute the qualitative converse's margin. |
@@ -145,6 +145,36 @@ the proposed uncertainty box. It also checks elastic retained-spin parity,
 same-rail time-bin spin echoes and conditional resonant-bypass instruments;
 actual QND readout, spectral matching, optical ports, reset
 and herald costs remain application assumptions.
+
+The [Raman local-ancilla checks](../communication.md#nr-r11-raman-local-ancillas)
+reconstruct the ordinary six-qubit circuit and complete photon readout,
+verify its local Schmidt-basis expansions and explicit filter effects,
+and charge photon loss and filter failure. The intermediate-transfer
+witness rebuilds exact source states, photonic unitaries and surviving
+matter branches; rational Hermitian LDL bounds certify an achievable Bell
+yield. The cited pure-state LOCC conversion theorem remains an analytic
+input, rather than a search result or a circuit-cost certificate.
+These run inside the existing communication job through
+[raman_baselines.py](architecture/raman_baselines.py), including the
+[rational verifier](architecture/verify_raman_bell_certificate.py) and its
+[witness data](architecture/raman_bell_certificate.json).
+Coefficient-independent local projections and the ordered field-operator
+extension have exact cancellation checks. Their scalar minus-only switch
+comparison is not extended to arbitrary noncommuting field coefficients.
+The [passive-filter replay](../communication.md#nr-r11-raman-passive-filter)
+uses exact Gaussian rationals extended by $\sqrt2$ to check its optical
+contraction, orthogonal heralds, local-filter effect, normalization and
+canceled/retained terms. It supports an achievable family member, with
+vacuum loss ports and local filter apparatus charged; it is not a sharp
+bound for adaptive or larger-mode ordinary processors.
+
+The [balanced-cavity checks](../communication.md#nr-r11-raman-cavity-frontier)
+verify exact polynomial frontier identities and rational nominal model
+substitutions. The continuum inequality, narrow-pulse design limit,
+ordinary retuning permissions, complete source/route/phase/reset ledger
+and renewal-time comparison are analytic or physical hypotheses. No
+unrestricted ordinary optimum, adaptive local-memory upper bound, measured
+Bell-pair yield or hardware clock advantage is certified.
 
 The known-control NR-R15 replay checks the exact compiler and contrasting
 coherent signal/noise extensions, including their full states and QFI.

@@ -57,7 +57,7 @@ JOBS = (
     ("architecture-measurements", "architecture/verify_measurements.py", (),
      "Exact measurement/Choi, record-return and shared-spectral counterexamples, syndrome-sector constants and recorded parity-braid comparisons; bandwidth--delay proofs analytic."),
     ("architecture-communication", "architecture/verify_communication.py", (),
-     "Exact full-Choi absorbing-loss, noisy-control-wire/reset-cycle and conditional NXY identities, Fredkin-bus/source-load guards, few-emitter number/Gram/vacuum guards and retained-spin parity instruments; capacity, record-tail/continuum and physical access proofs analytic."),
+     "Exact full-Choi absorbing-loss, noisy-control-wire/reset-cycle and conditional NXY identities, Fredkin-bus/source-load guards, few-emitter number/Gram/vacuum guards, retained-spin/Raman instruments, ordinary local-ancilla and fixed-beta witnesses, ordered auxiliary kernels and cavity/source polynomial identities; capacity, record-tail/continuum, conversion theorems, physical access and clock costs analytic."),
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
      "Exact native-layer/bit-oracle, Pauli/Weyl/qutrit and encoded-record checks, graded tetron code flags, Jaynes-Cummings decision identities, known-basis/number-lowering faults, common control noise, Bell/clock Choi and terminal replacement/SWAP guards; universal/energy/timing/access and costs analytic."),
     ("architecture-dispatch", "architecture/verify_dispatch.py", (),

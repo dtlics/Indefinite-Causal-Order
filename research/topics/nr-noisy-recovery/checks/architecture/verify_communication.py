@@ -16,6 +16,8 @@ from verify_fault_simulation import (
     rational_rotation, require,
 )
 
+from raman_baselines import verify_raman_stronger_baselines
+
 if not __debug__:
     raise RuntimeError("Exact communication checks require assertions; do not use -O.")
 
@@ -1016,7 +1018,7 @@ def main():
     visibilities = (F(0), F(1,3), F(7,10), F(1))
     wires = [wire_example(d, mode, k) for d in (2,3) for mode in (False,True) for k in visibilities]
     activation = [tight_activation(k) for k in visibilities]
-    print(json.dumps({"status":"passed", "arithmetic":"exact Gaussian fractions; standard library only",
+    print(json.dumps({"status":"passed", "arithmetic":"exact Gaussian fractions and Q(sqrt(2)); standard library only",
         "absorbing_vacuum_examples":losses, "sector_wire_factorizations":wires,
         "tight_qubit_activation_examples":activation,
         "rank_two_slot_factorizations":[rank_two_slot_example(k) for k in visibilities],
@@ -1027,6 +1029,7 @@ def main():
         "late_record_guard_examples":late_record_guard_examples(),
         "chiral_parity_examples":chiral_parity_examples(),
         "raman_sprint_examples":raman_sprint_examples(),
+        "raman_stronger_baselines":verify_raman_stronger_baselines(),
         "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and random-receiver phase/normalized-bus isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 

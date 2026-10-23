@@ -221,12 +221,33 @@ fault-tolerance threshold or an architecture advantage.
 NR-R11 also replays ideal Raman helper fanout and all four corrected
 remote-SWAP teleportation branches, including reference matrix units.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
-survivor instruments are checked with exact Gaussian fractions. The
-continuous detuning optimum, frequency-mode symmetry and full physical
-loss/port model remain analytic arguments or declared hypotheses.
-Neither an ideal helper construction nor a restricted serial yield gap
-certifies dominance for the actual noisy helper interface or a native
-Bell-pair rate. The mechanical-memory hardware screen is a primary-source
+survivor instruments are checked with exact Gaussian fractions. Its
+local-ancilla extension reconstructs the six-qubit source, both scatters,
+complete photonic readout, local Schmidt expansions and filter effects.
+A separate rational witness reconstructs all branches and photonic
+unitaries, then checks positive Hermitian LDL decompositions bounding
+their largest Schmidt weights. It supplies an achievable intermediate-
+transfer Bell yield; the cited LOCC conversion theorem remains analytic.
+Neither finite examples nor an unsuccessful optimization search establish
+an unrestricted ordinary optimum or an adaptive local-memory upper bound.
+
+The coefficient-independent Raman projection has exact branch-cancellation
+checks. Its comparison concerns the scalar switch's minus-only yield.
+The operator-valued extension extracts the actual ordinary ordered field
+kernel without an all-switch comparison for noncommuting coefficients.
+The passive-filter variant requires no extra retained stationary qubits.
+Its exact $\mathbb Q(\sqrt2)$ replay checks the optical contraction,
+orthogonal heralds, coherent local-filter effect, normalization and
+coefficient cancellation. Additional vacuum loss ports and filter apparatus
+are physical costs; the construction supplies no global ordinary bound.
+The balanced-cavity frontier has exact polynomial and nominal-substitution
+checks; its continuous detuning/design proof and narrow-pulse limit remain
+analytic. Physical frequency-mode symmetry, accepted/lost ports, local
+filters and memories, calibrated Raman/path phases, retuning range and
+within-attempt stationarity are declared interface requirements. Source,
+pilot, route and reset costs must enter matched all-attempt renewal times;
+raw-yield comparisons do not certify a measured Bell-pair rate or a clock
+advantage. The mechanical-memory hardware screen is a primary-source
 assessment and a held-out test specification, not a new measured result.
 
 Current evidence belongs with the claim it supports. When source changes, rerun relevant checks and update the corresponding record in place after success. Keep temporary output under `_build/`; normal Git history preserves prior versions. Do not preserve intermediate build logs or repeated checkpoint reports as alternate research records.

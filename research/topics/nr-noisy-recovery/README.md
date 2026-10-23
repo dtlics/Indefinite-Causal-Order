@@ -166,6 +166,18 @@ floor, a vacuum-preserving physical ground and an explicit pulse/clock
 budget. The retained-spin endpoint also has ordinary parity and photon-bus
 baselines with specific optical ports. The assessment records the remaining
 device and accuracy tests.
+Its [Raman local-memory comparisons](communication.md#nr-r11-raman-local-ancillas)
+give stronger ordinary achievable Bell yields, including a certified
+intermediate-transfer example and a coefficient-independent minus-flag
+comparison. Their local ancillas, coherent filters and preserved photon/helper
+ports are charged. The [balanced-cavity frontier](communication.md#nr-r11-raman-cavity-frontier)
+also includes ordinary operating-point optimization. The remaining question
+is a matched physical source/route/phase/reset and delivery-time comparison,
+with within-attempt stationarity established; a bare transfer-probability
+gap or a restricted product-spin bound does not answer it.
+A [passive-filter alternative](communication.md#nr-r11-raman-passive-filter)
+also gives a robust ordinary Bell output without extra retained stationary
+qubits; its vacuum loss ports and coherent local filter remain priced.
 The [alignment benchmark](alignment.md) separates a strict two-call
 advantage from measurement-record access, ordinary reuse and control
 backgrounds. Its calibrated one-memory ordinary construction at shrinking

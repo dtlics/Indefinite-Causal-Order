@@ -701,9 +701,53 @@ response, rather than substituting a dephasing rate for a two-history overlap.
 
 The [Raman exchange screen](communication.md#nr-r11-raman-swap) adds
 same-helper ordinary ideal Bell-generation, remote-SWAP and detuned-serial
-baselines. Its ideal comparison leaves actual loss, frequency conversion
-and the required local coherent ports unresolved; those resources belong
-in the complete delivered-state comparison.
+baselines. Stronger [local-memory constructions](communication.md#nr-r11-raman-local-ancillas)
+use one extra stationary qubit at each node, one preserved photonic helper
+degree, local coherent subspace filters and complete photon readout. No
+entanglement is initially shared between nodes. They beat the stipulated
+bare-switch yield in the high-transfer regime and at a separately certified
+intermediate setting. Thus a product-active-spin bound cannot be extended
+to these local memories. Preparation, coherent filtering, decoding,
+communication and reset remain additional physical costs.
+
+A fixed coefficient-independent projection also beats the scalar
+unknown-module switch's minus-only Bell yield; it does not compare all
+calibrated plus outputs. The more general ordered field-operator extension
+extracts an ordinary Bell output while retaining the actual ordered kernel.
+It supplies no switch comparison for arbitrary noncommuting coefficients.
+The product photon/helper ports and common logical SWAP frame must be
+realized by the physical Raman modes.
+
+A separate [passive photon-filter construction](communication.md#nr-r11-raman-passive-filter)
+gives a coefficient-independent ordinary Bell output with one photonic
+helper and no extra retained stationary qubits. Its four-mode contraction
+uses additional vacuum loss ports, two orthogonal photon heralds and a
+coherent local spin filter. Their apparatus, failures and reset costs
+remain charged. This is an achievable alternative within the declared
+processor family, rather than a general ordinary optimum.
+
+The [balanced-cavity frontier](communication.md#nr-r11-raman-cavity-frontier)
+retains complex bright, dark and spectator amplitudes. In its declared
+design family, an ordinary coherent which-node route at an optimized
+operating point closes the proposed raw-yield benefit from deliberately
+weakening transfer when the corresponding tuning and paths are admitted.
+This is an achievable design comparison,
+with a narrow-pulse limit; it is not a theorem about equal clocks or the
+tuning range of a fabricated device. A bare flat-channel transfer parameter
+therefore does not identify the next hardware advantage.
+
+The decisive test needs actual two-node input/output routes, measured pulse
+spectra, frequency conversion, collected and lost modes, and both Raman-leg
+phase frames. Model station and route phase fluctuations jointly with the
+available pilots, and establish the required stationarity within each full
+routed attempt. Compare the switch with coherent which-node routing,
+retuned ordinary settings, adaptive ordinary attempts and local-memory
+protocols wherever their ports exist. Prespecify a delivered Bell-fidelity
+target and compare source photons, occupied encounters, pilot/control energy
+and mean completion time, including every lost launch, failed filter,
+memory reset and successful hand-off. A source wait or a nominal query count
+alone settles none of those comparisons. No native rate advantage is yet
+established.
 
 The finite two-frequency candidate has failed this stronger ordinary
 screen: checks at each node remove all cross-bin jumps, including two
