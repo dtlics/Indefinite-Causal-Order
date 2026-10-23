@@ -2,10 +2,10 @@
 
 [Research map](../../README.md) · [Result index](../../RESULTS.md) · [Validation scope](../../../docs/VALIDATION.md)
 
-This topic owns recovery through two opaque related modules, with the
+This topic owns recovery and memory qualification through opaque related modules, with the
 ordinary comparison charged for every invocation, including calibration
 and rejected histories. It is distinct from universal switch simulation
-and from learning a scalar channel property.
+and includes an operational capacity decision and a scalar entropy witness.
 
 ## Canonical results
 
@@ -30,6 +30,7 @@ and from learning a scalar channel property.
 | NR-R17 | Braided magic, coherent trajectory resources and ordinary factories | [Braided magic](braided-magic.md#nr-r17) |
 | NR-R18 | Drifting measurement alignment: exact two-query limit and reuse costs | [Alignment benchmark](alignment.md#nr-r18) |
 | NR-R19 | Unknown odd couplers: exact correction and expected-query fidelity limits | [Coupler benchmark](backaction.md#nr-r19) |
+| NR-R20 | Hidden-basis memory qualification and Pauli entropy-capacity certificate | [Memory qualification](memory-qualification.md#nr-r20) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -65,7 +66,15 @@ without a deployed-runtime or communication-capacity claim.
 
 The [architecture assessment](architecture.md) owns the application
 requirements and next-test protocol. A significant architecture benefit
-has not been established. In particular, the fresh-frame converse does
+has not been established. The [memory-qualification result](memory-qualification.md#nr-r20)
+connects C6 to an asymptotic storage-capability decision, with distinct
+proof components for the [Pauli entropy witness](methods/pauli-entropy-capacity.md),
+[ordinary support-span learner](methods/pauli-subspace-calibration.md),
+[structured memory tests](methods/memory-ordinary-tests.md),
+[working-code verification](methods/memory-code-verification.md), and
+[native cost screens](methods/memory-native-cost.md). The next test must
+justify the private orientation, usable encoding and full repeated-slot
+interface on one platform. In particular, the fresh-frame converse does
 not extend to reused devices after calibration; the ordinary reuse
 baseline is in NR-R07. NR-R06 also closes deterministic bare-switch recovery
 for calibrated Pauli and tensor-product qutrit Weyl noise using one helper

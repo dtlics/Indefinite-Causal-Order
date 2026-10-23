@@ -13,6 +13,13 @@ and noise model before making that comparison.
 
 ## NR-R06 — Native checks, calibrated faults and ordinary path baselines
 
+The [Pauli support-span calibration method](methods/pauli-subspace-calibration.md)
+is a proof component of this result. It covers arbitrary weighted laws of
+binary support rank at most the number of counted probe/reference qubits,
+without a minimum error probability. It is the structured ordinary comparator
+for [memory qualification](memory-qualification.md#nr-r20); it does not extend
+the generic hidden-basis theorem to public Pauli frames.
+
 ### Physical hypothesis
 
 In cycle $t$, module-labelled faults realize known unitaries

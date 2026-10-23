@@ -31,6 +31,16 @@ SCHEMA = "noisy-recovery-validation-v1"
 SCOPE = "Finite exact replay and symbolic integer/rational identities, with separately scoped numerical scalar guards, supporting the linked proofs; no new Lean kernel audit."
 
 JOBS = (
+    ("architecture-memory-partial-Bell", "architecture/verify_memory_partial_bell.py", (),
+     "Exact finite commuting-stream kernel Gram forms, streaming equivalence and conditional uniform detection; full ordinary method and physical controls analytic."),
+    ("architecture-memory-fixed-probe", "architecture/verify_memory_fixed_probe.py", (),
+     "Exact finite fixed-layout prior likelihoods, full-rank record masses and expected-budget constants; scope excludes changing layouts and coherent multiquery receivers."),
+    ("architecture-memory-qualification", "architecture/verify_memory_qualification.py", (),
+     "Exact finite amplified Pauli blocks, complete flagged target maps, local-mode blindness, helper visibility, temporal counterexamples, adaptive mean-cost ledgers and code-verification Bell isometries/confidence; capacity/C6 reduction and all-dimension/native proofs analytic."),
+    ("architecture-entropy-capacity", "architecture/verify_entropy_capacity.py", (),
+     "Exact symplectic character/tail and conditional-entropy identities, rational confidence certificate, full-support witnesses and counterexamples; universal Shannon entropy and coding arguments analytic."),
+    ("architecture-pauli-subspace", "architecture/verify_pauli_subspace.py", (),
+     "Exact finite low-rank Pauli syndrome geometry, injective readout and empirical-constraint mass guards; distribution-free learning/query bounds and physical costs analytic."),
     ("physical-objectives", "algebra/brauer_objective.py", ("--validate",),
      "Exact sparse physical Choi contractions: all D2 diagrams and selected D4 diagrams."),
     ("D8-deterministic-tree", "algebra/brauer_gate_product_exact_check.py",

@@ -1114,6 +1114,22 @@
       "topic": "NR",
       "title": "Unknown odd couplers: exact correction and expected-query fidelity limits",
       "canonical_path": "research/topics/nr-noisy-recovery/backaction.md#nr-r19"
+    },
+    {
+      "id": "NR-R20",
+      "topic": "NR",
+      "title": "Hidden-basis memory qualification and Pauli entropy-capacity certificate",
+      "canonical_path": "research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20",
+      "relationships": [
+        {
+          "type": "capacity-qualification-corollary",
+          "target": "C6-R01"
+        },
+        {
+          "type": "qualified-by-ordinary-calibration",
+          "target": "NR-R06"
+        }
+      ]
     }
   ]
 }

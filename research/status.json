@@ -63,7 +63,7 @@
       "slug": "nr-noisy-recovery",
       "title": "Noisy physical recovery with expected-query bounds",
       "status": "analytic-with-exact-certificates",
-      "qualification": "Physical-output theorem for fresh frames and specified noise/control models; exact recovery, phase/alignment benchmarks, expected-query coupler fidelity certificates and scoped ordinary calibration, deterministic Pauli/qutrit recovery, measurement, network, magic and shared-bath baselines. Architecture benefit remains open; not Lean-formalized or externally peer reviewed.",
+      "qualification": "Physical-output recovery and hidden-basis capacity-qualification theorems, a correlated-Pauli entropy witness, exact phase/alignment and expected-query coupler certificates, and scoped ordinary calibration/record/control baselines. Native architecture benefit remains open; new recovery/capacity results are not Lean-formalized or externally peer reviewed.",
       "dossier": "topics/nr-noisy-recovery/README.md"
     }
   ]

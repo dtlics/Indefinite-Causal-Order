@@ -12,7 +12,7 @@ The eight stable topics below organize current knowledge. Each topic links to it
 | C4 | [Approximate full-switch simulation](topics/c4-approximate-switch-simulation/README.md) | recorded-formal-endpoints: Final supplied Lean package records the full-output error tradeoff and lower bounds. |
 | C5 | [Constant-gap channel-interference testing](topics/c5-interference-testing/README.md) | recorded-formal-endpoints: Final supplied Lean package records ordinary-query lower bounds; distinct single-hidden-basis proof retained. |
 | C6 | [SAME/MUB hidden dephasing and OTOCs](topics/c6-hidden-dephasing/README.md) | recorded-formal-endpoints: Final supplied Lean package records shared-Haar physical, decision and OTOC endpoints; keyed transfer remains conditional. |
-| NR | [Noisy physical recovery with expected-query bounds](topics/nr-noisy-recovery/README.md) | analytic-with-exact-certificates: Physical-output theorem for fresh frames and specified noise/control models; exact recovery, phase/alignment benchmarks, expected-query coupler fidelity certificates and scoped ordinary calibration, deterministic Pauli/qutrit recovery, measurement, network, magic and shared-bath baselines. Architecture benefit remains open; not Lean-formalized or externally peer reviewed. |
+| NR | [Noisy physical recovery with expected-query bounds](topics/nr-noisy-recovery/README.md) | analytic-with-exact-certificates: Physical-output recovery and hidden-basis capacity-qualification theorems, a correlated-Pauli entropy witness, exact phase/alignment and expected-query coupler certificates, and scoped ordinary calibration/record/control baselines. Native architecture benefit remains open; new recovery/capacity results are not Lean-formalized or externally peer reviewed. |
 <!-- END GENERATED RESEARCH STATUS -->
 
 ## How the parts fit
@@ -22,6 +22,12 @@ The selected [paper](../paper/main.tex) presents one connected quantum-switch st
 The OTOC consequence depends on the SAME/MUB comparison and an exact identity. The keyed-device transfer retains its computational-security assumptions. The result index links these relationships without counting a change of interpretation as another independent lower-bound method.
 
 NR concerns physical state recovery through related noisy modules and an expected-call budget. Its local-noise theorem, global-replacement theorem, and scoped obstructions have distinct assumptions. The Bell and secret-state tests are operational variants of the same recovery frontier, not independent lower-bound results. Its analytic proofs and exact arithmetic checks do not add endpoints to the selected Lean project or revise the manuscript.
+
+The [memory-qualification result](topics/nr-noisy-recovery/memory-qualification.md)
+transfers C6's existing hidden-basis decision lower bound to a quantum-capacity
+decision, including expected query cost. Its general Pauli entropy certificate
+has a separate proof and ordinary calibration comparisons. These operational
+consequences do not establish a native hardware advantage.
 
 The [architecture assessment](topics/nr-noisy-recovery/architecture.md)
 connects C6 and NR to real calibration, noise and recovery workloads.

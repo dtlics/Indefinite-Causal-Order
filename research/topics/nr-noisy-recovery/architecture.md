@@ -2,8 +2,8 @@
 
 [Recovery theorem](theorem.md) · [Ordinary baselines](architecture-baselines.md) · [Literature context](references.md) · [Topic](README.md)
 
-The current results establish an advantage in a specified fresh-frame recovery
-game. They do **not** yet establish a useful advantage for calibrating or
+The current results establish oracle advantages in fresh-frame recovery
+and hidden-basis memory qualification. They do **not** yet establish a useful advantage for calibrating or
 operating persistent hardware. The next investigations start from complete
 device instruments and available controls, then ask whether switched outputs
 improve a deployed decision. Current screens cover calibration transport,
@@ -15,6 +15,29 @@ echo and spectral checks, and every accepted and rejected outcome. No checked
 architecture currently meets all the required assumptions.
 
 ## What is established
+
+[NR-R20](memory-qualification.md#nr-r20) connects the manuscript's
+hidden-dephasing decision problem to an operational memory-capacity promise.
+It preserves the exponential ordinary query bound, including rare long
+histories, and gives an amplified switch protocol with optimal rare-burst
+query scaling. A separate correlated-Pauli entropy witness certifies a
+positive asymptotic storage rate from two scalar bounds. The proof components
+also identify strong ordinary learners and physical clock/energy costs.
+Qualifying existence of a code does not supply its encoder or decoder.
+Generic hidden orientation, independent slot environments and coherent
+whole-register routing remain unverified together on a native platform.
+
+The next focused test is to identify a memory whose unavailable error
+orientation follows from its actual operating interface, price the same
+preparation and measurement controls for ordinary qualification, and measure
+the complete cross-history process through the amplified block. A known
+pointer-state pilot or accessible error records can remove the proposed
+advantage. Compare qualified, usable storage after encoding calibration,
+including helper survival, duty cycle, rejected attempts and reuse.
+The [working-code verification bound](methods/memory-code-verification.md)
+makes the deployment issue quantitative: a supplied reliable code admits
+an ordinary test, so its learning and block cost must enter any claimed
+end-to-end saving.
 
 [NR-R01](theorem.md) concerns physical Bell-frame restoration with a fresh
 private frame for each job. For $n\geq8$, each unknown module is followed once

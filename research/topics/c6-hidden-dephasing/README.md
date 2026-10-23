@@ -57,6 +57,11 @@ These are limitations of tempting proof shortcuts. They are not unresolved premi
 
 ## Supplementary checks and open questions
 
+The [memory-capacity qualification corollary](../nr-noisy-recovery/memory-qualification.md#nr-r20)
+uses C6-R01 to distinguish positive-rate storage from a zero-capacity
+replacement mixture. Its expected-cost reduction and physical access limits
+are owned there; it introduces no new C6 recording argument or formal endpoint.
+
 The [architecture assessment](../nr-noisy-recovery/architecture.md) tests
 which physical interfaces could support an application. The
 [ordinary measurement baselines](../nr-noisy-recovery/architecture-baselines.md#nr-r08)
