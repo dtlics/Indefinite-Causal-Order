@@ -31,6 +31,18 @@ SCHEMA = "noisy-recovery-validation-v1"
 SCOPE = "Finite exact replay and symbolic integer/rational identities, with separately scoped numerical scalar guards, supporting the linked proofs; no new Lean kernel audit."
 
 JOBS = (
+    ("architecture-orthogonal-unitary-entropy", "architecture/verify_orthogonal_entropy.py", (),
+     "Exact non-Pauli unitary error bases, Choi entry-permutation/commutator identities, spectral tails and full target-dependent flags; entropy integration and capacity achievability analytic."),
+    ("architecture-approx-unitary-capacity", "architecture/verify_approx_unitary_capacity.py", (),
+     "Exact rational-complex unitary/Gram/tail identities, overlap and fidelity corrections, commuting counterexample and confidence arithmetic; universal entropy and coding arguments analytic."),
+    ("architecture-local-certification", "architecture/verify_pauli_local_certification.py", (),
+     "Exact bounded ordinary OR/population identities, correlated laws, calibrated readout trajectories and capacity example; confidence/concentration and physical costs analytic."),
+    ("architecture-noisy-structure", "architecture/verify_pauli_noisy_structure.py", (),
+     "Exact contaminated-subspace moments, hidden-product/short-window and mixed-target prefix identities; finite-model learning, concentration, runtime and native controls analytic."),
+    ("architecture-public-Clifford-calibration", "architecture/verify_public_clifford_calibration.py", (),
+     "Exact Clifford/PCS full mixed-target records, logical product probes and rational ratio-error guards; general learning/conditioning and native costs analytic."),
+    ("architecture-Pauli-slot-noise", "architecture/verify_pauli_slot_noise.py", (),
+     "Exact local-noise polynomials, uniform envelopes, full control-target-memory matrix units and KL constants; general helper-port stopping/noise and capacity limitations analytic."),
     ("architecture-memory-partial-Bell", "architecture/verify_memory_partial_bell.py", (),
      "Exact finite commuting-stream kernel Gram forms, streaming equivalence and conditional uniform detection; full ordinary method and physical controls analytic."),
     ("architecture-memory-fixed-probe", "architecture/verify_memory_fixed_probe.py", (),

@@ -78,6 +78,69 @@ $I/D$ removes this contrast: both promised maps are unital. The test
 does not apply to arbitrary hidden $U$ without the stated observable
 and control access.
 
+### Unknown coefficients in a known physical operator span
+
+Knowing the Hamiltonian coefficients is unnecessary for a weaker uniform
+test. Let $V$ be the known span of $M$ distinct nonidentity physical
+Paulis, orthonormal for $\langle A,B\rangle=\operatorname{Tr}(A^\dagger B)/D$.
+Suppose the nonzero traceless part $H_0=H-\operatorname{Tr}(H)I/D$ lies
+in $V$. Rank-one energy-basis pinching, or spectral-block pinching,
+is a Hilbert--Schmidt orthogonal projection fixing $H_0$. Its compression
+$$
+ C_{PQ}=D^{-1}\operatorname{Tr}[P\Delta_H(Q)],\qquad P,Q\in V,
+                                                               \tag{NS1}
+$$
+is therefore a positive semidefinite contraction. The coefficient vector
+of $H_0$ is an eigenvector of $C$ with eigenvalue one, so
+$\operatorname{Tr}C\ge1$. Choose a uniform listed $P$, prepare
+$\rho_P$ by the complete helper instrument above, query once, and measure
+$P$. The resulting sign $Y$ satisfies
+$$
+ \mathbb E_1Y=1-t+(t/M)\operatorname{Tr}C\ge1-t+t/M,
+ \qquad \mathbb E_0Y=1-t.                              \tag{NS2}
+$$
+Threshold $1-t+t/(2M)$ and Hoeffding again give
+$N\ge8M^2t^{-2}\log(1/\delta)$. No Hamiltonian learning,
+diagonalization or reference register is used. The span of all weight-at-most
+$k$ Paulis has $M=\sum_{j=1}^k3^j\binom nj$, polynomial for fixed $k$.
+The nonzero-$H_0$ condition matters for arbitrary rank-one refinements:
+a scalar Hamiltonian alone restricts no refined basis. Its actual
+spectral-block pinching is instead the identity and is easily tested.
+
+There is also a more expensive test beyond positive pinching. Let a
+unital CPTP map $\mathcal F$ conserve some traceless unit-Hilbert--Schmidt-norm
+$H\in V$, meaning $\mathcal F^\dagger(H)=H$. Its real Pauli compression
+$C_{PQ}=D^{-1}\operatorname{Tr}[P\mathcal F(Q)]$ has a left unit
+eigenvector $h^{\mathsf T}C=h^{\mathsf T}$, hence
+$\|C\|_F\ge\|h^{\mathsf T}C\|_2=1$. For supplied
+$r=1-t$, compare $r\operatorname{id}+t\mathcal F$ with
+$r\operatorname{id}+t\Omega_D$. Draw uniform listed $P,Q$, prepare
+$\rho_Q$, and use two fresh independent repetitions to obtain signs
+$Y,Y'$ by measuring $P$. Unitality gives their conditional mean
+$r1_{P=Q}+tC_{PQ}$. Thus, with
+$U=Y-r1_{P=Q}$ and $U'=Y'-r1_{P=Q}$,
+$$
+ \mathbb E_1[UU']=t^2\|C\|_F^2/M^2\ge t^2/M^2,
+ \qquad \mathbb E_0[UU']=0.                             \tag{NS3}
+$$
+Since $UU'\in[-4,4]$, threshold $t^2/(2M^2)$ and Hoeffding give
+$N\ge128M^4t^{-4}\log(1/\delta)$ paired trials, or $2N$ channel
+calls. This needs neither $\mathcal F^\dagger$ access nor knowledge of
+the conserved coefficients. Its large polynomial bound does not claim
+practical superiority.
+
+Both tests require supplied $t$, or independent calibration precise enough
+for their decision margin. A lower bound on unknown $t$ alone does not
+fix the replacement mean $1-t$. Each repetition also requires the declared
+mixed input: after a polarized probe, restore its marginal by independent
+uniform Pauli randomization, or supply a fresh mixed payload. Uniform
+randomization uses $n$ single-qubit Paulis and $2n$ random bits; average
+all keys rather than postselecting them. Preparation, randomization,
+helper reset/feedforward, controlled Paulis, measurement errors and
+freshness remain costs. These witnesses do not apply when the payload
+must stay exactly $I/D$ throughout, when the conserved observable has no
+known low-dimensional physical span, or when those controls are absent.
+
 ## What the measured interfaces supply
 
 [Curtis et al., *Physical Review A* **103**, 023705 (2021)](https://doi.org/10.1103/PhysRevA.103.023705),
@@ -230,3 +293,189 @@ to the ordinary comparator. No screened source supplies this entire
 interface; neither the generic hidden-basis ordinary frontier nor a
 native architecture advantage is settled by these structured-platform
 obstructions.
+
+## Matched terminal noise and noise inside each channel slot
+
+A target-only channel applied after a diagnostic has formed its retained
+helper record cannot change that record. For every joint state $\sigma_{CTM}$
+and trace-preserving $\mathcal N_T$,
+$$
+ \operatorname{Tr}_T[(\operatorname{id}_{CM}\otimes\mathcal N_T)
+                  (\sigma_{CTM})]=\operatorname{Tr}_T\sigma_{CTM}.
+ \tag{NC1}
+$$
+The identity follows from $\mathcal N_T^\dagger(I)=I$. It applies equally
+to ordinary helper compression completed before that layer. If the noise
+has a recorded instrument outcome, summing all outcomes proves (NC1);
+conditioning on a favorable outcome instead requires the conditional law.
+This is a statement about diagnostic records, not protection of the stored
+quantum payload. Moving an unavoidable ingress layer past a controller is
+not justified by (NC1). The
+[public-Clifford calibration method](pauli-clifford-calibration.md)
+gives an ordinary mixed-payload helper example and prices its controls.
+
+Now place independent local depolarizing noise **inside each opaque slot**.
+Use the Bloch-shrinkage convention
+$\mathcal N_\nu(X)=\nu X+(1-\nu)\operatorname{Tr}(X)I/2$,
+$0\le\nu\le1$, whose one-qubit Pauli-label law is
+$u_\nu=\nu\delta_0+(1-\nu)\operatorname{Unif}(\mathbb F_2^2)$.
+For arbitrary spatially correlated Pauli laws $p,q$, switch the composite
+channels $\mathcal N_\nu^{\otimes n}\circ\mathcal E_p$ and
+$\mathcal N_\nu^{\otimes n}\circ\mathcal E_q$ using their standard
+independent-environment extension. This is a specified channel model;
+equal reduced channels alone do not certify a physical routed extension.
+
+Write $\chi(a,b)=(-1)^{[a,b]}$. Conditional on the original one-site
+labels $a,b$, independent local noise labels give
+$$
+\begin{aligned}
+ m_\nu(a,b)
+ &=\mathbb E_{u,v}\chi(a+u,b+v)\\
+ &=\nu^2\chi(a,b)+\nu(1-\nu)
+       (1_{a=0}+1_{b=0})+(1-\nu)^2/4.
+\end{aligned}                                                    \tag{NC2}
+$$
+To prove the expansion, the two single-uniform terms vanish unless the
+opposite fixed label is zero, by character orthogonality. The
+double-uniform term is $1/4$. The four possible values are
+$$
+\begin{array}{c|c}
+a=b=0&r_\nu=1-3(1-\nu)^2/4\\
+\text{exactly one zero}&s_\nu=(1+\nu)^2/4\\
+a=b\ne0&d_\nu=\nu^2+(1-\nu)^2/4\\
+a,b\ne0,\ a\ne b&e_\nu=-\nu^2+(1-\nu)^2/4.
+\end{array}                                                       \tag{NC3}
+$$
+Here $r_\nu-s_\nu=\nu(1-\nu)$,
+$r_\nu-d_\nu=2\nu(1-\nu)$ and $|e_\nu|\le d_\nu$.
+Thus $\max_{a,b}|m_\nu(a,b)|=r_\nu$. Conditioning on the entire
+original label pair, the independent noise coordinates factor; averaging
+over $p_aq_b$ then gives
+$$
+ \left|\eta(\mathcal N_\nu^{\otimes n}\circ\mathcal E_p,
+             \mathcal N_\nu^{\otimes n}\circ\mathcal E_q)\right|
+ =\left|\sum_{a,b}p_aq_b\prod_i m_\nu(a_i,b_i)\right|
+ \le r_\nu^n=:R.                                      \tag{NC4}
+$$
+No independence of sites within $p$ or $q$ was used. Fixed $\nu<1$
+therefore suppresses this scalar exponentially. This is not one unknown
+visibility multiplying the original statistic: noiseless identity and
+noiseless fixed-$X$ channels each have self-statistic one, but their
+one-site noisy self-statistics are respectively $r_\nu$ and $d_\nu$.
+A single calibration divisor cannot correct both.
+
+The same local noise also limits this particular capacity certificate.
+Its largest noise atom is identity, of mass
+$a_\nu^n=[(1+3\nu)/4]^n$. For every original law $p$, convolution gives
+$p'_0=\sum_a p_a u_\nu^{\otimes n}(a)\le a_\nu^n$.
+Combining this with (NC4), the leading coefficient of the
+[entropy certificate](pauli-entropy-capacity.md) obeys
+$$
+ p'_0-\sqrt{1-\eta'}
+ \le a_\nu^n-\sqrt{1-r_\nu^n},                         \tag{NC4a}
+$$
+which is negative for all sufficiently large $n$ at fixed $\nu<1$.
+That witness then returns zero. This does not bound actual capacity:
+for an identity original channel the noisy memory is
+$\mathcal N_\nu^{\otimes n}$, with hashing lower bound
+$n[1-H_4(a_\nu,(1-\nu)/4,(1-\nu)/4,(1-\nu)/4)]$,
+positive for sufficiently small fixed $1-\nu$. The certificate can
+therefore fail even for a useful memory; finite sizes and noise shrinking
+with size remain distinct questions.
+
+## A converse for the retained-helper-only port
+
+The following port restriction is essential: after every launch the target
+is traced **before any controller interaction with, measurement of, or
+compression of its output**. Arbitrary helper–target–memory input
+entanglement and arbitrary coherent processing of retained helpers and
+memory are allowed. The slots, local-noise convention and switched
+program remain fixed; within-slot interventions and other block programs
+are outside this claim.
+
+For any Pauli pair the switch Kraus operator, up to an irrelevant scalar
+phase, factors as
+$$
+ W_{ab}=\sqrt{p_aq_b}\,
+       \operatorname{diag}(1,\chi(a,b))_C\otimes(P_bP_a)_T.
+                                                               \tag{NC5}
+$$
+Partial trace is invariant under the target unitary even on an entangled
+$C,T,M$ input. The retained port is therefore exactly
+$$
+ (\mathcal D_\eta\otimes\operatorname{id}_M)
+       (\operatorname{Tr}_T\rho_{CTM}),\qquad
+ \mathcal D_\eta(\rho)=\frac{1+\eta}{2}\rho+
+                       \frac{1-\eta}{2}Z\rho Z.          \tag{NC6}
+$$
+This applies to the composite noisy Pauli laws in (NC4). With fresh
+independent launches, granting their classical $Z$-flip labels simulates
+every adaptive coherent retained-helper strategy: apply each known flip
+and then its prescribed hypothesis-independent controller. Thus its
+final output is a channel applied to independent Bernoulli labels with
+law $\pi_\eta=((1+\eta)/2,(1-\eta)/2)$.
+
+For two hypotheses $|\eta_0|,|\eta_1|\le R\le1/2$, relative entropy
+data processing and the classical chi-square bound imply
+$$
+\begin{aligned}
+ D(\rho_0^{(L)}\Vert\rho_1^{(L)})
+ &\le L D(\pi_{\eta_0}\Vert\pi_{\eta_1})\\
+ &\le L\frac{(\eta_0-\eta_1)^2}{1-\eta_1^2}
+ \le\frac{16}{3}LR^2.
+\end{aligned}                                                    \tag{NC7}
+$$
+Entropies here use natural logarithms. Here $L$ is a hard maximum on
+launches; a shorter adaptive strategy can ignore unused labels. An equal-prior decision with error
+at most $\delta<1/2$ needs trace distance at least $1-2\delta$.
+Quantum Pinsker therefore yields
+$$
+ L\ge\frac{3(1-2\delta)^2}{8R^2}
+   =\Omega(r_\nu^{-2n}).                              \tag{NC8}
+$$
+The result includes coherent helper inputs, retained quantum memory and
+adaptive processing; it is not limited to measuring each helper in $X$.
+It does not bound access to the full target output. In particular,
+allowing an output target–memory gate before discarding the target changes
+the port and can invalidate (NC6).
+
+The exponential conclusion also holds under a finite expected launch
+budget with classically recorded stopping. Let $N$ be the almost surely
+finite launch count, let $c=\max_h\mathbb E_h N$, and fix
+$g=1-2\delta>0$. For $c>0$, truncate before launch $L+1$ with
+$L=\lceil4c/g\rceil$. Under either hypothesis Markov's inequality gives
+$\Pr_h(N>L)\le c/L\le g/4$. The truncated instrument agrees on every
+shorter branch; replacing the cap branch by any fixed terminal decision
+increases the equal-prior error by at most $g/4$, even with retained
+quantum memory. Its decision gap is consequently at least $g/2$.
+Apply (NC8) to this hard-budget strategy and use $L\le4c/g+1$ to obtain
+$$
+ c\ge\frac{3g^3}{128R^2}-\frac g4
+   =\Omega(r_\nu^{-2n}) .                              \tag{NC9}
+$$
+The asymptotic statement holds for fixed $\delta<1/2$ and $R\le1/2$.
+If $c=0$, no launch occurs almost surely under either hypothesis, so
+hypothesis-independent initial resources cannot yield error below
+$1/2$. This proof includes adaptive classical stopping and coherent
+processing between launches; it makes no claim about a coherent
+superposition of query counts or a different target-output port.
+
+[Cotler, Gong and Kannan, *Nature Communications* **17**, 6979 (2026)](https://doi.org/10.1038/s41467-026-73693-x),
+[arXiv:2512.10929v2, Theorem 2.4/E2 and F13](https://arxiv.org/html/2512.10929),
+give related noisy-learning obstructions for state copies corrupted before
+learner interaction. Their pair-copy purity theorem permits arbitrary
+noiseless pair measurements after that ingress cut; their persistent-memory
+Pauli-state bound has a different model. The formal v2 F13 exponent is
+$\Omega(2^{(n-k)/3}(1-\lambda)^{-n/3})$; the stronger informal 2.6 wording
+must not be substituted for it. These state-access bounds do not themselves
+prove (NC4)–(NC9), which concern a specified channel/control port. Conversely,
+terminal target noise after a helper record has formed cannot be placed
+only before the ordinary receiver's processing in a matched comparison.
+
+The [exact standard-library replay](../checks/architecture/verify_pauli_slot_noise.py)
+checks all 16 local label polynomials, their all-parameter envelope
+certificates, complete finite control–target–memory matrix units and the
+KL constant. Tensor factorization, the arbitrary-memory simulation and
+information-theoretic converse are the analytic proofs above; finite
+checks do not establish a native hardware implementation or a full-output
+lower bound.

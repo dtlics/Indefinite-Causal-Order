@@ -1118,7 +1118,7 @@
     {
       "id": "NR-R20",
       "topic": "NR",
-      "title": "Hidden-basis memory qualification and Pauli entropy-capacity certificate",
+      "title": "Hidden-basis memory qualification and unitary-error capacity certificates",
       "canonical_path": "research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20",
       "relationships": [
         {

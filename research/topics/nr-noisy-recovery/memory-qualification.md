@@ -501,11 +501,13 @@ shortcut requires learning a full encoder or every basis vector.
 
 ### An entropy certificate beyond the two-family promise
 
-The [Pauli entropy/capacity component](methods/pauli-entropy-capacity.md)
-also proves a sufficient certificate for arbitrary spatially correlated
-Pauli laws from identity probability $p_0$ and independent
-self-commutation mean $\eta$, without a uniform-support or low-rank
-promise. At $n=32$, simultaneous confidence bounds $p_0\geq0.38$ and
+The [entropy/capacity component](methods/pauli-entropy-capacity.md)
+also proves a sufficient certificate for Hilbert--Schmidt orthogonal
+unitary-error families containing identity, including arbitrary spatially
+correlated Pauli laws. Its Choi entry-permutation proof does not require
+a public Pauli frame. The general self-switch statistic uses target
+$I/D$; its input independence is a separate Pauli property. At $n=32$,
+simultaneous confidence bounds $p_0\geq0.38$ and
 $\eta\geq0.96$ certify $Q\geq2.9$ qubits per channel use, and a
 full-support law realizes that confidence region. For that example,
 even its exact identity probability and scalar purity together cannot
@@ -513,6 +515,23 @@ give a positive worst-case entropy-based hashing certificate, while
 the additional commutation information does. This compares sufficient
 capacity certificates; it supplies no lower bound on ordinary
 estimation of $\eta$ and no switch hardware advantage.
+
+The [overlap-robust extension](methods/unitary-error-overlap.md) treats
+at most $D^2$ unitary branches with supplied normalized pairwise overlap
+bound $\mu$ and $D\mu^2<1$. It distinguishes identity branch mass from
+measured entanglement fidelity, proves the corrected entropy and
+confidence bounds, and gives a nonorthogonal positive-rate example.
+The branch model and overlap promise are assumptions about the device;
+two measured moments do not establish them or justify a general-CPTP claim.
+
+Strong ordinary comparisons remain essential. [Local product probes](methods/pauli-local-certification.md)
+can give a dimension-independent sufficient certificate without a helper
+for spatially diluted overlap. [Noisy-structure calibration](methods/pauli-noisy-structure.md)
+closes further promise families in device calls, explicitly charging its
+classical processing, and gives polynomial total cost when short exposures
+or specified known controls are supplied. [Public-tableau checks](methods/pauli-clifford-calibration.md)
+also work on a mixed target with one reusable helper. These are scoped
+ordinary upper bounds, rather than an unrestricted scalar-estimation lower bound.
 
 ### A working code supplies an ordinary qualification test
 

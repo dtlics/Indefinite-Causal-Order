@@ -30,7 +30,7 @@ and includes an operational capacity decision and a scalar entropy witness.
 | NR-R17 | Braided magic, coherent trajectory resources and ordinary factories | [Braided magic](braided-magic.md#nr-r17) |
 | NR-R18 | Drifting measurement alignment: exact two-query limit and reuse costs | [Alignment benchmark](alignment.md#nr-r18) |
 | NR-R19 | Unknown odd couplers: exact correction and expected-query fidelity limits | [Coupler benchmark](backaction.md#nr-r19) |
-| NR-R20 | Hidden-basis memory qualification and Pauli entropy-capacity certificate | [Memory qualification](memory-qualification.md#nr-r20) |
+| NR-R20 | Hidden-basis memory qualification and unitary-error capacity certificates | [Memory qualification](memory-qualification.md#nr-r20) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -68,7 +68,8 @@ The [architecture assessment](architecture.md) owns the application
 requirements and next-test protocol. A significant architecture benefit
 has not been established. The [memory-qualification result](memory-qualification.md#nr-r20)
 connects C6 to an asymptotic storage-capability decision, with distinct
-proof components for the [Pauli entropy witness](methods/pauli-entropy-capacity.md),
+proof components for the [orthogonal-unitary entropy witness](methods/pauli-entropy-capacity.md),
+[overlap-robust extension](methods/unitary-error-overlap.md),
 [ordinary support-span learner](methods/pauli-subspace-calibration.md),
 [structured memory tests](methods/memory-ordinary-tests.md),
 [working-code verification](methods/memory-code-verification.md), and

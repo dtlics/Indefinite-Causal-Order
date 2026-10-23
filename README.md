@@ -9,7 +9,7 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | A particular result, obstruction, or conditional theorem | [Result index](research/RESULTS.md) |
 | Noisy physical recovery and its expected-query comparison | [Recovery topic](research/topics/nr-noisy-recovery/README.md) |
 | Architecture applications, strongest ordinary baselines, and next tests | [Application assessment](research/topics/nr-noisy-recovery/architecture.md) |
-| Memory-capacity qualification, hidden-basis query separation and Pauli entropy witness | [Memory qualification](research/topics/nr-noisy-recovery/memory-qualification.md) |
+| Memory-capacity qualification, hidden-basis query separation and unitary-error entropy witnesses | [Memory qualification](research/topics/nr-noisy-recovery/memory-qualification.md) |
 | Communication cuts, optical loss and control-resource bounds | [Communication results](research/topics/nr-noisy-recovery/communication.md) |
 | Coherent dispatch, ordinary recovery and microscopic temporal models | [Dispatch result](research/topics/nr-noisy-recovery/dispatch.md) |
 | Bath backaction, calibration transfer and ordinary echo/record controls | [Shared-bath screen](research/topics/nr-noisy-recovery/backaction.md) |
@@ -39,7 +39,7 @@ Each result has one canonical owner. The result index and topic READMEs provide 
 
 The recovery topic contains an analytic physical-output theorem, its exact replay dependencies, and scoped obstructions. It is separate from the manuscript's existing simulation and decision results and has not been formalized in Lean.
 
-Its architecture assessment distinguishes fresh-oracle theorems from persistent calibration and real device interfaces. Memory qualification connects the hidden-dephasing lower bound to positive quantum capacity and gives a correlated-Pauli entropy certificate. The unknown-coupler benchmark includes certified expected-query fidelity limits; calibrated Pauli/qutrit recovery, finite-family reuse, measurement records and conditional network controls supply strong ordinary baselines. A substantial native architecture benefit remains open.
+Its architecture assessment distinguishes fresh-oracle theorems from persistent calibration and real device interfaces. Memory qualification connects the hidden-dephasing lower bound to positive quantum capacity and gives entropy certificates for orthogonal and approximately orthogonal unitary errors. Local probes, structural calibration and native control/noise screens delimit that application. The unknown-coupler benchmark includes certified expected-query fidelity limits; calibrated Pauli/qutrit recovery, finite-family reuse, measurement records and conditional network controls supply strong ordinary baselines. A substantial native architecture benefit remains open.
 
 Checkpoint collections, repeated reviews, old drafts, and packaging history are not part of the repository. Revisions belong in ordinary Git commits to the canonical files.
 

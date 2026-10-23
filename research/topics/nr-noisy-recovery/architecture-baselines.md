@@ -20,6 +20,13 @@ without a minimum error probability. It is the structured ordinary comparator
 for [memory qualification](memory-qualification.md#nr-r20); it does not extend
 the generic hidden-basis theorem to public Pauli frames.
 
+Additional proof components give [ordinary local capacity certificates](methods/pauli-local-certification.md),
+[calibration with noisy subspace/product structure](methods/pauli-noisy-structure.md),
+and [mixed-target calibration from a public Clifford tableau](methods/pauli-clifford-calibration.md).
+They distinguish polynomial device calls from exponential classical
+processing and state the extra short-exposure or known-control ports
+needed for polynomial total resources.
+
 ### Physical hypothesis
 
 In cycle $t$, module-labelled faults realize known unitaries

@@ -39,6 +39,23 @@ makes the deployment issue quantitative: a supplied reliable code admits
 an ordinary test, so its learning and block cost must enter any claimed
 end-to-end saving.
 
+The capacity witness extends to orthogonal and approximately orthogonal
+unitary-error families, with corrected fidelity and overlap assumptions.
+For diluted physical Pauli errors, ordinary product probes can already
+provide the required sufficient certificate. Hidden weak-product frames
+admit polynomial device-call calibration with exponential classical work;
+short exposures, a public tableau or specified controlled-Pauli ports
+can strengthen the ordinary comparison further. These cases therefore
+do not currently supply a demonstrated native advantage.
+
+The native comparison must also locate noise in time. The
+[per-slot local-noise analysis](methods/memory-native-cost.md)
+gives an exponential helper-port sample penalty under fixed local
+depolarization inside each opaque channel. It covers arbitrary retained
+helper memory when the output target is discarded before controller
+interaction. Retaining or processing that target is a separate open route;
+noise applied only after sign compression has a different effect.
+
 [NR-R01](theorem.md) concerns physical Bell-frame restoration with a fresh
 private frame for each job. For $n\geq8$, each unknown module is followed once
 by calibrated local depolarization, with per-qubit strength

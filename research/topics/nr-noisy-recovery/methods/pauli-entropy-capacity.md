@@ -1,28 +1,40 @@
-# A Pauli-channel entropy and quantum-capacity certificate
+# Entropy and capacity certificates for orthogonal random-unitary channels
 
 This is the entropy proof component of
 [NR-R20](../memory-qualification.md#nr-r20). The
-[exact finite checker](../checks/architecture/verify_entropy_capacity.py)
+[Pauli finite checker](../checks/architecture/verify_entropy_capacity.py)
 guards the character identities, threshold inequalities, conditional
-identity formula and a positive confidence example. Its finite cases do
-not prove the all-dimension entropy or quantum coding theorems.
+identity formula and a positive confidence example. The
+[orthogonal-unitary checker](../checks/architecture/verify_orthogonal_entropy.py)
+also checks the general Choi index identity on a non-Pauli unitary
+basis, a dense change of frame, and target-state dependence.
+Finite cases do not prove the all-dimension entropy or coding theorems.
 
-Consider one fixed, memoryless stochastic $n$-qubit Pauli channel
+Consider one fixed memoryless random-unitary channel in dimension
+$D\geq2$, with $n=\log_2D$:
 $$
-\mathcal E_p(X)=\sum_{a\in G}p_aP_aXP_a,\qquad
-G=\mathbb F_2^{2n},\quad D=2^n,\quad n\geq1.
+\mathcal E_p(X)=\sum_{i=0}^{M-1}p_iU_iXU_i^\dagger,\qquad
+U_0=I,\qquad
+\operatorname{Tr}(U_i^\dagger U_j)=D\delta_{ij}.
 $$
-The independent self-commutation statistic is
+Orthogonality implies $M\leq D^2$; the probabilities may vanish.
+Define the real commutator matrix and its independently sampled mean by
 $$
-\eta=\sum_{a,b}p_ap_b(-1)^{[a,b]}.
+C_{ij}=\frac1D\operatorname{Re}
+\operatorname{Tr}(U_j^\dagger U_i^\dagger U_jU_i),\qquad
+\eta=\sum_{i,j}p_ip_jC_{ij}.
 \tag{EW1}
 $$
 The two quantities used below are $\eta$ and the identity-error
 probability $p_0$. No uniform-support, low-rank, hidden-subgroup or
-learning-complexity promise is imposed.
+learning-complexity promise is imposed. In the $n$-qubit Pauli
+specialization, $G=\mathbb F_2^{2n}$ and
+$C_{ab}=(-1)^{[a,b]}$. The general statistic is the self-switch
+helper mean when its target marginal is $I/D$; the input-independent
+Pauli readout is a special case, as detailed below.
 
 All capacities are unassisted asymptotic entanglement-transmission rates
-in qubits per $n$-qubit use, with the same fixed channel used
+in qubits per $D$-dimensional use, with the same fixed channel used
 independently, arbitrary encoding/decoding and no clean input-bearing
 bypass. The result is a sufficient capability certificate. It does not
 construct the encoder, give a finite-block guarantee, or establish a
@@ -30,11 +42,11 @@ query advantage for the quantum switch.
 
 ## The universal entropy estimate
 
-Let $q$ be any probability law on $G$, including a law with zeros.
+Let $q$ be any probability law on the orthogonal unitary family,
+including a law with zeros.
 Write
 $$
-H_{ab}=(-1)^{[a,b]},\qquad
-c=q^{\mathsf T}Hq,\qquad e=1-c,\qquad
+c=q^{\mathsf T}Cq,\qquad e=1-c,\qquad
 C_D=\frac{2-D^{-1}}{\ln2}.
 $$
 Here $-1\leq c\leq1$, and entropy is in bits. Then
@@ -45,20 +57,58 @@ H(q)\leq
 $$
 If $q_0=0$, the first bound improves to $\log_2(D^2-1)$.
 
-**Spectral tail bound.** Symplectic character orthogonality gives
-$H^2=D^2I$, hence $\|H\|_{\mathrm{op}}=D$. For any threshold
-$\beta>0$, let
+**The general spectral bound.** For nonnegative subweights $v_i$,
+let $J_v$ be their unnormalized Choi mixture. In matrix-entry
+coordinates,
 $$
-T=\{a:q_a\leq\beta/D\},\qquad
-v_a=q_a1_{\{a\in T\}},\qquad w=\sum_av_a.
+(J_v)_{ab,cd}
+=\frac1D\sum_i v_i(U_i)_{ab}\overline{(U_i)_{cd}}.
+$$
+The normalized vectors $|U_i\rangle\!\rangle/\sqrt D$ are orthonormal,
+so $\operatorname{Tr}(J_v^2)=\sum_i v_i^2$. Direct expansion of
+the four indices gives
+$$
+v^{\mathsf T}Cv
+=D\,\operatorname{Re}
+\sum_{a,b,c,d}(J_v)_{ab,cd}(J_v)_{ca,db}.
+$$
+Indeed the inner matrix-entry product is
+$(U_i)_{ab}\overline{(U_i)_{cd}}(U_j)_{ca}
+\overline{(U_j)_{db}}$, whose sum is
+$\operatorname{Tr}(U_j^\dagger U_i^\dagger U_jU_i)$.
+The index map $(a,b,c,d)\mapsto(c,a,d,b)$ is a permutation.
+Applying complex Cauchy–Schwarz to this **bilinear** sum yields
+$$
+|v^{\mathsf T}Cv|
+\leq D\|J_v\|_F^2
+=D\sum_i v_i^2.
+$$
+No identification with a sesquilinear inner product without its
+required conjugation is used.
+
+For Pauli operators there is the independent shorter proof:
+their character matrix $H_{ab}=(-1)^{[a,b]}$ obeys
+$H^2=D^2I$, hence $\|H\|_{\mathrm{op}}=D$, giving the same bound.
+
+**Spectral tail bound.** For any threshold $\beta>0$, let
+$$
+T=\{i:q_i\leq\beta/D\},\qquad
+v_i=q_i1_{\{i\in T\}},\qquad w=\sum_iv_i.
 $$
 The restricted self-bias satisfies
 $$
-v^{\mathsf T}Hv\leq D\|v\|_2^2\leq\beta w.
+v^{\mathsf T}Cv\leq D\|v\|_2^2\leq\beta w.
 $$
-The probability of an anticommuting pair with both labels in $T$ is
-$(w^2-v^{\mathsf T}Hv)/2$. It is at most the total anticommuting
-probability $(1-c)/2$, since every pair probability is nonnegative.
+Unitarity gives the nonnegative pair defect
+$$
+1-C_{ij}
+=\frac{\|U_iU_j-U_jU_i\|_F^2}{2D}\geq0.
+$$
+Consequently $w^2-v^{\mathsf T}Cv$ sums a subset of the
+nonnegative terms making up $1-c$, and is at most $1-c$.
+For Paulis, one half of this defect is exactly the probability of
+an anticommuting pair. No such binary-event interpretation is needed
+for general unitary families.
 Thus
 $$
 w^2-\beta w\leq1-c,\qquad
@@ -66,8 +116,9 @@ w\leq\frac{\beta+\sqrt{\beta^2+4(1-c)}}2
 \leq\beta+\sqrt{1-c}.
 \tag{EW3}
 $$
-No nonnegativity of the Fourier transform of $q$, or realization as
-the Pauli characteristic function of a quantum state, is assumed.
+For the Pauli specialization, no nonnegativity of the Fourier
+transform of $q$, or realization as the Pauli characteristic function
+of a quantum state, is assumed.
 
 **Integrating the tails.** Draw $A\sim q$ and put
 $X=-\log_2q_A$. Labels of zero probability never occur. For
@@ -91,11 +142,13 @@ Adding these proves (EW2). This gives $H(q)\leq n+o(n)$ for every
 sequence $c_n\to1$, with a dimension-independent finite-size offset.
 It does not assert closeness to a commuting error algebra.
 
-**The exact endpoint.** If $c=1$, the sum of nonnegative
-anticommuting-pair probabilities vanishes. Every pair of positive-mass
-labels commutes; their linear span is isotropic and has dimension at
-most $n$. Therefore $H(q)\leq n$ exactly. If $q_0=0$, its support
-has at most $D-1$ labels and
+**The exact endpoint.** If $c=1$, every positive-weight commutator
+norm in the pair defect vanishes. The support unitaries commute and
+are normal, so they are simultaneously diagonalizable. Their
+orthogonal linear span is contained in a $D$-dimensional diagonal
+operator algebra. Hence there are at most $D$ support elements and
+$H(q)\leq n$ exactly. If $q_0=0$, adding the identity preserves
+commutation and orthogonality, so at most $D-1$ support elements remain:
 $$
 H(q)\leq\log_2(D-1).
 \tag{EW5}
@@ -123,9 +176,10 @@ $$
 H(p)=h_2(r)+rH(q).
 \tag{EW7}
 $$
-For a Pauli channel, the output of $I/D$ is $I/D$, while its
-normalized Choi state is diagonal in the orthogonal Pauli-Bell basis
-with eigenvalues $p$. Consequently
+For this orthogonal random-unitary channel, the output of $I/D$ is
+$I/D$, while its normalized Choi eigenvectors are the orthonormal
+$|U_i\rangle\!\rangle/\sqrt D$, with eigenvalues $p_i$.
+Consequently
 $$
 I_c(I/D,\mathcal E_p)=n-H(p).
 $$
@@ -161,8 +215,9 @@ not necessary, for positive capacity.
 The only external coding dependency here is
 [Devetak, IEEE Transactions on Information Theory 51, 44–55 (2005),
 Theorem 5 and its direct coding proof](https://arxiv.org/pdf/quant-ph/0304127).
-The entropy bounds above are complete classical character/chain-rule
-proofs; they do not invoke an approximate-duality conjecture.
+The entropy bounds above have complete Choi-index, spectral and
+tail-integration proofs; they do not invoke an approximate-duality
+conjecture.
 
 ## Finite confidence and physical measurement scope
 
@@ -185,15 +240,51 @@ certificate minimizes the actual proved bound over the feasible
 joint region. Point estimates near $r=0$, or an unbounded division
 by a fitted visibility, are not confidence guarantees.
 
-Under an ideal stochastic-Pauli slot model, a self-switch gives a
-$\pm1$ helper outcome with mean $\eta$, independent of its target
-state. The identity probability also has a conventional one-helper
-estimator: choose a uniform public Pauli $P_b$, apply its controlled
-check before and after one channel call, and read the helper in $X$.
-For realized error $a$, the mean is $\chi(a,b)$; averaging over
-$b$ gives $1_{\{a=0\}}$. Thus the outcome has mean $p_0$.
-Each check uses one primitive channel call, a clean helper and two
-known controlled-Pauli gates of weight at most $n$.
+For the general random-unitary family, initialize a separately
+prepared $|+\rangle$ control and target marginal $I/D$. The standard
+self-switch of two independent calls then gives a $\pm1$ helper
+outcome with mean (EW1). At another target state $\rho$ the mean is
+instead
+$$
+\operatorname{Re}\sum_{i,j}p_ip_j
+\operatorname{Tr}[\rho\,U_j^\dagger U_i^\dagger U_jU_i],
+$$
+which can depend on $\rho$. For example, in dimension 4 let
+$X_4|k\rangle=|k+1\bmod4\rangle$ and
+$Z'=\operatorname{diag}(1,1,-1,-1)$. The equal iid mixture of
+$X_4,Z'$ has self-switch helper means 1 on $|0\rangle$, 0 on
+$|1\rangle$, and $1/2$ on $I/4$. Thus a general experiment must
+prepare or average to the declared maximally mixed target, rather
+than import Pauli input-independence. The exact checker verifies
+these full flagged probabilities within a 16-element non-Pauli
+orthogonal unitary basis.
+
+For Pauli errors, the unitary commutator is the scalar
+$(-1)^{[a,b]}I$, so the helper mean is independent of the target.
+In this specialization $p_0$ also has the established
+reference-free product-probe estimator
+$Z=(-1/2)^{\#\text{minus outcomes}}$ of
+[Flammia and O'Donnell, Theorem 22](https://arxiv.org/html/2105.02885).
+Its full proof, simultaneous confidence with an ordinary overlap
+certificate and calibrated readout limits are in
+[the local-certification method](pauli-local-certification.md).
+No quantum helper is needed for that identity estimator; trusted
+fresh product preparation and terminal local readout are needed.
+
+For an arbitrary orthogonal unitary family containing identity,
+$\operatorname{Tr}U_i=0$ for $i\neq0$, so
+$p_0=F_e(I/D,\mathcal E_p)$. In qubit dimensions $D=2^n$,
+randomizing the signs of the prepared
+product eigenstates and relabeling the outputs makes the same
+bounded product statistic an entanglement-fidelity estimator for
+any CPTP map. The Pauli-transfer expansion proving this fact is
+also given in the local-certification method. It supplies the
+general family's $p_0$ measurement without assuming that its
+unitaries are public Pauli operators. For other dimensions the
+entropy theorem still holds, but this qubit product-probe protocol
+is not being asserted: a conventional maximally entangled probe
+and Bell-fidelity measurement can estimate $p_0$, with its
+$D$-dimensional reference counted.
 
 Separate independent batches of sizes
 $2\varepsilon_\eta^{-2}\ln(4/\delta)$ and
@@ -201,6 +292,9 @@ $2\varepsilon_0^{-2}\ln(4/\delta)$, respectively, suffice by Hoeffding
 for simultaneous additive confidence widths
 $\varepsilon_\eta,\varepsilon_0$ with total failure at most
 $\delta$. The first batch uses two primitive slots per trial.
+In the qubit implementation, the product-fidelity batch uses one
+per trial and has range
+$[-1/2,1]$, so this shared Hoeffding budget is conservative.
 These are ideal sample upper bounds, not an optimal resource
 comparison. Global routing, helper lifetime, calibrated gates and
 readout, loss and all rejected launches remain charged.
@@ -222,6 +316,22 @@ failure probability or a finite-time memory service. It is an
 operational existence certificate. Proving a native useful
 qualification advantage still requires a full ordinary estimator
 comparison and a coherent-order interface justified by hardware.
+
+The family orthogonality and random-unitary structure are model
+assumptions. They cannot be certified from $p_0,\eta$ alone.
+For nonorthogonal unitaries, the Choi purity is not
+$\sum_i v_i^2$, and the number or entropy of representation labels
+can be enlarged without changing the channel. Diagonalizing a
+general CPTP Choi state instead supplies orthogonal Kraus
+operators that need not be unitary; the baseline
+$\sum_{i,j}v_iv_j=w^2$ and its unitary commutator defect then
+do not follow. The claims here do not cover arbitrary nonorthogonal
+random-unitary representations or arbitrary CPTP maps.
+The [bounded-overlap extension](unitary-error-overlap.md) supplies a
+corrected bound under additional cardinality and coherence promises;
+it does not cover arbitrary representations.
+The ordinary local OR commutation certificate is likewise a
+Pauli specialization, not a general-unitary consequence.
 
 ## A positive finite-confidence example with full support
 
@@ -276,6 +386,10 @@ It does not prove that no ordinary measurement can obtain the
 additional information supplied by $\eta$.
 
 ## Counterexamples fixing the interpretation
+
+These examples use the Pauli specialization $D=2^n$ with integer
+$n$ and $G=\mathbb F_2^{2n}$. They are also admissible instances
+of the general orthogonal-unitary model.
 
 1. **No dimension-free closeness to commuting support.** Let $q$
    be uniform on $\{X_1,Z_1,\ldots,X_n,Z_n\}$. Only the ordered
@@ -447,8 +561,9 @@ $p_0=0$ and purity $1/2$, but their self-biases are 1 and 0.
 The commutation statistic then contains geometry beyond the
 collision probability.
 
-The mathematical distinction here is the arbitrary-error-law
-Shannon upper bound and its original-channel hashing consequence.
+The mathematical distinction here is the orthogonal-random-unitary
+Shannon upper bound, its arbitrary-Pauli-law specialization, and
+the original-channel hashing consequence.
 It is neither a first scalar measurement nor a first detectable
 capacity witness. No novelty priority, ordinary-query lower bound
 or native architecture advantage follows from this comparison.

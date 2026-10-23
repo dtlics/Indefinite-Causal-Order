@@ -188,4 +188,4 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R17 | [Braided magic, coherent trajectory resources and ordinary factories](../research/topics/nr-noisy-recovery/braided-magic.md#nr-r17) |  |
 | NR-R18 | [Drifting measurement alignment: exact two-query limit and reuse costs](../research/topics/nr-noisy-recovery/alignment.md#nr-r18) |  |
 | NR-R19 | [Unknown odd couplers: exact correction and expected-query fidelity limits](../research/topics/nr-noisy-recovery/backaction.md#nr-r19) |  |
-| NR-R20 | [Hidden-basis memory qualification and Pauli entropy-capacity certificate](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) |  |
+| NR-R20 | [Hidden-basis memory qualification and unitary-error capacity certificates](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) |  |
