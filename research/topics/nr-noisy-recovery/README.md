@@ -170,11 +170,12 @@ plus-flag score at matched acceptance. After the fixed gauge trace it
 also bounds all-control deterministic recovery. Coherent gauge recovery,
 physical decoder costs, equal-energy optimization and the general
 heralded frontier remain open.
-The [heat-code cutoff component](methods/heat-gkp-certification.md)
-adds exact Gram normalization and certified photon tails for a separate
-standard finite-energy GKP family. Its common mean-energy ledger and
-small truncation error support a full-output calculation; they do not
-solve the recovery comparison or supply physical controls.
+The [heat-code recovery component](methods/heat-gkp-certification.md)
+adds exact Gram normalization, certified photon tails and a supplied
+finite-code ordinary recovery. At the declared noise point it exceeds
+a code-independent upper bound for one raw Weyl switch, even with full
+control/target decoding. Intermediate framing, repeated switched blocks,
+the heralded frontier and physical decoder costs remain separate tests.
 The full-reset ordinary simulation in NR-R10 and the excitation-exchange
 decision counterexample in NR-R14 sharpen the remaining state-preparation
 and memory-calibration targets without claiming a native advantage.

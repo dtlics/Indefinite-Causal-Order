@@ -42,12 +42,17 @@ derives a normalizable code, reduced all-control recovery bounds and
 complete coherent-gauge counterexamples. Its fixed-controller recovery
 SDP is a method, not a solved Gaussian frontier or native decoder.
 Finite guards do not establish equal-energy optimality. The
-[heat-code cutoff component](../research/topics/nr-noisy-recovery/methods/heat-gkp-certification.md)
+[heat-code recovery component](../research/topics/nr-noisy-recovery/methods/heat-gkp-certification.md)
 adds outward rational interval certificates for full Gram normalization,
 uniform exponential moments and source/output photon tails, including
 transient squeezing and a common ensemble mean-energy ledger. Its
-continuous/operator identities remain analytic. This is a controlled
-truncation method, not a solved recovery comparison or physical decoder.
+continuous/operator identities remain analytic. A separate finite witness
+certifies an actual supplied-code ordinary recovery using outward
+Gaussian matrix enclosures and exact positive/trace-preserving completion.
+Its comparison is against an analytic code-independent raw-switch bound,
+based on Gaussian broadcasting and a uniform trace-distance estimate.
+Neither check validates a physical decoder, intermediate-controller
+optimization, repeated switched blocks or the full heralded frontier.
 The
 [spin-phase component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md)
 also checks scattering, full entanglement-first gate/resource branches,
@@ -56,6 +61,11 @@ scope guards. Universal comparisons, continuum loss and full-space
 recovery obstructions remain analytic; no native router or rate ordering
 is certified. Fixed-marginal rank reduction, helper POVM and local-filter
 guards support the arbitrary accessible-purifier Bell-assistance proof.
+Additional complete finite-state and coherent two-frequency guards
+support the constant-optics four-mode reduction and the specified
+coefficient-independent survivor compiler. Their all-spectrum proofs
+remain analytic; lost-environment records and adaptive intermediate
+controls are outside those comparisons.
 A separate outward interval certificate integrates the full declared
 Gaussian pulse, with analytic strip and tail bounds. Its physical joint
 mode analyzer remains an additional resource. Full Choi twirls in the general-channel replay support the

@@ -99,6 +99,11 @@ Bell-assistance formula for an arbitrary fully accessible purifying
 photon helper, with at most eight effective measurement outcomes.
 A certified full-Gaussian ordinary witness includes the temporal modes;
 its joint analyzer and filtering costs still need a physical ledger.
+Four coherent modes saturate larger path registers in the declared
+constant-optics bus class, reducing the fixed-spin comparison to a small
+attainable optimization. A coefficient-independent reverse-order compiler
+also matches the stated eigen-source survivor instrument. Neither result
+supplies a completion of the loss records or bounds adaptive spin controls.
 Encoded recovery, resolved loss records and matched control/clock costs
 remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
 separately excludes exact heralded recovery in its infinite-oscillator
@@ -570,13 +575,17 @@ fixed gauge trace. Retaining the physical gauge coherently can preserve
 additional recovery information, as exact ordinary counterexamples show.
 Its energy ledger includes transient occupation. A finite-cost decoder,
 equal-energy optimization and full coherent Gaussian recovery remain open.
-The separate [heat-code cutoff certificate](methods/heat-gkp-certification.md)
+The separate [heat-code recovery certificate](methods/heat-gkp-certification.md)
 uses the standard oscillator heat envelope with its full Gram normalizer.
 It bounds input and Gaussian-circuit output photon tails uniformly over
 logical/reference inputs, including transient squeezing. A common
-ensemble mean-energy budget and controlled finite-Fock error make a
-full-coherent recovery calculation possible; no solved fidelity optimum
-or native implementation follows from those certificates.
+ensemble mean-energy ledger supports an explicit finite-code ordinary
+recovery. At the declared noise point its all-attempt Bell fidelity
+exceeds a code-independent upper bound for one raw Weyl switch, retaining
+the entire control/target output and allowing any target-only encoder.
+The raw-switch bound has no energy restriction. It excludes intermediate
+framing and repeated switched blocks; it does not settle the heralded
+frontier or validate a physical decoder.
 
 The [non-Gaussian cat-reservoir comparison](architecture-baselines.md#nr-r06-cat-reservoir-parity)
 retains the actual warm bath and finite buffer. An ordinary coherent

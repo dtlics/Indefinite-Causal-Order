@@ -398,13 +398,275 @@ The tail certificate makes a full-coherent finite-output comparison
 well defined; no gauge or control readout is imposed to reduce that
 dimension.
 
-No recovery fidelity, numerical SDP optimum, interval Choi matrix
-or advantage is asserted by this replay. A completed screen still
-needs certified Fock-prefix coefficients and Gram arithmetic,
-channel-matrix assembly, numerical residual/rounding bounds and
-primal/dual feasible recovery witnesses. Those errors must be
-added to (HG16). Gaussian quadrature convergence by itself is not
-such a certificate.
+The tail replay alone asserts no recovery fidelity or numerical SDP
+optimum. Comparing the exact heat encoder through a finite surrogate
+also needs certified coefficients, Gram and channel arithmetic and
+feasible recovery witnesses, with their errors added to (HG16).
+Gaussian quadrature convergence alone is insufficient. The following
+separate finite-code certificate instead defines its encoder exactly
+and includes overflow in its receiver; that achievable lower bound
+requires no tail subtraction.
+
+## A raw-switch converse with arbitrary target encoders and final recovery
+
+Fix one invocation of the raw Weyl switch at $a=b=1/2$. The target
+receives $D(x,y)=\exp[i(yQ-xP)]$, while a plus control receives
+$(e^{ixy/2}|0\rangle+e^{-ixy/2}|1\rangle)/\sqrt2$.
+The initial control may more generally have a fixed known joint state
+with a decoder-local ancillary system, independent of the logical
+payload and reference. Encoding into that protected system is excluded.
+There is no preshared sender--receiver entanglement or entangled
+encoder--decoder program, and no protected input-bearing bypass.
+Intermediate slot frames, extra switch invocations and additional
+noisy blocks are outside this channel definition.
+A target-only encoder before the channel and
+arbitrary deterministic recovery of the entire final target/control
+output are permitted.
+
+Compare this channel $\mathcal S$ with
+$\mathcal B=\mathcal N_{1/2}\otimes\sigma_C$, where $\mathcal N_v$
+adds independent $q,p$ displacements of variance $v$ and the fixed
+control/decoder-ancilla state is unchanged. Couple the same $x,y$
+in both channels. The control unitary is $e^{ixyZ/2}$.
+For any fixed control state, including its purification, its distance
+from no rotation is at most $|\sin(xy/2)|$ in trace distance.
+The target unitary and arbitrary reference do not change this bound.
+Convexity and $|\sin t|\le|t|$ therefore give
+
+$$
+\frac12\|\mathcal S-\mathcal B\|_\diamond
+\le\mathbb E|\sin(xy/2)|
+\le\frac12\mathbb E|xy|
+=\frac{\sqrt{ab}}{\pi}=\frac1{2\pi}.
+\tag{HG17}
+$$
+
+The comparison channel has a broadcast extension. A gain-two
+phase-insensitive amplifier with vacuum idler $e$, followed by a
+balanced beam splitter with vacuum input $v$, gives two output modes
+
+$$
+Q_{1,2}=Q+\frac{Q_e\pm Q_v}{\sqrt2},\qquad
+P_{1,2}=P+\frac{-P_e\pm P_v}{\sqrt2}.
+\tag{HG18}
+$$
+
+Vacuum quadrature variance is $1/2$ in the present convention.
+Each marginal adds independent commuting Gaussian noises of
+variance $1/2$. Thus each is exactly $\mathcal N_{1/2}$ on every
+input, not only on coherent states. This is the standard Gaussian
+broadcast construction
+([Braunstein et al., PRL 86, 4938 (2001)](https://doi.org/10.1103/PhysRevLett.86.4938);
+[primary full text](https://arxiv.org/pdf/quant-ph/0012046)).
+Only existence of this channel is used; optimality of Gaussian
+coherent-state cloning is unnecessary. The known fixed independent
+control state can be prepared on both broadcast outputs.
+
+Apply any target encoder to one half of a logical Bell pair, then
+apply the same final decoder separately to both broadcast outputs.
+The resulting logical state has two equal receiver marginals.
+The Bell-projector norm argument in
+[(DC3)](memory-code-verification.md#finite-block-logical-fidelity-has-a-low-channel-ceiling)
+gives $2F_e\le1+1/2$, hence $F_e\le3/4$ for $\mathcal B$.
+The recovered Bell projector is an effect, so (HG17) implies
+
+$$
+\sup_{\text{target-only encoder, final TP recovery}}F_e(\mathcal S)
+\le\frac34+\frac1{2\pi}<0.909155.
+\tag{HG19}
+$$
+
+More generally, for independent anisotropic kicks with
+$v=\sqrt{ab}\ge1/2$, a known symplectic squeeze conjugates
+$\mathcal N_{\operatorname{diag}(a,b)}$ to $\mathcal N_{vI}$.
+The latter has a broadcast extension by adding variance
+$v-1/2$ locally to each output of (HG18). Conjugating both
+outputs back preserves the extension. The same distance
+argument consequently gives
+$F_e(\mathcal S_{a,b})\le\min\{1,3/4+\sqrt{ab}/\pi\}$.
+This converse has no energy constraint, so using a squeezing
+conjugation in its proof grants no physical controller resource.
+The numerical ordinary certificate below concerns only
+$a=b=1/2$.
+
+The bound has no photon-number or code-family restriction.
+Known input controls can be included in the target encoder and known
+final controls in recovery. Controls between the two slots change
+the channel and are outside this raw-switch converse. In particular,
+the ordinary alignment below is such a different circuit.
+The score is deterministic, all-attempt logical entanglement fidelity.
+This does not determine a heralded acceptance/conditional-fidelity
+frontier or establish ordinary dominance after matching an arbitrary
+native acceptance probability.
+
+## A finite ordinary code and an exact feasible recovery
+
+The selected UTF-8
+[certificate](../checks/architecture/heat_gkp_recovery.json) defines
+a real rational $33\times2$ matrix $Q_{\mathrm{fin}}$ in oscillator
+number states $0,\ldots,32$. It is a finite approximation selected from
+the square heat family; its definition for this claim is the rational
+matrix itself. The executable certificate checks, by exact rational
+arithmetic,
+
+$$
+Q_{\mathrm{fin}}^\dagger Q_{\mathrm{fin}}=I_2,\qquad
+(Q_{\mathrm{fin}})_{n i}=0\quad(n\text{ odd}),\qquad
+Q_{\mathrm{fin}}^\dagger NQ_{\mathrm{fin}}<\frac{117}{50}I_2.
+\tag{HG20}
+$$
+
+The last strict inequality is the two-by-two positive principal-minor
+test. These facts define an actual finite isometry on every logical
+state and reference; no approximate Gram normalization is assumed.
+The operational lower below does not infer an unbounded exponential
+moment from closeness to a heat state.
+
+Use the calibrated ordinary circuit in
+[(BL17)--(BL19)](bosonic-logical-frontier.md), with $g=1/2$:
+known squeeze, first noisy slot, known Fourier rotation, second
+noisy slot, inverse rotation and inverse squeeze.
+Its net channel is $X[g(x+y)]$, a one-axis displacement of variance
+$1/4$. It uses each mandatory noisy slot once. The known controller
+calls, pump work and durations are additional resources.
+During squeeze and unsqueeze interpolation, the encoded component has
+squeeze magnitude at most $\log2$, so its energy is at most
+$4(E+1/2)-1/2$. The first and second independent kicks add at most
+$1/2$ in total mean energy before unsqueezing; their aligned variance
+then decreases from $1$ to $1/4$ during undoing the squeeze.
+Thus the Gaussian channel stage and (HG20) fit the conservative
+common oscillator ensemble-mean cap
+$4(117/50+1/2)=284/25=11.36$. This is an admissibility bound,
+not equality of realized peaks. Preparation and receiver
+implementation are not granted this time or apparatus-energy bound.
+
+Here is a fully finite construction of the receiver's input channel.
+Project target number onto $0,\ldots,K$, $K=24$, and replace overflow
+by one orthogonal erasure symbol, keeping its full logical-reference
+matrix. Denote this trace-preserving channel by $\mathcal T_K$.
+The resulting output dimension is $26$ and its normalized logical
+Choi state $\rho_{RB}$ has dimension $52$.
+
+Its entries are integrated analytically rather than by noise
+quadrature. For $\alpha=x/\sqrt2$, $x\sim N(0,1/4)$, define
+$I_{mnpl}=\mathbb E[D_{mn}(\alpha)D_{pl}(\alpha)^*]$.
+The displacement generating kernel is
+
+$$
+\sum_{m,n}\frac{D_{mn}(\alpha)u^mv^n}{\sqrt{m!n!}}
+=\exp(uv-|\alpha|^2/2+u\alpha-v\alpha^*).
+$$
+
+Multiplying it by its conjugate with variables $r,s$ and performing
+the one-dimensional Gaussian integral gives
+
+$$
+\sum_{m,n,p,l}\frac{I_{mnpl}u^mv^nr^ps^l}
+ {\sqrt{m!n!p!l!}}
+=\frac2{\sqrt5}\exp\!\left(uv+rs+
+ \frac{(u-v+r-s)^2}{20}\right).
+\tag{HG21}
+$$
+
+Set $h=(1,-1,1,-1)$ and
+$A=A_0+hh^\mathsf T/10$, where the only nonzero entries of
+$A_0$ are $(A_0)_{12}=(A_0)_{21}=(A_0)_{34}=(A_0)_{43}=1$.
+For a multi-index $\beta$, differentiation gives the terminating
+normalized coefficient recurrence
+
+$$
+f_\beta=\frac1{\sqrt{\beta_i}}\sum_j
+ A_{ij}\sqrt{\beta_j-\delta_{ij}}\,
+ f_{\beta-e_i-e_j},\qquad
+f_0=2/\sqrt5,
+\tag{HG22}
+$$
+
+for any $\beta_i>0$, with terms having negative indices omitted.
+Odd total degree is zero. Thus only finite arithmetic is needed for
+the selected source and target entries. The retained Choi entries are
+
+$$
+\rho_{im,jp}=\frac12\sum_{n,l=0}^{32}
+ (Q_{\mathrm{fin}})_{ni}(Q_{\mathrm{fin}})_{lj}I_{mnpl}.
+\tag{HG23}
+$$
+
+The reference matrix in the erasure block is exactly
+$I_R/2-\sum_{m=0}^{24}\rho_{im,jm}$.
+It includes reference offdiagonals, is not conditionally normalized,
+and completes the Choi state to trace one.
+This is a positive channel because it is the stated Gaussian channel
+followed by $\mathcal T_K$, not because a numerical matrix was
+projected onto positive matrices.
+
+The replay uses integer dyadic interval endpoints and exact integer
+square-root brackets in (HG22), rounding every arithmetic operation
+outward. Rational source coefficients are enclosed exactly.
+It therefore produces entrywise enclosures of (HG23) and the entire
+erasure block without trusting a numerical integration, an external
+binary matrix, an eigensolver or a PSD repair.
+Even input number and centered $x$ make the output commute target
+parity. Even, odd and erasure output groups can be treated separately
+without discarding coherent information within a group.
+
+For each group the certificate supplies an integer matrix $L_0$,
+declaring the exact dyadic factor $L=2^{-40}L_0$.
+Embed these group Gram matrices into the full reference/output
+space to define $Y=\bigoplus_{\rm groups}LL^\mathsf T$, and set
+$S=\operatorname{Tr}_R Y$.
+One common exact rational row Gershgorin bound
+$\kappa\ge\lambda_{\max}(S)>0$
+then gives the feasible recovery witness
+
+$$
+X=\frac Y\kappa+
+\frac{I_R}{2}\otimes\left(I_B-\frac S\kappa\right)
+\ge0,\qquad \operatorname{Tr}_R X=I_B.
+\tag{HG24}
+$$
+
+Both terms are positive: $Y$ is a Gram matrix and
+$I_B-S/\kappa\ge0$ by the bound. Thus no approximate marginal
+normalization or numerical positivity premise remains.
+This $X$ is a CPTP recovery Choi witness in the normalization of
+[(BL32)](bosonic-logical-frontier.md). It includes every output group
+and gives the deterministic recovery's Bell score.
+The integer interval replay evaluates
+$\operatorname{Tr}(\rho_{RB}X)/2$ with outward error and proves
+
+$$
+F_e\bigl(\mathcal R\circ\mathcal T_{24}\circ
+ \mathcal N_{\text{one-axis},\,1/4}\circ Q_{\mathrm{fin}}\bigr)
+>\frac{919}{1000}>\frac34+\frac1{2\pi}.
+\tag{HG25}
+$$
+
+The strict comparison needs no numerical value of $\pi$:
+$\pi>3$ gives $3/4+1/(2\pi)<11/12<919/1000$.
+
+This is a feasible lower, not a numerical SDP optimum.
+Every overflow outcome is included. Because $\mathcal T_{24}$ is
+part of the receiver, (HG25) is also an achievable lower for the
+original oscillator channel; no output-tail subtraction is needed.
+No source-tail subtraction is needed either, since
+$Q_{\mathrm{fin}}$ is the declared encoder. Such error terms would
+be needed to transfer a finite *upper* bound to an infinite output,
+or to replace this encoder by the exact heat encoder.
+
+Consequently this calibrated ordinary protocol exceeds the
+all-encoder/full-final-recovery ceiling of the single raw switch at
+the stated noise point. This does not optimize the full ordinary
+control set, a switched circuit with additional intermediate
+controllers, a heralded tradeoff, or multiple noisy blocks.
+The finite-dimensional encoder and receiver are mathematical
+instruments. A device claim still requires their actual coherent
+number-selective controls, ancillas, resets, gate faults, timing and
+work. The converse does not assert that those controls are native.
+The [standard-library replay](../checks/architecture/verify_heat_gkp_recovery.py)
+checks the selected source, finite channel and feasible witness;
+the continuous Gaussian integral, broadcast extension and diamond
+bound are the analytic arguments above.
 
 The controller assumptions are public calibrated Gaussian calls
 and the explicitly supplied known rotations/squeeze.
@@ -416,5 +678,7 @@ isometry are not an available native encoder merely because their
 tails are certified. All actual ancillary transfer or bypass
 controls supplied to either processor remain admissible for the
 ordinary comparison. No global ordinary-dominance, capacity or
-native coherent-order claim follows from this fixed-code
-certification component.
+native coherent-order claim follows from the tail certificate.
+The additional raw-switch comparison has precisely the scope of
+(HG17)--(HG25), while the full physical controller and heralded
+frontiers remain open.

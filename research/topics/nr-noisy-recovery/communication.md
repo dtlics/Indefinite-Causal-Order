@@ -821,6 +821,14 @@ interval certificate gives an ordinary full-Gaussian witness with
 Bell probability greater than $0.36675027$ per launch in the stated
 elastic model. It requires coherent polarization/temporal-mode analysis;
 unresolved inaccessible records do not satisfy that premise.
+Within its factorized-pulse, constant-optics bus model, four coherent
+photon modes attain the same Bell-yield optimum as any larger path
+register. The fixed-spin optimization has five real variables; a single
+optical compression must apply across the whole pulse spectrum.
+A separate reverse-order compiler matches all survivor vectors for the
+stated eigen-polarization source, with coefficients independent of the
+cavity response. These are scoped optical comparisons, not complete
+loss-record or adaptive-control simulations.
 Actual router records, encoded recovery and matched physical clocks
 remain open comparisons.
 

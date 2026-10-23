@@ -17,7 +17,10 @@ remain separate. An arbitrary-purifying-helper argument below extends the
 Bell-yield formula to pure finite-pulse states, and a separate
 [validated continuum checker](../checks/architecture/verify_remote_spin_pulse.py)
 certifies one ordinary Gaussian-pulse lower bound. This comparison has
-not been formalized in Lean.
+not been formalized in Lean. For fixed coherent controls, the full-pulse
+ordinary factory also has the exact four-mode reduction and marginal SDP
+below. A separate eigenstate-source construction matches complete coherent
+survivors without assuming frequency-independent reflection amplitudes.
 
 ## Physical task and declared interfaces
 
@@ -1380,6 +1383,206 @@ by the real-control conjugation symmetry above. These steps certify the
 continuum inequalities, rather than interpreting agreement between
 quadrature cutoffs as a proof.
 
+## Four modes saturate the fixed coherent ordinary bus
+
+The larger optical-control comparison can be reduced exactly, with a
+stronger port assumption than polarization alone. Fix normalized product
+spin amplitudes $a=(a_0,a_1)^{\mathsf T}$ and
+$b=(b_0,b_1)^{\mathsf T}$, a pure factorized incident pulse
+$f(\nu)\phi$, and strictly chronological $A$ then $B$. Both stations
+preserve four photon modes and have scalar responses
+$A_a(\nu)=\alpha(\nu)I+a\delta(\nu)P_A$ and
+$B_b(\nu)=\beta(\nu)I+b\epsilon(\nu)P_B$, where $P_A,P_B$ are
+known frequency-independent rank-two bright projectors. This includes
+(RS44) with a second preserved photon degree of freedom. Known
+frequency-independent photon rotations before, between and after the
+encounters are allowed. There is no inter-encounter measurement,
+postselected filter, recorded feedforward, adaptive spin preparation or
+extra device call. After both encounters, allow the full purifying-helper
+readout and local spin filters of (RS39).
+
+In this class, all source and intermediate optical controls reduce to
+five real variables: $x\in[0,1]$ and a Hermitian two-by-two $Y$ obeying
+$0\preceq Y\preceq D_x=\operatorname{diag}(x,1-x)$.
+To prove necessity, absorb the source optics into $\phi$, put
+$x=\|P_A\phi\|^2$, and for $0<x<1$ choose
+$e_0=P_A\phi/\sqrt x$, $e_1=(I-P_A)\phi/\sqrt{1-x}$.
+These are orthonormal and independent of frequency. At an endpoint
+complete the occupied source direction with any unused vector in the
+appropriate bright or dark sector. In this basis the first-encounter
+photon coefficient rows and their spin marginal are
+$$
+\begin{gathered}
+N(\nu)=\begin{pmatrix}
+a_0\alpha(\nu)&a_0\alpha(\nu)\\
+a_1[\alpha(\nu)+\delta(\nu)]&a_1\alpha(\nu)
+\end{pmatrix},\qquad S_x=\sqrt{D_x},\qquad T(\nu)=N(\nu)D_xN(\nu)^\dagger,\\
+Q=U^\dagger P_B U,\qquad K_{ij}=\langle e_i|Q|e_j\rangle,
+\qquad Y=S_xK^{\mathsf T}S_x,\qquad
+X(\nu)=N(\nu)YN(\nu)^\dagger.
+\end{gathered}
+\tag{RS48}
+$$
+Here $U$ is the intermediate photon unitary; a terminal $U^\dagger$
+can be absorbed in the helper measurement. The compression satisfies
+$0\preceq K\preceq I$, so $0\preceq Y\preceq D_x$.
+The transpose is required by the row convention: the selected spin
+matrix entry is $\langle h_{a'}|Q|h_a\rangle$.
+It cannot be dropped for a complex compression. The same $Y$ applies
+at every frequency because the pre-$B$ photon vectors always lie in the
+fixed span of $P_A\phi$ and $(I-P_A)\phi$.
+
+Put
+$h_0(\nu)=\beta(\nu)(b_0,b_1)^{\mathsf T}$ and
+$h_1(\nu)=(\beta(\nu)b_0,[\beta(\nu)+\epsilon(\nu)]b_1)^{\mathsf T}$.
+Tracing the orthogonal $Q$ and $I-Q$ photon sectors gives the exact
+unnormalized spin state
+$$
+\rho_{AB}(x,Y)=\int d\nu\,|f(\nu)|^2
+\left\{N(D_x-Y)N^\dagger\otimes h_0h_0^\dagger
+             +NYN^\dagger\otimes h_1h_1^\dagger\right\}.
+\tag{RS49}
+$$
+Every frequency-dependent factor remains inside this integral; it is
+affine in $x,Y$. Pointwise first-encounter Schmidt weights are the
+eigenvalues of $T(\nu)$, while those of the entire pulse are the
+eigenvalues of $\int|f|^2T(\nu)d\nu$. These operations cannot be
+interchanged. In particular, pointwise rank one at $x=1$ does not
+exclude spin–frequency entanglement of the full pulse.
+
+Conversely every feasible $x,Y$ is attained with four preserved photon
+modes and one constant $U$. On the occupied source support set
+$K=(S_x^+YS_x^+)^{\mathsf T}$ and extend by zero on an unused direction.
+The inequalities on $Y$ force its off-support entries to vanish, so this
+also handles $x=0,1$ without inverting a zero amplitude. Then
+$0\preceq K\preceq I$, and commuting positive square roots give
+$$
+V_K=\begin{pmatrix}\sqrt K&-\sqrt{I-K}\\
+                    \sqrt{I-K}&\sqrt K\end{pmatrix},\qquad
+Q_K=V_K\begin{pmatrix}I_2&0\\0&0\end{pmatrix}V_K^\dagger
+=\begin{pmatrix}K&\sqrt{K(I-K)}\\
+                 \sqrt{K(I-K)}&I-K\end{pmatrix}.
+\tag{RS50}
+$$
+$V_K$ is unitary and $Q_K$ is a rank-two projector with compression $K$.
+In the physical basis whose first two vectors are $e_0,e_1$, any native
+rank-two $P_B$ is unitarily equivalent to $Q_K$. Thus a known constant
+$U(4)$ realizes $U^\dagger P_BU=Q_K$. Prepare the pure source
+$\sqrt x e_0+\sqrt{1-x}e_1$. This realizes (RS49) at every frequency
+with the same source and unitary, including singular effects.
+
+This proves saturation of any larger coherent photonic program space
+in this class. A larger pure source still populates only the same two
+source directions before $B$; only a positive two-by-two compression
+enters (RS49), and (RS50) already realizes every such compression.
+It is not necessary to assign an uncontrolled source mixture or a new
+physical ancilla to each feasible point.
+
+Let $L_A=\operatorname{Tr}_B\rho_{AB}$ and
+$L_B=\operatorname{Tr}_A\rho_{AB}$. By (RS39), the exact fixed-spin,
+fixed-pulse optical-control optimum in this class is the small SDP
+$$
+\begin{aligned}
+\max_{x,Y,z}\quad &z\\
+\text{subject to}\quad&0\le x\le1,\quad
+ 0\preceq Y\preceq\operatorname{diag}(x,1-x),\\
+&L_A(x,Y)-\tfrac z2 I\succeq0,\qquad
+ L_B(x,Y)-\tfrac z2 I\succeq0.
+\end{aligned}
+\tag{RS51}
+$$
+There are five real optical-control variables plus the scalar objective.
+Every primal optical point has the pure four-mode realization above;
+(RS39) supplies its terminal POVM and local filters. Exact integral
+coefficients and feasible primal/dual witnesses can certify values;
+unvalidated quadrature and floating solver output cannot. The reverse
+definite order follows by exchanging the stations. Spin populations,
+pulse shape and response functions remain separate outer choices.
+
+This is not an upper bound for all ordinary protocols. Intermediate
+spin measurement or filtering with a retained flag can steer the photon
+and adapt later optics or the second spin's preparation. Other valid
+ordinary comparisons include photon instruments, extra calls, ancillary
+memories and frequency-dependent or frequency-converting controls.
+A factorized source and a fixed $U$ cannot be replaced by independent
+$Y(\nu)$ without supplying that additional interface. Stronger ordinary
+strategies can only raise the benchmark. The four-mode station ports,
+coherent mode readout and clocks remain the paid assumptions discussed
+after (RS8), not consequences of the mathematical reduction.
+
+## An eigenstate source has an exact reverse-order survivor compiler
+
+A useful subset permits equality of complete conditional quantum outputs,
+with no optimization over their Bell yield. Let $P,Q$ be known rank-one
+polarization bright projectors. For each spin label use
+$A_a=\alpha I+a\delta P$, $B_b=\beta I+b\epsilon Q$, allowing all four
+scalar functions to depend on frequency. With a pure order control
+$|c\rangle=c_0|0\rangle+c_1|1\rangle$ and source polarization $\psi$,
+the switch's surviving photon vector at spin label $ab$ is
+$$
+\begin{gathered}
+v_{ab}=\alpha\beta x+a\delta\beta y+
+                 b\alpha\epsilon z+ab\delta\epsilon w,\\
+x=|c\rangle\psi,\quad y=|c\rangle P\psi,\quad
+z=|c\rangle Q\psi,\quad
+w=c_0|0\rangle QP\psi+c_1|1\rangle PQ\psi.
+\end{gathered}
+\tag{RS52}
+$$
+The $C=0$ history is $BA$ and $C=1$ is $AB$.
+
+Suppose first that $P\psi=\psi$. Then $y=x$ and
+$z-w=c_1|1\rangle(I-P)Q\psi$ is orthogonal to both $x$ and $w$.
+Choose a rank-two projector $P'$ on the four photon modes whose range
+contains $\operatorname{span}\{x,w\}$ and whose kernel contains
+$z-w$. Such a projector exists: the first span has dimension at most
+two and is orthogonal to the excluded vector; pad its range in the
+remaining orthogonal directions if needed. With $Q'=I_C\otimes Q$,
+$$
+P'x=x,
+\qquad Q'x=z,
+\qquad P'Q'x=P'z=w.
+\tag{RS53}
+$$
+The strictly chronological reverse word $B(Q')$ then $A(P')$ has the
+same four polynomial coefficients in (RS52), hence the same surviving
+vector $v_{ab}$ for every $ab$ and every complex
+$\alpha,\beta,\delta,\epsilon$.
+
+If $P\psi=0$, then $y=0$ and
+$w=c_1|1\rangle PQ\psi$ is orthogonal to both $x$ and $z-w$.
+Choose a rank-two $P'$ containing $w$ and excluding
+$\operatorname{span}\{x,z-w\}$. Its orthogonal complement has dimension
+at least two, so padding is again possible. Now $P'x=0$, $Q'x=z$ and
+$P'Q'x=w$, proving the same reverse-word identity. Exchanging the
+stations and relabelling the two order-control states gives the
+forward-word construction for a $Q$-eigenstate source.
+The usual plus-polarization source with an $X$-axis bright projector in
+(RS1) is in this eigenstate class.
+
+Both $P'$ and $Q'$ have rank two, so known four-mode conjugating optics
+implement them with one encounter at each native station. The compiler
+depends on the known projectors and source, **not** the reflection
+coefficients. It therefore holds pointwise for arbitrary calibrated or
+unknown scalar spectral functions in the stated two-eigenvalue model.
+Multiplying by any common incident pulse and retaining the frequency
+register preserves equality of the entire coherent surviving linear operator.
+Linearity in the four spin basis labels proves equality for arbitrary
+unknown $ABR$ inputs and every terminal photon measurement, including
+coherent spectral readout and its conditional spin outputs.
+
+This is survivor equality in the declared four-preserved-mode interface.
+The reverse route must realize the same station responses; direction,
+phase and temporal access cannot be changed silently. Optical wrappers,
+propagation, storage and readout need their actual losses and duration.
+Physical spontaneous-emission, lost-route and no-click records are not
+identified by (RS52)–(RS53), so this is not a complete-erasure or harmless
+retry theorem. The separate all-loss comparison (RS10)–(RS18) retains
+its narrower erasure-dilation assumptions. For an ideal deterministic
+diagonal gate, (RS7)–(RS8) already provide the stronger endpoint check
+under four-mode ports; no additional remote query or nonlinear
+interaction between independent photons is hidden in that readout.
+
 ## Physical resources and verification scope
 
 The arbitrary-helper protocol assumes a pure incident photon and the
@@ -1418,3 +1621,12 @@ and the cited rank-two theorem establish (RS39) in general. The separate
 continuum replay certifies only (RS46) in the stated scattering model.
 Neither replay validates a native coherent mode analyzer, optimizes every
 switched flagged instrument, or formalizes these arguments in Lean.
+The finite replay also checks (RS48)–(RS50) on nine coherent two-frequency
+examples, including complex compressions, zero/one source occupancy,
+singular effects and all spin-state entries. Exact coefficient-vector and
+coherent-frequency guards check the eigenstate-source compiler. These
+finite cases support the general proofs; they do not supply native
+four-mode ports, an adaptive ordinary upper bound or a physical loss and
+clock completion. A further native gate comparison must retain arbitrary
+unknown $ABR$, the complete rejected instrument, and the strongest paid
+ordinary source, optics, local controls and memory resources.

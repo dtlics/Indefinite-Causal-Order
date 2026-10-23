@@ -6,7 +6,9 @@ checked. Gaussian rationals also guard the scalar-concurrence determinant
 factorization; the rational Bell-yield witness and known-gate compilers are
 replayed exactly. A full-rank fixed-marginal reduction and an eight-outcome
 helper POVM with local-filter failure accounting guard the arbitrary-helper
-assistance proof. The native port, calibration, timing and general scattering/RUS
+assistance proof. Coherent frequency guards also check the constant-control
+four-mode normal form and coefficient-independent eigen-source survivor
+compiler. The native port, calibration, timing and general scattering/RUS
 comparisons remain analytic scope, not certified by finite replay.
 Import is silent; no files are written.
 """
@@ -854,6 +856,310 @@ def helper_verify():
 
 
 
+# Constant-control four-mode normal form, including coherent frequency.
+def bus_transpose(a):
+    return [list(row) for row in zip(*a)]
+
+
+def bus_block(a,b,c,d):
+    return [ar+br for ar,br in zip(a,b)]+[cr+dr for cr,dr in zip(c,d)]
+
+
+def bus_rows_of_vectors(vs):
+    return [[v[j][0] for j in range(len(v))] for v in vs]
+
+
+def bus_native_projector():
+    return helper_diag([1,0,1,0])
+
+
+def bus_dilation(root_k,root_complement):
+    w=bus_block(root_k,helper_scale(root_complement,-1),root_complement,root_k)
+    helper_require(helper_mul(helper_dag(w),w)==helper_eye(4),'four-mode Naimark unitary')
+    # Native bright columns are 0 and 2, while w's first two columns span Q.
+    reordered=[[row[j] for j in (0,2,1,3)] for row in w]
+    phase=helper_diag([1,ConcG(0,1),1,1])
+    uf=helper_mul(phase,reordered)
+    between=helper_dag(uf)
+    q=helper_conjugate(bus_native_projector(),uf)
+    helper_require(helper_mul(q,q)==q and helper_dag(q)==q and helper_rank(q)==2,'helper_rank-two physical projector')
+    helper_require(helper_mul(helper_dag(between),between)==helper_eye(4),'native intermediate unitary')
+    return between,q,phase
+
+
+def bus_node(alpha,bright_a,beta,bright_b,a,b,x,sx,root_k,root_complement):
+    pn=bus_native_projector();between,q,phase=bus_dilation(root_k,root_complement)
+    k=helper_mul(root_k,root_k)
+    helper_require(helper_add(k,helper_mul(root_complement,root_complement))==helper_eye(2),'effect complement')
+    helper_require(helper_mul(root_k,root_complement)==helper_mul(root_complement,root_k),'commuting roots')
+    dd=helper_diag([x,1-x]);ss=helper_diag(sx)
+    y=helper_mul(helper_mul(ss,bus_transpose(k)),ss)
+    cy=helper_mul(ss,bus_transpose(root_k));cc=helper_mul(ss,bus_transpose(root_complement))
+    helper_require(bus_outer_columns(cy)==y,'positive Y factorization')
+    helper_require(bus_outer_columns(cc)==helper_add(dd,helper_scale(y,-1)),'positive D-Y factorization')
+    source=helper_mul(phase,helper_vec([sx[0],sx[1],0,0]))
+    helper_require(helper_trace(helper_outer(source))==helper_ONE,'normalized pure four-mode source')
+    aa=[helper_scale(helper_eye(4),alpha),helper_add(helper_scale(helper_eye(4),alpha),helper_scale(pn,bright_a-alpha))]
+    bb=[helper_scale(helper_eye(4),beta),helper_add(helper_scale(helper_eye(4),beta),helper_scale(pn,bright_b-beta))]
+    outputs=[]
+    for ai in range(2):
+        for bi in range(2):
+            outputs.append(helper_scale(helper_mul(bb[bi],helper_mul(between,helper_mul(aa[ai],source))),a[ai]*b[bi]))
+    actual=helper_mul(bus_rows_of_vectors(outputs),helper_dag(bus_rows_of_vectors(outputs)))
+    n=[[a[0]*alpha,a[0]*alpha],[a[1]*bright_a,a[1]*alpha]]
+    t=helper_conjugate(dd,n);xx=helper_conjugate(y,n)
+    phi0=helper_vec([beta*b[0],beta*b[1]])
+    phi1=helper_vec([beta*b[0],bright_b*b[1]])
+    predicted=helper_add(helper_kron(helper_add(t,helper_scale(xx,-1)),helper_outer(phi0)),helper_kron(xx,helper_outer(phi1)))
+    helper_require(actual==predicted,'full 4x4 spin state equals affine normal form')
+    # This nontrivial example must actually test the complex bus_transpose.
+    wrong_y=helper_mul(helper_mul(ss,k),ss)
+    wrong_x=helper_conjugate(wrong_y,n)
+    wrong=helper_add(helper_kron(helper_add(t,helper_scale(wrong_x,-1)),helper_outer(phi0)),helper_kron(wrong_x,helper_outer(phi1)))
+    if k[0][1].i and 0<x<1:
+        helper_require(wrong!=actual,'bus_transpose convention detected')
+    if x in (0,1):
+        helper_require(helper_rank(t)<=1,'singular occupancy handled pointwise')
+    # First-encounter Schmidt determinant, including all spin/source weights.
+    det=t[0][0]*t[1][1]-t[0][1]*t[1][0]
+    expected=(a[0]*a[1]*alpha*(bright_a-alpha))
+    expected=expected*expected.conj()*x*(1-x)
+    helper_require(det==expected,'local Schmidt determinant formula')
+    return outputs,actual,predicted
+
+
+def bus_outer_columns(a):
+    return helper_mul(a,helper_dag(a))
+
+
+def bus_verify():
+    if not __debug__:
+        raise RuntimeError('Do not run exact replay with Python optimization enabled')
+    v=[[ConcG(F(3,5)),ConcG(0,F(4,5))],[ConcG(0,F(4,5)),ConcG(F(3,5))]]
+    helper_require(helper_mul(helper_dag(v),v)==helper_eye(2),'effect eigenbasis unitary')
+    roots=[(helper_zeros(2,2),helper_eye(2)),(helper_eye(2),helper_zeros(2,2)),
+           (helper_conjugate(helper_diag([F(3,5),F(5,13)]),v),
+            helper_conjugate(helper_diag([F(4,5),F(12,13)]),v))]
+    occupancies=[(F(0),(F(0),F(1))),
+                 (F(9,25),(F(3,5),F(4,5))),
+                 (F(1),(F(1),F(0)))]
+    a=[ConcG(F(5,13)),ConcG(0,F(12,13))]
+    b=[ConcG(F(8,17)),ConcG(0,F(15,17))]
+    response=[(ConcG(-F(4,5),F(1,10)),ConcG(F(3,5),-F(1,5)),
+               ConcG(-F(2,3),F(1,6)),ConcG(F(3,4),F(1,8))),
+              (ConcG(-F(3,5),-F(1,5)),ConcG(F(2,3),F(1,6)),
+               ConcG(-F(5,7),-F(1,7)),ConcG(F(4,5),-F(1,10)))]
+    for rr in response:
+        for amp in rr:
+            norm=amp*amp.conj()
+            helper_require(norm.i==0 and norm.r<=1,'passive scalar response')
+    spectral=[ConcG(F(3,5)),ConcG(0,F(4,5))]
+    count=0;full_count=0
+    for root_k,root_complement in roots:
+        for x,sx in occupancies:
+            outs=[];formula=helper_zeros(4,4)
+            for amps,f in zip(response,spectral):
+                output,actual,predicted=bus_node(*amps,a,b,x,sx,root_k,root_complement)
+                outs.append(output)
+                weight=f*f.conj()
+                formula=helper_add(formula,helper_scale(predicted,weight));count+=1
+            full_vectors=[]
+            for j in range(4):
+                full_vectors.append(outs[0][j]+outs[1][j])
+                full_vectors[-1]=[[spectral[h]*outs[h][j][k][0]]
+                                  for h in range(2) for k in range(4)]
+            full_rows=bus_rows_of_vectors(full_vectors)
+            reduced=helper_mul(full_rows,helper_dag(full_rows))
+            helper_require(reduced==formula,'coherent two-frequency state integrated formula')
+            # The global output really retains frequency coherence; this
+            # helper_rank-one vector is not a classical mixture of bus_node states.
+            global_vector=helper_vec([entry for row in full_rows for entry in row])
+            global_state=helper_outer(global_vector)
+            helper_require(helper_rank(global_state)==1,'pure global pulse output')
+            helper_require(any(global_state[8*j+k][8*l+4+m]!=helper_ZERO
+                        for j in range(4) for l in range(4)
+                        for k in range(4) for m in range(4)),
+                    'nonzero cross-frequency coherences')
+            if x==0:
+                helper_require(helper_rank(helper_ptr_b(reduced))==1,'dark source leaves A pure even for pulse')
+            full_count+=1
+    return {'status': 'passed', 'arithmetic': 'Gaussian rational, stdlib',
+            'single_frequency_full_state_comparisons': count,
+            'coherent_two_frequency_examples': full_count,
+            'effect_cases': len(roots), 'occupancy_cases': len(occupancies),
+            'checks': ['Naimark rank/unitarity', 'complex transpose',
+                       'singular occupancy', 'Schmidt determinant',
+                       'all 4x4 spin entries', 'cross-frequency coherence']}
+
+
+
+
+# Coefficient-independent eigen-source survivor compiler.
+def eigen_scale(c, a):
+    return helper_scale(a, c)
+
+
+def eigen_outer(v):
+    return [[x*y.conj() for y in v] for x in v]
+
+
+def eigen_inner(v,w):
+    return sum(x.conj()*y for x,y in zip(v,w))
+
+
+def eigen_difference(v,w):
+    return [x-y for x,y in zip(v,w)]
+
+
+def eigen_iszero(v):
+    return all(x==0 for x in v)
+
+
+def eigen_orthogonal_remainder(v,basis):
+    out=v[:]
+    for b in basis:
+        norm=eigen_inner(b,b)
+        assert norm.i==0 and norm.r>0
+        coefficient=eigen_inner(b,out)/norm
+        out=[x-coefficient*y for x,y in zip(out,b)]
+    return out
+
+
+def eigen_orthogonal_basis(vectors):
+    basis=[]
+    for v in vectors:
+        r=eigen_orthogonal_remainder(v,basis)
+        if not eigen_iszero(r):
+            basis.append(r)
+    return basis
+
+
+def eigen_padded_projector(contain,exclude,dimension=4,rank=2):
+    """Project onto `contain`, avoid `exclude`, pad to the specified rank.
+
+    Every normalization divides by a rational squared norm; square roots are
+    unnecessary. The theorem supplies orthogonality and the available space.
+    """
+    rb=eigen_orthogonal_basis(contain)
+    eb=eigen_orthogonal_basis(exclude)
+    assert len(rb)<=rank and all(eigen_inner(r,e)==0 for r in rb for e in eb)
+    for k in range(dimension):
+        if len(rb)==rank:
+            break
+        v=[ConcG(i==k) for i in range(dimension)]
+        r=eigen_orthogonal_remainder(v,rb+eb)
+        if not eigen_iszero(r):
+            rb.append(r)
+    assert len(rb)==rank
+    p=[[ConcG() for _ in range(dimension)] for _ in range(dimension)]
+    for b in rb:
+        p=helper_add(p,eigen_scale(ConcG(1)/eigen_inner(b,b),eigen_outer(b)))
+    assert p==helper_dag(p) and helper_mul(p,p)==p and helper_trace(p)==rank
+    for v in contain:
+        assert conc_mv(p,v)==v
+    for v in exclude:
+        assert eigen_iszero(conc_mv(p,v))
+    return p
+
+
+def eigen_build_compiler(P,Q,psi,control,eigenvalue):
+    assert conc_mv(P,psi)==[eigenvalue*x for x in psi]
+    assert eigen_inner(psi,psi)==1 and eigen_inner(control,control)==1
+    x=[c*d for c in control for d in psi]
+    qpsi=conc_mv(Q,psi)
+    z=[c*d for c in control for d in qpsi]
+    # The two switch branches are QP psi and PQ psi in order.
+    w=[control[0]*d for d in conc_mv(Q,conc_mv(P,psi))]+[control[1]*d for d in conc_mv(P,qpsi)]
+    if eigenvalue==1:
+        contain,exclude=[x,w],[eigen_difference(z,w)]
+    else:
+        assert eigenvalue==0
+        contain,exclude=[w],[x,eigen_difference(z,w)]
+    PP=eigen_padded_projector(contain,exclude)
+    QQ=helper_kron(helper_eye(2),Q)
+    assert helper_mul(QQ,QQ)==QQ and QQ==helper_dag(QQ) and helper_trace(QQ)==2
+    assert conc_mv(PP,x)==[eigenvalue*d for d in x]
+    assert conc_mv(QQ,x)==z and conc_mv(PP,z)==w
+    return x,PP,QQ
+
+
+def eigen_switch_vector(P,Q,psi,control,coefficients,a,b):
+    alpha,alpha1,beta,beta1=coefficients
+    A=helper_add(eigen_scale(alpha,helper_eye(2)),eigen_scale((alpha1-alpha)*a,P))
+    B=helper_add(eigen_scale(beta,helper_eye(2)),eigen_scale((beta1-beta)*b,Q))
+    return [control[0]*z for z in conc_mv(helper_mul(B,A),psi)]+[control[1]*z for z in conc_mv(helper_mul(A,B),psi)]
+
+
+def eigen_ordinary_vector(PP,QQ,source,coefficients,a,b):
+    alpha,alpha1,beta,beta1=coefficients
+    A=helper_add(eigen_scale(alpha,helper_eye(4)),eigen_scale((alpha1-alpha)*a,PP))
+    B=helper_add(eigen_scale(beta,helper_eye(4)),eigen_scale((beta1-beta)*b,QQ))
+    return conc_mv(helper_mul(A,B),source)
+
+
+def eigen_verify():
+    P=helper_diag([1,0])
+    qs=[[ConcG(1),ConcG()],[ConcG(),ConcG(1)],[ConcG(F(3,5)),ConcG(F(4,5))],
+        [ConcG(F(3,5)),ConcG(0,F(4,5))]]
+    projectors=[eigen_outer(q) for q in qs]
+    controls=[[ConcG(1),ConcG()],[ConcG(),ConcG(0,1)],[ConcG(F(3,5)),ConcG(F(4,5))],
+              [ConcG(F(3,5)),ConcG(0,F(4,5))],[ConcG(0,F(5,13)),ConcG(F(12,13))]]
+    coefficients=[(ConcG(-1),ConcG(1),ConcG(-1),ConcG(1)),
+                  (ConcG(-F(3,5),F(1,5)),ConcG(F(2,5),-F(1,5)),ConcG(F(3,10),F(2,5)),ConcG(-F(1,2),F(1,10))),
+                  (ConcG(-F(21,25)),ConcG(F(2573,3263)),ConcG(-F(5,7)),ConcG(F(647,827))),
+                  (ConcG(),ConcG(F(1,2)),ConcG(F(2,5)),ConcG(0,F(3,5))),
+                  (ConcG(F(3,10),F(2,5)),ConcG(F(3,10),F(2,5)),ConcG(-F(4,5)),ConcG(F(1,5),F(1,10))),
+                  (ConcG(F(1,3)),ConcG(0,F(2,3)),ConcG(),ConcG(F(3,5),F(1,5)))]
+    for values in coefficients:
+        assert all(eigen_inner([v],[v]).r<=1 for v in values)
+    mode_amplitudes=[ConcG(F(3,5)),ConcG(0,F(4,5))]
+    assert eigen_inner(mode_amplitudes,mode_amplitudes)==1
+    state_cases=0;coherent_cases=0;projector_cases=0
+    for eigenvalue in (0,1):
+        psi=[ConcG(eigenvalue),ConcG(1-eigenvalue)]
+        for Q in projectors:
+            assert helper_mul(Q,Q)==Q and Q==helper_dag(Q) and helper_trace(Q)==1
+            for control in controls:
+                source,PP,QQ=eigen_build_compiler(P,Q,psi,control,eigenvalue)
+                projector_cases+=1
+                for values in coefficients:
+                    for a in (0,1):
+                        for b in (0,1):
+                            target=eigen_switch_vector(P,Q,psi,control,values,a,b)
+                            actual=eigen_ordinary_vector(PP,QQ,source,values,a,b)
+                            assert target==actual
+                            norm=eigen_inner(target,target)
+                            assert norm.i==0 and 0<=norm.r<=1
+                            state_cases+=1
+                # Two coherent spectral labels with different COMPLEX responses.
+                # The same PP,QQ are used for both labels. This compares full
+                # amplitudes, rather than tracing the labels before comparison.
+                targets=[];actuals=[]
+                for a in (0,1):
+                    for b in (0,1):
+                        tv=[];av=[]
+                        for amp,values in zip(mode_amplitudes,(coefficients[1],coefficients[2])):
+                            tv += [amp*z for z in eigen_switch_vector(P,Q,psi,control,values,a,b)]
+                            av += [amp*z for z in eigen_ordinary_vector(PP,QQ,source,values,a,b)]
+                        assert tv==av
+                        targets.append(tv);actuals.append(av)
+                        coherent_cases+=1
+                # Check every input matrix unit's cross-frequency block. Vector
+                # equality above already proves all ABR inputs by linearity;
+                # this guard prevents accidentally dephasing the frequency flag.
+                for v,w,vv,ww in zip([v for v in targets for _ in targets],targets*len(targets),
+                                     [v for v in actuals for _ in actuals],actuals*len(actuals)):
+                    left=[[v[i]*w[j+4].conj() for j in range(4)] for i in range(4)]
+                    right=[[vv[i]*ww[j+4].conj() for j in range(4)] for i in range(4)]
+                    assert left==right
+    return {'status':'passed','exact_rank_two_compiler_projectors':projector_cases,
+            'full_survivor_spin_basis_cases':state_cases,
+            'coherent_two_frequency_spin_basis_cases':coherent_cases,
+            'scope':'coefficient-independent reverse-word coherent survivor compiler for both A-projector eigenspaces, declared four-mode preserved ports and known wrappers; no loss/emission completion or router-clock validation'}
+
+
+
+
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
@@ -873,7 +1179,9 @@ def verify():
             "known_local_switch_compiler_cases": phase_known_switch_replay(),
             "exact_scalar_Bell_yield_witness": phase_bell_witness(),
             "arbitrary_helper_rank_reduction_example": helper_verify(),
-            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, and a full-rank helper POVM/filter example; the universal assistance proof, native ports, calibration and clocks remain analytic"}
+            "constant_control_four_mode_normal_form": bus_verify(),
+            "eigen_source_survivor_compiler": eigen_verify(),
+            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms and eigen-source survivor compilers; universal proofs, native ports, calibration and clocks remain analytic"}
 
 
 if __name__ == "__main__":
