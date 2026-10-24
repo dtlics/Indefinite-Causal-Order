@@ -1436,7 +1436,10 @@ The [retained-photon gate component](methods/remote-spin-phase.md#nr-r11-retaine
 asks a different full-input task: the flying qubit remains unknown quantum
 output together with both stationary spins. Its ordinary comparisons
 separate one corrected flag, four-mode terminal instruments, local spin
-filters, multiple feedback records and larger coherent programs. Extra return visits can
+filters, intermediate weak photon measurements, multiple feedback records
+and larger coherent programs. Its intermediate-instrument optimum requires
+a full-rank partial measurement; complete helper readout/reset cannot
+replace it. Extra return visits can
 replace photon-preserving measurements. The physical comparison must keep
 flag-dependent storage loss, erroneous vacuum repeats and actual helper
 ports; the ideal branch bounds do not establish a device advantage.

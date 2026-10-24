@@ -251,9 +251,11 @@ coherent-program realizations and ordinary survivor compilers, with
 explicit port and timing qualifications. Its
 [retained-photon gate comparison](methods/remote-spin-phase.md#nr-r11-retained-photon-gate)
 keeps the unknown photon as quantum output and distinguishes one corrected
-flag from multiple corrected records. The next test fixes a full physical
+flag from multiple corrected records. It also gives an exact ordinary
+weak-measurement optimum when intermediate photon instruments are allowed
+with four preserved modes. The next test fixes a full physical
 node, readout, vacuum and clock instrument, then compares delivery with
-ordinary extra modes, measurements between contacts, memories and return
+ordinary extra modes, actual weak measurements, memories and return
 visits. Ideal
 accepted weight alone does not establish a hardware advantage.
 The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)

@@ -153,6 +153,12 @@ Additional modules run inside the same existing architecture jobs:
   Schur-complement attainment. The instrument reduction, positivity and
   arbitrary-memory arguments are analytic; this is not a hardware or
   intermediate-adaptive-controller certificate.
+- [Intermediate photon instrument](architecture/retained_photon_middle.py)
+  checks positive algebraic effects, the complete two-history Kraus budget,
+  every input matrix unit and all-angle trace-cost polynomial identities.
+  Its 167 explicit checks also execute under optimized Python. Operator
+  convexity, the general optimization and physical weak-readout access
+  remain analytic or additional premises.
 - [Mechanical strength](architecture/mechanical_pointer_strength.py) checks
   exact finite full-control partial-meter blocks and Gram/Choi witnesses;
   [mechanical clocks](architecture/mechanical_pointer_clock.py) checks exact

@@ -2432,8 +2432,9 @@ preserves those spectator modes.
 ### What exactly two CZ contacts and one terminal flag can do
 
 There is also a useful restricted exact comparison. Consider one fixed
-$A$ CZ followed by one fixed $B$ CZ, arbitrary photon controls, one clean
-photon helper, no intermediate spin instruments or extra station ancillas,
+$A$ CZ followed by one fixed $B$ CZ, arbitrary photon unitaries before
+and between the contacts, one clean photon helper, no intermediate
+instruments or extra station ancillas,
 and arbitrary terminal photon instruments retaining $F$. Arbitrary local
 spin unitaries before/after their sole contact and record-dependent local
 unitary corrections are allowed. This class contains an exact $G$ flag
@@ -2441,8 +2442,9 @@ of weight $9/16$; the **total** weight of all its exact locally corrected
 $G$ records is at most $9/16$. Its projective two-outcome completion
 cannot turn the other outcome into either $G$ or a harmless local-product
 retry. This is not an upper bound on all ordinary controllers: larger
-photon helpers, intermediate instruments and local data filters change
-the model.
+photon helpers, middle measurements and local data filters change
+this fixed-unitary model; the extensions below retain their distinct
+assumptions.
 
 Here is the reduction including local spin controls. Across $A|BF$, the
 branch's spin factors are $U_A|i\rangle\langle i|V_A$. Target $G$ has
@@ -2774,8 +2776,9 @@ harmless local retry completes this projective one-helper circuit.
 For these diagonal unitary branches, arbitrary local pre/post spin
 operations again reduce to matched flips and phases by the rank-one
 spin-factor argument above. Additional contacts, station ancillas,
-intermediate instruments, larger helpers and general correction
-instruments remain outside this comparison.
+middle instruments, larger helpers and general corrections remain
+outside this projective-complement argument. Terminal filters and
+middle photon instruments are treated separately below.
 At most one of the two projective outcomes can therefore be a locally
 corrected $G$ flag. A zero-weight branch cannot evade the single-branch
 bound by putting deterministic $G$ in its complement.
@@ -2846,8 +2849,9 @@ and conjugating the photon by a Hadamard. This is a mathematical change
 of labels/basis, not a physical remote spin SWAP. A recorded classical
 lottery over either word and over pre-chosen sources/middle circuits is
 also bounded by convexity. Its record may select $E,W$ before the
-contacts; intermediate measurement-dependent changes are outside the
-fixed-circuit proof.
+contacts; intermediate measurement-dependent changes are outside this
+fixed-circuit proof. The purely photon middle-instrument model is
+bounded separately in (RP12g)–(RP12n).
 
 There is a separate, weaker **total** bound allowing terminal local
 spin filters in four photon dimensions. Keep the same fixed source
@@ -2931,11 +2935,218 @@ The lower norm inequality follows by applying nuclear-norm
 submultiplicativity to the two inverse matrices; the upper is the
 physical factorization in (RP6). This is a valid, potentially loose
 filter bound, not a $9/16$ claim for filters. It includes terminal
-local ancillary workspaces by Kraus refinement, but not coherent
-spin-ancilla encoding before a contact, adaptive intermediate
-preparation/middle controls, extra node visits or pre-shared auxiliary
-entanglement. Those stronger ordinary resources remain costed
-comparators rather than being excluded by this proof.
+local ancillary workspaces by Kraus refinement. The extension below
+also allows arbitrary middle photon records. Middle spin filters,
+coherent spin-ancilla encoding before a contact, extra node visits
+and pre-shared auxiliary entanglement remain outside these bounds
+and require their own physical accounting.
+
+### An intermediate photon instrument has a different optimum
+
+Keep four photon dimensions, the fixed source isometry, exactly one
+$A$ CZ followed by one $B$ CZ, and retained unknown $ABFR$.
+Now permit an arbitrary **photon** instrument between the contacts,
+record-dependent photon controls, arbitrary terminal photon instruments
+and local spin-unitary feedback. Several adaptive photon operations
+between the contacts are included by collecting their full records
+into one instrument. No spin filtering or coherent spin-ancilla encoding
+is allowed before or between the contacts, and there is no extra shared
+auxiliary entanglement. A transient meter may be read or discarded;
+retaining and coherently reusing it after the second contact adds
+quantum memory outside this four-dimensional model.
+
+In this class the optimal total exact-$G$ probability is
+$3/(3+\sqrt5)\approx0.572949$, slightly above $9/16$ and below
+the native ideal $3/4$. The following proof gives both the global
+upper bound and a matching partial-measurement construction.
+
+Fine-grain the surviving middle photon instrument, including hidden
+and reset records, into Kraus operators $T_h:\mathbb C^4\to\mathbb C^4$
+with $\sum_hT_h^\dagger T_h\preceq I_4$. Loss and other discarded
+outcomes remain in the positive completeness deficit; they cannot
+replace unknown $F$. Conditional photon unitaries are included in
+$T_h$. Write $L=\operatorname{diag}(E_0,E_1)$,
+so $\operatorname{Tr}L^\dagger L=2$. A successful terminal fine row has
+Fourier matrix $C_{hm}=\operatorname{diag}(M_{hm,0},M_{hm,1})T_hL$.
+It is invertible, so every square factor is invertible. Consequently
+a singular $T_h$ has **zero** exact-$G$ success. A complete helper
+projective measurement, or its fine-grained measure-and-reset channel,
+has rank at most two per record; appending a fresh helper afterwards
+does not restore that rank.
+
+For a fixed nonsingular $h$, the ratio cancellation (RP12a) uses only
+invertibility of the middle matrix, so (RP12b) still makes all
+successful terminal spin phases equal. Compress these terminal rows
+to one contraction $M_h$ and let $p_h$ be their total success weight.
+The input $A$ basis and its matched flip are fixed before its contact.
+Any conditional $B$ input basis on a successful leaf is monomial by
+the same rank-one spin-factor argument. Its matched bit flip inserts
+a known photon $Z$ at the $B$ query, which can be absorbed on the left
+of $T_h$ without changing $T_h^\dagger T_h$. Spin phases commute with
+the queries. Thus this feedback preserves the instrument budget and
+the target form below. Absorb photon output corrections into $M_h$,
+put $H_{hj}=(M_{hj}M_{hj}^\dagger)^{-1}$ and
+$\mathcal R_\theta=R_\theta\otimes I$. Then
+
+$$
+\begin{aligned}
+C_h&=\sqrt{p_h/3}\,\mathcal R_{\beta_h}C_0\mathcal R_{\alpha_h},
+&H_{h0}^{-1}+H_{h1}^{-1}&\preceq I,\\
+C_h^\dagger\operatorname{diag}(H_{h0},H_{h1})C_h
+ &=L^\dagger T_h^\dagger T_hL,
+&\sum_h\operatorname{Tr}
+ [C_h^\dagger\operatorname{diag}(H_{h0},H_{h1})C_h]&\le2.
+\end{aligned}
+\tag{RP12g}
+$$
+
+The last inequality is the **joint** Kraus budget. It does not sum
+unrelated single-branch probability bounds. Exact rank-one Choi support
+justifies refining hidden terminal records before the compression.
+
+To minimize each trace cost, drop its unitary right phase, put
+$c=\cos2\beta$, $s=\sin2\beta$, and omit the history index.
+The diagonal blocks of
+$\mathcal R_\beta C_0C_0^\dagger\mathcal R_\beta^\dagger$ are
+$B_0=(3+c)I/2+sX$ and $B_1=(3-c)I/2-sX$.
+They commute and are positive: their determinants are
+$(5c^2\pm6c+5)/4=[5(c\pm3/5)^2+16/5]/4>0$ and their traces
+are $3\pm c\ge2$. Set $Q_j=H_j^{-1}$, with $Q_0+Q_1\preceq I$.
+Pinching $Q_j$ in their common $X$ eigenbasis cannot increase the
+objective $\sum_j\operatorname{Tr}(B_jQ_j^{-1})$.
+Equivalently, Cauchy--Schwarz gives
+$\langle x|Q_j^{-1}|x\rangle\ge1/\langle x|Q_j|x\rangle$.
+For each eigenvalue $x=\pm1$, writing these positive diagonal entries
+as $q_{jx}$, the scalar constraint $q_{0x}+q_{1x}\le1$ gives
+$b_{0x}/q_{0x}+b_{1x}/q_{1x}\ge(\sqrt{b_{0x}}+\sqrt{b_{1x}})^2$.
+Hence
+
+$$
+\operatorname{Tr}(H_0B_0+H_1B_1)
+\ge6+2\bigl(\sqrt{d+cs}+\sqrt{d-cs}\bigr),
+\qquad d=\frac{5+3c^2}{4}.
+\tag{RP12h}
+$$
+
+Since $d\ge5/4$ and the following polynomial is at least $25/16$,
+the squared root sum is
+$2d+2\sqrt{d^2-c^2s^2}\ge5$. Combining with (RP12g) yields
+
+$$
+d^2-c^2s^2=\frac{25+14c^2+25c^4}{16},\qquad
+\frac{6+2\sqrt5}{3}\sum_hp_h\le2,
+\qquad
+p_\star=\max\sum_hp_h=\frac3{3+\sqrt5}.
+\tag{RP12i}
+$$
+
+Here is an exact two-history construction attaining the bound. Let
+$r=\sqrt5$, $p_\star=3/(3+r)$, $\gamma=(3-r)/4$, and choose positive
+square roots in
+
+$$
+\begin{aligned}
+Q_0&=I/2+\gamma X,& Q_1&=I/2-\gamma X,
+&\mathsf R&=\operatorname{diag}(\sqrt{Q_0},\sqrt{Q_1}),
+&L&=I_4/\sqrt2,\\
+\beta&=\pi/4,& \alpha_\pm&=\pm\pi/4,
+&C_\pm&=\sqrt{p_\star/6}\,\mathcal R_\beta C_0\mathcal R_{\alpha_\pm},
+&T_\pm&=\mathsf R^{-1}C_\pm L^{-1}.
+\end{aligned}
+\tag{RP12j}
+$$
+
+The eigenvalues of each $Q_j$ are $(5-r)/4,(r-1)/4$, strictly
+between zero and one, and $Q_0+Q_1=I$.
+The balanced source has block rows $E_0=E_1=I/\sqrt2$.
+Write $Q_0^{-1}=hI-tX$, $Q_1^{-1}=hI+tX$, where
+$h=1+3r/5$, $t=2r/5$, so $3h-2t=3+r$. Direct multiplication gives
+
+$$
+\begin{aligned}
+A&=C_0^\dagger\mathcal R_\beta^\dagger
+       \operatorname{diag}(Q_0^{-1},Q_1^{-1})
+       \mathcal R_\beta C_0\\
+ &=\frac{3h-2t}{2}I_4
+   +\frac{h-2t}{2}\tau_z\otimes I
+   +(h-t)\tau_y\otimes Z,\\
+T_+^\dagger T_++T_-^\dagger T_-
+ &=\frac{p_\star}{3}(3h-2t)I_4=I_4.
+\end{aligned}
+\tag{RP12k}
+$$
+
+The $\alpha_\pm$ conjugations cancel the last two terms of $A$ in
+their sum, proving the middle instrument is complete. Use the common
+terminal coisometry $M=[\sqrt{Q_0},\sqrt{Q_1}]$, which extends to a
+four-mode unitary followed by one projective helper outcome. Its
+accepted Kraus in each middle history is
+
+$$
+K_\pm=\sqrt{p_\star/2}\,
+ e^{i\alpha_\pm Z_A+i\beta Z_B}G.
+\tag{RP12l}
+$$
+
+Local spin phases therefore give exact $G$ with total weight $p_\star$.
+These are full operator identities on arbitrary $ABFR$, rather than
+known-input scores. The terminal rejected branches have not been
+shown to be harmless retries.
+
+The required middle primitive is a **full-rank weak measurement**.
+Put $a_0=(h-2t)/2=(5-r)/10$, $b_0=h-t=(5+r)/5$ and
+$D=-a_0\tau_y\otimes I+b_0\tau_z\otimes Z$.
+Its two Pauli terms anticommute, so $D^2=(a_0^2+b_0^2)I$.
+The middle effects and strength satisfy
+
+$$
+T_\pm^\dagger T_\pm
+ =\frac I2\pm\frac{D}{3+r}
+ =\frac{I\pm\nu S}{2},\qquad
+S=\frac D{\sqrt{a_0^2+b_0^2}},\quad
+\nu^2=3-\frac{6r}{5}\in(0,3/5),\qquad
+(T_+^\dagger T_+)(T_-^\dagger T_-)
+ =\frac{3r-5}{10}I\succ0.
+\tag{RP12m}
+$$
+
+Both records have probability exactly $1/2$ for every input/reference:
+the normalized photon source in spin sector $z=\pm1$ is
+$[I;zI]/\sqrt2$, whose compression of both terms of $D$ is zero.
+No complete projective helper read/reset can replace this weak
+instrument. One implementation uses a four-mode basis change, an
+unsharp QND meter and the conditional polar-decomposition unitaries
+of $T_\pm$. It requires that readout before its conditional pulse;
+a direct joint-meter implementation is a distinct supplied primitive.
+The middle record and terminal good/bad record may reuse a meter only
+with its actual reset, storage and readout time. The spin-phase
+correction can be deferred to the output, so no extra $A$ quantum visit
+is required. Destructive detection of this same photon loses $F$.
+Meter survival, false heralds, unobserved fields, feedback latency and
+the four-mode controls all remain paid resources.
+
+There is also a weaker bound including **terminal** separable spin
+filters after arbitrary middle photon records. Apply (RP12d)--(RP12e)
+separately for each nonsingular $T_h$. Its successful filters share
+a normalized product factor $D_h$, and their weighted photon rows
+compress to a contraction. The inverse-filter circulants cannot
+decrease the target nuclear norm. With
+$S_h=\operatorname{diag}(M_{h0},M_{h1})$ this gives
+
+$$
+\frac{20}{3}\sum_hp_h
+ \le\sum_h\|C_{h,\mathrm{eff}}\|_*^2
+ \le2\sum_h\|T_hL\|_{\rm HS}^2\le4,
+\qquad \sum_hp_h\le\frac35.
+\tag{RP12n}
+$$
+
+The sharp value in (RP12i) is only for unitary spin feedback; (RP12n)
+does not assert a sharp filtered optimum. Middle spin filters change
+the photon-only Kraus budget, and pre-contact spin-ancilla encoding
+changes the rank-one spin factors. Neither is covered. Extra contacts,
+larger preserved quantum spaces and coherent reuse of a meter remain
+separate ordinary resources in the physical comparison.
 
 ### A physical meter is a complete instrument, not one efficiency
 
@@ -3178,14 +3389,19 @@ The next physical comparison must therefore specify a node, router,
 meter and clock dilation on unknown $ABFR$ including vacuum, with
 finite-pulse spectral records, actual feedback delays and all loss
 outcomes. It must compare all-launch delivered-good weight and false
-herald/error separately against (RP2)–(RP4), generalized ordinary
-readout/programs, spare-matter entanglement-first gates and repeated
+herald/error separately against (RP2)–(RP4), the middle-instrument
+construction (RP12j)–(RP12m) with its weak QND meter, generalized
+ordinary readout/programs, spare-matter entanglement-first gates and repeated
 calibration. A gate on a future-discarded known photon is a different
 workload. The $9/16$ bounds concern one corrected flag with arbitrary
 finite photon helper or all terminal unitary-feedback flags in four
-photon dimensions; the $3/5$ total-filter bound concerns that fixed
-four-mode terminal-only model. They do not prove a
-best-ordinary physical rate, and the scalar break-even curves do not
+photon dimensions with a fixed middle unitary. Allowing arbitrary
+middle photon instruments changes the latter optimum to
+$3/(3+\sqrt5)$ for unitary spin feedback. The weaker $3/5$ bound
+also permits terminal spin filters after those middle photon records.
+These bounds exclude middle spin filtering and pre-contact node
+encodings. They do not prove a best-ordinary physical rate, and
+the scalar break-even curves do not
 establish a practical advantage.
 
 
@@ -3199,8 +3415,15 @@ terminal product-effect/compression budgets, coherent-return occupation
 and rational scalar-ledger cases. Its imported
 [dual component](../checks/architecture/retained_photon_dual.py)
 checks the formal all-phase matrices, trace polynomial and balanced
-attainment without an optimizer. These finite/formal algebra checks
-support the general analytic proofs; they do not enumerate arbitrary
+attainment without an optimizer. The imported
+[middle-instrument component](../checks/architecture/retained_photon_middle.py)
+checks the exact $\mathbb Q(\sqrt5,i)$ Gram construction, positive
+effects, midpoint probabilities, all 64 corrected channel matrix
+units and the all-angle trace-cost polynomial ingredients. Positive
+$Q_j$ supply the square-root existence; no expanded radical Kraus
+entries or formalized pinching/minimization proof are claimed.
+These finite/formal algebra checks support the general analytic
+proofs; they do not enumerate arbitrary
 controller instruments, establish the optical ports, reconstruct the
 physical meter/loss channel or verify a hardware rate. This retained-
 photon comparison has not been formalized in Lean.

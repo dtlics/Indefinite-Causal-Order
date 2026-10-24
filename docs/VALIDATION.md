@@ -112,8 +112,11 @@ loss-ledger guards. An exact formal-phase dual checks the positive
 polynomial and balanced Schur-complement attainment without a numerical
 optimizer. Its analytic upper bounds distinguish a single
 corrected flag with arbitrary photonic memory from the total terminal
-instrument with four preserved modes. Intermediate instruments, spin
-encodings before contacts, physical detector channels and an optimal ordinary rate
+instrument with four preserved modes. A further exact certificate checks
+the four-mode intermediate photon instrument's positive effects, complete
+Kraus budget, all input matrix units and all-angle trace-cost polynomials.
+Its pinching/optimization proof remains analytic. Spin filters before or between
+contacts, spin encodings before contacts, physical detector channels and an optimal ordinary rate
 are outside those bounds. Finite replay does not certify optical ports,
 a measured loss model, novelty or a hardware advantage.
 A separate outward interval certificate integrates the full declared
