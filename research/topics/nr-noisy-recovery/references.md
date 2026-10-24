@@ -125,6 +125,12 @@ access check, not a new security proof or a physical fresh-coupler claim.
 
 ## Recovery, inversion, and verification
 
+The [passive-qubit transfer component](communication.md#nr-r09-passive-qubit-transfer)
+uses [Diekmann et al., PRX Quantum **7**, 043013 (2026), arXiv:2605.12018v3](https://arxiv.org/html/2605.12018v3),
+Eqs. (1)–(4), (12), (16) and footnote 1. Its endpoint and separate
+fresh-channel filter arguments are analytic deductions, with no
+new passive-transfer, parity-check or hardware-priority claim.
+
 The [natural-exchange screen](backaction.md#nr-r19-natural-exchange) uses
 [Scazza et al., corrected arXiv:1403.4761v3](https://arxiv.org/html/1403.4761v3),
 [Widera et al., arXiv:cond-mat/0505492v2](https://arxiv.org/html/cond-mat/0505492v2)

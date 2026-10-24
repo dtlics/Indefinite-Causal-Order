@@ -192,6 +192,9 @@ global decoding before discard remains distinct. The same owner gives
 full calibrated bosonic noise compilers. NR-R09 separates those storage
 comparisons from unknown-loss inference and tests the complete passive
 optical transfer matrix and its directional loss records.
+Its [single-rail transfer component](communication.md#nr-r09-passive-qubit-transfer)
+also retains vacuum coherence, the giant-atom field memory and the
+separate fresh-channel terminal-filter boundary.
 NR-R06 also gives a passive two-photon ordinary estimator for the specified
 phase-invariant unitary reordering fidelity, with dimension-independent
 variance and explicit source/readout costs. Its noisy-channel statistic

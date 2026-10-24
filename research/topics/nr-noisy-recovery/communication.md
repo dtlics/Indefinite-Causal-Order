@@ -53,6 +53,131 @@ Thus the two channels are related by receiver-local postprocessing in both direc
 
 The conclusion concerns this vacuum extension and fixed input control. It is not a statement about every rectangular erasure-switch definition, quantum-correlated losses, unknown-parameter estimation, or arbitrary encoding into the control. In particular, preparing the forward simulation's flag depends on $a,b$; it is not a parameter-independent simulator of an unknown loss family. Other erasure conventions must be checked from their complete channel, as illustrated by the distinct flag formulas in [Caleffi, Simonov and Cacciapuoti](https://arxiv.org/abs/1912.08575).
 
+<a id="nr-r09-passive-qubit-transfer"></a>
+
+### Passive qubit transfer needs the vacuum coherence and delayed field
+
+[Diekmann et al., PRX Quantum **7**, 043013 (2026), primary v3](https://arxiv.org/html/2605.12018v3)
+give a theory/design and numerical-optimization study of passive transfer
+between giant atoms. Their spatial coupling profiles shape emission for
+matched capture. Equation (16) optimizes peak receiver excitation
+$P=|c_2(T)|^2$, with about 87% for two coupling legs per atom and
+over 99% around ten or more per atom under ideal chirality; realizing
+directionality can require extra legs.
+These are model predictions. Footnote 1 notes receiver reemission and an
+additional fast $\Lambda$-system storage pulse. The source supplies no
+coherent order port. Its own matched passive geometry is the first
+ordinary comparator, including chirality, propagation and storage costs.
+
+The complete unknown-qubit endpoint follows directly from its
+number-conserving rotating-wave Hamiltonian. Prepare receiver D in its
+ground state and field E in vacuum; S carries an arbitrary input,
+possibly entangled with a passive R. The zero-excitation state is fixed,
+and the one-excitation solution gives, with D written first,
+
+$$
+|0\rangle_S\mapsto|0\rangle_D|v\rangle_{SE},\qquad
+|1\rangle_S\mapsto h|1\rangle_D|v\rangle_{SE}
+ +\sqrt{1-|h|^2}|0\rangle_D|j_T\rangle_{SE},
+\quad h=e^{-i\omega_qT}c_2(T),\quad\langle v|j_T\rangle=0.
+\tag{ST1}
+$$
+
+Here $|j_T\rangle$ contains every leftover sender/field excitation.
+Tracing SE produces amplitude damping with
+$K_0=\operatorname{diag}(1,h)$ and
+$K_1=\sqrt{1-|h|^2}|0\rangle\langle1|$. This is an equality on every
+S/R input. Relative to identity transfer its entanglement fidelity is
+$F_e=|1+h|^2/4$ and uniform pure-qubit average fidelity is
+$F_{\rm av}=(3+|h|^2+2\operatorname{Re}h)/6$.
+An available calibrated phase correction gives
+$F_e=(1+\sqrt P)^2/4$ and $F_{\rm av}=(3+P+2\sqrt P)/6$.
+Thus excitation probability is neither of those fidelities nor an
+input-independent exact-unitary success weight. At $P=1$, the corrected
+ordinary channel is already perfect on all references in this ideal model.
+
+Receiver excitation readout has Kraus $h|1\rangle\langle1|$ and deletes
+the logical zero. Even resolved no-jump output gives
+$\operatorname{diag}(1,h)$, not a scalar unitary for $0<|h|<1$.
+For $|h|<1$ with the jump unobserved, no receiver-only postfilter has a
+nonzero exact qubit-isometry branch: rank-one Choi support would force every accepted
+filter F to annihilate the rank-one jump, hence $F|0\rangle=0$, also
+killing the no-jump ground input. Monitoring other outputs, encoding and
+entanglement-first delivery are different ports and protocols whose
+preparation, records, attempts and storage must be priced.
+
+Eliminating the field from the source Hamiltonian also retains its memory:
+
+$$
+\dot c_\alpha(t)=-\sum_\beta\int_0^t
+ \mathcal K_{\alpha\beta}(t-s)c_\beta(s)\,ds,\qquad
+\mathcal K_{\alpha\beta}(u)=\int dk\,
+ g_\alpha(k)g_\beta(k)^*e^{-i[\omega(k)-\omega_q]u}.
+\tag{ST2}
+$$
+
+Use the actual waveguide cutoff/envelope convention. The spatial phases
+in $g_\alpha(k)=\sum_jg_j^{(\alpha)}e^{ikx_j^{(\alpha)}}$ carry the
+leg delays; the shared field persists between contacts. A complete
+transfer marginal (ST1) does not supply independently reset channels
+for separate legs, atoms or time windows. With $g_1$ engineered to emit a
+time-reversal-symmetric pulse, the matched receiver $g_2(k)=e^{ikd}g_1(k)^*$ already
+enables the source's ideal direct transfer. A new order proposal needs
+an actual controlled Hamiltonian,
+field/record ports and common capture/storage time before comparison
+with the same passive design and any available ordinary pulse controls.
+
+**A separate fresh-channel repair also fails for the plain switch.**
+This next model is not the delayed network (ST2). To avoid confusing
+notation with the survival probabilities in (1), use amplitudes
+$0<x,y<1$. Let two independent amplitude-damping channels have
+$A_0=\operatorname{diag}(1,x)$,
+$A_1=\sqrt{1-x^2}L$, $B_0=\operatorname{diag}(1,y)$,
+$B_1=\sqrt{1-y^2}L$, $L=|0\rangle\langle1|$.
+Use one call each with an independent fixed $|+\rangle_C$, no input
+encoding or intermediate target operation, and inaccessible fresh baths.
+The complete pre-readout Kraus operators are
+
+$$
+N_0=|+\rangle\otimes D_{xy},\quad
+N_A=\frac{\sqrt{1-x^2}}{\sqrt2}(|0\rangle+y|1\rangle)\otimes L,
+\quad
+N_B=\frac{\sqrt{1-y^2}}{\sqrt2}(x|0\rangle+|1\rangle)\otimes L,
+\quad D_{xy}=\operatorname{diag}(1,xy).
+\tag{ST3}
+$$
+
+The double jump vanishes. Helper X readout gives
+$\Phi_+(\rho)=D_{xy}\rho D_{xy}^\dagger+\gamma_+\rho_{11}|0\rangle\langle0|$
+and $\Phi_-(\rho)=\gamma_-\rho_{11}|0\rangle\langle0|$, with
+$\gamma_\pm=(1\pm x)(1\pm y)(1-xy)/2$.
+Their sum is ordinary serial amplitude damping with amplitude xy.
+The minus flag is a reset whose probability depends on the input;
+plus retains unobserved jumps. On all references replace $\rho_{11}$
+by $\langle1|\rho_{SR}|1\rangle$ and tensor D with $I_R$.
+
+The obstruction covers every terminal SC filter, beyond this readout.
+For an accepted exact rank-two isometry J, Choi rank one forces each
+terminal Kraus F to satisfy $FN_\mu\propto J$.
+The rank-one $N_A,N_B$ must therefore be killed. Their helper vectors
+$(1,y)$ and $(x,1)$ span C since $1-xy>0$; hence F kills
+$C\otimes|0\rangle$, including $N_0|0\rangle$.
+No accepted full-rank branch can remain. Independent output ancillas,
+multiple accepted outcomes and passive references do not change this
+argument. Input encoding, bath monitoring, extra calls, approximate
+recovery and the lossless boundary are outside this statement.
+
+The existing [ordinary parity-check mechanism](architecture-baselines.md#nr-r06)
+provides a different conditional interface: controlled Z before and
+after ordinary A then B isolates $D_{xy}$ because it commutes with Z
+and every nonzero jump anticommutes. If the calibrated physical filter
+$\operatorname{diag}(xy,1)$ is also supplied, their product is $xyI$,
+an exact unknown-qubit branch of weight $x^2y^2$. This uses input
+encoding and needs actual coherent helper transport, controlled gates,
+filtering, readout and storage; those ports do not follow from a passive
+link or order router. It is a baseline application, not a demonstrated
+giant-atom protocol or a converse for all encoded switch strategies.
+
 ### Unknown loss calibration differs from calibrated storage
 
 The [calibrated bosonic compilers](architecture-baselines.md#nr-r06-bosonic-compilers)

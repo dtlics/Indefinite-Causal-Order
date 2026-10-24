@@ -954,6 +954,17 @@ fields, local probes and nondestructive monitors cannot be omitted when
 physically available. Holding total loss fixed while measuring every
 accessible complex transfer amplitude provides a falsifiable first test.
 
+The [passive-qubit transfer component](communication.md#nr-r09-passive-qubit-transfer)
+separately fixes the single-rail unknown-input endpoint. Its giant-atom
+source screen derives the complete receiver channel and retains the
+shared delayed field, rather than replacing individual contacts by
+independent noise slots. A separate fresh-channel analysis rules out an
+exact heralded qubit branch from terminal filtering of the plain
+two-amplitude-damping switch. Input encodings and supplied coherent
+checks change that class. The next physical test needs an actual
+controlled transfer schedule and common storage time, compared with the
+same optimized ordinary geometry and its available pulse controls.
+
 ## Cooling and reset-based state preparation
 
 Complete thermal resets are a useful retained-state benchmark, but

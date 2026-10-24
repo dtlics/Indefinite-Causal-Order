@@ -306,6 +306,13 @@ Fourier/Gaussian integrations remain analytic. The local-output terminal
 noise proof permits globally interacting CPTP preprocessing; finite
 replacement cross-map identities and sharp SWAP witnesses are replayed,
 while its universal norm and adaptive-use arguments are analytic.
+The single-rail transfer component derives its reference-complete
+amplitude-damping endpoint, fidelity conversion and delayed-field kernel
+analytically. Its separate fresh-channel terminal-filter obstruction is
+a Kraus/Choi-rank proof; the existing replays do not certify that general
+quantifier or a giant-atom device. No encoded-strategy, approximate-recovery
+or measured transfer-rate converse is claimed.
+
 The full passive-vacuum transfer and directional loss-record arguments
 are analytic family-level statements under their specified optical model.
 The passive two-photon reordering comparison has finite exact seed,
