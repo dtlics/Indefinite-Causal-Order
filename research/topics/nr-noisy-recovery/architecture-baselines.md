@@ -27,6 +27,11 @@ They distinguish polynomial device calls from exponential classical
 processing and state the extra short-exposure or known-control ports
 needed for polynomial total resources.
 
+The [depolarizing-noise search component](methods/noisy-search.md)
+gives a full ordinary controlled-unitary compiler, the complete
+measurement-timing identity and a counted-restart comparison.
+Its known-control, calibration and verification ports remain explicit.
+
 ### Physical hypothesis
 
 In cycle $t$, module-labelled faults realize known unitaries
@@ -6263,6 +6268,57 @@ syndrome PVM also leaves its channel and switch signal unchanged while
 potentially changing a decoder's action. Consequently zero switch
 incompatibility alone cannot certify logical information preservation
 or agreement of syndrome dictionaries.
+
+<a id="nr-r08-central-involution"></a>
+
+The ambiguity can extend to the **complete recorded SWITCH instrument**.
+Write the two instruments' Kraus operators as $A_{a\mu},B_{b\nu}$, where
+$a,b$ are accessible records and $\mu,\nu$ may be hidden. Let $V$ be a
+unitary commuting with every complete Kraus operator, and define faults
+$A'_{a\mu}=VA_{a\mu}$ and $B'_{b\nu}=V^\dagger B_{b\nu}$. For every
+record pair,
+
+$$
+B'_{b\nu}A'_{a\mu}=B_{b\nu}A_{a\mu},\qquad
+A'_{a\mu}B'_{b\nu}=A_{a\mu}B_{b\nu}.
+$$
+
+Therefore each controlled Kraus operator
+$|0\rangle\!\langle0|\otimes BA+|1\rangle\!\langle1|\otimes AB$
+is identical in the good and faulty models. The standard two-slot
+recorded SWITCH gives the same retained data, coherent control and all
+records, including on reference-entangled inputs, before any helper
+readout. The same post-call fault on both instruments is included when
+$V=Z=Z^\dagger$ and $Z^2=I$. Unrelated noisy Kraus wrappers are allowed
+when the resulting complete Kraus operators commute with $V$; reduced
+channel covariance alone is insufficient. For example, $A=I,B=X,V=Z$
+are covariant channels, but the faulty controlled words are $-X,X$
+instead of $X,X$, flipping a plus control to minus.
+
+A two-qubit logical/gauge example uses
+$P=I_L\otimes Z_G$, $Q=I_L\otimes X_G$ and
+$P_s=(I+sP)/2$, $Q_t=(I+tQ)/2$. The gauge checks anticommute, while the
+logical fault $Z_L\otimes I_G$ commutes with both. The instruments
+$(P_s,Q_t)$ and $((Z_L\otimes I_G)P_s,(Z_L\otimes I_G)Q_t)$ thus have
+identical recorded SWITCH outputs. Nevertheless, one individual faulty
+check applies a harmful logical $Z_L$. An ordinary fresh calibration
+prepares known logical $|+\rangle_L$, makes one $P$-instrument call and
+reads logical $X_L$: the outcomes are deterministically plus versus
+minus, irrespective of the gauge record. This comparator charges trusted
+logical preparation and readout plus one instrument call; it uses no
+retained reference. The two-qubit subsystem is an algebraic example,
+not a demonstrated fault-tolerant device.
+
+The production endpoint here is an individual call, an odd-use block,
+or unpaired use. Balanced faulty A/B production words cancel the same
+fault and are correctly benign on that endpoint. This is a failure of
+the specified paired diagnostic to identify logical correctness, not
+a bound against all SWITCH-assisted strategies: unpaired access or
+noncentral wrappers can detect the fault. The additive
+[exact central-fault guard](checks/architecture/verify_measurements.py)
+checks the complete coherent operators, inverse noninvolutory faults,
+unrelated wrappers, the covariance counterexample and a four-qubit
+Bacon–Shor known-state probe using exact arithmetic.
 
 <a id="nr-r08-memory-algebra"></a>
 

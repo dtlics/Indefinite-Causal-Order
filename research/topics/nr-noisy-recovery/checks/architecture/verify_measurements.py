@@ -555,6 +555,175 @@ def verify_photonic_pbs():
             "scope": "Exact normalized two-photon eight-mode PBS/path model and uniform post-PBS loss flags; no hardware source/dark/efficiency/latency certificate."}
 
 
+def verify_central_instrument_fault():
+    """Exact recorded-Kraus ambiguity, not an all-strategy lower bound.
+
+    Inverse central post-call unitaries cancel in both coherent words.
+    Complete Kraus operators, including the unrelated wrappers below, must
+    commute with the unitary; channel covariance alone is insufficient.
+    """
+    def word(labels):
+        matrices = {"I": eye(2), "X": [[F(0), F(1)], [F(1), F(0)]],
+                    "Z": [[F(1), F(0)], [F(0), F(-1)]]}
+        result = [[F(1)]]
+        for label in labels:
+            result = kron(result, matrices[label])
+        return result
+
+    def complete(ks):
+        result = zero(len(ks[0]))
+        for k in ks:
+            result = add(result, mul(transpose(k), k))
+        return result
+
+    def expect(v, op):
+        return mul(mul(transpose(v), op), v)[0][0]
+
+    def output_expect(v, ks, op):
+        return sum((expect(mul(k, v), op) for k in ks), F(0))
+
+    def complex_matrix(a):
+        return [[gaussian(x) for x in row] for row in a]
+
+    def complex_tensor(a, b):
+        return [[gproduct(a[i][j], b[k][ell])
+                 for j in range(len(a[0])) for ell in range(len(b[0]))]
+                for i in range(len(a)) for k in range(len(b))]
+
+    def complex_complete(ks):
+        result = gzeros(len(ks[0][0]), len(ks[0][0]))
+        for k in ks:
+            term = gmul(gadjoint(k), k)
+            result = [[gadd(x, y) for x, y in zip(row, other)]
+                      for row, other in zip(result, term)]
+        return result
+
+    def complex_word(a, b):
+        ba, ab = gmul(b, a), gmul(a, b)
+        d = len(a)
+        result = gzeros(2*d, 2*d)
+        for i, j in product(range(d), repeat=2):
+            result[i][j], result[d+i][d+j] = ba[i][j], ab[i][j]
+        return result
+
+    zlog, xlog = word("ZI"), word("XI")
+    p, q = word("IZ"), word("IX")
+    assert mul(p, q) == scale(mul(q, p), -1)
+    ps, qs = binary_pvm(p), binary_pvm(q)
+    re = [[F(3, 5), -F(4, 5)], [F(4, 5), F(3, 5)]]
+    rf = [[F(5, 13), -F(12, 13)], [F(12, 13), F(5, 13)]]
+    assert mul(transpose(re), re) == mul(transpose(rf), rf) == eye(2)
+    wrapped_e, wrapped_f = [], []
+    for j in range(2):
+        er = kron(eye(2), re if j == 0 else transpose(re))
+        fr = kron(eye(2), rf if j == 0 else transpose(rf))
+        wrapped_e.extend([scale(ps[j], F(3, 5)),
+                          scale(mul(er, ps[j]), F(4, 5))])
+        wrapped_f.extend([scale(qs[j], F(5, 13)),
+                          scale(mul(fr, qs[j]), F(12, 13))])
+
+    families = ((ps, qs), (wrapped_e, wrapped_f))
+    coherent_kraus = operator_entries = ordinary_probes = 0
+    for ae, bf in families:
+        assert complete(ae) == complete(bf) == eye(4)
+        assert all(mul(zlog, k) == mul(k, zlog) for k in ae+bf)
+        switch = []
+        for a, b in product(ae, bf):
+            good = block_diagonal(mul(b, a), mul(a, b))
+            ap, bp = mul(zlog, a), mul(zlog, b)
+            assert good == block_diagonal(mul(bp, ap), mul(ap, bp))
+            switch.append(good)
+            coherent_kraus += 1
+            operator_entries += len(good)**2
+        assert complete(switch) == eye(8)
+        v = [[F(1, 2)] for _ in range(4)]
+        assert expect(v, eye(4)) == 1
+        assert output_expect(v, ae, xlog) == 1
+        assert output_expect(v, [mul(zlog, a) for a in ae], xlog) == -1
+        ordinary_probes += 1
+
+    # Neither phase unitary nor real rotation is an involution. The F fault
+    # is V^dagger, not the same V used in E. All record-wise equalities are
+    # tested as complex matrices before any helper measurement.
+    phase = [[GONE, GZERO], [GZERO, gaussian(0, 1)]]
+    rotations = (phase, complex_matrix(re))
+    general_kraus = 0
+    for logical_v in rotations:
+        assert gmul(gadjoint(logical_v), logical_v) == geye(2)
+        assert gmul(logical_v, logical_v) != geye(2)
+        central_v = complex_tensor(logical_v, geye(2))
+        inverse_v = gadjoint(central_v)
+        for ae, bf in families:
+            aes, bfs = list(map(complex_matrix, ae)), list(map(complex_matrix, bf))
+            aps = [gmul(central_v, a) for a in aes]
+            bps = [gmul(inverse_v, b) for b in bfs]
+            assert complex_complete(aps) == complex_complete(bps) == geye(4)
+            switch = []
+            for a, b, ap, bp in ((a, b, aps[i], bps[j])
+                                 for i, a in enumerate(aes)
+                                 for j, b in enumerate(bfs)):
+                assert gmul(central_v, a) == gmul(a, central_v)
+                assert gmul(central_v, b) == gmul(b, central_v)
+                good = complex_word(a, b)
+                assert good == complex_word(ap, bp)
+                switch.append(good)
+                coherent_kraus += 1
+                general_kraus += 1
+                operator_entries += len(good)**2
+            assert complex_complete(switch) == geye(8)
+    a, b = complex_matrix(ps[0]), complex_matrix(qs[0])
+    central_phase = complex_tensor(phase, geye(2))
+    assert complex_word(a, b) != complex_word(gmul(central_phase, a),
+                                             gmul(central_phase, b))
+
+    # Four-qubit Bacon--Shor code: a physically interpretable noncommuting
+    # gauge-check example with explicit trusted known-state calibration.
+    sx, sz = word("XXXX"), word("ZZZZ")
+    p4, q4 = word("XXII"), word("ZIZI")
+    zl4, xl4 = word("ZZII"), word("XIXI")
+    assert mul(p4, q4) == scale(mul(q4, p4), -1)
+    assert mul(zl4, xl4) == scale(mul(xl4, zl4), -1)
+    for op in (p4, q4):
+        for central in (zl4, xl4, sx, sz):
+            assert mul(op, central) == mul(central, op)
+    v4 = [[F(1, 2) if i in (0, 5, 10, 15) else F(0)] for i in range(16)]
+    assert expect(v4, eye(16)) == 1
+    assert mul(sx, v4) == mul(sz, v4) == mul(xl4, v4) == v4
+    p4s, q4s = binary_pvm(p4), binary_pvm(q4)
+    for a, b in product(p4s, q4s):
+        good = block_diagonal(mul(b, a), mul(a, b))
+        ap, bp = mul(zl4, a), mul(zl4, b)
+        assert good == block_diagonal(mul(bp, ap), mul(ap, bp))
+        coherent_kraus += 1
+        operator_entries += len(good)**2
+    assert output_expect(v4, p4s, xl4) == 1
+    assert output_expect(v4, [mul(zl4, a) for a in p4s], xl4) == -1
+    ordinary_probes += 1
+
+    # Covariance of channels under Ad_Z permits odd Kraus operators: the
+    # controlled relative sign then distinguishes good and faulty calls.
+    z, x = word("Z"), word("X")
+    assert mul(z, x) == scale(mul(x, z), -1)
+    for i, j in product(range(2), repeat=2):
+        unit = zero(2)
+        unit[i][j] = F(1)
+        assert mul(mul(x, mul(mul(z, unit), z)), x) == mul(mul(z, mul(mul(x, unit), x)), z)
+    good_minus = scale(add(mul(x, eye(2)), scale(mul(eye(2), x), -1)), F(1, 2))
+    bad_minus = scale(add(mul(mul(z, x), z),
+                          scale(mul(z, mul(z, x)), -1)), F(1, 2))
+    assert good_minus == zero(2) and bad_minus == scale(x, -1)
+    assert mul(transpose(bad_minus), bad_minus) == eye(2)
+    return {"status": "passed", "full_recorded_coherent_kraus": coherent_kraus,
+            "full_recorded_operator_entries": operator_entries,
+            "noninvolutory_inverse_unitary_kraus": general_kraus,
+            "unrelated_normalized_wrapper_families": len(families),
+            "ordinary_one_call_probe_families": ordinary_probes,
+            "bacon_shor_record_pairs": 4,
+            "channel_covariance_matrix_units": 4,
+            "same_noninvolutory_factor_counterexample": True,
+            "scope": "Finite exact recorded coherent instruments and central inverse faults; no all-SWITCH-strategy, unknown-data certification, or hardware guarantee."}
+
+
 def main():
     from material_pointer_clock import verify_material_pointer_clock
     from mechanical_pointer_strength import verify_mechanical_pointer_strength
@@ -693,6 +862,7 @@ def main():
         "recorded_parity_gate_ordinary_parity_measurements": "3",
         "shared_frequency_examples": shared_frequency_rows,
         "photonic_local_measurement": verify_photonic_pbs(),
+        "central_instrument_fault": verify_central_instrument_fault(),
         "material_pointer_clock": verify_material_pointer_clock(),
         "mechanical_pointer_strength": verify_mechanical_pointer_strength(),
         "mechanical_pointer_clock": verify_mechanical_pointer_clock(),

@@ -20,6 +20,17 @@ The supplied state is already maximally entangled. The task restores a **specifi
 
 A four-call ordinary filter is **not excluded** by a mean-two-query budget: it can be run on occasional rounds and combined with rejection or other strategies. The cost-sensitive converse must cover such mixtures and adaptive continuations. Fixed call counts explain the constructions' resources; they do not by themselves prove the new comparison. Ordinary postselection and coherent routing must likewise remain allowed.
 
+## Depolarizing-noise search and restart accounting
+
+The [search proof component](methods/noisy-search.md) owns the full
+ordinary compiler, measurement-timing comparison and counted restarts.
+
+| Primary work | Closest connection | Scope to preserve |
+| --- | --- | --- |
+| [Srivastava et al., *Using Quantum Switches to Mitigate Noise in Grover's Search Algorithm*, arXiv:2401.05866v2, May 2025](https://arxiv.org/pdf/2401.05866v2), Sections IV.1–IV.2 and Eqs. (57)–(58) | Balanced depolarizing switches and immediate versus deferred postselection. | The canonical comparison treats the stated fresh controls, untouched old controls and terminal product-all-plus readout. Conditional success is distinct from all-attempt cost. |
+| [Vrana, Reeb, Reitzner and Wolf, *Fault-ignorant Quantum Search*](https://arxiv.org/pdf/1307.0771), Sections II.C–II.D | Noisy Grover restarts, explicit verification and noise-ignorant schedules. | Reliable candidate checking and its query cost are part of the interface. Their restricted lower bounds are not imported as all-SWITCH lower bounds. |
+| [Rosmanis, *Quantum Search with Noisy Oracle*](https://arxiv.org/abs/2309.14944) | Strong query bounds for depolarizing/dephasing noise, including an error-flag setting. | The oracle/register and verification ports differ between models; this is context, not a native-router or unrestricted physical-noise theorem. |
+
 ## Recovery, inversion, and verification
 
 - [Quintino et al., *Reversing Unknown Quantum Transformations*](https://arxiv.org/abs/1810.06944), PRL **123**, 210502 (2019), gives heralded physical inversion of an unknown unitary and analyzes adaptive strategies and indefinite-order advantages. [Dong et al., *Success-or-Draw*](https://arxiv.org/abs/2011.01055), PRL **126**, 150504 (2021), develops retries whose draw branch preserves the input. Heralding alone does not give the present noisy filter that preservation property.

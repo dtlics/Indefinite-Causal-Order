@@ -1739,6 +1739,315 @@ def verify_jc_energy_baseline():
                 scope='Finite J3/J4/J6/J8/J10--J12/J17 guards; all-m, finite-N strictness, Poisson asymptotics, native selector and physical resource comparisons remain analytic. No infinite-Fock truncation or hardware-performance certificate.')
 
 
+def replay_noisy_search_filters():
+    """Fresh-control depolarizing SWITCH: raw Kraus and full-record guards.
+
+    Rational CP weights stay outside Gaussian-rational Kraus directions.
+    The raw construction uses I and every Pauli, without the proposed
+    closed-form flag maps. Complete target matrix units also determine
+    the map tensored with any passive reference by complex linearity.
+    """
+    def matrix_unit(d, u, v):
+        out = zeros(d, d)
+        out[u][v] = ONE
+        return out
+
+    def depolarizing(x, a, b):
+        d = len(x)
+        out = scaled(x, a)
+        diagonal = times(trace(x), b/d)
+        for j in range(d):
+            out[j][j] = add(out[j][j], diagonal)
+        return out
+
+    def raw_block_coefficients(n, s, second_s=None):
+        d = 2**n
+        if second_s is None:
+            second_s = s
+        family = [(s, identity(d))]
+        family += [((1-s)/(d*d), p) for p in pauli_basis(n)]
+        second_family = [(second_s, identity(d))]
+        second_family += [((1-second_s)/(d*d), p) for p in pauli_basis(n)]
+        out = {(a, b, u, v): zeros(d, d)
+               for a, b, u, v in product(range(2), range(2), range(d), range(d))}
+        for wi, fi in family:
+            for wj, fj in second_family:
+                if not wi or not wj:
+                    continue
+                orders = (matmul(fj, fi), matmul(fi, fj))
+                for a, b, u, v in product(range(2), range(2), range(d), range(d)):
+                    z = out[a, b, u, v]
+                    for p in range(d):
+                        left = orders[a][p][u]
+                        if left == ZERO:
+                            continue
+                        for q in range(d):
+                            right = orders[b][q][v]
+                            if right != ZERO:
+                                z[p][q] = add(z[p][q],
+                                    times(multiply(left, conjugate(right)), wi*wj/2))
+        return out
+
+    def apply_super(x, coeff, d, r=1):
+        out = zeros(d*r, d*r)
+        for u, v, ru, rv in product(range(d), range(d), range(r), range(r)):
+            value = x[u*r+ru][v*r+rv]
+            if value == ZERO:
+                continue
+            y = coeff[u, v]
+            for p, q in product(range(d), repeat=2):
+                if y[p][q] != ZERO:
+                    out[p*r+ru][q*r+rv] = add(out[p*r+ru][q*r+rv],
+                                             multiply(value, y[p][q]))
+        return out
+
+    def flag_coefficients(raw, d, flag):
+        out = {(u, v): zeros(d, d) for u, v in product(range(d), repeat=2)}
+        for a, b, u, v in product(range(2), range(2), range(d), range(d)):
+            out[u, v] = plus(out[u, v],
+                scaled(raw[a, b, u, v], F((-1)**(flag*(a+b)), 2)))
+        return out
+
+    def grover(d):
+        # (2|uniform><uniform|-I)(I-2|0><0|), all entries rational.
+        diffusion = [[gaussian(F(2, d)-int(i == j)) for j in range(d)]
+                     for i in range(d)]
+        oracle = identity(d)
+        oracle[0][0] = gaussian(-1)
+        g = matmul(diffusion, oracle)
+        require(matmul(adjoint(g), g) == identity(d), "Grover fixture is not unitary.")
+        return g
+
+    def raw_ordinary_pauli_check(n, s):
+        """Actual known controlled-P check of the ordinary two-slot channel.
+
+        The already raw-Kraus checked ordinary composition is D_(s^2).
+        Its Pauli law has q_I=s^2+(1-s^2)/d^2, q_other=(1-s^2)/d^2.
+        For each error/check pair the pre/post controlled-P circuit has
+        helper branches E and P E P. Compute both readout Kraus directions,
+        then coarsen only the minus record by an independent known coin.
+        """
+        d = 2**n
+        ps = pauli_basis(n)
+        require(ps[0] == identity(d), "Ordinary Pauli identity label moved.")
+        p = 1-s*s
+        choi = [zeros(d*d, d*d), zeros(d*d, d*d)]
+        relations = 0
+        for index, error in enumerate(ps):
+            q = p/(d*d)+(s*s if index == 0 else 0)
+            anticommutes = 0
+            for check in ps:
+                checked = matmul(matmul(check, error), check)
+                require(checked == error or checked == scaled(error, -1),
+                        "Controlled-P circuit does not give a Pauli commutation sign.")
+                anticommutes += int(checked == scaled(error, -1))
+                for flag in (0, 1):
+                    k = scaled(plus(error, scaled(checked, (-1)**flag)), F(1, 2))
+                    add_outer(choi[flag], vectorize(k), q/(d*d))
+                relations += 1
+            require(anticommutes == (0 if index == 0 else d*d//2),
+                    "Uniform known Pauli check has wrong anticommutation count.")
+        thinning = (1-s)/(1+s)
+        thinned = [plus(choi[0], scaled(choi[1], 1-thinning)),
+                   scaled(choi[1], thinning)]
+        require(0 <= thinning <= 1 and (s != 1 or thinning == 0),
+                "Ordinary record-thinning endpoint failed.")
+        return thinned, relations
+
+    def raw_existing_control_compiler(n, s_a, s_b):
+        """Known controlled-P gates on existing arbitrary order-control C.
+
+        Draw P from (1-lambda)delta_I+lambda Uniform(Paulis) before the
+        two ordinary noise calls. No extra helper or measurement is used.
+        Compute actual target Kraus products in both control branches,
+        rather than inferring a phase from the desired switch formula.
+        """
+        d = 2**n
+        ps = pauli_basis(n)
+        t = s_a*s_b
+        lam = (1-s_a)*(1-s_b)/(1-t) if t != 1 else F(0)
+        require(0 <= lam <= 1, "Full-control Pauli compiler has an invalid coin.")
+        out = {(a, b, u, v): zeros(d, d)
+               for a, b, u, v in product(range(2), range(2), range(d), range(d))}
+        for index, error in enumerate(ps):
+            error_weight = (1-t)/(d*d)+(t if index == 0 else 0)
+            for check_index, check in enumerate(ps):
+                check_weight = lam/(d*d)+(1-lam if check_index == 0 else 0)
+                if not error_weight or not check_weight:
+                    continue
+                orders = (error, matmul(matmul(check, error), check))
+                weight = error_weight*check_weight
+                for a, b, u, v in product(range(2), range(2), range(d), range(d)):
+                    z = out[a, b, u, v]
+                    for p in range(d):
+                        left = orders[a][p][u]
+                        if left == ZERO:
+                            continue
+                        for q in range(d):
+                            right = orders[b][q][v]
+                            if right != ZERO:
+                                z[p][q] = add(z[p][q],
+                                    times(multiply(left, conjugate(right)), weight))
+        return out
+
+    single_entries = full_flag_entries = all_plus_entries = ordinary_entries = 0
+    x_classical_entries = 0
+    ordinary_check_relations = ordinary_flag_entries = 0
+    full_control_compiler_entries = unequal_control_compiler_entries = 0
+    reference_entries = geometric_guards = 0
+    for n, s in product((1, 2), (F(0), F(1, 2), F(3, 5), F(1))):
+        d = 2**n
+        raw = raw_block_coefficients(n, s)
+        flags = [flag_coefficients(raw, d, z) for z in (0, 1)]
+        ordinary_flags, check_relations = raw_ordinary_pauli_check(n, s)
+        ordinary_check_relations += check_relations
+        ordinary_full_control = raw_existing_control_compiler(n, s, s)
+        for key, z in raw.items():
+            require(scaled(z, 2) == ordinary_full_control[key],
+                    "Existing-control randomized Pauli circuit differs from raw full SWITCH.")
+            full_control_compiler_entries += d*d
+        a = s*s+(1-s)**2/(2*d*d)
+        b = (1-s*s)/2+s*(1-s)
+        am, bm = -(1-s)**2/(2*d*d), (1-s)**2/2
+        w = a+b
+        require(w == 1-(1-s)**2*(1-F(1, d*d))/2,
+                "Noisy-search flag probability failed.")
+        for u, v in product(range(d), repeat=2):
+            x = matrix_unit(d, u, v)
+            require(raw[0, 0, u, v] == raw[1, 1, u, v]
+                    and raw[0, 1, u, v] == raw[1, 0, u, v],
+                    "Raw full control is not diagonal in its X basis.")
+            x_classical_entries += 2*d*d
+            require(flags[0][u, v] == depolarizing(x, a, b),
+                    "Raw plus Kraus map disagrees with closed form.")
+            require(flags[1][u, v] == depolarizing(x, am, bm),
+                    "Raw minus Kraus map disagrees with closed form.")
+            require(plus(flags[0][u, v], flags[1][u, v])
+                    == depolarizing(x, s*s, 1-s*s),
+                    "Forgetting the noise flag is not ordinary depolarization.")
+            for flag in (0, 1):
+                actual = [[ordinary_flags[flag][p+u*d][q+v*d]
+                           for q in range(d)] for p in range(d)]
+                require(actual == flags[flag][u, v],
+                        "One-helper ordinary Pauli check does not reproduce the full switch flag map.")
+                ordinary_flag_entries += d*d
+            single_entries += 3*d*d
+        # Full retained-control blocks versus the entire early-read flag
+        # instrument. The later operations touch target and fresh control only.
+        # D=4 uses one nontrivial noise point; D=2 also covers both endpoints.
+        if n == 2 and s != F(3, 5):
+            continue
+        g = grover(d)
+        raw_supers = {(a0, b0): {(u, v): raw[a0, b0, u, v]
+                      for u, v in product(range(d), repeat=2)}
+                      for a0, b0 in product(range(2), repeat=2)}
+        for r in (1, 2):
+            if r == 1:
+                fixtures = [matrix_unit(d, u, v) for u, v in product(range(d), repeat=2)]
+            elif n == 1 and s == F(3, 5):
+                # Complex entangled target/reference fixture, not a transpose
+                # convention inferred from a real maximally mixed input.
+                phi = [ONE, ZERO, ZERO, gaussian(F(3, 5), F(4, 5))]
+                bell = zeros(4, 4)
+                add_outer(bell, phi, F(1, 2))
+                fixtures = [bell]
+            else:
+                continue
+            local_g = tensor(g, identity(r))
+            for x in fixtures:
+                blocks, early = {(0, 0): x}, {0: x}
+                ideal = x
+                for k in range(1, 4):
+                    ideal = matmul(matmul(local_g, ideal), adjoint(local_g))
+                    next_blocks = {}
+                    for (i, j), z in blocks.items():
+                        z = matmul(matmul(local_g, z), adjoint(local_g))
+                        for a0, b0 in product(range(2), repeat=2):
+                            next_blocks[2*i+a0, 2*j+b0] = apply_super(
+                                z, raw_supers[a0, b0], d, r)
+                    blocks = next_blocks
+                    next_early = {}
+                    for old_flags, z in early.items():
+                        z = matmul(matmul(local_g, z), adjoint(local_g))
+                        for new_flag in (0, 1):
+                            next_early[2*old_flags+new_flag] = apply_super(z, flags[new_flag], d, r)
+                    early = next_early
+                    forgotten = zeros(d*r, d*r)
+                    for record in range(2**k):
+                        deferred = zeros(d*r, d*r)
+                        for (i, j), z in blocks.items():
+                            parity = (record & i).bit_count()+(record & j).bit_count()
+                            deferred = plus(deferred, scaled(z, F((-1)**parity, 2**k)))
+                        require(deferred == early[record],
+                                "Deferred and early full flag instruments disagree.")
+                        forgotten = plus(forgotten, deferred)
+                        if r == 1:
+                            full_flag_entries += (d*r)**2
+                        else:
+                            reference_entries += (d*r)**2
+                    # Omega_T tensored with identity on the passive reference.
+                    omega = zeros(d*r, d*r)
+                    for ru, rv in product(range(r), repeat=2):
+                        partial = ZERO
+                        for j in range(d):
+                            partial = add(partial, x[j*r+ru][j*r+rv])
+                        for j in range(d):
+                            omega[j*r+ru][j*r+rv] = times(partial, F(1, d))
+                    require(early[0] == plus(scaled(ideal, a**k),
+                                            scaled(omega, w**k-a**k)),
+                            "All-plus all-iteration coefficient identity failed.")
+                    require(forgotten == plus(scaled(ideal, s**(2*k)),
+                                              scaled(omega, 1-s**(2*k))),
+                            "Forgotten full flag instrument differs from ordinary search.")
+                    all_plus_entries += (d*r)**2
+                    ordinary_entries += (d*r)**2
+                    c = sum(w**j for j in range(k))
+                    require(c >= k*w**(k-1), "Early-abort query-cost bound failed.")
+                    require(w == 1 and c == k or
+                            (1-w)*c == 1-w**k, "Early-abort geometric cost failed.")
+                    require(b >= (1-s*s)/2 and a/w <= 1-(1-s*s)/2,
+                            "Uniform noisy-search contraction guard failed.")
+                    geometric_guards += 3
+    # Unequal independently weighted depolarizing slots; check arbitrary
+    # incoming control/target matrix units, not only a balanced fixed source.
+    for s_a, s_b in product((F(0), F(1, 2), F(1)), (F(0), F(3, 5), F(1))):
+        raw = raw_block_coefficients(1, s_a, s_b)
+        ordinary = raw_existing_control_compiler(1, s_a, s_b)
+        for key, z in raw.items():
+            require(scaled(z, 2) == ordinary[key],
+                    "Unequal-slot full-control randomized Pauli compiler failed.")
+            unequal_control_compiler_entries += 4
+    # Independently checked displayed-source discrepancy: arXiv:2401.05866v2,
+    # F_omega equations (57)--(58), product plus projection and fresh controls.
+    d, s = 16, F(4, 5)
+    t, q = s*s, (1-s)**2/(d*d)
+    aa, bb = 2*t+q, 1-t+2*s*(1-s)
+    f = aa/(aa+bb)
+    displayed2 = aa**2/(aa**2+bb*(1+q+2*s*(1-s)+3*t))
+    displayed3 = aa**3/(aa**3+bb*(1+q/2+2*s*(1-s)+3*t+aa**2))
+    require(f*f == F(67125249, 157377025)
+            and displayed2 == F(67125249, 157372673)
+            and displayed2 != f*f, "Two-iteration source discrepancy guard failed.")
+    require(f**3 == F(549957165057, 1974294778625)
+            and displayed3 == F(549957165057, 1419655835905)
+            and displayed3 != f**3, "Three-iteration source discrepancy guard failed.")
+    return dict(status="passed", raw_Pauli_Kraus_single_block_entries=single_entries,
+                X_classical_raw_control_block_entries=x_classical_entries,
+                ordinary_controlled_Pauli_error_check_relations=ordinary_check_relations,
+                ordinary_one_helper_thinned_flag_entries=ordinary_flag_entries,
+                ordinary_existing_control_full_switch_entries=full_control_compiler_entries,
+                unequal_slot_existing_control_full_switch_entries=unequal_control_compiler_entries,
+                complete_target_deferred_flag_entries=full_flag_entries,
+                entangled_reference_deferred_flag_entries=reference_entries,
+                all_plus_closed_form_entries=all_plus_entries,
+                all_flags_forgotten_ordinary_entries=ordinary_entries,
+                restart_and_contraction_guards=geometric_guards,
+                source_discrepancy_fixtures=2,
+                corrected_d16_s4over5_f3=str(f**3),
+                displayed_source_d16_s4over5_f3=str(displayed3),
+                scope="Exact finite raw-Kraus, ordinary existing-control randomized Pauli full SWITCH coefficients (including unequal slots), measured/thinned flag maps, reference fixture, rational Grover and restart-cost identities. All-dimension compilation, all-k measurement commutation, asymptotic search complexity, hardware ports, routing and timing remain analytic; no arbitrary noisy-search algorithm bound or free controlled-unknown gate.")
+
+
 def main():
     pcs_cases = replay_pcs()
     read_cases = replay_read_oracles()
@@ -1754,6 +2063,7 @@ def main():
     encoded_cases = replay_encoded_pauli()
     fermionic_cases = replay_fermionic_collision()
     jc_cases = verify_jc_energy_baseline()
+    noisy_search_cases = replay_noisy_search_filters()
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian and Eisenstein rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
@@ -1771,6 +2081,7 @@ def main():
         "encoded_pauli_instrument": encoded_cases,
         "fermionic_collision_instruments": fermionic_cases,
         "jaynes_cummings_energy_baseline": jc_cases,
+        "noisy_search_filter_instruments": noisy_search_cases,
         "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",
     }, sort_keys=True))
 

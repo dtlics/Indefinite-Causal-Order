@@ -59,6 +59,26 @@ The five modules in `algebra/` form the shared exact engine. `brauer_exact_repla
 
 These checks complement the canonical mathematical proofs. Their finite or polynomial identities do not independently prove representation-sector completeness, stopping-time reductions, physical access assumptions, or approximate-design norm transfer. Those arguments remain in the linked method notes and theorem. This package performs no solver search, floating-point feasibility test, hardware experiment or new Lean kernel audit. Numerical discovery scripts, repeated audit narratives and search caches are intentionally absent.
 
+The native-check job additionally supports the
+[depolarizing-search component](../methods/noisy-search.md): raw switch
+blocks, full arbitrary-control ordinary compilers, complete deferred
+flags, retained references, restart identities and the primary-source
+coefficient discrepancy. The all-dimension unitary-basis proof,
+arbitrary-length induction and uniform restart bounds remain analytic.
+Known control/calibration and reliable verification ports are charged.
+The measurement job checks [central inverse-fault cancellation](../architecture-baselines.md#nr-r08-central-involution)
+on full coherent recorded Kraus operators, noninvolutory faults and
+covariance counterexamples, plus a known-state logical probe. These are
+scoped instrument examples, not device-level fault certification.
+
+The communication job's ordinary Raman gate programs include four-mode
+heralded CZ with a coherent early identity-failure completion, eight-mode
+deterministic CZ and sixteen-mode known-unitary teleportation.
+It checks all outcome/reference coefficients, complete success/failure
+effects, source/key coherence and qualified window serialization.
+Actual loss, partial exchange, helper-preserving ports and physical
+retry/controller clocks are not certified.
+
 The encoded-Pauli checks include the full code-input and retained-record
 channels, reference matrix units, actual deferred record gates and a
 non-phase helper-noise counterexample. The graded tetron checks concern

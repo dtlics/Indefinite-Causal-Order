@@ -32,6 +32,15 @@ replay does not implement that learner or determine its asymptotic
 constant. These checks do not establish hardware efficiency, source
 priority, a general memory-process model or an architecture advantage.
 
+The [depolarizing-search component](../research/topics/nr-noisy-recovery/methods/noisy-search.md)
+adds an analytic full-channel ordinary compiler using known controlled
+unitaries, plus an every-flag timing proof and uniform counted-restart
+bounds. Native-check replays compare finite raw Kraus maps, arbitrary
+incoming controls/references, ordinary controlled-Pauli circuits,
+deferred records and exact coefficient discrepancies. Their finite
+scope does not establish the all-dimension or asymptotic arguments,
+native gate costs or availability of a reliable candidate verifier.
+
 The [decoder-bootstrap component](../research/topics/nr-noisy-recovery/methods/memory-code-bootstrap.md)
 adds a high-prior mean-cost converse with receiver quantum programs under
 an all-instance unassisted deployment interface. Its replay checks complete
@@ -107,6 +116,11 @@ four and eight. The ordinary three-measurement construction is a cited
 baseline with an explicit analytic proof. Its comparison to the specified
 switch protocol counts retries and permits the same output frame convention;
 it does not optimize all coherent measurement protocols or model detector faults.
+The [central-fault extension](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r08-central-involution)
+checks complete paired recorded instruments, including inverse
+noninvolutory faults, a covariance counterexample and an ordinary
+known-state probe. Balanced cancellation does not certify individual
+or odd-use logical correctness; it is not a general diagnostic no-go.
 The [delivered-photon screen](../research/topics/nr-noisy-recovery/architecture-baselines.md#pbs-delivered-output)
 adds exact two-photon PBS sectors, coherent path instruments and
 uniform post-interaction loss/false-herald guards. Its same-graph
@@ -121,6 +135,12 @@ and finite-mean stopping arguments remain analytic; no channel-capacity theorem
 is inferred from finite sampling. The native-layer checks likewise assume
 their stated ideal helper operations and leave actual helper noise and routing
 cost to the application comparison.
+Ordinary ideal Raman gate-program checks additionally preserve all
+unknown-input reference coefficients, including coherent early
+identity failures, deterministic CZ, arbitrary known-unitary
+teleportation and a qualified serialized port. Their ideal retry
+argument does not make actual photon loss or partial exchange safe,
+and known internal gate synthesis and physical clocks remain charged.
 
 The [conditional dispatch result](../research/topics/nr-noisy-recovery/dispatch.md)
 has finite exact flagged-output and routing checks. Its universal exact

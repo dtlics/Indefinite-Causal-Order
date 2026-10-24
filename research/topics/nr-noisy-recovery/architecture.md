@@ -256,6 +256,14 @@ or one-helper Pauli check for the other. Its calibrated global-reference
 noise correction differs from weight-dependent local noise. Existing
 many-eigenvalue learning bounds do not lower-bound this scalar task.
 
+The [depolarizing-noise search comparison](methods/noisy-search.md)
+reproduces the full switched channel with ordinary randomized known
+controls and the same noisy calls. It also counts rejected/aborted
+Grover attempts and the shared candidate-verification port. A native
+search test must therefore price its router against those controlled
+frame layers, calibration, storage and readout; a conditional
+success plot or delayed control measurement does not settle that test.
+
 The [local-overlap estimator](architecture-baselines.md#nr-r06-local-overlap)
 needs no reference bank: its ideal variance is controlled by overlap
 of the two physical error supports, with explicit readout-contrast and

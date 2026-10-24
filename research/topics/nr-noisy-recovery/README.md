@@ -97,7 +97,13 @@ on its final parity-accepted code; unequal or correlated physical poisoning
 requires a new analysis. The finite-energy Jaynes--Cummings comparison
 closes its specified equatorial decision benchmark while preserving the
 source's isotropic and four-box restrictions.
+The [noisy-search component](methods/noisy-search.md) supplies an ordinary
+full-channel compiler for calibrated depolarizing slots and separately
+counts all-plus Grover restarts, verification and actual controller costs.
 Recorded Lüders measurements have the ordinary baseline in NR-R08.
+Its [central-fault comparison](architecture-baselines.md#nr-r08-central-involution)
+also distinguishes paired compatibility from individual logical
+correctness using a separately charged ordinary known-state probe.
 
 The next application questions concern a physical unmonitored multimode
 workload, retained inelastic scattering in a matter-photon link, a

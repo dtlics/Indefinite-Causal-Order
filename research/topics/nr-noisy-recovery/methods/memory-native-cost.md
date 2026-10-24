@@ -107,6 +107,24 @@ The nonzero-$H_0$ condition matters for arbitrary rank-one refinements:
 a scalar Hamiltonian alone restricts no refined basis. Its actual
 spectral-block pinching is instead the identity and is easily tested.
 
+A shallow hidden basis rotation also supplies a known span. Suppose $U$
+is a depth-$L$ circuit on a known one-dimensional nearest-neighbor layout,
+and $\Delta_U$ pinches in its rotated computational basis. For any site
+$i$, $K_i=UZ_iU^\dagger$ is nonzero, traceless and fixed by $\Delta_U$.
+Each layer extends support by at most one site on either side, so $K_i$
+is supported in a known interval $I_i$ of size
+$\ell\leq\min\{n,2L+1\}$. The $M=4^\ell-1$ nonidentity Paulis on
+$I_i$ span $K_i$. Thus the same one-helper test (NS2) suffices with
+$$
+ N\geq8(4^\ell-1)^2t^{-2}\log(1/\delta).
+$$
+It learns neither $U$ nor its key; controls and readout have Pauli weight
+at most $\ell$, with the same preparation/reset costs. For $L=O(\log n)$
+the test is polynomial for inverse-polynomial $t$ and error tolerance
+$\delta$; polylogarithmic $L$ gives a quasipolynomial bound. This assumes
+the **basis rotation itself** is shallow, not merely a shallow Floquet
+period whose eigenbasis may require a deep circuit.
+
 There is also a more expensive test beyond positive pinching. Let a
 unital CPTP map $\mathcal F$ conserve some traceless unit-Hilbert--Schmidt-norm
 $H\in V$, meaning $\mathcal F^\dagger(H)=H$. Its real Pauli compression
