@@ -105,6 +105,17 @@ PSD/PPT, phase and complex moment equalities establish a restricted
 accepted-CZ separation; general data filters, intermediate matter
 controls and hardware rates are outside that upper bound. The repeated
 ordinary survivor compiler remains a stronger paid comparator.
+The [retained-photon comparison](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-retained-photon-gate)
+adds exact full-input gate/compiler, four-mode witness and complementary
+branch identities, together with polynomial balance, phase-ratio and
+loss-ledger guards. An exact formal-phase dual checks the positive
+polynomial and balanced Schur-complement attainment without a numerical
+optimizer. Its analytic upper bounds distinguish a single
+corrected flag with arbitrary photonic memory from the total terminal
+instrument with four preserved modes. Intermediate instruments, spin
+encodings before contacts, physical detector channels and an optimal ordinary rate
+are outside those bounds. Finite replay does not certify optical ports,
+a measured loss model, novelty or a hardware advantage.
 A separate outward interval certificate integrates the full declared
 Gaussian pulse, with analytic strip and tail bounds. Its physical joint
 mode analyzer remains an additional resource. Full Choi twirls in the general-channel replay support the

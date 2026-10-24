@@ -1754,6 +1754,499 @@ def exact_projector_gap_verify():
                      'upper, no-click acceptance or native hardware/clock advantage'}
 
 
+def retained_photon_gate_verify():
+    """Exact retained-F instruments, ordinary compilers and algebraic guards.
+
+    The general balance, terminal-instrument and nuclear-norm arguments are
+    analytic proofs in the method note. This replays complete finite input
+    maps and exact polynomial ingredients, without parameter sweeps as bounds.
+    """
+    field_add, field_mul, field_conj = add, mul, conj
+    field_scale = globals()["scale"]
+    def field_cast(value):
+        if isinstance(value, tuple) and len(value) == 8:
+            return value
+        if isinstance(value, ConcG):
+            return field_add(field_scale(ONE, value.r), field_scale(root(4), value.i))
+        return field_scale(ONE, F(value))
+    class Q3:
+        """Quadratic sqrt3 extension of the existing exact cyclotomic engine."""
+        def __init__(self, a=0, b=0):
+            self.a, self.b = field_cast(a), field_cast(b)
+        def __add__(self, other):
+            other = cast(other)
+            return Q3(field_add(self.a, other.a), field_add(self.b, other.b))
+        __radd__ = __add__
+        def __neg__(self):
+            return Q3(field_scale(self.a, -1), field_scale(self.b, -1))
+        def __sub__(self, other):
+            return self + -cast(other)
+        def __rsub__(self, other):
+            return cast(other) + -self
+        def __mul__(self, other):
+            other = cast(other)
+            return Q3(field_add(field_mul(self.a, other.a), field_scale(field_mul(self.b, other.b), 3)),
+                      field_add(field_mul(self.a, other.b), field_mul(self.b, other.a)))
+        __rmul__ = __mul__
+        def __truediv__(self, denominator):
+            return Q3(field_scale(self.a, 1 / F(denominator)), field_scale(self.b, 1 / F(denominator)))
+        def __eq__(self, other):
+            other = cast(other)
+            return self.a == other.a and self.b == other.b
+        def conj(self):
+            return Q3(field_conj(self.a), field_conj(self.b))
+    def cast(value):
+        return value if isinstance(value, Q3) else Q3(value)
+    def matrix(rows):
+        return [[cast(value) for value in row] for row in rows]
+    def eye(d):
+        return matrix([[int(i == j) for j in range(d)] for i in range(d)])
+    def zeros(d, e=None):
+        return matrix([[0] * (d if e is None else e) for _ in range(d)])
+    def plus(a, b):
+        return [[x + y for x, y in zip(ar, br)] for ar, br in zip(a, b)]
+    def scale(a, scalar):
+        return [[x * scalar for x in row] for row in a]
+    def multiply(a, b):
+        out = zeros(len(a), len(b[0]))
+        for i, row in enumerate(a):
+            for k, x in enumerate(row):
+                if x == 0:
+                    continue
+                for j, y in enumerate(b[k]):
+                    if y != 0:
+                        out[i][j] = out[i][j] + x * y
+        return out
+    def dagger(a):
+        return [[a[j][i].conj() for j in range(len(a))] for i in range(len(a[0]))]
+    def kron(a, b):
+        return [[x * y for x in ar for y in br] for ar in a for br in b]
+    def block(a, b, c, d):
+        return [ar + br for ar, br in zip(a, b)] + [cr + dr for cr, dr in zip(c, d)]
+    def diagonal(values):
+        return matrix([[value if i == j else 0 for j in range(len(values))]
+                       for i, value in enumerate(values)])
+    def tr(a):
+        return sum((a[i][i] for i in range(len(a))), Q3())
+    def require_unitary(a):
+        helper_require(multiply(dagger(a), a) == eye(len(a)), "Exact Q(i,sqrt3) unitary")
+
+    i2, x, y, z = eye(2), matrix([[0, 1], [1, 0]]), matrix([[0, ConcG(0, -1)], [ConcG(0, 1), 0]]), diagonal([1, -1])
+    imaginary, r3 = Q3(ConcG(0, 1)), Q3(0, 1)
+    b00 = plus(plus(i2, x), z)
+    b01 = scale(plus(plus(i2, x), scale(z, -1)), imaginary)
+    b10 = scale(plus(plus(i2, scale(x, -1)), z), imaginary)
+    b11 = plus(plus(scale(i2, -1), x), z)
+    c = scale(block(b00, b01, b10, b11), r3 / 8)
+    e0, e1 = diagonal([r3 / 2, Q3(F(1, 2))]), diagonal([Q3(F(1, 2)), r3 / 2])
+    ei0, ei1 = diagonal([2 * r3 / 3, Q3(2)]), diagonal([Q3(2), 2 * r3 / 3])
+    m0 = plus(scale(i2, (r3 + 1) / 4), scale(x, (r3 - 1) / 4))
+    m1 = plus(scale(i2, (r3 + 1) / 4), scale(x, -(r3 - 1) / 4))
+    mi0 = plus(scale(i2, 1 + r3 / 3), scale(x, -(1 - r3 / 3)))
+    mi1 = plus(scale(i2, 1 + r3 / 3), scale(x, 1 - r3 / 3))
+    helper_require(plus(multiply(e0, e0), multiply(e1, e1)) == i2,
+                   "Exact source isometry normalization")
+    helper_require(plus(multiply(m0, m0), multiply(m1, m1)) == i2,
+                   "Exact accepted output coisometry normalization")
+    for a, inverse in ((e0, ei0), (e1, ei1), (m0, mi0), (m1, mi1)):
+        helper_require(multiply(a, inverse) == i2, "Displayed exact inverse")
+    middle = multiply(multiply(block(mi0, zeros(2), zeros(2), mi1), c),
+                      block(ei0, zeros(2), zeros(2), ei1))
+    require_unitary(middle)
+    swap = matrix([[int(i == (0, 2, 1, 3)[j]) for j in range(4)] for i in range(4)])
+    pre = multiply(block(e0, scale(e1, -1), e1, e0), swap)
+    post = multiply(swap, block(m0, m1, scale(m1, -1), m0))
+    require_unitary(pre)
+    require_unitary(post)
+    # Basis throughout is F,H,A,B; the source and readout have H=0/1.
+    cz_a = diagonal([(-1) ** (((index >> 3) & 1) * ((index >> 1) & 1)) for index in range(16)])
+    cz_b = diagonal([(-1) ** (((index >> 3) & 1) * (index & 1)) for index in range(16)])
+    full = multiply(kron(post, eye(4)), multiply(cz_b, multiply(kron(middle, eye(4)),
+        multiply(cz_a, kron(pre, eye(4))))))
+    branches = []
+    for outcome in (0, 1):
+        branches.append([[full[((row >> 2) * 2 + outcome) * 4 + row % 4]
+                              [((column >> 2) * 2) * 4 + column % 4]
+                          for column in range(8)] for row in range(8)])
+    complement = scale(block(multiply(plus(scale(i2, -2), x), b00),
+                             multiply(plus(scale(i2, -2), x), b01),
+                             multiply(plus(scale(i2, 2), x), b10),
+                             multiply(plus(scale(i2, 2), x), b11)), F(1, 8))
+    fourier = []
+    for coefficients in (c, complement):
+        operator = zeros(8)
+        for j in (0, 1):
+            for i in (0, 1):
+                coefficient = [row[2 * i:2 * i + 2] for row in coefficients[2 * j:2 * j + 2]]
+                operator = plus(operator, kron(coefficient, kron(z if i else i2, z if j else i2)))
+        fourier.append(operator)
+    helper_require(branches == fourier, "Literal pre/CZ/middle/CZ/post circuit equals both Fourier branches")
+    spin_phase = kron(i2, diagonal([imaginary, 1, 1, -imaginary]))
+    target_numerator = plus(eye(8), plus(scale(kron(z, kron(z, i2)), -imaginary),
+                                       scale(kron(x, kron(i2, z)), -imaginary)))
+    helper_require(branches[0] == scale(multiply(spin_phase, target_numerator), r3 / 4),
+                   "Accepted branch is the exact target after declared local spin phases")
+    helper_require(multiply(dagger(branches[0]), branches[0]) == scale(eye(8), F(9, 16))
+                   and multiply(dagger(branches[1]), branches[1]) == scale(eye(8), F(7, 16)),
+                   "Both exact terminal effects are scalar and complete")
+    undone_complement = multiply(dagger(spin_phase), branches[1])
+    for aa, bb in ((1, 1), (1, -1), (-1, 1), (-1, -1)):
+        index = 2 * int(aa == -1) + int(bb == -1)
+        actual = [[undone_complement[4 * row + index][4 * column + index] for column in range(2)]
+                  for row in range(2)]
+        expected = scale(plus(plus(scale(i2, imaginary * bb), scale(x, -1)),
+                              plus(scale(y, -aa), scale(z, 2 * aa * bb))), F(1, 4))
+        helper_require(actual == expected, "Exact complement agrees with all-p sector formula at r=0")
+
+    # Full polynomial Gram identities: no parameter grid is used as a no-go.
+    def padd(a, b):
+        out = [F(0)] * max(len(a), len(b))
+        for j in range(len(out)):
+            out[j] = (a[j] if j < len(a) else 0) + (b[j] if j < len(b) else 0)
+        while len(out) > 1 and out[-1] == 0:
+            out.pop()
+        return tuple(out)
+    def pmul(a, b):
+        out = [F(0)] * (len(a) + len(b) - 1)
+        for j, xx in enumerate(a):
+            for k, yy in enumerate(b):
+                out[j + k] += xx * yy
+        return padd(tuple(out), ())
+    def quaternion(aa, bb):
+        return ((F(bb, 4), F(aa, 2)), (F(-1, 4),),
+                (F(-aa, 4), F(-bb, 2)), (F(aa * bb, 2), F(-1, 2)))
+    def pdot(a, b):
+        out = ()
+        for xx, yy in zip(a, b):
+            out = padd(out, pmul(xx, yy))
+        return out
+    gram_identities = 0
+    for aa, bb in ((1, 1), (1, -1), (-1, 1), (-1, -1)):
+        source = quaternion(aa, bb)
+        expected = ((aa, bb, (F(7, 16), 0, F(3, 4))),
+                    (-aa, bb, (F(-3, 16), 0, F(1, 4))),
+                    (aa, -bb, (F(-3, 16), 0, F(1, 4))),
+                    (-aa, -bb, (F(3, 16), F(-aa * bb), F(-1, 4))))
+        for other_a, other_b, coefficients in expected:
+            helper_require(pdot(source, quaternion(other_a, other_b)) == tuple(map(F, coefficients)),
+                           "All-r complement Gram polynomial")
+            gram_identities += 1
+    # At p=1/2 the diagonal Gram is 1/3 +/- 1/sqrt3. Equality of its
+    # magnitude to 1/3 would force (2r)^2=0 or4/9, but it is1/3.
+    helper_require(F(1, 3) not in (F(0), F(4, 9)), "Exact second-outcome local-G obstruction")
+    helper_require(F(9, 16) / (3 * (1 - F(9, 16))) == F(3, 7) < 1,
+                   "Feasible neighboring Gram magnitude never permits local-product retry")
+    # Retained F is data: both native flags are full eight-dimensional maps.
+    p = kron(z, kron(z, i2))
+    q = kron(x, kron(i2, z))
+    g = scale(target_numerator, r3 / 3)
+    native_plus, native_minus = scale(target_numerator, F(1, 2)), scale(multiply(p, q), F(1, 2))
+    corrected_minus = multiply(dagger(multiply(p, q)), native_minus)
+    helper_require(corrected_minus == scale(eye(8), F(1, 2)), "Native failure restores the entire retained payload")
+    require_unitary(g)
+
+    # Readout-free four-contact Clifford dressing on the actual F,A,B space.
+    cnot = matrix([[int(row == ((column ^ 4) if ((column >> 1) & 1) else column))
+                    for column in range(8)] for row in range(8)])
+    cz = diagonal([(-1) ** (((column >> 2) & 1) * (column & 1)) for column in range(8)])
+    dressing = multiply(cnot, cz)
+    zf, xf = kron(z, eye(4)), kron(x, eye(4))
+    helper_require(multiply(multiply(dressing, zf), dagger(dressing)) == p
+                   and multiply(multiply(dressing, xf), dagger(dressing)) == q,
+                   "Four-contact Clifford dressing maps both local photon axes")
+    local_g = scale(plus(i2, plus(scale(z, -imaginary), scale(x, -imaginary))), r3 / 3)
+    helper_require(multiply(multiply(dressing, kron(local_g, eye(4))), dagger(dressing)) == g,
+                   "Readout-free four-contact compiler is the full retained target")
+
+    def sector_operator(values):
+        out = zeros(8)
+        for address, value in enumerate(values):
+            for row in range(2):
+                for column in range(2):
+                    out[4 * row + address][4 * column + address] = value[row][column]
+        return out
+    def program_sector(a, b):
+        return scale(plus(i2, plus(scale(z, -imaginary * (-1) ** a),
+                                   scale(x, -imaginary * (-1) ** b))), r3 / 3)
+    def spin_feedback(u, v):
+        return diagonal([(-1) ** (u * ((index >> 1) & 1) + v * (index & 1)) for index in range(8)])
+
+    # Literal ++ source, two CZs, both helper Hadamards, the computational
+    # program, and X readout. The six sqrt2 factors combine to 1/8.
+    two_helper = []
+    for u, v in product((0, 1), repeat=2):
+        sector_maps = []
+        for a, b in product((0, 1), repeat=2):
+            value = zeros(2)
+            for hh, jj, cc, dd in product((0, 1), repeat=4):
+                phase = (-1) ** (a * hh + b * jj + hh * cc + jj * dd + u * cc + v * dd)
+                value = plus(value, scale(program_sector(cc, dd), F(phase, 8)))
+            sector_maps.append(value)
+        raw = sector_operator(sector_maps)
+        corrected = multiply(spin_feedback(u, v), raw)
+        helper_require(corrected == scale(g, F(1, 2)),
+                       "Actual two-helper basis conversion/program/readout gives G/2 on every record")
+        two_helper.append(corrected)
+
+    # One reusable helper performs each rotation with one occupied spin CZ.
+    # Every computational readout is retained and its spin phase is corrected.
+    def one_helper_rotation(cosine, sine, photon_axis, spin):
+        target_pauli = p if spin == 0 else q
+        rotation = plus(scale(eye(8), cosine), scale(target_pauli, -imaginary * sine))
+        corrected = []
+        for read in (0, 1):
+            values = []
+            for a, b in product((0, 1), repeat=2):
+                address_sign = (-1) ** (a if spin == 0 else b)
+                value = zeros(2)
+                for helper in (0, 1):
+                    local = (scale(i2, cosine) if read == helper else scale(photon_axis, -imaginary * sine))
+                    value = plus(value, scale(local, cast(INV_SQRT2) * address_sign ** helper))
+                values.append(value)
+            raw = sector_operator(values)
+            feedback = spin_feedback(read if spin == 0 else 0, read if spin == 1 else 0)
+            actual = multiply(feedback, raw)
+            helper_require(actual == scale(rotation, cast(INV_SQRT2)),
+                           "Single occupied CZ plus local helper rotation/read/reset preserves full unknown F")
+            corrected.append(actual)
+        return rotation, corrected
+    rp, rp_branches = one_helper_rotation(cast(COS), cast(SIN), z, 0)
+    rq, rq_branches = one_helper_rotation(cast(field_scale(INV_SQRT2, 2)) * r3 / 3, r3 / 3, x, 1)
+    helper_require(multiply(multiply(rp, rq), rp) == g,
+                   "Three one-helper rotations synthesize the exact target")
+    three_helper = [multiply(multiply(last, middle_branch), first)
+                    for first in rp_branches for middle_branch in rq_branches for last in rp_branches]
+    for branch in three_helper:
+        helper_require(branch == scale(g, cast(INV_SQRT2) / 2),
+                       "Every three-contact readout history delivers the same target")
+
+    # Coherent return uses the unmeasured helper keys: their byproducts cancel
+    # on the two revisits. The exact occupied-key distribution also guards the
+    # vacuum-I bypass loss polynomial, without supplying that physical port.
+    coherent_return = []
+    for u, v in product((0, 1), repeat=2):
+        raw_key = scale(multiply(spin_feedback(u, v), g), F(1, 2))
+        coherent_return.append(multiply(spin_feedback(u, v), raw_key))
+    helper_require(coherent_return == [scale(g, F(1, 2))] * 4,
+                   "Coherent helper return decouples the unknown retained target from both keys")
+    helper_require(sum((F(2 + u + v, 4) for u, v in product((0, 1), repeat=2)), F(0)) == 3,
+                   "Ideal occupied correction-key contact count is three")
+
+    # Complete matrix-unit replay includes every passive-reference extension.
+    def cp_unit(operator, i, j):
+        out = zeros(8)
+        for row in range(8):
+            if operator[row][i] == 0:
+                continue
+            for column in range(8):
+                if operator[column][j] != 0:
+                    out[row][column] = operator[row][i] * operator[column][j].conj()
+        return out
+    native_units = program_units = three_units = sharp_units = coin_units = 0
+    for i, j in product(range(8), repeat=2):
+        unit_map = zeros(8)
+        unit_map[i][j] = cast(1)
+        target_map = cp_unit(g, i, j)
+        helper_require(cp_unit(native_plus, i, j) == scale(target_map, F(3, 4))
+                       and cp_unit(corrected_minus, i, j) == scale(unit_map, F(1, 4)),
+                       "Both native corrected flags on every retained input matrix unit")
+        native_units += 2
+        total = zeros(8)
+        for branch in two_helper:
+            output = cp_unit(branch, i, j)
+            helper_require(output == scale(target_map, F(1, 4)), "Two-helper full flag matrix unit")
+            total = plus(total, output)
+            program_units += 1
+        helper_require(total == target_map, "Two-helper deterministic complete instrument")
+        for branch in three_helper:
+            helper_require(cp_unit(branch, i, j) == scale(target_map, F(1, 8)),
+                           "Three-contact complete readout-history matrix unit")
+            three_units += 1
+        helper_require(scale(total, F(3, 4)) == cp_unit(native_plus, i, j)
+                       and scale(unit_map, F(1, 4)) == cp_unit(corrected_minus, i, j),
+                       "Independent classical coin and spectator helpers reproduce the native measured flags")
+        coin_units += 2
+        for branch, expected in zip(branches, fourier):
+            helper_require(cp_unit(branch, i, j) == cp_unit(expected, i, j),
+                           "Sharp U4 witness and complement complete input maps")
+            sharp_units += 1
+
+    # Exact nuclear-norm ingredients, independent of helper dimension. The
+    # Schatten/Choi-support proof applying these ingredients is analytic.
+    c0 = block(i2, scale(z, -imaginary), scale(x, -imaginary), zeros(2))
+    gram = multiply(dagger(c0), c0)
+    helper_require(plus(plus(multiply(gram, gram), scale(gram, -3)), eye(4)) == zeros(4),
+                   "Target Fourier Gram obeys lambda^2-3lambda+1")
+    helper_require(multiply(plus(gram, eye(4)), plus(gram, eye(4))) == scale(gram, 5)
+                   and tr(gram) == 6 and tr(plus(gram, eye(4))) == 10,
+                   "Positive Fourier square-root/nuclear-trace ingredients")
+    squared_target_nuclear = F(10 * 10, 5 * 3)
+    helper_require(squared_target_nuclear == F(20, 3)
+                   and 4 / squared_target_nuclear == F(3, 5),
+                   "Dimension-independent single-common-correction trace bound constant")
+
+    # General terminal contractions: exact polynomial constants used in the
+    # analytic T1--T3 eigenvalue argument, rather than a parameter sweep.
+    def pscale(poly, scalar):
+        return tuple(F(scalar) * value for value in poly)
+    x_squared = (F(0), F(2), F(-12))
+    helper_require(padd((1,), pscale(x_squared, -16)) == pscale(
+        pmul((F(-1, 24), F(1)), (F(-1, 8), F(1))), 192),
+        "T3 positive-product roots are exactly 1/24 and1/8")
+    helper_require(padd(x_squared, (0, 0, -4)) == pmul((0, 2), (1, -8)),
+                   "T3 x-squared minus4s-squared equals2s(1-8s)")
+    a_poly = (F(4), F(-20))
+    helper_require(padd(pscale(a_poly, 8), (-12,)) == (F(20), F(-160)),
+                   "T3 larger-eigenvalue comparison numerator20x(1-8s)")
+    helper_require(padd(pscale(a_poly, 2), (-8,)) == (F(0), F(-40))
+                   and -12 + 32 == 20,
+                   "T3 threshold numerator is exactly20(x-2s)")
+
+    # Fixed-source/fixed-middle terminal records: the inverse and rotation
+    # ratio have exact constant physical-Pauli coefficients. J's block-X
+    # trace is invariant for all beta by the three displayed coefficients.
+    c0_inverse = block(zeros(2), scale(x, imaginary), scale(z, imaginary), scale(y, imaginary))
+    helper_require(multiply(c0, c0_inverse) == eye(4)
+                   and multiply(c0_inverse, c0) == eye(4), "Exact inverse of target Fourier matrix")
+    j_block = matrix([[0, -2], [1, 0]])
+    ratio_generator = multiply(multiply(c0, scale(kron(x, i2), imaginary)), c0_inverse)
+    helper_require(ratio_generator == plus(kron(i2, scale(z, -1)), kron(j_block, y)),
+                   "All-delta Fourier rotation ratio cI+s[-I*Z+J*Y]")
+    for first in (i2, z, y):
+        for second in (i2, z, y):
+            helper_require(tr(multiply(dagger(first), second)) == (2 if first == second else 0),
+                           "Independent physical I/Z/Y coefficient directions in the phase ratio")
+    helper_require(tr(multiply(x, j_block)) == -1
+                   and tr(multiply(x, plus(multiply(x, j_block), scale(multiply(j_block, x), -1)))) == 0
+                   and tr(multiply(x, multiply(multiply(x, j_block), x))) == -1,
+                   "Conjugating J by cI+isX retains nonzero block-X coefficient for every beta")
+
+    # A legitimate refinement of the attaining accepted flag may have
+    # different photon corrections. Absorbing them and coherently compressing
+    # the common spin correction recovers the same terminal contraction.
+    terminal = [left + right for left, right in zip(m0, m1)]
+    projection = multiply(dagger(terminal), terminal)
+    helper_require(multiply(projection, projection) == projection
+                   and projection == dagger(projection), "Accepted terminal row is a contraction")
+    compressed = zeros(2, 4)
+    lambdas = (r3 / 3, cast(field_scale(INV_SQRT2, 2)) * r3 / 3)
+    for amplitude, photon_correction in zip(lambdas, (x, z)):
+        refined = scale(multiply(dagger(photon_correction), terminal), amplitude)
+        corrected_row = multiply(photon_correction, refined)
+        helper_require(corrected_row == scale(terminal, amplitude),
+                       "Record-dependent photon corrections preserve the common spin correction")
+        compressed = plus(compressed, scale(corrected_row, amplitude))
+    helper_require(compressed == terminal, "Exact coherent common-correction compression")
+
+    # Terminal spin filters give general complex circulants. This exact
+    # nonunitary fixture tests their ratio, while the three trace
+    # coefficients above supply the all-circulant polynomial identity.
+    aa, bb = (2 + imaginary) / 3, (1 - 2 * imaginary) / 5
+    circulant = plus(scale(i2, aa), scale(x, bb))
+    generalized_ratio = multiply(multiply(c0, kron(circulant, i2)), c0_inverse)
+    helper_require(generalized_ratio == plus(scale(eye(4), aa), plus(
+        scale(kron(i2, z), imaginary * bb), scale(kron(j_block, y), -imaginary * bb))),
+        "Complex-circulant Fourier ratio, including nonunitary spin filters")
+    nonunitary_t = plus(i2, scale(x, imaginary / 2))
+    nonunitary_t_inverse = scale(plus(i2, scale(x, -imaginary / 2)), F(4, 5))
+    helper_require(multiply(nonunitary_t, nonunitary_t_inverse) == i2
+                   and tr(multiply(x, multiply(multiply(nonunitary_t, j_block),
+                                                nonunitary_t_inverse))) == -1,
+                   "Invertible nonunitary circulant preserves nonzero block-X trace")
+
+    # A full terminal product-instrument budget with two differently
+    # corrected photon rows and the same nonunitary spin filter. Its
+    # residual is exhibited as an explicit sum of Gram matrices. The
+    # analytic proof uses this implication for arbitrary record families.
+    filter_a, filter_b = diagonal([1, F(1, 2)]), diagonal([F(1, 3), 1])
+    spin_filter = kron(filter_a, filter_b)
+    filter_effect = multiply(dagger(spin_filter), spin_filter)
+    weighted_rows = [scale(multiply(dagger(correction), terminal), amplitude)
+                     for amplitude, correction in zip(lambdas, (x, z))]
+    product_budget = zeros(16)
+    for row in weighted_rows:
+        product_row = kron(row, spin_filter)
+        product_budget = plus(product_budget, multiply(dagger(product_row), product_row))
+    helper_require(product_budget == kron(projection, filter_effect),
+                   "Actual complete terminal product effects have the common-filter budget")
+    residual = plus(eye(16), scale(product_budget, -1))
+    photon_residual = plus(eye(4), scale(projection, -1))
+    # The diagonal residual has the following explicit rational-square
+    # decomposition, so no further square-root extension is needed.
+    gram_roots = (diagonal([F(2, 3), 0, F(5, 6), F(1, 2)]),
+                  diagonal([F(2, 3), 0, F(1, 2), F(1, 2)]),
+                  diagonal([0, 0, F(1, 6), F(1, 2)]))
+    spin_residual = zeros(4)
+    for root_matrix in gram_roots:
+        spin_residual = plus(spin_residual, multiply(dagger(root_matrix), root_matrix))
+    helper_require(spin_residual == plus(eye(4), scale(filter_effect, -1)),
+                   "Explicit rational Gram decomposition of the normalized spin-filter residual")
+    budget_residual = multiply(dagger(kron(photon_residual, spin_filter)),
+                               kron(photon_residual, spin_filter))
+    for root_matrix in gram_roots:
+        factor = kron(eye(4), root_matrix)
+        budget_residual = plus(budget_residual, multiply(dagger(factor), factor))
+    helper_require(residual == budget_residual,
+                   "Global terminal effect budget is positive, without a per-leaf budget substitution")
+
+    from retained_photon_dual import verify as verify_retained_photon_dual
+    all_phase_dual = verify_retained_photon_dual()
+    helper_require(all_phase_dual["status"] == "PASS"
+                   and all_phase_dual["sharp_probability"] == "9/16",
+                   "Imported all-phase finite-helper exact dual certificate")
+
+    # Rational ledgers price every fatal erasure. These finite identities do
+    # not establish an actual detector, survival law or safe vacuum retry.
+    ledger_guards = 0
+    for transmission, meter, routing in ((F(0), F(1), F(1)), (F(1), F(1), F(1)),
+            (F(1, 2), F(1, 2), F(1)), (F(4, 5), F(31, 100), F(1)),
+            (F(9, 10), F(9, 10), F(1)), (F(9, 10), F(31, 100), F(3, 4))):
+        survival = transmission ** 2 * meter * routing
+        good, repeat, fatal = 3 * survival / 4, survival / 4, 1 - survival
+        helper_require(good + repeat + fatal == 1, "All round outcomes including fatal photon erasure")
+        delivered, rounds = 3 * survival / (4 - survival), 4 / (4 - survival)
+        helper_require(delivered == good / (1 - repeat) and rounds == 1 / (1 - repeat)
+                       and survival >= delivered,
+                       "Defined scalar delivered ledger and joint-meter ordinary comparison")
+        for cap in (1, 2, 4):
+            visits = sum((repeat ** j for j in range(cap)), F(0))
+            helper_require(good * visits + fatal * visits + repeat ** cap == 1
+                           and (1 - repeat) * visits == 1 - repeat ** cap,
+                           "Capped records retain rejection and every launched round")
+            ledger_guards += 1
+        returned = sum((transmission ** (2 + u + v) / 4
+                        for u, v in product((0, 1), repeat=2)), F(0))
+        helper_require(returned == transmission ** 2 * (1 + transmission) ** 2 / 4,
+                       "Actual coherent correction-key occupation loss polynomial")
+    meter = F(31, 100)
+    helper_require(3 * meter ** 2 / (4 - meter ** 2) == F(961, 13013) < F(1, 10),
+                   "Declared common-meter rejection constant, excluding plus-bypass models")
+    return {"status": "passed", "arithmetic": "Q(exp(i*pi/8),sqrt3) and exact rational polynomials",
+            "retained_input_dimension": 8, "native_corrected_flag_matrix_units": native_units,
+            "four_contact_Clifford_axis_identities": 2,
+            "two_helper_program_flag_matrix_units": program_units,
+            "three_contact_readout_history_matrix_units": three_units,
+            "native_classical_coin_flag_matrix_units": coin_units,
+            "coherent_return_keys": 4, "coherent_return_mean_occupied_contacts": 3,
+            "sharp_U4_controls": 3, "sharp_U4_both_flag_matrix_units": sharp_units,
+            "sharp_projective_single_branch_probability": "9/16", "complement_probability": "7/16",
+            "complement_Gram_polynomial_identities": gram_identities,
+            "Fourier_Gram_square_root_identities": 3,
+            "squared_target_Fourier_nuclear_norm": "20/3",
+            "single_common_correction_trace_probability_upper": "3/5",
+            "terminal_contraction_T3_polynomial_identities": 4,
+            "Fourier_inverse_and_rotation_ratio_identities": 3,
+            "terminal_phase_Pauli_trace_guards": 12,
+            "common_spin_correction_terminal_refinement_records": 2,
+            "four_mode_total_terminal_corrected_probability_upper": "9/16",
+            "terminal_spin_filter_complex_circulant_guards": 2,
+            "terminal_spin_filter_full_effect_budget_guards": 3,
+            "four_mode_total_terminal_separable_filter_probability_upper": "3/5",
+            "all_phase_arbitrary_finite_helper_dual": all_phase_dual,
+            "finite_capped_ledger_guards": ledger_guards,
+            "scope": "Exact retained-F instruments and ordinary compilers, U4 witness/projective complement Gram identities, terminal-contraction and fixed-four-mode phase-ratio polynomial ingredients, common-correction compression, complex-circulant and terminal product-effect budget guards, all-phase finite-helper SDP dual certificate, and finite scalar ledgers. General terminal-instrument and norm deductions remain analytic; no intermediate-adaptive upper, actual survival/readout port, microscopic scattering or hardware advantage."}
+
+
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
@@ -1778,6 +2271,7 @@ def verify():
             "reflected_diagonal_gate_cone": gate_verify(),
             "decorated_eight_mode_bus": decorated_bus_verify(),
             "exact_projector_CZ_gate_gap": exact_projector_gap_verify(),
+            "retained_photon_gate": retained_photon_gate_verify(),
             "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms, eigen-source survivor compilers and reflected diagonal-gate cone/balancing witnesses, decorated eight-mode coherent survivors and safe four-window compiler, with merged-port rank guards, and an exact restricted projector-kernel primal/dual gate gap; universal proofs, native ports, calibration and clocks remain analytic"}
 
 

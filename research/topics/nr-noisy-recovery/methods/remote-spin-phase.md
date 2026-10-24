@@ -2279,6 +2279,932 @@ photon detection and local phase feedback. This checkpoint certifies
 the specified probability optimization, without a new-mechanism or
 priority claim.
 
+<a id="nr-r11-retained-photon-gate"></a>
+## Retaining the unknown flying photon: gate, controllers and loss
+
+This subsection changes the output task: **both spins and the incoming
+photon qubit are unknown data**. Write them as $A,B,F$, with an arbitrary
+untouched reference $R$. The same $F$ must remain quantum output. A final
+photon counter, a known-input spin factory and a fresh replacement photon
+do not implement this service. The following ideal identities, restricted
+ordinary bounds and physical-instrument conditions do not establish a
+native hardware advantage or a new gate-generation mechanism.
+
+### Ideal complete instrument and strong ordinary circuits
+
+Set $P=Z_FZ_A$, $Q=X_FZ_B$, and
+$U_A(\theta)=e^{-i\theta P}$, $U_B(\phi)=e^{-i\phi Q}$.
+Since $P,Q$ are Hermitian involutions with $PQ=-QP$, a supplied coherent
+order interface, initialized in $+$ and read in $X$, has Kraus operators
+
+$$
+\begin{aligned}
+K_+&=\cos\theta\cos\phi I-i\sin\theta\cos\phi P
+                         -i\cos\theta\sin\phi Q,\\
+K_-&=\sin\theta\sin\phi\,PQ.
+\end{aligned}
+\qquad
+\theta=\phi=\frac\pi4:
+\quad K_+=\frac{\sqrt3}{2}G,\quad K_-=\frac12PQ,
+\quad G=\frac{I-iP-iQ}{\sqrt3}.
+\tag{RP1}
+$$
+
+The minus sign convention can change with the order labels. Here
+$G^\dagger G=I$ and $PQ=iY_FZ_AZ_B$ is a product of local Paulis.
+After reading a **surviving** minus without consuming $F$, its inverse
+restores all of $ABFR$. The corrected classical instrument is exactly
+$\{(3/4)\operatorname{Ad}_G,(1/4)\operatorname{Id}\}$.
+This is a legitimate ideal repeat branch. Photon loss is not such a
+branch. Where the plus probability is nonzero, at a common drifting
+angle its normalized gate becomes, up to a global phase,
+$[\cos\theta I-i\sin\theta(P+Q)]/\sqrt{1+\sin^2\theta}$;
+equal drift therefore does not preserve the fixed target $G$.
+
+One ideal cavity CZ and known local phases implement each $\pi/4$
+Ising rotation; a photon Hadamard changes its $Z_F$ axis to $X_F$.
+Those phases, rotations and coherent routes are supplied controls with
+their own cost. [Daiss et al.](https://doi.org/10.1126/science.abe3150)
+demonstrate sequential cavity reflections, photon detection and atomic
+feedback for retained **spin** data. That experiment supplies neither
+this coherent order interface nor its retained-photon branch readout.
+The product-unitary switch mechanism also has the antecedents cited
+above, including [Simonov et al.](https://arxiv.org/html/2311.13654v4).
+
+Several ordinary constructions preclude comparing (RP1) only with an
+uncontrolled two-contact word.
+
+* **Four contacts, no helper readout.** With
+  $S=\operatorname{CNOT}_{A\to F}\operatorname{CZ}_{BF}$ and
+  $g_F=(I-iZ_F-iX_F)/\sqrt3$,
+
+  $$
+  SZ_FS^\dagger=P,\qquad SX_FS^\dagger=Q,\qquad
+  G=Sg_FS^\dagger.
+  \tag{RP2}
+  $$
+
+  The chronological node visits are $A,B,g_F,B,A$; photon Hadamards
+  wrap each $A$ CZ. This is an operator identity on every $ABFR$.
+  Revisits, links and storage are paid. Four contacts are necessary only
+  for the **ancilla-free unitary** class whose nonlocal primitives are
+  $\operatorname{CZ}_{AF},\operatorname{CZ}_{BF}$ and whose other gates
+  are local qubit unitaries. Across either spin versus the rest, $G$ has
+  normalized operator-Schmidt coefficients $\sqrt{2/3},\sqrt{1/3}$:
+  across $A|BF$, its orthogonal terms are
+  $I_A\otimes(I-iX_FZ_B)/\sqrt3$ and
+  $-iZ_A\otimes Z_F/\sqrt3$. A circuit with exactly one cross-cut CZ
+  has equal coefficients $1/\sqrt2$, invariant under all processing on
+  either side; zero has rank one. Each node needs at least two contacts.
+  This proof does not cover helpers, measurements, entangled programs,
+  postselection or controlled-vacuum bypasses.
+
+* **Two contacts, two photon helpers.** Supply eight preserved photon
+  modes $F,H_A,H_B$, prepare both helpers in $+$, and use one
+  $\operatorname{CZ}_{A,H_A}$ and one $\operatorname{CZ}_{B,H_B}$.
+  Known mode swaps can assign the interacting degree while preserving
+  the other two; that spectator-mode station extension is a premise.
+  For a spin label $a,b$, the helper states are $H|a\rangle,H|b\rangle$.
+  Apply helper Hadamards before the computationally controlled known
+  photon unitary
+  $V=\sum_{ab}|ab\rangle\langle ab|\otimes
+  (I-i(-1)^aZ_F-i(-1)^bX_F)/\sqrt3$.
+  The four helper-$X$ outcomes have operators
+
+  $$
+  J_{mn}=\frac12Z_A^mZ_B^nG,\qquad m,n\in\{0,1\}.
+  \tag{RP3}
+  $$
+
+  Local spin-$Z$ feedback gives deterministic $G$. Both helper bits
+  must be read **without absorbing the photon carrying $F$**; a specified
+  joint four-outcome meter is an alternative to two binary readouts.
+  There is no minimum-two-devices or minimum-two-periods claim. Known
+  $U(8)$ synthesis, extra modes, readout, feedback and delay are paid.
+  With an independent $3/4$ coin this circuit, or identity contacts on
+  helpers prepared in $0$, also reproduces the corrected classical
+  instrument in (RP1). It does not reproduce unspecified loss branches
+  or the unread coherent order output.
+
+* **Three contacts, one reusable helper.** A helper $C=+$, one
+  $\operatorname{CZ}_{AC}$, the known photon operation
+  $e^{-i\alpha X_CZ_F}$ and computational QND helper readout give
+  $K_0=e^{-i\alpha P}/\sqrt2$, $K_1=Z_AK_0$.
+  Spin feedback and a real reset make an arbitrary $P$ rotation
+  deterministic. The same construction uses $X_F$ for $Q$. Thus
+  $e^{-i\pi P/8}e^{-i\beta Q}e^{-i\pi P/8}=G$ for
+  $\sin\beta=1/\sqrt3$, using three contacts and three actual helper
+  read/reset cycles on four modes. Expansion in $I,P,Q$ proves the
+  identity: $\cos\beta\cos(\pi/4)=
+  \cos\beta\sin(\pi/4)=\sin\beta=1/\sqrt3$.
+  It explicitly lies outside the lower bound following (RP2).
+
+* **Coherent return instead of helper measurement.** Before reading
+  (RP3), a known helper basis conversion gives
+  $\frac12\sum_{mn}|mn\rangle Z_A^mZ_B^nG|\psi\rangle$.
+  Two CZ revisits cancel both byproducts and leave $|++\rangle G|\psi\rangle$.
+  If an additional coherent vacuum/idle port bypasses the return node
+  when its key is zero, there are four potential contact windows with
+  lossless mean occupied contacts three. For state-independent surviving
+  contact amplitude $\sqrt t$ and lossless bypass, the survivor is
+
+  $$
+  t\left(\frac{|0\rangle+\sqrt t|1\rangle}{\sqrt2}\right)^{\!\otimes2}
+     \otimes G|\psi\rangle,
+  \qquad p_{\rm return}=\frac{t^2(1+t)^2}{4}.
+  \tag{RP4}
+  $$
+
+  This factorization includes every reference. It needs eight-mode
+  return routing, storage and correct vacuum-relative spin phases;
+  local equivalence of an occupied Ising gate to CZ does not prove its
+  idle block. It is not a hard three-query protocol or a complete loss
+  instrument. No helper readout is needed for correction; a promised
+  online photon-arrival herald remains a separate resource.
+
+These are known-control flying-program constructions, related to the
+ordinary gate-teleportation/program baselines in
+[NR-R11](../communication.md#nr-r11), rather than claims of mechanism
+priority. Arbitrary joint processing of one photon's modes is a control
+assumption, not a free unknown gate or a demonstration that each module
+preserves those spectator modes.
+
+### What exactly two CZ contacts and one terminal flag can do
+
+There is also a useful restricted exact comparison. Consider one fixed
+$A$ CZ followed by one fixed $B$ CZ, arbitrary photon controls, one clean
+photon helper, no intermediate spin instruments or extra station ancillas,
+and arbitrary terminal photon instruments retaining $F$. Arbitrary local
+spin unitaries before/after their sole contact and record-dependent local
+unitary corrections are allowed. This class contains an exact $G$ flag
+of weight $9/16$; the **total** weight of all its exact locally corrected
+$G$ records is at most $9/16$. Its projective two-outcome completion
+cannot turn the other outcome into either $G$ or a harmless local-product
+retry. This is not an upper bound on all ordinary controllers: larger
+photon helpers, intermediate instruments and local data filters change
+the model.
+
+Here is the reduction including local spin controls. Across $A|BF$, the
+branch's spin factors are $U_A|i\rangle\langle i|V_A$. Target $G$ has
+operator-Schmidt rank two and spin span $\operatorname{span}\{I,Z_A\}$,
+so the two independent rank-one factors must be diagonal. A rank-one
+diagonal matrix is a computational projector times a scalar. Thus the
+allowed controls reduce to matched input/output bit flips and spin
+phases. Apply the same argument to $B$. Common input/output photon
+unitaries are absorbed into its encoder/decoder. This reduction needs
+the stated one-contact/no-spin-instrument conditions.
+
+Let $a,b=\pm1$ be spin $Z$ eigenvalues and write each CZ on the photon
+as $D(a)=\Pi_0+a\Pi_1$. With source isometry $E$, middle photon unitary
+$W$ and accepted contraction $M$, the Fourier matrix has blocks
+
+$$
+C_{ji}=M_jW_{ji}E_i,\quad E_i=\Pi_iE,\quad M_j=M\Pi_j,
+\quad\sum_iE_i^\dagger E_i=I,\quad\sum_jM_jM_j^\dagger\le I.
+\qquad
+C=\frac{\sqrt p}{\sqrt3}(R_\beta\otimes I)C_0(R_\alpha\otimes I),
+\quad C_0=\begin{pmatrix}I&-iZ\\-iX&0\end{pmatrix},
+\quad R_\gamma=e^{i\gamma X}.
+\tag{RP5}
+$$
+
+The $R$ matrices act on Fourier **block indices**, not extra physical
+helpers. They express the local spin phases. Pauli matrices within each
+block act on $F$. For any finite photon-helper dimension, stack the block
+source/row as $L=\operatorname{diag}(E_i)$,
+$T=\operatorname{diag}(M_j)$. Then $C=TWL$,
+$\|L\|_{\rm HS}^2=2$, $\|T\|_{\rm HS}^2\le2$.
+Schatten Hölder gives $\|C\|_*\le2$, even if the two query-projector
+sectors have unequal dimensions.
+The eigenvalues of $C_0^\dagger C_0$ are
+$(3\pm\sqrt5)/2$, each twice, and hence
+
+$$
+\|C_0/\sqrt3\|_*=2\sqrt{5/3},\qquad p\le\frac35.
+\tag{RP6}
+$$
+
+This elementary dimension-independent lemma applies to one fine flag.
+The stronger dual below improves its single-flag probability bound to
+$9/16$; the nuclear-norm lemma remains useful when terminal spin filters
+are allowed. Both single-flag arguments also apply to a coarse exact
+map $p\operatorname{Ad}_G$ with **one common
+visible spin correction**: rank-one Choi support forces every hidden
+Kraus operator to be $\lambda_rG$. Dilate the photon filter and contract
+its hidden register onto $\sum_r\lambda_r|r\rangle/\sqrt p$ to obtain
+one photon contraction with Kraus $\sqrt pG$. This is an upper-bound
+reduction, not a free physical record eraser. Distinct visible spin
+corrections cannot be compressed this way by photon-only processing.
+
+In fact an arbitrary finite photon helper cannot increase the optimum
+of that one corrected flag beyond $9/16$. Here is an explicit all-phase
+dual, independent of a numerical optimizer. Denote the normalized target
+Fourier matrix by
+$\widehat C=(R_\beta\otimes I)(C_0/\sqrt3)(R_\alpha\otimes I)$,
+so the physical coefficient matrix is $t\widehat C$, $t=\sqrt p$.
+Let $A_i=E_i^\dagger E_i$, $B_j=M_jM_j^\dagger$. The physical
+factorization in (RP5) gives the necessary positive Gram matrix
+
+$$
+\mathcal M=
+\begin{pmatrix}
+ \operatorname{diag}(B_0,B_1)&t\widehat C\\
+ t\widehat C^\dagger&\operatorname{diag}(A_0,A_1)
+\end{pmatrix}\succeq0,
+\qquad A_0+A_1=I,\quad B_0+B_1\preceq I.
+\tag{RP6a}
+$$
+
+It follows by taking the Gram product of the stacked block maps
+$\operatorname{diag}(M_j)$ and
+$\operatorname{diag}(E_i)^\dagger W^\dagger$.
+If necessary add the positive deficit to $B_0$; this preserves
+$\mathcal M\succeq0$ and permits $B_0+B_1=I$ in the upper-bound
+argument. No realizability of that padded point is required.
+
+Use $\tau_x,\tau_y,\tau_z$ for Pauli matrices on the block index,
+distinct from physical photon $X,Y,Z$. Put
+$s_a=\sin2\alpha$, $c_a=\cos2\alpha$, $q=c_a^2$ and
+$s_b=\sin2\beta$, $c_b=\cos2\beta$, $r=c_b^2$, and define
+
+$$
+\begin{gathered}
+a_*=\frac{2+\sqrt2}{2\sqrt3},\qquad
+b_*=\frac{2-\sqrt2}{2\sqrt3},\qquad
+a_*^2+b_*^2=1,\quad 2a_*b_*=1/3,\\
+K_A=a_*I+b_*\tau_y\otimes(-s_aI+2c_aZ),\qquad
+K_B=a_*I+b_*\tau_y\otimes(s_bI-2c_bX).
+\end{gathered}
+\tag{RP6b}
+$$
+
+Each square has equal diagonal blocks:
+$H_A=(1+3b_*^2q)I-4b_*^2s_ac_aZ$ and
+$H_B=(1+3b_*^2r)I-4b_*^2s_bc_bX$.
+Consequently the total diagonal dual cost on (RP6a) is exactly
+$\mathcal D=\operatorname{Tr}H_A+\operatorname{Tr}H_B
+=4+6b_*^2(q+r)$ after padding.
+The following gauges and index matrices fix every normalization:
+
+$$
+\begin{gathered}
+U_L=\operatorname{diag}(I,iX),\quad
+U_R=\operatorname{diag}(I,iZ),\quad
+F_0=\frac1{\sqrt3}\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad
+O=\frac{\tau_z+\sqrt2\tau_x}{\sqrt3},\\
+V_0=U_L^\dagger(O\otimes I)U_R^\dagger,\qquad
+V=(R_\beta\otimes I)V_0(R_\alpha\otimes I),\qquad
+U_L(C_0/\sqrt3)U_R=F_0\otimes I.
+\end{gathered}
+\tag{RP6c}
+$$
+
+$O^2=I$, so $V$ is unitary. The dual block matrix
+$\mathcal Y=\bigl(\begin{smallmatrix}
+K_B^2&-K_BVK_A\\-K_AV^\dagger K_B&K_A^2
+\end{smallmatrix}\bigr)$ is positive: it is a congruence of
+$\bigl(\begin{smallmatrix}I&-V\\-V^\dagger&I\end{smallmatrix}\bigr)$
+by $\operatorname{diag}(K_B,K_A)$. Positivity of its pairing with
+$\mathcal M$ gives
+$2t\ell\le\mathcal D$, where
+$\ell=\operatorname{Re}\operatorname{Tr}(V^\dagger K_B\widehat C K_A)$.
+
+This trace has a short exact reduction. Let
+$N(x)=a_*I+b_*[2x\tau_x+(1-x)\tau_z]$. Direct Pauli multiplication
+gives
+
+$$
+\begin{aligned}
+U_R^\dagger(R_\alpha\otimes I)K_A(R_\alpha^\dagger\otimes I)U_R
+ &=N(q)\otimes I-b_*s_ac_a(\tau_x+2\tau_z)\otimes Z,\\
+U_L(R_\beta^\dagger\otimes I)K_B(R_\beta\otimes I)U_L^\dagger
+ &=N(r)\otimes I-b_*s_bc_b(\tau_x+2\tau_z)\otimes X.
+\end{aligned}
+\tag{RP6d}
+$$
+
+Every nonidentity physical term in the trace vanishes because
+$\operatorname{Tr}X=\operatorname{Tr}Z=\operatorname{Tr}XZ=0$.
+Thus $\ell=2\mathcal T$, with
+
+$$
+\begin{aligned}
+\mathcal T&=\operatorname{Tr}[O N(r)F_0N(q)]\\
+ &=\frac43+\frac{4(\sqrt2-1)}9(q+r)
+             +\frac{28\sqrt2-41}{18}qr,\\
+3\mathcal T-\mathcal D
+ &=\frac{10\sqrt2-13}{3}[q(1-r)+r(1-q)]
+   +\frac{68\sqrt2-93}{6}qr\ \ge0.
+\end{aligned}
+\tag{RP6e}
+$$
+
+Both displayed constant coefficients are positive (square
+$10\sqrt2>13$ and $68\sqrt2>93$), and $q,r\in[0,1]$.
+Since $\mathcal D>0$, also $\mathcal T>0$. Weak duality therefore
+gives the sharp dimension-independent single-flag bound
+
+$$
+\sqrt p=t\le\frac{\mathcal D}{4\mathcal T}\le\frac34,
+\qquad p\le\frac9{16}.
+\tag{RP6f}
+$$
+
+The inequality is strict away from $q=r=0$; the four-mode construction
+in (RP10) attains equality. This proof requires only the necessary
+Gram condition and the explicit positive dual, not SDP sufficiency or
+strong duality. It covers one fine flag, or one coarse exact map with
+the common correction reduction above. It does not bound several
+visible records with different spin corrections for an arbitrary
+larger helper; (RP3) already has total unit yield in that larger model.
+
+Now restrict the photon through the two contacts to four dimensions,
+one data qubit and a two-level helper, while allowing one arbitrary
+accepted terminal contraction $M:C F\to F$.
+The full target $C$ is invertible. In a four-dimensional photon space
+this forces both query sectors to have dimension two: each block
+source and row must have rank at least two and their dimensions sum
+to four. Thus all the $E_i,M_j$ in (RP5) are square and invertible,
+even when an individual target block is singular. Put
+$\kappa=\sqrt{p/3}$, $H_j=(M_jM_j^\dagger)^{-1}>0$ and
+$K_i=E_i^\dagger E_i$. Unitarity of $W$ gives the necessary balance
+conditions
+
+$$
+H_0^{-1}+H_1^{-1}\le I,\qquad
+C^\dagger\operatorname{diag}(H_0,H_1)C
+ =\operatorname{diag}(K_0,K_1),\qquad K_0+K_1=I.
+\tag{RP7}
+$$
+
+The first relation is equality for a terminal projective helper outcome.
+Conversely these conditions construct the source, row and middle
+unitary: choose positive square roots $E_i=\sqrt{K_i}$,
+$M_j=\sqrt{H_j^{-1}}$ and
+$W=\operatorname{diag}(M_j)^{-1}C\operatorname{diag}(E_i)^{-1}$.
+Then $W^\dagger W=I$. The source isometry and a coisometric terminal
+row extend to $U(4)$ controls in the equality case; the inequality
+permits a trace-decreasing terminal filter.
+
+For completeness the balance bound includes all spin phases and their
+singular limits. First suppose $\sin2\alpha\sin2\beta\ne0$, and put
+$u=\cot2\alpha$, $v=\cot2\beta$,
+$A_0=\cos^2\beta H_0+\sin^2\beta H_1$,
+$T_0=\sin\beta\cos\beta(H_0-H_1)$ and $A_1=A_0-2vT_0$.
+The conjugated weight is
+$\bigl(\begin{smallmatrix}A_0&iT_0\\-iT_0&A_1\end{smallmatrix}\bigr)$.
+Writing its $C_0$ congruence as $B$ gives
+$B_{00}=A_0+\{T_0,X\}+XA_1X$,
+$B_{01}=-i(A_0+XT_0)Z$, $B_{11}=ZA_0Z$.
+The off-diagonal balance and scalar block sum imply
+
+$$
+\begin{gathered}
+A_0=hI-t_0X+h_zZ,\qquad T_0=t_0I+t_xX+t_zZ,\qquad h>0,\\
+t_0=2vt_x,\quad h_z=-2vt_z,\quad
+S:=\kappa^{-2}=3h+(2-4v^2)t_x,\\
+h=(12v^2-2)t_x,\qquad ut_z=-2vt_x,\qquad
+u(h+t_x)=2vt_z.
+\tag{RP8}
+\end{gathered}
+$$
+
+Indeed $B_{01}+B_{10}=0$ forces the first line;
+$B_{00}+B_{11}=SI$ gives the second; and
+$B_{00}-B_{11}=2u[h_zI+t_zX+(h+t_x)Z]$ gives the third.
+If $v\ne0$, write $s=v^2$, $q=-t_x>0$, $L=2-12s$ and
+$z=|v|\sqrt L$. The last line gives
+$0<s<1/12$, $u^2=4s/(1-12s)$ and
+$t_z^2=(1-12s)q^2$. The positive $H_0,H_1$ commute, and
+
+$$
+\begin{aligned}
+H_0+H_1&=q[(4-20s)I-6v\sqrt L\,N],\\
+H_0H_1&=2q^2(1-8s)[I-4v\sqrt L\,N],\qquad N^2=I.
+\end{aligned}
+\tag{RP9}
+$$
+
+Positive product requires $z<1/4$, equivalently $s<1/24$ in this
+interval. The inverse-sum eigenvalues are
+$(4-20s\mp6z)/[2q(1-8s)(1\mp4z)]$.
+Their difference is $10z/[q(1-16z^2)]>0$, with the upper-minus-sign
+fraction the larger. Requiring that eigenvalue to be at most one and
+using $S=4q(1-8s)$ gives
+$S\ge2(4-20s-6z)/(1-4z)\ge8$.
+The last inequality is equivalent to $z\ge2s$, which follows from
+$z^2-4s^2=2s(1-8s)>0$. Thus this whole generic branch has
+$p=3/S\le3/8$. In the projective case the two inverse-sum eigenvalues
+would both equal one; their nonzero difference rules out every
+$v\ne0$ solution entirely.
+
+If $v=0$, (RP8) forces $u=0$ and, up to swapping the two blocks,
+$H_0=hI+T_0$, $H_1=hI-T_0$ with
+$T_0=-hX/2+t_zZ$. The inverse-sum inequality becomes
+$2h/(3h^2/4-t_z^2)\le1$, so $h\ge8/3$ and
+$p=3/(2h)\le9/16$.
+There are two remaining angle cases. If $\sin2\beta=0$, the weight
+is block diagonal with positive blocks $A_0,A_1$. For
+$\sin2\alpha=0$, $B_{01}=-iA_0Z$ cannot vanish. Otherwise the
+conditions give $A_0=hI+z_0Z$, $A_1=h_1I+2z_0Z$,
+$z_0=-uh$, $h_1=2uz_0=-2u^2h\le0$, contradicting positivity.
+If $\sin2\beta\ne0$ but $\sin2\alpha=0$, they give
+$A_0=-XT_0$, $t_x=-h$, $t_0=-2vh$, $h_z=t_z=0$;
+then $B_{11}=h(I-2vX)$ and $B_{00}=h(4v^2I+2vX)$.
+Positivity requires simultaneously $|v|<1/2$ and $|v|>1/2$.
+This exhausts the singular cases without dividing by a vanishing sine.
+
+The sharp value is attained at $\alpha=\beta=\pi/4$, $t_z=0$:
+
+$$
+\begin{gathered}
+H_0=\tfrac83I-\tfrac43X,\qquad H_1=\tfrac83I+\tfrac43X,
+\qquad K_0=\tfrac12I+\tfrac14Z,\quad K_1=\tfrac12I-\tfrac14Z,\\
+M_0M_0^\dagger=\tfrac12I+\tfrac14X,\qquad
+M_1M_1^\dagger=\tfrac12I-\tfrac14X,
+\qquad\kappa=\tfrac{\sqrt3}{4},\qquad p=\tfrac9{16}.
+\tag{RP10}
+\end{gathered}
+$$
+
+The construction after (RP7) supplies exact $U(4)$ controls and local
+spin-phase correction. This proves the sharp single-contraction bound
+$9/16$ in four photon dimensions, and attains it with a projective
+helper outcome. It does not yet multiply or sum leaf bounds across
+an arbitrary instrument; the fixed-circuit argument below is needed
+for that conclusion.
+
+The projective complement is also constrained. Every feasible projective
+solution has $u=v=0$. Put $\rho=t_z/h$, so
+$\rho^2=3/4-4p/3$. Up to common input/output photon unitaries, bit flips
+and spin phases, choose the orthogonal row $[-M_1,M_0]$.
+After removing the accepted branch's spin phases its sector operators are
+
+$$
+D_{ab}=\frac12\left[i(\rho a+b/2)I-X/2
+                   -(a/2+\rho b)Y+(ab-\rho)Z\right],
+\quad D_{ab}^\dagger D_{ab}=(1-p)I.
+\tag{RP11}
+$$
+
+The real quaternion inner products, or direct Pauli multiplication, give
+
+$$
+\begin{aligned}
+\frac{\operatorname{Tr}(D_{ab}^\dagger D_{-a,b})}{2(1-p)}
+ =\frac{\operatorname{Tr}(D_{ab}^\dagger D_{a,-b})}{2(1-p)}
+ &=-\frac{p}{3(1-p)},\\
+\frac{\operatorname{Tr}(D_{ab}^\dagger D_{-a,-b})}{2(1-p)}
+ &=\frac{p/3-\rho ab}{1-p}.
+\end{aligned}
+\tag{RP12}
+$$
+
+For target $G_{ab}=(I-iaZ-ibX)/\sqrt3$ the corresponding absolute
+half-traces are all $1/3$. Photon pre/post unitaries preserve these
+overlaps, spin phases preserve their magnitudes and matched flips permute
+the same pairs. A complement locally equivalent to $G$ would therefore
+require $p=1/2$ from a neighboring pair. Then
+$\rho=\pm1/\sqrt{12}$ and the opposite-pair values have magnitudes
+$|1/3\pm1/\sqrt3|\ne1/3$, a contradiction.
+A local-product rejected unitary would require all sector photon
+operators proportional, so the neighboring magnitude would be one;
+that requires $p=3/4>9/16$. Thus neither a second corrected $G$ nor a
+harmless local retry completes this projective one-helper circuit.
+For these diagonal unitary branches, arbitrary local pre/post spin
+operations again reduce to matched flips and phases by the rank-one
+spin-factor argument above. Additional contacts, station ancillas,
+intermediate instruments, larger helpers and general correction
+instruments remain outside this comparison.
+At most one of the two projective outcomes can therefore be a locally
+corrected $G$ flag. A zero-weight branch cannot evade the single-branch
+bound by putting deterministic $G$ in its complement.
+
+The stronger total-terminal-instrument statement uses the **same source
+and middle unitary for all records**. Refine its accepted records to
+photon rows $M_m$ with $\sum_mM_m^\dagger M_m\le I_4$, absorbing
+each known photon output correction into its row. For the fixed circuit,
+the matched spin flips are fixed by its common pre-contact spin bases;
+absorb them once. The remaining accepted corrections are spin phases.
+Every nonzero corrected-$G$ Fourier matrix is invertible, and hence
+
+$$
+C_mC_n^{-1}
+=\operatorname{diag}(M_{m0}M_{n0}^{-1},M_{m1}M_{n1}^{-1})
+\quad\hbox{is block diagonal}.
+\tag{RP12a}
+$$
+
+The square block cancellation uses four dimensions and the common
+$W,E_i$; it fails for a general larger helper or a changed intermediate
+history. Common photon output unitaries multiply this test by block
+diagonal matrices and do not alter its vanishing off-diagonal blocks.
+For $\delta=\alpha_m-\alpha_n$, put $c=\cos\delta$, $s=\sin\delta$.
+Direct multiplication gives
+
+$$
+C_0^{-1}=\begin{pmatrix}0&iX\\iZ&iY\end{pmatrix},\qquad
+C_0R_\delta C_0^{-1}
+=I\otimes(cI-sZ)+sJ\otimes Y,\qquad
+J=\begin{pmatrix}0&-2\\1&0\end{pmatrix}
+  =-X/2-3iY/2.
+\tag{RP12b}
+$$
+
+Thus the ratio test is $R_{\beta_m}[I\otimes(cI-sZ)+sJ\otimes Y]
+R_{-\beta_n}$. Its physical-$I$ and physical-$Z$ off-diagonal
+coefficients are respectively
+$ci\sin(\beta_m-\beta_n)X$ and
+$-si\sin(\beta_m-\beta_n)X$. Since $c,s$ cannot both vanish,
+$\sin(\beta_m-\beta_n)=0$. The remaining physical-$Y$ coefficient
+contains $sR_{\beta_n}JR_{-\beta_n}$ up to sign. Conjugation about
+$X$ preserves its nonzero $X$ coefficient $-1/2$, so it cannot be
+diagonal. Therefore $\sin(\alpha_m-\alpha_n)=0$ too.
+All accepted records require the same spin phases modulo global signs.
+
+After that common correction, rank-one Choi support forces every
+accepted fine Kraus to be $\lambda_mG$, including hidden records.
+Stack its photon rows into $M_{\rm stack}$ and contract the record
+onto $\sum_m\lambda_m|m\rangle/\sqrt p$, where
+$p=\sum_m|\lambda_m|^2$. This gives one photon contraction with
+Kraus $\sqrt pG$, to which (RP7)–(RP10) apply. Consequently
+
+$$
+\sum_{\text{accepted exact locally corrected }G\text{ records}}p_m
+\le\frac9{16}.
+\tag{RP12c}
+$$
+
+This mathematical compression does not grant a free physical record
+eraser. Intermediate readout can change $E,W$, local nonunitary spin
+filters change the phase factors, and extra spin ancillas change the
+rank-one spin argument. None is covered by (RP12c). In particular it
+does not constrain the four differently corrected eight-mode records
+of (RP3).
+The reverse fixed word has the same cap by relabelling the two stations
+and conjugating the photon by a Hadamard. This is a mathematical change
+of labels/basis, not a physical remote spin SWAP. A recorded classical
+lottery over either word and over pre-chosen sources/middle circuits is
+also bounded by convexity. Its record may select $E,W$ before the
+contacts; intermediate measurement-dependent changes are outside the
+fixed-circuit proof.
+
+There is a separate, weaker **total** bound allowing terminal local
+spin filters in four photon dimensions. Keep the same fixed source
+isometry and middle $U(4)$, no intermediate records or pre-contact
+spin-ancilla encodings, and no additional shared ancillary quantum
+resource beyond the arbitrary supplied $ABFR$ input.
+After the last contact allow any terminal separable instrument, hence
+any terminal LOCC with local workspaces, filtering and classical
+communication. Fine-grain its successful Kraus operators as
+$M_m\otimes L_{A,m}\otimes L_{B,m}$, with their sum of positive
+effects at most identity on the full post-contact Hilbert space.
+The target on each accepted leaf is $\lambda_mG$.
+
+Across either spin cut the two factors are
+$L_{A,m}|i\rangle\langle i|V_A$, where $V_A$ is the common pre-contact
+spin unitary. Target invertibility excludes rank-one local filters.
+The diagonal target Schmidt span again forces each rank-one factor
+diagonal, so $V_A,V_B$ are monomial with common matched permutations.
+Absorb them once. Every successful spin filter is an invertible
+diagonal $D_{A,m}\otimes D_{B,m}$. With normalized two-point
+Hadamard $H$, division by its diagonal entries becomes the invertible
+circulant $T_{A,m}=H D_{A,m}^{-1}H$, and similarly for $B$.
+The Fourier matrix is, up to its scalar,
+$(T_{B,m}\otimes I)C_0(T_{A,m}\otimes I)$.
+The same square-factor ratio (RP12a) applies.
+
+To check compatibility for complex filters, write
+$T_{A,m}T_{A,n}^{-1}=aI+b\tau_x$, with complex $a,b$ not both zero.
+From (RP12b),
+
+$$
+C_0[(aI+b\tau_x)\otimes I]C_0^{-1}
+ =aI+ibI\otimes Z-ibJ\otimes Y.
+\tag{RP12d}
+$$
+
+Its physical-$I,Z$ parts force
+$T_{B,m}T_{B,n}^{-1}$ to be both circulant and diagonal, hence
+scalar. The remaining part is proportional to
+$bTJT^{-1}$ for an invertible circulant $T$. Since $T$ commutes with
+$\tau_x$,
+$\operatorname{Tr}(\tau_xTJT^{-1})
+=\operatorname{Tr}(\tau_xJ)=-1$;
+a diagonal matrix has zero such trace. Thus $b=0$ too.
+All successful spin product filters are proportional to one common
+invertible product $D=D_A\otimes D_B$:
+$D_{A,m}\otimes D_{B,m}=c_mD$.
+Normalize $\|D_A\|_{\rm op}=\|D_B\|_{\rm op}=1$ by absorbing
+their scales into $c_m$.
+
+Now the **global** terminal success-effect budget implies
+
+$$
+\left(\sum_m|c_m|^2M_m^\dagger M_m\right)\otimes D^\dagger D
+\preceq I,
+\qquad \sum_m|c_m|^2M_m^\dagger M_m\preceq I_4.
+\tag{RP12e}
+$$
+
+The second inequality follows by evaluating the spin factor on a
+maximal eigenvector of $D^\dagger D$, whose largest eigenvalue is one.
+This is not an unjustified independent photon-POVM budget for unrelated
+branch filters: the compatibility proof has first made their spin
+factor common. Stack the rows $c_mM_m$ and compress their record onto
+the successful $|\lambda\rangle/\sqrt p$ as before. The resulting
+photon contraction, followed by $D$, implements $\sqrt pG$.
+Before $D$, its Fourier matrix is
+$C_{\rm eff}=\sqrt p(T_B\otimes I)(C_0/\sqrt3)(T_A\otimes I)$,
+where $T_A=HD_A^{-1}H$, $T_B=HD_B^{-1}H$ have smallest singular
+values at least one. Therefore
+
+$$
+2\sqrt{5p/3}\le\|C_{\rm eff}\|_*\le2,
+\qquad
+\sum_{\text{terminal-LOCC exact }G\text{ leaves}}|\lambda_m|^2
+\le\frac35.
+\tag{RP12f}
+$$
+
+The lower norm inequality follows by applying nuclear-norm
+submultiplicativity to the two inverse matrices; the upper is the
+physical factorization in (RP6). This is a valid, potentially loose
+filter bound, not a $9/16$ claim for filters. It includes terminal
+local ancillary workspaces by Kraus refinement, but not coherent
+spin-ancilla encoding before a contact, adaptive intermediate
+preparation/middle controls, extra node visits or pre-shared auxiliary
+entanglement. Those stronger ordinary resources remain costed
+comparators rather than being excluded by this proof.
+
+### A physical meter is a complete instrument, not one efficiency
+
+After a path interferometer, plus and minus occupy different rails.
+Reading that label destructively absorbs the photon carrying $F$.
+An unmeasured output rail is a quantum key, not an available classical
+spin-feedback signal. A common-rail presence measurement also does not
+distinguish plus from minus. One can compose ideal rail-selective
+occupancy meters to resolve $\{+, -,\mathrm{vacuum}\}$, or specify a
+time-multiplexed meter with its reset/readout/delay; neither interface
+follows just from coherent routing. Monitoring a discarded minus port
+and accepting silence retains plus in an exactly lossless model, but
+consumes the minus photon and therefore gives no same-$F$ retry. Under
+loss, silence also includes vacuum.
+
+[Niemietz et al., Nature **591**, 570–574
+(2021)](https://doi.org/10.1038/s41586-021-03290-z) demonstrate a
+polarization-preserving nondestructive photon detector using an atom and
+two crossed cavities. Their [primary manuscript, Methods and
+supplement](https://arxiv.org/html/2103.14677) report, for the stated
+weak-coherent-pulse experiment, surviving-photon herald probability
+$\Pr(H\mid S)=0.79\pm0.03$, survival $0.31\pm0.01$, and conditional
+mean polarization fidelity $0.962\pm0.003$. The $79\%$ is not
+$\Pr(S\mid H)$. Vacuum/multiphoton priors, dark heralds, loss and
+atomic readout remain separate records. These averages do not specify
+an arbitrary-reference conditional channel. Microwave $\pi/2$ pulses
+and fluorescence take about $5.8$ and $7.5\,\mu\mathrm{s}$ respectively;
+the complete control sequence and feedback delay must be included.
+The actual presence primitive supports a physical investigation, but is
+not a demonstrated path-$X$/survival meter for (RP1).
+
+The following scalar ledger is conditional on its stated ideal
+instruments. Let each occupied node contact survive with probability
+$t$, independent of data/history, with the exact surviving CZ; let a
+correct helper measurement have survival $m$ and per-round routing and
+storage survival $r$. Put $q=t^2mr$. With a genuine fatal-erasure flag,
+a native round gives good exit $3q/4$, identity retry $q/4$, and fatal
+loss $1-q$. Hence
+
+$$
+D_N=\frac{3q}{4-q},\qquad
+\mathbb E N_{\rm rounds}=\frac4{4-q},\qquad
+D_4=t^4r_4,\quad D_8=t^2m^2o,\quad D_3=(tm)^3r_3.
+\tag{RP13}
+$$
+
+$r_4,o,r_3$ include each ordinary circuit's own optics/holds; $D_8$
+assumes two independent binary-meter survivals, not a joint meter.
+The mean number of scheduled native node contacts is $8/(4-q)$,
+equal to $8/3$ at $q=1$. If each round also uses one cavity meter,
+its lossless total mean is four cavity encounters. This mean does
+not order survival against four fixed contacts. Actual occupied
+counts require the locations of losses rather than $q$ alone.
+With $r_4=1$, $D_N\ge D_4$ exactly when
+$mr\ge4t^2/(3+t^4)$. For $t,m>0$, $D_N\ge D_8$ exactly when
+$r(3+t^2m^2o)\ge4mo$.
+At $m=t$, $r=o=r_4=1$ these inequalities hold because
+$t^4-4t+3=(t-1)^2(t^2+2t+3)\ge0$; equal mean contact count does not
+by itself order survival. Conversely a supplied joint four-outcome
+meter with the same $m,r$ gives ordinary delivery $q\ge D_N$.
+At $m=0.31$ the common-survival model cannot both beat $t^4$ and
+deliver $0.1$: the first inequality gives $t^2\le mr$, so
+$D_N\le3m^2/(4-m^2)=961/13013<0.1$.
+This rejection is **not** valid when plus bypasses the lossy meter.
+
+If plus survival is $\ell_+$ and corrected-minus return survival is
+$\ell_-$, with otherwise ideal flags, the correct sum is instead
+
+$$
+D_{N,\rm asym}=\frac{t^2p\ell_+}{1-t^2(1-p)\ell_-},
+\qquad p=3/4.
+\tag{RP14}
+$$
+
+The optimistic $\ell_+=1$, $\ell_-=m$ gives
+$3t^2/(4-t^2m)$. Plus may still need to wait for atomic readout and
+branch-conditioned spin control; its delay loss belongs in $\ell_+$.
+For one concrete hold implementation this is decisive. The
+[Niemietz Methods, Appendix D](https://arxiv.org/html/2103.14677)
+uses fiber attenuation $4\,\mathrm{dB/km}$ near $780\,\mathrm{nm}$.
+Its post-reflection microwave $\pi/2$ and fluorescence components give
+a nominal $5.8+7.5=13.3\,\mu\mathrm{s}$, not a measured total latency;
+electronics and gaps add time. Assuming group velocity
+$2\times10^8\,\mathrm{m/s}$, a fiber-only hold needs $2.66\,\mathrm{km}$,
+or $10.64\,\mathrm{dB}$, with survival
+$b_{\rm delay}=10^{-1.064}\approx0.0863$.
+If **every accepted plus** waits in that spool for the clean-$G$
+dark-hit-dump and spin-feedback policy, $\ell_+\le b_{\rm delay}$, $\ell_-\le1$
+and $t\le1$ in (RP14) imply $D_{N,\rm asym}\le b_{\rm delay}<0.1$.
+This excludes that particular hold implementation, not faster meters,
+frequency conversion or matter storage. Those change the instrument
+and cost and must also be offered to ordinary protocols.
+Immediate plus forwarding with later dark-hit spin errors, deferred
+flags or a different frame policy is a different service; this cap
+does not exclude it.
+Ordinary helper meters must receive the same bypass option: with
+independent uniform helper bits, survival one on zero and $m$ on one
+gives $D_{8,\rm asym}=t^2(1+m)^2o/4$. The readout-free coherent return
+has (RP4). These are comparator points, not optimal ordinary frontiers.
+
+To expose false/missed heralds without fitting a quantum map from mean
+numbers, consider the following **defined** classical-instrument model.
+Let $\eta=\Pr(H\mid\text{surviving minus})$, $d$ be an empty-bypass
+dark-hit probability, $b_+$ the plus bypass survival, and
+$r_M,r_R,r_W$ the minus pre-decision, repeat-return and wrong-exit
+transmissions. Suppose all survivors preserve $F$ exactly. Pass plus on
+atomic zero, dump plus on atomic one, and correct/return minus on atomic
+one. The good exit, true surviving repeat and missed-minus wrong exit
+weights are
+
+$$
+a=t^2p b_+(1-d),\qquad
+b=t^2(1-p)r_Mm\eta r_R,\qquad
+w=t^2(1-p)r_Mm(1-\eta)r_W.
+\tag{RP15}
+$$
+
+If atomic-zero survivors from both paths are delivered, good/wrong
+weights are $a/(1-b)$ and $w/(1-b)$.
+Because $\operatorname{Tr}(G^\dagger PQ)=0$, their conditional
+entanglement fidelity is $a/(a+w)$. With the illustrative
+$m=.31$, $\eta=.79$, $d=0$ and other transmissions one, it is about
+$0.9788$; this is not a source-certified channel prediction or a
+universal $79\%$ fidelity cap.
+An additional path-resolved output switch can dump minus on atomic
+zero, converting surviving misses into erasures; the good delivery
+remains $a/(1-b)$ in this model. That switch, optical storage and
+feedback are paid. Plus must wait to be dumped on a dark hit before an
+erroneous global spin correction; releasing it early changes the
+instrument. Ordinary path-gated helper readout similarly has per-bit
+good surviving weight $[b_+(1-d)+m\eta]/2$, and the independent
+two-bit comparator is its square times $t^2o$.
+
+The $b$ in (RP15) counts true surviving repeats, not every announced
+repeat. A lost photon can produce a hit and cause further empty rounds.
+Such histories cannot deliver the old unknown $F$, but they consume
+calls/reset/time. Their costs cannot be inferred from $1/(1-b)$.
+A delivered-output service may score vacuum zero; an **online heralded**
+gate must also bound false accepted vacuum. A common final-arrival
+check applies to ordinary outputs too, while native same-photon retry
+requires its additional branch record. No-click selection is not
+recovery of a lost $FR$ state.
+
+For the real instrument let $T$ be the corrected true surviving-repeat
+CP map, $A$ the clean exit, and $W$ a wrong exit if delivered. Then
+
+$$
+\mathcal C_{\rm delivered}=\sum_{j\ge0}A\circ T^j
+\quad\text{or}\quad\sum_{j\ge0}(A+W)\circ T^j.
+\tag{RP16}
+$$
+
+For stopping and cost, use full maps $\widehat T,\widehat A$ on
+one-photon **and vacuum**, including all retained records; the complete
+accepted map is $\sum_j\widehat A\circ\widehat T^j$ and mean rounds
+are $\sum_j\operatorname{Tr}\widehat T^j(\rho)$.
+Persistent bath/controller memory belongs in that state; otherwise
+use the actual nonstationary products instead of a fixed power.
+A scalar geometric reduction requires the corresponding scalar map
+identities, not mean polarization fidelity. If $T=b\Lambda$ with
+$\Lambda$ TP, $A=a\operatorname{Ad}_G$ and
+$\tfrac12\|\Lambda-\operatorname{Id}\|_\diamond\le\delta$, the
+normalized delivered map differs from $\operatorname{Ad}_G$ by at most
+$b\delta/(1-b)$ in half diamond norm: telescope
+$\|\Lambda^j-\operatorname{Id}\|_\diamond/2\le j\delta$ and sum
+$(1-b)\sum_jb^jj=b/(1-b)$.
+This reference-inclusive bound is conditional on constant $b$ and a
+uniform channel error; the measured six-state mean does not supply it.
+
+### Preparing the meter and balancing the cavity response
+
+In a scalar atom-preserving reflection model take atom amplitudes
+$r_0=A>0$, $r_1=-B<0$. Preparation
+$|\psi_z\rangle=\sqrt z|0\rangle+\sqrt{1-z}|1\rangle$ gives a
+surviving atomic vector
+$A\sqrt z|0\rangle-B\sqrt{1-z}|1\rangle$.
+Choosing $z=B/(A+B)$ makes it orthogonal to the bypass atom and gives
+survival $AB$. The source's illustrative intensities $A^2=.50$,
+$B^2=.117$ would give about $.242$ in this derived ideal setting,
+not a newly measured operating point. For complex amplitudes,
+$zr_0+(1-z)r_1=0$ requires antipodal phases; an initial atomic
+relative phase cancels from this condition. For a finite pulse it
+must hold as an operator on the occupied frequency/polarization
+support, not only for one averaged amplitude.
+
+Improving the conditional hit fraction in this way does not maximize
+true surviving-hit mass. More generally suppose the full interaction
+preserves atomic labels,
+$V=|0\rangle\langle0|\otimes V_0+|1\rangle\langle1|\otimes V_1$,
+with the same retained/lost outputs in both terms. The orthogonal hit
+bra gives
+
+$$
+K_H(z)=\sqrt{z(1-z)}(V_0-V_1),\qquad
+\mathcal H_z=4z(1-z)\mathcal H_{1/2}.
+\tag{RP17}
+$$
+
+The identity holds on every passive reference, including loss if the
+full controlled dilation holds. A selected diagonal elastic block
+$R_0,R_1$ alone proves it only for that block; it does not cover lost
+atomic flips or other reflected inelastic records. Normalized nonzero
+hit output is independent of $z$. For the scalar example the hit mass
+is $z(1-z)(A+B)^2$, maximized at $z=1/2$; it exceeds $AB$ by
+$(A-B)^2/4$. With the illustrative intensities it is about $.275$.
+Thus perfect conditional survivor discrimination can reduce useful
+repeat mass. If only $T$ changes to $cT$, $c=4z(1-z)$, while $A$ and
+all other controls are fixed and misses are dumped, each finite sum
+$\sum_{j<K}c^jA\circ T^j$ increases in CP order with $c$.
+Balanced preparation maximizes every positive linear all-launch output
+payoff in this model. It need not maximize fidelity, signed utility or
+payoff per query/time, and actual preparation-dependent errors may
+invalidate its hypotheses.
+
+There is a distinct physical route to equal elastic amplitudes at a
+node. The projected architecture of
+[Arwas et al., *Blueprint for a fault-tolerant compound photon–atom
+quantum architecture*, Sec. II.3](https://arxiv.org/html/2606.30385v1)
+uses a single reflection with symmetric polarization preparation and
+orthogonal polarization selection. Its Eqs. (8)–(13) give the selected
+interacting-rail amplitudes $+r_{\rm sym}$ and $-r_{\rm sym}$, with
+$r_{\rm sym}=(r_a-r_c)/2=(\kappa_e/\kappa)C/(1+C)$.
+There is no additional two-pass requirement in that construction.
+However its other logical spatial rail bypasses the atom. To obtain
+the survivor premise $\alpha(\omega)\operatorname{CZ}$ used in this
+subsection, the **full complex bypass transfer** must equal the
+selected interacting transfer throughout the occupied band, after
+calibrated phases and all path losses. Equal atomic-state amplitudes
+or equal average rail intensities alone do not prove this. Auxiliary
+polarization selection must not consume the unknown $F$; reencoding
+$F$ into spatial/temporal rails, extra order/helper modes, filters and
+their failure/loss records are additional resources. The source states
+that its device parameters are projected. Neither its scalar efficiency
+nor its cluster-state protocols demonstrate this retained-$F$ switch,
+its QND order readout or matched ordinary modal ports.
+In particular its efficiency quoted for incident $|+\rangle$ with an
+ideal bypass is not a state-independent whole-gate survival scalar.
+
+The next physical comparison must therefore specify a node, router,
+meter and clock dilation on unknown $ABFR$ including vacuum, with
+finite-pulse spectral records, actual feedback delays and all loss
+outcomes. It must compare all-launch delivered-good weight and false
+herald/error separately against (RP2)–(RP4), generalized ordinary
+readout/programs, spare-matter entanglement-first gates and repeated
+calibration. A gate on a future-discarded known photon is a different
+workload. The $9/16$ bounds concern one corrected flag with arbitrary
+finite photon helper or all terminal unitary-feedback flags in four
+photon dimensions; the $3/5$ total-filter bound concerns that fixed
+four-mode terminal-only model. They do not prove a
+best-ordinary physical rate, and the scalar break-even curves do not
+establish a practical advantage.
+
+
+The [exact finite replay](../checks/architecture/verify_remote_spin_phase.py)
+checks the literal native corrected flags and ordinary two-helper,
+reused-helper and classical-coin instruments on every $ABF$ matrix
+unit; an actual pre/CZ/middle/CZ/post four-mode circuit realizes (RP10)
+and its complementary map. It also checks polynomial complement-Gram
+identities, the phase-ratio and complex-circulant ingredients, explicit
+terminal product-effect/compression budgets, coherent-return occupation
+and rational scalar-ledger cases. Its imported
+[dual component](../checks/architecture/retained_photon_dual.py)
+checks the formal all-phase matrices, trace polynomial and balanced
+attainment without an optimizer. These finite/formal algebra checks
+support the general analytic proofs; they do not enumerate arbitrary
+controller instruments, establish the optical ports, reconstruct the
+physical meter/loss channel or verify a hardware rate. This retained-
+photon comparison has not been formalized in Lean.
+
 ## Physical resources and verification scope
 
 The arbitrary-helper protocol assumes a pure incident photon and the

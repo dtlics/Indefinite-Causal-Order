@@ -246,12 +246,16 @@ floor, a vacuum-preserving physical ground and an explicit pulse/clock
 budget. The retained-spin endpoint also has ordinary parity and photon-bus
 baselines with specific optical ports. The assessment records the remaining
 device and accuracy tests.
-The [spin-phase component](methods/remote-spin-phase.md) now gives an
-exact eight-mode coherent-program realization, a restricted gate-yield
-separation and a repeated ordinary survivor compiler, with explicit
-port and timing qualifications. Its next
-test compares rates and fidelity with the strongest paid ordinary routes;
-ideal accepted weight alone does not establish a hardware advantage.
+The [spin-phase component](methods/remote-spin-phase.md) gives exact
+coherent-program realizations and ordinary survivor compilers, with
+explicit port and timing qualifications. Its
+[retained-photon gate comparison](methods/remote-spin-phase.md#nr-r11-retained-photon-gate)
+keeps the unknown photon as quantum output and distinguishes one corrected
+flag from multiple corrected records. The next test fixes a full physical
+node, readout, vacuum and clock instrument, then compares delivery with
+ordinary extra modes, measurements between contacts, memories and return
+visits. Ideal
+accepted weight alone does not establish a hardware advantage.
 The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
 also compare unknown-input gates, helper-space costs and coherently read
 identity failures; their ideal identities do not certify lossy retries.

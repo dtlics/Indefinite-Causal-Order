@@ -79,6 +79,21 @@ gate-synthesis or composite-control priority claim.
 | [Bravyi, DiVincenzo and Loss, *Schrieffer-Wolff transformation for quantum many-body systems*, arXiv:1105.0675v1](https://arxiv.org/html/1105.0675v1), Sections 2--3 | Standard direct rotation and exact effective low-energy Hamiltonians. | The component supplies an elementary retained-bath/reference estimate under bounded global perturbation and a common bare vacuum. Weak on-shell hybridization, fourth-order truncation, finite temperature and ramps need additional arguments. |
 | [Simonov et al., *Universal Quantum Computation via Superposed Orders of Single-Qubit Gates*, arXiv:2311.13654v4](https://arxiv.org/html/2311.13654v4), Sections II--III | Gate synthesis through commutator/anticommutator branches. | Order-based synthesis is established. Vacuum extensions, controlled implementations and the full input/output interface must be priced; this is not a source for the component's drift law or a practical robustness advantage. |
 
+## Retained-photon gate synthesis and readout
+
+The [retained-photon component](methods/remote-spin-phase.md#nr-r11-retained-photon-gate)
+specifies a full unknown-input gate and restricted ordinary query/readout
+classes. Its branch bounds do not establish priority or a physical
+advantage against all ordinary instruments and memories.
+
+| Primary work | Input used | Scope to preserve |
+| --- | --- | --- |
+| [Daiss et al., *A quantum-logic gate between distant quantum-network modules*, Science **371**, 614–617 (2021)](https://doi.org/10.1126/science.abe3150) | Sequential cavity interactions, local spin control and a remote gate. | The demonstrated photon readout consumes the flying carrier; retaining its unknown polarization requires another readout interface. |
+| [Niemietz et al., *Nondestructive detection of photonic qubits*, arXiv:2103.14677v1](https://arxiv.org/html/2103.14677v1), main text, Methods and supplement | A polarization-preserving one-rail photon-presence detector. | Conditional detection given survival, survival probability and conditional mean polarization fidelity are different quantities. They do not specify a full path-flag, vacuum and reference-complete gate instrument. |
+| [Arwas et al., *Blueprint for a fault-tolerant compound photon–atom quantum architecture*, arXiv:2606.30385v1](https://arxiv.org/html/2606.30385v1), Section II.3, Eqs. (8)–(13) | Symmetric cavity reflection with a spin-independent selected amplitude on the interacting rail. | The architecture parameters are projected. The bypass must match the full complex transfer, and the extra polarization selection consumes physical modes. |
+| [Simonov et al., *Universal Quantum Computation via Superposed Orders of Single-Qubit Gates*, arXiv:2311.13654v4](https://arxiv.org/html/2311.13654v4), Sections II–III | Established order-based gate synthesis and local feedback. | Their controlled-product gates differ from the present fixed remote contacts. Vacuum extensions and controlled optical implementations remain resources. |
+| [Saberi, *Ancilla-assisted sequential approximation of nonlocal unitary operations*, PRA **84**, 032323 (2011)](https://doi.org/10.1103/PhysRevA.84.032323), Sections II–IV | Operator-Schmidt and sequential-ancilla obstructions. | Its unitary decoupling task differs from a retained flying data qubit with postselection and classical feedback; that no-go theorem is not imported as the present measured-instrument upper bound. |
+
 ## Recovery, inversion, and verification
 
 - [Quintino et al., *Reversing Unknown Quantum Transformations*](https://arxiv.org/abs/1810.06944), PRL **123**, 210502 (2019), gives heralded physical inversion of an unknown unitary and analyzes adaptive strategies and indefinite-order advantages. [Dong et al., *Success-or-Draw*](https://arxiv.org/abs/2011.01055), PRL **126**, 150504 (2021), develops retries whose draw branch preserves the input. Heralding alone does not give the present noisy filter that preservation property.

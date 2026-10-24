@@ -1432,6 +1432,15 @@ Retained phonon modes, overlapping histories and unmodeled delayed feedback
 remain outside that reduction. Both protocols must meet the same declared
 accuracy before their extra-window delay and visibility costs are compared.
 
+The [retained-photon gate component](methods/remote-spin-phase.md#nr-r11-retained-photon-gate)
+asks a different full-input task: the flying qubit remains unknown quantum
+output together with both stationary spins. Its ordinary comparisons
+separate one corrected flag, four-mode terminal instruments, local spin
+filters, multiple feedback records and larger coherent programs. Extra return visits can
+replace photon-preserving measurements. The physical comparison must keep
+flag-dependent storage loss, erroneous vacuum repeats and actual helper
+ports; the ideal branch bounds do not establish a device advantage.
+
 There are now more specific physical starting points than an assumed pair
 of copies of Nielsen's processor.
 [Hallacy et al.](https://arxiv.org/abs/2511.07640) independently tune two
