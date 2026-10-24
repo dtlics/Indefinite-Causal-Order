@@ -1296,6 +1296,8 @@ def raman_ordinary_gate_programs():
 
 def main():
     from bosonic_order_gates import verify as bosonic_order_gates_verify
+    from transmon_array_modes import verify as transmon_array_modes_verify
+    from causal_allpass_inverse import verify as causal_allpass_inverse_verify
     from rydberg_memory_schur import verify_rydberg_memory_schur
     from rydberg_exchange_eraser import verify_exchange_eraser
     losses = [loss_example(d, x, lx, y, ly) for d, x, lx, y, ly in (
@@ -1330,6 +1332,8 @@ def main():
         "rydberg_memory_schur":verify_rydberg_memory_schur(),
         "rydberg_exchange_eraser":verify_exchange_eraser(),
         "bosonic_order_gates":bosonic_order_gates_verify(),
+        "transmon_array_modes":transmon_array_modes_verify(),
+        "causal_allpass_inverse":causal_allpass_inverse_verify(),
         "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, random-receiver phase/normalized-bus isometries, and ideal helper-preserving SWAP gate programs with filter, source-coherence and query-window guards. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 

@@ -396,6 +396,17 @@ The existing finite communication replay does not certify those continuum
 arguments, actual phonon overlaps, a native pulse-tail bound, a physical
 pair router or a hardware performance advantage. No frequency-grid
 certificate or fitted single-mode gate is claimed.
+The [giant-transmon array component](../research/topics/nr-noisy-recovery/communication.md#nr-r11-transmon-array-modes)
+adds finite rational residue, connected-kernel, eigenphase, central-nesting,
+commutator and reference-Choi guards. Its all-energy orthogonality,
+direct-integral and full-input overlap proofs are analytic statements of
+the declared chiral effective kernel, not microscopic all-frequency
+certificates. A second helper checks Laguerre coefficients and outward
+rational causal-inverse delay/error/rejection examples. The Fourier tail,
+Hardy-space lower bound, global delay-padding and passive-implementation
+conditions remain analytic or supplied premises. Both helpers run inside
+the existing communication job; no physical whole-pair router or filter
+synthesis is certified.
 The finite-emitter extension proves a uniform late-record bound under a
 positive radiative Gram floor and an actual vacuum-preserving ground,
 with a Gaussian-code preparation allowance and matched route guards.

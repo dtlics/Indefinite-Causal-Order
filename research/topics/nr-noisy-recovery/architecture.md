@@ -1871,6 +1871,12 @@ The [giant-transmon-molecule array proposal](https://arxiv.org/html/2507.05377v1
 instead directly targets an elastic photonic CZ. That ordinary target,
 with its finite-pulse, array, disorder and loss costs, must enter the
 comparison before treating a SWITCH-modified HOM fringe as useful output.
+Its [effective array-mode reduction](communication.md#nr-r11-transmon-array-modes)
+now separates the nonlinear spectral subspace from known dispersion, and
+gives conditional full-logical-gate bounds and explicit causal-filter
+delay/rejection budgets. The microscopic band approximation and independent
+whole-pair routing remain physical requirements; a separately available
+coherent controller is itself an ordinary gate resource.
 Neither proposal supplies the missing controlled-order interface.
 
 The next test is the full input-output model of one such actual device.

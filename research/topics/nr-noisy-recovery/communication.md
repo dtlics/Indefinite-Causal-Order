@@ -6667,6 +6667,321 @@ dynamics or feedback during unresolved dwell needs its own full
 instrument and strongest ordinary comparison; being outside this
 input-only premise does not establish an advantage.
 
+<a id="nr-r11-transmon-array-modes"></a>
+
+### Giant-transmon arrays: spectral modes and the ordinary gate test
+
+The ordinary microwave-photon CZ proposal of
+[Levy-Yeyati, Ramos and González-Tudela](https://arxiv.org/html/2507.05377v1)
+provides a different two-photon kernel. The following deductions concern
+its **lossless chiral effective model**, with identical molecular resonances
+and monitored rate $\Gamma>0$, real total anharmonicity $U=U_a+U_b$, and
+the array propagation convention of its Eq. 9. Appendix B assumes resolved
+molecular resonances, near-resonant counterpropagating bands and small
+$\Gamma\tau$. An identity of the rational model at all real energies does
+not validate the microscopic device far outside those bands. Finite-$J$
+corrections, reflections, nonguided emission, disorder, retained bath records
+and extra site-dependent propagation delays require separate bounds.
+
+#### A finite-rank phase in every energy fiber
+
+Write $E=\omega_R+\omega_L-2\omega_0$, $x=\omega_R-\omega_+$, and
+$\omega_L-\omega_-=E-x$. On $L^2(\mathbb R,dx)$ define
+
+$$
+\begin{gathered}
+a=\Gamma/2,\qquad t(x)=\frac{x-ia}{x+ia},\qquad
+D_E(x)=t(x)t(E-x),\\
+f_E(x)=\frac1{(x+ia)(E-x+ia)},\qquad
+c_U(E)=\frac{i\Gamma^2U(E+i\Gamma)}{4\pi(E+U/2+i\Gamma)}.
+\end{gathered}
+\tag{GT1}
+$$
+
+Let $S_{N,U}(E)$ be the completed two-photon response of an $N$-molecule
+array in that model. Its kernel is
+
+$$
+\begin{aligned}
+S_{N,U}(y,x)={}&D_E(x)^N\delta(y-x)\\
+&+c_U(E)f_E(y)f_E(x)\sum_{n=0}^{N-1}
+t(y)^{N-1-n}t(E-x)^{N-1-n}t(x)^nt(E-y)^n.
+\end{aligned}
+\tag{GT2}
+$$
+
+Only the **connected** term is summed over meeting sites. The disconnected
+linear term occurs once. This convention is also explicit in the authors'
+[released calculation](https://github.com/TomasLevyYeyati/GiantTransmonMolecules/blob/v1/TwoPhotonTransmission.jl):
+`SlinN` is added once to the integral of `SnlN`, whose site sum uses only
+`Snl`. It is not a product of $N$ completed whole-pair scattering calls.
+
+Put $u_n^{(N)}(x)=f_E(x)t(x)^{N-1-n}t(E-x)^n$. These functions have
+common squared norm
+
+$$
+I_E=\int_{\mathbb R}|f_E(x)|^2dx
+=\frac{4\pi}{\Gamma(E^2+\Gamma^2)},\qquad
+\langle u_m^{(N)},u_n^{(N)}\rangle=I_E\delta_{mn}.
+\tag{GT3}
+$$
+
+For the norm, integrate the two Lorentzian denominators by residues;
+coincident poles at $E=0$ are covered by the continuous limit. For a positive
+index difference $k$, the cross overlap, after cancelling common unit-modulus
+factors, has integrand
+
+$$
+\frac{(x+ia)^{k-1}(E-x-ia)^{k-1}}
+     {(x-ia)^{k+1}(E-x+ia)^{k+1}}.
+$$
+
+All remaining poles are above the real axis and the integrand decays as
+$x^{-4}$. Closing below gives zero. Negative differences follow by
+conjugation. This proves orthogonality for every real $E$ and every finite
+$N$, rather than by a frequency grid.
+
+Let $P_N(E)=I_E^{-1}\sum_n|u_n^{(N)}\rangle\langle u_n^{(N)}|$. Since
+$D_E\overline f_E=f_E$, (GT2) becomes
+
+$$
+\begin{aligned}
+S_{N,U}(E)&=[I+(\zeta_U(E)-1)P_N(E)]D_E^N,\\
+\zeta_U(E)&=1+c_U(E)I_E
+=\frac{A+i\Gamma U/2}{A-i\Gamma U/2},\qquad
+A=E^2+EU/2+\Gamma^2.
+\end{aligned}
+\tag{GT4}
+$$
+
+Here $D_E^N$ acts on the input. For real $E,U$, $|\zeta_U|=1$; $U=0$
+gives the identity phase. Thus (GT4) is an exactly unitary rational-model
+fiber: an ordinary single-photon dispersion followed by one phase on an
+explicit rank-$N$ subspace. The measurable fibers form a bounded unitary
+direct integral on normalizable two-photon inputs, including entanglement
+with an untouched reference. This mathematical extension is not a
+full-Gaussian microscopic-device error certificate.
+
+For example, applying the array to a given spectral wavefunction requires
+the $N$ inner products with these modes and multiplication by $D_E^N$,
+instead of replacing its connected output by a fitted scalar Kerr phase.
+Their quadrature and physical approximation errors still need certification.
+
+#### Known dispersion, commuting cores and a central-energy screen
+
+The modes $b_n=f_E[t(E-x)/t(x)]^n/\sqrt{I_E}$, $n\ge0$, form a common
+orthonormal sequence independent of $N$. Let $Q_N$ project onto its first
+$N$ members. Define the factorized one-photon phase operators
+
+$$
+F_N=t(x)^{N-1},\qquad G_N=t(x)t(E-x)^N,\qquad
+V_{N,U}=I+(\zeta_U-1)Q_N.
+\qquad S_{N,U}=F_NV_{N,U}G_N.
+\tag{GT5}
+$$
+
+Indeed $P_N=F_NQ_NF_N^\dagger$ and $F_N^\dagger D_E^N=G_N$.
+Nestedness of $Q_N$ makes the cores $V_{N,U}$ commute for any lengths and
+anharmonicities at common $\Gamma$ and resonances. The original complete
+responses need not commute: their intervening dispersion matters. For a
+fixed length, writing $\lambda_j=\zeta_{U_j}-1$ gives the more specific
+identity
+
+$$
+[S_{N,U_B},S_{N,U_A}]
+=(\lambda_B-\lambda_A)[P_N,D_E^N]D_E^N.
+\tag{GT6}
+$$
+
+Its rank is at most $2N$. Noncommutativity from changing $U$ in this family
+is therefore not an independent change of the nonlinear spectral modes.
+Equation (GT5) also does not grant a free physical inverse: removing
+$F_N,G_N$ calls for inverse all-pass phases. Their broadband inverses have
+upper-half-plane poles. Delay, capture, filtering, controlled placements and
+their noise or insertion loss must be supplied and priced.
+
+At the central energy $E=0$, $D_E=1$. Up to a common phase, the normalized
+modes are
+
+$$
+v_k(x)=\sqrt{\frac{\Gamma^3}{4\pi}}\,
+\frac{t(x)^k}{x^2+a^2},\qquad
+\langle v_k,v_l\rangle=
+\delta_{kl}-\tfrac12\delta_{k,l+1}-\tfrac12\delta_{k,l-1}.
+\tag{GT7}
+$$
+
+To verify the Gram formula, change to $t=e^{i\theta}$; the probability
+measure is $(1-\cos\theta)d\theta/(2\pi)$, up to orientation. The array
+span uses $k=N-1,N-3,\ldots,-N+1$. Same-parity lengths have nested spans,
+so their central fibers commute, including the source's lengths 4, 8 and
+12. Opposite parities or nonzero $E$ can give noncommuting responses;
+there is no all-pulse commutation claim. At fixed finite lengths, rational
+multiplication functions and these finite lists of $L^2$ vectors vary
+continuously with $E$, so the fibers are operator-norm continuous near zero.
+Normalizable packets concentrating there approach the central predictions
+by dominated convergence. A delta-energy state is not a physical pulse,
+and narrowing a packet costs a longer coherent timing window.
+
+#### Full logical inputs and the comparison to beat
+
+A dual-rail CZ must preserve the active vacuum, R-only, L-only and RL
+sectors coherently; the full code still contains two photons because of
+the reference rails. The earlier minus-sector obstruction applies when
+the lower-sector histories agree. Arbitrary phase readouts, path-dependent
+local phases, spectral rejection and recombined control flags instead
+require all four output vectors. Their extra controls must also enter the
+ordinary coherent-path comparison.
+
+There is a useful conditional translation of pulse-overlap scores into a
+complete gate bound. Let $V$ be a supplied full isometry, including loss
+records, and $W$ the ideal delayed CZ isometry with a fixed ideal environment.
+Assume correct-rail chirality and matched bypass phases/delays give
+$W^\dagger V=\operatorname{diag}(a_z)$ in logical order $00,01,10,11$.
+Put $I_z=(1-\operatorname{Re}a_z)/2$. Then
+
+$$
+\begin{aligned}
+\tfrac12\|\Phi_V-\Phi_W\|_\diamond
+&\le\min(1,2\sqrt{\max_z I_z}),\\
+q_{\rm Choi,good}
+&\ge\left[\max\left(0,1-\tfrac12\sum_z I_z\right)\right]^2.
+\end{aligned}
+\tag{GT8}
+$$
+
+The first bound follows from
+$(V-W)^\dagger(V-W)=2I-\operatorname{diag}(a_z+\overline a_z)$ and
+contraction after discarding the environment, with arbitrary references.
+For the second, project the Choi output onto the ideal logical Choi vector
+and ideal environment; its amplitude is $\sum_z a_z/4$. The real part
+gives the stated lower bound. If $I_{00}=0$ and the two one-photon scores
+both equal $I_1$ in this same output frame, the lower bound is
+$[\max(0,1-I_1-I_2/2)]^2$. A reported $I_2$ alone, reflection outside the
+chiral limit, or a surviving amplitude without its full dilation does not
+establish these premises. The bound counts loss and is not a
+coincidence-normalized conditional gate fidelity.
+
+A separately usable independent-control whole-payload bank encoder and
+coherent decoder can itself be a strong ordinary gate resource. If empty
+bypass paths and conditional bank-local phase plates are supplied, applying
+$P=Z_AZ_B$ in one bank and measuring the independent $+$ helper in $Y$
+gives $(I\mp iP)/2$. Each outcome has effect $I/2$; an outcome-dependent
+local $P$ and common local $S_A^\dagger S_B^\dagger$ give CZ up to global
+phase. This is the existing [ordinary ancilla-bus construction](methods/remote-spin-phase.md#an-ordinary-single-polarization-bus-matches-the-instrument)
+at angle $\pi/4$, a standard ancilla-mediated mechanism
+([Anders et al.](https://arxiv.org/abs/0911.3783)). It uses no nonlinear
+array. Its encoder/decoder, helper coherence, readout, bypass loss and timing
+are paid. A passive pair beam splitter, a router inseparable from the
+nonlinear modules, or required nonbypassable calls do not supply these
+premises. Thus an independently granted whole-pair controller cannot be
+treated as a free capability only on the native side.
+
+The ordinary comparison must consider a single optimized array with the
+same total molecule count when its layout is available at matched cost,
+its pulse/launch-delay and spectral controls, both sequential whole-pair
+orders, and coherent delayed paths with their actual routing resources.
+[Schrinski, Lamaison and Sørensen](https://arxiv.org/pdf/2112.11328)
+provide a nearby passive V-emitter gate comparator with full logical Choi
+and frequency-filter success accounting; its hardware is not automatically
+the same finite-$U$ molecule interface.
+
+In an inline counterpropagating array the two photons encounter regions in
+opposite spatial orders. Splitting it into regions $A,B$ does not implement
+two completed whole-pair calls $BA$. A proposed coherent-order construction
+must supply whole-pair capture/routing, direction and carrier rematching,
+common finish, ground/bath reset and a photon-preserving valid-output flag.
+Actual propagation and bath records remain part of that instrument.
+
+#### Causal phase correction has an explicit delay and rejection budget
+
+The inverse-phase caveat can be made quantitative without assuming a
+physical filter implementation. Use Fourier convention
+$H(\omega)=\int h(t)e^{i\omega t}dt$. For an integer $m\ge1$, the inverse
+of the all-pass factor $t(\omega)^m$ has impulse
+
+$$
+\begin{aligned}
+h_m(t)&=\delta(t)-2ae^{at}L_{m-1}^{(1)}(-2at)\mathbf1_{t<0},\\
+L_{m-1}^{(1)}(z)&=\sum_{r=0}^{m-1}
+ (-1)^r\binom m{r+1}\frac{z^r}{r!}.
+\end{aligned}
+\tag{GT9}
+$$
+
+Expand $t^{-m}=[1+2ia/(\omega-ia)]^m$ and take the upper-half-plane
+residues to obtain (GT9). Delay it by $T\ge0$, then discard its part at
+negative time. The resulting causal response $H_{m,T}$ differs from the
+ideal delayed inverse $A_{m,T}=e^{i\omega T}t^{-m}$ by at most the discarded
+impulse's $L^1$ norm. With $X=aT$ this gives
+
+$$
+\begin{aligned}
+\epsilon_m(T)&=2\int_X^\infty e^{-x}|L_{m-1}^{(1)}(2x)|dx\\
+&\le e^{-X}\sum_{k=1}^m\binom mk2^k
+                  \sum_{j=0}^{k-1}\frac{X^j}{j!}.
+\end{aligned}
+\tag{GT10}
+$$
+
+Triangle inequality and repeated integration by parts prove the bound.
+Splitting $e^{-x}=e^{-x/2}e^{-x/2}$ also gives
+$\epsilon_m(T)\le(5^m-1)e^{-X/2}$, so a sufficient delay scales as
+$O((m+\log(1/\epsilon))/a)$. For any certified upper $\epsilon$ on this
+tail, normalize $C_{m,T}=H_{m,T}/(1+\epsilon)$. Then, uniformly on the
+whole real frequency axis,
+
+$$
+\|C_{m,T}\|_\infty\le1,\qquad
+\|C_{m,T}-A_{m,T}\|_\infty\le\frac{2\epsilon}{1+\epsilon},\qquad
+|C_{m,T}|^2\ge
+ \left[\frac{\max(0,1-\epsilon)}{1+\epsilon}\right]^2.
+\tag{GT11}
+$$
+
+These multiplication-operator bounds include arbitrary references and
+count filter rejection. They specify a causal scalar contraction, not a
+finite passive network, accessible herald or loss-recovery implementation.
+Those resources and the tails outside the microscopic model remain to be
+supplied.
+
+There is also a necessary delay for this particular uniform inverse task.
+If a stable causal response $H\in H^\infty(\mathbb C_+)$ approximates
+$A_{m,T}$ with error $\delta$, the bounded analytic function
+$t(z)^mH(z)-e^{izT}$ has value $-e^{-aT}$ at $z=ia$. On the real boundary
+its modulus is the approximation error. The maximum principle therefore
+gives $\delta\ge e^{-aT}$. This is not a lower bound on every ordinary gate:
+an ordinary protocol may avoid this inverse task or choose a different
+output-mode frame.
+
+For (GT5), the inverse powers on the post-R, pre-R and pre-L paths are
+respectively $N-1,1,N$. Errors telescope through the lossless unitary core;
+their minimum singular-value bounds multiply. Crucially, pad both incoming
+photon paths to the same delay $T_{\rm in}$, and both outgoing paths to
+$T_{\rm out}$. Their phases are then whole-pair translations
+$e^{iE T_{\rm in/out}}$, which commute with the energy-conserving scatterer.
+Unequal individual delays change collision timing and cannot be moved
+through it. Match the logical bypasses and controller finish as well.
+
+The [exact filter replay](checks/architecture/causal_allpass_inverse.py)
+uses the positive Taylor sum through degree 200 as a lower bound on $e^X$, with outward rational
+rounding. With per-factor tail at most $10^{-4}$ it gives powers
+$(3,1,4)$ at $X=(17,10,20)$ for $N=4$, and $(7,1,8)$ at
+$X=(29,10,32)$ for $N=8$. When input paths can run in parallel with that
+common padding, the added latency is respectively $37/a$ and $61/a$.
+The combined accepted-amplitude error is below $0.0006$, and minimum
+filter-only survival exceeds $0.9988$ in this ideal unitary-core model.
+Serial totals $47/a$ and $71/a$ are conservative alternatives. These are
+sufficient, nonoptimal filter budgets; pulse duration, synthesis, actual
+module noise/loss, capture, routing and reset are additional clock costs.
+
+The [array replay](checks/architecture/transmon_array_modes.py) checks the
+finite rational kernel, residue, phase, nesting and reference-Choi
+ingredients. The continuum proofs and all-integer claims above remain
+analytic. Equations (GT1)–(GT11) sharpen the full-input task and resource
+test; they establish neither a new CZ-generation mechanism, priority, nor
+a native hardware advantage.
+
 <a id="nr-r11-moving-caps"></a>
 
 ### Retained atomic motion and a passive order-flag bound
