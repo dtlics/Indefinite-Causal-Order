@@ -118,6 +118,8 @@ JOBS = (
      "Exact two-query phase/AD dual, achievable Fisher information and visibility/erasure arithmetic, known-unitary compiler, contrasting coherent sign/noise extensions and state/syndrome/SLD identities; continuous-time/access/global-risk and hardware arguments analytic."),
     ("architecture-braided-magic", "architecture/verify_braided_magic.py", (),
      "Exact Ising quarter-braid branches, stabilizer target bound, both flagged ordinary controlled-S state identities under matched helper visibility, physical-S half-exchange yield and Pauli-loop closures; native trajectories, phases and factory costs remain analytic."),
+    ("architecture-pulse-gates", "architecture/anticommuting_pulse_gates.py", (),
+     "Exact pulse/Euler/full-flag and random-order Choi identities, necessary-success support rank, literal Pauli links, positive causal slacks and an all-real-angle matrix sum-of-squares certificate. Adaptive instruments, endpoint/stopping inclusion, global diamond equality and timing/hardware premises are analytic; no approximate ordinary optimum or native hardware advantage."),
     ("architecture-alignment", "architecture/verify_alignment.py", (),
      "Exact Haar-Choi sectors, causal null-event witnesses, native adaptive realization, general-axis one-memory QEC/syndrome and differential-coherence identities; calibrated averaged-information scaling and physical costs analytic."),
 )

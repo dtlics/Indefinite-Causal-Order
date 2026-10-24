@@ -1130,6 +1130,12 @@
           "target": "NR-R06"
         }
       ]
+    },
+    {
+      "id": "NR-R21",
+      "topic": "NR",
+      "title": "Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines",
+      "canonical_path": "research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21"
     }
   ]
 }

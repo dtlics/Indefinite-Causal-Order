@@ -164,6 +164,20 @@ simulation and projected timing retain their distinct scopes.
 - [Salek, Ebler, and Chiribella, *Quantum communication in a superposition of causal orders*](https://arxiv.org/abs/1809.06655) (2018), already gives a heralded error-free physical transmission branch. Its communication task and comparison do not establish restoration of the specified Bell alignment against the present ordinary receivers.
 - [Bai and Chiribella, *Test one to test many: a unified approach to quantum benchmarks*](https://arxiv.org/abs/1711.10240), PRL **120**, 150502 (2018), and [Barizien et al., *Quantifying the fidelity of a quantum memory*](https://arxiv.org/html/2610.08445) (2026), provide channel-test and probabilistic-fidelity context. A Bell overlap and an explicit rejection reward are standard operational tools; the task-specific expected-cost separation is the contribution.
 
+## Unknown timed-pulse gates
+
+The [unknown timed-pulse gate comparison NR-R21](unknown-pulse-gates.md#nr-r21)
+credits [Zhao and Yuan, Quantum **5**, 534 (2021), §4.3 and Appendix D.2](https://arxiv.org/html/2103.07988v2)
+for exact anticommuting-sum simulation using controlled LCU access. The
+uncontrolled opaque-pulse premise requires a separate comparison.
+[Taminiau et al., Nature Nanotechnology **9**, 171–176 (2014), Methods and
+supplement VII, IX and XIII](https://arxiv.org/html/1309.5452v2) supplies
+the NV conditional-Hamiltonian and readout screen; it does not demonstrate
+the new result's unknown orthogonal equal-rate pair or native order helper.
+The switch-repair precedent is Trillo, Dive and Navascués cited above.
+These bounded source comparisons do not establish priority for the protocol
+or its task-specific exact-query certificate.
+
 ## Efficient frames and representation input
 
 [Brandão, Harrow, and Horodecki, *Local random quantum circuits are approximate polynomial-designs*](https://arxiv.org/html/1208.0692v4), CMP **346**, 397–434 (2016), corrected v4, supplies the efficient frame construction. Definition 2 uses relative CP-order approximation; Lemma 3 bounds its additive twirl diamond error by twice that parameter. Corollary 7 permits a fixed finite inverse-closed universal algebraic gate alphabet. At fixed order six, the gate count is $O_G(n[n+\log(1/\varepsilon)])$, hence polynomial even for the exponentially small additive accuracy required in the [theorem](theorem.md). This is an **approximate** design construction with an unspecified gate-set constant, not an exact-design or practically small-depth claim.

@@ -10,6 +10,11 @@ Coherent order of two Ising exchanges can herald a non-Clifford gate on an unkno
 
 Magic generation by switching stabilizer-preserving operations is already
 established by [Mo et al., PRA **109**, 062428 (2024), Theorem 1](https://arxiv.org/html/2311.15494v2).
+The distinct [unknown timed-pulse gate result NR-R21](unknown-pulse-gates.md#nr-r21)
+uses the same two-order algebra with classically adjustable pulse angles.
+It owns the continuous unknown-frame exact-call bound, ordinary Euler and
+approximation comparisons, and their physical timing limitations. That
+oracle promise is separate from the known protected-Ising controls below.
 The separate [photonic program-resource comparison](backaction.md#nr-r19-private-programs)
 keeps its CCZ construction and ordinary controlled-H factory in their
 own physical access model. Neither comparison is a priority claim for

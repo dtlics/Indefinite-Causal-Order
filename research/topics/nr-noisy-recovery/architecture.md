@@ -14,6 +14,15 @@ enough: the comparison must include native reference encodings, ordinary
 echo and spectral checks, and every accepted and rejected outcome. No checked
 architecture currently meets all the required assumptions.
 
+The [unknown timed-pulse gate result NR-R21](unknown-pulse-gates.md#nr-r21)
+gives a strict ideal expected-call gap for an exact physical gate under a
+continuous unknown anticommuting-axis promise. Its ordinary Euler circuit
+already uses less interaction time than the native first attempt. The
+source-specific NV screen also lacks the required unknown equal-rate
+orthogonal pair and irreducible activation cost. The next test must measure
+those premises and price every ordinary use of any supplied coherent
+selector; this ideal call gap is not an architecture benefit.
+
 ## What is established
 
 [NR-R20](memory-qualification.md#nr-r20) connects the manuscript's

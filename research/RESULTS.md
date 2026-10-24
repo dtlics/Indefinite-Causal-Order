@@ -189,3 +189,4 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R18 | [Drifting measurement alignment: exact two-query limit and reuse costs](../research/topics/nr-noisy-recovery/alignment.md#nr-r18) |  |
 | NR-R19 | [Unknown odd couplers: exact correction and expected-query fidelity limits](../research/topics/nr-noisy-recovery/backaction.md#nr-r19) |  |
 | NR-R20 | [Hidden-basis memory qualification and channel-entropy capacity certificates](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) |  |
+| NR-R21 | [Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21) |  |

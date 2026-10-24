@@ -31,6 +31,7 @@ and includes an operational capacity decision and a scalar entropy witness.
 | NR-R18 | Drifting measurement alignment: exact two-query limit and reuse costs | [Alignment benchmark](alignment.md#nr-r18) |
 | NR-R19 | Unknown odd couplers: exact correction and expected-query fidelity limits | [Coupler benchmark](backaction.md#nr-r19) |
 | NR-R20 | Hidden-basis memory qualification and channel-entropy capacity certificates | [Memory qualification](memory-qualification.md#nr-r20) |
+| NR-R21 | Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines | [Pulse-gate comparison](unknown-pulse-gates.md#nr-r21) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic

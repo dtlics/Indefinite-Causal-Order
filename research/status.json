@@ -63,7 +63,7 @@
       "slug": "nr-noisy-recovery",
       "title": "Noisy physical recovery with expected-query bounds",
       "status": "analytic-with-exact-certificates",
-      "qualification": "Physical-output recovery and hidden-basis capacity-qualification theorems, general-channel entropy certificates with a nonunitality correction, exact phase/alignment and expected-query coupler certificates, and scoped ordinary calibration/record/control baselines. Native architecture benefit remains open; new recovery/capacity results are not Lean-formalized or externally peer reviewed.",
+      "qualification": "Physical-output recovery and hidden-basis capacity-qualification theorems, general-channel entropy certificates with a nonunitality correction, exact phase/alignment, expected-query coupler and unknown timed-pulse certificates, and scoped ordinary calibration/record/control baselines. Native architecture benefit remains open; new recovery/capacity/gate results are not Lean-formalized or externally peer reviewed.",
       "dossier": "topics/nr-noisy-recovery/README.md"
     }
   ]

@@ -62,6 +62,19 @@ Equal worst-case calls do not imply equal early-abort means, and static
 Strang merging requires actual half-duration ports. No routing or
 persistent-bath reduction is certified by these finite fixtures.
 
+The [unknown-pulse gate result NR-R21](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21)
+has a standard-library exact replay of the necessary success-support rank,
+literal Pauli-link normalization, causal positive-definite slacks and a
+matrix sum-of-squares identity for every real nondegenerate pair of pulse
+angles. These are exact polynomial certificates rather than sampled-angle
+upper bounds. The proof separately includes classical adaptive instruments,
+singular angles, query-type choices and stopping, yielding its ideal exact
+expected-call comparison. Full data/reference Euler and flagged maps and
+random-order Choi ingredients are also replayed. Global diamond equality,
+continuous timing inequalities and the source-specific physical comparison
+remain analytic. No approximate ordinary optimum, measured router, hardware
+benefit, priority claim or new Lean audit follows.
+
 The [fault-parity controller component](../research/topics/nr-noisy-recovery/methods/binary-fault-controller.md)
 has analytic closed-controller and general-intermediate-operation memory
 bounds and a separate prearrival-programming bound, with exact finite
