@@ -482,6 +482,15 @@ $d=2,3$. Its all-dimension, mixed-source and arbitrary-decoder bounds,
 including exact-unitary yield under a whole-isometry perturbation
 promise, remain analytic. Partial exchange requires its actual complete
 instrument; an isolated transfer fidelity does not supply that promise.
+The fixed opposite-partial-contact example checks all four native and
+six ordinary branch maps, source/contact normalization and full gate
+matrix-unit coefficients. Scalar-coefficient and coherent-frequency
+guards support the ordinary midpoint filter's selected-map identity;
+the continuum extension under the stated common frequency-diagonal
+scalar elastic responses is analytic. CZ and corrected early identity
+retries refer to the calibrated center. Stopping costs remain analytic; neither
+full-instrument equality, optimized yield nor a physical/noisy
+implementation is certified.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
 survivor instruments are checked with exact Gaussian fractions. Its
 local-ancilla extension reconstructs the six-qubit source, both scatters,

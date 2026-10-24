@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-24T14:20:37+00:00",
+  "generated_utc": "2026-10-24T14:47:09+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -15,7 +15,7 @@
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "0579328ad4e1ee6c97072f6591191b6eab8c1c4312167340c7128432650c2b46",
     "research/topics/nr-noisy-recovery/architecture-baselines.md": "6bbd98125d17d2cc0cb2b5450155c6c5396274c58ac4d2123c0ed182b98c7889",
-    "research/topics/nr-noisy-recovery/architecture.md": "211acf0116b5d7b956785d84217012585ca688d0c1cc5c1cb6934e3e03560d54",
+    "research/topics/nr-noisy-recovery/architecture.md": "55fcb5b35e7d2409a034b1160d7ba382c78aa56471762aa31d78a3deb848173b",
     "research/topics/nr-noisy-recovery/backaction.md": "9ec4695d37280e4f7b1945199511780666e1491157dc5b1e009e0d61274c5168",
     "research/topics/nr-noisy-recovery/braided-magic.md": "ceae446ab3da27c440de14db2a976a458c29d06045aa79b26da77267c6d0bd34",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_dual_sharp_certificate.json": "95d061e96dd7cdf31ca311b54ac9896995312dd5e2b6407d000bd0e2ff80acaf",
@@ -40,7 +40,7 @@
     "research/topics/nr-noisy-recovery/checks/architecture/pair_memory_qualification_guards.py": "5106665cd05d8300f82b1f62218d2827050b7e3f6ffee6c91ab12522c37b65ed",
     "research/topics/nr-noisy-recovery/checks/architecture/private_program_guards.py": "e739bfec1de2821917c637c206fb2d2b79e4ec41c170c3794bc0134d23b2083b",
     "research/topics/nr-noisy-recovery/checks/architecture/projector_gate_gap.json": "0d39cba7abeec84f2d47c027d65d500a9b762c77fbf5daf4c7fac1f34bd81fe2",
-    "research/topics/nr-noisy-recovery/checks/architecture/raman_baselines.py": "e2f7b3f0769ac04add8c423c152f2112fd9526ec3f1be48ce88e78539a6a87be",
+    "research/topics/nr-noisy-recovery/checks/architecture/raman_baselines.py": "aec7f2d53f731ec49ca1ada529793960af4515397038cff1c0a34bae38687f5b",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_bell_certificate.json": "036a490d801df65169e7d253cdc9939abcd962483dfbe65386df00f27bcbbd32",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_direct_temporal.py": "5593c32d10c2447e257744737b9cfaeb1d0f5e31d83ebde69041d8409f28d0ff",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_multimode_helper.py": "2edbe06a4b0eee21fe429d94e492deabcefdff4d255144bd76e068532e89e6e7",
@@ -106,13 +106,13 @@
     "research/topics/nr-noisy-recovery/checks/coupler/verify_mean_query_certificate.py": "2802a4c3e972a76ec0666d8d0fd996c75336bb5e6016faddf21c86ed4594d62d",
     "research/topics/nr-noisy-recovery/checks/local/verify_dimensions.py": "5af10c3fad26a66651d72c4ab42a5402f182e44d8b8b0c616c454a865a20505f",
     "research/topics/nr-noisy-recovery/checks/local/verify_structural.py": "68bd7e55c46b75504c58a2d77621b2192e1df3629979ae23d8c74917eb2e1a97",
-    "research/topics/nr-noisy-recovery/checks/README.md": "bd108518a4bc20c77d5a44093b45d0a7915f78be4ec96fa970add211753b8ed0",
+    "research/topics/nr-noisy-recovery/checks/README.md": "9121a323324a26aaf01f01be40861d920bf41e8fe7e9548167443bad50637fbc",
     "research/topics/nr-noisy-recovery/checks/recovery/expected_cost_D8.py": "fc9944f7aff0698dd99fdce2f34eaadad42fecb3cc99cd41cffdd84bec2de1b4",
     "research/topics/nr-noisy-recovery/checks/recovery/finite_ensemble_D8.py": "fb82731ebb8c239652b65ddfc51933e266694a18ce559cef03a61ff176c40e66",
     "research/topics/nr-noisy-recovery/checks/recovery/local_recovery.py": "38958045476b075a233a1ee1f71fcde934f26f44fbb7a42da4abb30c14a11afc",
     "research/topics/nr-noisy-recovery/checks/recovery/scalable_global.py": "b1762c233496f7a1225f056305a50b795329caab01cf5099abccbf7d116a328a",
-    "research/topics/nr-noisy-recovery/checks/run_all.py": "1a4e9dd88bef0486782f0f791bef1887fdeaac86ef0b488632777e5c37d078c5",
-    "research/topics/nr-noisy-recovery/communication.md": "edbd277a49ff72c2ee6f9d0af0daf02db9e11c339e2064670106d33f7624b8b0",
+    "research/topics/nr-noisy-recovery/checks/run_all.py": "37b7ce38c46551b4836010792c23c2e1229d331d0516ca4aadb76b48dc2d0cab",
+    "research/topics/nr-noisy-recovery/communication.md": "c6893daca9de4557c7270b14e80fc4d36767cd2f8f5d3cda765f47aa0b0e5517",
     "research/topics/nr-noisy-recovery/dispatch.md": "97982b8b9fc3733ca6ae9696b277d48dba80bab3626a727a2f6d2fa14e4232db",
     "research/topics/nr-noisy-recovery/geometric-calibration.md": "f202ef5c494e4aa9df0c1f9b38a2b0e532e65dbecee0fc2b80a9a07657164dba",
     "research/topics/nr-noisy-recovery/global-noise.md": "b65e344b96022b031ea1e7b6e51182cceb509d84a6a6515393198d88e898eea4",
@@ -142,7 +142,7 @@
     "research/topics/nr-noisy-recovery/metrology.md": "0e4645178bcef56d924ec3fc0f22f7b19467851faf6e07be7676ab81b2206100",
     "research/topics/nr-noisy-recovery/native-lookups.md": "c7dfb67147911198d048d9d0987714d2bf20cbd50f84030298fe5eb64e85e82e",
     "research/topics/nr-noisy-recovery/obstructions.md": "86ac3f4b00fd7b156250486162a6067d4b0524ac26421206a9ae8c30338fe8a9",
-    "research/topics/nr-noisy-recovery/README.md": "1c8fc2a7c869d5aa2b9bf3598add9db1789b34e2b3daea0ca7861ec10f6864cb",
+    "research/topics/nr-noisy-recovery/README.md": "7c1cac98419ac17eec46ed2a8fb2f57ded2993a7ba5894a1d7dacde3790ea5a8",
     "research/topics/nr-noisy-recovery/references.md": "d8b3fb568f48cf80297e68591fb4027c8ba93df9711aa56407acae507a43c368",
     "research/topics/nr-noisy-recovery/theorem.md": "f55ba54175170100b2f62423583ee72e92efff3fd3cb569f5c190a857de06944"
   },
@@ -424,7 +424,7 @@
     {
       "id": "architecture-communication",
       "source": "research/topics/nr-noisy-recovery/checks/architecture/verify_communication.py",
-      "scope": "Exact absorbing-loss/wire/reset/NXY and bus identities, emitter guards, Raman/local-memory/multimode instruments, bare full-SWAP rank/fidelity fixtures, known-gate helper programs and coherent identity-retry flags, temporal source/clock/tail and phase/reciprocal/double-herald guards, ordered kernels and cavity/source identities, retained Rydberg-memory/exchange eraser and feedback records; all-dimension/mixed-CS/robust-yield proofs, continuum instruments, native ports, loss completion and clocks analytic.",
+      "scope": "Exact absorbing-loss/wire/reset/NXY and bus identities, emitter guards, Raman/local-memory/multimode instruments, bare full-SWAP rank/fidelity fixtures, scalar/coherent-frequency selected-map guards and calibrated partial-contact full-flag/early-identity instruments, known-gate helper programs and coherent identity-retry flags, temporal source/clock/tail and phase/reciprocal/double-herald guards, ordered kernels and cavity/source identities, retained Rydberg-memory/exchange eraser and feedback records; all-dimension/mixed-CS/robust-yield proofs, continuum instruments, native ports, loss completion and clocks analytic. Selected-map matching is not full-instrument or optimized-yield dominance.",
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-communication.log"

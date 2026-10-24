@@ -83,6 +83,13 @@ It checks all outcome/reference coefficients, complete success/failure
 effects, source/key coherence and qualified window serialization.
 Actual loss, partial exchange, helper-preserving ports and physical
 retry/controller clocks are not certified.
+The fixed opposite-partial-contact example checks four native and six
+ordinary branch maps, source/contact normalization and complete effects.
+The scalar-coefficient and coherent-frequency guards support its
+selected-map identity in the stated stationary elastic model; the
+continuum lift is analytic. CZ and the specified early identity retries
+refer to the calibrated center. This does not certify full-instrument
+equality, an optimal yield or a complete physical/noisy implementation.
 
 The encoded-Pauli checks include the full code-input and retained-record
 channels, reference matrix units, actual deferred record gates and a

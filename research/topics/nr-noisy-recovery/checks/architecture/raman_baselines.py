@@ -809,6 +809,208 @@ def bare_swap_rank_guards():
     return run_guards()
 
 
+def partial_swap_gate_instruments():
+    """Opposite ideal partial contacts: native CZ flag and ordinary match."""
+    from retained_photon_serial import G, add, adj, eye, mm, require, scale, zeros
+
+    def matrix(rows):
+        return [[G(x) for x in row] for row in rows]
+
+    def gram(a):
+        return mm(adj(a), a)
+
+    def total(matrices):
+        out = zeros(4)
+        for entry in matrices:
+            out = add(out, entry)
+        return out
+
+    swap = matrix([[1, 0, 0, 0], [0, 0, 1, 0],
+                   [0, 1, 0, 0], [0, 0, 0, 1]])
+    for sign in (1, -1):
+        numerator = add(eye(4), scale(swap, G(0, 2*sign)))
+        require(gram(numerator) == scale(eye(4), 5), 'partial-contact normalization')
+        # Gamma=1, delta=sign/2: the known bus-Z conjugation gives tI-rF.
+        r = -G(1)/G(1, -F(sign, 2))
+        raw = add(scale(eye(4), 1+r), scale(swap, -r))
+        require(raw == scale(numerator, G(1, -2*sign)/5), 'source detuning and phase frame')
+        require(gram(raw) == eye(4), 'lossless source-derived contact unitarity')
+    bell = matrix([[1, 0, 0, 1], [1, 0, 0, -1],
+                   [0, 1, 1, 0], [0, 1, -1, 0]])
+    source_norm = sum((x*x for x in bell[0]), G())
+    require(source_norm == 2 and gram(bell) == scale(eye(4), 2), 'Bell source and complete readout normalization')
+    terminal_denominator_squared = source_norm.r*5*5*2
+    early_denominator_squared = source_norm.r*5*2
+    phase_filter = matrix([[1, 0, 0, 0], [0, 0, 0, 0],
+                           [0, 0, 0, 0], [0, 0, 0, -1]])
+    odd = matrix([[0, 0, 0, 0], [0, 1, 0, 0],
+                  [0, 0, 1, 0], [0, 0, 0, 0]])
+    require(add(gram(phase_filter), gram(odd)) == eye(4), 'physical filter/reject completion')
+
+    def accumulate(state, key, value):
+        state[key] = state.get(key, G())+value
+
+    def contact(state, station, sign, coefficients=None):
+        # Raw numerator I+sign*2iF, qubit order C,S,A,B.
+        alpha, beta = (G(1), G(0, 2*sign)) if coefficients is None else coefficients
+        out = {}
+        for (c, s, a, b), value in state.items():
+            accumulate(out, (c, s, a, b), alpha*value)
+            target = (c, a, s, b) if station == 'A' else (c, b, a, s)
+            accumulate(out, target, beta*value)
+        return out
+
+    def states(a, b, mode, coefficients=None):
+        ca = None if coefficients is None else coefficients[:2]
+        cb = None if coefficients is None else coefficients[2:]
+        source = {(0, 0, a, b): G(1), (1, 1, a, b): G(1)}
+        if mode == 'native':
+            out = {}
+            for c in (0, 1):
+                branch = {k: v for k, v in source.items() if k[0] == c}
+                branch = (contact(contact(branch, 'A', 1, ca), 'B', -1, cb) if c == 0
+                          else contact(contact(branch, 'B', -1, cb), 'A', 1, ca))
+                for key, value in branch.items():
+                    accumulate(out, key, value)
+            return out
+        first = contact(source, 'A', 1, ca)
+        if mode == 'early':
+            return {k: v for k, v in first.items() if k[0] != k[1]}
+        accepted = {k: v*((-1)**k[0]) for k, v in first.items() if k[0] == k[1]}
+        return contact(accepted, 'B', -1, cb)
+
+    def flags(mode, coefficients=None):
+        labels = ((1, 0), (1, 1)) if mode == 'early' else tuple(product(range(2), repeat=2))
+        out = {f'{m}{n}': zeros(4) for m, n in labels}
+        for a, b in product(range(2), repeat=2):
+            for (c, s, aa, bb), value in states(a, b, mode, coefficients).items():
+                for m, n in labels:
+                    if s == (c ^ m):
+                        out[f'{m}{n}'][2*aa+bb][2*a+b] += ((-1)**(n*c))*value
+        return out
+
+    native, ordinary, early = flags('native'), flags('ordinary'), flags('early')
+    expected_native = {
+        '00': matrix([[6, 0, 0, 0], [0, 2, 8, 0], [0, 0, 2, 0], [0, 0, 0, 6]]),
+        '01': matrix([[4, 0, 0, 0], [0, G(0, 4), 0, 0],
+                      [0, 0, G(0, -4), 0], [0, 0, 0, -4]]),
+        '10': matrix([[0, G(4, -2), G(0, 2), 0], [G(4, -2), 0, 0, G(4, 2)],
+                      [G(0, 2), 0, 0, G(0, -2)], [0, G(4, 2), G(0, -2), 0]]),
+        '11': matrix([[0, G(4, -2), G(0, 2), 0], [G(-4, 2), 0, 0, G(4, 2)],
+                      [G(0, -2), 0, 0, G(0, -2)], [0, G(-4, -2), G(0, 2), 0]]),
+    }
+    expected_ordinary = {
+        '00': expected_native['01'],
+        '01': matrix([[6, 0, 0, 0], [0, 2, 0, 0], [0, 0, 2, 0], [0, 0, 0, 6]]),
+        '10': matrix([[0, G(4, -2), 0, 0], [G(0, 2), 0, 0, 0],
+                      [0, 0, 0, G(0, -2)], [0, 0, G(-4, 2), 0]]),
+        '11': matrix([[0, G(4, -2), 0, 0], [G(0, -2), 0, 0, 0],
+                      [0, 0, 0, G(0, -2)], [0, 0, G(4, -2), 0]]),
+    }
+    expected_early = {}
+    for n in (0, 1):
+        entry = zeros(4)
+        for a, b in product(range(2), repeat=2):
+            entry[2*(a ^ 1)+b][2*a+b] = G(0, 2*((-1)**(n*(1-a))))
+        expected_early[f'1{n}'] = entry
+    branch_entries = 0
+    for actual, expected in ((native, expected_native), (ordinary, expected_ordinary), (early, expected_early)):
+        for label in expected:
+            for i, j in product(range(4), repeat=2):
+                require(actual[label][i][j] == expected[label][i][j], 'direct all-input branch entry')
+                branch_entries += 1
+
+    target = scale(expected_native['01'], F(1, 4))
+    correction = matrix([[1, 0, 0, 0], [0, G(0, -1), 0, 0],
+                         [0, 0, G(0, 1), 0], [0, 0, 0, 1]])
+    cz = matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, -1]])
+    require(gram(target) == eye(4) and mm(correction, target) == cz, 'known output-local CZ correction')
+    probability = F(16, terminal_denominator_squared)
+    require(probability == F(4, 25), 'normalized selected gate mass')
+    coefficients = 0
+    for a, b, i, j in product(range(4), repeat=4):
+        expected = probability*target[i][a]*target[j][b].conj()
+        for branch in (native['01'], ordinary['00']):
+            require(branch[i][a]*branch[j][b].conj()/terminal_denominator_squared == expected,
+                    'all input matrix units including reference coherences')
+        coefficients += 1
+    native_effects = {k: gram(v) for k, v in native.items()}
+    ordinary_effects = {k: gram(v) for k, v in ordinary.items()}
+    early_effects = {k: gram(v) for k, v in early.items()}
+    require(total(native_effects.values()) == scale(eye(4), terminal_denominator_squared), 'native four-flag TP')
+    ordinary_total = scale(total(ordinary_effects.values()), 1/terminal_denominator_squared)
+    early_total = scale(total(early_effects.values()), 1/early_denominator_squared)
+    require(ordinary_total == scale(eye(4), F(3, 5)) and early_total == scale(eye(4), F(2, 5)), 'ordinary pass and early mass')
+    require(add(ordinary_total, early_total) == eye(4), 'ordinary complete six-flag TP')
+    for effect in early_effects.values():
+        require(scale(effect, 1/early_denominator_squared) == scale(eye(4), F(1, 5)), 'each corrected early identity normalization')
+    for effects, labels in ((native_effects, ('00', '10', '11')), (ordinary_effects, ('01', '10', '11'))):
+        for label in labels:
+            require(effects[label] != scale(eye(4), effects[label][0][0]), 'other terminal flag is nonunitary')
+
+    # Generic scalar contacts use their actual coefficients, not point numerators.
+    za = matrix([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, -1, 0], [0, 0, 0, -1]])
+    zb = matrix([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, 1, 0], [0, 0, 0, -1]])
+    fixtures = [
+        (G(F(3, 10), F(1, 10)), G(F(1, 5), -F(1, 10)), G(F(2, 5), -F(1, 5)), G(F(1, 10), F(1, 10))),
+        (G(0, F(1, 2)), G(F(1, 4), F(1, 4)), G(F(1, 3)), G(0, F(1, 5))),
+        (G(), G(1), G(F(3, 5)), G(0, F(4, 5))),
+    ]
+    frequencies = (F(-1, 4), F(1, 4))
+    for xi in frequencies:
+        ra, rb = -G(1)/G(1, -(xi+F(1, 2))), -G(1)/G(1, -(xi-F(1, 2)))
+        fixtures.append((1+ra, -ra, 1+rb, -rb))
+    selected_entries = 0
+    selected_native, selected_ordinary, frequency_formula = [], [], []
+    for index, (a, b, c, d) in enumerate(fixtures):
+        for alpha, beta in ((a, b), (c, d)):
+            for eigenvalue in (alpha+beta, alpha-beta):
+                norm = (eigenvalue*eigenvalue.conj()).r
+                require(norm <= 1 and (index < 3 or norm == 1), 'scalar fixture contact contraction/unitarity')
+        expected = add(scale(za, b*c/2+b*d/4), scale(zb, a*d/2+b*d/4))
+        kn = scale(flags('native', (a, b, c, d))['01'], F(1, 2))
+        ko = scale(flags('ordinary', (a, b, c, d))['00'], F(1, 2))
+        for i, j in product(range(4), repeat=2):
+            require(kn[i][j] == ko[i][j] == expected[i][j], 'generic direct-action selected-branch identity')
+            selected_entries += 2
+        if index >= 3:
+            xi = frequencies[index-3]
+            denominator = 4*(G(1, -xi)*G(1, -xi)+F(1, 4))
+            source_expected = add(scale(za, G(1, 1-2*xi)/denominator),
+                                  scale(zb, G(1, -1-2*xi)/denominator))
+            require(kn == source_expected, 'noncentral Fourier-source selected map')
+            even, odd = kn[0][0], kn[1][1]
+            require(even*even.conj() == (1+4*xi*xi)*odd*odd.conj() and xi != 0,
+                    'finite spectral bins need not give proportional CZ')
+            selected_native.append(kn)
+            selected_ordinary.append(ko)
+            frequency_formula.append(source_expected)
+    frequency_coefficients = offdiagonal_coefficients = 0
+    # Equal coherent bin amplitudes: retain output frequency and its off-diagonals.
+    for f, g, a, b, i, j in product(range(2), range(2), range(4), range(4), range(4), range(4)):
+        lhs = selected_native[f][i][a]*selected_native[g][j][b].conj()/2
+        rhs = selected_ordinary[f][i][a]*selected_ordinary[g][j][b].conj()/2
+        expected = frequency_formula[f][i][a]*frequency_formula[g][j][b].conj()/2
+        require(lhs == rhs == expected, 'coherent retained-frequency matrix-unit coefficient')
+        frequency_coefficients += 1
+        offdiagonal_coefficients += int(f != g)
+    require(selected_native[0][0][0]*selected_native[1][0][0].conj()/2 != 0,
+            'coherent frequency off-diagonal is retained, not spectrally averaged')
+    return {'status': 'passed', 'branch_entries': branch_entries, 'gate_CP_coefficients': coefficients,
+            'native_flags': 4, 'ordinary_terminal_flags': 4, 'ordinary_early_flags': 2,
+            'terminal_denominator_squared': str(terminal_denominator_squared),
+            'early_denominator_squared': str(early_denominator_squared),
+            'corrected_CZ_probability': str(probability), 'corrected_early_identity_probability': '2/5',
+            'native_TP': True, 'ordinary_six_flag_TP': True,
+            'scalar_elastic_selected_map': {'complex_scalar_fixtures': 3,
+                'source_frequency_bins': [str(x) for x in frequencies],
+                'selected_branch_entries': selected_entries,
+                'coherent_frequency_CP_coefficients': frequency_coefficients,
+                'offdiagonal_frequency_coefficients': offdiagonal_coefficients,
+                'scope': 'Same frequency-diagonal elastic multipliers, Bell source/readout, matched history phase and ordinary midpoint filter. Selected retained-frequency map only; no frequency-changing/noncommuting bath kernel or other/rejected instrument equality.'},
+            'scope': 'Exact opposite ideal partial contacts, Bell source/readout and paid ordinary midpoint parity filter. All-input flags and source/contact normalizations; no POVM/filter optimum, noisy instrument, clock or hardware certificate.'}
+
+
 def verify_raman_stronger_baselines():
     from verify_raman_bell_certificate import verify
     return {
@@ -821,5 +1023,6 @@ def verify_raman_stronger_baselines():
         "source_and_occupied_visit_frontier": verify_raman_source_clock_frontier(),
         "balanced_cavity_frontier": verify_raman_cavity_frontier(),
         "bare_swap_gate_rank": bare_swap_rank_guards(),
+        "partial_swap_cz_instruments": partial_swap_gate_instruments(),
         "scope": "Exact achievable ordinary instruments and polynomial identities. No ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
     }

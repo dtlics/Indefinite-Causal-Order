@@ -1873,6 +1873,176 @@ Its arbitrary-U
 coefficient identities support the all-unitary proof (RS18); they
 do not certify physical helper-preserving ports or clock costs.
 
+<a id="nr-r11-raman-partial-gate"></a>
+
+**Opposite partial contacts admit a full-input CZ flag, with an ordinary match.**
+The bare-SWAP obstruction does not extend to every detuning. In the
+lossless equal-leg long-pulse family of the same
+[source, equations (15)--(18)](https://arxiv.org/html/0909.4762v2), a known
+bus-$Z$ conjugation gives $Z_ST(\delta)Z_S=tI-rF_{Sj}$, where $F$ is
+literal SWAP and $r,t$ are (RS1). At $\delta_A=+\Gamma/2$ and
+$\delta_B=-\Gamma/2$, put $\theta=\arctan(2)$. The contacts are
+$e^{-i\theta}U_A,e^{i\theta}U_B$, with
+
+$$
+U_A=\frac{I+2iF_{SA}}{\sqrt5},\qquad
+U_B=\frac{I-2iF_{SB}}{\sqrt5}.
+\tag{RS19a}
+$$
+
+Their scalar phases cancel in either word; the shared conjugating
+bus-$Z$ factors cancel internally. Actual independent resonance tuning
+or coherent frequency conversion must supply the opposite detunings.
+This source-derived ideal family does not certify a two-node order
+router, helper-preserving ports or a finite-pulse/loss instrument.
+
+Prepare $|\Phi^+\rangle_{CS}$ independently of arbitrary unknown $ABR$,
+where $C$ controls $U_BU_A$ for $0$ and $U_AU_B$ for $1$.
+Use the terminal joint basis
+$|B_{mn}\rangle_{CS}=2^{-1/2}(|0,m\rangle+(-1)^n|1,1\oplus m\rangle)$.
+The $01=\Phi^-$ flag has the full-input Kraus operator
+
+$$
+K_{01}=\frac25G,\qquad
+G=\operatorname{diag}(1,i,-i,-1)
+=(\mathsf S_A^\dagger\otimes\mathsf S_B)\mathrm{CZ},
+\qquad \mathsf S=\operatorname{diag}(1,i).
+\tag{RS19b}
+$$
+
+Thus local correction $\mathsf S_A\otimes\mathsf S_B^\dagger$ gives
+$\tfrac4{25}\operatorname{Ad}_{\rm CZ}$ on every $ABR$, with physical
+outputs at A,B. This is an operator identity, not a Bell-input score.
+For completeness, the other native records are
+
+$$
+\begin{aligned}
+K_{00}&=\tfrac15\begin{pmatrix}3&0&0&0\\0&1&4&0\\0&0&1&0\\0&0&0&3\end{pmatrix},\\
+K_{10}&=\tfrac15\begin{pmatrix}0&2-i&i&0\\2-i&0&0&2+i\\i&0&0&-i\\0&2+i&-i&0\end{pmatrix},\\
+K_{11}&=\tfrac15\begin{pmatrix}0&2-i&i&0\\-2+i&0&0&2+i\\-i&0&0&-i\\0&-2-i&i&0\end{pmatrix}.
+\end{aligned}
+\tag{RS19c}
+$$
+
+Together $\sum_{mn}K_{mn}^\dagger K_{mn}=I$; the other three effects
+are nonconstant, so output-unitary feedback does not turn these flags
+into unitary gates. Further filtering or another terminal POVM is not
+excluded.
+
+An ordinary A-then-B traversal matches the displayed useful flag at the
+same helper dimension. Repurpose $C$ as a preserved helper, use the same
+$\Phi^+_{CS}$ source, and between $U_A,U_B$ place the known accepted
+four-mode filter
+$V=|00\rangle\langle00|-|11\rangle\langle11|$ on $CS$.
+This is an even-mode phase operation in the control class already used
+by (RS14), with $V^\dagger V=P_{\rm even}$. Its terminal branches are
+
+$$
+\begin{aligned}
+L_{00}&=\tfrac25G,&
+L_{01}&=\tfrac15\operatorname{diag}(3,1,1,3),\\
+L_{10}&=\tfrac15X_B\operatorname{diag}(i,2-i,-2+i,-i),&
+L_{11}&=\tfrac15X_B\operatorname{diag}(-i,2-i,2-i,-i).
+\end{aligned}
+\tag{RS19d}
+$$
+
+Their effects are $4I/25$, $\operatorname{diag}(9,1,1,9)/25$ and,
+for each of $10,11$, $\operatorname{diag}(1,5,5,1)/25$, summing to
+$3I/5$. The $00$ flag therefore gives exactly the same corrected CZ
+mass $4/25$. The other terminal flags are nonunitary and are not safe
+identity failures. Complete the filter by coherently collecting
+$P_{\rm odd}$ and reading $B_{1n}$ **before B**. The early maps are
+
+$$
+J_n=\frac{i(-1)^n}{\sqrt5}(X_AZ_A^n\otimes I_B),\qquad
+J_n^\dagger J_n=I/5.
+\tag{RS19e}
+$$
+
+After local correction these give identity mass $2/5$; the four terminal
+and two early flags form a trace-preserving instrument. The filter
+needs explicit rejected ports and coherent odd-mode erasure, not a
+closed four-mode unitary or an unresolved lost photon. Retrying only
+these corrected early identity flags with fresh Bell sources gives,
+at most $M$ launches, CZ mass
+$\tfrac4{15}(1-(2/5)^M)$ and remaining corrected-identity mass $(2/5)^M$.
+Other terminal flags stop without a claimed usable gate. With unlimited
+early retries the CZ mass is $4/15$, with mean $5/3$ A contacts and one
+B contact, hence $8/3$ occupied contacts. This is an ideal stopping
+policy, not a hard cap or a measured rate. When early rejects are
+actually read before B, one ordinary launch has mean occupied-contact
+count $1+3/5=8/5$, versus two for the displayed native circuit. The
+filter, readout and feedback times remain paid; this count is not an
+optimized-rate comparison.
+
+The selected-branch equality has wider scope than this calibrated point.
+For arbitrary scalar contacts $U_A=aI+bF_{SA}$ and $U_B=cI+dF_{SB}$,
+the same Bell source, native $\Phi^-$ flag and ordinary $V$/$\Phi^+$
+flag give exactly
+
+$$
+K=L=\left(\frac{bc}{2}+\frac{bd}{4}\right)Z_A
+     +\left(\frac{ad}{2}+\frac{bd}{4}\right)Z_B.
+\tag{RS19f}
+$$
+
+Indeed the native expansion is
+$bcZ_A/2+adZ_B/2+bd(P_{0A}-P_{1B})F_{AB}/2$, and
+$(P_{0A}-P_{1B})F_{AB}=(Z_A+Z_B)/2$ on all four basis states.
+For ordinary order the zero-, A-only, B-only and two-exchange terms
+are respectively $0$, $bcZ_A/2$, $adZ_B/2$ and
+$bd(P_{00}-P_{11})/2=bd(Z_A+Z_B)/4$. No unitarity or reality of the
+scalar coefficients was used.
+
+This also proves equality of the **full selected retained-frequency
+map** when $a,b,c,d$ are common frequency-diagonal elastic
+multipliers. They commute, so the identity holds as an operator on
+$L^2(d\omega)\otimes AB$, including frequency coherences and passive
+references. The Bell source/filter/readout must act on $CS$ with the
+same frequency-independent amplitudes, and both routes must have the
+same finish and propagation/history-phase frame. Fourier transformation
+of the source's stationary equation (14), together with (10)--(13),
+gives this multiplier form for its degenerate equal-leg asymptotic
+elastic model; replacing an actual routed apparatus by that model
+still requires those interface conditions.
+
+For example, in units $\Gamma=1$, let the incident offset be $\xi$,
+so $\delta_A=\xi+1/2$, $\delta_B=\xi-1/2$. Then (RS19f) is
+
+$$
+K(\xi)=L(\xi)=
+\frac{(1+i-2i\xi)Z_A+(1-i-2i\xi)Z_B}{4D(\xi)},
+\qquad D(\xi)=(1-i\xi)^2+\tfrac14.
+\tag{RS19g}
+$$
+
+Its $00,11$ magnitudes are
+$\sqrt{1+4\xi^2}/(2|D|)$, versus $1/(2|D|)$ for $01,10$.
+Thus proportional CZ is the carrier-point limit; ordinary order matches
+the entire selected finite-bandwidth distortion, including a coherent
+pulse's off-diagonal frequencies. This is not equality of the other
+flags, radiative rejects or full lossy/bath instrument. Different
+history delays/phases, frequency-changing processes and noncommuting
+retained-bath kernels are outside this commuting-multiplier identity.
+
+Both routes pay for a coherent Bell source and joint readout of two
+degrees of one photon, preserved helper coherence, local feedback,
+calibrated detunings/phases, drift and reuse, rejected launches, storage
+and the complete clock. The ordinary route additionally supplies the
+midpoint filter, reject collection and early feedback when retries are
+used; the native route supplies coherent order and matched time/mode
+records. Finite wavepackets, unequal legs, emission loss or leaked
+history records require their actual complete instrument. Matching
+the selected flag proves neither equality of the remaining instruments
+nor an optimum over filters/POVMs or a physical advantage. The
+[same Raman replay](checks/architecture/raman_baselines.py) checks all
+ten finite branch maps, source/contact normalization, both complete
+instruments and all gate matrix-unit coefficients. Complex scalar
+fixtures and two coherently retained frequency bins check the selected
+identity and cross-frequency coefficients; the continuum multiplier
+extension is the analytic operator argument above.
+
 <a id="nr-r11-raman-route"></a>
 
 ### Native Raman ports need a routed temporal helper

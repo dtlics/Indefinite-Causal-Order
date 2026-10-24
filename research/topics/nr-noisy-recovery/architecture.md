@@ -1102,8 +1102,19 @@ baselines. Its [bare order circuit with two full SWAPs](communication.md#nr-r11-
 cannot herald an exact unitary on both unknown memories under the stated
 terminal-readout interface. The rank/fidelity and perturbative-yield
 bounds do not cover extra coherent programs, later bus-memory gates or
-delivery of the bus as part of the payload. Unknown-input gate comparisons
-must also include its ordinary
+delivery of the bus as part of the payload.
+[Calibrated opposite partial contacts](communication.md#nr-r11-raman-partial-gate)
+instead give a full-input CZ flag. An ordinary midpoint parity filter
+using the same helper matches the selected map throughout the stated
+scalar, common frequency-diagonal elastic family, including coherent
+frequency.
+A finite wavepacket need not retain the center's CZ form; its distorted
+selected map is still matched under those premises. This does not equate
+the remaining instruments, optimal yields or complete physical routers.
+Only the center's specified early ordinary identity flags are safe for
+ideal retry. Source coherence, filter/reject ports, readout and the
+complete clock remain paid.
+Unknown-input gate comparisons must also include its ordinary
 known-gate helper programs and the coherent completion that restores the
 data on specified early rejection flags. Extra helper space can replace
 repeat contacts; those programs require real tensor-preserving ports,

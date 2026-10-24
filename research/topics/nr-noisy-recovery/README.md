@@ -306,7 +306,12 @@ accepted weight alone does not establish a hardware advantage.
 The [bare full-SWAP endpoint](communication.md#nr-r11-bare-swap-gate)
 cannot herald a full-input unitary on both unknown memories under its
 stated terminal-readout interface. Larger coherent programs change that
-resource premise. The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
+resource premise. The [partial-contact family](communication.md#nr-r11-raman-partial-gate)
+has a selected map matched by an ordinary midpoint filter using the same
+helper, including coherent frequency in the stated stationary elastic
+model. Its calibrated center gives CZ. The other flags differ; only the
+center's specified early ordinary identity flags support ideal retries.
+The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
 also compare unknown-input gates, helper-space costs and coherently read
 identity failures; their ideal identities do not certify lossy retries.
 Its [Raman local-memory comparisons](communication.md#nr-r11-raman-local-ancillas)
