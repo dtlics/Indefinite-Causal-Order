@@ -106,6 +106,11 @@ unitary-support ingredients. They are declared lossless examples.
 The general selected-map norm and raw-unitary bounds remain analytic;
 the diagonal-target comparison is not arbitrary-receiver, equal-yield or
 device-rate dominance.
+Passive Bell factory fixtures reconstruct both fixed-order/source
+variants, contacts, passive midpoint/analyzer, normalized port/time flags and
+corrections, including a frequency-discard/no-eraser guard. The continuous
+time instrument and finite-packet bounds remain analytic; these checks
+do not certify an unknown-input gate or physical detector/router performance.
 
 The encoded-Pauli checks include the full code-input and retained-record
 channels, reference matrix units, actual deferred record gates and a

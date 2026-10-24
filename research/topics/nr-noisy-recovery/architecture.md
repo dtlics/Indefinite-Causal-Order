@@ -1165,6 +1165,38 @@ controls the added component and unnormalized selected-map distance
 near any raw full-input unitary. It does not order arbitrary-target
 fidelities or cover joint recovery, lower codes, other readouts,
 product-input Bell tasks or full-instrument/rate comparisons.
+A separate [passive Bell factory](communication.md#nr-r11-passive-inelastic-bell)
+attains unit ideal Bell probability in the declared fixed-contact
+lossless fixture from prepared product memories and consumes the photon.
+The A-then-B version uses a Bell C/S source and full passive midpoint/analyzer
+processing. At the same carrier, a B-then-A variant uses calibrated source
+weights, a constant midpoint and helper-basis/time readout, yielding only
+odd Bell flags. Both require preserved helper/bus ports, the coherent time
+eraser and phase/Pauli corrections; the source weights and reversed route
+must actually be available and paid. The stated finite-packet guarantee
+is approximate and analytic.
+This closes an ideal Bell-yield gap under those supplied ports; it does
+not certify an actual source, unknown-input gate or physical rate.
+Source-weight control, reverse-route access, analyzer/collection loss,
+false clicks, time-erasure errors, spin storage,
+reset and the complete feedback clock still need a measured instrument.
+No-click damage is not an identity retry.
+
+[Kikura et al. (2026)](https://doi.org/10.1103/32yf-3nsm) provide a strong
+ordinary CAPS baseline through calibrated photon processing and hybrid
+emission–CAPS networking. Their model predicts $2\times10^5$ heralded Bell
+pairs/s at $0.999$ conditional fidelity using multiplexing without
+in-cavity reset. These figures concern resource-state generation.
+Finite-pulse, temporal impurity and spectator errors are modeled; actual
+link/detector losses and the deployment clock need the target ledger.
+
+The next [NR-R11 instrument test](communication.md#nr-r11-two-port-gate)
+is an online nonlocal parity/stabilizer measurement on unknown data, including
+failed-herald damage and recovery costs: derive intrinsic/spontaneous-loss
+maps and compare all-launch logical quality and cost at a fixed deadline
+with ordinary encoding/recovery and offline CAPS Bell resources plus
+teleportation/feedforward.
+
 Unknown-input gate comparisons must also include its ordinary
 known-gate helper programs and the coherent completion that restores the
 data on specified early rejection flags. Extra helper space can replace

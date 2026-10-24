@@ -342,6 +342,12 @@ keeps the same diagonal-target Bell-good weight in the ordinary flag at
 reduced or equal acceptance. Its separate near-unitary bound constrains raw
 full-input gates; it does not establish ordinary fidelity dominance for
 arbitrary targets or receivers.
+For prepared product memories, the separate
+[passive Bell factory](communication.md#nr-r11-passive-inelastic-bell)
+attains unit ideal Bell probability in the fixed-contact lossless
+fixture. Source preparation, four-port processing, the time eraser and
+corrections are supplied resources; this consumes the photon and is not
+an unknown-input gate.
 The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
 also compare unknown-input gates, helper-space costs and coherently read
 identity failures; their ideal identities do not certify lossy retries.

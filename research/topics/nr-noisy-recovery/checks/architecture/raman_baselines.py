@@ -1719,6 +1719,423 @@ def inelastic_gate_remainder():
             "scope": "Declared stationary lossless Raman energy-sector fixtures and common paid field filters. General CPTNI bound, triangular-unitary argument, source/interface and converter costs remain analytic; no actual converter fit, full bath-loss instrument or all-readout optimum."}
 
 
+def passive_inelastic_bell_factory():
+    """Exact passive-port Bell factories and finite proof ingredients.
+
+    General continuous-time, packet, jitter and hardware claims are analytic
+    or supplied assumptions. No solver, float or extra runtime file is used.
+    """
+    from retained_photon_serial import G, require
+
+    class E:
+        """Exact multiquadratic field; masks multiply square-free 5,7,13,3."""
+        primes = (5, 7, 13, 3)
+
+        def __init__(self, x=0):
+            self.c = x.c if isinstance(x, E) else (G(x),)+(G(),)*15
+
+        @staticmethod
+        def coefficients(c):
+            out = E()
+            out.c = tuple(c)
+            return out
+
+        def __add__(self, other):
+            other = E(other)
+            return E.coefficients([x+y for x, y in zip(self.c, other.c)])
+
+        __radd__ = __add__
+
+        def __neg__(self):
+            return E.coefficients([-x for x in self.c])
+
+        def __sub__(self, other):
+            return self+-E(other)
+
+        def __rsub__(self, other):
+            return E(other)+-self
+
+        def __mul__(self, other):
+            other = E(other)
+            out = [G() for _ in range(16)]
+            for a, x in enumerate(self.c):
+                if x == 0:
+                    continue
+                for b, y in enumerate(other.c):
+                    if y == 0:
+                        continue
+                    common = a & b
+                    scalar = 1
+                    for j, prime in enumerate(self.primes):
+                        if common & (1 << j):
+                            scalar *= prime
+                    out[a ^ b] += x*y*scalar
+            return E.coefficients(out)
+
+        __rmul__ = __mul__
+
+        def __truediv__(self, scalar):
+            return self*G(F(1)/F(scalar))
+
+        def __eq__(self, other):
+            return self.c == E(other).c
+
+        def conj(self):
+            return E.coefficients([z.conj() for z in self.c])
+
+
+    def radical(j):
+        c = [G() for _ in range(16)]
+        c[1 << j] = G(1)
+        return E.coefficients(c)
+
+
+    ROOT5, ROOT7, ROOT13, ROOT3 = [radical(j) for j in range(4)]
+    A = ROOT5*ROOT7/10
+    B = ROOT5*ROOT13/10
+    ZETA = E(G(-2, 1))*ROOT5/5
+
+
+    def norm(v):
+        return sum((x*x.conj() for x in v), E())
+
+
+    def eye(n):
+        return [[E(int(i == j)) for j in range(n)] for i in range(n)]
+
+
+    def adj(a):
+        return [[a[j][i].conj() for j in range(len(a))]
+                for i in range(len(a[0]))]
+
+
+    def mm(a, b):
+        return [[sum((a[i][k]*b[k][j] for k in range(len(b))), E())
+                 for j in range(len(b[0]))] for i in range(len(a))]
+
+
+    def put(v, key, z):
+        v[key] = v.get(key, E())+z
+
+
+    def response(energy, node, center=None):
+        delta = G(energy-(F(node, 2) if center is None else center))
+        t = delta/(delta+G(0, 1))
+        r = G(0, -1)/(delta+G(0, 1))
+        require(t == 1+r and t*t.conj()+r*r.conj() == 1 and
+                t*r.conj()+r*t.conj() == 0, "exact lossless active response")
+        return t, r
+
+
+    def contact(state, node, center=None):
+        out = {}
+        gap = (1, 2)[node]
+        for (c, s, a, b, w), z in state.items():
+            bit = a if node == 0 else b
+            if s == bit:
+                put(out, (c, s, a, b, w), z)
+            else:
+                t, r = response(w+gap*bit, node, center)
+                put(out, (c, s, a, b, w), z*E(t))
+                target = ((c, bit, s, b, w+gap*(bit-s)) if node == 0
+                          else (c, bit, a, s, w+gap*(bit-s)))
+                put(out, target, z*E(r))
+        return {key: z for key, z in out.items() if z != 0}
+
+
+    def midpoint(wrong_sign=False):
+        out = [[E() for _ in range(4)] for _ in range(4)]
+        out[3][0] = E(1)
+        out[2][1], out[1][1] = B, -A
+        sign = 1 if wrong_sign else -1
+        out[2][2], out[1][2] = sign*A, sign*B
+        out[0][3] = E(1)
+        require(mm(adj(out), out) == eye(4), "full constant passive midpoint U4")
+        return out
+
+
+    def port_step(state, matrix):
+        out = {}
+        for (c, s, a, b, w), z in state.items():
+            for cs in range(4):
+                co, so = divmod(cs, 2)
+                put(out, (co, so, a, b, w), matrix[cs][2*c+s]*z)
+        return {key: z for key, z in out.items() if z != 0}
+
+
+    def rows():
+        t0, r0 = map(E, response(0, 1))
+        t1, r1 = map(E, response(-1, 1))
+        out = []
+        for sign in (1, -1):
+            out.append(("even", sign, [sign*B*r1, E(), E(), t0],
+                        E(F(2, 5)), E(F(5, 2)), E(F(1, 10))))
+        for sign in (1, -1):
+            vector = [E(), sign*ZETA*B*t1, r0+sign*ZETA*A, E()]
+            d = 2*(4+sign*ROOT7)/5
+            inverse = 5*(4-sign*ROOT7)/18
+            probability = (4+sign*ROOT7)/10
+            out.append(("odd", sign, vector, d, inverse, probability))
+        return out
+
+
+    def i_power(power):
+        return (G(1), G(0, 1), G(-1), G(0, -1))[power % 4]
+
+
+    def phase_power(z, power):
+        if power < 0:
+            z, power = z.conj(), -power
+        answer = G(1)
+        for _ in range(power):
+            answer *= z
+        return answer
+
+
+    def run(matrix, terminal_rows, omit_b_phase=False, conjugate=True,
+            omit_time=False, late_time=False, retune=None, drop_frequency=False,
+            phases=None):
+        # Carry the initial 1/sqrt(2) source factor outside all vectors.
+        initial = {(c, c, 0, 0, 0): E(1) for c in range(2)}
+        after_a = contact(initial, 0)
+        require(after_a == {(0, 0, 0, 0, 0): E(1),
+                            (1, 0, 1, 0, -1): E(-1)},
+                "literal first contact includes r_A=-1 and shifted frequency")
+        final = contact(port_step(after_a, matrix), 1, retune)
+        if drop_frequency:
+            dropped = {}
+            for (c, s, a, b, w), z in final.items():
+                put(dropped, (c, s, a, b, 0), z)
+            final = dropped
+        require(norm(final.values()) == 2, "literal two-contact norm")
+        require(all(w == -a-2*b for (_, _, a, b, w) in final),
+                "every actual final frequency is its physical AB energy record")
+        outputs = {}
+        if phases is None:
+            phases = tuple(i_power(k) for k in range(4))
+        for channel, (kind, sign, vector, d, inverse, probability) in enumerate(terminal_rows):
+            for k, time_phase in enumerate(phases):
+                require(time_phase*time_phase.conj() == 1, "exact unit time phase")
+                raw = {}
+                for (c, s, a, b, w), z in final.items():
+                    coefficient = vector[2*c+s]
+                    if conjugate:
+                        coefficient = coefficient.conj()
+                    # Normalized four-mode Fourier row: angle k*pi/2.
+                    time_row = E(phase_power(time_phase, -w))/2
+                    put(raw, (a, b), z*coefficient*time_row)
+                corrected = {}
+                for (a, b), z in raw.items():
+                    phase_exponent = -(a+(0 if omit_b_phase else 2*b))
+                    if not omit_time and not late_time:
+                        z *= E(phase_power(time_phase, phase_exponent))  # FIRST
+                    if kind == "odd":
+                        z *= ZETA if a else 1
+                        target = (a, b ^ 1)
+                    else:
+                        target = (a, b)
+                    if sign == -1:
+                        z *= (-1)**a
+                    if late_time:
+                        z *= E(phase_power(time_phase, -(target[0]+2*target[1])))
+                    put(corrected, target, z)
+                density = {(i, j): corrected.get(i, E())*
+                           corrected.get(j, E()).conj()*inverse/2
+                           for i, j in product(product(range(2), repeat=2), repeat=2)}
+                expected = {(i, j): probability/8 if i[0] == i[1] and j[0] == j[1]
+                            else E() for i, j in density}
+                require(density == expected,
+                        "every corrected port/time flag is its exact Bell weight")
+                outputs[(channel, k)] = (density, probability)
+        return outputs
+
+
+
+    def no_eraser_guard(matrix, terminal_rows):
+        """Tracing the physical frequency record pinches this eigenstate fixture."""
+        initial = {(c, c, 0, 0, 0): E(1) for c in range(2)}
+        final = contact(port_step(contact(initial, 0), matrix), 1)
+        total_good = E()
+        for kind, sign, vector, d, inverse, probability in terminal_rows:
+            buckets = {}
+            for (c, s, a, b, w), z in final.items():
+                value = z*vector[2*c+s].conj()
+                if kind == "odd":
+                    value *= ZETA if a else 1
+                    target = (a, b ^ 1)
+                else:
+                    target = (a, b)
+                if sign == -1:
+                    value *= (-1)**a
+                put(buckets.setdefault(w, {}), target, value)
+            density = {(i, j): sum((bucket.get(i, E())*
+                        bucket.get(j, E()).conj()*inverse/2
+                        for bucket in buckets.values()), E())
+                       for i, j in product(product(range(2), repeat=2), repeat=2)}
+            require(all(value == 0 for (i, j), value in density.items() if i != j),
+                    "no eraser: frequency trace leaves computational-basis separability")
+            trace = sum((density[(i, i)] for i in product(range(2), repeat=2)), E())
+            good = sum((density[(i, j)] for i, j in
+                        product(((0, 0), (1, 1)), repeat=2)), E())/2
+            require(trace == probability and good == probability/2,
+                    "no eraser: each corrected Bell overlap is half its trace")
+            total_good += good
+        require(total_good == E(F(1, 2)), "no eraser: total Bell-good weight is one half")
+        return {"conditioned_diagonal_states": 4, "bell_good_weight": "1/2",
+                "scope": "This energy-eigenstate product-input fixture with frequency traced, not coherent packets or the supplied time-click instrument."}
+
+
+    def reverse_word_odd_guards():
+        """The B-then-A word gives only odd Bell flags at the original carrier."""
+        t_b, r_b = map(E, response(0, 1))
+        alpha, beta, phase = ROOT3/2, ROOT5*t_b/2, ROOT5*r_b/2
+        require(alpha*alpha+beta*beta.conj() == 1 and phase*phase.conj() == 1,
+                "reverse-word variant normalized source-mode vectors")
+        # U=|01><ubar|+|10><vbar|+|00><uperp|+|11><01|.
+        matrix = [[E() for _ in range(4)] for _ in range(4)]
+        matrix[1][0], matrix[1][3] = alpha, beta.conj()
+        matrix[0][0], matrix[0][3] = -beta, alpha
+        matrix[2][2], matrix[3][1] = phase.conj(), E(1)
+        require(mm(adj(matrix), matrix) == eye(4), "reverse-word passive midpoint U4")
+        # Source sqrt3|00>+sqrt5|11> has external normalization 1/sqrt8.
+        initial = {(0, 0, 0, 0, 0): ROOT3, (1, 1, 0, 0, 0): ROOT5}
+        require(norm(initial.values()) == 8, "reverse-word source weight")
+        final = contact(port_step(contact(initial, 1), matrix), 0)
+        require(final == {(0, 0, 1, 0, -1): E(-2), (1, 0, 0, 1, -2): E(2)},
+                "reverse-word literal shifts, full reflection phase and endpoint")
+        def timed_flags(phases, late_time=False, omit_time=False, wrong_sign=False):
+            require(len(phases) == 2 and phases[1] == -phases[0],
+                    "reverse-word two opposite phases define a full time basis")
+            for i, j in product(range(2), repeat=2):
+                inner = sum((phase_power(phases[i], -w).conj()*
+                             phase_power(phases[j], -w) for w in (-2, -1)), G())/2
+                require(inner == int(i == j), "reverse-word normalized time-basis Gram")
+            flags = 0
+            for sign, time_phase in product((1, -1), phases):
+                require(time_phase*time_phase.conj() == 1, "reverse-word unit time phase")
+                raw = {}
+                for (c, s, a, b, w), z in final.items():
+                    require(s == 0, "reverse-word no unused output port")
+                    # Each opposite phase pair is a complete two-frequency
+                    # time basis. C +/- and time bras are left unnormalized;
+                    # their source/bra density denominator is 8*2*2.
+                    value = z*(sign**c)*E(phase_power(time_phase, -w))
+                    if not late_time and not omit_time:
+                        exponent = (a+2*b)*(1 if wrong_sign else -1)
+                        value *= E(phase_power(time_phase, exponent))
+                    if sign == 1:
+                        value *= (-1)**a
+                    target = (a, b ^ 1)
+                    if late_time:
+                        value *= E(phase_power(time_phase, -(target[0]+2*target[1])))
+                    put(raw, target, value)
+                density = {(i, j): raw.get(i, E())*raw.get(j, E()).conj()/32
+                           for i, j in product(product(range(2), repeat=2), repeat=2)}
+                require(all(z == (E(F(1, 8)) if i[0] == i[1] and j[0] == j[1] else E())
+                            for (i, j), z in density.items()),
+                        "reverse-word each C/time flag is corrected Bell of weight one fourth")
+                flags += 1
+            return flags
+
+        flags = timed_flags((G(1), G(-1)))
+        off_grid = G(F(3, 5), F(4, 5))
+        generic_flags = timed_flags((off_grid, -off_grid))
+        time_mutants = 0
+        for options in ({"late_time": True}, {"omit_time": True}, {"wrong_sign": True}):
+            try:
+                timed_flags((off_grid, -off_grid), **options)
+            except ValueError:
+                time_mutants += 1
+            else:
+                raise ValueError("reverse-word bad time-feedback mutant was not detected")
+        return {"status": "passed", "midpoint_unitary_entries": 16, "word": "B then A",
+                "source_carrier": "0",
+                "corrected_C_time_flags": flags, "C_flag_weights": ["1/2", "1/2"],
+                "generic_time_density_guards": generic_flags,
+                "time_basis_gram_entries": 8,
+                "detected_time_feedback_mutants": time_mutants,
+                "total_bell_yield": "1", "residual_jitter_gap": 1,
+                "scope": "Unequal coherent C/S source weights, a passive constant U4, the ordinary reverse-order route/clock and C/time detection are paid. The carrier and contacts are unchanged; no frequency converter or contact retuning. Two Fourier angles and an independent off-grid opposite phase pair guard time normalization and the separate feedback frame."}
+
+
+    def run_passive_replay():
+        for j, prime in enumerate((5, 7, 13, 3)):
+            require(radical(j)*radical(j) == prime, "exact square-free field relation")
+        require(A*A == F(7, 20) and B*B == F(13, 20) and
+                A*A+B*B == 1 and ZETA*ZETA.conj() == 1,
+                "exact algebraic control coefficients")
+        matrix, terminal_rows = midpoint(), rows()
+        projector = [[E() for _ in range(4)] for _ in range(4)]
+        for _, _, vector, d, inverse, _ in terminal_rows:
+            require(norm(vector) == d and d*inverse == 1,
+                    "exact analyzer row norm and inverse, without floating roots")
+            for i, j in product(range(4), repeat=2):
+                projector[i][j] += vector[i]*vector[j].conj()*inverse
+        require(projector == eye(4), "all four physical helper projectors complete")
+        require(sum((row[-1] for row in terminal_rows), E()) == 1,
+                "all four all-attempt spin Bell probabilities sum to one")
+        # DFT completeness on the four actual frequency labels -3,-2,-1,0.
+        fourier = [[E(i_power(-k*w))/2 for w in range(-3, 1)] for k in range(4)]
+        require(mm(adj(fourier), fourier) == eye(4), "finite time-POVM normalization guard")
+        outputs = run(matrix, terminal_rows)
+        # Off-grid rational unit phase catches a time-after-X frame error
+        # that the four special Fourier angles alone happen to hide.
+        generic_phase = (G(F(3, 5), F(4, 5)),)
+        generic_densities = run(matrix, terminal_rows, phases=generic_phase)
+        reference_units = 0
+        for (_, _), (density, probability) in outputs.items():
+            for r, s in product(range(4), repeat=2):
+                extended = {((i, r), (j, s)): z for (i, j), z in density.items()}
+                expected = {((i, r), (j, s)): probability/8
+                            if i[0] == i[1] and j[0] == j[1] else E()
+                            for i, j in density}
+                require(extended == expected, "passive reference matrix units for the known resource")
+                reference_units += 1
+        require(sum((sum((density[(i, i)] for i in product(range(2), repeat=2)), E())
+                     for density, _ in outputs.values()), E()) == 1,
+                "all port and Fourier-time records have total weight one")
+        lipschitz_cases = 0
+        for energy, epsilon in product((F(0), F(-1), F(1, 2)),
+                                       (F(-1, 3), F(-1, 10), F(1, 10), F(1, 3))):
+            r = response(energy, 0)[1]
+            rp = response(energy+epsilon, 0)[1]
+            difference = rp-r
+            exact = G(0, epsilon)/((G(energy+epsilon)+G(0, 1))*(G(energy)+G(0, 1)))
+            require(difference == exact and (difference*difference.conj()).r <= epsilon**2,
+                    "finite exact ingredients of analytic response Lipschitz bound")
+            lipschitz_cases += 1
+        require(sum((row[-1] for row in terminal_rows if row[0] == "even"), E()) == F(1, 5)
+                and sum((row[-1] for row in terminal_rows if row[0] == "odd"), E()) == F(4, 5),
+                "jitter phase-gap weights are one fifth and four fifths")
+        mutants = 0
+        for options in ({"matrix": midpoint(True)}, {"omit_b_phase": True},
+                        {"conjugate": False}, {"omit_time": True},
+                        {"late_time": True}, {"retune": F(-1)},
+                        {"drop_frequency": True}):
+            actual_matrix = options.pop("matrix", matrix)
+            try:
+                run(actual_matrix, terminal_rows, **options)
+                run(actual_matrix, terminal_rows, phases=generic_phase, **options)
+            except ValueError:
+                mutants += 1
+            else:
+                raise ValueError("meaningful passive-control mutant was not detected")
+        no_eraser = no_eraser_guard(matrix, terminal_rows)
+        reverse_word_odd = reverse_word_odd_guards()
+        return {"status": "passed", "exact_field": "Q(i,sqrt3,sqrt5,sqrt7,sqrt13)",
+                "midpoint_unitary_entries": 16, "analyzer_projector_entries": 16,
+                "fourier_normalization_entries": 16, "corrected_port_time_flags": len(outputs),
+                "generic_time_phase_density_guards": len(generic_densities),
+                "passive_reference_matrix_units": reference_units,
+                "lipschitz_ingredient_cases": lipschitz_cases,
+                "detected_control_mutants": mutants, "total_bell_yield": "1",
+                "port_weights": ["1/10", "1/10", "(4+sqrt7)/10", "(4-sqrt7)/10"],
+                "occupied_contacts": 2,
+                "no_eraser": no_eraser, "reverse_word_odd": reverse_word_odd,
+                "scope": "Known-product Bell factories in the lossless integer-line Raman fixture with paid passive coherent C/S U4 midpoint/analyzer and time/phase records; the reverse-word variant additionally grants its unequal source weights and route. The full continuous-time identity and finite-packet bound are analytic. No active frequency conversion, retuning, unknown-AB gate, physical detector/loss fit, or source port grant."}
+    return run_passive_replay()
+
+
 def verify_raman_stronger_baselines():
     from verify_raman_bell_certificate import verify
     return {
@@ -1735,5 +2152,6 @@ def verify_raman_stronger_baselines():
         "operator_partial_swap_frontier": operator_partial_swap_frontier(),
         "two_port_selected_map": two_port_selected_map(),
         "inelastic_gate_remainder": inelastic_gate_remainder(),
-        "scope": "Exact achievable ordinary instruments and polynomial identities. No ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
+        "passive_inelastic_bell_factory": passive_inelastic_bell_factory(),
+        "scope": "Exact achievable ordinary instruments and polynomial identities. No complete physical ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
     }

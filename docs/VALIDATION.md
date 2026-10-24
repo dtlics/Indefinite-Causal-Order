@@ -530,6 +530,11 @@ Gram and support ingredients guard the diagonal-target comparison and
 raw-unitary constraint; the general norm and support proofs remain
 analytic. No arbitrary-target fidelity dominance, joint-receiver optimum
 or device fit follows.
+The passive Bell factory fixtures check prepared-input forward/reverse
+source/contact paths, unitary four-port processing, normalized analyzer/time flags and local
+corrections. Frequency-discard guards retain the distinction from an
+actual coherent time click. The continuous-time and approximate packet
+bounds are analytic, not a measured detector, routing or feedback certificate.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
 survivor instruments are checked with exact Gaussian fractions. Its
 local-ancilla extension reconstructs the six-qubit source, both scatters,

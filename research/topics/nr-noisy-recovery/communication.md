@@ -2468,10 +2468,279 @@ all native Bell flags and the ordinary midpoint rejects/late flags.
 It checks coherent spectral/reference maps, certified CP/TNI field
 filters, added-error ledgers and norm/support ingredients. These are
 declared lossless fixtures, not the device's full bath-loss instrument;
-the general diamond and unitary-support proofs remain analytic. A
-remaining application must use a useful Bell output from known product
-inputs, another CS measurement, or noncommuting elastic diagonal blocks,
-with its actual frequency/bath eraser and ordinary controls supplied.
+the general diamond and unitary-support proofs remain analytic. Known-input
+Bell preparation is a different endpoint. The following fixed-contact
+comparison closes its yield in this lossless fixture when the stated
+passive port processors and time eraser are supplied. A remaining physical
+application needs its actual frequency/bath instrument and ordinary ports;
+noncommuting elastic diagonal blocks remain outside the support argument.
+
+<a id="nr-r11-passive-inelastic-bell"></a>
+
+**A fixed-order passive-port Bell factory needs no frequency converter.**
+Prepare $A=B=0$ and consume the photon to deliver a known Bell pair on
+$AB$. This is not an unknown-input gate or a retained-photon service.
+Use the declared lossless stationary fixture on an unwrapped integer
+frequency line, with memory gaps $\Delta_A=1,\Delta_B=2$, zero $C/S$
+port splittings, and fixed active responses
+
+$$
+t_j(E)=\frac{E-j/2}{E-j/2+i},\qquad
+r_j(E)=\frac{-i}{E-j/2+i},\qquad j=0,1
+\tag{IG5}
+$$
+
+for $A,B$ respectively. Equal $S$/memory values are dark identity; an
+exchange $|s,a,\omega\rangle\mapsto
+|a,s,\omega+\Delta_j(a-s)\rangle$ has coefficient
+$r_j(\omega+\Delta_ja)$, and its unchanged path has coefficient $t_j$
+at the same energy. All intermediate frequencies are retained.
+
+Supply the four coherent photon $C/S$ ports, a normalized
+$\Phi^+_{CS}$ source at $\omega=0$, one constant frequency-preserving
+$U(4)$ between contacts, a constant terminal $C/S$ analyzer,
+port-resolved broadband time detection, and local spin phase/Pauli
+feedback. The route must preserve all four ports into the required
+contacts. These are paid ports, not implied by a native order router or
+spectrometer. Neither static retuning, active frequency translation,
+spectral source replacement nor an abstract field-only projection is used.
+
+The first contact is always $A$. Since $t_A(0)=0,r_A(0)=-1$, it gives
+$[|A0,C0,S0,\omega0\rangle-
+|A1,C1,S0,\omega{-1}\rangle]/\sqrt2$. Put
+$a=\sqrt{7/20}$, $b=\sqrt{13/20}$. The midpoint unitary has columns
+
+$$
+\begin{array}{ll}
+|00\rangle\mapsto|11\rangle,&
+|01\rangle\mapsto b|10\rangle-a|01\rangle,\\
+|10\rangle\mapsto-a|10\rangle-b|01\rangle,&
+|11\rangle\mapsto|00\rangle .
+\end{array}
+\tag{IG6}
+$$
+
+They are orthonormal. The minus sign in column $10$ compensates the
+physical first reflection phase; the unitary does not change frequency.
+Contact $B$ second, with its center still $+1/2$. Define
+$t_0=(1+2i)/5$, $r_0=(-4+2i)/5$ at $E=0$, and
+$t_1=(9+6i)/13$, $r_1=(-4+6i)/13$ at $E=-1$.
+Suppressing frequency labels temporarily, the exact joint output is
+
+$$
+\frac1{\sqrt2}\bigl[
+ |00\rangle_{AB}t_0|11\rangle_{CS}
++|01\rangle_{AB}r_0|10\rangle_{CS}
++|10\rangle_{AB}(a|10\rangle+b t_1|01\rangle)_{CS}
++|11\rangle_{AB}b r_1|00\rangle_{CS}\bigr].
+\tag{IG7}
+$$
+
+Each $AB$ label $|x,y\rangle$ in (IG7) has its own frequency
+$\omega=-x-2y$, by conservation of $\Omega+n_A+2n_B$. No frequency record
+has been discarded by writing (IG7).
+
+Here is a complete, constant projective analyzer. Put
+
+$$
+\begin{aligned}
+h_\pm&=t_0|11\rangle\pm b r_1|00\rangle,&
+\|h_\pm\|^2&=2/5,\\
+u&=r_0|10\rangle,\quad v=a|10\rangle+b t_1|01\rangle,&
+\zeta&=r_0/|r_0|=(-2+i)/\sqrt5,\\
+k_\pm&=u\pm\zeta v,&
+\|k_\pm\|^2&=2(4\pm\sqrt7)/5 .
+\end{aligned}
+\tag{IG8}
+$$
+
+The four normalized vectors are an orthonormal $C/S$ basis:
+$|t_0|^2=|br_1|^2=1/5$,
+$\|u\|^2=\|v\|^2=4/5$, and
+$\langle u|\zeta v\rangle=\sqrt7/5$ is real. The $h$ and $k$ sectors
+have disjoint helper support. Thus (IG8) specifies a physical four-port
+projective basis under the supplied coherent $U(4)$ interface, rather
+than only invoking an HJW existence claim. Its real insertion loss and
+phase/path requirements remain costs.
+
+At time phase zero, the $h_\pm$ flags give $\Phi^\pm$ with probability
+$1/10$ each. The $k_\pm$ flags give
+$(|01\rangle\pm\zeta^*|10\rangle)/\sqrt2$, with probabilities
+$(4\pm\sqrt7)/10$. Apply $Z_A$ for $h_-$; for a $k$ flag apply
+$\operatorname{diag}(1,\zeta)_A$, $Z_A$ for the minus sign, and $X_B$.
+The four corrected flags are
+
+$$
+\rho_\ell=p_\ell|\Phi^+\rangle\langle\Phi^+|,\qquad
+(p_\ell)_\ell=
+\left(\frac1{10},\frac1{10},
+      \frac{4+\sqrt7}{10},\frac{4-\sqrt7}{10}\right).
+\tag{IG9}
+$$
+
+They sum to one. The passive-reference extension is
+$p_\ell|\Phi^+\rangle\langle\Phi^+|\otimes\rho_R$ for an arbitrary
+independent $\rho_R$, not a statement about unknown $ABR$ inputs.
+
+On the integer line use the ideal time/angle instrument
+$\langle\theta|\omega\rangle=e^{-i\omega\theta}/\sqrt{2\pi}$,
+$0\le\theta<2\pi$. Frequency $-x-2y$ gives only the local spin byproduct
+
+$$
+D_A(\theta)D_B(2\theta),\qquad
+D(\phi)=\operatorname{diag}(1,e^{i\phi}).
+\tag{IG10}
+$$
+
+Apply its inverse **before** the fixed corrections containing $X_B$
+in (IG9), or conjugate the phase frame through that Pauli. The analyzer
+is constant in time; port and time detection can therefore be combined.
+Each true flag/time outcome delivers the known Bell state with measure
+$p_\ell\,d\theta/(2\pi)$. A detector that merely leaves an unread
+which-frequency record does not implement this instrument. In this
+energy-eigenstate fixture, tracing frequency before detection pinches
+$AB$ in its computational basis; even conditioned on a $C/S$ analyzer
+outcome it is separable, with corrected Bell overlap at most half its
+trace. This guard does not apply to arbitrary coherent spin preparations,
+overlapping packets or an actual coherent time click.
+
+The construction also has a finite-packet **approximate** guarantee.
+Use a normalized common continuum packet $\phi(\epsilon)$ with
+$\sigma^2=\int\epsilon^2|\phi(\epsilon)|^2d\epsilon$ and the same constant
+midpoint/analyzer. Frequencies are angular and dimensionless in the
+linewidth units of (IG5). On each conserved total-energy-$\epsilon$
+fiber, freeze only the contact coefficients at $\epsilon=0$, retaining
+every output label $\epsilon-x-2y$. This is a mathematical comparison
+isometry, not an extra physical controller. Since $t=1+r$ and
+$|r(E+\epsilon)-r(E)|\le|\epsilon|$, each active contact changes by at
+most $2|\epsilon|$ in operator norm; dark sectors are unchanged. A
+two-contact telescope and orthogonal energy fibers give
+
+$$
+\|\Psi_{\rm actual}-\Psi_{\rm frozen}\|\le4\sigma,\qquad
+1-F_{\rm Bell}({\rm actual})\le\min\{1,16\sigma^2\}.
+\tag{IG11}
+$$
+
+For the second inequality apply the **same** full-time
+detector/feedforward isometry to both states. The frozen coefficients
+make a common Fourier envelope factor out after (IG10), so the frozen
+$AB$ output is exactly pure Bell. Its Bell-orthogonal projection
+vanishes; the actual bad weight is bounded by the squared norm
+difference. This requires the same packet, phase, complete frequency
+space and processing dilation. It is a full-window, ideal-lossless
+Bell-good-weight bound with unit click yield, not an exact finite-pulse
+Bell theorem. A dimensionful linewidth rescales $\sigma$ and the derivative.
+For a common window/efficiency and any $0\ldots1$ all-attempt payoff, the
+separate absolute discrepancy from the frozen comparison is at most
+$4\sigma$; no yield-free normalized postselection bound follows.
+
+For frozen ideal dynamics, additive independent timestamp error $\xi$,
+all times accepted, and the displayed phase correction, let
+$\chi(q)=\mathbb E e^{iq\xi}$. The $h$ flags have total weight $1/5$
+and residual gap $3$; the $k$ flags have total weight $4/5$ and gap $1$.
+Thus the aggregate Bell fidelity is
+
+$$
+F_{\rm time}=\frac12+\frac1{10}\operatorname{Re}\chi(3)
+                      +\frac25\operatorname{Re}\chi(1).
+\tag{IG12}
+$$
+
+For zero-mean Gaussian jitter of standard deviation $s_t$, replace the
+two real parts by $e^{-9s_t^2/2}$ and $e^{-s_t^2/2}$. These are derived
+response formulas, not measured jitter or feedback performance.
+Finite windows, pulse-dependent errors, frequency drift or correlated
+timestamp noise need their conditional distributions instead.
+If the common processing already has imperfect timing, the separate
+complete-instrument payoff bound gives a discrepancy at most
+$\min\{1,4\sigma\}$; the $16\sigma^2$ ideal-Bell infidelity bound cannot
+simply be added to an imperfect frozen fidelity without cross terms.
+
+A different **ordinary word and source weights** also remove any proposed
+gap-$3$ timing limitation of this benchmark. Keep the contacts and carrier
+$\omega=0$ fixed, but use $B$ first, $A$ second, and source
+$\sqrt{3/8}|00\rangle_{CS}+\sqrt{5/8}|11\rangle_{CS}$.
+At $B$, $t_B=(1+2i)/5$, $r_B=(-4+2i)/5$.
+The $B=0$ and $B=1$ photon vectors after that contact are orthogonal,
+both of squared norm $1/2$. Their normalized versions are
+$\bar u=\alpha|00\rangle+\beta|11\rangle$ and
+$\bar v=\rho|10\rangle$, where
+$\alpha=\sqrt3/2$, $\beta=t_B\sqrt5/2$, $\rho=r_B\sqrt5/2$.
+With $\bar u_\perp=-\beta^*|00\rangle+\alpha|11\rangle$, use the
+constant midpoint
+
+$$
+U_*=|01\rangle\langle\bar u|
+    +|10\rangle\langle\bar v|
+    +|00\rangle\langle\bar u_\perp|
+    +|11\rangle\langle01|.
+\tag{IG13}
+$$
+
+The four input vectors are orthonormal. The $B=0$ branch now reaches
+$A$ with $S=1,\omega=0$, exactly its unchanged resonance, while the
+$B=1$ branch has $S=0,\omega=-2$ and is dark. The full final state is
+
+$$
+\frac{-|10\rangle_{AB}|00,\omega=-1\rangle_{CS,H}
+      +|01\rangle_{AB}|10,\omega=-2\rangle_{CS,H}}{\sqrt2}.
+\tag{IG14}
+$$
+
+A $C$-basis $\pm$ measurement and $S=0$ time click therefore give an
+odd Bell pair with probability $1/2$ per $C$ flag. Remove the same local
+energy phases (IG10); apply $X_B$ and $Z_A$ for the $C=+$ flag, or
+$X_B$ alone for $C=-$. This gives unit Bell yield with no terminal
+general $U(4)$ analyzer. Its independent-jitter fidelity is
+$(1+\operatorname{Re}\chi(1))/2$, the gap-$1$ expression also available
+to an ideal native odd-Bell output. No pairwise timing advantage is
+asserted. This variant prices coherent unequal source weights and the
+ordinary reverse-order route/clock; it changes neither carrier nor contact
+detuning. More generally the balancing step works when the first
+partial-exchange probability is $R\ge1/2$ and the second contact is
+resonant at the original carrier: source weights
+$1-1/(2R)$ and $1/(2R)$ make both first-contact branches have norm
+squared $1/2$. This is a conditional lossless-port argument, not a
+two-upper-level or lossy-device theorem. The original $A$-then-$B$,
+$\Phi^+_{CS}$-source construction remains the separately proved
+fixed-word/source comparison.
+
+Flat true-photon efficiency $\eta$ and a common accepted window $W$
+give frozen true-click yield $\eta\int_W|\phi_t(t)|^2dt$.
+The photon is consumed; no-click can damage the spins and is not an
+identity retry. Collection, analyzer loss, port-dependent efficiency,
+dead time, multi-click veto, reset, spin storage, delay, phase calibration
+and feedback latency enter the complete attempt ledger. A false click
+after photon loss contributes its actual accepted CP map. For mutually
+exclusive true and false masses $s,d$, fidelity is
+$(sF_{\rm true}+dF_{\rm false})/(s+d)$; the false state requires the
+loss/detection dilation. No free path control survives photon loss.
+
+[Hermans et al., arXiv:2208.07449v1, Secs. II, IV, VI–VII](https://arxiv.org/html/2208.07449v1)
+model time-labelled annihilation and frequency-dependent herald phase,
+and distinguish temporal-envelope mismatch and fluctuating detuning.
+They motivate this conditional time instrument, not these Raman
+contacts, retuning, four-port optics, or jitter/feedback guarantees.
+The POVM, packet bound and cost analysis here are independent derivations.
+
+Ordinary yield one closes a Bell-yield advantage for **this** lossless
+fixture under the supplied passive processors and coherent time eraser.
+It improves on a single diagonal-$L_F$ comparison or a selected
+$8/17$ ordinary branch, without asserting that an actual optical graph
+supplies the two $U(4)$ processors. The independent $C/S$ ports, matched
+delays and complete traveling-mode interface remain necessary. This is
+not a two-node device fit or a microscopic loss certificate. Native
+frequency erasure must be charged on the same terms as ordinary erasure.
+The [same Raman replay](checks/architecture/raman_baselines.py) uses exact
+$\mathbb Q(i,\sqrt3,\sqrt5,\sqrt7,\sqrt{13})$ arithmetic for literal unwrapped
+paths, all normalized analyzer/time flags, passive-reference coefficients,
+the no-eraser guard, reverse-word odd-Bell variant and bad-control mutants.
+Four Fourier angles on
+the four populated frequency labels check finite normalization; the
+two distinct feedback circuits also have independent off-grid rational
+unit-phase checks and wrong-frame mutants. The
+continuous-time and packet bounds remain the analytic arguments above.
 
 <a id="nr-r11-raman-route"></a>
 
