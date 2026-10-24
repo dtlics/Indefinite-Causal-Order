@@ -212,8 +212,9 @@ budget. The retained-spin endpoint also has ordinary parity and photon-bus
 baselines with specific optical ports. The assessment records the remaining
 device and accuracy tests.
 The [spin-phase component](methods/remote-spin-phase.md) now gives an
-exact eight-mode coherent-program realization and a repeated ordinary
-survivor compiler, with explicit port and timing qualifications. Its next
+exact eight-mode coherent-program realization, a restricted gate-yield
+separation and a repeated ordinary survivor compiler, with explicit
+port and timing qualifications. Its next
 test compares rates and fidelity with the strongest paid ordinary routes;
 ideal accepted weight alone does not establish a hardware advantage.
 Its [Raman local-memory comparisons](communication.md#nr-r11-raman-local-ancillas)

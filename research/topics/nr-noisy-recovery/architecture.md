@@ -110,10 +110,16 @@ ordinary photon preparation and readout attain the declared one-pass
 ceiling for accepted reflected gates. This does not settle arbitrary
 unequal responses or finite-bandwidth hardware rates. Two independent
 coherent-order programs are now exactly attainable in a declared
-eight-mode interface. A repeated ordinary route matches their full
+eight-mode interface. An exact rational primal/dual comparison also
+establishes a strict gate-yield separation from the two fixed words in
+the declared local-phase-feedback class; broader data filters and
+intermediate matter controls are outside that upper bound.
+A repeated ordinary route matches their full
 survivor on unknown spin/reference inputs: four windows suffice with
-the same four-mode port per visit; three require a merged port or a
-proved program compression. A calibrated monochromatic compression
+the same four-mode port per visit. A direct three-window photon replay
+needs a merged port or a proved program compression; external quantum
+program memories and controlled transfers are separate paid alternatives.
+A calibrated monochromatic compression
 and a response-uniform finite-pulse compiler have different port
 requirements. The next test is a matched rate and fidelity comparison
 against both the best fixed word and this repeated route, using actual

@@ -24,6 +24,8 @@ survivors without assuming frequency-independent reflection amplitudes.
 A stronger decorated eight-mode interface attains independent coherent
 order programs; its same-port ordinary compiler uses four global windows,
 with a separately qualified three-window merged-port option.
+An exact projector-reflection certificate below gives a restricted
+two-encounter gate gap while retaining those stronger ordinary comparators.
 
 ## Physical task and declared interfaces
 
@@ -2008,6 +2010,8 @@ does not remove that clock.
 This port obstruction concerns that direct response-uniform survivor
 compiler. It is not a lower bound against every three-window algorithm
 or a different program with covariance-equivalent terminal instruments.
+External quantum program storage and controlled photon–memory transfer
+are additional resources not bounded by this port argument.
 
 ### Station and readout interfaces remain physical assumptions
 
@@ -2083,6 +2087,198 @@ For the qualified three-window comparator
 $\tau_3=T_0+3t$, the same illustrative threshold is $T_0\le3t$;
 these are conditional clock sensitivities, not fitted device claims.
 
+## An exact restricted gate gap for projector reflections
+
+A rational checkpoint separates the coherent two-arm cone from both
+fixed words and their recorded classical lotteries. The scalar kernel
+is $A_a=I-aP$, $B_b=I-bQ$: dark reflection is one and bright
+reflection is zero. The prescribed accepted gate is
+$D=\operatorname{CZ}=\operatorname{diag}(1,1,1,-1)$ on unknown
+$ABR$, with an arbitrary terminal photon POVM and only local
+output $Z$-phase corrections. All rejected launches are counted;
+physical no-click branches are not accepted.
+
+For the conventional feature Gram of
+$(\phi,P\phi,Q\phi,QP\phi)$, every ordinary moment has the form
+
+$$
+H(\gamma,x,q,t,c)=
+\begin{pmatrix}
+\gamma&x&q&c\\
+x&x&c^*&t\\
+q&c&q&c\\
+c^*&t&c^*&t
+\end{pmatrix}\succeq0,\qquad
+x,q,t\in\mathbb R,\quad c\in\mathbb C.
+\tag{RS63}
+$$
+
+Here $\gamma=1$ for a normalized source and is the launch weight
+in a homogeneous arm. This condition is also sufficient in four
+modes: factor $H$ into vectors $(v_0,v_1,v_2,v_3)$.
+Its identities give
+$\operatorname{span}\{v_2,v_3\}\perp
+\operatorname{span}\{v_0-v_2,v_1-v_3\}$.
+A rank-two $Q$ includes the first span and excludes the second,
+padding unused directions when necessary. Similarly
+$v_1\perp v_0-v_1$ permits a rank-two $P$ with $Pv_0=v_1$.
+Then $Qv_0=v_2$, $Qv_1=v_3$, as required.
+At $\gamma=0$ positivity forces $x=q=c=t=0$.
+
+Define $J$ to exchange coordinates 1 and 2 (zero-based) and put
+
+$$
+L=\begin{pmatrix}
+1&0&0&0\\1&0&-1&0\\1&-1&0&0\\1&-1&-1&1
+\end{pmatrix},\qquad
+G_{AB}=LH^{\mathsf T}L^{\mathsf T},\qquad
+L_{BA}=JL=LJ.
+\tag{RS64}
+$$
+
+The transpose is essential for complex $c$: $H$ is the conventional
+column Gram, whereas $G$ is the Kraus covariance of (RS54)–(RS55).
+The two equal station kernels allow station-label exchange for the
+reverse word; this is a relabelling, not a physical data-spin swap.
+
+The selected
+[rational certificate](../checks/architecture/projector_gate_gap.json)
+contains the normalized moment and phase covariance
+
+$$
+H_*=\frac1{1000}
+\begin{pmatrix}
+1000&313&922&278\\
+313&313&278&87\\
+922&278&922&278\\
+278&87&278&87
+\end{pmatrix},\qquad
+\Omega_*=\frac1{1000}
+\begin{pmatrix}
+175&-30&-30&174\\
+-30&175&-164&-30\\
+-30&-164&175&-30\\
+174&-30&-30&175
+\end{pmatrix}.
+\tag{RS65}
+$$
+
+Use the equal coherent arm moments $H_*/2$ and $H_*/2$.
+Their total covariance is
+$G_*=\tfrac12 L(H_*+JH_*J)L^{\mathsf T}$.
+Exact principal-minor checks prove
+$H_*\succ0$, $\Omega_*\succ0$,
+$\Omega_*^{T_B}\succ0$ and
+$G_*-D\Omega_*D\succ0$.
+The diagonal of $\Omega_*$ is $7/40$ and its complex phase-cone
+equalities in (RS54) hold. Thus (RS55) and the pure eight-mode
+attainment (RS59) give the exact accepted map
+$(7/40)\operatorname{Ad}_{\rm CZ}$ on every unknown $ABR$.
+The source, projectors and POVM exist by the displayed Gram
+construction and covariance factorization; no numerical
+eigenvalue or near-unitarity tolerance supplies them.
+
+For the ordinary upper, the same certificate specifies four rational
+real symmetric matrices $Z,A,B,S$, with common denominator $60000$.
+They satisfy $Z,A,B,S\succeq I/2000$. With
+$\mathcal E=\operatorname{span}_{\mathbb R}\{I,X,Y\}^{\otimes2}$
+and $\langle X,Y\rangle=\operatorname{Tr}(XY)$, their exact
+identities are
+
+$$
+\begin{aligned}
+W&=DZD-A-B^{T_B}-I/4\ \perp\mathcal E,\\
+\Lambda&=L^{\mathsf T}ZL+S,\qquad
+\Lambda_{00}=1/6,\qquad
+\langle\Lambda,H_i\rangle=0\quad(i=1,\ldots,5).
+\end{aligned}
+\tag{RS66}
+$$
+
+The $H_i$ are all five real coefficient directions in (RS63),
+including $\operatorname{Im}c$. The replay tests all nine real
+Pauli directions of $\mathcal E$, including their imaginary
+entries, and all five moment directions. These are not restrictions
+to real ordinary programs or a finite Pauli correction dictionary.
+
+For any ordinary feasible $H,\Omega$, positivity, PPT and
+the reflected residual yield the weak-duality chain
+
+$$
+\begin{aligned}
+p
+&=\langle I/4,\Omega\rangle
+ \le\langle Z,D\Omega D\rangle
+ \le\langle Z,LH^{\mathsf T}L^{\mathsf T}\rangle\\
+&=\langle L^{\mathsf T}ZL,H\rangle
+ \le\langle\Lambda,H\rangle
+ =\gamma/6 .
+\end{aligned}
+\tag{RS67}
+$$
+
+The first inequality subtracts the nonnegative pairings with
+$A,\Omega$ and $B,\Omega^{T_B}$; $W$ pairs to zero.
+The transpose in the middle equality can be dropped because
+$L^{\mathsf T}ZL$ is real symmetric, even when $H$ is complex.
+The next inequality uses $S,H\succeq0$.
+For $BA$, conjugate $Z,A,B$ by $J$, keep $S$ and use $L_{BA}$.
+The certificate checks all identities again, including partial
+transpose. Homogeneity bounds each recorded order arm by
+$\gamma_o/6$, hence their lottery by $1/6$ when
+$\sum_o\gamma_o=1$. It does not grant a classical lottery the
+coherent pooled purifier.
+
+Consequently the exact restricted optima obey
+
+$$
+\operatorname{OPT}_{\rm coherent,8}\ge\frac7{40},\qquad
+\operatorname{OPT}_{\rm fixed\ word/recorded\ lottery}\le\frac16,
+\qquad
+\Delta_{\rm OPT}\ge\frac1{120},\qquad
+\frac{\operatorname{OPT}_{\rm coherent,8}}
+ {\operatorname{OPT}_{\rm fixed\ word/recorded\ lottery}}
+\ge\frac{21}{20}.
+\tag{RS68}
+$$
+
+The ordinary optimum is positive: $H_*\succ0$ is ordinary-realizable,
+$L$ is invertible and (RS56) gives a positive uncorrected CZ
+weight. Neither optimum, nor their actual difference, is asserted
+equal to these bounds.
+
+There is a checked scalar correspondence with (RS44). At one
+frequency, set its decay rate $\gamma=\kappa$, $\kappa_r=\kappa$,
+$g^2=2\kappa^2$ and $\nu=\kappa$; direct substitution gives
+$r_{\rm dark}=-i$, $r_{\rm bright}=0$. A common station phase $i$
+gives the projector kernel. This is a single-frequency model point,
+not a fit to the measured modules, a normalizable finite-pulse
+certificate or evidence for the required four/eight-mode ports.
+
+This checkpoint concerns only the specified CZ flag and the
+phase-only fixed-word two-encounter class. Intermediate data
+controls, general local data filters, encodings, protected
+data bypasses, spare memories, entanglement-first protocols,
+extra calls and different spectral or no-click interfaces are
+outside the ordinary dual. The safe four-window survivor compiler,
+or the qualified calibrated three-window construction, matches
+the pooled instrument when its premises are supplied. Thus (RS68)
+is an exact restricted-interface gate separation, not a practical
+rate or hardware advantage, a harmless-retry theorem, or a
+priority claim. The port, purity, timing and strongest-ordinary
+resource tests above remain necessary.
+
+The broader mechanisms have established antecedents.
+[Simonov et al., Proposition 2](https://arxiv.org/html/2311.13654v4)
+give deterministic CZ by switching product unitaries on the data
+register, with ancilla measurement and local preprocessing/feedback;
+those slots differ from the spin-controlled photon contractions here.
+[Duan, Wang and Kimble](https://arxiv.org/pdf/quant-ph/0505054)
+already give ordinary sequential cavity-photon remote gates with
+photon detection and local phase feedback. This checkpoint certifies
+the specified probability optimization, without a new-mechanism or
+priority claim.
+
 ## Physical resources and verification scope
 
 The arbitrary-helper protocol assumes a pure incident photon and the
@@ -2145,3 +2341,11 @@ padding polarization with bypass modes guards the rank-one obstruction.
 These finite identities support (RS58)–(RS62); physical station ports,
 surviving-bath purity, time-bin wrappers, common-finish dynamics and
 actual gate rates remain the stated analytic and device premises.
+The selected projector-kernel certificate additionally checks its
+primal PSD/PPT and reflected rejection matrices, both ordinary duals
+with a positive rational margin, every real/imaginary moment and
+phase direction, transpose conventions and homogeneous lottery
+weights. Its checked scalar cavity point is single-frequency.
+These exact tests establish the bounds in (RS68), not either optimum,
+a finite-pulse rate or a physical separation from the longer or
+entanglement-first ordinary protocols.

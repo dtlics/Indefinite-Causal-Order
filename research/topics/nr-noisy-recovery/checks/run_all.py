@@ -46,7 +46,7 @@ JOBS = (
     ("architecture-general-channel-entropy", "architecture/verify_unital_entropy.py", (),
      "Exact Kraus/Choi, mixed-adjoint energy, nonunitality, pinching, spectral-tail, full-flag and Clifford-twirl identities; entropy integration, relative-entropy convexity and coding analytic."),
     ("architecture-remote-spin-phase", "architecture/verify_remote_spin_phase.py", (),
-     "Exact spin-gate/four-mode/erasure maps, scattering/rank-loss, concurrence/Bell-yield, two-CZ, coherent-spectrum, full-helper, constant-optics, local-phase/balanced/opposite-phase gates and decorated eight-mode joint-readout/four-window/qualified-three-window port guards; universal comparisons, cone completeness, continuum loss, native ports and clocks analytic."),
+     "Exact spin-gate/four-mode/erasure maps, scattering/rank-loss, concurrence/Bell-yield, two-CZ, coherent-spectrum, full-helper, constant-optics, local-phase gates, eight-mode/readout/window/port guards and rational pooled-primal/fixed-word-dual CZ separation; no general data filters/intermediate-control upper. Universal comparisons, cone completeness, continuum loss, native ports and clocks analytic."),
     ("architecture-remote-spin-pulse", "architecture/verify_remote_spin_pulse.py", (),
      "Outward rational interval integration of the declared full Gaussian cavity-response witness, with analytic strip and tail error bounds; arbitrary-helper attainment proof and physical analyzer/control costs remain analytic."),
     ("architecture-orthogonal-unitary-entropy", "architecture/verify_orthogonal_entropy.py", (),

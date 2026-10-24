@@ -77,6 +77,12 @@ obstruction for a four-mode middle port. The general program-attainment,
 compression and common-frame timing proofs remain analytic. These
 guards do not validate native station ports, inaccessible emission
 records, physical buffers or throughput.
+An additional rational projector-response certificate supplies a
+coherent pooled gate primal and ordinary fixed-word duals. Exact
+PSD/PPT, phase and complex moment equalities establish a restricted
+accepted-CZ separation; general data filters, intermediate matter
+controls and hardware rates are outside that upper bound. The repeated
+ordinary survivor compiler remains a stronger paid comparator.
 A separate outward interval certificate integrates the full declared
 Gaussian pulse, with analytic strip and tail bounds. Its physical joint
 mode analyzer remains an additional resource. Full Choi twirls in the general-channel replay support the

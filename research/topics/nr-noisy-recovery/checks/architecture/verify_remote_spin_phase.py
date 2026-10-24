@@ -1595,6 +1595,165 @@ def decorated_bus_verify():
                      'no generic F4 merged visit, loss/emission completion or physical clock validation'}
 
 
+def exact_projector_gap_verify():
+    """Exact pooled CZ primal and both ordinary-word weak-dual certificates.
+
+    The gap is a lower/upper comparison in the declared constant-projector
+    reflected gate class, with local phase feedback. No optimum equality,
+    adaptive ordinary bound, no-click recovery or hardware rate is inferred.
+    """
+    from pathlib import Path
+
+    data = json.loads(Path(__file__).with_name('projector_gate_gap.json').read_text(encoding='utf-8'))
+    assert data['schema'] == 'projector-cz-gate-gap-v1'
+    assert data['moment_denominator'] == data['phase_denominator'] == 1000
+    assert data['dual_denominator'] == 60000
+
+    def read_matrix(rows, denominator):
+        assert len(rows) == 4 and all(len(row) == 4 for row in rows)
+        assert all(isinstance(x, int) and not isinstance(x, bool) for row in rows for x in row)
+        return [[ConcG(F(x, denominator)) for x in row] for row in rows]
+
+    def moment(gamma, x, q, t, c):
+        c = conc_cast(c)
+        return [[conc_cast(gamma), conc_cast(x), conc_cast(q), c],
+                [conc_cast(x), conc_cast(x), c.conj(), conc_cast(t)],
+                [conc_cast(q), c, conc_cast(q), c],
+                [c.conj(), conc_cast(t), c.conj(), conc_cast(t)]]
+
+    def pairing(a, b):
+        return helper_trace(helper_mul(a, b))
+
+    def partial_b(a):
+        return [[a[2*(i//2)+j % 2][2*(j//2)+i % 2]
+                 for j in range(4)] for i in range(4)]
+
+    def strict_psd(a):
+        gate_psd(a)
+        for size in range(1, 5):
+            determinant = gate_determinant([row[:size] for row in a[:size]])
+            assert determinant.i == 0 and determinant.r > 0
+
+    identity = helper_eye(4)
+    origin = helper_diag([1, 0, 0, 0])
+    directions = [moment(0, 1, 0, 0, 0), moment(0, 0, 1, 0, 0),
+                  moment(0, 0, 0, 1, 0), moment(0, 0, 0, 0, 1),
+                  moment(0, 0, 0, 0, ConcG(0, 1))]
+    assert len(directions) == 5 and all(h == helper_dag(h) for h in directions)
+    # Explicit Im(c) signs and H^T covariance orientation are tested using
+    # an actual complex rank-two projector program, not just real witnesses.
+    phi = [ConcG(F(3, 5)), ConcG(F(4, 5)), ConcG(), ConcG()]
+    p = helper_diag([1, 0, 1, 0])
+    q = [[ConcG(F(9, 25)), ConcG(0, -F(12, 25)), ConcG(), ConcG()],
+         [ConcG(0, F(12, 25)), ConcG(F(16, 25)), ConcG(), ConcG()],
+         [ConcG(), ConcG(), ConcG(1), ConcG()],
+         [ConcG(), ConcG(), ConcG(), ConcG()]]
+    assert q == helper_dag(q) and helper_mul(q, q) == q and helper_rank(q) == 2
+    features = [phi, conc_mv(p, phi), conc_mv(q, phi), conc_mv(q, conc_mv(p, phi))]
+    feature_gram = [[conc_inner(v, w) for w in features] for v in features]
+    assert feature_gram[0][3].i != 0
+    assert feature_gram == moment(1, feature_gram[0][1], feature_gram[0][2],
+                                  feature_gram[3][3], feature_gram[0][3])
+    assert partial_b(feature_gram) == bus_transpose(gate_partial_transpose(feature_gram))
+    assert partial_b(feature_gram) != gate_partial_transpose(feature_gram)
+    l = [[ConcG(x) for x in row] for row in
+         ((1, 0, 0, 0), (1, 0, -1, 0), (1, -1, 0, 0), (1, -1, -1, 1))]
+    swap = [[ConcG(j == (0, 2, 1, 3)[i]) for j in range(4)] for i in range(4)]
+    target = helper_diag([1, 1, 1, -1])
+    actual_vectors = [[sum((l[i][j]*features[j][k] for j in range(4)), ConcG())
+                       for k in range(4)] for i in range(4)]
+    actual_covariance = gate_covariance(actual_vectors)
+    assert actual_covariance == helper_mul(helper_mul(l, bus_transpose(feature_gram)), bus_transpose(l))
+    assert actual_covariance != helper_mul(helper_mul(l, feature_gram), bus_transpose(l))
+    # Both homogeneous arms use H/2, hence their source weights sum to one.
+    h = read_matrix(data['moment_numerators'], data['moment_denominator'])
+    omega = read_matrix(data['phase_numerators'], data['phase_denominator'])
+    probability = F(7, 40)
+    assert h[0][0] == 1
+    assert h == moment(1, h[0][1], h[0][2], h[3][3], h[0][3])
+    strict_psd(h)
+    gate_phase_cone(omega, probability)
+    strict_psd(omega)
+    strict_psd(partial_b(omega))
+    forward_h = helper_scale(h, F(1, 2))
+    reverse_h = helper_scale(h, F(1, 2))
+    assert forward_h[0][0]+reverse_h[0][0] == 1
+    pooled = helper_add(bus_transpose(forward_h),
+                        helper_mul(helper_mul(swap, bus_transpose(reverse_h)), swap))
+    covariance = helper_mul(helper_mul(l, pooled), bus_transpose(l))
+    residual = helper_add(covariance, helper_scale(
+        helper_mul(helper_mul(target, omega), target), -1))
+    strict_psd(residual)
+    assert set(data['dual_numerators']) == {'Z', 'A', 'B', 'S'}
+    dual = {name: read_matrix(rows, data['dual_denominator'])
+            for name, rows in data['dual_numerators'].items()}
+    phase_basis = gate_phase_subspace_basis()
+    assert len(phase_basis) == 9
+    assert helper_mul(target, swap) == helper_mul(swap, target)
+    reversed_l = helper_mul(swap, l)
+    assert reversed_l == helper_mul(l, swap)
+    # The station swap exchanges the two partial transposes. For this real
+    # symmetric B they agree; verify rather than assuming that simplification.
+    partial_a_b = helper_mul(helper_mul(swap, partial_b(
+        helper_mul(helper_mul(swap, dual['B']), swap))), swap)
+    assert partial_a_b == partial_b(dual['B']) == gate_partial_transpose(dual['B'])
+    objectives = []
+    for reverse, coefficient in ((False, l), (True, reversed_l)):
+        matrices = {name: (value if name == 'S' or not reverse else
+                    helper_mul(helper_mul(swap, value), swap))
+                    for name, value in dual.items()}
+        z, a, b, s = (matrices[name] for name in ('Z', 'A', 'B', 'S'))
+        for value in matrices.values():
+            strict_psd(helper_add(value, helper_scale(identity, -F(1, 2000))))
+        w = helper_add(helper_add(helper_mul(helper_mul(target, z), target),
+                                  helper_scale(a, -1)),
+                       helper_add(helper_scale(partial_b(b), -1),
+                                  helper_scale(identity, -F(1, 4))))
+        assert w == helper_dag(w)
+        assert all(pairing(w, direction) == 0 for direction in phase_basis)
+        qdual = helper_add(helper_mul(helper_mul(bus_transpose(coefficient), z), coefficient), s)
+        assert qdual == helper_dag(qdual) == bus_transpose(qdual)
+        assert all(pairing(qdual, direction) == 0 for direction in directions)
+        assert qdual[0][0] == F(1, 6)
+        # An arbitrary complex affine point guards all five directions with
+        # non-unit leading weight. Positivity is not needed for this identity.
+        test_h = moment(F(3, 5), F(2, 7), F(5, 11), F(3, 13),
+                        ConcG(F(5, 17), F(7, 19)))
+        assert pairing(qdual, test_h) == F(3, 5)*F(1, 6)
+        assert pairing(qdual, origin) == F(1, 6)
+        objectives.append(F(1, 6))
+    weights = [F(1, 7), F(2, 7), F(4, 7)]
+    assert sum(weights) == 1
+    assert sum(weight*objectives[j % 2] for j, weight in enumerate(weights)) == F(1, 6)
+    # Scalar input-output kernel at kappa=gamma=kappa_r=nu=1 and g^2=2.
+    denominator_dark = ConcG(1, -1)
+    denominator_bright = denominator_dark+ConcG(2)/ConcG(1, -1)
+    dark = 1-ConcG(2)/denominator_dark
+    bright = 1-ConcG(2)/denominator_bright
+    assert dark == ConcG(0, -1) and bright == 0
+    assert ConcG(0, 1)*dark == 1 and ConcG(0, 1)*bright == 0
+    upper = objectives[0]
+    assert probability-upper == F(1, 120)
+    assert probability/upper == F(21, 20)
+    return {'status': 'passed', 'arithmetic': 'Gaussian rational, stdlib',
+            'coherent_pooled_CZ_probability': str(probability),
+            'ordinary_AB_BA_recorded_lottery_upper': str(upper),
+            'restricted_optimum_gap_lower': '1/120',
+            'positive_ordinary_optimum_ratio_lower': '21/20',
+            'primal_PSD_PPT_residual_matrices': 4,
+            'ordinary_strict_margin_matrices': 8,
+            'dual_PSD_margin': '1/2000',
+            'explicit_complex_phase_direction_pairings': 18,
+            'explicit_complex_moment_direction_pairings': 10,
+            'complex_projector_Gram_orientation_fixtures': 1,
+            'homogeneous_recorded_order_lotteries': 1,
+            'projector_reflection_kernel_fixtures': 1,
+            'scope': 'exact pooled reflected CZ primal and fixed-word/classically recorded-order '
+                     'weak duals with terminal pure-helper POVM and local phase feedback; '
+                     'lower/upper gap and ratio only, no optimum equality, adaptive-ordinary '
+                     'upper, no-click acceptance or native hardware/clock advantage'}
+
+
 def verify():
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
@@ -1618,7 +1777,8 @@ def verify():
             "eigen_source_survivor_compiler": eigen_verify(),
             "reflected_diagonal_gate_cone": gate_verify(),
             "decorated_eight_mode_bus": decorated_bus_verify(),
-            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms, eigen-source survivor compilers and reflected diagonal-gate cone/balancing witnesses, decorated eight-mode coherent survivors and safe four-window compiler, with merged-port rank guards; universal proofs, native ports, calibration and clocks remain analytic"}
+            "exact_projector_CZ_gate_gap": exact_projector_gap_verify(),
+            "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms, eigen-source survivor compilers and reflected diagonal-gate cone/balancing witnesses, decorated eight-mode coherent survivors and safe four-window compiler, with merged-port rank guards, and an exact restricted projector-kernel primal/dual gate gap; universal proofs, native ports, calibration and clocks remain analytic"}
 
 
 if __name__ == "__main__":
