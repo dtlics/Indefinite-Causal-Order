@@ -72,7 +72,11 @@ guards; the motion, sideband and ordinary routing premises are analytic.
 The optional NumPy finite-packet study has its own
 [current numerical record](../research/topics/nr-noisy-recovery/numerics/moving_caps_record.json),
 including source hashes, environment, actual commands and empirical
-quadrature/cutoff refinements. The standard-library suite fingerprints
+quadrature/cutoff refinements. The ordinary parity-factory witness counts
+both destructive photon-readout ports and traces final photon frequency
+and motion. Its biased known-photon preparation has an analytic density
+scaling identity; finite packet fidelities remain numerical evidence.
+The standard-library suite fingerprints
 those numerical sources and record but does not execute them. Neither
 finite convergence nor an omitted initial thermal mass bounds all output
 oscillator tails. The model does not certify a complete failed-data

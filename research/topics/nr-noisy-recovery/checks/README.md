@@ -11,7 +11,8 @@ Use `--record` to replace the single current [validation record](validation.json
 The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs each job in a fresh `python -S -B` process. Reports, logs, bytecode and other generated files stay under `_build/noisy-recovery/`; tracked checker sources remain unchanged. Run individual verifiers from the staged copy if their detailed output is needed, because some save a report beside their source.
 
 The optional [moving-CAPS packet study](../methods/moving-caps.md) lives in
-`../numerics/` and requires NumPy. Its two source files and one
+`../numerics/` and requires NumPy. Its packet, running-wave and ordinary
+parity-factory source files and one
 [current numerical record](../numerics/moving_caps_record.json) are
 fingerprinted by this runner for integrity, but are not executed by the
 standard-library jobs. That record identifies its own commands,

@@ -776,15 +776,57 @@ is established by the source; if bypass is absent, its availability
 must be tested rather than assumed. There is no global hardware-rate
 or unrestricted factory optimum claim.
 
-The factory endpoint may destroy the photon, unlike (MC1). Ordinary
-processing must therefore also include the source's $H$ reference:
-prepare photon $|+\rangle$, visit $AB$, and read $X$. In the common
-reference convention its joint retained-field branch operators are
-$(hI\pm T_{AB})/2$ before the actual field readout. The ideal CZ limit
-gives the two parity projections on $++$, both Bell outputs with
-known Pauli correction. No packet fidelity or physical rate for that
-additional comparator is asserted here, and a $V$-only restriction
-requires an actual interface reason.
+### An ordinary carrier-parity witness for the Bell endpoint
+
+The factory endpoint may destroy the photon, unlike (MC1), so a
+$V$-only restriction requires an actual interface reason. Prepare
+known atoms $++$ with ground motion, photon $|+\rangle$, and use
+ordinary $AB$ visits with the common $H$ amplitude
+$h=a=r_{\rm dark}(0)^2$. Detect both photon $X$ ports, applying
+$I$ or $X_B$ to target
+$\Phi^+=(|00\rangle+|11\rangle)/\sqrt2$. The joint retained-field branch
+operators before detection are $(aI\pm T_{AB})/2$.
+Here detection traces the photon frequency and all final motion:
+these are atomic Bell scores, not the retained-$PAB$/fixed-temporal-mode
+scores in (MC4).
+
+The [finite-packet witness](../numerics/moving_caps_parity.py) uses a
+normalized compact-support truncated Gaussian on
+$[-8.5\sigma,8.5\sigma]$. At $\sigma/(2\pi)=0.01$ MHz, cutoff 20 and
+240 trapezoidal intervals it gives the following rounded
+reflected-sector, both-port totals:
+
+| Known photon / $H$ reference | $p$ | Bell-good mass $g$ | $F=g/p$ |
+| --- | --- | --- | --- |
+| $|+\rangle$ / amplitude $a$ | 0.440404 | 0.440359 | 0.999896234 |
+| Biased photon / unit amplitude | 0.610359 | 0.610296 | same |
+
+The second row has an analytic normalization explanation. Supply
+unit $H$ transmission and a known photon
+$\alpha|H\rangle+\beta|V\rangle$ with
+$\alpha=a/\sqrt{1+a^2}$, $\beta=1/\sqrt{1+a^2}$.
+Its branch operators are
+$(aI\pm T_{AB})/\sqrt{2(1+a^2)}$.
+Every accepted atomic density, including each fine output record,
+is therefore exactly $2/(1+a^2)$ times the balanced-reference
+density. Both $p,g$ scale by this factor and $F$ is unchanged;
+this identity does not depend on a numerical cutoff.
+At the ideal motionless equal-reflection CZ carrier, both parity
+flags are Pauli-correctable Bell outputs with total probability
+$2a^2/(1+a^2)\approx0.614095$.
+
+The numerical cases are $(N,\text{intervals})=(12,160),(20,240),(20,480)$:
+the first refinement changes cutoff and quadrature jointly; the
+last refines quadrature at fixed cutoff. Their actual results and
+environment belong to the single current numerical record, not an
+infinite-oscillator or outward error certificate. Destructive
+photon detection is a legitimate presence herald for this factory,
+but detector efficiency, false clicks, source bias, preparation/reset,
+storage and the full delivery clock still need their physical model.
+The known polarization bias cannot be applied to the original unknown
+retained-$PAB$ payload. Higher fidelity requirements and stronger
+ordinary filters, purification, local bias or memories need their own
+comparisons; this is neither a factory optimum nor a hardware rate.
 
 Ordinary which-node erasure is established by
 [Cabrillo et al., PRA **59**, 1025 (1999)](https://arxiv.org/abs/quant-ph/9810013)
@@ -792,8 +834,9 @@ and the trapped-ion single-photon-interference experiment of
 [Slodička et al., PRL **110**, 083603 (2013)](https://arxiv.org/abs/1207.5468v2).
 Those sources do not claim this CAPS kernel or quality-matched bound.
 The separate [exact factory helper](../checks/architecture/moving_caps_factory.py)
-checks its algebraic ingredients; the optional packet record above
-does not numerically test this coherent-input construction.
+checks its algebraic ingredients. The new carrier-parity numerical
+study does not test the coherent-motion blue-band construction
+(MC10)–(MC14).
 
 ## Remaining physical test and executable scope
 
