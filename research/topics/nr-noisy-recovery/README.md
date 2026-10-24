@@ -256,6 +256,11 @@ weak-measurement optimum when intermediate photon instruments are allowed
 with four preserved modes. Its sequence analysis treats every recorded
 prefix and its changing photon encoding, and distinguishes a strict visit
 cap from the stronger ordinary comparison under an average-cost budget.
+A clean-photonic-ancilla lower bound separately covers unitary circuits;
+measurements and feedback change that class. Its common-meter scalar
+screen includes coherent ordinary returns. A microwave-detector screen
+requires an unknown-qubit-preserving occupancy instrument before using
+reported detection and survival scalars as gate/retry parameters.
 A broader ordinary serialization matches the
 native elastic survivor with two occupied contacts in four encounter
 windows; three windows require a preserved spectator-path port. This

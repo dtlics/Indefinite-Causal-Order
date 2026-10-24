@@ -7,6 +7,10 @@ stationary closed-transition model only. Supplied controlled-vacuum ports,
 timed routing, full rejected/bath maps and hardware rates remain analytic
 or physical assumptions. Import is quiet, no files are written, and every
 guard remains active under -O.
+
+Additional physical-screen ingredients are formal energy-decay reflection,
+common reliable-meter scalar polynomials and exact CZ relative sectors.
+They supply no complete detector instrument or hardware certificate.
 """
 from fractions import Fraction as F
 from itertools import product
@@ -337,6 +341,78 @@ def finite_pulse_algebra():
             "scope": "declared stationary closed-transition r/l/e normalization and detuning/critical-coupling algebra only; no parameter fit, broadband equality, pulse/router bound or complete Raman/bath model"}
 
 
+def physical_screen_algebra():
+    # All variables here are formal. Positivity on the stated parameter
+    # rectangle and the clean-ancilla one-contact deduction remain analytic.
+    t, meter = pv(0), pv(1)
+    one_plus_t = pa(pc(1), t)
+    t2, one_plus_t2 = pm(t, t), pm(one_plus_t, one_plus_t)
+    denominator = ps(pc(4), pm(meter, t2))
+    bracket = pa(pm(t2, one_plus_t2), pc(12))
+    numerator = ps(pm(pc(4), one_plus_t2), pm(meter, bracket))
+    require(ps(pm(one_plus_t2, denominator), pm(pc(12), meter)) == numerator,
+            "common-meter delivered-weight difference numerator")
+    manifest = pa(pm(pm(pc(F(1, 3)), t),
+                     pa(pa(pc(24), pm(pc(8), t)),
+                        pm(pm(t, ps(pc(1), t)), pa(t, pc(3))))),
+                  pm(ps(pc(F(1, 3)), meter), bracket))
+    require(numerator == manifest, "common-meter nonnegative polynomial decomposition")
+    margin = pa(pc(F(11, 3)),
+                pa(pm(ps(pc(F(1, 3)), meter), t2),
+                   pm(pc(F(1, 3)), ps(pc(1), t2))))
+    require(denominator == margin, "common-meter denominator lower-margin identity")
+
+    # These kappa values are ENERGY decay rates. This response convention
+    # differs from the amplitude-rate closed-transition model above.
+    ke, ki, delta, chi = [pv(i) for i in range(4)]
+    half_width = pm(pc(F(1, 2)), pa(ke, ki))
+    imaginary = pc(G(0, 1))
+    shifted = [ps(delta, chi), pa(delta, chi)]
+    cavity = [ps(half_width, pm(imaginary, x)) for x in shifted]
+    reflected = [ps(d, ke) for d in cavity]
+    intensities = [pn(d) for d in cavity]
+    loss_product = pm(ke, ki)
+    for r, d in zip(reflected, intensities):
+        require(pn(r) == ps(d, loss_product),
+                "energy-decay dispersive reflected intensity numerator")
+    imbalance = ps(pm(pn(reflected[0]), intensities[1]),
+                   pm(pn(reflected[1]), intensities[0]))
+    require(imbalance == pm(pc(-4), pm(pm(loss_product, delta), chi)),
+            "energy-decay spin-reflectance imbalance numerator")
+    carrier_plus = pa(half_width, pm(imaginary, chi))
+    carrier_minus = ps(half_width, pm(imaginary, chi))
+    carrier_sum = pa(pm(ps(carrier_plus, ke), carrier_minus),
+                     pm(ps(carrier_minus, ke), carrier_plus))
+    opposition = pm(pc(F(1, 2)),
+                    pa(ps(pm(ki, ki), pm(ke, ke)), pm(pc(4), pm(chi, chi))))
+    require(carrier_sum == opposition, "energy-decay opposite-carrier condition numerator")
+
+    x = [[G(), G(1)], [G(1), G()]]
+    z = [[G(1), G()], [G(), G(-1)]]
+    identity = eye(2)
+    for spin in (1, -1):
+        plus = add(add(identity, scale(z, G(0, -spin))), scale(x, G(0, -1)))
+        minus = add(add(identity, scale(z, G(0, -spin))), scale(x, G(0, 1)))
+        require(mm(adj(plus), plus) == scale(identity, 3)
+                and mm(adj(minus), minus) == scale(identity, 3),
+                "target-sector numerator normalization")
+        relative = scale(mm(adj(plus), minus), F(1, 3))
+        expected = scale(add(add(identity, scale(x, G(0, 2))),
+                             scale(mm(z, x), -2*spin)), F(1, 3))
+        require(relative == expected and mm(adj(relative), relative) == identity,
+                "single-CZ clean-return relative unitary")
+        trace = relative[0][0]+relative[1][1]
+        determinant = relative[0][0]*relative[1][1]-relative[0][1]*relative[1][0]
+        require(trace == F(2, 3) and determinant == 1 and relative != adj(relative),
+                "relative trace/determinant obstruct a phased Hermitian involution")
+    return {"common_meter_polynomial_identities": 3,
+            "microwave_energy_decay_polynomial_identities": 4,
+            "clean_CZ_relative_spin_sectors": 2,
+            "clean_CZ_relative_sector_trace": "2/3",
+            "clean_CZ_relative_sector_determinant": 1,
+            "scope": "formal common-reliable-meter scalar closure ingredients for 0<=t<=1 and 0<=m<=1/3, declared stationary energy-decay dispersive reflection, and clean-CZ relative-sector identities only. Sign-domain positivity, arbitrary-clean-photonic-ancilla invariance and the unitary-only four-contact theorem remain analytic. No rail-preserving detector, complete repeated-use instrument, device fit, fractional-angle port or hardware-rate claim."}
+
+
 def verify():
     imaginary = G(0, 1)
     sf = single_f([[G(1), G()], [G(), imaginary]])
@@ -491,7 +567,8 @@ def verify():
             "B_contrast_arbitrary_local_spin_phase_minor": True,
             "padded_single_bright_contrast_rank": 1,
             "finite_pulse_local_algebra": finite_pulse_algebra(),
-            "scope": "conditional coherent-vacuum survivor operator equality for safe same-local-port four-factor routing or a supplied spectator-C simultaneous middle port. Disjoint events also regroup into two layers: no four-versus-two hardware-latency lower bound or opaque-query-class equivalence. Raw auxiliary polarization and coherent frequency remain quantum. No actual routing/port, common timed-bath/rejected-loss instrument, parameter fit, readout or hardware-rate certificate."}
+            "physical_screen_ingredients": physical_screen_algebra(),
+            "scope": "conditional coherent-vacuum survivor operator equality for safe same-local-port four-factor routing or a supplied spectator-C simultaneous middle port. Disjoint events also regroup into two layers: no four-versus-two hardware-latency lower bound or opaque-query-class equivalence. Raw auxiliary polarization and coherent frequency remain quantum. Additional formal scalar-meter, energy-decay reflection and clean-CZ relative-sector ingredients do not certify their general analytic or physical deductions. No actual routing/port, common timed-bath/rejected-loss instrument, parameter fit, readout or hardware-rate certificate."}
 
 
 if __name__ == "__main__":

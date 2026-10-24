@@ -121,7 +121,11 @@ matrix units, both output flags, common atomic phases, nonunitary raw
 kernels, raw auxiliary polarization, coherent frequency blocks, middle-port
 span guards and regrouping into two event layers. Polynomial checks cover
 a declared closed-transition node's normalization, detuning residuals and
-carrier balance. Its
+carrier balance. Additional polynomial/matrix ingredients cover a common
+reliable-meter delivery comparison, energy-decay dispersive reflection
+and the relative-sector invariants used in a clean-photonic-ancilla CZ
+obstruction. The general clean-return argument and unknown-qubit-preserving
+microwave occupancy instrument are not established by finite replay. Its
 pointwise elastic identity is distinct from a complete timed loss/bath
 dilation or hardware clock certificate. Spin filters before or between
 contacts, spin encodings before contacts, physical detector channels and an optimal ordinary rate

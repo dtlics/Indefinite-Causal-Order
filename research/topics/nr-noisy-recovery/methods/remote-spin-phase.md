@@ -2360,18 +2360,64 @@ uncontrolled two-contact word.
 
   The chronological node visits are $A,B,g_F,B,A$; photon Hadamards
   wrap each $A$ CZ. This is an operator identity on every $ABFR$.
-  Revisits, links and storage are paid. Four contacts are necessary only
-  for the **ancilla-free unitary** class whose nonlocal primitives are
-  $\operatorname{CZ}_{AF},\operatorname{CZ}_{BF}$ and whose other gates
-  are local qubit unitaries. Across either spin versus the rest, $G$ has
-  normalized operator-Schmidt coefficients $\sqrt{2/3},\sqrt{1/3}$:
-  across $A|BF$, its orthogonal terms are
-  $I_A\otimes(I-iX_FZ_B)/\sqrt3$ and
-  $-iZ_A\otimes Z_F/\sqrt3$. A circuit with exactly one cross-cut CZ
-  has equal coefficients $1/\sqrt2$, invariant under all processing on
-  either side; zero has rank one. Each node needs at least two contacts.
-  This proof does not cover helpers, measurements, entangled programs,
-  postselection or controlled-vacuum bypasses.
+  Revisits, links and storage are paid. Four contacts remain necessary
+  with **arbitrary clean photonic ancillas in a unitary-only circuit**.
+  The physical stationary data are qubits $A,B$; their only couplings to
+  other registers are counted exact CZ encounters. Allow arbitrary
+  photon/ancilla unitaries and local unitaries on those physical spin
+  qubits, but no extra matter encoding, pre-shared node resource,
+  measurement, postselection, record-conditioned feedback or additional
+  nonlocal primitive. The target must be unconditional $G$ on every
+  $ABFR$, with all photonic ancillas returned to a fixed state independent
+  of that input. A unitary dilation with exactly this reduced channel
+  automatically has such a pure, input-independent environment output;
+  merely discarding its final environment does not evade the premise.
+
+  Suppose there is only one $B$ encounter. Across $B|\text{rest}$, all
+  pre-encounter controls give a local spin unitary and a rest-source
+  isometry $E$ from $AF$; all later controls give a local spin unitary
+  and a rest unitary $V$. The two spin factors are independent rank-one
+  matrices $R_j=b_{\rm out}|j\rangle\langle j|b_{\rm in}$, and the
+  rest maps are $VE,VJE$, where $J=J^\dagger$, $J^2=I$ is the CZ's
+  relative photon operator, including all ancillary identities.
+  The target's $B$ operator-Schmidt span is precisely
+  $\operatorname{span}\{|0\rangle\langle0|,|1\rangle\langle1|\}$.
+  Each $R_j$ must therefore be diagonal; its rank one forces a
+  computational projector. Unitary $b_{\rm in/out}$ leave only matched
+  bit permutations and phases. Consequently, up to inversion and a
+  common phase,
+
+  $$
+  E^\dagger JE=e^{i\delta}G_+^\dagger G_-,\qquad
+  G_b=\frac{I-iP-i bX_F}{\sqrt3},\quad P=Z_AZ_F.
+  \tag{RP2a}
+  $$
+
+  The compression on the left is Hermitian, whereas the right is
+  unitary. Hence its eigenvalues must be $\pm1$. Equivalently, exact
+  clean return makes the source code invariant: with
+  $C=E^\dagger JE$,
+  $E^\dagger J^\dagger(I-EE^\dagger)JE=I-C^\dagger C=0$, so
+  $JE=EC$. But anticommutation gives
+
+  $$
+  G_+^\dagger G_-=\frac{I+2iX_F-2PX_F}{3}
+  =\frac13I+i\frac{2\sqrt2}{3}H,\qquad
+  H=\frac{X_F+iPX_F}{\sqrt2},\quad H^\dagger=H,\quad H^2=I.
+  \tag{RP2b}
+  $$
+
+  Its eigenvalues $e^{\pm i\theta}$, each twice, have
+  $\cos\theta=1/3$ and ratio $-7/9+i4\sqrt2/9$. No common phase
+  makes them both real, including after inversion. Thus one $B$
+  encounter is impossible; zero has insufficient spin Schmidt rank.
+  Station relabelling and a photon Hadamard give the same obstruction
+  at $A$. Two contacts per node are necessary, and (RP2) attains four.
+  This proves no lower bound for measured/feedforward circuits such as
+  (RP3), selected ports or spin filters, extra matter encodings,
+  fractional interactions, or controlled-vacuum opportunity calls.
+  The latter's occupied counts in (RP4) are not counts of fixed CZ
+  gates, so that construction is also consistent with the bound.
 
 * **Two contacts, two photon helpers.** Supply eight preserved photon
   modes $F,H_A,H_B$, prepare both helpers in $+$, and use one
@@ -3711,6 +3757,33 @@ deliver $0.1$: the first inequality gives $t^2\le mr$, so
 $D_N\le3m^2/(4-m^2)=961/13013<0.1$.
 This rejection is **not** valid when plus bypasses the lossy meter.
 
+There is a stronger closure of this same **common reliable-meter toy**
+when the separately priced coherent-return ports of (RP4) are supplied.
+Set $r=1$ and the ordinary extra routing losses to zero for this
+declared comparison. Then
+
+$$
+\begin{aligned}
+D_C-D_N
+&=\frac{t^2 N(t,m)}{4(4-mt^2)},\qquad
+D_C=\frac{t^2(1+t)^2}{4},\\
+N(t,m)
+&=\frac t3\bigl[24+8t+t(1-t)(t+3)\bigr]
+ +\left(\frac13-m\right)\bigl[t^2(1+t)^2+12\bigr]\ge0
+\quad(0\le t\le1,\ 0\le m\le1/3).
+\end{aligned}
+\tag{RP13a}
+$$
+
+Expansion gives $N=4(1+t)^2-m[t^2(1+t)^2+12]$ and the denominator
+is positive. Thus $m=.31$ is dominated at every $t$ in this toy;
+both deliveries vanish at $t=0$, and the inequality is strict for
+$t>0$. This uses protected spectator modes, coherent returns, the
+correct vacuum-relative spin phases and lossless extra ordinary optics.
+It does not cover the plus-bypass instrument below, false flags,
+unequal route transfers, timed reservoir records or actual device
+statistics. It is not universal ordinary hardware dominance.
+
 If plus survival is $\ell_+$ and corrected-minus return survival is
 $\ell_-$, with otherwise ideal flags, the correct sum is instead
 
@@ -3814,6 +3887,103 @@ $\|\Lambda^j-\operatorname{Id}\|_\diamond/2\le j\delta$ and sum
 $(1-b)\sum_jb^jj=b/(1-b)$.
 This reference-inclusive bound is conditional on constant $b$ and a
 uniform channel error; the measured six-state mean does not supply it.
+
+### Microwave number readout and the retained-qubit port
+
+[Kono et al., *Quantum non-demolition detection of an itinerant
+microwave photon*](https://doi.org/10.1038/s41567-018-0066-3),
+[primary v1, Figs. 1–4, Methods and supplement](https://arxiv.org/html/1711.05479v1),
+report detection efficiency $0.84\pm0.02$ from the weak-input
+qubit-flip slope, survival $0.87\pm0.03$ from reflected/input mean
+photon number in corrected tomography, and no-input flip probability
+$0.0147\pm0.0005$. These are not survival conditioned on a hit.
+Their one-coaxial-pulse apparatus uses $25\,\mathrm{ns}$ qubit pulses,
+$500\,\mathrm{ns}$ readout, a $650\,\mathrm{ns}$ amplifier pump and
+a $500\,\mathrm{ns}$ Gaussian input width. Ramsey intervals are
+$800\,\mathrm{ns}$, or $1100\,\mathrm{ns}$ for tomography;
+initialization uses readout postselection. These components are not
+an end-to-end restart clock, and their final quadrature measurement
+is not a demonstrated coherent-return loop.
+
+The known weak coherent pulse used to characterize that detector must
+not be identified with the present arbitrary unknown $FR$ payload.
+If one **chooses** a hypothetical logical encoding
+$c_0|0\rangle+c_1|1\rangle$ in a single pulse mode, reading its
+number measures $F$ itself and removes that logical coherence. A
+one-photon dual-rail or time-bin encoding instead needs a common
+total-occupancy instrument on
+$\operatorname{span}\{|10\rangle,|01\rangle\}$, with identical
+meter and unresolved-reservoir states on the two alternatives.
+Otherwise which-rail information dephases $F$ and can destroy its
+coherence with $R$.
+The single-mode measurements do not specify this extension. Sending
+both bins through one unreset ancilla before a final read is a
+conditional design, requiring matched complex transfer, retained
+meter coherence across the separation, orthogonal outgoing bins and
+a newly characterized longer clock. Retained $F$ and order $C$ need
+four preserved one-photon modes; (RP3) needs its larger supplied
+program/spectator ports. Ordinary schemes receive the same ports.
+
+A minimal stationary dispersive reflection model illustrates why an
+interaction Hamiltonian does not supply a free itinerant gate angle.
+In the source's energy-decay convention put
+$a=(\kappa_{\rm ex}+\kappa_{\rm in})/2$ and let the two spin
+detunings be $\delta-s\chi$, $s=\pm1$. The elastic and internal-loss
+columns can be written
+
+$$
+r_s(\delta)=1-\frac{\kappa_{\rm ex}}{a-i(\delta-s\chi)},
+\quad l_s(\delta)=\frac{-\sqrt{\kappa_{\rm ex}\kappa_{\rm in}}}
+ {a-i(\delta-s\chi)},\qquad
+|r_s|^2=1-\frac{\kappa_{\rm ex}\kappa_{\rm in}}
+ {a^2+(\delta-s\chi)^2}.
+\tag{RP16a}
+$$
+
+Their squared norms sum to one. For
+$\chi\kappa_{\rm ex}\kappa_{\rm in}\ne0$, subtraction gives
+$|r_+|=|r_-|$ exactly when $\delta=0$. Moving the carrier therefore
+generically changes spin-dependent survival as well as phase. The
+lossless case is all-pass but still has finite-bandwidth phase and
+bypass-matching requirements. This is a diagnostic of a specified
+no-spin-flip model, not a device fit or a converse against tunable
+hardware; relaxation, dephasing and additional output records need
+their own dilation.
+
+If the device additionally provides exact adjustable retained-qubit
+Ising interactions $e^{-i\theta P},e^{-i\phi Q}$, the ordinary
+three-rotation identity already proved above is mandatory. Its total
+$P$ area is $\pi/4$ and $Q$ area is
+$\beta=\arcsin(1/\sqrt3)$. Ideal corrected native retry uses mean
+area $\pi/3$ on each axis. With hypothetical constant Hamiltonian
+rates $g_P,g_Q$ and no other costs,
+
+$$
+T_N-T_E=\frac{\pi}{12g_P}+
+ \frac{\pi/3-\beta}{g_Q}>0.
+\tag{RP16b}
+$$
+
+This is an adjustable-Hamiltonian comparison, not a claim that an
+itinerant reflection angle equals $\chi$ times a selectable pulse
+duration. Loading, holding and releasing a photon with a controlled
+dwell supplies a different memory interface. Per-visit overheads,
+rail conversions and dissipation can change the time comparison.
+Conversely a demonstrated number meter does not prove those exact
+angle controls for either architecture.
+
+For a real retained-photon retry, the full maps in (RP16), including
+vacuum, dark hits, missed hits, lost fields and all feedback records,
+remain necessary. A surviving repeat must preserve the entire unknown
+$ABFR$ after its correction; a hit after absorption cannot return $F$.
+Meter preparation may occur before input arrival, but repeated attempts
+still require a real reset, storage/return and compatible readout
+pulses. Neither $.87$ nor the other two statistics specifies those
+maps. A plus-only output-port service avoids this meter for both
+architectures. The concrete next component to characterize is a
+which-rail-erasing occupancy instrument and its complete finite-pulse
+return channel, compared with the same-control ordinary circuits;
+no native performance claim follows from the reported scalars alone.
 
 ### Preparing the meter and balancing the cavity response
 
@@ -4056,6 +4226,10 @@ one-time spin wrappers, nonunitary raw kernels, retained auxiliary
 polarization, coherent frequency inputs and the two middle-input
 spans. It also guards the commuting-event layering and the rational
 local-response identities underlying the finite-pulse certificate.
+Its additional polynomial and matrix guards cover the common-meter
+identity (RP13a), the energy-decay reflection algebra (RP16a), and the
+relative-sector trace/determinant in (RP2b). The general clean-ancilla
+obstruction and missing physical readout instrument remain analytic.
 Retiming unresolved reservoir histories is not certified. The general
 norm, causal-interface and continuum error arguments remain analytic;
 no physical port or clock is supplied by these replays.

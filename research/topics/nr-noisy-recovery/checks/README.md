@@ -164,7 +164,11 @@ Additional modules run inside the same existing architecture jobs:
   polarization and coherent frequency inputs, atomic phases, the qualified
   middle-port spans and regrouping into two event layers. Polynomial
   checks cover a declared closed-transition node's normalization, detuning
-  residuals and carrier balance. These identities do not establish a
+  residuals and carrier balance. Further exact ingredients check the
+  common-meter delivery polynomial, energy-decay dispersive reflection,
+  and clean-CZ relative-sector invariants. Their general inequalities,
+  clean-ancilla obstruction and physical meter extension remain analytic.
+  These identities do not establish a
   hardware latency gap, two-opaque-query simulation, calibrated router or
   complete timed loss/bath channel.
 - [Four-mode sequences](architecture/retained_photon_chain.py) checks exact
