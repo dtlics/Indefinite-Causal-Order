@@ -261,6 +261,12 @@ measurements and feedback change that class. Its common-meter scalar
 screen includes coherent ordinary returns. A microwave-detector screen
 requires an unknown-qubit-preserving occupancy instrument before using
 reported detection and survival scalars as gate/retry parameters.
+Its time-bin meter models distinguish equal detection rates from preserved
+coherence, including hidden relaxation and probe-loss records. A separate
+deferred-correction analysis specifies when exit-time keys can replace
+internal readout, with raw gate phases and terminal basis choice charged.
+An actual SiV signal-to-memory experiment supplies an ordinary endpoint
+comparison; it does not require retaining the original flying photon.
 A broader ordinary serialization matches the
 native elastic survivor with two occupied contacts in four encounter
 windows; three windows require a preserved spectator-path port. This

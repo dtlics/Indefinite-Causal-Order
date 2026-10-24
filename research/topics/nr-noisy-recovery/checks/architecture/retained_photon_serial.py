@@ -413,6 +413,188 @@ def physical_screen_algebra():
             "scope": "formal common-reliable-meter scalar closure ingredients for 0<=t<=1 and 0<=m<=1/3, declared stationary energy-decay dispersive reflection, and clean-CZ relative-sector identities only. Sign-domain positivity, arbitrary-clean-photonic-ancilla invariance and the unitary-only four-contact theorem remain analytic. No rail-preserving detector, complete repeated-use instrument, device fit, fractional-angle port or hardware-rate claim."}
 
 
+def deferred_exit_frame_guards():
+    imaginary = G(0, 1)
+    sf = single_f([[G(1), G()], [G(), imaginary]])
+    sx = single_f([[G(F(1, 2), F(1, 2)), G(F(1, 2), F(-1, 2))],
+                   [G(F(1, 2), F(-1, 2)), G(F(1, 2), F(1, 2))]])
+    yf = single_f([[G(), -imaginary], [imaginary, G()]])
+    sa, sb = spin_phase(0), spin_phase(1)
+    t = mm(sa, sb)
+    s = mm(t, t)
+    p, q = ising_pauli(0), ising_pauli(1, True)
+    numerator = add(add(eye(8), scale(p, -imaginary)), scale(q, -imaginary))
+    require(mm(s, numerator) == mm(numerator, s) and mm(s, s) == eye(8),
+            "commuting spin-only retry Pauli")
+    require(mm(p, q) == scale(mm(yf, s), imaginary), "literal minus photon/spin factors")
+
+    def power(op, exponent):
+        if exponent < 0:
+            return power(adj(op), -exponent)
+        result = eye(len(op))
+        for _ in range(exponent):
+            result = mm(op, result)
+        return result
+
+    ra, rb = mm(sf, cz(0)), mm(sx, cz(1, True))
+    ideal = flags(compiler(mm(sa, ra), mm(sb, rb))[0])
+    raw = flags(compiler(ra, rb)[0])
+    ideal_exit = scale(ideal[0], -imaginary)
+    ideal_repeat = mm(scale(yf, -1), ideal[1])
+    raw_exit = scale(raw[0], -imaginary)
+    raw_repeat = mm(scale(yf, -1), raw[1])
+    require(ideal_exit == scale(numerator, F(1, 2))
+            and ideal_repeat == scale(s, F(1, 2)), "ideal photon-only retry correction")
+    require(raw_exit == scale(mm(adj(t), numerator), F(1, 2))
+            and raw_repeat == scale(t, F(1, 2)), "raw plus-minus photon gauge and Clifford retry")
+    literal_repeat = mm(scale(yf, -imaginary), raw[1])
+    require(literal_repeat == scale(t, imaginary/2), "literal uncompensated raw retry phase")
+    coherent_units, residual_cases, phase_witness = 0, 0, None
+    for cap in (2, 3):
+        for variant, exit_op, repeat_op in (("ideal", ideal_exit, ideal_repeat),
+                                            ("raw", raw_exit, raw_repeat),
+                                            ("literal", raw[0], literal_repeat)):
+            actual, expected, continuation = [], [], eye(8)
+            for j in range(1, cap+1):
+                actual.extend(mm(exit_op, continuation))
+                frame = power(s, j-1) if variant == "ideal" else power(t, j-2)
+                block = scale(mm(frame, numerator), F(1, 2**j))
+                if variant == "literal":
+                    block = scale(block, power([[imaginary]], j)[0][0])
+                expected.extend(block)
+                continuation = mm(repeat_op, continuation)
+            residual = scale(power(s if variant == "ideal" else t, cap), F(1, 2**cap))
+            if variant == "literal":
+                residual = scale(residual, power([[imaginary]], cap)[0][0])
+            actual.extend(continuation)
+            expected.extend(residual)
+            require(actual == expected, "all coherent exit-time and residual amplitudes")
+            require(mm(adj(actual), actual) == eye(8), "finite-cap coherent isometry")
+            require(mm(adj(continuation), continuation) == scale(eye(8), F(1, 4**cap)),
+                    "finite-cap full-input failure effect")
+            coherent_units += cp_equal(actual, expected)
+            residual_cases += 1
+            if cap == 2 and variant == "raw":
+                mutant = [row[:] for row in expected]
+                mutant[8:16] = scale(mutant[8:16], -1)
+                require(cp_equal(mutant[8:16], expected[8:16]) == 64,
+                        "a single exit global phase leaves its separate CP map unchanged")
+                phase_witness = cp_difference(actual, mutant)
+                require(phase_witness is not None and phase_witness[2]//8 != phase_witness[3]//8,
+                        "exit-time relative phase changes a coherent cross block")
+    # The two parity classes have exact infinite geometric weights. The
+    # finite coefficient identity below checks every ABF matrix unit.
+    require(F(3, 4)/(1-F(1, 16)) == F(4, 5)
+            and F(3, 16)/(1-F(1, 16)) == F(1, 5), "untracked ideal retry-frame weights")
+    sn = mm(s, numerator)
+    for i, j, row, col in product(range(8), repeat=4):
+        first = numerator[row][i]*numerator[col][j].conj()
+        second = sn[row][i]*sn[col][j].conj()
+        require((first/4+second/16)/F(15, 16) == (4*first+second)/15,
+                "untracked geometric channel on every ABF matrix unit")
+    require([F(3, 4**j)/(1-F(1, 256)) for j in range(1, 5)] ==
+            [F(64, 85), F(16, 85), F(4, 85), F(1, 85)], "untracked raw mod4 frame weights")
+    relative = scale(mm(mm(numerator, mm(p, q)), adj(numerator)), F(1, 3))
+    require(relative == scale(add(add(scale(mm(p, q), -1), scale(p, 2*imaginary)),
+                                  scale(q, -2*imaginary)), F(1, 3)),
+            "omitting photon correction is not a Pauli output frame")
+    x = [[G(), G(1)], [G(1), G()]]
+    y = [[G(), -imaginary], [imaginary, G()]]
+    phase = [[G(1), G()], [G(), imaginary]]
+    require(mm(mm(phase, x), adj(phase)) == y and power(t, 4) == eye(8),
+            "raw frame changes terminal Pauli basis modulo four")
+    for sign in (1, -1):
+        rho = scale(add(eye(2), scale(x, sign)), F(1, 2))
+        require(sum((x[r][c]*rho[c][r] for r, c in product(range(2), repeat=2)), G()) == sign,
+                "opposite target X eigenstate outcomes")
+        transformed = mm(mm(phase, rho), adj(phase))
+        require(sum((x[r][c]*transformed[c][r] for r, c in product(range(2), repeat=2)), G()) == 0,
+                "late fixed-X data cannot distinguish the two raw-framed X eigenstates")
+    return {"finite_caps": [2, 3], "coherent_ABF_matrix_units": coherent_units,
+            "residual_cases": residual_cases, "coherent_exit_phase_CP_witness": phase_witness,
+            "untracked_ABF_matrix_units": 64, "ideal_untracked_frame_weights": ["4/5", "1/5"],
+            "raw_untracked_mod4_frame_weights": ["64/85", "16/85", "4/85", "1/85"],
+            "late_fixed_X_counterexample_states": 2,
+            "scope": "finite ideal and literal raw-CZ ABFR exit-time isometries in the explicit plus-minus photon gauge; all coherent time cross blocks retained. General loop/vacuum/error dilation, endpoint record access, physical clock and ordinary same-port simulations remain analytic or supplied-interface assumptions. An unread quantum time key is not a reusable fixed-frame gate or an online classical herald."}
+
+
+def unreset_meter_guards():
+    identity, z = eye(2), [[G(1), G()], [G(), G(-1)]]
+
+    def coefficient(kraus, i, j, row, col):
+        return sum((k[row][i]*k[col][j].conj() for k in kraus), G())
+
+    def compare_channels(actual, expected):
+        for i, j, row, col in product(range(3), repeat=4):
+            require(coefficient(actual, i, j, row, col) ==
+                    coefficient(expected, i, j, row, col),
+                    "full vacuum-early-late matrix-unit CP coefficient")
+        return 9
+
+    def diagonal(entries):
+        return [[G(entries[i]) if i == j else G() for j in range(len(entries))]
+                for i in range(len(entries))]
+
+    units = 0
+    fixtures = [(F(1), F(0)), (F(4, 5), F(3, 5)), (F(3, 5), F(4, 5)), (F(0), F(1))]
+    for a, r in fixtures:
+        require(a*a+r*r == 1, "Pythagorean amplitude-damping fixture")
+        damping = [[G(1), G(), G(), G()], [G(), G(a), G(r), G()],
+                   [G(), G(-r), G(a), G()], [G(), G(), G(), G(1)]]
+        require(mm(adj(damping), damping) == eye(4), "unitary meter-bath amplitude-damping dilation")
+        early = diagonal([-1 if rail == 1 and meter == 1 else 1
+                          for rail, meter, bath in product(range(3), range(2), range(2))])
+        late = diagonal([-1 if rail == 2 and meter == 1 else 1
+                         for rail, meter, bath in product(range(3), range(2), range(2))])
+        full = mm(late, mm(kron(eye(3), damping), early))
+        require(mm(adj(full), full) == eye(12), "full ordered qutrit-meter-bath dilation")
+        effects = zeros(3)
+        for h in (1, -1):
+            actual = [[[sum((full[row*4+2*mout+bath][col*4+2*minput] * h**mout
+                              for mout, minput in product(range(2), repeat=2)), G())/2
+                        for col in range(3)] for row in range(3)] for bath in range(2)]
+            expected = [diagonal([F(1+h*a, 2), F(1-h*a, 2), F(1-h*a, 2)]),
+                        diagonal([r/2, -r/2, r/2])]
+            require(actual == expected, "full three-sector Ramsey Kraus amplitudes")
+            units += compare_channels(actual, expected)
+            for k in actual:
+                effects = add(effects, mm(adj(k), k))
+            pocc, pvac = (1-h*a)/2, (1+h*a)/2
+            require(coefficient(actual, 1, 1, 1, 1) == pocc
+                    and coefficient(actual, 2, 2, 2, 2) == pocc
+                    and coefficient(actual, 0, 0, 0, 0) == pvac,
+                    "occupied flags and vacuum dark indication")
+            require(coefficient(actual, 1, 2, 1, 2) == -h*a*pocc,
+                    "matched occupied populations do not ensure payload coherence")
+            require(coefficient(actual, 0, 1, 0, 1) == 0
+                    and coefficient(actual, 0, 2, 0, 2) == r*r/2,
+                    "asymmetric vacuum-bin cross histories retained")
+        require(effects == eye(3), "complete two-flag qutrit instrument")
+
+    # Diagonal dephasing Kraus operators commute with the ideal kicks:
+    # the missed indication changes a flag without dephasing the payload.
+    c, d = F(3, 5), F(4, 5)
+    pure_units = 0
+    for h in (1, -1):
+        actual = []
+        for gap in (scale(identity, c), scale(z, d)):
+            require(mm(gap, z) == mm(z, gap), "record-level diagonal dephasing commutes with kicks")
+            joint = blockdiag(blockdiag(gap, mm(gap, z)), mm(z, gap))
+            actual.append([[sum((joint[row*2+mout][col*2+minput] * h**mout
+                                  for mout, minput in product(range(2), repeat=2)), G())/2
+                            for col in range(3)] for row in range(3)])
+        expected = ([diagonal([c, 0, 0]), diagonal([0, d, d])] if h == 1 else
+                    [diagonal([0, c, c]), diagonal([d, 0, 0])])
+        require(actual == expected, "pure-dephasing full qutrit flag amplitudes")
+        pure_units += compare_channels(actual, expected)
+        require(coefficient(actual, 1, 2, 1, 2) == (d*d if h == 1 else c*c),
+                "pure-dephasing occupied output stays clean even on a missed flag")
+    return {"amplitude_damping_fixtures": len(fixtures), "dilation_dimension": 12,
+            "amplitude_damping_qutrit_matrix_units": units,
+            "pure_dephasing_qutrit_matrix_units": pure_units,
+            "scope": "exact ideal phase-kick and gap-only rational damping/dephasing fixtures, both flags and all vacuum/one-photon cross histories. General hidden-record/POVM theorems, finite-pulse driven scattering, actual loss/cavity/readout maps, device rates and protected flying-rail ports remain analytic or unprovided. No experimental error or hardware-performance estimate."}
+
+
 def verify():
     imaginary = G(0, 1)
     sf = single_f([[G(1), G()], [G(), imaginary]])
@@ -568,7 +750,9 @@ def verify():
             "padded_single_bright_contrast_rank": 1,
             "finite_pulse_local_algebra": finite_pulse_algebra(),
             "physical_screen_ingredients": physical_screen_algebra(),
-            "scope": "conditional coherent-vacuum survivor operator equality for safe same-local-port four-factor routing or a supplied spectator-C simultaneous middle port. Disjoint events also regroup into two layers: no four-versus-two hardware-latency lower bound or opaque-query-class equivalence. Raw auxiliary polarization and coherent frequency remain quantum. Additional formal scalar-meter, energy-decay reflection and clean-CZ relative-sector ingredients do not certify their general analytic or physical deductions. No actual routing/port, common timed-bath/rejected-loss instrument, parameter fit, readout or hardware-rate certificate."}
+            "deferred_exit_frames": deferred_exit_frame_guards(),
+            "unreset_two_rail_meter": unreset_meter_guards(),
+            "scope": "conditional coherent-vacuum survivor operator equality for safe same-local-port four-factor routing or a supplied spectator-C simultaneous middle port. Disjoint events also regroup into two layers: no four-versus-two hardware-latency lower bound or opaque-query-class equivalence. Raw auxiliary polarization and coherent frequency remain quantum. Additional formal scalar-meter, energy-decay reflection, clean-CZ relative-sector, finite deferred-exit-frame and gap-only two-rail-meter ingredients do not certify their general analytic or physical deductions. No actual routing/port, common timed-bath/rejected-loss instrument, parameter fit, readout or hardware-rate certificate."}
 
 
 if __name__ == "__main__":

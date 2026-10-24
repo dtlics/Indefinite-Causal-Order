@@ -937,6 +937,49 @@ $(I\otimes S)X_A\operatorname{CS}^{\dagger}|++\rangle
 This locally Clifford equivalence concerns those known states and does
 not correct the inverse-CS gate on an arbitrary unknown input.
 
+A measured ordinary memory-transfer endpoint is supplied by
+[Stas et al., Nature **651**, 326–332 (2026), Eqs. (3)–(5)](https://www.nature.com/articles/s41586-026-10171-w).
+They combine SiV electron/nuclear registers, photon-mode erasure and
+electron heralds to retain a weak optical signal's phase in matter.
+To distinguish that endpoint from preserving the flying photon, take
+their idealized one-photon circuit, with common reflected amplitude
+$\alpha$, early/late input $F$, electron $E$ and initialized nuclear
+memory $N$. Its normalized branch before photon erasure is
+$|e\rangle\mapsto|e\rangle|\downarrow\rangle_E|+\rangle_N$ and
+$|l\rangle\mapsto|l\rangle
+(|\downarrow\downarrow\rangle+|\uparrow\uparrow\rangle)_{EN}/\sqrt2$.
+A fine erasure bra $w_e\langle e|+w_l\langle l|$, followed by the
+electron $\langle-|$ herald, therefore has
+
+$$
+K_m=\frac{\alpha}{\sqrt2}H\operatorname{diag}(w_e,w_l),\qquad
+p_{m,\rm balanced}=\frac{|\alpha|^2}{2}
+                       \min\{|w_e|^2,|w_l|^2\}.
+\tag{RS27a}
+$$
+
+Direct contraction sends the early/late inputs to
+$w_e|+\rangle/\sqrt2,w_l|-\rangle/\sqrt2$. Hence this is an
+operator identity on every $FR$. Equal magnitudes give a scalar
+known unitary after phase correction. Otherwise a nuclear filter
+balances the two singular values to their minimum, proving the
+all-attempt weight in (RS27a); its failure, meter and feedback are
+paid. This consumes the photon and initialized memory resources; it
+does not implement a gate preserving pre-existing unknown $ABF$.
+Incident vacuum has electron $|+\rangle$ and is rejected in this ideal
+circuit. An input photon lost **after** spin interaction can instead
+leave a non-plus electron and falsely herald with local-oscillator
+clicks. For unresolved records $\mu$, every corrected $K_{m\mu}$ must
+be proportional to the same isometry for an exact storage branch.
+The measured phase-ensemble visibility is not a full unknown-input
+process certificate. In the two-station experiment, event-ready
+memory entanglement permits local signal collection without transporting
+that signal between stations. Its preparation, storage and erasure
+records are charged ordinary resources; a direct flying-payload
+proposal must compare its actual link cost with that option. Neither
+the matter-transfer endpoint nor its photon consumption supplies a
+nondestructive flying-qubit branch meter for the gate below.
+
 The exact checker replays resonant scattering-kernel normalization,
 finite rank-loss examples, the ideal factory and remote-gate Kraus
 identities, local controlled-phase synthesis and the resource-state
@@ -3688,6 +3731,120 @@ to (RP24), and the actual source/router/storage/readout/loss costs
 remain part of every application of the bound.
 
 
+### Coherent retries and an exit-time correction key
+
+A different service can remove per-round nondestructive readout without
+delivering an unkeyed fixed gate. Put $S=Z_AZ_B$, so $S^2=I$ and
+$[S,G]=0$. On minus, the photon-only correction $-iY_F$ turns
+$K_-=iY_FS/2$ into $S/2$. If the full vacuum/idle and clock completion
+permits these same base attempts, coherent routing with hard cap $N$
+gives the exact isometry on every $ABFR$
+
+$$
+W_N=\sum_{j=1}^N\frac{\sqrt3}{2^j}|\mathrm{exit}_j\rangle
+                  S^{j-1}G
+       +2^{-N}|\mathrm{fail}_N\rangle S^N.
+\tag{RP36}
+$$
+
+The orthogonal time/route labels retain the physical relative phases.
+Each live pass either exits once or continues, so multiplication of
+$\sqrt3G/2$ by $(S/2)^{j-1}$ proves the formula. Exit probabilities
+are $3/4^j$, accepted mass is $1-4^{-N}$, and lossless mean occupied
+data contacts are $(8/3)(1-4^{-N})$. These are not hard-window or
+wall-time counts. If all labels remain coherently stored, the
+one-photon code has at least $2(N+1)$ modes including $F$ and the
+residual route, or an explicit released-output stream with its own cost.
+
+A later classical $j$ permits local correction $S^{j-1}$ if intervening
+operations are compatible. For terminal Pauli measurements it can
+simply relabel the appropriate $X/Y$ signs. Before that key is read or
+coherently corrected, however, it is a quantum register entangled with
+the payload. Its off-diagonal time blocks can depend on $\rho$.
+Discarding it in the formal infinite ideal process gives
+
+$$
+\mathcal C_{\rm untracked}
+=\frac45\operatorname{Ad}_G+\frac15\operatorname{Ad}_{SG},
+\qquad
+G(PQ)G^\dagger=\frac{-PQ+2iP-2iQ}{3}.
+\tag{RP37}
+$$
+
+The first identity sums odd/even exit probabilities; it is not
+$\operatorname{Ad}_G$. The second shows why omitting the minus-route
+photon $Y$ is substantive: propagating that uncorrected fault through
+$G$ gives a sum of Pauli words, not a Pauli frame. A final destructive
+photon record can reveal the exit time for a terminal sampling task;
+keeping optical $F$ with an online herald instead needs an actual
+nondestructive arrival/key port, coherent correction, or a specified
+matter-transfer interface such as (RS27a) with all its resources.
+
+The declared raw CZ completion has a different frame. With
+$\mathsf S_j=\operatorname{diag}(1,i)$ and
+$T=\mathsf S_A\mathsf S_B$, the literal occupied photon wrappers obey
+$R_A=e^{i\pi/4}\mathsf S_A^\dagger U_A$ and the analogous $R_B$.
+Thus raw flags are $iT^\dagger K_\pm$. Choose a physical photon-only
+output gauge: phase $-i$ on plus and operation $-Y_F$ on minus.
+Since $T^2=S$, the round maps and their finite-cap composition are
+
+$$
+\begin{aligned}
+A_{\rm raw}&=\frac{\sqrt3}{2}T^\dagger G,
+&B_{\rm raw}&=\frac12T,\\
+W_{N,\rm raw}
+&=\sum_{j=1}^N\frac{\sqrt3}{2^j}|\mathrm{exit}_j\rangle
+                        T^{j-2}G
+ +2^{-N}|\mathrm{fail}_N\rangle T^N.
+\end{aligned}
+\tag{RP38}
+$$
+
+All $T$ factors commute with $G$. Without that specified output gauge,
+retaining the literal flags and applying only $-iY_F$ on minus gives
+additional $i^j$ and $i^N$ phases on exits and residual; coherent time
+labels do not permit dropping them. A single unconditional finish can
+shift every spin power together, but cannot remove its $j$ dependence.
+The raw key is $j\bmod4$, a local Clifford frame, not merely parity.
+A photon-only operation confined to one minus route cannot remove its
+spin $T$ factor. This excludes neither recombining exit times nor
+selecting a frame subset, which changes the instrument and yield.
+
+When $j$ is known **before** terminal basis choice, Clifford frames
+only change Pauli measurement bases. Late sign relabelling cannot in
+general repair a previously fixed $X$ result: $\mathsf S_A$ changes
+the relevant basis to $Y$, and inputs $|+\rangle,|-\rangle$ become
+indistinguishable by that fixed $X$ measurement. Specify basis
+feedforward, a compatible task such as spin-$Z$ readout, or active
+compensation. All later unconditional spin pulses and free evolution
+also act on already-exited spins and must be included at a common
+finite-cap finish. No infinite-duration online service is inferred.
+
+Loss needs the full exit/continue maps $\widehat A,\widehat B$ on
+one-photon **and vacuum**, with their controller, bath and time records.
+At cap $N$ the ordered exits are $\widehat A\widehat B^{j-1}$ and
+the residual is $\widehat B^N$, or the actual nonstationary products.
+Without a meter there may be no early loss stop: empty windows, spin
+idling and false terminal arrival records still count. Only a declared
+stationary scalar survivor with unit plus bypass gives
+$a=3t^2/4$, $b=t^2r/4$ and delivered mass
+$a(1-b^N)/(1-b)$, where $r$ includes the photon correction/return.
+It is not fitted by detector efficiency or mean polarization fidelity.
+
+The same supplied full timed controlled-vacuum interface lets the
+ordinary serialized/qualified-parallel circuit (RP4a) append exactly
+this minus-$Y$ route and loop, matching all exit and loss records.
+Retimed elastic products alone do not prove that premise. Also the
+two-helper ordinary state $\tfrac12\sum_{mn}|mn\rangle
+Z_A^mZ_B^nG|\psi\rangle$ in (RP3) needs no internal QND readout if
+the endpoint allows those terminal keys and deferred Pauli frames.
+For such sampling, its ideal scalar weight $t^2$ is at least
+$3t^2/(4-t^2)$; protected eight-mode processing and all terminal access
+remain paid. Coherent native exit bins must not be free while ordinary
+temporal labels are excluded. The fixed four-CZ and adjustable-angle
+ordinary gates remain further comparators. Endpoint-dependent meter
+removal therefore establishes no native hardware advantage.
+
 ### A physical meter is a complete instrument, not one efficiency
 
 This readout/retry discussion concerns the online classical-flag
@@ -3985,6 +4142,139 @@ which-rail-erasing occupancy instrument and its complete finite-pulse
 return channel, compared with the same-control ordinary circuits;
 no native performance claim follows from the reported scalars alone.
 
+**The missing two-rail instrument has a precise test.** Use the full
+time-ordered detector/field dilation, with input-independent prepared
+detector/bath states purified,
+cavity memory retained, and every readout/loss record. On the
+vacuum-plus-code input its full Kraus family satisfies
+$\sum K^\dagger K=I_3$. For flag $h$, let $K^S_{h\mu}$ be the
+unresolved surviving-code Kraus operators. A scalar known-isometry
+branch on every $FR$ is equivalent to
+
+$$
+K^S_{h\mu}=c_{h\mu}U_h\quad\text{for every }\mu,\qquad
+\sum_\mu|c_{h\mu}|^2=s_h.
+\tag{RP16c}
+$$
+
+This is necessary by rank-one Choi support and sufficient after tensoring
+with $I_R$. For rail-preserving maps it says that the two complete
+unobserved record vectors have equal norm $\sqrt{s_h}$ and overlap
+modulus $s_h$, with their relative phase known. Equal rail efficiencies
+alone do not fix that overlap. A lost-photon flag instead has some
+effect $E_h^L$ on $F$ and output
+$|\mathrm{vac}\rangle\langle\mathrm{vac}|\otimes
+\operatorname{Tr}_F[(E_h^L\otimes I_R)\rho]$; only
+$E_h^L=\ell_h I$ is state-independent erasure. Incident-vacuum dark
+maps and vacuum/code coherences are additional data. Projecting onto
+output sectors does not license replacing their coherent sum by a
+pinched instrument without an actual record.
+
+A concrete diagnostic sends both bins through one unreset meter.
+Let its initial state be $|+\rangle$, each occupied bin apply $Z$,
+and the common physical gap have Kraus $L_\mu$. Then
+$W_\mu=|e\rangle\langle e|\otimes L_\mu Z+
+|l\rangle\langle l|\otimes ZL_\mu$.
+Commutation $L_\mu Z=ZL_\mu$ record by record suffices to preserve
+$F$; covariance of the reduced gap alone does not. For amplitude
+damping $L_0=\operatorname{diag}(1,a)$,
+$L_1=\sqrt\gamma|g\rangle\langle e|$, $a=\sqrt{1-\gamma}$,
+the no-jump vectors coincide, while early/late jumps have opposite
+signs. Thus any final meter effect $E$ gives
+
+$$
+\Phi_E=A_E\operatorname{Id}_F+B_E\operatorname{Ad}_{Z_F},\qquad
+A_E=\langle v_-|E|v_-\rangle,\quad
+B_E=\frac\gamma2\langle g|E|g\rangle,\quad
+v_-=\frac{|g\rangle-a|e\rangle}{\sqrt2}.
+\tag{RP16d}
+$$
+
+For $0<\gamma<1$, a nonzero known-unitary branch requires $A_EB_E=0$.
+Positivity then restricts $E$ to the ray $|e\rangle\langle e|$ or
+$|w\rangle\langle w|$, where
+$w=(a|g\rangle+|e\rangle)/\sqrt{1+a^2}$. The latter ray has
+strictly positive real off-diagonal entries and the former has zero;
+their nonnegative sum cannot be $I$. No complete terminal meter-only
+POVM makes every occupied flag clean; monitoring the jump bath is a
+different port. Selected clean sub-POVMs remain
+possible: $E=|e\rangle\langle e|$ rejects jumps, with both occupied
+and incident-vacuum weight $a^2/2$; the $w$ ray isolates a correctable
+$Z_F$ branch. Rejected effects and false heralds still count.
+
+For Ramsey $X$ flags $h=\pm1$, the same dilation gives the **full**
+vacuum/early/late Kraus operators and occupied maps
+
+$$
+\begin{aligned}
+K_{h0}&=\tfrac12\operatorname{diag}(1+ha,1-ha,1-ha),&
+K_{h1}&=\tfrac{\sqrt\gamma}{2}\operatorname{diag}(1,-1,1),\\
+\Phi_h&=\tfrac{(1-ha)^2}{4}\operatorname{Id}_F
+             +\tfrac\gamma4\operatorname{Ad}_{Z_F},&
+p_h&=(1-ha)/2.
+\end{aligned}
+\tag{RP16e}
+$$
+
+Summing $K_{h\mu}^\dagger K_{h\mu}$ gives $I_3$, retaining the
+vacuum/code cross terms. The usual hit $h=-1$ has conditional
+$Z_F$ error $(1-a)/2$, entanglement fidelity $(1+a)/2$, and **full**
+diamond norm $1-a$ from identity; incident-vacuum false hits occur
+with probability $(1-a)/2$. A corrected other flag has the same
+residual error. At $\gamma=0$ the ideal detector returns; at
+$\gamma=1$ nonzero occupied effects fully dephase the code.
+These are exact ideal-kick/gap formulas, not bounds fitted to Kono's
+finite-pulse device. Diagonal pure-dephasing Kraus commute with $Z$
+and instead change flags without this rail error. Actual pulses,
+cavity tails, ladder jumps and driven intervals require the full
+dilation, not only a gap rate. A genuinely simultaneous coupling
+$N_{\rm total}\otimes B_M(t)$ factors from $F$ because
+$N_{\rm total}=I$ on its one-photon code; sequential bins with this
+relaxation gap are not that protected interface.
+
+A stored coherent probe exhibits a different record tradeoff. In a
+defined model a photon in either bin rotates $|\alpha_p\rangle$ by
+$\phi$, with one probe pure-loss channel $\eta$ between the kicks.
+Both occupied histories leave the same kept probe
+$|\sqrt\eta\alpha_pe^{i\phi}\rangle$, but their lost states have
+amplitudes $\sqrt{1-\eta}\alpha_pe^{i\phi}$ and
+$\sqrt{1-\eta}\alpha_p$. Their coherent-state overlap gives, after
+a known rail phase correction,
+
+$$
+\begin{aligned}
+V&=e^{-(1-\eta)z},\qquad z=|\alpha_p|^2(1-\cos\phi),\\
+\Phi_h&=q_h\left[\frac{1+V}{2}\operatorname{Id}_F
+                 +\frac{1-V}{2}\operatorname{Ad}_{Z_F}\right],\\
+d_h=0&\ \Longrightarrow\quad
+q_h\le1-e^{-2\eta z}=1-V^{2\eta/(1-\eta)}
+\quad(0<\eta<1).
+\end{aligned}
+\tag{RP16f}
+$$
+
+Every probe-only flag has the same normalized dephasing; postselecting
+the kept probe cannot remove the hidden loss record. Here $q_h$ and
+$d_h$ are its occupied and incident-vacuum probabilities. Positivity
+and $d_h=0$ force its effect to annihilate the vacuum-input probe
+$|\sqrt\eta\alpha_p\rangle$; projection onto its orthogonal complement
+proves and attains the displayed bound. The full diamond norm from identity is
+$1-V$ and its $Z_F$ error is $(1-V)/2$. At $\eta=1$ this record
+leakage vanishes; at $\eta=0$ the retained probe has no occupancy
+information. Loss before both kicks or after both has common
+occupied loss states and does not cause this particular mechanism.
+
+[Sinclair et al., Nature Communications **7**, 13454 (2016),
+primary proposal/experiment](https://arxiv.org/html/1510.01164v1)
+motivate such a stored-probe approach, but their proof of principle
+uses macroscopic signal pulses. Its total probe recall does not
+determine the isolated inter-bin $\eta$ in (RP16f), nor establish a
+single-mode pure-loss model of the ensemble. The diagnostic supplies
+no universal optical-QND converse or native gate benefit. A practical
+comparison must measure the timed full instrument and offer its
+protected modes, probes, memory, clocks and all readout records to
+the ordinary return/Euler/deferred-frame controllers too.
+
 ### Preparing the meter and balancing the cavity response
 
 In a scalar atom-preserving reflection model take atom amplitudes
@@ -4230,6 +4520,11 @@ Its additional polynomial and matrix guards cover the common-meter
 identity (RP13a), the energy-decay reflection algebra (RP16a), and the
 relative-sector trace/determinant in (RP2b). The general clean-ancilla
 obstruction and missing physical readout instrument remain analytic.
+Its finite $N=2,3$ fixtures also retain coherent exit/residual cross
+blocks, the raw-CZ time gauge and all vacuum/one-photon matrix units
+of the damping diagnostic, with pure-dephasing comparison cases.
+The general Stas transfer reduction, complete-POVM obstruction and
+coherent-probe tradeoff remain analytic, not finite-replay certificates.
 Retiming unresolved reservoir histories is not certified. The general
 norm, causal-interface and continuum error arguments remain analytic;
 no physical port or clock is supplied by these replays.

@@ -1455,6 +1455,18 @@ elastic survivors do not establish equal lost-history or retained-bath
 instruments; online heralding and safe retries need those maps as well.
 The ideal branch bounds do not establish a device advantage.
 
+The same owner now gives explicit time-bin meter diagnostics: hidden
+relaxation or intervening probe loss can spoil qubit coherence despite
+matched final detection rates. Their parameters require the actual timed
+dilation. A finite-cap passive retry can instead defer an exit-time frame
+for a specified terminal endpoint; raw CZ phases determine whether spin
+measurement bases must wait for that key. The next comparison must fix
+that measurement order and the complete vacuum/loop clock before comparing
+the same-interface ordinary loop, terminal helper program and deterministic
+gate. A measured SiV signal-to-memory workload supplies an ordinary
+alternative when the useful output can reside in matter memory. None of
+these component results establishes a native hardware benefit.
+
 The same component's sequence bound permits adaptive query words and
 intermediate photon instruments, with four persistent modes and one visit
 per spin. It keeps the nonuniform photon encoding at each recorded prefix

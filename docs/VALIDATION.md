@@ -126,6 +126,13 @@ reliable-meter delivery comparison, energy-decay dispersive reflection
 and the relative-sector invariants used in a clean-photonic-ancilla CZ
 obstruction. The general clean-return argument and unknown-qubit-preserving
 microwave occupancy instrument are not established by finite replay. Its
+finite-cap endpoint replay retains coherent time-key blocks and residual
+routes in ideal and raw-CZ phase conventions, with a counterexample to
+postprocessing a fixed spin basis. An explicit gap-relaxation meter/bath
+unitary checks both flags on every vacuum/early/late input matrix unit;
+pure dephasing is checked separately. The all-POVM argument, coherent-probe
+loss/discrimination tradeoff, SiV ideal storage extension and actual
+terminal access/clock remain analytic or physical premises. Its
 pointwise elastic identity is distinct from a complete timed loss/bath
 dilation or hardware clock certificate. Spin filters before or between
 contacts, spin encodings before contacts, physical detector channels and an optimal ordinary rate

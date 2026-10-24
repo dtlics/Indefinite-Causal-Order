@@ -168,6 +168,12 @@ Additional modules run inside the same existing architecture jobs:
   common-meter delivery polynomial, energy-decay dispersive reflection,
   and clean-CZ relative-sector invariants. Their general inequalities,
   clean-ancilla obstruction and physical meter extension remain analytic.
+  Finite-cap endpoint guards retain coherent exit/residual cross blocks,
+  raw phase conventions and the late-basis counterexample. A separate
+  explicit meter/bath unitary checks both flags and all vacuum/early/late
+  matrix units for rational relaxation and pure-dephasing fixtures.
+  The general meter-POVM obstruction, coherent-probe overlap tradeoff and
+  measured-workload interpretation remain analytic; no device rates are fitted.
   These identities do not establish a
   hardware latency gap, two-opaque-query simulation, calibrated router or
   complete timed loss/bath channel.
