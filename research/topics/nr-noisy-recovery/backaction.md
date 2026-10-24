@@ -1239,6 +1239,39 @@ $H$ persists and $A$ repeats within that job. Rapid phase drift alone is
 therefore insufficient for a durable advantage; its $H$ drift window,
 training and helper cost must be compared explicitly.
 
+**Physical drift clocks require a source-specific access model.** The
+following interfaces illustrate why controller timing, measured drift and
+the lifetime of a reusable calibration must be distinguished. They do not
+establish a retained-output advantage for coherently ordered couplers.
+
+| Primary source and version | Actual access and timing | Qualification for the application |
+| --- | --- | --- |
+| [Tan et al., *Communications Engineering* **3**, 57 (22 March 2024)](https://doi.org/10.1038/s44172-024-00198-0) | The fiber simulation assumes 0.5 ms detector acquisition and 0.5 ms EPC braking; its reference drift is a 1% average QBER rise within one minute. The experiments are explicitly quasistatic classical laser, polarizer and power-meter analogues. | Supplies ordinary Mueller estimation and waveplate compensation, not a measured fast calibration-expiry window or an unknown retained-payload test. |
+| [Herrera Valencia et al., *Nature Photonics* **20**, 202–207 (2026), online 26 November 2025](https://doi.org/10.1038/s41566-025-01806-x) | An $8\times8$ multimode-fiber circuit routes and swaps entanglement after classical transmission-matrix characterization and inverse design of its phase planes. Routing stability is tested over two weeks without realignment or matrix recharacterization, with the fiber mechanically fixed. Output phase planes also perform projective measurements. | Genuine quantum mode processing does not itself supply coherent order of two unknown processors. Preserve the measured calibration reuse and programmed optical controls in the ordinary comparator. |
+| [Tagliavacche et al., *npj Quantum Information* **11**, 60 (6 April 2025)](https://doi.org/10.1038/s41534-025-00991-5) | Frequency-bin fiber-spool phase drift is followed over about 600 s, with ordinary RF/pilot phase correction about every 2 s and stability tested up to one hour. The demonstrated endpoint is destructive BBM92 detection. | Slow scalar phase tracking does not establish two indispensable unknown noncommuting kernels or a heralded service retaining an arbitrary input. |
+
+These are source-specific exclusions of the proposed application, not a
+universal obstruction to drifting interfaces or an exhaustive literature
+claim. In particular, a fast assumed detector or controller does not
+measure a fast loss of usable calibration. The measured matrix or channel
+must remain valid for the proposed workload, and its expiry must be
+compared with the actual ordinary update and reuse schedule.
+
+A useful next test would supply a dynamic transfer-map record together
+with the required two-module workload and its physical output ports.
+Compare both strategies on that same record, charging training visits,
+pilots, reconfiguration and readout while amortizing reusable calibration.
+Allow ordinary calibrated mode processing, temporal returns and
+entanglement-first alternatives whenever the same ports permit them;
+price their propagation loss, delays, storage and extra modes explicitly.
+The score must count every attempt and test the complete conditional
+output on an arbitrary unknown input entangled with a passive reference,
+including inaccessible frequency, bath and loss records. A consumed
+unknown input cannot be replaced for a free retry. Normalized coincidence
+fidelity or a known-state fringe alone does not specify that service.
+No source in the table supplies the full fast-window access model needed
+to proceed from this qualification test to a physical advantage claim.
+
 **A general hopping matrix has extra spectral requirements.** For an
 invertible coupling $K=L\Sigma R^\dagger$ between two $d$-state
 manifolds, the resonant constant Hamiltonian

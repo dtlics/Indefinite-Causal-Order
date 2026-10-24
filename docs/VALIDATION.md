@@ -385,7 +385,10 @@ of arbitrary terminating strategies to the stopping relaxation are
 analytic proof inputs. This is an unconditional prior-average Bell score
 with expected cost averaged over the same prior and Bell input, without
 oracle-dependent initial advice. It is not a calibrated persistent-device
-throughput bound or an optimal ordinary frontier. Native coupler access,
+throughput bound or an optimal ordinary frontier. Its bounded comparison
+of polarization, multimode-routing and frequency-bin refresh interfaces
+is a primary-source assessment, not a new measured drift/error bound or
+an outcome of the finite certificate. Native coupler access,
 primitive errors, routing costs and a finite-energy GKP bound remain
 unverified.
 The Andreev extension has finite exact reflection-signature,

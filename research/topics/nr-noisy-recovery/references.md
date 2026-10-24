@@ -102,6 +102,18 @@ advantage against all ordinary instruments and memories.
 | [Saberi, *Genuine fidelity gaps associated with a sequential decomposition of genuinely entangling isometry and unitary operations*, arXiv:1306.0430v1](https://arxiv.org/html/1306.0430v1), Sections II–VI | Matrix-product descriptions and deterministic sequential fidelity gaps. | The retained-photon sequence here permits postselection, classical feedback and a specified CZ primitive; its success-probability coefficient is not a deterministic fidelity-gap statement. |
 | [Gour, *A Family of Concurrence Monotones and its Applications*, PRA **71**, 012318 (2005), arXiv:quant-ph/0410148v2](https://arxiv.org/html/quant-ph/0410148v2), Eqs. (19), (21)–(22), Theorem 1 and Eq. (45) | Determinant weights, homogeneous local-filter scaling and average product bounds for LOCC chains. | The determinant-potential technique is established. The independent-edge-state theorem does not specify the reused four-mode bus, its fixed CZ visits or the target-specific local coefficient proved here; this bounded comparison establishes no priority claim. |
 
+## Calibration windows and multimode interfaces
+
+The [persistent-coupler comparison](backaction.md#nr-r19-native-interface)
+owns the bounded hardware screen. These sources do not establish the
+fresh unknown-coupler prior or a useful retained-output order interface.
+
+| Primary work | Access relevant to the comparison | Scope to preserve |
+| --- | --- | --- |
+| [Tan et al., Communications Engineering **3**, 57 (2024)](https://doi.org/10.1038/s44172-024-00198-0), simulation and experiment sections | Mueller-parameter estimation and ordinary polarization compensation. | Simulated controller timings differ from the quasistatic classical-link experiment. |
+| [Herrera Valencia et al., *A large-scale reconfigurable multiplexed quantum photonic network*, Nature Photonics **20**, 202–207 (2026)](https://doi.org/10.1038/s41566-025-01806-x), Methods | Classical transmission-matrix characterization, inverse-designed phase planes and quantum entanglement routing. | The reported access and destructive state analysis do not establish the proposed fast-refresh two-processor retained-output service. |
+| [Tagliavacche et al., *Frequency-bin entanglement-based Quantum Key Distribution*, npj Quantum Information **11**, 60 (2025)](https://doi.org/10.1038/s41534-025-00991-5), active phase-drift compensation and Fig. 4 | Implemented ordinary RF/pilot compensation and destructive QKD measurements. | Scalar drift and its correction do not establish a pair of required unknown multimode interactions. |
+
 ## Recovery, inversion, and verification
 
 - [Quintino et al., *Reversing Unknown Quantum Transformations*](https://arxiv.org/abs/1810.06944), PRL **123**, 210502 (2019), gives heralded physical inversion of an unknown unitary and analyzes adaptive strategies and indefinite-order advantages. [Dong et al., *Success-or-Draw*](https://arxiv.org/abs/2011.01055), PRL **126**, 150504 (2021), develops retries whose draw branch preserves the input. Heralding alone does not give the present noisy filter that preservation property.

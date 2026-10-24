@@ -224,8 +224,11 @@ and a certified qutrit prior-average fidelity ceiling for arbitrary
 terminating ordinary strategies with mean query budget two. Its fresh
 prior and lack of oracle-dependent advice are essential. An executable
 address-selective reflection closes the task even if its matrix is unknown;
-persistent-reflection calibration supplies another ordinary route. The
-general family also admits a three-call simulation. The remaining target
+persistent-reflection calibration supplies another ordinary route. Its
+bounded hardware screen distinguishes simulated refresh timing,
+calibrated multimode routing and demonstrated pilot correction from the
+required fresh two-coupler interface. None supplies that application yet.
+The general family also admits a three-call simulation. The remaining target
 is a useful native interface with the complete register routed through
 both modules, a justified drift window and a matched primitive-level
 comparison including calibration, clean memory, delays and routing loss.
