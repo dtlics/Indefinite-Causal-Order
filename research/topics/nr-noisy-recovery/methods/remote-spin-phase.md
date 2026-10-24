@@ -3272,6 +3272,376 @@ changes the rank-one spin factors. Neither is covered. Extra contacts,
 larger preserved quantum spaces and coherent reuse of a meter remain
 separate ordinary resources in the physical comparison.
 
+### A sequence bound with four persistent photon modes
+
+Consider $n$ fresh unknown spin pairs $(A_i,B_i)$, the same unknown
+retained photon qubit $F$, and arbitrary passive references. Put
+
+$$
+G_i=\frac{I-iZ_FZ_{A_i}-iX_FZ_{B_i}}{\sqrt3},\qquad
+U_n=G_n\cdots G_1.
+\tag{RP23}
+$$
+
+An ordinary circuit in the following restricted class has an exact
+accepted full-input channel $p\operatorname{Ad}_{U_n}$ only if
+
+$$
+p\le\left(\frac35\right)^n.
+\tag{RP24}
+$$
+
+The photon workspace has dimension four, including its one persistent
+helper, at every query boundary. Each spin has exactly one complete CZ
+encounter; a classically adaptive query permutation is allowed. Known
+photon instruments, discarded fresh environments, classical records and
+feedback, local spin-unitary controls, and photon/classical
+postselection are allowed. No additional persistent quantum workspace,
+spin ancilla/instrument, joint spin operation, preloaded auxiliary
+entanglement, or extra controlled-vacuum encounter is supplied. The
+complete unknown input is present before these calls. An environment
+retained coherently for a later measurement counts as extra quantum
+workspace even if it never recouples unitarily. This is an upper bound,
+not a claimed optimum: the single-pair optimum (RP12i) is not being
+multiplied. The ideal native all-plus port has weight $(3/4)^n$, but
+both probabilities vanish with $n$.
+
+**This is not an expected-cost or architectural separation.** The
+deterministic, ancilla-free four-contact compiler (RP2) implements
+$U_n$ with $4n$ encounters and no helper readout. Run it with classical
+probability $1/2$ and otherwise abort before touching the input. Its
+accepted channel is $\tfrac12\operatorname{Ad}_{U_n}$ at mean $2n$
+contacts, exceeding $(3/4)^n$ for $n\ge3$. Under the separately supplied
+eight-mode, lossless coherent-return interface (RP4), the $n$-pair
+circuit has mean $3n$ **occupied** contacts and returns its helpers.
+Running it with probability $2/3$ gives
+$\tfrac23\operatorname{Ad}_{U_n}$ at mean $2n$ occupied contacts,
+exceeding the native one-pass weight for $n\ge2$. Its $4n$ potential
+opportunity calls are not $3n$ opaque queries. The controlled-vacuum
+compiler (RP4a) is another mandatory comparator: with the enlarged path
+interface, the same two occupied contacts per pair can reproduce the
+native survivor and can admit the same two physical time layers. Thus
+(RP24) supplies no occupied-contact, latency, loss, or delivered-rate
+advantage over those interfaces. It also gives no bound for approximate
+gates or terminal spin filtering.
+
+**Query order and actual boundary ranks.** Refine observed records and
+each discarded environment to fine Kraus histories, fixing that
+refinement when its instrument is applied. Rank-one unitary Choi
+support makes every nonzero successful fine history a scalar multiple
+of $U_n$ after its permitted correction. On a fixed history, local
+unitaries on a leaf before its unique encounter can be moved immediately
+before it; all later leaf unitaries can be moved after it. They commute
+with operations on other systems. The target spin-side Schmidt span is
+$\operatorname{span}\{I,Z\}$ and has rank two for every leaf. Its
+rank-one factors force matched pre/post bit permutations and phases.
+These give invertible local changes of the two Fourier indices, which
+do not alter any matricization rank. They do not permit arbitrary
+spin filters or encodings.
+
+Remove these local gauges and write the target's Fourier coefficients
+in the spin $Z$ labels. For one pair, apart from $1/\sqrt3$, they are
+$g_{00}=I$, $g_{10}=-iZ$, $g_{01}=-iX$, $g_{11}=0$. For a queried
+leaf set $S$, let $T_S$ have columns indexed by its Fourier bits and
+$F_{\rm in}$, and rows by the complementary bits and $F_{\rm out}$.
+A four-mode fine history factors through its photon workspace at every
+cut, so $\operatorname{rank}T_S\le4$.
+
+For two pairs, use bit order $(A_1,B_1,A_2,B_2)$ and entries
+$(g_{\epsilon_2}g_{\epsilon_1})_{F_{\rm out},F_{\rm in}}$,
+omitting the common $1/3$. Direct exact multiplication gives
+
+$$
+\begin{array}{c|c}
+S&\operatorname{rank}T_S\\ \hline
+\{A_1,B_1\}&2\\
+\{A_2,B_2\}&6\\
+\{A_1,A_2\},\{A_1,B_2\},\{B_1,A_2\},\{B_1,B_2\}&8
+\end{array}
+\tag{RP25}
+$$
+
+Each mixed $8\times8$ determinant is $1$. In the reversed-pair case
+the last two rows and columns vanish and the leading $6\times6$
+minor has determinant $16$. Every one-/three-leaf cut has rank four.
+For arbitrary $n$, set the Fourier bits of all but two selected pairs
+to $00$. These are **Fourier slices**, not physical input choices:
+each removed coefficient is $I/\sqrt3$, so no intervening photon
+rotation remains. A slice cannot increase rank. Mixed cuts therefore
+forbid two simultaneously open pairs, and reversed cuts forbid
+finishing a later pair before an untouched earlier one. Every nonzero
+successful history must visit pairs $1,\ldots,n$ in order, with either
+internal order and adjacent encounters within each pair.
+
+Let $J$ be the combined photon Kraus map in a gap between complete
+pairs, including every operation and record in that gap. Write the
+target matricization as $\lambda T=\mathcal A J\mathcal B$.
+The target has rank two: its past and future coefficient stacks factor
+through $F$, and Parseval and unitarity make those stacks full row and
+column rank two. To infer the rank of $J$, the physical stacks
+$\mathcal B,\mathcal A$ must instead have full rank four.
+
+Fix all physical spin $Z$ labels except one pair. Its target Fourier
+matrix is the invertible matrix
+$C_0/\sqrt3$, multiplied by invertible common photon matrices and local
+index gauges, where
+
+$$
+C_0=\begin{pmatrix}I&-iZ\\-iX&0\end{pmatrix}.
+\tag{RP26}
+$$
+
+Its physical factorization is
+$\operatorname{diag}(M_0,M_1)V\operatorname{diag}(E_0,E_1)$,
+where the source and terminal sector blocks are $2\times2$ and $V$
+is the combined map between that pair's encounters. Invertibility
+forces all five factors invertible. For the prefix after the second
+encounter, the four maps $\Pi_lV\Pi_kE$ have a positive-definite
+horizontal-stack Gram matrix: it is the sector pinching of
+$V\operatorname{diag}(E_0E_0^\dagger,E_1E_1^\dagger)V^\dagger$.
+Thus the full prefix stack has row rank four. The time-reversed
+argument gives suffix column rank four. Consequently
+$\operatorname{rank}J=\operatorname{rank}(\mathcal A J\mathcal B)=2$.
+This is a statement about the **combined gap**, not each constituent
+Kraus map. In particular a unitary-only interpair gap cannot work.
+
+**A determinant-normalized norm inequality.** For invertible complex
+$2\times2$ matrices $R,T$, the nucleus obeys
+
+$$
+\|(I_\tau\otimes R)C_0(I_\tau\otimes T)\|_*
+\ge2\sqrt5\sqrt{|\det R\det T|},
+\tag{RP27}
+$$
+
+where $\|\cdot\|_*$ is the nuclear norm and $\tau$ is the block
+index. Here is a complete argument. Set
+$A_L=C_0C_0^\dagger$ and $A_R=C_0^\dagger C_0$. Multiplication gives
+
+$$
+A_L=\begin{pmatrix}2I&iX\\-iX&I\end{pmatrix},\quad
+A_R=\begin{pmatrix}2I&-iZ\\iZ&I\end{pmatrix},\quad
+A_\bullet^2-3A_\bullet+I_4=0.
+\tag{RP28}
+$$
+
+They are positive definite because $C_0$ is invertible. Hence
+$\sqrt{A_\bullet}=(A_\bullet+I_4)/\sqrt5$,
+$\operatorname{Tr}_\tau\sqrt{A_\bullet}=\sqrt5 I$, and
+$\|C_0\|_*=2\sqrt5$.
+
+For Hermitian $L,M$, the function
+$t\mapsto\log\|e^{tL}Ce^{tM}\|_*$ is convex. Indeed
+$F(z)=e^{zL}Ce^{zM}$ is entire and uniformly bounded on every finite
+vertical strip: its imaginary exponential factors are exterior
+unitaries. For every fixed $D$ with $\|D\|_{\rm op}\le1$,
+$\operatorname{Tr}(D^\dagger F(z))$ is bounded analytic, with boundary
+moduli at most the two boundary nuclear norms. The scalar three-lines
+inequality and nuclear/operator-norm duality give log convexity. For
+completeness, three-lines follows by rescaling to $0\le\Re z\le1$,
+dividing the scalar function by
+$\exp[(1-z)\log m_0+z\log m_1]$, multiplying by
+$e^{\epsilon z^2-\epsilon}$, and applying the maximum principle on
+large rectangles. The horizontal-edge contribution tends to zero;
+then let $\epsilon\downarrow0$. The positive boundary bounds $m_j$
+exist because invertible exponentials preserve nonzero $C$.
+
+For traceless Hermitian $H,K$, put $L=I_\tau\otimes H$ and
+$M=I_\tau\otimes K$. The derivative of the nuclear norm at the
+invertible $C_0$ is
+
+$$
+\left.\frac{d}{dt}\|e^{tL}C_0e^{tM}\|_*\right|_{t=0}
+=\operatorname{Tr}(L\sqrt{A_L})+
+ \operatorname{Tr}(M\sqrt{A_R})=0.
+\tag{RP29}
+$$
+
+One obtains this formula directly by differentiating
+$S(t)^2=C(t)^\dagger C(t)$ for its positive square root, multiplying
+the resulting Sylvester equation by $S^{-1}$ and taking a trace.
+Thus the convex logarithm has its global minimum at zero. Finally use
+the polar orientations $R=U_RP$ and $T=QU_T$, with $P,Q>0$; the
+unitaries are exterior, so no unitary is moved through $C_0$.
+Writing $P=\sqrt{|\det R|}e^H$ and
+$Q=\sqrt{|\det T|}e^K$ gives traceless Hermitian logarithms and proves
+(RP27). Singular filters have the trivial zero lower bound. Query-index
+phases $R_\alpha=e^{i\alpha X_\tau}$ commute with the $F$ filters
+and can be removed by norm invariance. Reversing internal encounter
+order interchanges $X,Z$ and is unitarily equivalent via the photon
+Hadamard, so the same inequality applies.
+
+**Actual recorded frontiers and their metric.** A viable frontier is an
+actual circuit prefix immediately before the next pair's first query,
+including the entire preceding gap, with nonzero conditional accepted
+CP weight. It is not a complete successful future relabelled as a
+prefix. Rank-two factorization and its uniqueness give its corrected
+prefix operator as
+
+$$
+(I_{\rm past}\otimes E_vH_v)U_{\rm past},\qquad
+E_v^\dagger E_v=I_2,\quad H_v\text{ invertible},\qquad
+w_v=|\det H_v|.
+\tag{RP30}
+$$
+
+At the root $H=I$; arbitrary source instruments may be included in the
+first stage. At terminal success $H=\lambda I$ up to a photon unitary,
+so $w=|\lambda|^2$. Changing the isometric gauge of $E_v$ does not
+change $w_v$.
+
+This determinant weight is established entanglement machinery:
+$|\det H|$ is the unnormalized qubit $G$-concurrence of
+$(H\otimes I)|\Phi_2\rangle$. [Gour, PRA **71**, 012318
+(2005), Eqs. (19), (21)–(22) and (45)](https://arxiv.org/html/quant-ph/0410148v2)
+gives determinant scaling and average product bounds for chains of
+independent shared states under LOCC. Those results do not supply the
+present fixed-CZ, four-mode coefficient: that needs the query-order,
+common-phase and physical-budget arguments here. No new determinant
+monotone or general product-bound technique is claimed.
+
+The past-spin frame cannot secretly depend on the future continuation.
+Choose one continuation to fix a frame $D_v$. A second has past
+correction $D_w$ and suffix $F_w$ acting only on the photon and future
+spins. Cancelling $U_{\rm past}$ on the **input side** gives
+
+$$
+(D_wD_v^\dagger)_{\rm past}\otimes(F_wE_vH_v)
+=\lambda_w I_{\rm past}\otimes U_{\rm future}.
+\tag{RP31}
+$$
+
+Both factors are nonzero, so $D_wD_v^\dagger$ is scalar. This covers
+matched flips as well as phases. There is also an intrinsic measurable
+definition of $w_v$, requiring no measurable choice of a future frame.
+Fix past computational labels $z_0$ and let $P_v(z_0)$ be the actual
+prefix map from $F$ to all past-spin outputs and the four photon modes.
+Equation (RP30) gives
+$w_v=\sqrt{\det[P_v(z_0)^\dagger P_v(z_0)]}$, independent of $z_0$.
+Unvisited-spin pre-unitaries can be deferred to their own query; they
+commute with this prefix.
+
+**The complete two-encounter budget.** At a viable parent with metric
+$H_{\rm in}$, let $S_r:\mathbb C^2\to\mathbb C^4$ be the source/
+preparation maps, including the parent's isometric embedding, and
+$V_{rh}$ the middle photon maps. Their genuine Kraus budgets give
+$\sum_rS_r^\dagger S_r\le I_2$ and
+$\sum_hV_{rh}^\dagger V_{rh}\le I_4$. In sector coordinates put
+$L_r=\operatorname{diag}(E_{r0},E_{r1})$, so
+$\sum_r\operatorname{Tr}L_r^\dagger L_r\le2$.
+For fixed $r,h$, each viable child's combined boundary map is
+$K_m=E_mM_m$ with $E_m$ isometric and
+$\sum_mM_m^\dagger M_m\le I_4$. Dead records are positive terms
+that may be omitted. A terminal $2\times4$ output row can be embedded
+isometrically in four modes. The child's Fourier factorization is
+
+$$
+\begin{aligned}
+C_m&=\operatorname{diag}(M_{m0},M_{m1})V_{rh}L_r\\
+&=(I_\tau\otimes H_m)R_{\beta_m}
+  \frac{C_0}{\sqrt3}R_{\alpha_m}
+  (I_\tau\otimes H_{\rm in}^{-1}).
+\end{aligned}
+\tag{RP32}
+$$
+
+It is invertible for every viable child. Hence $V_{rh}$ and each
+sector block are invertible. For an $A$-first history, its input basis
+and matched bit permutation are fixed by $r$ before the first query;
+$B$'s are fixed by $r,h$ before its query. The rank-one spin-factor
+argument forces all viable children's output permutations to match
+these same input permutations. They can be absorbed at $r$ or $r,h$
+without changing the shared $V_{rh}L_r$ or its budget. There is no
+child-dependent source/middle relabelling. Only diagonal spin phases
+can still vary with $m$; the reversed internal order is identical.
+
+For two such children, $C_mC_k^{-1}$ is block diagonal in $\tau$.
+The invertible exterior $F$ filters cannot remove an off-diagonal
+block, and $H_{\rm in}$ cancels. Therefore this condition is exactly
+block diagonality of
+$R_{\beta_m}C_0R_{\alpha_m-\alpha_k}C_0^{-1}R_{-\beta_k}$.
+With $J=\left(\begin{smallmatrix}0&-2\\1&0\end{smallmatrix}\right)$,
+direct multiplication gives
+
+$$
+C_0(aI+bX_\tau)C_0^{-1}
+=aI+i b I_\tau\otimes Z-i b J\otimes Y.
+\tag{RP33}
+$$
+
+The independent physical $I,Z$ terms require
+$\sin(\beta_m-\beta_k)=0$. The remaining $Y$ term requires
+$\sin(\alpha_m-\alpha_k)=0$: otherwise its $X_\tau$ trace is
+$\operatorname{Tr}(X_\tau R_\beta J R_{-\beta})
+=\operatorname{Tr}(X_\tau J)=-1$, inconsistent with a diagonal
+matrix. Thus the phases agree modulo $\pi$. Absorb the resulting
+scalar signs into $H_m$. Invertibility of the common $V_{rh}L_r$
+then gives a single row $M_{\rm base}$ with
+$M_m=H_mM_{\rm base}$ for all these children.
+
+Let $S=\sum_mH_m^\dagger H_m$ and $T=\sqrt S$.
+The true terminal budget says $M_{\rm base}^\dagger S M_{\rm base}
+\le I$, so $M_{\rm tot}=TM_{\rm base}$ is a contraction. The sum is
+bounded because $M_{\rm base}$ has a right inverse. The replacement
+row has the same source/middle factorization and Fourier matrix
+$C_{\rm tot}=(I_\tau\otimes T)R_\beta(C_0/\sqrt3)R_\alpha
+(I_\tau\otimes H_{\rm in}^{-1})$.
+This is a feasible row for a norm inequality, not an equality of the
+original flagged CP instruments. The $2\times2$ Minkowski determinant
+inequality, (RP27), and Schatten Cauchy–Schwarz give
+
+$$
+\begin{aligned}
+\sum_m|\det H_m|&\le\det T,\\
+\frac{20}{3}\frac{\det T}{|\det H_{\rm in}|}
+&\le\|C_{\rm tot}\|_*^2
+\le2\|V_{rh}L_r\|_{\rm HS}^2,\\
+\sum_{r,h}\|V_{rh}L_r\|_{\rm HS}^2
+&\le\sum_r\operatorname{Tr}L_r^\dagger L_r\le2.
+\end{aligned}
+\tag{RP34}
+$$
+
+The terminal factor two is its $2\times4$ contraction's squared
+Hilbert–Schmidt norm bound. For completeness, Minkowski for two
+positive $2\times2$ matrices follows by conjugating one to $I$ and
+using $\operatorname{Tr}B\ge2\sqrt{\det B}$; induction and continuity
+give finite/countable sums. Thus (RP34), summed over the actual source
+and middle records, proves
+
+$$
+\sum_{\text{viable children }m}w_m\le\frac35 w_v.
+\tag{RP35}
+$$
+
+There is no independent per-leaf terminal budget or multiplicity factor.
+For standard Borel continuous records, use finite-dimensional Kraus
+densities relative to a scalar control measure. The budgets become
+integrals. Integral Minkowski follows from concavity and homogeneity
+of $\sqrt{\det}$: for $S=\int A\,d\mu$ of nonzero trace use
+$d\nu=(\operatorname{Tr}A/\operatorname{Tr}S)d\mu$ and
+$B=A\operatorname{Tr}S/\operatorname{Tr}A$. Then $B$ has constant
+trace, is bounded, and $S=\int B\,d\nu$; Jensen gives
+$\sqrt{\det S}\ge\int\sqrt{\det A}\,d\mu$. The zero case is
+immediate. Integrability follows from the same row right inverse.
+Phase agreement holds almost everywhere against a viable reference
+record, while the intrinsic potential is measurable. Nonnegative
+Tonelli and induction through the $n$ actual pair frontiers now give
+$p=\sum_{\rm terminal}|\lambda_v|^2\le(3/5)^n$.
+Dead/wrong-order histories and nontermination contribute no accepted
+mass. Anisotropic intermediate $H_v^\dagger H_v$ are fully included;
+neither scalar stage yields nor independent acceptance were assumed.
+
+Exact Choi rank and exact tensor minors are essential here. Small
+approximation error can change those ranks, so this argument supplies
+no error-dependent extension. It does not cover terminal spin filters,
+middle spin instruments, spare coherent memories, pre-contact node
+encodings, extra encounters, or the larger vacuum-controlled hardware
+interfaces. Those exclusions, the mean-cost countercomparisons next
+to (RP24), and the actual source/router/storage/readout/loss costs
+remain part of every application of the bound.
+
+
 ### A physical meter is a complete instrument, not one efficiency
 
 This readout/retry discussion concerns the online classical-flag
@@ -3689,6 +4059,14 @@ local-response identities underlying the finite-pulse certificate.
 Retiming unresolved reservoir histories is not certified. The general
 norm, causal-interface and continuum error arguments remain analytic;
 no physical port or clock is supplied by these replays.
+The imported
+[sequence component](../checks/architecture/retained_photon_chain.py)
+guards the exact Fourier-cut ranks and slices, the phase-ratio identity,
+nucleus moment identities, and a genuinely complex anisotropic
+multi-record boundary contraction on full input matrix units. Its
+finite algebra does not enumerate all controllers or prove complex
+interpolation, continuous-record integration or the general
+determinant-potential theorem (RP24). Those remain analytic arguments.
 These finite/formal algebra checks support the general analytic
 proofs; they do not enumerate arbitrary
 controller instruments, establish the optical ports, reconstruct the

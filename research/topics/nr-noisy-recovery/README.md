@@ -253,7 +253,10 @@ explicit port and timing qualifications. Its
 keeps the unknown photon as quantum output and distinguishes one corrected
 flag from multiple corrected records. It also gives an exact ordinary
 weak-measurement optimum when intermediate photon instruments are allowed
-with four preserved modes. A broader ordinary serialization matches the
+with four preserved modes. Its sequence analysis treats every recorded
+prefix and its changing photon encoding, and distinguishes a strict visit
+cap from the stronger ordinary comparison under an average-cost budget.
+A broader ordinary serialization matches the
 native elastic survivor with two occupied contacts in four encounter
 windows; three windows require a preserved spectator-path port. This
 construction alone gives no latency lower bound; granting the identical

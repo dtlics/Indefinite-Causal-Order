@@ -127,6 +127,13 @@ dilation or hardware clock certificate. Spin filters before or between
 contacts, spin encodings before contacts, physical detector channels and an optimal ordinary rate
 are outside those bounds. Finite replay does not certify optical ports,
 a measured loss model, novelty or a hardware advantage.
+A sequence component adds exact Fourier cut ranks/minors, query-word and
+slice guards, nuclear-norm balance identities, weighted encoding fixtures
+and average-cost abort comparisons. The all-length rank reduction,
+three-lines interpolation, full recorded-prefix determinant bound and
+continuous-outcome extension are analytic. No approximate-gate robustness,
+expected-query separation or architecture advantage follows from that
+strict-visit sequence bound.
 A separate outward interval certificate integrates the full declared
 Gaussian pulse, with analytic strip and tail bounds. Its physical joint
 mode analyzer remains an additional resource. Full Choi twirls in the general-channel replay support the

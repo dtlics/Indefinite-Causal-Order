@@ -167,6 +167,12 @@ Additional modules run inside the same existing architecture jobs:
   residuals and carrier balance. These identities do not establish a
   hardware latency gap, two-opaque-query simulation, calibrated router or
   complete timed loss/bath channel.
+- [Four-mode sequences](architecture/retained_photon_chain.py) checks exact
+  Fourier cut ranks/minors and query-word/slice fixtures, nuclear-norm
+  balance identities, weighted photon-encoding maps and average-cost abort
+  comparisons. The all-length rank and recorded-prefix determinant proofs,
+  interpolation and continuous-outcome extension remain analytic. The
+  strict-visit theorem gives no approximate-gate or hardware certificate.
 - [Mechanical strength](architecture/mechanical_pointer_strength.py) checks
   exact finite full-control partial-meter blocks and Gram/Choi witnesses;
   [mechanical clocks](architecture/mechanical_pointer_clock.py) checks exact

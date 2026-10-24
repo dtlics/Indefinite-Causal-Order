@@ -1455,6 +1455,16 @@ elastic survivors do not establish equal lost-history or retained-bath
 instruments; online heralding and safe retries need those maps as well.
 The ideal branch bounds do not establish a device advantage.
 
+The same component's sequence bound permits adaptive query words and
+intermediate photon instruments, with four persistent modes and one visit
+per spin. It keeps the nonuniform photon encoding at each recorded prefix
+in the proof. Its exponential accepted-weight comparison requires that
+strict visit cap. Under an average-contact budget, an ordinary deterministic
+longer compiler mixed with an initial abort already defeats the native
+one-pass sequence at sufficient length. Approximate gates, extra memory
+and vacuum-extended opportunities also require separate bounds. This
+sequence result therefore does not supply the architecture application.
+
 There are now more specific physical starting points than an assumed pair
 of copies of Nielsen's processor.
 [Hallacy et al.](https://arxiv.org/abs/2511.07640) independently tune two
