@@ -1185,7 +1185,11 @@ instrument rather than importing the symmetric formula.
 The [microscopic thermal-contact component](architecture-baselines.md#nr-r06-thermal-contact-history)
 instead retains the bath across the two physical schedules. It bounds
 the code-input error of a temporal bath-copy replacement and supplies
-an ordinary compiler for its isotropic specialization. The correlation
+an ordinary compiler for its isotropic specialization. A uniform Pauli
+check and a calibrated random flag flip extend the compiler to any
+Pauli-diagonal accepted map with a scalar copied cross map, including a
+known required gate when its transported checks are available. Coherent
+noise and nonscalar cross maps need a separate calculation. The correlation
 moments, calibration and controlled gates are charged assumptions.
 An application must include a required gate, readout or other useful
 contact action: an ordinary device can turn off purely harmful switchable

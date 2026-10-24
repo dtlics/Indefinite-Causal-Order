@@ -2289,6 +2289,157 @@ def replay_gaussian_contact_copy():
                 scope="Finite signed Wick/pair-count and thermal CAR bath-copy algebra, interaction-picture phase guard, and complete two-flag tetron-code Pauli compiler. Gaussian diamond/resummation/continuum bounds, correlation moments, microscopic isotropy, availability/calibration of physical controls and costs remain analytic; no numerical bath-error or normalized rare-herald certificate.")
 
 
+def replay_uniform_pauli_copy_compiler():
+    """Anisotropic Pauli code maps, scalar cross terms and transported checks.
+
+    Character counts include k=3; literal Gaussian check/read/coin circuits
+    cover k=1,2 on every complex input matrix unit. Complete map equality
+    also fixes every passive-reference extension. The existence of a scalar
+    microscopic cross map and access/cost of known transported controls are
+    hypotheses, rather than conclusions of these finite examples.
+    """
+    def symplectic_label(label, qubits):
+        x = z = 0
+        for bit in range(qubits):
+            digit = (label >> (2 * bit)) & 3
+            x |= int(digit in (1, 2)) << bit
+            z |= int(digit in (2, 3)) << bit
+        return x, z
+
+    character_relations = balanced_characters = 0
+    for qubits in (1, 2, 3):
+        size = 4 ** qubits
+        labels = [symplectic_label(label, qubits) for label in range(size)]
+        for error, (x, z) in enumerate(labels):
+            commutes = 0
+            for a, b in labels:
+                commutes += ((x & b).bit_count() + (z & a).bit_count()) % 2 == 0
+                character_relations += 1
+            require(commutes == (size if error == 0 else size // 2),
+                    "Uniform full-Pauli check includes identity and balances every nonidentity character")
+            if error:
+                balanced_characters += 1
+
+    def image(kraus, i, j):
+        dimension = len(kraus[0][1])
+        out = zeros(dimension, dimension)
+        for weight, operator in kraus:
+            if not weight:
+                continue
+            left = [(row, operator[row][i]) for row in range(dimension)
+                    if operator[row][i] != ZERO]
+            right = [(column, operator[column][j]) for column in range(dimension)
+                     if operator[column][j] != ZERO]
+            for row, x in left:
+                for column, y in right:
+                    out[row][column] = add(out[row][column],
+                                          times(multiply(x, conjugate(y)), weight))
+        return out
+
+    circuit_cases = flag_maps = literal_characters = transported_axes = 0
+    zero_identity_cases = no_flip_cases = fair_coin_cases = 0
+    wrong_transport_guards = 0
+    for qubits in (1, 2):
+        dimension = 2 ** qubits
+        paulis = pauli_basis(qubits)
+        size = len(paulis)
+        for error, p in enumerate(paulis):
+            x, z = symplectic_label(error, qubits)
+            for check, q in enumerate(paulis):
+                a, b = symplectic_label(check, qubits)
+                sign = (-1) ** (((x & b).bit_count() + (z & a).bit_count()) % 2)
+                require(matmul(matmul(q, p), q) == scaled(p, sign),
+                        "Literal Gaussian Pauli conjugation matches independently counted characters")
+                literal_characters += 1
+        sparse = [F(0)] * size
+        sparse[0], sparse[1], sparse[-1] = F(1, 3), F(1, 2), F(1, 12)
+        no_identity = [F(0)] + [F(2 ** label, 2 * (2 ** size - 2))
+                                    for label in range(1, size)]
+        ideal = [F(1)] + [F(0)] * (size - 1)
+        cases = ((sparse, F(0)), (sparse, F(1, 6)), (sparse, F(1, 3)),
+                 (no_identity, F(0)), (ideal, F(1)))
+        known_u = rational_rotation(paulis[-1], 3, 4, 5)
+        transformed = matmul(matmul(known_u, paulis[1]), adjoint(known_u))
+        coefficients = [times(inner(vectorize(p), vectorize(transformed)), F(1, dimension))
+                        for p in paulis]
+        require(sum(c != ZERO for c in coefficients) == 2
+                and sum(absolute_squared(c) for c in coefficients) == 1,
+                "Known non-Clifford unitary requires a genuinely transported non-Pauli check")
+        for unitary in (identity(dimension), known_u):
+            after_checks = [matmul(matmul(unitary, q), adjoint(unitary)) for q in paulis]
+            for check in after_checks:
+                require(adjoint(check) == check
+                        and matmul(check, check) == identity(dimension),
+                        "Actual transported check remains Hermitian unitary")
+                transported_axes += 1
+            physical_errors = [matmul(unitary, p) for p in paulis]
+            for weights, scalar in cases:
+                total, p_identity = sum(weights), weights[0]
+                require(min(weights) >= 0 and total <= 1 and 0 <= scalar <= p_identity,
+                        "Pauli-diagonal accepted map and scalar cross term obey complete CP constraints")
+                flip = (1 - scalar / p_identity) / 2 if p_identity else F(1, 2)
+                require(0 <= flip <= F(1, 2), "One symmetric independent flag-flip probability")
+                raw = [[], []]
+                for q, transported in zip(paulis, after_checks):
+                    for probability, operator in zip(weights, physical_errors):
+                        if not probability:
+                            continue
+                        checked = matmul(matmul(transported, operator), q)
+                        for read in (0, 1):
+                            raw[read].append((probability / size,
+                                scaled(plus(operator, scaled(checked,
+                                    1 if read == 0 else -1)), F(1, 2))))
+                reported = [[], []]
+                for read in (0, 1):
+                    for weight, operator in raw[read]:
+                        reported[read].append((weight * (1 - flip), operator))
+                        reported[1 - read].append((weight * flip, operator))
+                expected = [[((p_identity + (scalar if flag == 0 else -scalar)) / 2,
+                               physical_errors[0])]
+                            + [(probability / 2, operator) for probability, operator
+                               in zip(weights[1:], physical_errors[1:])] for flag in (0, 1)]
+                original = list(zip(weights, physical_errors))
+                for i, j in product(range(dimension), repeat=2):
+                    combined = zeros(dimension, dimension)
+                    for flag in (0, 1):
+                        actual = image(reported[flag], i, j)
+                        require(actual == image(expected[flag], i, j),
+                                "Actual uniform-check circuit and symmetric coin reproduce both scalar-cross flags")
+                        require(trace(actual) == gaussian(
+                            (total + (scalar if flag == 0 else -scalar)) / 2 if i == j else 0),
+                            "Both flags retain their exact accepted probability effect")
+                        combined = plus(combined, actual)
+                        flag_maps += 1
+                    require(combined == image(original, i, j),
+                            "Summing the simulated flags preserves the full anisotropic accepted map")
+                zero_identity_cases += p_identity == 0
+                no_flip_cases += flip == 0
+                fair_coin_cases += flip == F(1, 2)
+                circuit_cases += 1
+        # For an ideal required non-Clifford gate, omitting transport creates
+        # a spurious minus flag. Correct transported checks have none at u=1.
+        wrong_minus = []
+        for q in paulis:
+            checked = matmul(matmul(q, known_u), q)
+            wrong_minus.append((F(1, size),
+                                scaled(plus(known_u, scaled(checked, -1)), F(1, 2))))
+        require(pq(wrong_minus)[0] > 0,
+                "Using an untransported final check fails even on the ideal required gate")
+        wrong_transport_guards += 1
+    return dict(status="passed", arithmetic="exact Gaussian/rational; standard library",
+                character_qubits=[1, 2, 3], circuit_qubits=[1, 2],
+                full_Pauli_character_relations=character_relations,
+                balanced_nonidentity_characters=balanced_characters,
+                literal_Gaussian_character_relations=literal_characters,
+                actual_transported_check_unitaries=transported_axes,
+                anisotropic_scalar_cross_circuit_cases=circuit_cases,
+                complete_both_flag_matrix_unit_maps=flag_maps,
+                zero_identity_mass_cases=zero_identity_cases, no_flip_endpoint_cases=no_flip_cases,
+                fair_coin_endpoint_cases=fair_coin_cases,
+                wrong_untransported_nonClifford_guards=wrong_transport_guards,
+                scope="Uniform complete-Pauli sampling including identity; actual one-helper check/read and one symmetric independent flag flip on anisotropic accepted code maps, plus known non-Clifford transported controls. Complete finite input maps retain passive references. Microscopic scalar-cross assumptions, calibration, transported-control availability and costs remain analytic; no generic unknown-frame or arbitrary coherent-order-input simulator.")
+
+
 def verify_jc_energy_baseline():
     """Exact isometry/PVM, arbitrary JC-form CP weights and dummy guards."""
     from fractions import Fraction as F
@@ -2787,6 +2938,7 @@ def main():
     fermionic_cases = replay_fermionic_collision()
     even_majorana_cases = replay_even_majorana_modes()
     gaussian_contact_cases = replay_gaussian_contact_copy()
+    uniform_pauli_copy_cases = replay_uniform_pauli_copy_compiler()
     jc_cases = verify_jc_energy_baseline()
     noisy_search_cases = replay_noisy_search_filters()
     print(json.dumps({
@@ -2807,6 +2959,7 @@ def main():
         "fermionic_collision_instruments": fermionic_cases,
         "even_majorana_class_instruments": even_majorana_cases,
         "gaussian_contact_copy_instruments": gaussian_contact_cases,
+        "uniform_pauli_scalar_cross_instruments": uniform_pauli_copy_cases,
         "jaynes_cummings_energy_baseline": jc_cases,
         "noisy_search_filter_instruments": noisy_search_cases,
         "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",

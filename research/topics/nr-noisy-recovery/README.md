@@ -104,7 +104,9 @@ tetron flag compiler reproduces that code instrument; unequal or correlated
 physical poisoning requires a new analysis. Its
 [microscopic contact component](architecture-baselines.md#nr-r06-thermal-contact-history)
 adds Gaussian bath-correlation bounds and an ordinary compiler for the
-specified isotropic contact schedule. A useful application still needs a
+specified isotropic contact schedule. Its general Pauli-diagonal,
+scalar-cross-map compiler also covers anisotropy with paid known-frame
+checks and calibrated parameters. A useful application still needs a
 required contact operation and a matched storage/control comparison.
 The finite-energy Jaynes--Cummings comparison
 closes its specified equatorial decision benchmark while preserving the

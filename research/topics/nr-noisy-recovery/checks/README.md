@@ -95,6 +95,11 @@ Gaussian matching, CAR temporal-copy and full code-flag compiler guards.
 Continuum convergence, correlation-moment/diamond bounds and the cited
 stability-proof adaptation remain analytic, with their code-input and
 physical-control assumptions retained.
+The separate arbitrary-Pauli compiler replay checks uniform-check
+character balance, anisotropic two-flag maps and known-gate transport,
+including a non-Clifford fixture. Its general reference-complete identity
+assumes a Pauli-diagonal accepted map and scalar copied cross map;
+parameter knowledge and actual transported-check costs are charged.
 The Jaynes--Cummings checks support the explicit ordinary
 isometry/measurement and decision identities. The all-positive-energy
 infinite-Fock proof, its asymptotic remainder and matched hardware costs

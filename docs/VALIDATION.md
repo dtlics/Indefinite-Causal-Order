@@ -306,9 +306,13 @@ limit, correlation-moment and diamond estimates, symmetry reduction and
 adaptation of the cited stability theorem remain analytic. The stronger
 uniform-duration estimate concerns code inputs with passive references;
 finite algebra does not certify measured spectra or an available coherent
-contact selector. Its calibrated isotropic compiler is distinct from
-the split-energy physical model and from an application with required
-contact operations.
+contact selector. The arbitrary-Pauli extension separately checks both
+accepted flag maps, anisotropy, zero-weight endpoints and correctly
+transported known-gate checks. Its all-dimensional character balance and
+full-reference identity remain analytic under Pauli-diagonal and scalar
+cross-map hypotheses, with calibration and controlled-gate costs explicit.
+These compiler hypotheses still require derivation for the split-energy
+physical model or any application with required contact operations.
 The Jaynes--Cummings extension checks the explicit ordinary
 isometry/measurement and decision identities. Its complete infinite-Fock
 inequality for all positive field energies and high-energy remainder are

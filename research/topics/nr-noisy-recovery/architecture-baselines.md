@@ -5742,6 +5742,53 @@ parity-accepted CQ instrument by $\epsilon_{{\rm copy},e}$ in diamond
 norm. It does not simulate retained odd-parity quantum outputs or an
 unmeasured controller.
 
+The ordinary compiler extends beyond isotropic noise whenever the
+accepted map is Pauli-diagonal and the copied cross map is scalar in
+the same frame. On a $k$-qubit code of dimension $d=2^k$, suppose
+$\mathcal E=\sum_P p_P\operatorname{Ad}_P$, $p_P\ge0$,
+$\sum_Pp_P\le1$, and $\mathcal G_{01}^{\rm copy}=u\operatorname{Id}$
+with $0\le u\le p_I$. Sample uniformly from **all** $d^2$ phase-free
+Hermitian Paulis $Q$, including $I$, and apply controlled-$Q$ before
+and after the actual ordinary block. The established
+[Pauli check sandwiching](https://www.nature.com/articles/s41598-023-28109-x)
+mechanism gives
+
+$$
+\begin{aligned}
+\mathcal O_\pm&=(\mathcal E\pm p_I\operatorname{Id})/2,\\
+a&=\frac{1-u/p_I}{2},\qquad
+\widetilde{\mathcal O}_\pm
+ =(1-a)\mathcal O_\pm+a\mathcal O_\mp
+ =\frac{\mathcal E\pm u\operatorname{Id}}2.
+\end{aligned}
+\tag{FP24a}
+$$
+
+Every identity error gives raw plus; every fixed nonidentity error
+commutes with exactly half the sampled Paulis. Independently flipping
+the raw flag with probability $a\in[0,1/2]$ therefore reproduces both
+target flags on every code/reference input. If $p_I=0$, then $u=0$
+and $a=1/2$ works. When $\mathcal E$ is an average of actual orders,
+retain that paid order choice. The isotropic compiler (FP24) uses only
+three nonidentity axes; (FP24a) permits arbitrary Pauli anisotropy.
+
+For a known required gate $U$, the same identity holds with
+$\mathcal E=\operatorname{Ad}_U\circ\mathcal E_{\rm frame}$ and
+$\mathcal G_{01}^{\rm copy}=u\operatorname{Ad}_U$ when
+$\mathcal E_{\rm frame}$ is Pauli-diagonal: use $Q$ before and
+$UQU^\dagger$ after. Indeed
+$(UQU^\dagger)(UP)Q=UQPQ=\pm UP$.
+If instead $\mathcal E=\mathcal E_{\rm out}\circ\operatorname{Ad}_U$
+with output-frame Pauli noise, use $U^\dagger QU$ before and $Q$ after.
+Clifford $U$ transports Pauli strings to Pauli strings; a general known
+$U$ need not admit inexpensive transported checks. One clean helper,
+$2k$ random setting bits, the actual controlled checks, reset/readout,
+and supplied or ordinarily calibrated $p_I,u$ count. In particular,
+learnability of the dilation-dependent $u$ from reduced-channel access
+alone is not assumed. The identity requires the stated Pauli and scalar
+cross-map hypotheses; it does not extend the all-mode (FP11)--(FP17)
+comparison to a full instrument, or cover general coherent noise.
+
 Calibration or supplied knowledge of $w_0,u$, its precision and reuse,
 the real controlled-even-check gates, axis/order sampling, helper
 reset/readout and a coarse QND parity measurement all count. Separate
@@ -8238,12 +8285,14 @@ and exact probability/positivity polynomial identities for (FP1)--(FP10).
 Larger-mode fault-pair enumeration checks logical-class weights and fixed
 balanced checks in (FP11)--(FP17); the all-mode inequalities and optimal
 decoder arguments remain analytic. The rational rate/visibility grid is
-an additional scope and transcription guard. For (FP18)--(FP24), the same
+an additional scope and transcription guard. For (FP18)--(FP24a), the same
 replay checks finite Wick matchings and deleted-pair coefficients,
 thermal CAR moments, exact diagonal preservation and copied cross-map
 factorization, positive residual maps, the interaction-picture phase
 convention, Lorentzian term moments and both flags of the paid ordinary
-compiler on every code matrix unit. The continuous-bath limit, Gaussian
+compiler on every code matrix unit. It also checks full-Pauli character
+balance, anisotropic scalar-cross flag maps and transported known-gate
+checks, including a non-Clifford wrong-transport guard. The continuous-bath limit, Gaussian
 stability resummation, infinite Matsubara sum, correlation-moment and
 diamond bounds, and isotropic symmetry reduction remain analytic under
 the stated parity, reference and access assumptions. These finite checks
