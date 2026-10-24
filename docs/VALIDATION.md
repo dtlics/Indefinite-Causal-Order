@@ -191,6 +191,19 @@ The unknown-input Choi-rank/completeness bridge remains analytic. Spin
 operations before/interleaved with readout, intermediate matter controls
 and hardware rates remain outside that upper bound. The repeated
 ordinary survivor compiler remains a stronger paid comparator.
+The [source-rate gate comparison](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-source-gate-budget)
+adds 120 exact positive-principal-minor checks for an ordinary resonant CZ
+primal, complex station-order covariance fixtures, and exact rational
+fixed-spatial Gaussian error/success budgets. Its all-reference CP-map,
+resolvent/Taylor and pure-helper attainment arguments remain analytic.
+A separate outward rectangular interval certificate and Gaussian Mills
+bound support an exact gate with a stronger joint spatial/spectral POVM.
+An exact degree-eight Sturm chain evaluates the native monochromatic
+common-detuning ceiling. The finite-packet native bound concerns guaranteed
+minimum reflected acceptance, not arbitrary approximate average gate scores.
+Both helpers are included in the existing remote-spin-pulse job; actual
+ports, click-time coarse-graining, loss recovery and hardware clocks remain
+explicit premises or costs.
 The [direct-parity failure component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-parity-failure)
 adds exact complete accepted/loss maps and finite capped-retry guards.
 The [Bell-resource component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-offline-parity)

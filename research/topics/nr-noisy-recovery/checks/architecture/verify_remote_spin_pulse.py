@@ -7,6 +7,9 @@ in methods/remote-spin-phase.md. Import is silent; no files are written.
 from fractions import Fraction as F
 import json
 
+from remote_spin_gate_budget import verify as verify_gate_budget
+from remote_spin_frequency_budget import verify as verify_frequency_budget
+
 if not __debug__:
     raise SystemExit("Run without -O: validated replay uses assertions.")
 
@@ -227,6 +230,8 @@ def verify():
             "reflection_probability_enclosure": probability.bounds(),
             "spin_Bloch_component_abs_upper": str(residual),
             "Bell_yield_strict_lower": "36675027/100000000",
+            "source_rate_gate_budget": verify_gate_budget(expected_rates=PARAMETERS),
+            "common_detuning_CZ_budget": verify_frequency_budget(expected_rates=PARAMETERS),
             "scope": "continuum Gaussian integrals for the declared pure one-photon elastic cavity model, with full coherent photon-mode measurement and charged local filters; no native analyzer, router or complete-loss comparison"}
 
 

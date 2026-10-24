@@ -1291,8 +1291,10 @@ R_A(a)=\alpha I+a\Delta_A P,\qquad
 R_B(b)=\beta I+b\Delta_B Q,\quad a,b\in\{0,1\},
 \tag{RS28}
 $$
-with rank-one photon projectors $P,Q$ and
+with orthogonal photon projectors $P,Q$ and
 $|\alpha|,|\alpha+\Delta_A|,|\beta|,|\beta+\Delta_B|\le1$.
+The polarization-only port has rank-one projectors; the upper proof below
+also holds for higher ranks because $I-2P$ and $I-2Q$ remain unitary.
 Fixed photon wrappers may occur
 on both sides of each reflection; they need not be inverse
 conjugations. Every selected surviving history visits each module
@@ -2697,6 +2699,242 @@ already give ordinary sequential cavity-photon remote gates with
 photon detection and local phase feedback. This checkpoint certifies
 the specified probability optimization, without a new-mechanism or
 priority claim.
+
+<a id="nr-r11-source-gate-budget"></a>
+## Ordinary gates and native headroom at the reported cavity rates
+
+The projector checkpoint is not the strongest ordinary operating point of
+the reported scalar device model. Keep the nominal Table S1 parameters of
+(RS44), and grant both methods the declared pure, preserved four-mode photon
+port, known constant optics and terminal photon POVMs. Unknown $ABR$ remains
+the gate input. The following benchmarks count every photon/readout rejection;
+they do not identify a damaged failed payload with a harmless retry.
+
+### Exact center-frequency ordinary program
+
+At resonance write $\alpha=r_{A,0}$, $\beta=r_{B,0}$,
+$\delta=r_{A,1}-\alpha$ and $\epsilon=r_{B,1}-\beta$. The exact responses are
+
+$$
+(\alpha,r_{A,1},\beta,r_{B,1})=
+\left(-\frac{21}{25},\frac{2573}{3263},-\frac57,\frac{647}{827}\right).
+\tag{RS69}
+$$
+
+The [ordinary source certificate](../checks/architecture/ordinary_spin_gate.json)
+provides real rational matrices $H,\Omega$ with denominator $10^6$.
+Use the chronological word **$B$ then $A$**. The conventional feature Gram
+$H$ orders its vectors as $(\phi,P_B\phi,P_A\phi,P_AP_B\phi)$: its first
+projector belongs to the first contact. Let $J$ exchange feature indices
+1 and 2, while the physical spin row order remains $00,01,10,11$. Define
+
+$$
+T=\begin{pmatrix}
+\alpha\beta&0&0&0\\
+\alpha\beta&0&\alpha\epsilon&0\\
+\alpha\beta&\delta\beta&0&0\\
+\alpha\beta&\delta\beta&\alpha\epsilon&\delta\epsilon
+\end{pmatrix},\qquad G=TJH^{\mathsf T}JT^\dagger.
+\tag{RS70}
+$$
+
+The shared data obey the moment pattern (RS63), $H_{00}=1$, and the complete
+local-phase cone (RS54), with $\operatorname{diag}\Omega=(177/500)\mathbf1$.
+Every nonempty principal minor of $H,\Omega,\Omega^{T_B},G-D\Omega D$ is
+strictly positive; so is every such minor after subtracting $7I/10000$.
+These 120 rational checks certify feasibility with a positive margin.
+Moment sufficiency (RS63) constructs a pure four-mode source and rank-two
+projectors. Pure-helper attainment (RS55) constructs the complete photon
+POVM, with the positive remainder as reflected rejection. Known local phases
+correct every accepted flag to CZ. Therefore, on every unknown $ABR$,
+
+$$
+\mathcal J_0=\frac{177}{500}\operatorname{Ad}_{\rm CZ}.
+\tag{RS71}
+$$
+
+No local amplitude filter or source-coupling retuning is needed. The POVM
+may use additional optical output paths and detectors; its existence is
+not a demonstration of the four-mode station port in the cited experiment.
+
+For the same resonant diagonal two-contact reflected service, input $00$
+makes both stations scalar dark reflections. Every normalized native source,
+order superposition and terminal trace-nonincreasing correction then has
+survivor weight $|\alpha\beta|^2=9/25$. Thus any exact input-independent
+native CZ flag, including terminal separable filtering, has
+
+$$
+p_S\le\frac9{25},\qquad
+\frac{p_S}{177/500}\le\frac{60}{59}.
+\tag{RS72}
+$$
+
+This leaves less than $1.7\%$ possible per-launch improvement over this one
+ordinary witness, before additional optical/control costs. It asserts
+neither optimum. For a specified failure-handling and cycle model, the
+necessary rate comparison additionally multiplies $60/59$ by
+$(\eta_S/\eta_O)(\tau_O/\tau_S)$. A net factor at most $59/60$ removes even
+that ceiling; no irreducible or measured routing penalty is inferred.
+
+### Common probe detuning has a separate scalar ceiling
+
+Keep the atom/cavity resonances and nominal rates fixed, and vary a common
+monochromatic probe detuning $\nu$. The dark-input bound and the rank-independent
+unitary-replacement proof (RS31) give
+$p_S\le\min(|\alpha\beta|^2,|\alpha\beta\delta\epsilon|/4)$ for an exact CZ
+service. The latter follows by evaluating its output on $++$, whose accepted
+CZ image is a Bell state, and counting every terminal local-filter outcome.
+
+Here is an exact uniform evaluation, rather than a detuning grid. For
+$x=\nu^2$ define, for each station with rates $(g,k,k_r,\gamma)$,
+
+$$
+\begin{aligned}
+N_j(x)&=4k_{r,j}^2g_j^4[(k_j-2k_{r,j})^2+x],\\
+D_j(x)&=(k_j^2+x)^2[(k_j\gamma_j+g_j^2-x)^2+(k_j+\gamma_j)^2x].
+\end{aligned}
+\tag{RS73}
+$$
+
+All denominators are positive and the squared contrast budget is
+$N_A N_B/(16D_A D_B)$. Put $U=3649/10000$, $c=181/2500$. The dark survival
+is the increasing product $\prod_j[(k_j-2k_{r,j})^2+x]/(k_j^2+x)$; at $c$ it
+equals $57044143/156329243<U$. For $x\ge c$, set $y=x-c$ and form
+$P(y)=16U^2D_A(y+c)D_B(y+c)-N_A(y+c)N_B(y+c)$.
+The [exact frequency checker](../checks/architecture/remote_spin_frequency_budget.py)
+constructs this degree-eight polynomial from (RS73). Its constant is positive.
+Its rational Sturm chain has nine polynomials, with signs
+$(+,+,-,-,-,+,+,+,+)$ at both zero and positive infinity. Each endpoint has
+two variations, so there are no positive roots. Continuity gives $P(y)>0$
+for all $y\ge0$. Consequently $p_S<U$ for every common real detuning.
+Against (RS71) this leaves a ratio below $3649/3540$, about $1.031$.
+
+This monochromatic bound does not extend through coherent spectral erasure;
+(RS38) already supplies that scope warning. Independently changed cavity
+resonances, interleaved spin controls, encodings, extra contacts and accepted
+no-click maps also change the comparison.
+
+### A fixed optical readout for a full Gaussian packet
+
+The center program also supplies an approximate finite-bandwidth gate
+without a coherent temporal-mode analyzer. Calibrate its finite spatial
+photon POVM and local corrections at $\nu=0$, then tensor that same POVM
+with the identity on frequency. Spatial detector/local-feedback records are
+kept, click times are coarse-grained, and frequency is traced, as in bucket
+detection. The pure input has full
+Gaussian spectral intensity $N(0,\sigma^2)$ with $\sigma=1/100$ MHz.
+
+The all-real-frequency derivative bound is analytic. For a bright response
+put $M_j=\bigl(\begin{smallmatrix}k_j&ig_j\\ig_j&\gamma_j\end{smallmatrix}\bigr)$.
+Its Hermitian part is at least $k_jI$ at these rates, hence
+$\|(M_j-i\nu I)^{-1}\|\le1/k_j$. Both dark and bright reflections are
+contractions, with first and second derivative bounds
+$L_j=2k_{r,j}/k_j^2$ and $H_j=4k_{r,j}/k_j^3$.
+Constant known wrappers do not change them. The two-contact reflected
+survivor contraction, and its accepted Stinespring operator $A(\nu)$ after
+the fixed measurement/corrections, therefore obey
+
+$$
+\|A'\|\le L=\frac{8258}{6125}<\frac{27}{20},\qquad
+\|A''\|\le H=\frac{413174}{214375}<\frac{193}{100}.
+\tag{RS74}
+$$
+
+At the carrier $A_0^\dagger A_0=qI$, $q=177/500$. Write $B(\nu)=A(\nu)-A_0$.
+Taylor's formula and the zero Gaussian mean give
+$\|B(\nu)\|\le L|\nu|$ and $\|\mathbb EB\|\le H\sigma^2/2$.
+Expanding the actual averaged **CP maps**, rather than averaging amplitudes,
+gives, uniformly including arbitrary references and these retained spatial flags,
+
+$$
+\|\mathcal J_\sigma-q\operatorname{Ad}_{\rm CZ}\|_\diamond
+ \le\sigma^2(\sqrt q H+L^2)\le\frac{5961}{20000000}.
+\tag{RS75}
+$$
+
+With flags retained, the ideal comparison includes their fixed center
+distribution. The cross terms use $\mathbb EB$; the positive quadratic map
+has norm at most $L^2\sigma^2$. For any purified input, let $p$ be accepted
+weight and $g$ its ideal-target good weight. The quadratic contribution is
+nonnegative for both weights and is the only contribution outside the target
+subspace. Thus, using $\sqrt q<3/5$,
+
+$$
+p,g\ge\frac{1769421}{5000000}=0.3538842,\qquad
+p-g\le\frac{729}{4000000},\qquad
+D_{\rm conditional}\le\frac{5961}{7077684}<0.00085.
+\tag{RS76}
+$$
+
+Here $D$ is half trace distance from the ideal conditional output. Success
+can depend on the input; its normalized conditional transformation is not
+called a linear channel. No spectral tail has been discarded. Missing
+photons and the complementary spatial POVM outcomes remain failures; their
+weights alone do not supply a microscopic lost-payload recovery map.
+If every failed payload is formally discarded into an orthogonal abort
+state, the resulting trace-preserving completion has half diamond distance
+at most the (RS75) budget from the corresponding ideal abort completion:
+the abort term is bounded by the same accepted-map effect difference.
+This formal completion does not restore failed spins or make retries harmless.
+
+For the **same Gaussian spectrum** a native dark-input survivor bound follows
+from $|r_{j,0}(\nu)|^2=1-4k_{r,j}(k_j-k_{r,j})/(k_j^2+\nu^2)$:
+
+$$
+u=\mathbb E|r_{A,0}r_{B,0}|^2
+ \le\frac9{25}+\frac{4110886}{375156250000}.
+\tag{RS77}
+$$
+
+Indeed the change in each dark survival is bounded by
+$4k_r(k-k_r)\nu^2/k^4$; for their product the two changes add, and
+$\mathbb E\nu^2=\sigma^2$. This caps an exact input-independent native
+gate yield or any guaranteed **minimum over all inputs** of its reflected
+acceptance. Dividing by the exhibited ordinary guarantee in (RS76) gives a
+ratio below $1.018$. It does not cap the average Choi-good weight of an
+arbitrary approximate, input-dependent native map. Extra native transmission
+and cycle costs still enter separately, as do both methods' calibration and
+memory errors. Neither the center nor packet ceiling permits pre-encoding
+or acceptance of no-click branches.
+
+### Exact Gaussian output with the stronger field-POVM premise
+
+An alternative exact gate uses the Bell photon program of (RS7) on a
+spectator rail and polarization, with $P=(I-Z)/2$, $Q=(I-X)/2$. At each
+frequency put $t_A=r_{A,1}/r_{A,0}$, $t_B=r_{B,1}/r_{B,0}$ and
+$T_j=\bigl(\begin{smallmatrix}1&0\\(1+t_j)/2&(1-t_j)/2\end{smallmatrix}\bigr)$.
+The Pauli-Bell basis vectors $I|\Phi\rangle,X|\Phi\rangle,
+Z|\Phi\rangle,XZ|\Phi\rangle$ are orthonormal, so the literal
+coefficient rows give the Kraus covariance
+$G(\nu)=|r_{A,0}r_{B,0}|^2(T_AT_A^\dagger)\otimes(T_BT_B^\dagger)$.
+Gershgorin bounds each factor below by
+$\lambda(t)=\min(1-|a|,(1+|t|^2)/2-|a|)$, $a=(1+t)/2$.
+The [rational gate checker](../checks/architecture/remote_spin_gate_budget.py)
+encloses the entire interval $|\nu|\le1/10$ MHz by complex rectangular
+arithmetic and proves $G(\nu)\succeq(265099/10^6)I\succ(53/200)I$.
+
+Take full Gaussian intensity with $\sigma=1/40$ MHz. The two-sided Mills
+bound gives $\Pr(|\nu|>1/10)\le e^{-8}/(2\sqrt{2\pi})<1/1024$.
+Outside-band covariances remain positive, hence
+$G_f\succeq(54219/204800)I\succ I/4$. Choose $\Omega=I/4$:
+the four local-Z masks with weight $1/16$ sum to this covariance. The complete
+pure-field POVM of (RS55) therefore gives total exact CZ weight $1/4$ on
+every unknown $ABR$, with all rejects counted. Its joint spatial/spectral
+measurement is a stronger resource than the fixed readout in (RS74)–(RS76).
+
+These strengthen existing ordinary bus and POVM constructions; they are not
+new gate-generation mechanisms. Neither Gaussian has compact temporal
+support. Their incident intensity RMS times are respectively $25/\pi$ and
+$10/\pi$ microseconds, not full gate clocks. Actual mode-port preservation,
+dispersion, calibration/reuse, readout loss, propagation, capture, feedback,
+spin storage, reset and failed-payload handling remain costs. The nominal
+scalar rates are not device uncertainty intervals or a complete noise fit.
+The $1/4$ exact Gaussian witness exceeds the selected $7/40$ critical-point
+construction when the reported ordinary setting is available, without
+refuting the same-kernel separation (RS68) or bounding a different optimized
+native device. A useful positive test must improve a matched delivered
+service beyond these ordinary controls and the existing memory/factory
+alternatives.
 
 <a id="nr-r11-retained-photon-gate"></a>
 ## Retaining the unknown flying photon: gate, controllers and loss

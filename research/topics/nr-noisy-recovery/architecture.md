@@ -146,6 +146,13 @@ photon readout](methods/remote-spin-phase.md#nr-r11-terminal-separable-gate),
 including amplitude filters and their failures. Spin operations before or
 interleaved with that readout and intermediate matter controls remain outside
 the upper bound.
+A [comparison at the reported cavity rates](methods/remote-spin-phase.md#nr-r11-source-gate-budget)
+now supplies a stronger ordinary center-frequency CZ certificate, a fixed
+spatial-readout Gaussian gate with all-input error and success bounds, and a
+separate exact Gaussian witness with a full-field POVM. Dark-input and
+common-detuning native ceilings leave little acceptance headroom in their
+stated interfaces; they do not bound arbitrary approximate average scores
+or establish delivered hardware rates.
 A repeated ordinary route matches their full
 survivor on unknown spin/reference inputs: four windows suffice with
 the same four-mode port per visit. A direct three-window photon replay
