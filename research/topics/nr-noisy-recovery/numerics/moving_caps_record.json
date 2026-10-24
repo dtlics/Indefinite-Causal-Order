@@ -1108,6 +1108,274 @@
     "packet": true,
     "running": true
   },
+  "ordinary_coherent_analyzer": {
+    "cases": [
+      {
+        "configurations": [
+          {
+            "H_amplitude": 0.6656575597783737,
+            "MMdagger_defect": 8.319841787393475e-17,
+            "alpha": 0.7071067811865475,
+            "analyzer_norm_before_scaling": 1.9875392118031154,
+            "beta": 0.7071067811865475,
+            "configuration": "balanced_photon_masked_H",
+            "direct_even_Gram_probability": 0.1824397168469344,
+            "gamma": [
+              -0.46774918383560726,
+              -8.320355557048276e-05
+            ],
+            "one_mode_probability": 0.22016922812977535,
+            "u": [
+              -0.9355115303041122,
+              -8.294968537393052e-05
+            ]
+          },
+          {
+            "H_amplitude": 1.0,
+            "MMdagger_defect": 1.2536143805061062e-15,
+            "alpha": 0.5541185093211516,
+            "analyzer_norm_before_scaling": 1.9875392118031143,
+            "beta": 0.832437792046772,
+            "configuration": "known_photon_unit_H",
+            "direct_even_Gram_probability": 0.2528441805894468,
+            "gamma": [
+              -0.5506553015520708,
+              -9.795095441358878e-05
+            ],
+            "one_mode_probability": 0.30513371232750586,
+            "u": [
+              -1.101326098745477,
+              -9.765208704092695e-05
+            ]
+          }
+        ],
+        "input_packet_mass": 0.9999999999999944,
+        "nout": 12,
+        "r1_zero": [
+          0.8108458063081807,
+          -4.405295684022154e-07
+        ],
+        "scope": "Finite virtual-motion cutoff and quadrature witness only. Exact carrier isolation is analytic under ground/standing-wave/compact-band assumptions; physical filter/analyzer/cooling/calibration costs are unprovided.",
+        "sigma": 0.01,
+        "steps": 160
+      },
+      {
+        "configurations": [
+          {
+            "H_amplitude": 0.6656575597783737,
+            "MMdagger_defect": 6.809619411127251e-16,
+            "alpha": 0.7071067811865475,
+            "analyzer_norm_before_scaling": 1.9875392118030732,
+            "beta": 0.7071067811865475,
+            "configuration": "balanced_photon_masked_H",
+            "direct_even_Gram_probability": 0.18243971684670438,
+            "gamma": [
+              -0.4677491838355966,
+              -8.320355933676337e-05
+            ],
+            "one_mode_probability": 0.22016922812977052,
+            "u": [
+              -0.9355115303040912,
+              -8.294968912871252e-05
+            ]
+          },
+          {
+            "H_amplitude": 1.0,
+            "MMdagger_defect": 1.2177757759454066e-15,
+            "alpha": 0.5541185093211516,
+            "analyzer_norm_before_scaling": 1.987539211803071,
+            "beta": 0.832437792046772,
+            "configuration": "known_photon_unit_H",
+            "direct_even_Gram_probability": 0.25284418058912816,
+            "gamma": [
+              -0.5506553015520579,
+              -9.795095884741836e-05
+            ],
+            "one_mode_probability": 0.3051337123274991,
+            "u": [
+              -1.1013260987454518,
+              -9.765209146122e-05
+            ]
+          }
+        ],
+        "input_packet_mass": 0.9999999999999944,
+        "nout": 16,
+        "r1_zero": [
+          0.8108458063081628,
+          -4.4052958834210907e-07
+        ],
+        "scope": "Finite virtual-motion cutoff and quadrature witness only. Exact carrier isolation is analytic under ground/standing-wave/compact-band assumptions; physical filter/analyzer/cooling/calibration costs are unprovided.",
+        "sigma": 0.01,
+        "steps": 160
+      }
+    ],
+    "commands_and_outputs": {
+      "normal": {
+        "command": [
+          "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-B",
+          "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\numerics\\moving_caps_analyzer.py"
+        ],
+        "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+        "exit_code": 0,
+        "generated_output": "_build/moving_caps_analyzer/normal.json",
+        "output_sha256": "2275102792caea82f55d07daf6eeaee3af5b7fd5e7b7dd0a4fac07d8b91c820d",
+        "stderr_bytes": 0
+      },
+      "optimized": {
+        "command": [
+          "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-OO",
+          "-B",
+          "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\numerics\\moving_caps_analyzer.py"
+        ],
+        "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+        "exit_code": 0,
+        "generated_output": "_build/moving_caps_analyzer/optimized.json",
+        "output_sha256": "2275102792caea82f55d07daf6eeaee3af5b7fd5e7b7dd0a4fac07d8b91c820d",
+        "stderr_bytes": 0
+      }
+    },
+    "environment": {
+      "machine": "AMD64",
+      "numpy_version": "2.3.5",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python_executable": "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "python_version": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]"
+    },
+    "exact_guard_evidence": {
+      "commands_and_outputs": {
+        "normal": {
+          "command": [
+            "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "-S",
+            "-B",
+            "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\checks\\architecture\\moving_caps_analyzer.py"
+          ],
+          "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+          "exit_code": 0,
+          "generated_output": "_build/moving_caps_analyzer/exact_normal.json",
+          "output_sha256": "bc0c1e3be7dcd5adca260cbff02a8c51f256735ef2cc110d9c55ad4019c094bd",
+          "stderr_bytes": 0
+        },
+        "optimized": {
+          "command": [
+            "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "-OO",
+            "-S",
+            "-B",
+            "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\checks\\architecture\\moving_caps_analyzer.py"
+          ],
+          "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+          "exit_code": 0,
+          "generated_output": "_build/moving_caps_analyzer/exact_optimized.json",
+          "output_sha256": "bc0c1e3be7dcd5adca260cbff02a8c51f256735ef2cc110d9c55ad4019c094bd",
+          "stderr_bytes": 0
+        }
+      },
+      "dependency_scope": "independent exact standard-library helper; numerical source witness does not import this helper",
+      "normal_optimized_output_bytes_equal": true,
+      "report": {
+        "rank_one_carrier_analyzer": {
+          "degeneracy_cases": 4,
+          "exact_photon_projections": 4,
+          "one_outcome_probabilities": [
+            "15876/113125",
+            "16097493683160036/229752589434558125",
+            "2579769/176028125",
+            "18756036/2222639125"
+          ],
+          "physical_frequency_fixtures": 4,
+          "projection_entries": 16,
+          "zero_contrast_rejected": true
+        },
+        "scope": "Exact finite rational contact/projection/normalization and local-frame ingredients only. The general complex-mode theorem and exact carrier isolation are analytic; no physical analyzer, infinite-cutoff or rate certificate is supplied. One accepted photon outcome is counted.",
+        "status": "passed"
+      },
+      "source_sha256": "33c0161b8ea9720b8143c51edc2357d4da6928839190636ad9481d88ce41652f"
+    },
+    "guards": {
+      "maximum_MMdagger_scalar_identity_defect": 1.2536143805061062e-15,
+      "maximum_input_packet_mass_residual": 5.551115123125783e-15,
+      "source_and_cache_nonmutation": true
+    },
+    "kind": "supplemental ordinary known-input carrier Bell factory with one normalized coherent photon outcome",
+    "normal_optimized_output_bytes_equal": true,
+    "original_evidence_preservation": "all earlier top-level values, eight packet/running run ledgers and ordinary_parity_factory remain exact, except the consolidated current-method pin and additive new source pins",
+    "pinned_configuration": {
+      "H_analysis_mode": "matched to actual H reference field with calibrated complex amplitude gamma; complete H/V analyzer is normalized",
+      "V_analysis_mode": "the normalized incident f; all coefficients are complex coherent overlaps before squaring",
+      "accepted_outcomes": 1,
+      "balanced_photon_masked_H": {
+        "H_amplitude": "a=r_dark(0)^2",
+        "alpha": "1/sqrt(2)",
+        "beta": "1/sqrt(2)"
+      },
+      "carrier_filter": "ideal carrier projection onto [-L,L], L<mu; all nonzero standing even final motion is rejected analytically",
+      "compact_halfwidth": 0.085,
+      "eta": 0.17,
+      "frequency_unit": "angular frequencies divided by the same 2*pi MHz",
+      "g": 7.6,
+      "gamma": 3.0,
+      "input": "known atoms |++>, independent ground motion |00>, one known photon alpha|H>+beta|V>",
+      "kappa_in": 0.2,
+      "known_photon_unit_H": {
+        "H_amplitude": 1,
+        "alpha": "a/sqrt(1+a^2)",
+        "beta": "1/sqrt(1+a^2)"
+      },
+      "local_correction": "known atomic unitary M^dagger/s; no local nonunitary filter in this symmetric construction",
+      "mu": 0.138,
+      "node_relation": "two identical phase-aligned nodes with matched complete scattering frames",
+      "photon_density": "normalized compact truncated Gaussian exp(-w^2/(2*sigma^2))/(sqrt(2*pi)*sigma*erf(8.5/sqrt(2))) on [-8.5*sigma,8.5*sigma]",
+      "primary_model": "arXiv:2606.26542v1, Eqs.(3)-(8),(12), declared stationary standing-wave reflection sector",
+      "sigma": 0.01
+    },
+    "recorded_at_utc": "2026-10-24T20:54:05.720662+00:00",
+    "refinement": {
+      "absolute_changes": {
+        "balanced_photon_masked_H": {
+          "direct_even_Gram_probability_absolute_change": 2.3003821070233244e-13,
+          "one_mode_probability_absolute_change": 4.829470157119431e-15
+        },
+        "known_photon_unit_H": {
+          "direct_even_Gram_probability_absolute_change": 3.1863400806741993e-13,
+          "one_mode_probability_absolute_change": 6.772360450213455e-15
+        }
+      },
+      "base": {
+        "intervals": 160,
+        "virtual_motion_cutoff": 12
+      },
+      "certified_error_bound": false,
+      "interpretation": "only a finite virtual-oscillator cutoff refinement at fixed empirical packet quadrature; no output-tail, infinite-resolvent or apparatus certificate",
+      "refined": {
+        "intervals": 160,
+        "virtual_motion_cutoff": 16
+      }
+    },
+    "scope": {
+      "access": "CAPS polarization control or a frequency-bin mixer alone does not establish a rank-one temporal projector; native proposals granting that projector must compare the same supplied ordinary access",
+      "endpoint": "known-input atomic Bell resource after one coherent photon outcome; not an unknown-PAB gate or global analyzer optimum",
+      "exact_structure": "ground input, standing even parity and compact carrier isolation make final motion 00 exactly in the declared model; the infinite virtual resolvent remains analytic",
+      "excluded": [
+        "certified oscillator cutoff or continuum quadrature error",
+        "measured device fidelity or rate",
+        "complete rejected/lost/false-herald instrument",
+        "native architecture advantage",
+        "two accepted ports",
+        "global ordinary optimum"
+      ],
+      "numerics": "computed source kernels have complex recoil/virtual-motion phases; no real-resonance symmetry shortcut is used",
+      "resources": "pay ground cooling, carrier filtering, known photon polarization/reference, coherent rank-one temporal-mode analysis, calibration, local Bell-frame rotation, detection/rejection/reset and storage/clock latency"
+    },
+    "sources_sha256": {
+      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "2d772855e789a4ad7c268dd9a27e15a40a591822023289d6e9211ea7e460e986",
+      "research/topics/nr-noisy-recovery/numerics/moving_caps_analyzer.py": "0c9eeb3b1879b208042612b804e3fc0d9eaf5d6b22a836a43be49ffd04a03597",
+      "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a"
+    },
+    "status": "passed"
+  },
   "ordinary_parity_factory": {
     "baseline_case_index": 1,
     "cases": [
@@ -2298,7 +2566,7 @@
         "beta": "1/sqrt(1+a^2)"
       },
       "eta": 0.17,
-      "exact_full_density_scaling": "rho_biased,± = 2/(1+a^2) * rho_balanced,±",
+      "exact_full_density_scaling": "rho_biased,\u00b1 = 2/(1+a^2) * rho_balanced,\u00b1",
       "extra_phase_scope": "headline g/F use only I/X_B correction; optional calibrated local Rz values are separately labelled and require a paid known phase control",
       "fixed_order": "A followed by B; no order-control qubit or coherent order router",
       "frequencies": "all angular frequencies divided by common 2*pi MHz",
@@ -2309,7 +2577,7 @@
       "kappa_ex": "kappa_in*sqrt(1+g^2/(kappa_in*gamma))",
       "kappa_in": 0.2,
       "mu": 0.138,
-      "nodes": "two identical independent nodes, phase-aligned common scattering frame; standing d=cos(eta*(b+b†))",
+      "nodes": "two identical independent nodes, phase-aligned common scattering frame; standing d=cos(eta*(b+b\u2020))",
       "output": "both detected photon X ports; detected frequency and all final motion traced after amplitudes are squared",
       "packet_scope": "the compact packet defines the input; trapezoidal quadrature approximates its integral, and compact frequency support does not imply finite temporal duration",
       "photon_density": "normalized compact-support truncated Gaussian: exp(-w^2/(2*sigma^2))/(sqrt(2*pi)*sigma*erf(8.5/sqrt(2))) on [-8.5*sigma,8.5*sigma]",
@@ -2403,7 +2671,7 @@
       "scratch_sha256": "4df2cc79d244113b766ef5d805be038ea4f3f484ab6ba63d12f8abec455f79e5"
     },
     "sources_sha256": {
-      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "78a8bef409fb528bcafaac464fbd92b351c3fb6e2e62a18216002830949d5c85",
+      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "2d772855e789a4ad7c268dd9a27e15a40a591822023289d6e9211ea7e460e986",
       "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a",
       "research/topics/nr-noisy-recovery/numerics/moving_caps_parity.py": "84974e35a87e88bd75c8bf29a99a85dab67729716b43fb00654b205898998978"
     }
@@ -2416,7 +2684,7 @@
       "output_cutoff": 20
     },
     "eta": 0.17,
-    "filter": "F±(nu)=(1±exp(i*nu*tau))/2, applied to BOTH H and V",
+    "filter": "F\u00b1(nu)=(1\u00b1exp(i*nu*tau))/2, applied to BOTH H and V",
     "filter_delay_factors": [
       0.5,
       1.0,
@@ -2431,8 +2699,8 @@
     "g": 7.6,
     "gamma": 3.0,
     "geometries": {
-      "packet": "standing wave d=cos(eta*(b+b†))",
-      "running": "running wave d=exp(i*eta*(b+b†)); complex adjoint in resolvent"
+      "packet": "standing wave d=cos(eta*(b+b\u2020))",
+      "running": "running wave d=exp(i*eta*(b+b\u2020)); complex adjoint in resolvent"
     },
     "geometry_scope": "running uses the source-style theoretical comparison at nominal standing-device numbers, not a measured running apparatus",
     "ground_and_excited_motion": "same harmonic potential in both atomic states",
@@ -2469,7 +2737,7 @@
     "rate_convention": "source resolvents use (E+i*kappa)^(-1) and (E-Delta_a+i*gamma)^(-1); these parameters retain that amplitude-linewidth convention",
     "sigma": 0.01,
     "source_packet": "f(w)=(2*pi*sigma^2)^(-1/4)*exp(-w^2/(4*sigma^2))",
-    "target": "|H><H|⊗I_AB+|V><V|⊗Z_A Z_B",
+    "target": "|H><H|\u2297I_AB+|V><V|\u2297Z_A Z_B",
     "thermal_weights": "(1-q)*q^n, q=nbar/(1+nbar); no renormalization after cutoff"
   },
   "primary_model": {
@@ -2716,7 +2984,8 @@
     "source_hardware": "no two-module routing/helper realization, propagation phase calibration or apparatus-rate fit is certified"
   },
   "sources_sha256": {
-    "research/topics/nr-noisy-recovery/methods/moving-caps.md": "78a8bef409fb528bcafaac464fbd92b351c3fb6e2e62a18216002830949d5c85",
+    "research/topics/nr-noisy-recovery/methods/moving-caps.md": "2d772855e789a4ad7c268dd9a27e15a40a591822023289d6e9211ea7e460e986",
+    "research/topics/nr-noisy-recovery/numerics/moving_caps_analyzer.py": "0c9eeb3b1879b208042612b804e3fc0d9eaf5d6b22a836a43be49ffd04a03597",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_parity.py": "84974e35a87e88bd75c8bf29a99a85dab67729716b43fb00654b205898998978",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_running.py": "b3b449c89e3fc7ffa2c7b854812e4805e1efe5cf2dfa1e458cb380e81f7642e5"

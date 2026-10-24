@@ -828,6 +828,145 @@ retained-$PAB$ payload. Higher fidelity requirements and stronger
 ordinary filters, purification, local bias or memories need their own
 comparisons; this is neither a factory optimum nor a hardware rate.
 
+<a id="nr-r11-moving-caps-coherent-analyzer"></a>
+
+### A paid coherent photon outcome can prepare an exact Bell state
+
+The preceding raw fidelity is not an ordinary ceiling. A stronger
+conditional construction uses ground motion, known atoms $++$, identical
+standing-wave nodes and a normalized incident envelope $f$ supported on
+$[-L,L]$, $L<\mu$. Select the **carrier** band $[-L,L]$ after ordinary
+$AB$ visits. Every nonzero allowed final motion has $m_A+m_B\ge2$ and
+shifts the photon by $-(m_A+m_B)\mu$, so its output band is disjoint.
+Only final motion $00$ survives, on the full oscillator Hilbert space.
+This energy/parity argument does not truncate virtual excursions inside
+the complete ground-to-ground reflection amplitude
+$r_1(w)=s^{0,0}(w)$. It requires the specified initial ground state,
+individual parity, independent nodes and absence of other unread
+inelastic records. A finite-time apparatus must approximate the ideal
+band isolation and bound its leakage.
+
+Write $r_0=r_{\rm dark}$ and prepare the known photon
+$\alpha H+\beta V$, $|\alpha|^2+|\beta|^2=1$. The surviving joint state is
+
+$$
+|\Psi\rangle=\frac12\sum_{ij}|ij\rangle
+ \bigl(|H\rangle q+|V\rangle v_{ij}\bigr),\qquad
+q=\alpha hf,\quad
+(v_{00},v_{01},v_{10},v_{11})
+ =\beta f(r_0^2,r_0r_1,r_0r_1,r_1^2).
+\tag{MC15}
+$$
+
+Here $h$ is the supplied common $H$ response and the field vectors
+include their incident amplitudes. Fix a known normalized $V$ analysis
+mode $\phi$, such as $f$, and set
+$c_0=\langle\phi,v_{00}\rangle$,
+$b=\langle\phi,v_{01}\rangle$,
+$c_1=\langle\phi,v_{11}\rangle$, $H_0=\|q\|^2>0$.
+An $H$ analysis vector can contribute any scalar
+$\gamma=\langle\xi,q\rangle$ at minimum squared norm
+$|\gamma|^2/H_0$. Define $x=c_0-b$, $y=c_1-b$ and $u=\gamma+b$.
+The unnormalized atomic amplitude matrix is
+
+$$
+M=\begin{pmatrix}u+x&u\\u&u+y\end{pmatrix},\qquad
+u=\frac{|y|^2-|x|^2}{2\overline{x-y}}\quad(x\ne y),
+\qquad \gamma=u-b.
+\tag{MC16}
+$$
+
+For $x=y\ne0$, choose $u=0$. If $x=y=0$, this chosen $\phi$ has no
+entangling contrast: every $M$ is a multiple of the all-ones product
+matrix. A different analysis mode may still have contrast.
+
+To prove (MC16), put $d=x-y\ne0$ and
+$t=(|y|^2-|x|^2)/(2|d|^2)\in\mathbb R$, so $u=td$.
+Then
+$(MM^\dagger)_{01}=2t^2|d|^2+t(|x|^2-|y|^2)=0$ and
+$(MM^\dagger)_{00}-(MM^\dagger)_{11}
+=2t|d|^2+|x|^2-|y|^2=0$.
+Thus $MM^\dagger=s^2I$, with $s>0$ whenever $(x,y)\ne(0,0)$.
+The equal-$x,y$ case has the same property directly. Moreover,
+$|u|\le(|x|+|y|)/2$, so nearly equal coefficients do not force an
+unbounded analyzer amplitude, although the calibrated Bell frame can
+remain sensitive to small errors.
+
+Normalize the **whole** photon outcome, including its $H$ component:
+
+$$
+\xi=\frac{\overline\gamma}{H_0}q,\qquad
+\lambda=\left(1+\frac{|\gamma|^2}{H_0}\right)^{-1/2},\qquad
+|\chi\rangle=\lambda\bigl(|H\rangle\xi+|V\rangle\phi\bigr).
+\tag{MC17}
+$$
+
+Detection of this one unit-normalized mode gives
+$\lambda\operatorname{vec}(M)/2$, with probability
+
+$$
+p_\chi=\frac{\lambda^2}{4}\operatorname{Tr}(MM^\dagger)
+       =\frac{\lambda^2s^2}{2}.
+\tag{MC18}
+$$
+
+The conditional atomic state is maximally entangled. The known local
+unitary $M^\dagger/s$ on atom $A$ converts it to $\Phi^+$; no nonunitary
+atomic filter is used in this symmetric-node construction. All
+orthogonal photon outcomes are rejected here. A second useful outcome
+is not counted. Nonidentical nodes need not have $v_{01}=v_{10}$ and
+are outside this prescription; local SVD/concentration remains an
+additional, separately paid ordinary option for a known pure output.
+
+A stricter fixed-even-Bell family has a closed optimum. Let $P$ project
+orthogonally to $v_{00}-v_{11}$ (use $P=I$ if this vector is zero),
+$A=P(v_{00}-v_{01})$ and $B=Pv_{01}$. Requiring
+$\phi\perp v_{00}-v_{11}$ and $\gamma=-\langle\phi,v_{01}\rangle$
+gives probability
+$|\langle\phi,A\rangle|^2/[2(\|\phi\|^2+
+|\langle\phi,B\rangle|^2/H_0)]$.
+Cauchy--Schwarz in the positive metric $I+|B\rangle\langle B|/H_0$,
+followed by its rank-one inverse, gives the attained maximum
+
+$$
+p_{\rm even}=\frac12\left(\|A\|^2-
+ \frac{|\langle B,A\rangle|^2}{H_0+\|B\|^2}\right).
+\tag{MC19}
+$$
+
+It is positive exactly when $A\ne0$; an optimal mode is proportional to
+$A-B\langle B,A\rangle/(H_0+\|B\|^2)$ before normalization (MC17).
+Exact orthogonality to a small nuisance vector can remove a large
+useful packet component. Allowing a known Bell-frame rotation as in
+(MC16) avoids that unnecessary fixed-parity restriction.
+
+The [exact analyzer helper](../checks/architecture/moving_caps_analyzer.py)
+guards finite complex rational photon projections, complete analyzer
+normalization, nonzero and degenerate Bell matrices, and the local
+correction. The [optional source witness](../numerics/moving_caps_analyzer.py)
+uses the normalized compact truncated Gaussian above with 160
+trapezoidal intervals and virtual-motion cutoffs 12 and 16. Its
+single-outcome probabilities are approximately $0.220169$ for the
+balanced photon with $H$ mask, and $0.305134$ for the biased known photon
+with unit $H$ reference. These finite witnesses and their actual runs
+belong to the current numerical record. They certify neither an infinite
+virtual-resolvent error nor device fidelity. The carrier's final-motion
+isolation is the separate analytic argument above.
+
+The moving-ground response is complex even at bare resonance: positive
+virtual phonon energies invalidate the shortcut
+$r_1(-w)=\overline{r_1(w)}$. Equations (MC16)--(MC18) retain that phase.
+Ground cooling, carrier isolation, coherent rank-one temporal-mode
+analysis, matched $H$ analysis, calibration, known local rotation,
+detection, every reject, reset, insertion loss and timing are paid
+requirements. Elementary polarization control or a frequency-bin mixer
+does not supply an arbitrary temporal projector. Exact compact support
+and exact rank-one continuum analysis are ideal limits, with no finite
+clock or calibration guarantee. A native proposal granting the same
+coherent photon analyzer must admit this ordinary comparator or justify
+an actual interface/cost difference. No arbitrary retained-helper
+recovery, full factory optimum or native hardware benefit is established.
+
 Ordinary which-node erasure is established by
 [Cabrillo et al., PRA **59**, 1025 (1999)](https://arxiv.org/abs/quant-ph/9810013)
 and the trapped-ion single-photon-interference experiment of

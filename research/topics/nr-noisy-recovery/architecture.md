@@ -1638,6 +1638,58 @@ coherent vacuum port absent from the ordinary hardware. A surviving task
 must also beat direct compiled control, conditional uncomputation and reuse.
 No present screen establishes that advantage.
 
+### Retained transmon routing needs a complete module interface
+
+[Miao et al.](https://arxiv.org/html/2503.04295v2) demonstrate a
+four-transmon quantum-addressed router using two native controlled-iSWAP
+gates, retaining both the quantum address and routed input. Their reported
+$95.3\%$ routing fidelity is a state-tomography assessment on the stated
+valid subspace: the outputs start in their ground states and at most one
+routed excitation occupies the input and outputs. The output qubits use
+the $g$--$f$ code, with $f\to e$ decay producing an invalid state. Identifying
+that error in tomography does not supply an online erasure herald that
+preserves an unknown $g$--$f$ superposition. The source also distinguishes
+individual-gate benchmarking from the sequential protocol, whose second
+gate acts after a noisy wait. Its gate fidelities therefore do not certify
+a complete storage or repeated-route instrument.
+
+This port cannot simply be substituted for a general controlled swap of
+populated noisy memories. In logical excitation labels, routing input
+$|1\rangle$ with address $|1\rangle$ gives
+$|0_I0_A1_B\rangle$. Applying $X_A$ to the unselected output creates
+$|0_I1_A1_B\rangle$, outside the router's one-excitation domain. Thus a
+route--module--return construction needs modules that preserve the idle
+vacuum, a characterized extension beyond that domain, or a different
+encoding. A vacuum sector orthogonal to a dual-rail logical qubit can
+meet this requirement with additional modes and controls; the example is
+not an impossibility result for general routers. Physical ground serving
+simultaneously as logical zero does not itself supply that extension.
+
+[Wu et al.](https://arxiv.org/html/2604.15432v1) provide a distinct
+programmable superconducting port: a trained $40\,\mathrm{ns}$
+CSWAP-like operation with reported XEB fidelity
+$85.74\%\pm0.78\%$. Their Supplemental Eq. (S9) includes measured
+computational-basis phases, including start-time-dependent
+$\Delta_{23}t_b$ terms, in the **ideal matrix used for benchmarking**.
+That number is not automatically fidelity to a phase-free Fredkin gate.
+The phases must be retained in the routed instrument or corrected through
+the supplied controls; population routing and a benchmark against a
+phase-dressed target do not alone establish the required unknown-input
+controlled-order port.
+
+The concrete next test is the actual candidate module inside a
+phase-resolved route--module--return experiment, with a quantum address
+and data entangled with a reference. Retain the unselected-site action,
+raw leakage, address coherence and common-clock idle intervals before
+assigning a SWITCH model. Compare the same-port ordinary cached route,
+direct compiled control, calibrated echo and available leakage records at
+the same delivery deadline. A nondestructive invalid-subspace read must
+be demonstrated and costed before either implementation uses it as a
+retained-output herald or retry condition. Preparation, calibration reuse,
+reset, route noise and controller occupancy remain part of the comparison.
+These sources supply constituent controls, not a verified native memory
+or recovery advantage.
+
 ### Nonlinear photonic evolution: the next complete-instrument test
 
 A repeated passive photonic operation is not enough to supply an expensive
@@ -1788,6 +1840,21 @@ now provides ordinary one-collision memory preparation and two-collision
 delivery benchmarks with full record kernels. The specific next
 experiment measures retained memory/rail coherence and false heralds;
 population hopping alone does not certify that memory resource.
+
+The [programmable giant-atom HOM proposal](https://arxiv.org/html/2609.18530v1)
+adds a different finite-band model: one atom couples to two cavity arrays
+with classically tuned coupling phases and four photon output ports.
+Its two-photon interference statistics do not supply a coherent
+complete-payload order controller or a retained-photon CZ instrument.
+Equal couplings and coupling phases leave a free antisymmetric field
+alongside the interacting symmetric field; those reference ports must
+also enter the ordinary comparison. Differing phase profiles require
+the full new scattering model, rather than the constant-coupling shortcut.
+The [giant-transmon-molecule array proposal](https://arxiv.org/html/2507.05377v1)
+instead directly targets an elastic photonic CZ. That ordinary target,
+with its finite-pulse, array, disorder and loss costs, must enter the
+comparison before treating a SWITCH-modified HOM fringe as useful output.
+Neither proposal supplies the missing controlled-order interface.
 
 The next test is the full input-output model of one such actual device.
 Prespecify a useful detuning or spin-setting decision, or a delivered

@@ -76,6 +76,11 @@ quadrature/cutoff refinements. The ordinary parity-factory witness counts
 both destructive photon-readout ports and traces final photon frequency
 and motion. Its biased known-photon preparation has an analytic density
 scaling identity; finite packet fidelities remain numerical evidence.
+The coherent-carrier comparator has finite complex-rational projection,
+whole-analyzer normalization and local Bell-frame guards. Its exact
+final-motion isolation and general complex construction are analytic;
+finite virtual-motion witnesses do not certify the infinite resolvent
+or supply a physical temporal-mode detector.
 The standard-library suite fingerprints
 those numerical sources and record but does not execute them. Neither
 finite convergence nor an omitted initial thermal mass bounds all output
