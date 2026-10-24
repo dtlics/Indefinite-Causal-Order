@@ -300,6 +300,15 @@ visibility. The all-even-mode comparison with native decoders and Bell-input
 receiver filters, and the general tetron postprocessing proof, remain analytic;
 rational-grid replays guard transcription. They do not certify microscopic
 poisoning, arbitrary noisy check gates or rejected odd-parity outputs.
+The microscopic thermal-contact extension adds finite Gaussian matching,
+CAR bath-copy and reference-matrix-unit compiler checks. The continuum
+limit, correlation-moment and diamond estimates, symmetry reduction and
+adaptation of the cited stability theorem remain analytic. The stronger
+uniform-duration estimate concerns code inputs with passive references;
+finite algebra does not certify measured spectra or an available coherent
+contact selector. Its calibrated isotropic compiler is distinct from
+the split-energy physical model and from an application with required
+contact operations.
 The Jaynes--Cummings extension checks the explicit ordinary
 isometry/measurement and decision identities. Its complete infinite-Fock
 inequality for all positive field energies and high-energy remainder are

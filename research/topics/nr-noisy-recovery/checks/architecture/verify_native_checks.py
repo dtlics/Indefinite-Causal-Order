@@ -1898,6 +1898,397 @@ def replay_even_majorana_modes():
                 scope="Finite all-record and net-mask weights, actual positive-parity JW code maps, fixed even-setting and common-dephasing comparisons, and finite CPTP/TNI decoder examples. The all-even-mode inequalities, arbitrary-decoder Parseval proof, bath/history coherence, physical control availability and costs remain analytic; no rejected-sector or unread-order simulation claim.")
 
 
+def replay_gaussian_contact_copy():
+    """Finite Wick/CAR copy identities and the accepted isotropic CQ compiler.
+
+    The finite bath has persistent correlations; it is not a numerical
+    certificate for integrable continuum moments or the analytic diamond
+    bound. Physical matrices check the algebra independently of the scalar
+    compiler coefficients, including off-diagonal unknown-code inputs.
+    """
+    from functools import lru_cache
+    from math import factorial
+
+    def majoranas(modes):
+        i2, x2, y2, z2 = pauli_basis(1)
+        out = []
+        for mode in range(modes):
+            for local in (x2, y2):
+                operator = [[ONE]]
+                for site in range(modes):
+                    operator = tensor(operator, z2 if site < mode
+                                      else local if site == mode else i2)
+                out.append(operator)
+        return out
+
+    def thermal_weights(occupations):
+        out = []
+        for bits in range(1 << len(occupations)):
+            weight = F(1)
+            for mode, occupation in enumerate(occupations):
+                weight *= (occupation if (bits >> (len(occupations) - 1 - mode)) & 1
+                           else 1 - occupation)
+            out.append(weight)
+        return tuple(out)
+
+    def thermal_average(operator, weights):
+        bath = len(weights)
+        return [[sum_gaussian(times(operator[i * bath + b][j * bath + b], weight)
+                              for b, weight in enumerate(weights))
+                 for j in range(2)] for i in range(2)]
+
+    def sum_gaussian(values):
+        out = ZERO
+        for value in values:
+            out = add(out, value)
+        return out
+
+    def bath_blocks(operator, weights):
+        bath = len(weights)
+        return [(weight, b, h,
+                 [[operator[i * bath + h][j * bath + b] for j in range(2)]
+                  for i in range(2)])
+                for b, weight in enumerate(weights) for h in range(bath)]
+
+    def cross_map(left, right, weights, i, j):
+        bath = len(weights)
+        out = zeros(2, 2)
+        for b, weight in enumerate(weights):
+            for h in range(bath):
+                for row in range(2):
+                    x = left[row * bath + h][i * bath + b]
+                    if x == ZERO:
+                        continue
+                    for column in range(2):
+                        y = right[column * bath + h][j * bath + b]
+                        if y != ZERO:
+                            out[row][column] = add(out[row][column],
+                                                   times(multiply(x, conjugate(y)), weight))
+        return out
+
+    def unit_image(operator, i, j):
+        return [[multiply(operator[row][i], conjugate(operator[column][j]))
+                 for column in range(2)] for row in range(2)]
+
+    def cp_image(kraus, i, j):
+        out = zeros(2, 2)
+        for weight, operator in kraus:
+            if weight:
+                out = plus(out, scaled(unit_image(operator, i, j), weight))
+        return out
+
+    def matchings(vertices):
+        if not vertices:
+            yield ()
+        else:
+            first = vertices[0]
+            for j in range(1, len(vertices)):
+                for rest in matchings(vertices[1:j] + vertices[j + 1:]):
+                    yield ((first, vertices[j]),) + rest
+
+    def poly_multiply(left, right):
+        out = [0] * (len(left) + len(right) - 1)
+        for i, x in enumerate(left):
+            for j, y in enumerate(right):
+                out[i + j] += x * y
+        return out
+
+    pairing_count = union_polynomials = 0
+    for k in range(1, 6):
+        pairings = list(matchings(tuple(range(2 * k))))
+        require(len(pairings) == factorial(2 * k) // (2 ** k * factorial(k)),
+                "Literal perfect-matching enumeration has the contour factorial")
+        marked = [0] * (k + 1)
+        for pairing in pairings:
+            require(sorted(vertex for edge in pairing for vertex in edge)
+                    == list(range(2 * k)), "Every Wick matching pairs each vertex once")
+            for deleted in product((0, 1), repeat=len(pairing)):
+                if any(deleted):
+                    marked[sum(deleted)] += 1
+            pairing_count += 1
+        # D is the variable and total K is 1. Count every nonempty deleted
+        # edge assignment, then expand the remaining (1-D) factors literally.
+        actual = [0] * (k + 1)
+        for deleted, count in enumerate(marked):
+            if not count:
+                continue
+            term = [1]
+            for _ in range(k - deleted):
+                term = poly_multiply(term, [1, -1])
+            for power, value in enumerate(term):
+                actual[power + deleted] += count * value
+        undeleted = [1]
+        for _ in range(k):
+            undeleted = poly_multiply(undeleted, [1, -1])
+        expected = [-len(pairings) * value for value in undeleted]
+        expected[0] += len(pairings)
+        require(actual == expected,
+                "Deleted-edge union equals matching_count times [K^k-(K-D)^k]")
+        require(F(len(pairings), factorial(2 * k)) == F(1, 2 ** k * factorial(k)),
+                "Ordered-contour matching coefficient")
+        union_polynomials += 1
+
+    # Lorentzian Matsubara terms: verify actual polynomial antiderivatives
+    # before taking their exact finite Laplace moments. No truncated sum is
+    # used to infer the infinite odd-frequency identity or a bath-error bound.
+    def laplace_moment(power, rate):
+        primitive = [F(0)] * (power + 1)
+        primitive[power] = 1 / rate
+        for j in reversed(range(power)):
+            primitive[j] = (j + 1) * primitive[j + 1] / rate
+        derivative = [(j + 1) * primitive[j + 1] if j < power else F(0)
+                      for j in range(power + 1)]
+        require([x - rate * value for x, value in zip(derivative, primitive)]
+                == [F(0)] * power + [F(-1)],
+                "Exact derivative of exp(-rate*t) times the Laplace primitive")
+        return primitive[0]
+
+    bandwidths = (F(1, 3), F(1, 2), F(1), F(2), F(3), F(7, 2))
+    moments = {(power, rate): laplace_moment(power, rate)
+               for power in (1, 2) for rate in bandwidths}
+    lorentz_regular = lorentz_resonant = lorentz_positive = lorentz_prefactors = 0
+    for bandwidth, frequency in product(bandwidths, repeat=2):
+        if bandwidth != frequency:
+            moment = (moments[1, frequency] - moments[1, bandwidth]) / (
+                bandwidth * bandwidth - frequency * frequency)
+            require(moment == 1 / (bandwidth ** 2 * frequency ** 2),
+                    "Off-resonance Lorentz term first moment cancels both pole factors")
+            lorentz_regular += 1
+        else:
+            moment = moments[2, bandwidth] / (2 * bandwidth)
+            require(moment == 1 / bandwidth ** 4,
+                    "Removable resonance uses integral t-squared exp(-W*t)/(2W)")
+            lorentz_resonant += 1
+        for gamma, temperature in product((F(1, 7), F(1), F(4, 3)), repeat=2):
+            require(2 * gamma * bandwidth ** 2 * temperature * moment
+                    == 2 * gamma * temperature / frequency ** 2,
+                    "Source-normalized imaginary Matsubara term has no remaining bandwidth factor")
+            lorentz_prefactors += 1
+    for bandwidth in bandwidths:
+        for gamma in (F(1, 7), F(1), F(4, 3)):
+            require(gamma * bandwidth * moments[1, bandwidth] / 2
+                    == gamma / (2 * bandwidth),
+                    "Source-normalized real Lorentz first moment")
+            lorentz_prefactors += 1
+    for bandwidth, frequency in product(range(1, 7), repeat=2):
+        if bandwidth != frequency:
+            quotient = (F(1, 2 ** frequency) - F(1, 2 ** bandwidth)) / (
+                bandwidth ** 2 - frequency ** 2)
+            require(quotient > 0,
+                    "Lorentz time quotient is positive at t=log(2) on either side of resonance")
+        else:
+            # The omitted common log(2) factor is positive. This is the exact
+            # coefficient of the continuous resonant value, not 0/0.
+            require(F(1, 2 * bandwidth * 2 ** bandwidth) > 0,
+                    "Resonant time quotient has a positive finite log(2) coefficient")
+        lorentz_positive += 1
+
+    fields = majoranas(2)
+    weights = thermal_weights((F(1, 3), F(2, 5)))
+    require(sum(weights) == 1 and min(weights) > 0, "Nonpure product thermal bath")
+
+    @lru_cache(None)
+    def word_matrix(word):
+        return identity(4) if not word else matmul(word_matrix(word[:-1]), fields[word[-1]])
+
+    def moment(word):
+        operator = word_matrix(word)
+        return sum_gaussian(times(operator[b][b], weight) for b, weight in enumerate(weights))
+
+    two_point = {(i, j): moment((i, j)) for i in range(4) for j in range(4)}
+
+    @lru_cache(None)
+    def wick(word):
+        if not word:
+            return ONE
+        if len(word) % 2:
+            return ZERO
+        return sum_gaussian(times(multiply(two_point[word[0], word[j]],
+            wick(word[1:j] + word[j + 1:])), (-1) ** (j - 1))
+                            for j in range(1, len(word)))
+
+    words = [word for length in range(5) for word in product(range(4), repeat=length)]
+    words += sorted(set(permutations((0, 1, 2, 3, 0, 1))))
+    for word in words:
+        require(moment(word) == wick(word), "Actual finite thermal CAR moments obey signed Wick matching")
+    require(any(value[1] for value in two_point.values()),
+            "Thermal covariance fixture retains nonzero ordered imaginary moments")
+
+    def schedule(copied):
+        bath_occupations = ((F(1, 3), F(2, 5), F(1, 3), F(2, 5))
+                            if copied else (F(1, 3), F(2, 5)))
+        gamma = majoranas(1 + len(bath_occupations))
+        dimension = len(gamma[0])
+        ca, sa, cb, sb = F(3, 5), F(4, 5), F(5, 13), F(12, 13)
+        slots = ((1, 0, ca, sa), (2, 1, cb, sb),
+                 (3 if copied else 1, 0, ca, sa),
+                 (4 if copied else 2, 1, cb, sb))
+        generators, gates = [], []
+        for index, (mode, system, cosine, sine) in enumerate(slots):
+            # A/B use independent modes. Late fields have a genuine quarter
+            # free-rotation phase; every coupling remains even in the full CAR.
+            generator = matmul(gamma[system], gamma[2 * mode + int(index >= 2)])
+            require(adjoint(generator) == scaled(generator, -1)
+                    and matmul(generator, generator) == scaled(identity(dimension), -1),
+                    "Actual even system/bath contact generator")
+            gate = plus(scaled(identity(dimension), cosine), scaled(generator, sine))
+            require(matmul(adjoint(gate), gate) == identity(dimension),
+                    "Finite CAR contact is exactly unitary")
+            generators.append(generator)
+            gates.append(gate)
+        v0, v1 = matmul(gates[3], gates[0]), matmul(gates[2], gates[1])
+        return v0, v1, thermal_weights(bath_occupations), generators
+
+    actual0, actual1, actual_weights, actual_generators = schedule(False)
+    copy0, copy1, copy_weights, copy_generators = schedule(True)
+    k0, k1 = thermal_average(copy0, copy_weights), thermal_average(copy1, copy_weights)
+    require(k0 == k1 == scaled(identity(2), F(3, 13)),
+            "Interaction-picture thermal average has no unused-copy free phase")
+    diagonal_maps = copy_cross_maps = residual_maps = second_order_maps = 0
+    nonzero_copy_defect = False
+    nonzero_deleted_contraction = False
+    for i, j in product(range(2), repeat=2):
+        for actual, copied in ((actual0, copy0), (actual1, copy1)):
+            require(cross_map(actual, actual, actual_weights, i, j)
+                    == cross_map(copied, copied, copy_weights, i, j),
+                    "Temporal copies preserve every full diagonal-channel matrix unit")
+            diagonal_maps += 1
+        copied_cross = cross_map(copy0, copy1, copy_weights, i, j)
+        expected = [[multiply(k0[row][i], conjugate(k1[column][j]))
+                     for column in range(2)] for row in range(2)]
+        require(copied_cross == expected, "Actual copied thermal cross map factorizes as K0 X K1-dagger")
+        nonzero_copy_defect |= cross_map(actual0, actual1, actual_weights, i, j) != copied_cross
+        copy_cross_maps += 1
+        for copied, average in ((copy0, k0), (copy1, k1)):
+            residual = [(weight, plus(block, scaled(average, -1)) if b == h else block)
+                        for weight, b, h, block in bath_blocks(copied, copy_weights)]
+            require(cp_image(residual, i, j) == plus(
+                cross_map(copied, copied, copy_weights, i, j), scaled(unit_image(average, i, j), -1)),
+                    "Thermal-average Kraus subtraction has an explicit positive variance decomposition")
+            residual_maps += 1
+        # At quadratic coupling order the same-side terms are unchanged;
+        # deleted ket/bra contractions are precisely same-station early/late.
+        aa, be, al, bl = actual_generators
+        ac, bc, alc, blc = copy_generators
+        full_second_actual = cross_map(plus(aa, bl), plus(be, al), actual_weights, i, j)
+        full_second_copy = cross_map(plus(ac, blc), plus(bc, alc), copy_weights, i, j)
+        deleted = plus(cross_map(aa, al, actual_weights, i, j),
+                       cross_map(bl, be, actual_weights, i, j))
+        nonzero_deleted_contraction |= deleted != zeros(2, 2)
+        require(plus(full_second_actual, scaled(full_second_copy, -1)) == deleted,
+                "Leading copied-bath difference retains the actual ordered thermal cross contractions")
+        second_order_maps += 1
+    require(nonzero_copy_defect, "Finite shared bath is not silently replaced by independent temporal slots")
+    require(nonzero_deleted_contraction, "Leading deleted thermal contraction is genuinely nonzero")
+
+    free_bath = [[ONE]]
+    for _ in range(4):
+        free_bath = tensor(free_bath, [[ONE, ZERO], [ZERO, gaussian(0, 1)]])
+    common_free = tensor(identity(2), free_bath)
+    sch0, sch1 = matmul(common_free, copy0), matmul(common_free, copy1)
+    raw0, raw1 = thermal_average(sch0, copy_weights), thermal_average(sch1, copy_weights)
+    raw_phase_guard = False
+    for i, j in product(range(2), repeat=2):
+        require(cross_map(sch0, sch1, copy_weights, i, j)
+                == cross_map(copy0, copy1, copy_weights, i, j),
+                "Common final bath free evolution cancels under the true partial trace")
+        raw_guess = [[multiply(raw0[row][i], conjugate(raw1[column][j]))
+                      for column in range(2)] for row in range(2)]
+        raw_phase_guard |= raw_guess != cross_map(copy0, copy1, copy_weights, i, j)
+    require(raw_phase_guard, "Wrong raw Schrodinger thermal amplitudes fail the copied cross map")
+
+    # Actual tetron bilinears provide the three orthogonal logical axes.
+    gamma = majoranas(2)
+    axes = []
+    for j in (1, 2, 3):
+        full = [[multiply(gaussian(0, 1), value) for value in row]
+                for row in matmul(gamma[0], gamma[j])]
+        axes.append([[full[row][column] for column in (0, 3)] for row in (0, 3)])
+    errors = (identity(2), *axes)
+    for i, first in enumerate(errors):
+        require(adjoint(first) == first and matmul(first, first) == identity(2),
+                "Physical even code check is Hermitian unitary")
+        for j, second in enumerate(errors):
+            require(trace(matmul(adjoint(first), second)) == gaussian(2 if i == j else 0),
+                    "Tetron code checks form the complete logical Pauli basis")
+    compiler_cases = compiler_maps = wrong_order_guards = zero_weight_cases = 0
+    for numerator0 in range(13):
+        for numerator in range(5):
+            w0, w = F(numerator0, 12), F(numerator, 12)
+            if w0 + 3 * w > 1:
+                continue
+            # Individual order channels may be anisotropic. Only their paid
+            # fair random order is the assumed isotropic diagonal average.
+            orders = ((w0, 2 * w, F(0), w), (w0, F(0), 2 * w, w))
+            for fraction in (F(0), F(1, 2), F(1)):
+                u = w0 * fraction
+                a = (w0 - u) / (2 * w0) if w0 else F(1, 2)
+                b = (2 * w0 + u) / (4 * w0) if w0 else F(1, 2)
+                require(0 <= a <= F(1, 2) and F(1, 2) <= b <= F(3, 4),
+                        "Compiler probabilities cover every zero-weight endpoint")
+                helper = [[], []]
+                first_order = [[], []]
+                for order, probabilities in enumerate(orders):
+                    for check in axes:
+                        for probability, error in zip(probabilities, errors):
+                            conjugated = matmul(matmul(check, error), check)
+                            for read in (0, 1):
+                                operator = scaled(plus(error, scaled(conjugated,
+                                    1 if read == 0 else -1)), F(1, 2))
+                                helper[read].append((probability / 6, operator))
+                                if order == 0:
+                                    first_order[read].append((probability / 3, operator))
+                compiled = [[], []]
+                wrong_first = [[], []]
+                for read, minus_probability in enumerate((a, b)):
+                    for weight, operator in helper[read]:
+                        compiled[1].append((weight * minus_probability, operator))
+                        compiled[0].append((weight * (1 - minus_probability), operator))
+                    for weight, operator in first_order[read]:
+                        wrong_first[1].append((weight * minus_probability, operator))
+                        wrong_first[0].append((weight * (1 - minus_probability), operator))
+                target = [[((w0 + u) / 2 if flag == 0 else (w0 - u) / 2, errors[0])]
+                          + [(w / 2, error) for error in errors[1:]] for flag in (0, 1)]
+                wrong_order = False
+                for i, j in product(range(2), repeat=2):
+                    total = zeros(2, 2)
+                    for flag in (0, 1):
+                        image = cp_image(compiled[flag], i, j)
+                        require(image == cp_image(target[flag], i, j),
+                                "Actual known-check/read/relabel circuit equals both native code flags on every Eij")
+                        require(trace(image) == gaussian((w0 + 3 * w + (u if flag == 0 else -u))
+                                                         / 2 if i == j else 0),
+                                "Compiled flag has the full subnormalized acceptance effect")
+                        wrong_order |= cp_image(wrong_first[flag], i, j) != image
+                        total = plus(total, image)
+                        compiler_maps += 1
+                    require(total == cp_image(list(zip((w0, w, w, w), errors)), i, j),
+                            "Both reported flags sum to the complete accepted diagonal average")
+                if w:
+                    require(wrong_order, "Dropping the stipulated order randomization changes the full code instrument")
+                    wrong_order_guards += 1
+                if w0 == 0:
+                    require(u == 0 and a == b == F(1, 2), "Zero identity mass uses a nonsingular fair-coin compiler")
+                    zero_weight_cases += 1
+                compiler_cases += 1
+    return dict(status="passed", arithmetic="exact Gaussian/rational; standard library",
+                enumerated_Wick_matchings=pairing_count, deleted_edge_union_polynomials=union_polynomials,
+                Lorentz_Laplace_primitive_identities=len(moments),
+                Lorentz_regular_term_moment_guards=lorentz_regular,
+                Lorentz_resonant_term_moment_guards=lorentz_resonant,
+                Lorentz_positive_time_quotient_guards=lorentz_positive,
+                Lorentz_source_term_prefactor_guards=lorentz_prefactors,
+                finite_thermal_CAR_moments=len(words), diagonal_copy_matrix_units=diagonal_maps,
+                factorized_copy_cross_matrix_units=copy_cross_maps,
+                positive_residual_variance_matrix_units=residual_maps,
+                leading_deleted_contraction_matrix_units=second_order_maps,
+                nonzero_shared_bath_defect=True, wrong_Schrodinger_amplitude_guard=True,
+                physical_code_CQ_compiler_cases=compiler_cases,
+                both_flag_code_matrix_unit_maps=compiler_maps,
+                common_random_order_guards=wrong_order_guards, zero_identity_mass_cases=zero_weight_cases,
+                scope="Finite signed Wick/pair-count and thermal CAR bath-copy algebra, interaction-picture phase guard, and complete two-flag tetron-code Pauli compiler. Gaussian diamond/resummation/continuum bounds, correlation moments, microscopic isotropy, availability/calibration of physical controls and costs remain analytic; no numerical bath-error or normalized rare-herald certificate.")
+
+
 def verify_jc_energy_baseline():
     """Exact isometry/PVM, arbitrary JC-form CP weights and dummy guards."""
     from fractions import Fraction as F
@@ -2395,6 +2786,7 @@ def main():
     encoded_cases = replay_encoded_pauli()
     fermionic_cases = replay_fermionic_collision()
     even_majorana_cases = replay_even_majorana_modes()
+    gaussian_contact_cases = replay_gaussian_contact_copy()
     jc_cases = verify_jc_energy_baseline()
     noisy_search_cases = replay_noisy_search_filters()
     print(json.dumps({
@@ -2414,6 +2806,7 @@ def main():
         "encoded_pauli_instrument": encoded_cases,
         "fermionic_collision_instruments": fermionic_cases,
         "even_majorana_class_instruments": even_majorana_cases,
+        "gaussian_contact_copy_instruments": gaussian_contact_cases,
         "jaynes_cummings_energy_baseline": jc_cases,
         "noisy_search_filter_instruments": noisy_search_cases,
         "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",

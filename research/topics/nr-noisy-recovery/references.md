@@ -57,6 +57,20 @@ ordinary compiler, measurement-timing comparison and counted restarts.
 | [Vrana, Reeb, Reitzner and Wolf, *Fault-ignorant Quantum Search*](https://arxiv.org/pdf/1307.0771), Sections II.C–II.D | Noisy Grover restarts, explicit verification and noise-ignorant schedules. | Reliable candidate checking and its query cost are part of the interface. Their restricted lower bounds are not imported as all-SWITCH lower bounds. |
 | [Rosmanis, *Quantum Search with Noisy Oracle*](https://arxiv.org/abs/2309.14944) | Strong query bounds for depolarizing/dephasing noise, including an error-flag setting. | The oracle/register and verification ports differ between models; this is context, not a native-router or unrestricted physical-noise theorem. |
 
+## Microscopic contact interference
+
+The [thermal-contact component](architecture-baselines.md#nr-r06-thermal-contact-history)
+distinguishes a controlled physical contact schedule from an abstract
+SWITCH of reduced channels. Its temporal bath-copy comparison uses
+established Gaussian correlation methods; it does not claim a new general
+stability technique or a demonstrated memory advantage.
+
+| Primary work | Input used | Scope to preserve |
+| --- | --- | --- |
+| [Bhattacharyya and van Heck, *Dynamics of Majorana tetron qubits under quasiparticle poisoning*, arXiv:2608.18042v1](https://arxiv.org/html/2608.18042v1), Sections II, V--VI and Appendices B--C | Island Hamiltonian, thermal lead correlations, charging-energy protection and split-energy dynamics. | The source supplies neither two coherently orderable contact families nor their controlled bath cross map. The exact isotropic specialization and the split-energy case require different comparisons. |
+| [Huang, Zhu, Park and Lin, *Unified error bounds for perturbations of non-Markovian open quantum systems in Gaussian environments*, arXiv:2411.08741v2](https://arxiv.org/html/2411.08741v2), Theorem 2.9, Lemmas 2.10--2.11 and Appendix B | Correlation-perturbation resummation for bosonic and fermionic environments. | The contact proof adapts the insertion argument to piecewise controlled unitary propagators and a localized two-time covariance change. Its reference-complete code-input bound is an application with explicit parity and continuum assumptions. |
+| [Mascherpa et al., *Open systems with error bounds: spin-boson model with spectral density variations*, PRL **118**, 100401 (2017), arXiv:1611.03377v4](https://arxiv.org/html/1611.03377v4), Eqs. (6)--(9) | Earlier non-Markovian observable bounds from changes in bath correlations. | This is a bosonic spin-boson precedent, rather than the fermionic controlled-contact statement. Gaussian influence and correlation-error bounds are established background. |
+
 ## Recovery, inversion, and verification
 
 - [Quintino et al., *Reversing Unknown Quantum Transformations*](https://arxiv.org/abs/1810.06944), PRL **123**, 210502 (2019), gives heralded physical inversion of an unknown unitary and analyzes adaptive strategies and indefinite-order advantages. [Dong et al., *Success-or-Draw*](https://arxiv.org/abs/2011.01055), PRL **126**, 150504 (2021), develops retries whose draw branch preserves the input. Heralding alone does not give the present noisy filter that preservation property.

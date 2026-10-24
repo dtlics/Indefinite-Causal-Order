@@ -5402,22 +5402,360 @@ actual overlap. The formulas favor the switch by retaining ideal bath
 coherence; they do not establish that coherence in a device, a full
 fermionic-channel SWITCH from reduced maps, or a native architecture gain.
 
+<a id="nr-r06-thermal-contact-history"></a>
+
 The [microscopic tetron analysis of Bhattacharyya and van Heck](https://arxiv.org/html/2608.18042v1)
 includes charging energy, Majorana overlap and thermal lead spectra.
 Its transition operators are energy-projected Majoranas, rather than
 the homogeneous bare-generator product (FP1). The declared contact model
-cannot be silently substituted for that physical master equation. Its
-Hamiltonian and lead correlations, Eqs. (3), (5)--(8), supply ingredients
-for a microscopic calculation, with actual schedules for two contact
-families still required. The next test is the retained-bath cross map
-$\mathcal G_{01}(X)=\operatorname{Tr}_B[V_0(X\otimes\tau_B)V_1^\dagger]$
-for those schedules, alongside their diagonal maps and ordinary controls.
-The island Hamiltonian acts once throughout each physical trajectory.
-A reduced Born--Markov generator or measured parity lifetime alone does
-not bound this cross map. A surviving application would have to identify its actual coherent bath
-history and beat ordinary parity monitoring, accessible quasiparticle
-records and production-schedule calibration at matched memory, gate,
-reset, discarded-launch and routing costs.
+cannot be silently substituted for that physical master equation. The
+following finite-bath calculation instead uses its Hamiltonian and
+thermal correlations, Eqs. (3), (5)--(10), with an explicitly added
+two-contact schedule. It is not a demonstrated coherent contact selector.
+
+**A physical temporal-copy comparison.** Use the source normalization
+$a_i=\gamma_i/\sqrt2$, $\{a_i,a_j\}=\delta_{ij}$ and
+$P=-4a_1a_2a_3a_4$. Supply two independent families $A,B$, each with four
+thermal fermionic leads. The initial bath is even, quasifree and
+independent of the controller, target and every passive reference.
+Assume bounded $L^2$-smeared linear lead fields, or a finite-cutoff limit
+with convergent dynamics and a common integrable covariance majorant.
+The source's finite Lorentzian bandwidth is compatible with this
+regularization; an unsmeared infinite-band contact is not automatically
+covered. Its actual absolute correlation moments must still be supplied.
+
+Let $I_0=[0,\tau]$, $I_1=[\tau,2\tau]$ and $T_F=2\tau$.
+History $0$ couples $A$ on $I_0$ and $B$ on $I_1$; history $1$ reverses
+the families. The island Hamiltonian $H_S$ acts once, continuously,
+including all idle intervals. Work in the common interaction picture
+of $H_S+H_B$. In a system-first tensor representation of the combined
+CAR algebra, the physical even coupling $-ia_iB_{ri}$ has system
+factor $S_i=-ia_iP$, which is Hermitian with norm $1/\sqrt2$.
+Thus
+
+$$
+\begin{aligned}
+H_{I,c}(t)&=\sum_{r=A,B}\sum_{i=1}^4
+ g_{r,c}(t)S_i(t)\otimes B_{ri}(t),\\
+\mathcal G_{cc'}(X)&=\operatorname{Tr}_B
+ [V_c(X\otimes\tau_B)V_{c'}^\dagger],\qquad
+\mathcal M_\pm=\frac{\mathcal G_{00}+\mathcal G_{11}
+                 \pm\mathcal G_{01}\pm\mathcal G_{10}}4.
+\end{aligned}
+\tag{FP18}
+$$
+
+Here $g$ are the prescribed rectangular envelopes and $V_c$ are the
+interaction-picture propagators. Common free system evolution is restored
+on the output; common free bath evolution cancels under the trace.
+All reservoir fields, including temporal copies below, belong to one
+CAR algebra. Physical odd operators have not been declared commuting
+tensor factors. The maps in (FP18) retain every target sector; the last
+formula is the measured instrument for an initial independent plus
+controller.
+
+Replace each station bath by independent, identically prepared copies
+for $I_0$ and $I_1$. This deletes only same-station, different-window
+covariances and is a valid Gaussian bath, rather than an arbitrary
+covariance truncation. Every individual history visits a station in
+only one window. Its complete diagonal channel
+$\mathcal E_c=\mathcal G_{cc}$ is therefore **exactly unchanged**.
+The two histories now use disjoint collections of copies. Odd moments
+in a collection vanish; nonzero even moments factor between the
+collections with no remaining CAR sign. Consequently
+
+$$
+\mathcal G_{01}^{\rm copy}(X)=K_0XK_1^\dagger,\qquad
+K_c=\operatorname{Tr}_B[V_c^{\rm copy}(I\otimes\tau_B)],\qquad
+\mathcal E_c-\operatorname{Ad}_{K_c}\ \text{is CP}.
+\tag{FP19}
+$$
+
+The last assertion follows by projecting a Stinespring bath purification
+onto its initial vector. These are thermal averages in the common
+interaction picture, not raw Schrödinger averages containing idle bath
+phases, and not assumed Markov no-jump exponentials. Unlike the
+[vacuum-record formula](communication.md#photon-preserving-markov-records-the-complete-routed-instrument),
+this comparison needs no Markov approximation for its diagonal channels.
+
+The leading deleted contraction is already a definite microscopic
+cross-map calculation. For identical independent fields within each
+family, $\langle B_{ri}(t)B_{sj}(s)\rangle
+=\delta_{rs}\delta_{ij}C_r(t-s)$. At second tunneling order,
+
+$$
+\delta\mathcal G_{01}^{(2)}(X)=
+ \sum_{r,i}\int_{I_{r,0}}dt\int_{I_{r,1}}ds\,
+ C_r(s-t)S_i(t)XS_i(s),
+\quad I_{A,0}=I_{B,1}=I_0,\ I_{A,1}=I_{B,0}=I_1.
+\tag{FP20}
+$$
+
+Same-side contractions are unchanged. This is a correction term, not
+a CP channel by itself. Resolving $S_i(t)$ into Bohr components keeps
+its actual mixed-frequency phases; discarding them requires a separate
+secular approximation.
+
+**A uniform bound includes the controller and reference.** Expand the
+cross map on its forward/backward contour $\mathcal C$. Absorb coupling
+amplitudes and system-operator norms into $v_\alpha(z)$ and use the
+symmetric nonnegative pair majorant
+$h(z,z')=\sum_{\alpha\beta}v_\alpha(z)v_\beta(z')
+|C_{\alpha\beta}(t(z)-t(z'))|$; if needed take the maximum of the two
+ordered absolute correlations. Let $h_{\rm cross}$ retain precisely
+the deleted contractions, and put
+$\mathsf K=\int_{\mathcal C^2}h$,
+$\mathsf D=\int_{\mathcal C^2}h_{\rm cross}$.
+Then $0\le\mathsf D\le\mathsf K$ and
+
+$$
+\begin{aligned}
+\|\mathcal G_{01}-\mathcal G_{01}^{\rm copy}\|_\diamond
+ &\le e^{\mathsf K/2}-e^{(\mathsf K-\mathsf D)/2}
+ \le\frac{\mathsf D}{2}e^{\mathsf K/2},\\
+\|\Phi-\Phi^{\rm copy}\|_\diamond
+ &\le\min\{2,e^{\mathsf K/2}-e^{(\mathsf K-\mathsf D)/2}\},
+\end{aligned}
+\tag{FP21}
+$$
+
+where $\Phi$ is the full controlled channel, allowing arbitrary initial
+controller/target/reference states. To prove the first line, use the
+fermionic Wick expansion of each actual ordered thermal bath word.
+Odd words vanish. After absolute values, the sum over the
+$(2k-1)!!$ pairings at order $2k$ is symmetric in the contour vertices.
+Its ordered-simplex integral is
+$\mathsf K^k/(2^k k!)$. Only pairings containing at least one deleted
+pair change, whose integral is bounded by
+$[\mathsf K^k-(\mathsf K-\mathsf D)^k]/(2^k k!)$.
+Summing proves (FP21). No commutation of the noncommuting system
+integrand, or tracial approximation to the thermal state, was used.
+The bounded-smearing assumptions justify convergence, including with
+any input ancilla. This is the Wick/correlation-perturbation method
+developed in [Mascherpa et al.](https://doi.org/10.1103/PhysRevLett.118.100401)
+and extended to fermionic Gaussian environments by
+[Huang, Zhu, Park and Lin](https://arxiv.org/html/2411.08741v2);
+the temporal-copy construction and code comparator specify its use here.
+
+For the second line, the diagonal channels coincide. A positive input
+block matrix obeys $\|\rho_{01}\|_1\le1/2$. Its output difference has
+two adjoint off-diagonal blocks, so its trace norm is at most the first
+line's diamond bound. The state-input characterization of channel
+discrimination, with arbitrary reference, proves the claim. Every
+subsequent complete instrument or fixed decoder is contractive.
+
+For two families of four identical independent fields of correlation
+$C$, define
+$J_{\rm self}=\int_{I_0^2}|C(t-s)|dt\,ds$ and
+$J_{\rm cross}=\int_{I_0\times I_1}|C(t-s)|dt\,ds$.
+If $c_j=\int_0^\infty v^j|C(v)|dv<\infty$ for $j=0,1$, then
+
+$$
+\begin{aligned}
+\mathsf K&=8(J_{\rm self}+J_{\rm cross}),&
+\mathsf D&=8J_{\rm cross},\\
+J_{\rm cross}
+ &=\int_0^{2\tau}\min(v,2\tau-v)|C(v)|dv\le c_1,&
+J_{\rm self}+J_{\rm cross}&\le2\tau c_0,\\
+\|\Phi-\Phi^{\rm copy}\|_\diamond
+ &\le\epsilon_{\rm copy}:=
+ \min\{2,4c_1e^{8\tau c_0}\}.
+\end{aligned}
+\tag{FP22}
+$$
+
+The factor eight counts both contour orientations, eight lead fields
+and $\|S_i\|^2=1/2$. Different family kernels use (FP21)'s actual
+weighted integrals. A one-sided self-energy boundary estimate also gives
+$|\int_0^\tau(\tau-v)C(v)e^{i\omega v}dv
+-\tau\int_0^\infty C(v)e^{i\omega v}dv|\le c_1$;
+it does not prove the remaining Markov/secular replacements.
+The source hierarchy $\Gamma_0\ll T$ alone supplies no numeric
+diamond certificate. In particular $c_0$ measures bare coupling, so
+(FP22) may be uninformative on the activated long-memory scale
+$1/\Gamma_{\rm even}$ even when that hierarchy holds.
+
+There is a stronger bound for the physically relevant **fixed-parity
+code inputs**. Write $\Phi_e$ for $\Phi$ preceded by the even-code
+embedding, retaining arbitrary initial controller states and passive
+bosonic references. In physical time write the system coupling
+operators, including the control projectors and window envelopes, as
+$A_\alpha(t)$. Define the general deleted-covariance integral
+
+$$
+F_{\rm cross}=\sum_{\alpha\beta}\int_0^{T_F}\!dt
+ \int_0^{T_F}\!ds\,
+ \|A_\alpha(t)\|\|A_\beta(s)\|
+ |\Delta C_{\alpha\beta}(t,s)|.
+$$
+
+The indices include the station and temporal-copy label;
+$\Delta C$ is zero except between different windows of the same
+station. The Gaussian resummation of
+[Huang et al., Theorem 2.9 and Eqs. (2.45)--(2.48)](https://arxiv.org/html/2411.08741v2)
+gives the following application:
+
+$$
+\begin{aligned}
+\|\Phi_e-\Phi_e^{\rm copy}\|_\diamond
+ &\le\epsilon_{{\rm copy},e}
+ :=\min\{2,e^{\mathsf K/2}-e^{(\mathsf K-\mathsf D)/2},
+                 e^{2F_{\rm cross}}-1\}.
+\end{aligned}
+\tag{FP22a}
+$$
+
+For the identical kernels of (FP22), $F_{\rm cross}=8J_{\rm cross}$,
+so $\epsilon_{{\rm copy},e}\le\min\{2,e^{16J_{\rm cross}}-1\}
+\le\min\{2,e^{16c_1}-1\}$, uniformly in $\tau$.
+The general definition also permits the different family kernels
+used below.
+
+Here is the normalization and the time-dependent adaptation.
+Each Hamiltonian coupling produces left- and right-multiplication
+Liouville insertions; their four pair combinations give integrated
+normalized covariance perturbation at most $4F_{\rm cross}$.
+The cited resummation leaves only $k$ perturbing pairs explicitly,
+while summing all unperturbed pairs into exact propagators. Their
+contribution is bounded by $(2F_{\rm cross})^k/k!$.
+For our prescribed windows, replace the proof's autonomous interval
+propagators by the actual time-ordered unitary propagators $U(t,s)$.
+They remain trace-norm contractions, and scalar window coefficients
+stay attached to their vertices; the Wick reordering and insertion
+norm bound are unchanged. Thus this is an explicit adaptation of that
+proof, rather than a claim that its autonomous theorem already states
+the present schedule verbatim. Summing $k\ge1$ gives
+$e^{2F_{\rm cross}}-1$; here $F_{\rm cross}=8J_{\rm cross}$.
+
+The fermionic resummation uses the physical parity superselection
+sector. Fixed even-code inputs with an arbitrary controller/reference
+state meet it, and tensoring a passive bosonic reference changes none
+of the insertion norms. The state trace-norm bound is therefore uniform
+over such references and gives the code-input diamond norm in (FP22a).
+No extension of this resummed bound to formal even/odd input coherences
+is asserted; (FP21) remains the separate direct-contour bound on that
+larger algebra. Unlike (FP22), (FP22a) has no bare-duration exponential.
+It still needs evaluated finite moments: $\Gamma_0\ll T$ does not fix
+$c_1$, its cutoff dependence or a numerical error. All these bounds
+are unconditional over launches. Rare postselection needs its accepted
+probability before they can imply a conditional-fidelity bound.
+
+For the source's explicit even Lorentzian spectrum, the moment can be
+bounded analytically rather than inferred from a separation of scales.
+Use finite bandwidth $W>0$ (the source's $D$), temperature $T>0$,
+chemical-potential origin zero, and $\hbar=k_B=1$:
+$\nu(\epsilon)=\nu(0)W^2/(\epsilon^2+W^2)$ and
+$\Gamma_0=2\pi|w_{\rm tun}|^2\nu(0)$.
+Its [Eqs. (105), (117)](https://arxiv.org/html/2608.18042v1) give,
+for $t>0$ and $\omega_j=(2j+1)\pi T$,
+
+$$
+\begin{aligned}
+\operatorname{Re}C(t)&=\frac{\Gamma_0W}{2}e^{-Wt},\\
+-\operatorname{Im}C(t)
+ &=2\Gamma_0W^2T\sum_{j\ge0}
+       \frac{e^{-\omega_jt}-e^{-Wt}}{W^2-\omega_j^2}\ge0,\\
+c_1&\le\frac{\Gamma_0}{4T}+\frac{\Gamma_0}{2W},\\
+\epsilon_{{\rm copy},e}
+ &\le\min\{2,\exp(4\Gamma_0/T+8\Gamma_0/W)-1\}
+ \quad\text{for identical families.}
+\end{aligned}
+\tag{FP22b}
+$$
+
+To verify the moment, insert
+$\tanh(\epsilon/2T)=4\epsilon T
+\sum_{j\ge0}(\epsilon^2+\omega_j^2)^{-1}$ in the source's
+Fourier integral and use partial fractions of its elementary sine
+transform. Its partial sums are bounded by one in absolute value, so
+the integrable Lorentzian permits dominated convergence there.
+Every displayed difference quotient is nonnegative. At
+$W=\omega_j$ its removable limit is $t e^{-Wt}/(2W)$.
+The weighted time integral of each quotient is
+$1/(W^2\omega_j^2)$, including the limit $1/W^4$.
+Tonelli's theorem and $\sum_{j\ge0}\omega_j^{-2}=1/(8T^2)$ give
+$\int_0^\infty t|\operatorname{Im}C(t)|dt=\Gamma_0/(4T)$;
+the real-part moment is $\Gamma_0/(2W)$. The triangle inequality
+proves (FP22b). This is a uniform-duration certificate for that
+specified finite spectrum and code-input endpoint. It makes no
+unsmeared $W\to\infty$ assertion, experimental parameter estimate,
+or normalized rare-herald guarantee. Different family parameters
+retain the general integral bound (FP22a).
+
+**Exact degeneracy and isotropy admit an ordinary code compiler.**
+Set $H_S=-(U/2)P$ and impose four identical lead Hamiltonians,
+temperatures, chemical potentials and form factors within each family,
+with a common tunneling phase. The two families may have different
+overall rates or temperatures. A simultaneous real $SO(4)$ rotation
+of the four system Majoranas and each family's lead modes preserves
+the Hamiltonian and thermal state. The two parity sectors are the
+inequivalent two-dimensional chiral $\operatorname{Spin}(4)$ irreps.
+Schur's lemma therefore makes each thermal-average contact amplitude
+$K_r=k_{r,e}\Pi_e+k_{r,o}\Pi_o$. Stationarity and the continuously
+acting $H_S$ give the two copied products $K_BK_A$ and $K_AK_B$;
+they commute. On the even code their common squared scalar amplitude
+is $u\ge0$.
+
+The accepted diagonal **average**
+$\mathcal E_e=(\mathcal E_{0,e}+\mathcal E_{1,e})/2$ is
+$SU(2)$-covariant. Thus it is a depolarizing Pauli CP map, and (FP19)
+implies
+
+$$
+\mathcal E_e=w_0\operatorname{Id}
+ +w\sum_{Q=X,Y,Z}\operatorname{Ad}_Q,\quad
+w_0,w\ge0,\quad 0\le u\le w_0,\qquad
+\mathcal N_\pm=(\mathcal E_e\pm u\operatorname{Id})/2.
+\tag{FP23}
+$$
+
+The inequality follows from orthogonal Pauli Choi coefficients of
+$\mathcal E_e-u\operatorname{Id}$, not from assuming a positive
+Markov depolarizing parameter. The two diagonal channels need not be
+equal: different family temperatures can change parity populations.
+
+An ordinary circuit samples the two fixed orders equally if needed,
+and uses one clean helper with the three known even logical-Pauli
+checks of (FP9), sampled uniformly, before and after the contacts.
+Retain the same coarse QND total-parity outcome. Its helper maps and
+a classical postprocessor are
+
+$$
+\begin{aligned}
+\mathcal O_+&=w_0\operatorname{Id}
+ +(w/3)\sum_{Q=X,Y,Z}\operatorname{Ad}_Q,&
+\mathcal O_-&=(2w/3)\sum_{Q=X,Y,Z}\operatorname{Ad}_Q,\\
+a&=\frac{w_0-u}{2w_0},&b&=\frac{2w_0+u}{4w_0},\\
+a\mathcal O_++b\mathcal O_-&=\mathcal N_-.
+\end{aligned}
+\tag{FP24}
+$$
+
+Indeed $aw_0=(w_0-u)/2$ and $w(a+2b)/3=w/2$.
+Here $0\le a\le1/2$, $1/2\le b\le3/4$; if $w_0=0$ then
+$u=0$ and $a=b=1/2$ works. The complementary reported flag gives
+$\mathcal N_+$ exactly on every code/reference input. Ordinary fixed
+order visits each station once, so its actual diagonal maps equal
+the copy maps without a bath replacement. Combining (FP22a) with this
+compiler bounds the actual scheduled experiment's measured,
+parity-accepted CQ instrument by $\epsilon_{{\rm copy},e}$ in diamond
+norm. It does not simulate retained odd-parity quantum outputs or an
+unmeasured controller.
+
+Calibration or supplied knowledge of $w_0,u$, its precision and reuse,
+the real controlled-even-check gates, axis/order sampling, helper
+reset/readout and a coarse QND parity measurement all count. Separate
+bilinear measurements can reveal the unknown logical state and are
+not a free substitute for that coarse port. Native contact gating,
+helper survival, whole-payload routing/storage and discarded launches
+also count; no equal-time or hardware-performance claim follows.
+Finally, if both contacts can be turned off and only cause the modeled
+poisoning, ordinary storage omits them. A useful workload must require
+an indispensable gate/readout output or include the same measured
+residual noise when inactive. Finite splitting, anisotropy and such
+required operations need their own retained-output calculation and
+ordinary parity, known-energy, QEC and protected-storage comparison.
+They remain open rather than established native gains.
 
 <a id="nr-r06-jc-energy"></a>
 
@@ -7900,7 +8238,16 @@ and exact probability/positivity polynomial identities for (FP1)--(FP10).
 Larger-mode fault-pair enumeration checks logical-class weights and fixed
 balanced checks in (FP11)--(FP17); the all-mode inequalities and optimal
 decoder arguments remain analytic. The rational rate/visibility grid is
-an additional scope and transcription guard. For (J1)--(J17), it verifies the finite isometry,
+an additional scope and transcription guard. For (FP18)--(FP24), the same
+replay checks finite Wick matchings and deleted-pair coefficients,
+thermal CAR moments, exact diagonal preservation and copied cross-map
+factorization, positive residual maps, the interaction-picture phase
+convention, Lorentzian term moments and both flags of the paid ordinary
+compiler on every code matrix unit. The continuous-bath limit, Gaussian
+stability resummation, infinite Matsubara sum, correlation-moment and
+diamond bounds, and isotropic symmetry reduction remain analytic under
+the stated parity, reference and access assumptions. These finite checks
+do not establish microscopic hardware performance. For (J1)--(J17), it verifies the finite isometry,
 complete projective measurement, ordinary and switched CP-weight
 identities, nonnegative gap and full invariant-sector atomic-dummy
 counterexample. The all-Fock sums, strict finite-energy inequality,

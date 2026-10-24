@@ -1182,6 +1182,16 @@ monitoring at the same gate error, memory exposure, reset and rejected-launch
 cost. Unequal rates or retained reservoir coherence require their own
 instrument rather than importing the symmetric formula.
 
+The [microscopic thermal-contact component](architecture-baselines.md#nr-r06-thermal-contact-history)
+instead retains the bath across the two physical schedules. It bounds
+the code-input error of a temporal bath-copy replacement and supplies
+an ordinary compiler for its isotropic specialization. The correlation
+moments, calibration and controlled gates are charged assumptions.
+An application must include a required gate, readout or other useful
+contact action: an ordinary device can turn off purely harmful switchable
+contacts. The next physical test therefore needs that action, its complete
+retained output and the actual storage/control alternatives.
+
 The [native-check baselines](architecture-baselines.md#nr-r06) also prevent
 promoting a known Clifford layer or a read-only classical-bit lookup merely
 because recompiling its full unitary is expensive. Cheap transported checks
