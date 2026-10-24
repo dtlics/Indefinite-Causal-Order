@@ -556,6 +556,250 @@ def dualrail_projector_route_guards():
 
 
 
+def multiple_survivor_collection_guards():
+    def unit(d,i,j):
+        a=zeros(d); a[i][j]=G(1); return a
+
+    def trace(a): return sum((a[i][i] for i in range(len(a))),G())
+    def ch(ks,rho):
+        out=zeros(len(ks[0]))
+        for k in ks: out=add(out,mm(k,mm(rho,adj(k))))
+        return out
+
+    def tp(ks):
+        out=zeros(len(ks[0][0]))
+        for k in ks: out=add(out,mm(adj(k),k))
+        require(out==eye(len(out)),'channel TP')
+
+    def column(a,j): return [[row[j]] for row in a]
+
+    def embed0():
+        return [[G(1),G()],[G(),G(1)],[G(),G()]]
+
+
+    def source(a,b,ra,rb,r):
+        require(a*a+ra*ra==b*b+rb*rb==1,'rational source norm')
+        k0=[[G(1),G(),G()],[G(),G(a),G()],[G(),G(),G(b)]]
+        k1=zeros(3); k1[0][1],k1[2][1]=G(ra*F(3,5)),G(ra*F(4,5))
+        k2=zeros(3); k2[0][2],k2[1][2]=G(rb*F(4,5)),G(0,rb*F(3,5))
+        ks=[mm(r,k) for k in (k0,k1,k2)]; tp(ks)
+        require(column(ks[0],0)==[[G(1)],[G()],[G()]] and
+                all(column(k,0)==zeros(3,1) for k in ks[1:]),'same pure vacuum record')
+        require(ks[0][0][1]==ks[0][0][2]==0,'vacuum e0 orthogonality')
+        return ks
+
+
+    def run_collection_replay():
+        rot0=[[G(1),G(),G()],[G(),G(F(3,5)),G(0,F(4,5))],
+              [G(),G(0,F(4,5)),G(F(3,5))]]
+        rot1=[[G(1),G(),G()],[G(),G(F(5,13)),G(F(-12,13))],
+              [G(),G(F(12,13)),G(F(5,13))]]
+        require(mm(adj(rot0),rot0)==mm(adj(rot1),rot1)==eye(3),'mode rotations')
+        hist=[source(F(3,5),F(4,5),F(4,5),F(3,5),rot0),
+              source(F(4,5),F(3,5),F(3,5),F(4,5),rot1)]
+        # Output occupancy/qubit convention: [vac, t=01, other=10].
+        embedding=[[G(1),G(),G()],[G(),G(1),G()],[G(),G(),G(1)],[G(),G(),G()]]
+        cnot=eye(4); cnot[2][2]=cnot[3][3]=G(); cnot[3][2]=cnot[2][3]=G(1)
+        require(mm(adj(cnot),cnot)==eye(4),'physical control-other CNOT-target')
+        dump0=[[G(1),G(),G(),G()],[G(),G(1),G(),G()]]
+        dump1=[[G(),G(),G(1),G()],[G(),G(),G(),G(1)]]
+        compressor=[mm(d,mm(cnot,embedding)) for d in (dump0,dump1)]
+        require(compressor==[[[G(1),G(),G()],[G(),G(1),G()]],
+                             [[G(),G(),G()],[G(),G(),G(1)]]],'literal CNOT and discard Kraus')
+        tp(compressor)
+        z=[[G(1),G(),G()],[G(),G(-1),G()],[G(),G(),G(-1)]]
+        w=blockdiag(eye(3),z)
+        plus_input=eye(3)+eye(3) # stacked numerator, external 1/sqrt2
+        x=[[G(),G(1)],[G(1),G()]]
+        encoder=embed0()
+        instrument_units=phase_entries=echo_fine=0
+        naive_bias=False
+        scores=[]
+        for h,(ks,r) in enumerate(zip(hist,(rot0,rot1))):
+            a=(F(3,5),F(4,5))[h]
+            ps=sum(((mm(adj(k),k))[1][1].r for k in ks),F())
+            require(ps==1,'encoded input norm')
+            even=[scale(add(k,mm(z,mm(k,z))),F(1,2)) for k in ks]
+            odd=[scale(add(k,scale(mm(z,mm(k,z)),-1)),F(1,2)) for k in ks]
+            for sign,expected in ((1,even),(-1,odd)):
+                row=[[G(int(i==j)) for j in range(3)]+[G(sign*int(i==j)) for j in range(3)] for i in range(3)]
+                for k,e in zip(ks,expected):
+                    literal=scale(mm(row,mm(w,mm(blockdiag(k,k),mm(w,plus_input)))),F(1,2))
+                    require(literal==e,'literal helper W/channel/W/X-readout Kraus')
+                    echo_fine+=1
+            plus=[mm(d,mm(adj(r),mm(k,encoder))) for k in even for d in compressor]
+            minus=[mm(x,mm(d,mm(adj(r),mm(k,encoder)))) for k in odd for d in compressor]
+            tp(plus+minus)
+            # Survivors in every bath record, not just e0, reach logical1.
+            surv=sum((trace(ch(even,unit(3,1,1))).r,),F())
+            loss=1-surv
+            require(surv>a*a and loss>0,'nontrivial extra survivor and loss records')
+            for i,j in product(range(2),repeat=2):
+                rho=unit(2,i,j)
+                gotplus,gotminus=ch(plus,rho),ch(minus,rho)
+                want=zeros(2)
+                if i==j==0: want[0][0]=G(1)
+                elif i==j==1: want[1][1]=G(surv)
+                else: want[i][j]=G(a)
+                require(gotplus==want,'full-reference even flag')
+                require(gotminus==scale(unit(2,1,1),loss*int(i==j==1)),'full-reference actively excited odd flag')
+                expected=unit(2,i,j) if i==j else scale(unit(2,i,j),a)
+                require(add(gotplus,gotminus)==expected,'dephasing full-reference corrected output')
+                instrument_units+=1
+            score=F(1,2)*(1+a); scores.append(str(score))
+            # Phase-cycling cancels Ejj coherence with no model assumption about it.
+            for j,i in product((1,2),repeat=2):
+                ex,ey=unit(3,0,i),scale(unit(3,0,i),G(0,-1))
+                ex=add(ex,unit(3,i,0)); ey=add(ey,scale(unit(3,i,0),G(0,1)))
+                means=[]
+                for sign in (1,-1):
+                    p=scale(add(add(unit(3,0,0),unit(3,j,j)),scale(add(unit(3,0,j),unit(3,j,0)),sign)),F(1,2))
+                    out=ch(ks,p)
+                    means.append((trace(mm(ex,out)),trace(mm(ey,out))))
+                re=(means[0][0]-means[1][0])/2
+                im=(means[0][1]-means[1][1])/2
+                require(re.i==im.i==0 and G(re.r,im.r)==ks[0][i][j], 'phase-cycled K sign and normalization')
+                naive_bias |= G(means[0][0].r,means[0][1].r)!=ks[0][i][j]
+                phase_entries+=1
+        require(naive_bias,'single positive-phase Ramsey means can be biased by Ejj coherence')
+        # Full retained-control selector: common e0 fixes the cross map even when
+        # hidden survivor/loss records interfere differently across histories.
+        def selector(ka,kb,rho):
+            out=zeros(6)
+            for a,b in zip(ka,kb):
+                stack=a+b
+                out=add(out,scale(mm(stack,mm(rho,adj(stack))),F(1,2)))
+            return out
+        zero=[[G(1)],[G()],[G()]]
+        c0=zero+zero
+        psi=column(hist[0][0],1)+column(hist[1][0],1)
+        retained_units=0
+        for i,j in product(range(2),repeat=2):
+            r=mm(encoder,mm(unit(2,i,j),adj(encoder)))
+            actual=selector(hist[0],hist[1],r)
+            if (i,j)==(0,0): require(actual==scale(mm(c0,adj(c0)),F(1,2)),'retained vacuum pure')
+            if (i,j)==(1,0): require(actual==scale(mm(psi,adj(c0)),F(1,2)),'retained E10 uses only e0 survivor columns')
+            if (i,j)==(0,1): require(actual==scale(mm(c0,adj(psi)),F(1,2)),'retained E01 conjugate orientation')
+            require(trace(actual)==G(i==j),'retained full-input trace')
+            retained_units+=1
+        require(trace(mm(adj(psi),psi))/2==G(F(1,2)) and F(1,2)<F(16,25),'stacked norm/order comparison ingredient')
+        # A bath-record unitary fixing e0 changes the coherent selector, while
+        # leaving BOTH reduced channels and their K matrices unchanged.
+        kb=hist[1]
+        changed=[kb[0],add(scale(kb[1],F(3,5)),scale(kb[2],F(4,5))),
+                 add(scale(kb[1],F(-4,5)),scale(kb[2],F(3,5)))]
+        tp(changed)
+        for i,j in product(range(3),repeat=2):
+            require(ch(changed,unit(3,i,j))==ch(kb,unit(3,i,j)),'same reduced history channel')
+        require(selector(hist[0],changed,unit(3,1,1))!=selector(hist[0],kb,unit(3,1,1)), 'full histories not inferred from reduced channels')
+        require(selector(hist[0],changed,unit(3,1,0))==selector(hist[0],kb,unit(3,1,0)), 'cross coherence independent of nonvacuum record overlap')
+        return {'status':'passed','literal_echo_fine_Kraus':echo_fine,'corrected_flag_reference_units':instrument_units,
+                'phase_cycled_complex_entries':phase_entries,'retained_control_reference_units':retained_units,
+                'ordinary_scores':scores,'naive_Ramsey_bias_counterexample':True,'hidden_history_overlap_counterexample':True,
+                'scope':'finite vacuum-preserving multi-survivor fixtures and literal paid CNOT/parity ingredients; all-history decoder upper and statistical concentration are analytic; physical gates, bath matching, phase and mode access are premises'}
+
+    return run_collection_replay()
+
+
+def unequal_vacuum_record_boundary_guards():
+    def unit(d, i, j):
+        out = zeros(d)
+        out[i][j] = G(1)
+        return out
+
+
+    def rectangular_blocks(a, b):
+        out = zeros(len(a) + len(b), len(a[0]) + len(b[0]))
+        for i, row in enumerate(a):
+            for j, value in enumerate(row):
+                out[i][j] = value
+        for i, row in enumerate(b):
+            for j, value in enumerate(row):
+                out[len(a) + i][len(a[0]) + j] = value
+        return out
+
+
+    def channel(ks, rho, weight=F(1)):
+        out = zeros(len(ks[0]))
+        for k in ks:
+            out = add(out, scale(mm(k, mm(rho, adj(k))), weight))
+        return out
+
+
+    def run_boundary_replay():
+        # System/bath output basis is |l,e>, selector/system/bath is |c,l,e>.
+        v0 = zeros(4, 2)
+        v1 = zeros(4, 2)
+        v0[0][0] = v0[3][1] = G(1)
+        v1[1][0] = v1[2][1] = G(1)
+        x = [[G(), G(1)], [G(1), G()]]
+        z = [[G(1), G()], [G(), G(-1)]]
+        require(mm(adj(v0), v0) == mm(adj(v1), v1) == eye(2), 'isometries')
+        require(v1 == mm(kron(x, eye(2)), mm(v0, x)), 'joint controlled conjugation')
+        # Block isometry on arbitrary selector/logical input, before preparing C+.
+        native = rectangular_blocks(v0, v1)
+        fixed = rectangular_blocks(v0, v0)
+        pre = blockdiag(eye(2), x)
+        post = blockdiag(eye(4), kron(x, eye(2)))
+        ordinary = mm(post, mm(fixed, pre))
+        require(ordinary == native, 'full joint selector/logical/bath equality')
+        require(mm(fixed, pre) != native, 'missing second controlled-X is detected')
+        # Prepared C+ column numerator; external squared normalization is 1/2.
+        prep = eye(2) + eye(2)
+        w = mm(native, prep)
+        projections = []
+        for e in range(2):
+            p = zeros(4, 8)
+            for c in range(2):
+                for l in range(2):
+                    p[2*c+l][4*c+2*l+e] = G(1)
+            projections.append(mm(p, w))
+        expected = [
+            [[G(1), G()], [G(), G()], [G(), G()], [G(), G(1)]],
+            [[G(), G()], [G(), G(1)], [G(1), G()], [G(), G()]],
+        ]
+        require(projections == expected, 'retained selector bath-resolved phases')
+        full_units = 0
+        for i in range(4):
+            for j in range(4):
+                rho = unit(4, i, j)
+                actual = channel([kron(k, eye(2)) for k in projections], rho, F(1, 2))
+                same = channel([kron(k, eye(2)) for k in expected], rho, F(1, 2))
+                require(actual == same, 'all logical/reference retained units')
+                full_units += 1
+        corrected = []
+        visible_units = 0
+        for h in range(2):
+            bra = [[G(1), G() , G((-1)**h), G()],
+                   [G(), G(1), G(), G((-1)**h)]]
+            maps = [mm(bra, k) for k in projections]
+            target = [eye(2), eye(2)] if h == 0 else [z, scale(z, -1)]
+            require(maps == target, 'visible fine-record phases')
+            correction = eye(2) if h == 0 else z
+            corrected.append([mm(correction, k) for k in maps])
+            for i in range(4):
+                for j in range(4):
+                    rho = unit(4, i, j)
+                    got = channel([kron(k, eye(2)) for k in corrected[h]], rho, F(1, 4))
+                    require(got == scale(rho, F(1, 2)), 'per-visible-flag full-reference identity')
+                    visible_units += 1
+        # Each isolated word is dephasing; its ground/coherence transfer is zero.
+        for v in (v0, v1):
+            ks = []
+            for e in range(2):
+                p = zeros(2, 4)
+                p[0][e] = p[1][2+e] = G(1)
+                ks.append(mm(p, v))
+            require(channel(ks, unit(2, 1, 0)) == zeros(2), 'individual word coherence transfer zero')
+            require(channel(ks, unit(2, 0, 0)) == unit(2, 0, 0), 'individual word fixes vacuum')
+        return {'joint_isometry_equal': True, 'retained_reference_matrix_units': full_units,
+                'corrected_flag_reference_matrix_units': visible_units,
+                'scope': 'Exact two-codeword boundary witness and paid controlled-conjugation compiler; no hardware port certificate.'}
+
+
+    return run_boundary_replay()
+
+
 def verify():
     return {"status": "passed", "arithmetic": "exact Gaussian rationals",
             "collective_relaxation": collective_guards(),
@@ -563,7 +807,9 @@ def verify():
             "retained_control_and_paid_parity": retained_and_parity_guards(),
             "actual_history_boundary": history_guards(),
             "dualrail_projector_routes": dualrail_projector_route_guards(),
-            "scope": "Finite full-input/reference channels, flags and model-boundary ingredients for a declared loss-only family. Universal decoder/norm/concentration proofs remain analytic; unique survivor vacuum, bath preparation, selectors, protected checks, mode/phase controls, active excitation, rejects and physical clocks are premises. No full instrument, conditional-fidelity frontier, arbitrary-code or hardware advantage certificate. Separate dual-rail fixtures use declared common-success four-mode physical loss slots and paid independent Pauli seeds; seed-index products are not distinct nonzero physical records."}
+            "multiple_survivor_collection": multiple_survivor_collection_guards(),
+            "unequal_vacuum_record_boundary": unequal_vacuum_record_boundary_guards(),
+            "scope": "Finite full-input/reference channels, flags and model-boundary ingredients for a declared loss-only family. Universal decoder/norm/concentration proofs remain analytic; unique survivor vacuum, bath preparation, selectors, protected checks, mode/phase controls, active excitation, rejects and physical clocks are premises. No full instrument, conditional-fidelity frontier, arbitrary-code or hardware advantage certificate. Separate dual-rail fixtures use declared common-success four-mode physical loss slots and paid independent Pauli seeds; seed-index products are not distinct nonzero physical records. Distinct multiple-survivor collection fixtures assume a common pure vacuum history record and final vacuum/one-excitation support, allow other survivor records and loss/survivor coherences, and add paid non-number-preserving CNOT collection, garbage reset and active recovery; they do not replace the earlier pure-loss AD/discard family. The unequal-vacuum-record witness and exact one-word controlled-conjugation closure are separate finite code-level guards, not a physical advantage or an assumed control port."}
 
 
 if __name__ == "__main__":

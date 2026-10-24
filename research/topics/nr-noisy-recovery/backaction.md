@@ -611,12 +611,12 @@ no physical noise model, native advantage or new Lean proof is certified.
 
 <a id="nr-r14-loss-memory"></a>
 
-### Loss-memory qualification and recovery with retained order control
+### Ground-preserving memory and recovery with retained order control
 
 The next memory decision is a ground-plus-collective-excitation code at a
 specified storage deadline. The following comparison retains the order
 control, every loss outcome and an arbitrary passive reference. It closes
-one loss-only fidelity candidate under explicitly paid ordinary controls;
+one ground-preserving fidelity candidate under explicitly paid ordinary controls;
 it does not exclude every dual-rail, thermal or postselected application.
 
 **Physical access and the ordinary dark code.**
@@ -645,25 +645,30 @@ Hamiltonian must be corrected. Unknown dephasing, heating, leakage and
 coupling errors require their actual channel. The experiment does not
 supply a coherent history selector or a nondestructive jump port.
 
-**The loss-only promise and ordinary probes.** Let the system manifold be
-vacuum $G$ plus $N$ labelled single excitations. For each complete physical
-word $c=0,1$, assume the full dilation with the specified initial bath is
+**Ground-preserving words, bath records and probes.** Let the input code
+lie in vacuum $G$ plus $N$ labelled single excitations. Each complete
+physical word $c=0,1$ has the full input-independent prepared-bath dilation
 
 $$
 \begin{aligned}
-V_c|G,0_B\rangle&=|G,0_B\rangle,\\
-V_c|j,0_B\rangle&=\sum_i(K_c)_{ij}|i,0_B\rangle
+V_c|G,0_B\rangle&=|G,e_0\rangle,\\
+V_c|j,0_B\rangle&=\sum_i|i\rangle|\eta_{c,ij}\rangle
                     +|G\rangle|\ell_{c,j}\rangle,\\
-\langle0_B|\ell_{c,j}\rangle&=0,\qquad
-\langle\ell_{c,i}|\ell_{c,j}\rangle
-           =\delta_{ij}-(K_c^\dagger K_c)_{ij}.
+\langle e_0|\ell_{c,j}\rangle&=0,\qquad
+(K_c)_{ij}=\langle e_0|\eta_{c,ij}\rangle.
 \end{aligned}
 \tag{LM1}
 $$
 
-The common **pure survivor record** is essential. Words may share a bath,
-and their loss vectors may overlap arbitrarily. Emission and reabsorption
-inside a word are allowed. Each ordinary word must reproduce the same
+The common **pure vacuum record** $e_0$, including the vacuum arm phase,
+is essential. A known relative phase may instead be removed by a paid
+control. Arbitrarily many survivor records and loss/survivor-record
+overlaps are allowed. Only the complete word's final output on this input
+space must lie in vacuum plus one excitation; intermediate sectors can
+be arbitrary. Isometry gives the displayed orthogonality. In particular,
+$\mathcal E_c(|j\rangle\langle G|)=K_c|j\rangle\langle G|$, but
+$\mathcal E_c(|j\rangle\langle j|)$ can contain vacuum/excitation
+coherence. Each ordinary word must reproduce the same
 initial bath preparation, pulse/clock history and output modes as its
 coherent alternative. Equal deadlines include any actual idle evolution.
 The selector must implement these full dilations coherently, with the
@@ -672,24 +677,33 @@ not establish that interface. Independent loss-only ports give
 $K_0=K_BK_A$, $K_1=K_AK_B$ as a special case, not a model for every reused
 waveguide.
 
-Prepare the product probe $(G+|j\rangle)/\sqrt2$, with one site plus and
-the rest ground. Local readout gives
+Choose an independent random sign $\xi\in\{-1,+1\}$ and prepare the
+product probe $(G+\xi|j\rangle)/\sqrt2$, with the other sites ground.
+Retain that sign and all local outcomes. Phase-cycled readout gives
 
 $$
-(K_c)_{ij}=\langle X_i\rangle+i\langle Y_i\rangle.
+(K_c)_{ij}=\mathbb E[\xi X_i]+i\mathbb E[\xi Y_i].
 \tag{LM2}
 $$
 
 The sign differs from the upper-off-diagonal Schur convention in (DQ2).
 A coherent vacuum/excitation phase reference and calibrated readout phases
-are resources. These means identify the matrix under (LM1); they do not
-verify the premise. For example, scalar amplitude damping with survival
+are resources. The random sign cancels the entire diagonal-input output,
+including any vacuum/excitation coherence. An uncycled probe can be biased.
+These means identify the coherent transfer matrix under (LM1); they do
+not verify the model or identify its full channel. For example, scalar amplitude damping with survival
 amplitude $a$ and occupancy dephasing with coherence $a$ have identical
 local $X/Y$ responses, but excited populations $a^2$ and $1$. At $a=3/5$
 their uncorrected $F_e$ are $16/25$ and $4/5$. Population records distinguish
-them. A common survivor bath state is not implied by system excitation
-preservation; extra zero-energy bath records can dephase survivors.
+them. The matrix nevertheless suffices for the paid collector below.
 
+**Pure-loss specialization and decoder options.** If every survivor has
+the same bath state $e_0$, then
+$\eta_{c,ij}=(K_c)_{ij}e_0$ and
+$\langle\ell_{c,i}|\ell_{c,j}\rangle
+=\delta_{ij}-(K_c^\dagger K_c)_{ij}$. In this stricter model the
+uncycled version of (LM2) is unbiased. It is not implied by system
+excitation preservation; additional bath records can dephase survivors.
 Encode $|0\rangle\mapsto G$, $|1\rangle\mapsto v$, with $\|v\|=1$.
 Rotate a selected unit output mode $u$ to one output qubit and trace the
 other modes. The complete logical/reference channel is amplitude damping
@@ -717,11 +731,11 @@ $$
 Tracing the bath gives the following four logical input matrix units:
 $S_{00}=|c_0\rangle\langle c_0|$,
 $S_{10}=|\psi\rangle\langle c_0|$, $S_{01}=S_{10}^\dagger$, and
-$S_{11}=|\psi\rangle\langle\psi|+\sum_\nu|\chi_\nu\rangle\langle\chi_\nu|$,
-with $\operatorname{Tr}S_{11}=1$. Every $\chi_\nu$ has system vacuum but
-may retain a nontrivial control state. Tensor each term with the
+$S_{11}=M\succeq0$, with $\operatorname{Tr}M=1$. This includes all
+survivor/loss states, their coherences and cross-history record overlaps.
+Tensor each term with the
 corresponding arbitrary input/reference coefficient $\rho_{ij,R}$.
-This is the full channel, including the loss background.
+This specifies the full input/reference map without discarding $M$.
 
 For any deterministic joint CPTP decoder $\mathcal R$,
 
@@ -758,30 +772,70 @@ ground-plus-one-mode family and the stipulated selector. It is not a
 conditional-fidelity/yield frontier, an equality of flagged instruments,
 or a bound on encodings that put the input into a helper before exposure.
 
+The common-record premise cannot be replaced by reduced ground
+preservation. For orthogonal bath states $e_0,e_1$, define code isometries
+$W_0|0\rangle=|0,e_0\rangle$, $W_0|1\rangle=|1,e_1\rangle$ and
+$W_1|0\rangle=|0,e_1\rangle$, $W_1|1\rangle=|1,e_0\rangle$.
+Both reduced words are complete dephasing, with coherent transfer zero,
+but coherent selection followed by control $X$ readout gives visible maps
+$\rho/2$ and $Z\rho Z/2$, including every reference. Correcting the
+minus flag recovers identity. The two words' vacuum bath records differ,
+so this does not satisfy (LM1).
+
+This particular exception also has a paid ordinary compiler:
+$W_1=(X_L\otimes I_E)W_0X_L$ on the code. Known controlled-$X_L$ gates
+before and after one actual $W_0$ execution therefore give exactly the
+same joint control/logical/bath isometry and corrected flags. The logical
+number-changing drive, coherent controlled port, helper lifetime, phase,
+clock, readout/reset and correction must be supplied and priced. The
+identity grants no extension outside the code or unseen bath access.
+It is a necessity witness, not a native advantage from unequal records.
+
 **Paid ordinary attainment.** Supply one protected meter and known
 controlled excitation parity $C_\Pi$, with
 $\Pi=\prod_j Z_j$ equal to $+1$ on $G$ and $-1$ on every excitation.
-Apply $C_\Pi$ before and after the complete chosen ordinary word. The
-unique survivor Kraus is parity even; every final-loss Kraus is odd.
+Apply $C_\Pi$ before and after the complete chosen ordinary word.
+In an environment basis containing $e_0$, write each Kraus operator as
+$L_\alpha=\delta_{\alpha0}|G\rangle\langle G|
+ +S_\alpha+|G\rangle\langle\ell_\alpha|$, with
+$S_0=K_c$ and $\ell_0=0$. The two flag Kraus operators are
+$(L_\alpha\pm\Pi L_\alpha\Pi)/2$: their plus parts are vacuum/survivor
+blocks and their minus parts are final-loss rows.
 The standard [ordinary parity sandwich](architecture-baselines.md#nr-r06-cat-reservoir-parity)
 therefore leaves the helper plus on final survival and minus on final
-loss, without measuring the unknown initial logical parity. It includes
-unresolved records and internal emission/reabsorption. This is an
+loss, without measuring the unknown initial logical parity. This can
+remove loss/survivor coherence from $\mathcal E_c(|v\rangle\langle v|)$;
+it preserves $\mathcal E_c(|v\rangle\langle G|)$. No equality with the
+original unflagged channel is asserted in this noncovariant case.
+It includes unresolved records and internal reabsorption. This is an
 application of an established check primitive; see
 [Gonzales et al.](https://doi.org/10.1038/s41598-023-28109-x).
 
 For $s=\|K_cv\|$, rotate $K_cv/s$ to the output mode, choosing any mode
-when $s=0$. Re-excite the output qubit on the loss flag. The exact two
-unnormalized logical/reference maps are
+when $s=0$. Collect every surviving excitation into that output qubit:
+after alignment, apply CNOT from each other site into output site $t$,
+then discard/reset the other sites. On the input vacuum/one-excitation
+space this implements the trace-preserving decoder
+$D_0=|0\rangle\langle G|+|1\rangle\langle t|$ and
+$D_i=|1\rangle\langle i|$ for $i\ne t$. The literal CNOT circuit sends
+$|i\rangle$ to the **two-excitation** garbage state $|i,t\rangle$.
+These $N-1$ gates are not passive mode merging or number-preserving optics.
+Finally re-excite the output on the loss flag. With
+$p_S=\sum_\alpha\|S_\alpha v\|^2$ and $p_L=1-p_S$, the exact maps are
 
 $$
-\mathcal O_+(\rho)=
-  [\operatorname{diag}(1,s)\otimes I_R]\rho
-  [\operatorname{diag}(1,s)\otimes I_R],\qquad
-\mathcal O_-(\rho)=(1-s^2)|1\rangle\langle1|\otimes\rho_{11,R}.
+\begin{aligned}
+\mathcal O_+(\rho)&=|0\rangle\langle0|\otimes\rho_{00,R}
+ +s|1\rangle\langle0|\otimes\rho_{10,R}
+ +s|0\rangle\langle1|\otimes\rho_{01,R}
+ +p_S|1\rangle\langle1|\otimes\rho_{11,R},\\
+\mathcal O_-(\rho)&=p_L|1\rangle\langle1|\otimes\rho_{11,R}.
+\end{aligned}
 \tag{LM6}
 $$
 
+Since $p_S\ge s^2$, the plus map is CP: its logical Kraus can be
+$\operatorname{diag}(1,s)$ and $\sqrt{p_S-s^2}|1\rangle\langle1|$.
 Their sum is dephasing with coherence $s$, giving $F_e=(1+s)/2$ on
 every attempt. Choosing the better actual word already reaches or exceeds
 (LM5) for the **same input mode**; optimizing modes preserves the
@@ -790,6 +844,11 @@ addition to any routing degree that must stay fixed to implement the
 ordinary word. Neither a path qubit nor demonstrated local drives alone
 grant these controlled parity gates. If a logical SWAP into the protected
 meter is also supplied, direct helper storage is a further comparator.
+For an unflagged endpoint, a supplied coherent helper-conditional active
+recovery followed by helper discard replaces intermediate readout; its
+gate and reset costs remain. In the pure-loss case $p_S=s^2$, and the
+collector is unnecessary with the exact output mode: the simpler
+rotate/discard decoder gives the same two flags.
 
 Retaining control genuinely matters to the proof. For two scalar
 amplitude-damping contacts with amplitude $3/5$, passive no-loss output
@@ -801,7 +860,8 @@ this example.
 
 **Calibration and the complete ledger.** A sufficient matrix-learning
 schedule uses $n$ independent launches for each of $N$ probes and all-$X$
-or all-$Y$ readout. Hoeffding over $2N^2$ local means gives
+or all-$Y$ readout, with the independent sign on each launch. Signed local
+outcomes remain in $[-1,1]$. Hoeffding over $2N^2$ means gives
 
 $$
 \|\widehat K-K\|\le\|\widehat K-K\|_F
@@ -810,29 +870,33 @@ $$
 $$
 
 Taking $n\ge4N^2\eta^{-2}\log(4N^2/\delta)$ suffices for operator error
-$\eta$, at $2Nn$ actual storage launches. Empirical singular modes give
+$\eta$, at $2Nn$ actual storage launches, $2N^2n$ local outcomes and
+one retained sign per launch. Empirical singular modes give
 $|h-\|K\||\le2\eta$; since $|1+h|^2/4$ is 1-Lipschitz on the unit disk,
-their rotate/discard fidelity regret is at most $2\eta$.
+their pure-loss rotate/discard fidelity regret is at most $2\eta$.
 Learning both actual words changes the logarithm to
 $\log(8N^2/\delta)$ and doubles the setting groups. For (LM6), choosing
 the larger empirical singular value gives
-$\operatorname{Re}h\ge s_{\rm best}-2\eta$. The surviving component
-outside the empirical output mode has norm at most $\eta$; final-loss
-re-excitation therefore restores excited population to at least
-$1-\eta^2$. Its actual fidelity is at least
-$(1+s_{\rm best})/2-\eta-\eta^2/4$.
+$\operatorname{Re}h\ge s_{\rm best}-2\eta$. The population collector
+restores both logical populations exactly even with a nonexact output
+mode. Thus its score $(1+\operatorname{Re}h)/2$ is at least
+$(1+s_{\rm best})/2-\eta$. Without the collector, the stricter pure-loss
+parity/re-excitation decoder can instead lose an uncollected surviving
+component of norm at most $\eta$; its bound is
+$(1+s_{\rm best})/2-\eta-\eta^2/4$. These are different control families.
 These are sufficient bounds, not sample optimality or free matrix advice.
 For a supplied fixed production encoder, targeted logical-plus probes can
 learn just $K_0v,K_1v$; full matrix learning is not compulsory. Such a
-known probe can be entangled across sites, using the paid encoder, though
+known phase-cycled probe can be entangled across sites, using the paid encoder, though
 it needs no held reference.
 
 Charge every word's actual contact count, elapsed time and bath/history
 preparation; two contacts apply only to the two-slot specialization.
 The ordinary recovery additionally pays two controlled global parities
 (one implementation has $2N$ controlled-$Z$ gates), coherent meter
-storage, active excitation and its energy, reset, and either coherent
-feedback or readout latency. Mode preparation/rotation, discarded modes,
+storage, $N-1$ full population-collection CNOTs when needed, active
+excitation and its energy, garbage reset, and either coherent feedback or
+readout latency. Mode preparation/rotation, discarded modes,
 phase references, $N$ local readouts per training launch and classical
 matrix storage/decomposition count. Native routing, buffers and all
 rejected attempts count too. Independent launches, SPAM, drift and model
@@ -1000,9 +1064,12 @@ The [loss-memory guard](checks/architecture/loss_memory_qualification_guards.py)
 replays finite channel, encoded/reference, flag and recovery fixtures in
 the existing backaction job. The general shared-history, arbitrary-decoder,
 concentration and physical-access arguments remain analytic. The next
-candidate must supply a useful logical task beyond this family or a
-genuinely noisy/multiple survivor record, its full selector and a benefit
-after ordinary learning, memory, checks and routing have been priced.
+candidate must supply a useful task beyond this family, distinct vacuum
+bath histories, final leakage or other justified structure, its full
+selector and a benefit after ordinary learning, memory, checks and routing
+have been priced. Extra survivor records alone do not evade the paid
+population-collection comparison; departures from its premises do not by
+themselves establish an advantage.
 
 ### Direct calibration and measurement-record prediction
 

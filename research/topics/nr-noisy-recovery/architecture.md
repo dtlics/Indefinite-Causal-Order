@@ -512,8 +512,10 @@ now connects local records to a concrete code-and-phase decision, with
 separate dedicated-pair and parallel classical-phase assumptions. The
 [loss-memory extension](backaction.md#nr-r14-loss-memory) compares full
 retained-control recovery with paid parity checks and active excitation,
-including complete shared-bath histories under a pure-survivor-record
-promise. The next target must beat these accessible ordinary controls
+including complete shared-bath histories under a common pure vacuum
+record. The multiple-survivor baseline uses phase-cycled calibration and
+paid population-collection gates; reduced ground preservation alone does
+not specify that coherent history interface. The next target must beat these accessible ordinary controls
 within a justified drift window, with preparation and training costs.
 
 The [excitation-exchange example in NR-R14](backaction.md#nr-r14) now

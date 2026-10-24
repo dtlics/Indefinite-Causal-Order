@@ -228,7 +228,10 @@ remain analytic or separately assumed. The
 [loss-memory ingredient](../research/topics/nr-noisy-recovery/checks/architecture/loss_memory_qualification_guards.py)
 adds finite collective/loss, retained-control and paid parity/re-excitation
 fixtures on complete encoded matrix units, plus single-carrier dual-rail
-success/seed/reject maps. Shared-history, arbitrary
+success/seed/reject maps. The multiple-survivor extension checks signed
+phase cycling, literal CNOT collection/discard, full flagged reference
+maps and an unequal-vacuum-record/ordinary-conjugation boundary.
+Shared-history, arbitrary
 decoder, finite-confidence and physical-cost proofs remain analytic;
 no experimental selector or bath model is certified. These checks
 establish neither a fitted bath model nor a switch sampling or

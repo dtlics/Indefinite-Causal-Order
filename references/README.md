@@ -54,7 +54,8 @@ aggregate must not replace the full labelled ordinary records.
 The same [NR-R14 owner](../research/topics/nr-noisy-recovery/backaction.md#nr-r14-loss-memory)
 connects measured dark-state controls, retained-control amplitude-damping
 literature and the established parity-check sandwich to loss-memory
-qualification. It keeps physical photon absorption, simulated optical
+qualification and the stronger ground-preserving population-collection
+comparison. It keeps physical photon absorption, simulated optical
 thermalization and a separate surviving control distinct. The
 encoding-specific endpoint comparison is not a universal switch no-go.
 

@@ -381,9 +381,9 @@ establish priority.
 
 The [ordinary pair-memory qualification baseline](backaction.md#nr-r14-pair-qualification)
 uses complete local records for code-and-phase selection. The
-[loss-memory comparison](backaction.md#nr-r14-loss-memory) retains the
-order control and compares complete quantum outputs with paid ordinary
-parity recovery. The next native test needs a justified joint instrument
+[ground-preserving memory comparison](backaction.md#nr-r14-loss-memory)
+retains the order control and compares complete quantum outputs with paid
+parity recovery and population collection, including noisy survivors. The next native test needs a justified joint instrument
 and a useful production decision beyond these scoped baselines within
 the same drift window.
 
