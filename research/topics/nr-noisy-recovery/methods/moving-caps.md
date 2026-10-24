@@ -967,6 +967,160 @@ coherent photon analyzer must admit this ordinary comparator or justify
 an actual interface/cost difference. No arbitrary retained-helper
 recovery, full factory optimum or native hardware benefit is established.
 
+### Frequency-resolved ordinary readout with finite response width
+
+<a id="nr-r11-moving-caps-frequency-readout"></a>
+
+The same ground-motion carrier sector admits a different paid readout
+that does not select one coherent temporal mode. Keep the known atomic
+$++$ input and all assumptions of (MC15). Write
+
+$$
+R(w)=\begin{pmatrix}r_0(w)^2&r_0(w)r_1(w)\\
+ r_0(w)r_1(w)&r_1(w)^2\end{pmatrix},\qquad q_H(w)=\alpha h(w).
+$$
+
+Assume a frequency-diagonal photon instrument with response $R_j(w)\ge0$,
+$\sum_jR_j(w)\le1$. Each record $j$ has a fixed unit-normalized
+polarization bra $(t_{H,j},t_{V,j})$ and a known local correction $U_j$ on
+atom $A$. Discard the unresolved frequency and arrival-time records.
+With $\mathbf1$ denoting the two-by-two all-ones matrix, set
+$B_j(w)=t_{H,j}q_H(w)\mathbf1+t_{V,j}\beta R(w)$. Its exact accepted
+probability and Bell-good mass are
+
+$$
+\begin{aligned}
+\rho_j&=\frac14\int |f(w)|^2R_j(w)
+ |\operatorname{vec}(U_jB_j(w))\rangle
+ \langle\operatorname{vec}(U_jB_j(w))|\,dw,\\
+p&=\frac14\sum_j\int |f|^2R_j\|B_j\|_F^2\,dw,\qquad
+g=\frac18\sum_j\int |f|^2R_j|\operatorname{Tr}(U_jB_j)|^2\,dw,
+\qquad F_{\rm Bell}=g/p.
+\end{aligned}\tag{MC20}
+$$
+
+This specifies the measurement instrument, not just its spectral intensity
+curve. A resolved arrival-time click after a filter can contain coherent
+cross-frequency amplitudes and does not automatically implement (MC20).
+
+For an exactly known frequency and a fixed polarization analyzer, local
+unitaries alone give at most
+
+$$
+F_{\rm loc}(w)=\frac{\|B(w)\|_F^2+2|\det B(w)|}{2\|B(w)\|_F^2}.
+\tag{MC21}
+$$
+
+Indeed, if the singular values are $s_1,s_2$, the largest corrected trace
+magnitude is $s_1+s_2$. Exact Bell therefore requires equal singular values;
+knowing the frequency cannot remove a Schmidt-amplitude mismatch by rotation.
+Local concentration is a separate paid filter, with resolved-frequency
+Bell mass $s_{\min}(B)^2/2$, and is not used below.
+
+At representative $w_j$, instead apply (MC16) pointwise to
+$c_0=\beta r_0(w_j)^2$, $b=\beta r_0(w_j)r_1(w_j)$ and
+$c_1=\beta r_1(w_j)^2$. It gives
+$M_j=\gamma_j\mathbf1+\beta R(w_j)$ and
+$M_jM_j^\dagger=s_j^2I$. For nonzero $q_H(w_j)$ choose
+
+$$
+\lambda_j=\left[1+|\gamma_j/q_H(w_j)|^2\right]^{-1/2},\quad
+(t_{H,j},t_{V,j})=\lambda_j(\gamma_j/q_H(w_j),1),\quad
+U_j=M_j^\dagger/s_j.
+\tag{MC22}
+$$
+
+The center output is exactly Bell. Count only this one normalized
+polarization outcome; its orthogonal output has not been proved to be
+another Bell branch. Frequency sorting followed by calibrated per-bin
+polarization processing is an additional port. A label obtained after a
+fixed-polarization click cannot retroactively supply (MC22). The continuum
+limit with its own analyzer and correction at every frequency is exact.
+A finite bin is exact only if almost every corrected $B_j(w)$ is
+proportional to identity, because a positive mixture is rank one only when
+all its nonzero summands share the same support.
+
+There is an analytic finite-resolution bound. Let
+$P_\perp X=X-I\operatorname{Tr}(X)/2$ and suppose
+$\|B_j(w)-B_j(w_j)\|_F\le D_j|w-w_j|$. The Frobenius contraction of
+$P_\perp$ and unitarity of $U_j$ imply
+$\|P_\perp U_jB_j(w)\|_F\le e_j+D_j|w-w_j|$, where
+$e_j=\|P_\perp U_jB_j(w_j)\|_F$. For (MC22), $e_j=0$, hence
+
+$$
+Q_j=\int |f(w)|^2R_j(w)(w-w_j)^2\,dw,\qquad
+p-g\le\frac14\sum_jD_j^2Q_j,\qquad
+F_{\rm Bell}\ge1-\frac{\sum_jD_j^2Q_j}{4p}.
+\tag{MC23}
+$$
+
+A lower confidence bound on actual $p$ may replace its denominator.
+For response weight $W_j=\int|f|^2R_j$ confined within $\Delta_j$ of
+$w_j$, the triangle inequality separately gives
+$p\ge\sum_jW_j[\max(0,\|B_j(w_j)\|_F-D_j\Delta_j)]^2/4$.
+Mislabel tails must enter the full $Q_j$; a small nominal bin width alone
+does not bound them. Calibration and rotation errors enter through the
+nonzero center residual $e_j$ and its displayed squared envelope.
+
+For constant $h$, (MR2)–(MR3) supply $|r_i|\le1$ and all-cutoff
+Lipschitz constants $L_0=2\kappa_{\rm ex}/\kappa^2$ and
+$L_1=2\kappa_{\rm ex}/\min(\kappa,\gamma)^2$. Entrywise product
+differences then give the admissible constant
+
+$$
+D_j^2=\lambda_j^2|\beta|^2
+ [4L_0^2+2(L_0+L_1)^2+4L_1^2].
+\tag{MC24}
+$$
+
+If $h$ varies with Lipschitz constant $L_h$, add
+$2|t_{H,j}\alpha|L_h$ to the Frobenius bound for $D_j$.
+A sharp bin of full width $\Delta$ centered at its midpoint has
+$Q_j\le W_j\Delta^2/4$; its incident-density centroid only decreases
+$Q_j$. The finite-resolution bad mass is therefore quadratic in width
+under this declared measurement model. The proof does not replace the
+source's complex $r_1(w)$ by a real-resonance approximation.
+
+The [exact frequency helper](../checks/architecture/moving_caps_frequency.py)
+checks normalized complex polarization projections, corrected densities and
+nonzero finite-bin bad mass. The [optional source witness](../numerics/moving_caps_frequency.py)
+uses 640 trapezoidal intervals, cutoffs 12 and 16,
+$\sigma/(2\pi)=10\,\mathrm{kHz}$ and compact band
+$[-85,85]\,\mathrm{kHz}$. For the biased known photon with unit $H$
+reference, 8, 16 and 32 bins with their own analyzers give one-port
+$p\simeq0.305145$ and $F\simeq0.99998594,0.99999543,0.99999878$.
+Evaluating (MC23) with the finite sampled moments and $p$ gives lower
+values $0.99991558,0.99997257,0.99999268$. These are empirical evaluations
+of an analytic inequality, with no infinite-resolvent, quadrature or device
+confidence certificate. A fixed analyzer without frequency resolution gives
+$F\simeq0.99994687$; even resolved-frequency local rotations alone reach
+only about $0.99997651$ for that fixed analyzer. Two fixed polarization
+outputs with separate known local corrections give a distinct approximate
+comparison: total $p\simeq0.610333$, $F\simeq0.99993290$ without frequency
+resolution, or $F\simeq0.99997051$ with 16-bin frame corrections.
+
+The 32-bin example has full width $5.3125\,\mathrm{kHz}$. As one explicit
+cost model, a Lorentzian amplitude filter
+$t(\omega)=k_f/[k_f-i(\omega-\omega_j)]$ has intensity FWHM
+$\Delta\nu=k_f/\pi$, normalized impulse intensity $2k_fe^{-2k_ft}$,
+mean delay $1/(2\pi\Delta\nu)$ and 99-percent impulse-energy time
+$\log(100)/(2\pi\Delta\nu)$: about $30$ and $138\,\mu\mathrm{s}$ here.
+This is a filter calculation, not a universal spectrometer lower bound.
+A real bank needs its actual response and time instrument, insertion loss,
+polarization phases, false clicks, detector efficiency, feedforward and
+atomic storage, cooling/reset, carrier leakage and calibration reuse/drift.
+Exact frequency resolution is not a finite-clock port.
+
+Finally, within the specified bare two-history protocol's ground-motion
+final carrier sector both orders are the same products $r_i(w)r_j(w)$,
+including their complex phase. The order
+helper factors into its known plus state. Every common photon/helper
+analyzer therefore has the same ordinary pre-readout state available,
+with an unused known helper supplied at its actual cost. Ordering gives
+no additional carrier-sector readout capability under these assumptions.
+Coherent red/blue erasure, retained nonzero motion, changed history frames,
+other loss records and unknown-input services remain separate tests.
+
 Ordinary which-node erasure is established by
 [Cabrillo et al., PRA **59**, 1025 (1999)](https://arxiv.org/abs/quant-ph/9810013)
 and the trapped-ion single-photon-interference experiment of

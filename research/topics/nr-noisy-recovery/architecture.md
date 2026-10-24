@@ -158,7 +158,11 @@ Encoded recovery, resolved loss records and matched control/clock costs
 remain physical tests. The [partial thermal-attenuator analysis](methods/thermal-attenuator.md)
 separately excludes exact heralded recovery in its infinite-oscillator
 model and supplies ordinary source-preparation comparisons; it leaves
-approximate unknown-state recovery open.
+general approximate unknown-state recovery open. For identical thermal
+slots, its [exact visibility budget](methods/thermal-attenuator.md#nr-r04-thermal-visibility)
+bounds every all-launch positive-payoff improvement over the same serial
+contacts and receiver: at fixed input mean energy and bath occupation,
+the budget is quadratic in weak loss, or cubic for a vacuum bath.
 
 [NR-R01](theorem.md) concerns physical Bell-frame restoration with a fresh
 private frame for each job. For $n\geq8$, each unknown module is followed once

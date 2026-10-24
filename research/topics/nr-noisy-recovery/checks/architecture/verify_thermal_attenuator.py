@@ -6,7 +6,9 @@ density argument are analytic inputs, not experimentally fitted conclusions.
 
 from fractions import Fraction as F
 from itertools import product
+import importlib.util
 import json
+from pathlib import Path
 
 
 if not __debug__:
@@ -304,14 +306,25 @@ def verify():
     result = _verify_contacts_and_polynomials()
     ranks, kernels = _matrix_unit_boundary_guards()
     number_blocks, modulo_records = _vacuum_retained_flag_guards()
+    visibility_path = Path(__file__).resolve().with_name("thermal_self_visibility.py")
+    visibility_spec = importlib.util.spec_from_file_location("_thermal_self_visibility", visibility_path)
+    if visibility_spec is None or visibility_spec.loader is None:
+        raise RuntimeError("Thermal visibility helper import specification failed.")
+    visibility = importlib.util.module_from_spec(visibility_spec)
+    visibility_spec.loader.exec_module(visibility)
+    visibility_budget = visibility.verify()
+    if visibility_budget.get("status") != "passed":
+        raise RuntimeError("Thermal visibility helper did not pass.")
     result.update(matrix_unit_boundary_ranks=ranks,
                   finite_dimension_kernel_contractions=kernels,
                   retained_source_number_blocks=number_blocks,
                   modulo_source_records=modulo_records,
+                  unknown_input_visibility=visibility_budget,
                   scope=('Exact finite-bath/Choi, polynomial, retained-source and '
                          'matrix-unit boundary checks. Infinite-oscillator '
                          'faithfulness, bounded strong density, Gaussian integration, '
-                         'infinite tails and native access are analytic or measured inputs.'))
+                         'infinite tails, thermal trace, sharp energy/payoff bounds '
+                         'and native access are analytic or measured inputs.'))
     return result
 
 

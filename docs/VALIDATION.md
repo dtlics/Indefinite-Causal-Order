@@ -81,11 +81,27 @@ whole-analyzer normalization and local Bell-frame guards. Its exact
 final-motion isolation and general complex construction are analytic;
 finite virtual-motion witnesses do not certify the infinite resolvent
 or supply a physical temporal-mode detector.
+Frequency-diagonal readout adds normalized per-bin polarization and
+corrected-density guards. Its finite-response bad-mass bound is analytic;
+sampled bin moments and fidelities remain optional numerical evidence,
+with no physical spectrometer, detector-clock or storage certificate.
 The standard-library suite fingerprints
 those numerical sources and record but does not execute them. Neither
 finite convergence nor an omitted initial thermal mass bounds all output
 oscillator tails. The model does not certify a complete failed-data
 channel, actual coherent router or hardware advantage.
+
+The [thermal-attenuator component of NR-R04](../research/topics/nr-noisy-recovery/methods/thermal-attenuator.md#nr-r04-thermal-visibility)
+has an analytic exact visibility formula and sharp mean-energy budget for
+identical slots. The finite replay independently lifts complete
+total-photon sectors and retains reference/flag/payoff fixtures, with
+exact omitted initial thermal-mixture weight. It does not truncate output
+photon number. Infinite trace convergence, arbitrary normal inputs,
+the sharp energy bound and all-attempt payoff comparison remain analytic.
+Finite-code parity/coin-twirl and factorial-moment guards support the
+separate parameter-free ordinary receiver; its complete infinite-gain
+CP bound and actual control costs are analytic or supplied premises;
+no conditional-fidelity optimum, capacity or native hardware is certified.
 
 The [unknown-pulse gate result NR-R21](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21)
 has a standard-library exact replay of the necessary success-support rank,

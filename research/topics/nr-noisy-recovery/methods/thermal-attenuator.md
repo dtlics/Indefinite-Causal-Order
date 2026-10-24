@@ -3,7 +3,8 @@
 This proof component of [NR-R04](../obstructions.md#nr-r04) concerns two
 independent thermal attenuators on an infinite-dimensional oscillator. It
 extends the exact-output obstruction beyond the parent's additive-displacement
-case. It does not bound approximate recovery, quantum capacity or a physical
+case and bounds a weak-loss all-attempt payoff at fixed mean input energy.
+It does not optimize approximate recovery, quantum capacity or a physical
 implementation's throughput. The separate vacuum-input calculation gives a
 fully specified retained-state preparation comparison, rather than a claim
 about arbitrary unknown inputs.
@@ -262,6 +263,228 @@ For $L=2$ this is ordinary parity. These comparisons price those extra
 controls rather than calling them free thermal contacts. They do not
 establish an optimal ordinary finite-error memory receiver.
 
+## Exact unknown-input visibility and the weak-loss payoff budget
+
+<a id="nr-r04-thermal-visibility"></a>
+
+Keep the same standard switch and independent identical thermal slots,
+with $x=\sqrt\eta$, finite $n=\bar n\ge0$ and arbitrary normal input
+$\rho_{SR}$. The reference stays inaccessible. Define
+
+$$
+c=(1-x)^3(1+x),\qquad
+d=1+2n(1-x)(1-x^2)+n^2(1-x^2)^2,\qquad
+q=1-\frac{(2n+1)c}{d}.
+\tag{TA14}
+$$
+
+Then $0\le q\le1$, $d\ge1$, and the exact minus probability is
+
+$$
+p_-(\rho)=\frac12\left[1-\frac{\operatorname{Tr}(q^N\rho_S)}d\right].
+\tag{TA15}
+$$
+
+Here $q^0=1$, including at $q=0$. No photon-number cutoff, input
+incoherence or second-moment assumption is used. Vacuum recovers (TA7)–(TA10).
+The formula also includes a vacuum bath and the endpoints $\eta=0,1$;
+these additional boundary cases do not extend the earlier faithfulness claim.
+
+Here is a full-dilation proof. On the signal and two bath one-particle
+modes the contacts are
+
+$$
+R_1=\begin{pmatrix}x&s&0\\-s&x&0\\0&0&1\end{pmatrix},\qquad
+R_2=\begin{pmatrix}x&0&s\\0&1&0\\-s&0&x\end{pmatrix},\quad
+s=\sqrt{1-x^2}.
+$$
+
+Their passive Fock-space unitaries are the second quantizations of these
+matrices. The relative matrix $V=(R_1R_2)^T(R_2R_1)$ is in $SO(3)$.
+Its signal entry and bath block are
+
+$$
+a=x^4-2x^3+2x=1-c,\quad h=x+x^2-x^3,\quad
+D=\begin{pmatrix}h&1-x^2\\
+(1-x^2)x(x-2)&h\end{pmatrix},
+\quad \det D=a.
+$$
+
+Put $r=n/(n+1)$ and
+$T=\operatorname{Tr}_{E_1E_2}[(I\otimes\tau_n\otimes\tau_n)\Gamma(V)]$.
+Cyclicity gives $\operatorname{Tr}J(\rho)=\operatorname{Tr}(T\rho_S)$
+for the switch cross map $J$. Number conservation and the phase-invariant
+baths make $T$ diagonal. For $0\le z<1$ its generating trace is
+
+$$
+\begin{aligned}
+\sum_{k\ge0}z^k\langle k|T|k\rangle
+&=\frac{(1-r)^2}{\det[I-V\operatorname{diag}(z,r,r)]}\\
+&=\frac{(1-r)^2}{(1-2rh+r^2a)-z(a-2rh+r^2)}
+=\frac{d^{-1}}{1-qz}.
+\end{aligned}\tag{TA16}
+$$
+
+To justify the infinite trace, $\|V\operatorname{diag}(z,r,r)\|<1$.
+On total number $m$, second quantization is the symmetric power, of
+dimension $(m+1)(m+2)/2$, so the trace series converges absolutely.
+The symmetric-power trace identity is the reciprocal determinant:
+it follows for diagonal matrices by multiplying three geometric series,
+and for arbitrary three-dimensional matrices by the eigenvalue identity
+and continuity. Direct determinant expansion, or the $SO(3)$ cofactors,
+gives the middle expression in (TA16). Coefficient comparison proves
+$T=d^{-1}q^N$, a bounded operator, and then (TA15) for every normal input.
+For positivity, the numerator of $q$ is
+$(r-h)^2+(a-h^2)$, where
+$a-h^2=-(1-x^2)^2x(x-2)\ge0$; the denominator minus numerator is
+$(1-a)(1-r^2)\ge0$. This proves the asserted interval for $q$.
+
+For a declared mean input energy $\operatorname{Tr}(N\rho_S)\le E<\infty$,
+write $K=\lfloor E\rfloor$ and $t=E-K$. The sharp probability budget is
+
+$$
+\sup_{\operatorname{Tr}(N\rho_S)\le E}p_-
+=\frac12\left[1-\frac{(1-t)q^K+tq^{K+1}}d\right].
+\tag{TA17}
+$$
+
+The piecewise-linear interpolation of $q^k$ is decreasing and convex.
+Its supporting lines and Jensen's inequality bound every number
+distribution, including infinite tails. The adjacent-Fock mixture with
+weights $1-t,t$ attains (TA17); handle $q=0$ with $q^0=1$ as above.
+The simpler inequality $1-q^k\le k(1-q)$ gives
+
+$$
+\frac{d-1}{2d}\le p_-\le
+\min\left\{\frac12,\frac{d-1}{2d}
+ +\frac{(2n+1)cE}{2d^2}\right\}.
+\tag{TA18}
+$$
+
+For $\delta=1-\eta\to0$ at fixed $n,E$, this is
+$p_-\le n(n+1)\delta^2/2+O_{n,E}(\delta^3)$.
+In a vacuum bath it sharpens to $p_-\le cE/2
+=E\delta^3/8+O_E(\delta^4)$. These are probability statements;
+they do not give a uniform conditional-fidelity remainder.
+
+The bound has an all-attempt operational implication. Identical slots
+give the same serial map $S=\mathcal E^2$ on both helper diagonals,
+and exchanging their Kraus labels makes $J$ Hermiticity preserving.
+Thus, with the reference retained,
+
+$$
+\Omega=|+\rangle\langle+|\otimes\sigma_+
+       +|-\rangle\langle-|\otimes\sigma_-,\quad
+\sigma_++\sigma_-=S(\rho_{SR}),\quad
+\frac12\|\Omega-|+\rangle\langle+|\otimes S(\rho_{SR})\|_1=p_-.
+\tag{TA19}
+$$
+
+The last equality follows because the difference has two orthogonal
+helper blocks $-\sigma_-$ and $\sigma_-$, both with trace $p_-$.
+An ordinary experiment can supply the same clean helper in $|+\rangle$,
+use the same two serial contacts, and then apply the same admitted
+receiver, program and records. Every all-launch positive payoff
+represented by an effect between zero and identity, including accepted
+Bell-good mass, improves by at most $p_-$; optimizing the ordinary
+receiver only strengthens this comparison. Large changes in conditional
+fidelity on a rare accepted branch do not evade this probability budget.
+
+This closes a weak-loss, fixed-energy all-attempt comparison, rather than
+the general approximate-memory problem. Unequal slots, multiple adaptive
+switched contacts, additional bath records, input-bearing bypass memory,
+different coherent extensions and energies growing with inverse loss
+require separate analysis. Routing, helper survival, storage, calibration
+and every rejection still count. Ordinary non-Gaussian codes and filters
+must also be admitted: for example,
+[Mele et al., arXiv:2607.27449v1](https://arxiv.org/html/2607.27449v1)
+certify positive ordinary coherent information for a finite-support
+non-Gaussian input where every single-mode Gaussian input gives zero.
+A Gaussian-input comparison is therefore not an ordinary capacity ceiling.
+
+### A parameter-free ordinary parity comparison on a fixed code
+
+A concrete ordinary approximate receiver is available when the actual
+apparatus supplies a known logical swap and QND parity. Encode entirely
+in $\mathcal C=\operatorname{span}\{|0\rangle,|2\rangle\}$, with any
+unknown code/reference state. Toss a fair classical coin; apply the known
+unitary $X_{02}$ before the same two serial contacts when it is one,
+accept the even-parity outcome, undo the same swap, and discard the coin.
+The full oscillator unitary swaps $|0\rangle,|2\rangle$ and is identity
+elsewhere. It commutes with parity. The coin-averaged input mean photon
+number is exactly one for every unknown code state; there is no
+input-bearing bypass memory or measured bath.
+
+The serial channel is a thermal attenuator with transmissivity
+$T=\eta^2$ and the same bath occupation $n$. For the analysis only, set
+
+$$
+G=1+(1-T)n,\quad \tau=T/G,\quad u=1-\tau,\quad v=G-1,\quad
+t=\eta/G.
+\tag{TA20}
+$$
+
+Use its exact pure-loss-then-quantum-limited-amplifier decomposition,
+with transmissivity $\tau$ and gain $G$. The no-event Kraus operator is
+$G^{-1/2}t^N$, hence on the code it is
+$G^{-1/2}\operatorname{diag}(1,t^2)$. Averaging the two known swap
+frames gives exactly
+
+$$
+\frac{D\rho D+XDX\rho XDX}{2G}
+=p_T\rho+z_T Z\rho Z,\quad D=\operatorname{diag}(1,t^2),\quad
+p_T=\frac{(1+t^2)^2}{4G},\quad z_T=\frac{(1-t^2)^2}{4G}.
+\tag{TA21}
+$$
+
+Here $X,Z$ are logical Paulis on $\mathcal C$; the reference is untouched.
+For every other accepted Kraus history, loss count $L$ plus amplifier gain
+count $K$ is even and at least two. Since the input support has $N\le2$,
+the binomial loss law and unbounded negative-binomial gain law obey
+$\mathbb E[L(L-1)]/2\le u^2$,
+$\mathbb E[LK]\le4uv$ and
+$\mathbb E[K(K-1)]/2\le6v^2$.
+For the middle inequality, condition on the loss result: the gain mean
+is $(N-L+1)v$, and $N-L\le1$ when $L\ge1$, while
+$\mathbb E L\le2u$. The last inequality uses
+$\mathbb E[K(K-1)\mid N-L]/2=(N-L+1)(N-L+2)v^2/2$.
+The indicator of $L+K\ge2$ is bounded by the sum of these three
+nonnegative factorial products. Their Kraus probability effects are
+number diagonal, so these bounds hold uniformly on the entire code,
+including its coherences and any passive reference.
+
+Consequently the complete accepted map, with full oscillator output, is
+
+$$
+\mathcal O_{\rm acc}=p_T\operatorname{Id}_{\mathcal C}+\mathcal R,
+\quad \mathcal R\text{ CP},\quad
+\|\mathcal R\|_\diamond\le z_T+\beta,\quad
+\beta=u^2+4uv+6v^2.
+\tag{TA22}
+$$
+
+For a CP map its diamond norm is the operator norm of its probability
+effect. Every accepted gain output, including levels above two, remains
+inside $\mathcal R$; no free code projection or output Fock cutoff is used.
+Thus success is at least $p_T$ and encoded Bell-good mass is at least
+$p_T$. Conditional Bell fidelity is at least
+$p_T/(p_T+z_T+\beta)$. At fixed $n$ and $\delta=1-\eta\to0$,
+$p_T=1-O_n(\delta)$ and $z_T+\beta=O_n(\delta^2)$.
+For any code/reference state, the normalized accepted state's half
+trace distance from that encoded input is at most
+$(z_T+\beta)/(p_T+z_T+\beta)$, by the same positive-mixture decomposition.
+The controller never uses $\eta,n$; those parameters only evaluate the
+bound. This is a supplied-control comparison, not an ordinary optimum.
+
+The physical cost is the encoding/capture, known $0\leftrightarrow2$
+swap pulses, one clean helper for the QND parity measurement and its
+readout/reset, the discarded coin, storage and every rejected run.
+Known-control calibration, finite pulse errors, parity assignment errors
+and actual clock must be included. The parity sources below establish
+that control's relevance; they do not implement this whole receiver.
+A rare high-quality switch branch must be compared against this
+near-unit-acceptance ordinary alternative when these same controls exist.
+
 ## Native source and port test
 
 [Xi et al., PRL **133**, 040401 (2024)](https://arxiv.org/html/2406.01951)
@@ -340,6 +563,11 @@ thermal-memory advantage remains open.
 The [exact checker](../checks/architecture/verify_thermal_attenuator.py)
 replays the Gaussian determinant and ratio polynomials, full finite
 source/flag identities, and matrix-unit boundary guards including the
-finite-dimensional kernel. Faithfulness, bounded strong density, Gaussian
+finite-dimensional kernel. Its [visibility helper](../checks/architecture/thermal_self_visibility.py)
+also lifts complete finite total-photon sectors, checks thermal-series
+coefficients and retains reference/flag/payoff fixtures, with exact omitted
+initial thermal-mixture weight. These are independent finite guards;
+the infinite trace, sharp mean-energy budget and all-input payoff bound
+remain analytic. Faithfulness, bounded strong density, Gaussian
 integration, infinite tails and the physical source premises are analytic
 or measured inputs, not conclusions of a Fock-cutoff numerical replay.

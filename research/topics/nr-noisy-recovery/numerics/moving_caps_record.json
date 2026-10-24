@@ -1370,8 +1370,1027 @@
       "resources": "pay ground cooling, carrier filtering, known photon polarization/reference, coherent rank-one temporal-mode analysis, calibration, local Bell-frame rotation, detection/rejection/reset and storage/clock latency"
     },
     "sources_sha256": {
-      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "2d772855e789a4ad7c268dd9a27e15a40a591822023289d6e9211ea7e460e986",
+      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "9fb10505542ed6f42882769dcd56fda5787032a96124d5646f19b757a0fe83a5",
       "research/topics/nr-noisy-recovery/numerics/moving_caps_analyzer.py": "0c9eeb3b1879b208042612b804e3fc0d9eaf5d6b22a836a43be49ffd04a03597",
+      "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a"
+    },
+    "status": "passed"
+  },
+  "ordinary_frequency_readout": {
+    "cases": [
+      {
+        "cases": [
+          {
+            "alpha": 0.7071067811865475,
+            "beta": 0.7071067811865475,
+            "configuration": "balanced_masked_H",
+            "fixed_polarization_both_ports": [
+              {
+                "bins": 1,
+                "conditional_Bell_fidelity": 0.9999328951262982,
+                "probability_both_ports": 0.4403856603558783
+              },
+              {
+                "bins": 4,
+                "conditional_Bell_fidelity": 0.9999591028235176,
+                "probability_both_ports": 0.4403856603558783
+              },
+              {
+                "bins": 16,
+                "conditional_Bell_fidelity": 0.9999705078786133,
+                "probability_both_ports": 0.4403856603558782
+              }
+            ],
+            "fixed_polarization_perfect_frequency_local_unitary_limit": {
+              "F": 0.9999765107781842,
+              "p": 0.22018755489861946
+            },
+            "h": 0.6656575597783737,
+            "single_port": [
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 7.029648623530861e-05,
+                "bad_mass": 1.1698149373656763e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 1.463506940921843e-15,
+                "conditional_Bell_fidelity": 0.9999468718866557,
+                "conditional_F_lower_from_measured_p": 0.9996807426910769,
+                "finite_bin_residual_bound": 1.818877392311951e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861946
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 7.029648623530861e-05,
+                "bad_mass": 1.1698149373656763e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 1.463506940921843e-15,
+                "conditional_Bell_fidelity": 0.9999468718866557,
+                "conditional_F_lower_from_measured_p": 0.9996807426910769,
+                "finite_bin_residual_bound": 1.818877392311951e-05,
+                "per_bin_polarization": true,
+                "probability": 0.22018755489861946
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 4.352264433780563e-05,
+                "bad_mass": 7.5434588661105195e-06,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 0.0036679603601282172,
+                "conditional_Bell_fidelity": 0.9999657407573758,
+                "conditional_F_lower_from_measured_p": 0.999802338309457,
+                "finite_bin_residual_bound": 1.7372597127592292e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861946
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.5544514914037106e-05,
+                "bad_mass": 4.257026098963834e-06,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 9.383729734271943e-15,
+                "conditional_Bell_fidelity": 0.999980665587261,
+                "conditional_F_lower_from_measured_p": 0.999883982812629,
+                "finite_bin_residual_bound": 6.60959270268815e-06,
+                "per_bin_polarization": true,
+                "probability": 0.2201787122486074
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 4.350028270624133e-05,
+                "bad_mass": 7.54158252203041e-06,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 0.02035749778402248,
+                "conditional_Bell_fidelity": 0.9999657492789477,
+                "conditional_F_lower_from_measured_p": 0.999802439866657,
+                "finite_bin_residual_bound": 1.736701021913823e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861946
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.5524289929290985e-05,
+                "bad_mass": 4.253635358608676e-06,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 5.652946135357277e-15,
+                "conditional_Bell_fidelity": 0.9999806809871151,
+                "conditional_F_lower_from_measured_p": 0.9998840746692063,
+                "finite_bin_residual_bound": 6.604362163300063e-06,
+                "per_bin_polarization": true,
+                "probability": 0.22017871119738422
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 3.494661224748222e-05,
+                "bad_mass": 6.897702933911232e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 0.029712548676867758,
+                "conditional_Bell_fidelity": 0.999968673511375,
+                "conditional_F_lower_from_measured_p": 0.9998412870688193,
+                "finite_bin_residual_bound": 1.5000439027870099e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861944
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.8587672367521638e-05,
+                "bad_mass": 3.095748332182513e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 6.71405488102729e-15,
+                "conditional_Bell_fidelity": 0.9999859398174745,
+                "conditional_F_lower_from_measured_p": 0.9999155790335108,
+                "finite_bin_residual_bound": 4.809686896573189e-06,
+                "per_bin_polarization": true,
+                "probability": 0.22017838862222405
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.815497749049805e-05,
+                "bad_mass": 5.73281201221576e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 0.034438476855974044,
+                "conditional_Bell_fidelity": 0.9999739639598848,
+                "conditional_F_lower_from_measured_p": 0.9999175476674925,
+                "finite_bin_residual_bound": 1.0048302359636341e-05,
+                "per_bin_polarization": false,
+                "probability": 0.2201875548986195
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 6.040197126148242e-06,
+                "bad_mass": 1.0054142679238876e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 9.777736210614121e-15,
+                "conditional_Bell_fidelity": 0.9999954336229847,
+                "conditional_F_lower_from_measured_p": 0.9999725667138364,
+                "finite_bin_residual_bound": 1.5629672470577088e-06,
+                "per_bin_polarization": true,
+                "probability": 0.22017767358003842
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.0604487208859584e-05,
+                "bad_mass": 5.321633368998713e-06,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 0.03677826362044171,
+                "conditional_Bell_fidelity": 0.999975831361716,
+                "conditional_F_lower_from_measured_p": 0.9999518388438723,
+                "finite_bin_residual_bound": 7.474457979569739e-06,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861952
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.611347074547586e-06,
+                "bad_mass": 2.6818234974412825e-07,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 3.948712300201049e-15,
+                "conditional_Bell_fidelity": 0.999998781971169,
+                "conditional_F_lower_from_measured_p": 0.9999926815944616,
+                "finite_bin_residual_bound": 4.169546842004177e-07,
+                "per_bin_polarization": true,
+                "probability": 0.2201773413757481
+              }
+            ]
+          },
+          {
+            "alpha": 0.5541185093211516,
+            "beta": 0.832437792046772,
+            "configuration": "known_bias_unit_H",
+            "fixed_polarization_both_ports": [
+              {
+                "bins": 1,
+                "conditional_Bell_fidelity": 0.9999328951262979,
+                "probability_both_ports": 0.6103328450649019
+              },
+              {
+                "bins": 4,
+                "conditional_Bell_fidelity": 0.9999591028235174,
+                "probability_both_ports": 0.6103328450649018
+              },
+              {
+                "bins": 16,
+                "conditional_Bell_fidelity": 0.9999705078786135,
+                "probability_both_ports": 0.6103328450649018
+              }
+            ],
+            "fixed_polarization_perfect_frequency_local_unitary_limit": {
+              "F": 0.9999765107781844,
+              "p": 0.3051591114945912
+            },
+            "h": 1.0,
+            "single_port": [
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 9.742427672945755e-05,
+                "bad_mass": 1.62125278635461e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 3.961871917796004e-14,
+                "conditional_Bell_fidelity": 0.9999468718866557,
+                "conditional_F_lower_from_measured_p": 0.9996807426910758,
+                "finite_bin_residual_bound": 2.520791918573482e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945912
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 9.742427672945755e-05,
+                "bad_mass": 1.62125278635461e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 3.961871917796004e-14,
+                "conditional_Bell_fidelity": 0.9999468718866557,
+                "conditional_F_lower_from_measured_p": 0.9996807426910758,
+                "finite_bin_residual_bound": 2.520791918573482e-05,
+                "per_bin_polarization": true,
+                "probability": 0.3051591114945912
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 6.031826586264412e-05,
+                "bad_mass": 1.0454520039560045e-05,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 0.004318087316849969,
+                "conditional_Bell_fidelity": 0.9999657407573762,
+                "conditional_F_lower_from_measured_p": 0.999802338309457,
+                "finite_bin_residual_bound": 2.4076775393825642e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945912
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 3.540228001678165e-05,
+                "bad_mass": 5.899835267886289e-06,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 1.6722647931920682e-14,
+                "conditional_Bell_fidelity": 0.9999806655872614,
+                "conditional_F_lower_from_measured_p": 0.999883982812629,
+                "finite_bin_residual_bound": 9.160269922720904e-06,
+                "per_bin_polarization": true,
+                "probability": 0.30514685641858497
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 6.028727475770671e-05,
+                "bad_mass": 1.0451919604359539e-05,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 0.023965758719626872,
+                "conditional_Bell_fidelity": 0.9999657492789478,
+                "conditional_F_lower_from_measured_p": 0.999802439866657,
+                "finite_bin_residual_bound": 2.4069032467479703e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945912
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 3.537425010211548e-05,
+                "bad_mass": 5.895136022837644e-06,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 1.4799582250182005e-14,
+                "conditional_Bell_fidelity": 0.9999806809871149,
+                "conditional_F_lower_from_measured_p": 0.9998840746692063,
+                "finite_bin_residual_bound": 9.153020890173435e-06,
+                "per_bin_polarization": true,
+                "probability": 0.3051468549616891
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 4.843269706182268e-05,
+                "bad_mass": 9.559563435068696e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 0.03497894388051242,
+                "conditional_Bell_fidelity": 0.999968673511375,
+                "conditional_F_lower_from_measured_p": 0.9998412870688193,
+                "finite_bin_residual_bound": 2.078918877990846e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945912
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.5760754675903113e-05,
+                "bad_mass": 4.2904141923649775e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 1.3271897591220618e-14,
+                "conditional_Bell_fidelity": 0.9999859398174736,
+                "conditional_F_lower_from_measured_p": 0.9999155790335107,
+                "finite_bin_residual_bound": 6.665770827073652e-06,
+                "per_bin_polarization": true,
+                "probability": 0.3051464079030472
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.51610805286235e-05,
+                "bad_mass": 7.945134868458936e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 0.04054251832705575,
+                "conditional_Bell_fidelity": 0.9999739639598846,
+                "conditional_F_lower_from_measured_p": 0.9999175476674925,
+                "finite_bin_residual_bound": 1.392599605144583e-05,
+                "per_bin_polarization": false,
+                "probability": 0.30515911149459124
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 8.371141543937619e-06,
+                "bad_mass": 1.3934090182243786e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 2.7045421195928133e-14,
+                "conditional_Bell_fidelity": 0.9999954336229845,
+                "conditional_F_lower_from_measured_p": 0.9999725667138364,
+                "finite_bin_residual_bound": 2.1661246777913333e-06,
+                "per_bin_polarization": true,
+                "probability": 0.30514541692225294
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.4696815612496367e-05,
+                "bad_mass": 7.375280184740429e-06,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 0.04329702016453692,
+                "conditional_Bell_fidelity": 0.9999758313617161,
+                "conditional_F_lower_from_measured_p": 0.9999518388438723,
+                "finite_bin_residual_bound": 1.0358891341517405e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945912
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.2331745397976087e-06,
+                "bad_mass": 3.716753546045837e-07,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 1.3544749338486826e-14,
+                "conditional_Bell_fidelity": 0.9999987819711692,
+                "conditional_F_lower_from_measured_p": 0.9999926815944616,
+                "finite_bin_residual_bound": 5.778597297357316e-07,
+                "per_bin_polarization": true,
+                "probability": 0.30514495651854784
+              }
+            ]
+          }
+        ],
+        "nout": 12,
+        "packet_mass": 1.00000000000002,
+        "scope": "Finite virtual-motion cutoff and sampled packet integrals only. MR2 analytically supplies the all-cutoff Lipschitz constant, but source design/correction values, quadrature moments and accepted p here are finite witnesses, not a hardware confidence/tail/measurement-resolution/time certificate.",
+        "sigma_2pi_MHz": 0.01,
+        "steps": 640
+      },
+      {
+        "cases": [
+          {
+            "alpha": 0.7071067811865475,
+            "beta": 0.7071067811865475,
+            "configuration": "balanced_masked_H",
+            "fixed_polarization_both_ports": [
+              {
+                "bins": 1,
+                "conditional_Bell_fidelity": 0.9999328951262977,
+                "probability_both_ports": 0.4403856603558687
+              },
+              {
+                "bins": 4,
+                "conditional_Bell_fidelity": 0.9999591028235177,
+                "probability_both_ports": 0.4403856603558687
+              },
+              {
+                "bins": 16,
+                "conditional_Bell_fidelity": 0.9999705078786132,
+                "probability_both_ports": 0.44038566035586857
+              }
+            ],
+            "fixed_polarization_perfect_frequency_local_unitary_limit": {
+              "F": 0.9999765107781842,
+              "p": 0.22018755489861458
+            },
+            "h": 0.6656575597783737,
+            "single_port": [
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 7.029648623536413e-05,
+                "bad_mass": 1.1698149373851052e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 9.345352278033622e-15,
+                "conditional_Bell_fidelity": 0.9999468718866549,
+                "conditional_F_lower_from_measured_p": 0.9996807426910765,
+                "finite_bin_residual_bound": 1.8188773923147213e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861458
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 7.029648623536413e-05,
+                "bad_mass": 1.1698149373851052e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 9.345352278033622e-15,
+                "conditional_Bell_fidelity": 0.9999468718866549,
+                "conditional_F_lower_from_measured_p": 0.9996807426910765,
+                "finite_bin_residual_bound": 1.8188773923147213e-05,
+                "per_bin_polarization": true,
+                "probability": 0.22018755489861458
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 4.352264433780636e-05,
+                "bad_mass": 7.543458865971742e-06,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 0.003667960360128064,
+                "conditional_Bell_fidelity": 0.9999657407573764,
+                "conditional_F_lower_from_measured_p": 0.999802338309457,
+                "finite_bin_residual_bound": 1.737259712759241e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861458
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.5544514914040667e-05,
+                "bad_mass": 4.257026098797301e-06,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 8.715040806090768e-15,
+                "conditional_Bell_fidelity": 0.9999806655872617,
+                "conditional_F_lower_from_measured_p": 0.999883982812629,
+                "finite_bin_residual_bound": 6.609592702689955e-06,
+                "per_bin_polarization": true,
+                "probability": 0.22017871224860253
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 4.350028270624194e-05,
+                "bad_mass": 7.54158252203041e-06,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 0.020357497784020025,
+                "conditional_Bell_fidelity": 0.9999657492789477,
+                "conditional_F_lower_from_measured_p": 0.999802439866657,
+                "finite_bin_residual_bound": 1.7367010219138268e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861458
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.5524289929305703e-05,
+                "bad_mass": 4.253635358553165e-06,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 8.557465282104227e-15,
+                "conditional_Bell_fidelity": 0.9999806809871153,
+                "conditional_F_lower_from_measured_p": 0.9998840746692063,
+                "finite_bin_residual_bound": 6.604362163307514e-06,
+                "per_bin_polarization": true,
+                "probability": 0.22017871119737933
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 3.4946612247482395e-05,
+                "bad_mass": 6.897702933966743e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 0.02971254867686294,
+                "conditional_Bell_fidelity": 0.9999686735113746,
+                "conditional_F_lower_from_measured_p": 0.9998412870688193,
+                "finite_bin_residual_bound": 1.5000439027869925e-05,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861455
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.8587672367509176e-05,
+                "bad_mass": 3.0957483324045576e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 1.842403736150821e-15,
+                "conditional_Bell_fidelity": 0.9999859398174735,
+                "conditional_F_lower_from_measured_p": 0.9999155790335109,
+                "finite_bin_residual_bound": 4.809686896566761e-06,
+                "per_bin_polarization": true,
+                "probability": 0.2201783886222192
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.815497749049789e-05,
+                "bad_mass": 5.732812012271271e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 0.034438476855967855,
+                "conditional_Bell_fidelity": 0.9999739639598845,
+                "conditional_F_lower_from_measured_p": 0.9999175476674925,
+                "finite_bin_residual_bound": 1.0048302359636092e-05,
+                "per_bin_polarization": false,
+                "probability": 0.2201875548986146
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 6.040197126146138e-06,
+                "bad_mass": 1.0054142679793987e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 9.617191802536046e-15,
+                "conditional_Bell_fidelity": 0.9999954336229844,
+                "conditional_F_lower_from_measured_p": 0.9999725667138365,
+                "finite_bin_residual_bound": 1.5629672470566017e-06,
+                "per_bin_polarization": true,
+                "probability": 0.22017767358003354
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.0604487208859271e-05,
+                "bad_mass": 5.321633369054224e-06,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 0.03677826362043491,
+                "conditional_Bell_fidelity": 0.9999758313617156,
+                "conditional_F_lower_from_measured_p": 0.9999518388438723,
+                "finite_bin_residual_bound": 7.474457979569416e-06,
+                "per_bin_polarization": false,
+                "probability": 0.22018755489861463
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.6113470745498682e-06,
+                "bad_mass": 2.681823497996394e-07,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 1.1307135738735569e-14,
+                "conditional_Bell_fidelity": 0.9999987819711686,
+                "conditional_F_lower_from_measured_p": 0.9999926815944616,
+                "finite_bin_residual_bound": 4.169546842015683e-07,
+                "per_bin_polarization": true,
+                "probability": 0.2201773413757432
+              }
+            ]
+          },
+          {
+            "alpha": 0.5541185093211516,
+            "beta": 0.832437792046772,
+            "configuration": "known_bias_unit_H",
+            "fixed_polarization_both_ports": [
+              {
+                "bins": 1,
+                "conditional_Bell_fidelity": 0.999932895126298,
+                "probability_both_ports": 0.6103328450648886
+              },
+              {
+                "bins": 4,
+                "conditional_Bell_fidelity": 0.9999591028235172,
+                "probability_both_ports": 0.6103328450648886
+              },
+              {
+                "bins": 16,
+                "conditional_Bell_fidelity": 0.9999705078786132,
+                "probability_both_ports": 0.6103328450648885
+              }
+            ],
+            "fixed_polarization_perfect_frequency_local_unitary_limit": {
+              "F": 0.9999765107781841,
+              "p": 0.3051591114945845
+            },
+            "h": 1.0,
+            "single_port": [
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 9.742427672941161e-05,
+                "bad_mass": 1.6212527863435078e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 3.365156860077311e-14,
+                "conditional_Bell_fidelity": 0.999946871886656,
+                "conditional_F_lower_from_measured_p": 0.999680742691076,
+                "finite_bin_residual_bound": 2.5207919185711416e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945845
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 9.742427672941161e-05,
+                "bad_mass": 1.6212527863435078e-05,
+                "bin_width_kHz": 170.0,
+                "bins": 1,
+                "center_non_Bell_amplitude_max": 3.365156860077311e-14,
+                "conditional_Bell_fidelity": 0.999946871886656,
+                "conditional_F_lower_from_measured_p": 0.999680742691076,
+                "finite_bin_residual_bound": 2.5207919185711416e-05,
+                "per_bin_polarization": true,
+                "probability": 0.3051591114945845
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 6.031826586264423e-05,
+                "bad_mass": 1.0454520039560045e-05,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 0.0043180873168497695,
+                "conditional_Bell_fidelity": 0.9999657407573762,
+                "conditional_F_lower_from_measured_p": 0.999802338309457,
+                "finite_bin_residual_bound": 2.4076775393825673e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945845
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 3.5402280016748176e-05,
+                "bad_mass": 5.899835267997311e-06,
+                "bin_width_kHz": 85.0,
+                "bins": 2,
+                "center_non_Bell_amplitude_max": 3.66673109755369e-15,
+                "conditional_Bell_fidelity": 0.9999806655872611,
+                "conditional_F_lower_from_measured_p": 0.9998839828126291,
+                "finite_bin_residual_bound": 9.160269922703623e-06,
+                "per_bin_polarization": true,
+                "probability": 0.3051468564185782
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 6.0287274757706625e-05,
+                "bad_mass": 1.0451919604526072e-05,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 0.023965758719623913,
+                "conditional_Bell_fidelity": 0.9999657492789472,
+                "conditional_F_lower_from_measured_p": 0.999802439866657,
+                "finite_bin_residual_bound": 2.40690324674796e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945845
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 3.537425010213647e-05,
+                "bad_mass": 5.89513602267111e-06,
+                "bin_width_kHz": 42.5,
+                "bins": 4,
+                "center_non_Bell_amplitude_max": 2.013762890659345e-14,
+                "conditional_Bell_fidelity": 0.9999806809871155,
+                "conditional_F_lower_from_measured_p": 0.9998840746692061,
+                "finite_bin_residual_bound": 9.153020890184241e-06,
+                "per_bin_polarization": true,
+                "probability": 0.3051468549616824
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 4.843269706182214e-05,
+                "bad_mass": 9.559563435179719e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 0.034978943880506895,
+                "conditional_Bell_fidelity": 0.9999686735113745,
+                "conditional_F_lower_from_measured_p": 0.9998412870688193,
+                "finite_bin_residual_bound": 2.0789188779908057e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945845
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.5760754675879447e-05,
+                "bad_mass": 4.290414192309466e-06,
+                "bin_width_kHz": 21.25,
+                "bins": 8,
+                "center_non_Bell_amplitude_max": 8.16514715087005e-15,
+                "conditional_Bell_fidelity": 0.9999859398174739,
+                "conditional_F_lower_from_measured_p": 0.9999155790335108,
+                "finite_bin_residual_bound": 6.665770827061585e-06,
+                "per_bin_polarization": true,
+                "probability": 0.3051464079030405
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.516108052862304e-05,
+                "bad_mass": 7.945134868347914e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 0.040542518327048624,
+                "conditional_Bell_fidelity": 0.9999739639598849,
+                "conditional_F_lower_from_measured_p": 0.9999175476674925,
+                "finite_bin_residual_bound": 1.3925996051445453e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945846
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 8.371141543922599e-06,
+                "bad_mass": 1.3934090181133563e-06,
+                "bin_width_kHz": 10.625,
+                "bins": 16,
+                "center_non_Bell_amplitude_max": 9.816943458081576e-15,
+                "conditional_Bell_fidelity": 0.9999954336229848,
+                "conditional_F_lower_from_measured_p": 0.9999725667138365,
+                "finite_bin_residual_bound": 2.1661246777836977e-06,
+                "per_bin_polarization": true,
+                "probability": 0.30514541692224617
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 1.4696815612495745e-05,
+                "bad_mass": 7.375280184684918e-06,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 0.04329702016452872,
+                "conditional_Bell_fidelity": 0.9999758313617163,
+                "conditional_F_lower_from_measured_p": 0.9999518388438723,
+                "finite_bin_residual_bound": 1.0358891341516858e-05,
+                "per_bin_polarization": false,
+                "probability": 0.3051591114945845
+              },
+              {
+                "all_cutoff_Lipschitz_bad_mass_bound": 2.2331745397988598e-06,
+                "bad_mass": 3.716753546600948e-07,
+                "bin_width_kHz": 5.3125,
+                "bins": 32,
+                "center_non_Bell_amplitude_max": 1.807591318017325e-14,
+                "conditional_Bell_fidelity": 0.9999987819711691,
+                "conditional_F_lower_from_measured_p": 0.9999926815944616,
+                "finite_bin_residual_bound": 5.778597297363617e-07,
+                "per_bin_polarization": true,
+                "probability": 0.30514495651854107
+              }
+            ]
+          }
+        ],
+        "nout": 16,
+        "packet_mass": 1.00000000000002,
+        "scope": "Finite virtual-motion cutoff and sampled packet integrals only. MR2 analytically supplies the all-cutoff Lipschitz constant, but source design/correction values, quadrature moments and accepted p here are finite witnesses, not a hardware confidence/tail/measurement-resolution/time certificate.",
+        "sigma_2pi_MHz": 0.01,
+        "steps": 640
+      }
+    ],
+    "commands_and_outputs": {
+      "normal": {
+        "command": [
+          "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-B",
+          "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\numerics\\moving_caps_frequency.py"
+        ],
+        "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+        "exit_code": 0,
+        "generated_output": "_build/moving_caps_frequency/normal.json",
+        "output_sha256": "4eb6e084a850482b64d4a9b8f9376ffde57412de7e7fdf6bb3dbd51fa75f3c3d",
+        "stderr_bytes": 0
+      },
+      "optimized": {
+        "command": [
+          "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+          "-OO",
+          "-B",
+          "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\numerics\\moving_caps_frequency.py"
+        ],
+        "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+        "exit_code": 0,
+        "generated_output": "_build/moving_caps_frequency/optimized.json",
+        "output_sha256": "4eb6e084a850482b64d4a9b8f9376ffde57412de7e7fdf6bb3dbd51fa75f3c3d",
+        "stderr_bytes": 0
+      }
+    },
+    "environment": {
+      "machine": "AMD64",
+      "numpy_version": "2.3.5",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python_executable": "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "python_version": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]"
+    },
+    "exact_guard_evidence": {
+      "commands_and_outputs": {
+        "normal": {
+          "command": [
+            "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "-S",
+            "-B",
+            "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\checks\\architecture\\moving_caps_frequency.py"
+          ],
+          "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+          "exit_code": 0,
+          "generated_output": "_build/moving_caps_frequency/exact_normal.json",
+          "output_sha256": "2dde8b9f4ba0b9353d367d713690b54d231818b6bbb99f4578da42daefe090b8",
+          "stderr_bytes": 0
+        },
+        "optimized": {
+          "command": [
+            "C:\\Users\\Yiga\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+            "-OO",
+            "-S",
+            "-B",
+            "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update\\research\\topics\\nr-noisy-recovery\\checks\\architecture\\moving_caps_frequency.py"
+          ],
+          "cwd": "C:\\Users\\Yiga\\Documents\\Codex\\2026-10-21\\new-chat-2\\work\\repo-update",
+          "exit_code": 0,
+          "generated_output": "_build/moving_caps_frequency/exact_optimized.json",
+          "output_sha256": "2dde8b9f4ba0b9353d367d713690b54d231818b6bbb99f4578da42daefe090b8",
+          "stderr_bytes": 0
+        }
+      },
+      "dependency_scope": "independent exact standard-library helper; NumPy source imports only sibling Nodes, not this helper",
+      "normal_optimized_output_bytes_equal": true,
+      "report": {
+        "finite_frequency_readout": {
+          "bad_mass": "589807/442361250",
+          "coarse_Bell_good_mass": "127627159/884722500",
+          "coarse_probability": "2525623/17347500",
+          "frequency_points": 3,
+          "full_density_entries": 48,
+          "perturbation_upper": "24127/17347500",
+          "scope": "Finite rational contraction and frequency-diagonal readout ingredients; universal continuum/derivative and physical analyzer claims are analytic or supplied premises.",
+          "status": "passed"
+        },
+        "scope": "Finite complex rational local-contraction/polarization-projection, point-frequency Bell-frame and nonzero finite-bin error ingredients. General frequency-response moments, all-cutoff derivative proof, carrier isolation and physical sorting/analyzer/clock costs remain analytic or supplied premises. No hardware or rate certificate.",
+        "status": "passed"
+      },
+      "source_sha256": "ca44b8969e489d7d0a78be15e56e0e77aba535b0f12c8136d0116fb19f49aec1"
+    },
+    "guards": {
+      "direct_finite_bin_residual_and_MR2_envelopes_active": true,
+      "maximum_packet_mass_residual": 1.9984014443252818e-14,
+      "source_cache_record_nonmutation_during_runs": true
+    },
+    "kind": "supplemental ordinary carrier Bell factory with frequency-diagonal finite-bin readout and recorded local corrections",
+    "normal_optimized_output_bytes_equal": true,
+    "original_evidence_preservation": "all prior numerical values, cases, commands, environments, outputs, guards and interpretations unchanged; only current method metadata pins are refreshed recursively, plus this component and new numerical source pin",
+    "pinned_configuration": {
+      "bin_counts": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "both_ports": "separately labelled fixed X-basis polarization superposition outputs with per-bin local frames; approximate Bell comparator only",
+      "carrier_filter": "ideal carrier-band isolation; all nonzero final even motion rejected by analytic disjoint support",
+      "compact_halfwidth": 0.085,
+      "eta": 0.17,
+      "frequency_unit": "angular frequencies divided by the same 2*pi MHz; sigma/(2*pi)=10 kHz",
+      "g": 7.6,
+      "gamma": 3.0,
+      "input": "known atoms++, independent motion00, one known photon alpha H+beta V; not an unknown-data gate",
+      "kappa_in": 0.2,
+      "local_correction": "known per-bin Procrustes/Bell-frame unitary on one atom",
+      "mu": 0.138,
+      "node_relation": "identical matched-frame nodes; common H reference and scattering clock",
+      "primary_model": "arXiv:2606.26542v1, stationary standing-wave reflection; same MC15 ground/carrier preparation",
+      "readout": "frequency-diagonal records with ideal nonoverlapping bins; unresolved frequency/arrival time discarded",
+      "reference_configurations": [
+        "balanced known photon with constant H mask a=r_dark(0)^2",
+        "known biased photon with unit H reference"
+      ],
+      "representatives": "known incident-density centroid within each bin",
+      "sigma": 0.01,
+      "single_port": "one unit-normalized polarization outcome; either one fixed setting or independently calibrated settings per frequency bin"
+    },
+    "recorded_at_utc": "2026-10-24T21:28:02.090008+00:00",
+    "refinement": {
+      "absolute_changes": {
+        "balanced_masked_H": [
+          {
+            "F_absolute_change": 7.771561172376096e-16,
+            "bins": 1,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 7.771561172376096e-16,
+            "bins": 1,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 6.661338147750939e-16,
+            "bins": 2,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 7.771561172376096e-16,
+            "bins": 2,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 0.0,
+            "bins": 4,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 2.220446049250313e-16,
+            "bins": 4,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 8,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 9.992007221626409e-16,
+            "bins": 8,
+            "p_absolute_change": 4.85722573273506e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 16,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 16,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 32,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 32,
+            "p_absolute_change": 4.884981308350689e-15,
+            "per_bin_polarization": true
+          }
+        ],
+        "known_bias_unit_H": [
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 1,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 1,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 0.0,
+            "bins": 2,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 2,
+            "p_absolute_change": 6.772360450213455e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 5.551115123125783e-16,
+            "bins": 4,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 5.551115123125783e-16,
+            "bins": 4,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 4.440892098500626e-16,
+            "bins": 8,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 2.220446049250313e-16,
+            "bins": 8,
+            "p_absolute_change": 6.716849298982197e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 16,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 3.3306690738754696e-16,
+            "bins": 16,
+            "p_absolute_change": 6.772360450213455e-15,
+            "per_bin_polarization": true
+          },
+          {
+            "F_absolute_change": 2.220446049250313e-16,
+            "bins": 32,
+            "p_absolute_change": 6.661338147750939e-15,
+            "per_bin_polarization": false
+          },
+          {
+            "F_absolute_change": 1.1102230246251565e-16,
+            "bins": 32,
+            "p_absolute_change": 6.772360450213455e-15,
+            "per_bin_polarization": true
+          }
+        ]
+      },
+      "base": {
+        "intervals": 640,
+        "virtual_motion_cutoff": 12
+      },
+      "certified_error_bound": false,
+      "interpretation": "only empirical finite virtual-resolvent refinement at fixed packet quadrature; no infinite-motion or quadrature confidence certificate",
+      "refined": {
+        "intervals": 640,
+        "virtual_motion_cutoff": 16
+      }
+    },
+    "scope": {
+      "access": "frequency sorting plus per-bin polarization is an additional paid physical port; post-click frequency knowledge alone cannot retroactively change the polarization analyzer",
+      "analytic": "general frequency-response second-moment bound and all-cutoff MR2 derivative constants are proved in the method; numerical center/moment/p inputs remain witnesses",
+      "costs": "pay ground cooling, carrier filter, optical resolution/insertion loss, bin analyzer phases, calibration/reuse/drift, local feedforward/storage, all rejects, detection/false flags and reset",
+      "excluded": [
+        "native advantage",
+        "measured device rate/fidelity",
+        "actual filter impulse or deadline certificate",
+        "full loss/false-herald instrument",
+        "exact Bell at finite bins in general",
+        "coherent rank-one temporal projector",
+        "arbitrary native receiver or global ordinary optimum"
+      ],
+      "instrument": "a time-resolved click after a filter need not realize the frequency-diagonal instrument; response/crosstalk/timing records must be supplied"
+    },
+    "sources_sha256": {
+      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "9fb10505542ed6f42882769dcd56fda5787032a96124d5646f19b757a0fe83a5",
+      "research/topics/nr-noisy-recovery/numerics/moving_caps_frequency.py": "6fbe6c82580b3a2bb29ca33fae2bd360c10ab9494634ffab668ab2979b57a719",
       "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a"
     },
     "status": "passed"
@@ -2671,7 +3690,7 @@
       "scratch_sha256": "4df2cc79d244113b766ef5d805be038ea4f3f484ab6ba63d12f8abec455f79e5"
     },
     "sources_sha256": {
-      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "2d772855e789a4ad7c268dd9a27e15a40a591822023289d6e9211ea7e460e986",
+      "research/topics/nr-noisy-recovery/methods/moving-caps.md": "9fb10505542ed6f42882769dcd56fda5787032a96124d5646f19b757a0fe83a5",
       "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a",
       "research/topics/nr-noisy-recovery/numerics/moving_caps_parity.py": "84974e35a87e88bd75c8bf29a99a85dab67729716b43fb00654b205898998978"
     }
@@ -2984,8 +4003,9 @@
     "source_hardware": "no two-module routing/helper realization, propagation phase calibration or apparatus-rate fit is certified"
   },
   "sources_sha256": {
-    "research/topics/nr-noisy-recovery/methods/moving-caps.md": "2d772855e789a4ad7c268dd9a27e15a40a591822023289d6e9211ea7e460e986",
+    "research/topics/nr-noisy-recovery/methods/moving-caps.md": "9fb10505542ed6f42882769dcd56fda5787032a96124d5646f19b757a0fe83a5",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_analyzer.py": "0c9eeb3b1879b208042612b804e3fc0d9eaf5d6b22a836a43be49ffd04a03597",
+    "research/topics/nr-noisy-recovery/numerics/moving_caps_frequency.py": "6fbe6c82580b3a2bb29ca33fae2bd360c10ab9494634ffab668ab2979b57a719",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_parity.py": "84974e35a87e88bd75c8bf29a99a85dab67729716b43fb00654b205898998978",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_running.py": "b3b449c89e3fc7ffa2c7b854812e4805e1efe5cf2dfa1e458cb380e81f7642e5"
