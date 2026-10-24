@@ -230,6 +230,9 @@ calibrated multimode routing and demonstrated pilot correction from the
 required fresh two-coupler interface. None supplies that application yet.
 Its private-program comparison also preserves client secrecy and ordinary
 adaptive controls; blindness alone does not supply a callable fresh oracle.
+Its [natural-exchange screen](backaction.md#nr-r19-natural-exchange) separates
+the demonstrated atomic sectors from the required two-manifold port and
+gives a scoped constant-hold spectral guard.
 The general family also admits a three-call simulation. The remaining target
 is a useful native interface with the complete register routed through
 both modules, a justified drift window and a matched primitive-level

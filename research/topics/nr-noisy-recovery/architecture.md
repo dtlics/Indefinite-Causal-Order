@@ -232,6 +232,33 @@ sequence data for multiple gate-set properties. Local or sparse model fitting
 can also be appropriate when its assumptions fit the device. Calibration
 data and computation must be amortized across subsequent settings and jobs.
 
+<a id="nr-online-detector-feedback"></a>
+
+Ordinary calibration can also reuse production error-detection records.
+[Sivak et al., Nature **655**, 879–884 (2026)](https://doi.org/10.1038/s41586-026-10759-2)
+steer physical controls using detector-event rates, a surrogate available
+without knowing the logical input. Under injected drift, controller
+steering gives 24% lower logical error rate and 2.4-fold better stability;
+31% and 3.5-fold additionally use offline decoder steering with labelled
+logical-error estimates. The local surrogate relation is not a universal
+logical-fidelity certificate. Their hardware experiments repeat prepared
+memory shots; uninterrupted steering with exploration is simulated.
+[The v4 supplement, I.B](https://arxiv.org/html/2511.08493v4), specifies a
+typical epoch of 40 policies, 4,000 shots each and 25 cycles per shot:
+four million cycles. Actual epochs take 1–10 minutes; four seconds is a
+projected budget at 1 µs per cycle. The reported 130-epoch step response must
+not be interpreted as 130 physical cycles.
+
+A new diagnostic should improve a specified production decision beyond
+this record-based ordinary controller. Preserve its detector transcript,
+available decoder information and real update latency. Score every
+exploratory policy on the same unknown-input task, rather than only the
+best learned policy or labelled evaluation shots. Extra probes, clean
+helpers, resets and classical processing enter the same drift clock.
+A detector-blind logical direction needs an additional physical observable;
+the existing [ordinary transported-check comparison](architecture-baselines.md#nr-r06)
+must still receive any known coherent check controls supplied to a switch.
+
 The [phase-calibration benchmark NR-R15](metrology.md) checks a stronger
 positive starting point: a known switch protocol exceeds every ordinary
 strategy restricted to two independent phase/amplitude-damping queries.
@@ -499,6 +526,11 @@ three-call simulation. In passive mobile devices the extra nominal query
 can use a vacuum dummy, so its physical penalty needs an occupied-path
 calculation. Generic manifold hopping and reciprocal reverse propagation
 do not automatically implement the promised unknown couplers.
+
+The bounded [natural-exchange screen](backaction.md#nr-r19-natural-exchange)
+checks the actual endpoint spaces and ordinary controls in three atomic
+experiments. Its separate ideal-vector transfer bound is an analytic
+constant-hold diagnostic, not a measured device limit.
 
 The next native test needs packaged modules receiving the complete coherent
 address/data register, a useful task requiring that address coherence,

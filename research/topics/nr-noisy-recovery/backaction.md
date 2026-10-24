@@ -1327,6 +1327,79 @@ explicitly has generally different bright-pair couplings. Adiabatic or
 composite pulse constructions can change this constant-coupling screen,
 but need full-input propagators, durations and ordinary controls.
 
+<a id="nr-r19-natural-exchange"></a>
+
+**Natural atomic exchange still needs the complete port.** A bounded
+three-primary screen distinguishes useful exchange dynamics from the
+specific two-manifold oracle required here. These sources do not establish
+that pair or its coherent order interface.
+
+| Primary source and version | Demonstrated interaction | Missing premise for this application |
+| --- | --- | --- |
+| [Scazza et al., Nature Physics **10**, 779–784 (2014), corrected v3](https://arxiv.org/html/1403.4761v3) | SU(6) orbital exchange studied by spectroscopy and lossy ensemble equilibration; coherent confined-pair preparation and fast switching were unavailable. | The ideal homogeneous zero-field distinct-label model gives $(VI_2+JX_C)\otimes I_{15}$, with $J=-V_{\rm ex}$ in a fixed fermionic creation-operator convention. This is known label transport, without a fresh $U(15)$ or correlated sign station. |
+| [Widera et al., PRL **95**, 190405 (2005), v2](https://arxiv.org/html/cond-mat/0505492v2) | Coherent collisions conserve total magnetization; the $f=2$, zero-magnetization sector has three symmetrized pair states. Populations are measured after release. | One three-dimensional sector is not two complete three-dimensional endpoint manifolds. A separately prepared exchange oscillation does not certify arbitrary-input transfer, retained address coherence or the required second station. |
+| [Emperauger et al., PRA **111**, 062806 (2025), v3](https://arxiv.org/html/2503.15034v3) | Selected direct, indirect and light-shift-resonant Rydberg pair exchanges, with diagonal shifts, motion and decay included in their assessment. Microwave and local addressing controls prepare and probe the states. | Four named atomic levels in a selected pair resonance are not four parallel transfer channels. Neither two full qutrit endpoint manifolds nor the correlated $A(U),A(UH)$ pair is demonstrated. Preserve the actual ordinary controls and complete motional/loss output. |
+
+The Scazza single-band model also gives a simple detuning guard. Within
+one distinct-spin pair, write its Hamiltonian as
+$(V+\bar z_{\mu\nu})I+JX+\Delta_{\mu\nu}Z$, where
+$\Delta_{\mu\nu}=\delta g\mu_BB(\mu-\nu)/2$ and
+$\bar z_{\mu\nu}=\delta g\mu_BB(\mu+\nu)/2$ after subtracting the
+common ground-orbital nuclear energy. Pauli-vector exponentiation bounds
+its single-hold transfer probability by
+$J^2/(J^2+\Delta_{\mu\nu}^2)<1$ for nonzero detuning. The pair-dependent
+scalar is not a global phase on coherent superpositions of different
+labels. Equal-label occupancy, motional bands and loss need their actual
+model; neither a composite-control impossibility nor coherent selective
+control follows from this calculation.
+
+There is a sharper spectral guard for a **declared ideal vector model**,
+rather than the selected Rb levels in the third source. Assume a scalar
+$J=0$ state and a degenerate Cartesian $J=1$ manifold, equal reduced
+dipole elements, common endpoint energies and no other resonant channels.
+The dipole tensor then gives $K(n)=g(I-3P_n)$ between
+$\{|p_j,s\rangle\}_j$ and $\{|s,p_j\rangle\}_j$, with
+$g\in\mathbb R\setminus\{0\}$ and $P_n=|n\rangle\langle n|$ for a
+real unit bond vector. Its singular
+strengths are $|g|(1,1,2)$, so (NC3) cannot vanish on every channel:
+$\cos(gt)=0$ forces $\cos(2gt)=-1$. More quantitatively,
+
+$$
+\max_t\min_{\|v\|=1}\Pr\{\text{opposite endpoint}\mid v\}
+ =1-\min_\theta\max\{\cos^2\theta,\cos^2(2\theta)\}
+ =\frac34,\qquad \theta=gt.
+\tag{NC4}
+$$
+
+Indeed, put $y=|\cos\theta|$. If $y\ge1/2$, the maximum cosine
+magnitude is at least $1/2$; otherwise
+$|\cos2\theta|=1-2y^2>1/2$. Equality holds at $\theta=\pi/3$.
+This bounds transfer from either prepared endpoint, not all-output gate
+fidelity: the untransferred amplitude remains quantum output. At positive
+time $t=\pi/(3|g|)$ the full propagator actually factors as
+$e^{-i\operatorname{sgn}(g)\pi X_C/3}\otimes(I-2P_n)$; at
+$t=\pi/|g|$ it is
+$-I_C\otimes(I-2P_n)$. Natural reflection operations therefore survive
+this failed full-swap test. Their calibrated area, physical address
+controls, phases and noise remain resources. Composite pulses or an
+engineered spectrum can change the single constant-hold premise.
+
+If a repair supplies complete exchange through constant resonant hopping,
+with only common diagonal phases and each **cross-manifold kernel** real
+symmetric in one common identified data basis, its sine transfer matrices
+are real symmetric involutions. This does not follow for arbitrary
+composite sequences of such kernels. The existing ordinary
+[common-symmetry construction (BD1)](#nr-r19-bdi-controls) then applies
+under the stated Hermitian relative-$H$ promise, with clean address
+storage and its actual adapters charged. Symmetry of the full hopping
+Hamiltonian alone does not imply that cross-kernel condition, since
+$\left(\begin{smallmatrix}0&K^T\\K&0\end{smallmatrix}\right)$ is
+real symmetric for every real $K$. Generic reciprocity supplies no such
+shortcut or Haar prior by itself. A successor needs both full endpoint
+maps, their physical correlated sign change and a required retained-output
+task before comparing ordinary recoupling, direct reflection, calibration
+reuse and routing on the same device.
+
 <a id="nr-r19-adiabatic-port"></a>
 
 **Adiabatic dark transfer supplies one endpoint, not automatically both.**

@@ -125,6 +125,18 @@ access check, not a new security proof or a physical fresh-coupler claim.
 
 ## Recovery, inversion, and verification
 
+The [natural-exchange screen](backaction.md#nr-r19-natural-exchange) uses
+[Scazza et al., corrected arXiv:1403.4761v3](https://arxiv.org/html/1403.4761v3),
+[Widera et al., arXiv:cond-mat/0505492v2](https://arxiv.org/html/cond-mat/0505492v2)
+and [Emperauger et al., arXiv:2503.15034v3](https://arxiv.org/html/2503.15034v3).
+The spectral examples are declared model deductions; these experiments
+do not certify the proposed full coupler pair or its unknown-input service.
+
+The [online-calibration assessment](architecture.md#nr-online-detector-feedback)
+credits [Sivak et al., Nature **655**, 879–884 (2026), arXiv:2511.08493v4](https://arxiv.org/html/2511.08493v4),
+especially Methods and supplement I.B, VI.A and VII.A–B. Its experiment,
+simulation and projected timing retain their distinct scopes.
+
 - [Quintino et al., *Reversing Unknown Quantum Transformations*](https://arxiv.org/abs/1810.06944), PRL **123**, 210502 (2019), gives heralded physical inversion of an unknown unitary and analyzes adaptive strategies and indefinite-order advantages. [Dong et al., *Success-or-Draw*](https://arxiv.org/abs/2011.01055), PRL **126**, 150504 (2021), develops retries whose draw branch preserves the input. Heralding alone does not give the present noisy filter that preservation property.
 - [Trillo, Dive, and Navascués, *A universal quantum rewinding protocol with an arbitrarily high probability of success*](https://arxiv.org/abs/2205.01131), PRL **130**, 110201 (2023), uses unknown repeatable qubit operations and switch parity branches for adaptive physical recovery. Almost-sure finite stopping is distinct from a finite expected query budget. These results preclude a broad first-recovery or first-rewinding claim.
 - [Salek, Ebler, and Chiribella, *Quantum communication in a superposition of causal orders*](https://arxiv.org/abs/1809.06655) (2018), already gives a heralded error-free physical transmission branch. Its communication task and comparison do not establish restoration of the specified Bell alignment against the present ordinary receivers.
