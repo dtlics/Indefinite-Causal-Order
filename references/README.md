@@ -51,6 +51,13 @@ states the dedicated-pair and stronger parallel classical-phase memory
 tasks, prior attribution and calibration-transfer limits. A coarse parity
 aggregate must not replace the full labelled ordinary records.
 
+The same [NR-R14 owner](../research/topics/nr-noisy-recovery/backaction.md#nr-r14-loss-memory)
+connects measured dark-state controls, retained-control amplitude-damping
+literature and the established parity-check sandwich to loss-memory
+qualification. It keeps physical photon absorption, simulated optical
+thermalization and a separate surviving control distinct. The
+encoding-specific endpoint comparison is not a universal switch no-go.
+
 ## Exposition conventions
 
 The manuscript presents the task, access model, output, and resource accounting before the lower bound. Proofs separate correctness from query cost, identify which random objects stay fixed, and state the conditioning needed before averaging. Diagrams identify an operational experiment or proof step; they do not replace the reduction. Conditional claims and model restrictions stay adjacent to their statements. These conventions are maintained in the one paper source rather than in successive style-review documents.

@@ -380,9 +380,12 @@ and recovery mechanisms. The bounded primary-source check does not
 establish priority.
 
 The [ordinary pair-memory qualification baseline](backaction.md#nr-r14-pair-qualification)
-uses complete local records for code-and-phase selection. Its next native
-test needs a justified order-sensitive quantum-bath instrument and useful
-production prediction beyond that baseline within the same drift window.
+uses complete local records for code-and-phase selection. The
+[loss-memory comparison](backaction.md#nr-r14-loss-memory) retains the
+order control and compares complete quantum outputs with paid ordinary
+parity recovery. The next native test needs a justified joint instrument
+and a useful production decision beyond these scoped baselines within
+the same drift window.
 
 ## Updating this topic
 

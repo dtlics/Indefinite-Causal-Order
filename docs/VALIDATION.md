@@ -224,8 +224,15 @@ are analytic. The [pair-memory ingredient](../research/topics/nr-noisy-recovery/
 adds exact Schur-channel, encoded matrix-unit, labelled-record, parallel
 phase-estimator and spectator/switch-boundary fixtures. Recovery
 optimality, concentration, general model transfer and physical costs
-remain analytic or separately assumed. These checks establish neither a
-fitted bath model nor a switch sampling or architecture advantage. The application assessment's
+remain analytic or separately assumed. The
+[loss-memory ingredient](../research/topics/nr-noisy-recovery/checks/architecture/loss_memory_qualification_guards.py)
+adds finite collective/loss, retained-control and paid parity/re-excitation
+fixtures on complete encoded matrix units, plus single-carrier dual-rail
+success/seed/reject maps. Shared-history, arbitrary
+decoder, finite-confidence and physical-cost proofs remain analytic;
+no experimental selector or bath model is certified. These checks
+establish neither a fitted bath model nor a switch sampling or
+architecture advantage. The application assessment's
 photonic and phononic resource comparisons are primary-source screens,
 not hardware experiments or new security proofs.
 

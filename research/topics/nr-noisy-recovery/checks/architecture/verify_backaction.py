@@ -727,6 +727,7 @@ def main():
     from native_matter_guards import verify_native_matter_guards
     from private_program_guards import verify as private_program_checks
     from pair_memory_qualification_guards import verify as pair_memory_qualification_checks
+    from loss_memory_qualification_guards import verify as loss_memory_qualification_checks
     cases = sum(echo_check(a, b) for d in [2, 3] for a, b in pairs(d))
     example = heldout_counterexample()
     contrast = record_correlation_check()
@@ -746,7 +747,8 @@ def main():
                       "native_matter_controls": verify_native_matter_guards(),
                       "private_program_resources": private_program_checks(),
                       "pair_memory_qualification": pair_memory_qualification_checks(),
-                      "scope": "NR-R14/NR-R19 exact finite full-instrument, exchange norm-factor, scalar polynomial, odd-coupler, Andreev-interface and private-program resource/factory replay; universal proofs, privacy/security, access and physical-cost statements remain analytic. Ordinary dedicated-pair and parallel classical-phase qualification adds finite channel/record/statistical-constant ingredients under explicit model, calibration and production premises.",
+                      "loss_memory_qualification": loss_memory_qualification_checks(),
+                      "scope": "NR-R14/NR-R19 exact finite full-instrument, exchange norm-factor, scalar polynomial, odd-coupler, Andreev-interface and private-program resource/factory replay; universal proofs, privacy/security, access and physical-cost statements remain analytic. Ordinary dedicated-pair and parallel classical-phase qualification adds finite channel/record/statistical-constant ingredients under explicit model, calibration and production premises. Loss-memory qualification adds finite collective/retained-output, decoded-channel, parity-recovery and actual-history guards; general bounds, concentration, physical bath/control and clock assumptions remain analytic or supplied. Separate dual-rail projector/independent-seed routes add finite full-reference success/loss guards under declared common-success four-mode ports, without a universal herald or hardware claim.",
                       "counterexample": example}, sort_keys=True))
 
 

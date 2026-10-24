@@ -608,6 +608,402 @@ encoded-channel, record, estimator and scope fixtures. The recovery,
 concentration and model-transfer arguments above remain analytic;
 no physical noise model, native advantage or new Lean proof is certified.
 
+
+<a id="nr-r14-loss-memory"></a>
+
+### Loss-memory qualification and recovery with retained order control
+
+The next memory decision is a ground-plus-collective-excitation code at a
+specified storage deadline. The following comparison retains the order
+control, every loss outcome and an arbitrary passive reference. It closes
+one loss-only fidelity candidate under explicitly paid ordinary controls;
+it does not exclude every dual-rail, thermal or postselected application.
+
+**Physical access and the ordinary dark code.**
+[Filipp et al.](https://doi.org/10.1103/PhysRevA.84.061805) and
+[Zanner et al.](https://doi.org/10.1038/s41567-022-01527-w) demonstrate
+ordinary phase-sensitive dark-state preparation and coherence tests.
+Zanner's [published supplement, S3](https://media.springernature.com/original/springer-static/esm/art:10.1038%2Fs41567-022-01527-w/MediaObjects/41567_2022_1527_MOESM1_ESM.pdf)
+reports ground/dark $T_1=1.71\pm0.06\,\mu$s and
+$T_2=0.58\pm0.06\,\mu$s. The coherence cannot be inferred from radiative
+population lifetime alone. Neither population readout nor destructive
+emission tomography supplies a retained-output survival herald.
+
+[Shah et al., PRX Quantum **5**, 030346 (2024)](https://doi.org/10.1103/PRXQuantum.5.030346)
+stabilize one prescribed entangled state through waveguide dissipation;
+this is a preparation service, rather than an arbitrary-input memory
+experiment. In the ideal model $\mathcal L=\gamma\mathcal D[J]$,
+$J=\sigma_1^-+\sigma_2^-$, both
+$|G\rangle=|gg\rangle$ and
+$|D\rangle=(|eg\rangle-|ge\rangle)/\sqrt2$ lie in its kernel.
+Consequently $\mathcal D[J]$ vanishes on every encoded matrix unit,
+including reference coefficients. An ordinary encoder and decoder preserve
+that qubit exactly in this idealization. The source's drive and relative
+detuning must **both** be off ($\Omega=\delta=0$); otherwise a coherent
+term can mix dark and bright states. A remaining known code-preserving
+Hamiltonian must be corrected. Unknown dephasing, heating, leakage and
+coupling errors require their actual channel. The experiment does not
+supply a coherent history selector or a nondestructive jump port.
+
+**The loss-only promise and ordinary probes.** Let the system manifold be
+vacuum $G$ plus $N$ labelled single excitations. For each complete physical
+word $c=0,1$, assume the full dilation with the specified initial bath is
+
+$$
+\begin{aligned}
+V_c|G,0_B\rangle&=|G,0_B\rangle,\\
+V_c|j,0_B\rangle&=\sum_i(K_c)_{ij}|i,0_B\rangle
+                    +|G\rangle|\ell_{c,j}\rangle,\\
+\langle0_B|\ell_{c,j}\rangle&=0,\qquad
+\langle\ell_{c,i}|\ell_{c,j}\rangle
+           =\delta_{ij}-(K_c^\dagger K_c)_{ij}.
+\end{aligned}
+\tag{LM1}
+$$
+
+The common **pure survivor record** is essential. Words may share a bath,
+and their loss vectors may overlap arbitrarily. Emission and reabsorption
+inside a word are allowed. Each ordinary word must reproduce the same
+initial bath preparation, pulse/clock history and output modes as its
+coherent alternative. Equal deadlines include any actual idle evolution.
+The selector must implement these full dilations coherently, with the
+vacuum arms as displayed. Reduced channels or a master equation alone do
+not establish that interface. Independent loss-only ports give
+$K_0=K_BK_A$, $K_1=K_AK_B$ as a special case, not a model for every reused
+waveguide.
+
+Prepare the product probe $(G+|j\rangle)/\sqrt2$, with one site plus and
+the rest ground. Local readout gives
+
+$$
+(K_c)_{ij}=\langle X_i\rangle+i\langle Y_i\rangle.
+\tag{LM2}
+$$
+
+The sign differs from the upper-off-diagonal Schur convention in (DQ2).
+A coherent vacuum/excitation phase reference and calibrated readout phases
+are resources. These means identify the matrix under (LM1); they do not
+verify the premise. For example, scalar amplitude damping with survival
+amplitude $a$ and occupancy dephasing with coherence $a$ have identical
+local $X/Y$ responses, but excited populations $a^2$ and $1$. At $a=3/5$
+their uncorrected $F_e$ are $16/25$ and $4/5$. Population records distinguish
+them. A common survivor bath state is not implied by system excitation
+preservation; extra zero-energy bath records can dephase survivors.
+
+Encode $|0\rangle\mapsto G$, $|1\rangle\mapsto v$, with $\|v\|=1$.
+Rotate a selected unit output mode $u$ to one output qubit and trace the
+other modes. The complete logical/reference channel is amplitude damping
+with amplitude $h=u^\dagger K_cv$: its off-diagonal multipliers are $h^*$
+and $h$, and its excited population is $|h|^2$. This follows from the
+dilation $|0\rangle\mapsto|0\rangle|e_0\rangle$,
+$|1\rangle\mapsto h|1\rangle|e_0\rangle+|0\rangle|\xi\rangle$,
+where $\langle e_0|\xi\rangle=0$ and
+$\|\xi\|^2=1-|h|^2$. Its $F_e=|1+h|^2/4$ becomes
+$(1+|h|)^2/4$ with the known output phase
+$\operatorname{diag}(1,e^{-i\arg h})$. Exact leading singular modes attain
+$h=\|K_c\|$. This optimizes the specified rotate/discard family only;
+retained flags and other recovery maps must still be considered.
+
+**Full retained-control upper bound.** With an initially independent
+$|+\rangle$ order control, put
+
+$$
+|c_0\rangle=|+,G\rangle,\qquad
+T v=\frac{|0\rangle K_0v+|1\rangle K_1v}{\sqrt2}
+       =|\psi\rangle.
+\tag{LM3}
+$$
+
+Tracing the bath gives the following four logical input matrix units:
+$S_{00}=|c_0\rangle\langle c_0|$,
+$S_{10}=|\psi\rangle\langle c_0|$, $S_{01}=S_{10}^\dagger$, and
+$S_{11}=|\psi\rangle\langle\psi|+\sum_\nu|\chi_\nu\rangle\langle\chi_\nu|$,
+with $\operatorname{Tr}S_{11}=1$. Every $\chi_\nu$ has system vacuum but
+may retain a nontrivial control state. Tensor each term with the
+corresponding arbitrary input/reference coefficient $\rho_{ij,R}$.
+This is the full channel, including the loss background.
+
+For any deterministic joint CPTP decoder $\mathcal R$,
+
+$$
+F_e(\mathcal R S)=\frac{A+B+2\operatorname{Re}z}{4},\quad
+A=\langle0|\mathcal R(S_{00})|0\rangle\le1,\quad
+B=\langle1|\mathcal R(S_{11})|1\rangle\le1,
+\tag{LM4}
+$$
+
+where $z=\langle1|\mathcal R(|\psi\rangle\langle c_0|)|0\rangle$.
+For decoder Kraus operators $R_j$, Cauchy--Schwarz gives
+
+$$
+|z|\le
+\sqrt{\sum_j|\langle1|R_j\psi\rangle|^2}
+\sqrt{\sum_j|\langle0|R_jc_0\rangle|^2}
+\le\|\psi\|.
+$$
+
+Thus arbitrary fresh decoder ancillas and joint control/target processing
+are included in the bound
+
+$$
+F_e(\mathcal R S)\le\frac{1+\|Tv\|}{2},\qquad
+\|Tv\|\le\max_c\|K_cv\|,\qquad
+\|T\|^2=\left\|\frac{K_0^\dagger K_0+K_1^\dagger K_1}{2}\right\|
+\le\max_c\|K_c\|^2.
+\tag{LM5}
+$$
+
+This is an all-attempt deterministic-fidelity comparison within the
+ground-plus-one-mode family and the stipulated selector. It is not a
+conditional-fidelity/yield frontier, an equality of flagged instruments,
+or a bound on encodings that put the input into a helper before exposure.
+
+**Paid ordinary attainment.** Supply one protected meter and known
+controlled excitation parity $C_\Pi$, with
+$\Pi=\prod_j Z_j$ equal to $+1$ on $G$ and $-1$ on every excitation.
+Apply $C_\Pi$ before and after the complete chosen ordinary word. The
+unique survivor Kraus is parity even; every final-loss Kraus is odd.
+The standard [ordinary parity sandwich](architecture-baselines.md#nr-r06-cat-reservoir-parity)
+therefore leaves the helper plus on final survival and minus on final
+loss, without measuring the unknown initial logical parity. It includes
+unresolved records and internal emission/reabsorption. This is an
+application of an established check primitive; see
+[Gonzales et al.](https://doi.org/10.1038/s41598-023-28109-x).
+
+For $s=\|K_cv\|$, rotate $K_cv/s$ to the output mode, choosing any mode
+when $s=0$. Re-excite the output qubit on the loss flag. The exact two
+unnormalized logical/reference maps are
+
+$$
+\mathcal O_+(\rho)=
+  [\operatorname{diag}(1,s)\otimes I_R]\rho
+  [\operatorname{diag}(1,s)\otimes I_R],\qquad
+\mathcal O_-(\rho)=(1-s^2)|1\rangle\langle1|\otimes\rho_{11,R}.
+\tag{LM6}
+$$
+
+Their sum is dephasing with coherence $s$, giving $F_e=(1+s)/2$ on
+every attempt. Choosing the better actual word already reaches or exceeds
+(LM5) for the **same input mode**; optimizing modes preserves the
+inequality. No negative flag is discarded. The meter must be available in
+addition to any routing degree that must stay fixed to implement the
+ordinary word. Neither a path qubit nor demonstrated local drives alone
+grant these controlled parity gates. If a logical SWAP into the protected
+meter is also supplied, direct helper storage is a further comparator.
+
+Retaining control genuinely matters to the proof. For two scalar
+amplitude-damping contacts with amplitude $3/5$, passive no-loss output
+alignment gives $F_e=289/625$. Re-exciting only the native minus loss flag
+gives $297/625$; its loss probability is $(32/625)\rho_{11}$.
+Therefore the passive amplitude-damping value is **not** a bound on joint
+decoding. Ordinary (LM6) instead attains $17/25$, the valid (LM5) bound in
+this example.
+
+**Calibration and the complete ledger.** A sufficient matrix-learning
+schedule uses $n$ independent launches for each of $N$ probes and all-$X$
+or all-$Y$ readout. Hoeffding over $2N^2$ local means gives
+
+$$
+\|\widehat K-K\|\le\|\widehat K-K\|_F
+\le2N\sqrt{\log(4N^2/\delta)/n}.
+\tag{LM7}
+$$
+
+Taking $n\ge4N^2\eta^{-2}\log(4N^2/\delta)$ suffices for operator error
+$\eta$, at $2Nn$ actual storage launches. Empirical singular modes give
+$|h-\|K\||\le2\eta$; since $|1+h|^2/4$ is 1-Lipschitz on the unit disk,
+their rotate/discard fidelity regret is at most $2\eta$.
+Learning both actual words changes the logarithm to
+$\log(8N^2/\delta)$ and doubles the setting groups. For (LM6), choosing
+the larger empirical singular value gives
+$\operatorname{Re}h\ge s_{\rm best}-2\eta$. The surviving component
+outside the empirical output mode has norm at most $\eta$; final-loss
+re-excitation therefore restores excited population to at least
+$1-\eta^2$. Its actual fidelity is at least
+$(1+s_{\rm best})/2-\eta-\eta^2/4$.
+These are sufficient bounds, not sample optimality or free matrix advice.
+For a supplied fixed production encoder, targeted logical-plus probes can
+learn just $K_0v,K_1v$; full matrix learning is not compulsory. Such a
+known probe can be entangled across sites, using the paid encoder, though
+it needs no held reference.
+
+Charge every word's actual contact count, elapsed time and bath/history
+preparation; two contacts apply only to the two-slot specialization.
+The ordinary recovery additionally pays two controlled global parities
+(one implementation has $2N$ controlled-$Z$ gates), coherent meter
+storage, active excitation and its energy, reset, and either coherent
+feedback or readout latency. Mode preparation/rotation, discarded modes,
+phase references, $N$ local readouts per training launch and classical
+matrix storage/decomposition count. Native routing, buffers and all
+rejected attempts count too. Independent launches, SPAM, drift and model
+transfer require validation; a single-shot channel marginal does not
+justify calibration reuse. These ideal endpoint inequalities alone do
+not establish a native wall-clock or gate-cost optimum.
+
+**Fresh-slot flags, prior and remaining scope.** For independent loss-only
+ports, $M_{ij,-}=(B_jA_i-A_iB_j)/2$ kills $G$. On a ground-plus-mode code
+every such Kraus operator has only its logical-$1$ column, so the minus
+map is $\Xi\otimes\rho_{11,R}$ and is entanglement breaking. It cannot
+herald a uniform positive-weight unknown-qubit unitary. This does not
+make the entire retained-control channel entanglement breaking. A zero
+minus rate is also insufficient: collective contacts on the same bright
+mode preserve a different dark mode, while contacts on two orthogonal
+bright modes can damp it with the same zero flag. Ordinary production
+population and Ramsey probes resolve that example.
+
+For rank-one collective bright projectors $P_a,P_b$ with survival
+amplitudes $x,y$, the no-jump minus operator on a wholly one-excitation
+code is $(1-x)(1-y)[P_b,P_a]/2$. Its rank is at most two and its nonzero
+squared singular value is
+$(1-x)^2(1-y)^2z(1-z)/4\le1/16$,
+$z=|\langle a|b\rangle|^2$. Such a dual-rail branch is outside the
+ground-plus-mode entanglement-breaking statement. The following separate
+comparison includes its vacuum background and ordinary on-carrier modes;
+no unrestricted rank-one-channel bound follows.
+
+<a id="nr-r14-dualrail-projector-routes"></a>
+
+**Dual-rail projector filters and the complete carrier.** Let the unknown
+qubit lie entirely in two one-excitation modes, take $K_A=P_a$, $K_B=P_b$
+to be rank-one Hermitian projectors, and initialize an independent order
+control plus. Write $c=|\langle a|b\rangle|$. The direct-switch survivor
+isometry and its effect are
+
+$$
+N=\frac{|0\rangle P_bP_a+|1\rangle P_aP_b}{\sqrt2},
+\qquad N^\dagger N=\frac{c^2}{2}(P_a+P_b).
+\tag{DR1}
+$$
+
+If the order control is a **separate surviving register**, loss to system
+vacuum can still map the input coherently into that register. In general
+its loss Kraus maps are the two-row matrices
+$J_{A,\mu}=(a_\mu,a_\mu K_B)^T/\sqrt2$ and
+$J_{B,\nu}=(b_\nu K_A,b_\nu)^T/\sqrt2$, where the symbols inside each
+parenthesis are rows and
+$\sum_\mu a_\mu^\dagger a_\mu=I-K_A^\dagger K_A$,
+and likewise for $B$. They need not have rank one. Hidden records are
+summed as CP maps, not amplitudes. The ground-plus-mode minus argument
+must not be applied to this different code and output.
+
+For **one physical photon** carrying both binary degrees, the space is
+$\mathbb C|{\rm vac}\rangle\oplus(C\otimes D)$: absorption removes both
+registers. A compatible completion has survivor $N$ and vacuum loss effect
+$I-N^\dagger N$. On every input/reference state, its rejected block is
+$|{\rm vac}\rangle\langle{\rm vac}|\otimes
+\operatorname{Tr}_D[((I-N^\dagger N)\otimes I_R)\rho_{DR}]$.
+There is no retained path qubit in that block. An actual timed router can
+have further records or loss; a reduced target channel does not specify it.
+
+Any exact heralded recovery of the full unknown qubit from the survivor,
+allowing arbitrary joint output processing and many corrected success
+records, has total effect $pI\preceq N^\dagger N$. Indeed each corrected
+success Kraus composed with $N$ must be proportional to identity, and
+their total recovery effect is at most identity. Vacuum-loss Kraus maps
+have rank one; they cannot contribute a nonzero rank-two identity Choi
+branch without extra coherent environment access or surviving memory.
+Consequently
+
+$$
+p\le\lambda_{\min}(N^\dagger N)
+   =\frac{c^2(1-c)}2\le\frac{2}{27},\qquad
+\frac2{27}-\frac{c^2(1-c)}2
+   =\frac{(3c-2)^2(3c+1)}{54}\ge0.
+\tag{DR2}
+$$
+
+This fixes the direct-switch input control and code; it does not bound
+protocols that first put data into the control. The selected minus
+survivor has weight at most $1/16$, but minus alone also has a vacuum
+background. For $P_a=P_0$, $P_b=P_+$, its survivor is $-iY/4$, while its
+total flag effect is $\left(\begin{smallmatrix}2&-1\\-1&4\end{smallmatrix}\right)/16$,
+rather than $I/16$. A retained-survival herald or an explicitly late
+erasure endpoint must distinguish those outcomes; a destructive click
+consumes the payload. The projector constants are not bounds for all
+rank-one contractions: $K_A=|0\rangle\langle1|$,
+$K_B=|1\rangle\langle0|$ give $M_+=I/2$, $M_-=-Z/2$.
+
+There is a stronger ordinary comparator when the following **success-port
+and codec premise** is supplied. The same four modes admit known logical
+$\operatorname{SWAP}(C,D)$ and local mode Paulis; a fixed-route contact
+has selected block $I_C\otimes K$. Accepted bath/clock records and phases
+must preserve coherence between the data-carrying $C$ modes. One explicit
+complete single-carrier slot is
+
+$$
+F_0=1_{\rm vac}\oplus(I_C\otimes K),\qquad
+F_{c,\mu}=|{\rm vac}\rangle(\langle c|\otimes q_\mu),
+\quad\sum_\mu q_\mu^\dagger q_\mu=I-K^\dagger K.
+\tag{DR3}
+$$
+
+Lost path labels can remain in the environment; no controller survives
+rejection. Four modes or equal pass probabilities alone do not grant
+(DR3). A time-bin realization can need stationarity, buffers and path-phase
+matching. A distinct matter control instead needs a paid coherent transfer
+port; a provider-owned inaccessible control is a different access model.
+
+Move unknown $D/R$ into $C$ by SWAP, leaving the old known control state
+$\chi$ in $D$. Independently choose Paulis $P,Q$ uniformly from
+$I,X,Y,Z$; apply $P$, filter $A$, $Q$, filter $B$, and SWAP back. For each
+retained seed pair the success output is exactly
+$|\xi_{PQ}\rangle\langle\xi_{PQ}|_{\rm junk\,C}\otimes\rho_{DR}/16$,
+where $\xi_{PQ}=K_BQK_AP\chi$. Pauli twirling gives
+
+$$
+\mathcal S_{\rm ordinary}(\rho_{DR})
+ =\frac{\operatorname{Tr}(K_A^\dagger K_A)
+              \operatorname{Tr}(K_B^\dagger K_B)}4\rho_{DR}
+ =\tfrac14\rho_{DR}
+\tag{DR4}
+$$
+
+for unit-strength rank-one blocks, including fresh unknown correlated
+axes independent of the input and random seeds. The proof uses
+$\sum_PP|\chi\rangle\langle\chi|P=2I$ and
+$\sum_QQXQ=2\operatorname{Tr}(X)I$. It retains all 16 classical seed
+records and the aggregate erasure probability $3/4$. Independent seeds
+matter; reusing one can give zero transmission for orthogonal filters.
+Thus this qualified ordinary interface gives ideal exact-qubit weight
+$1/4$, exceeding (DR2) for the direct projector switch. With calibrated
+bright modes, ordinary alignment before each filter instead gives weight
+$1$. Scaled projectors multiply these weights and (DR2) by their two
+intensity transmissions.
+
+This comparison charges two SWAP permutations, two Pauli choices and their
+records, fixed-route optics, both occupied contacts, every buffer/clock
+and phase requirement, filter/router loss and the same retained-survival
+herald or erasure endpoint. Optional harmful contacts may also be avoided.
+It establishes no actual hardware winner, arbitrary-code/fidelity/capacity
+frontier, or extension to a separately surviving control after absorption.
+
+Perfect quantum communication activated by switching entanglement-breaking
+channels is already established [prior](https://doi.org/10.1088/1367-2630/abe7a0),
+including a provider-owned control. This bounded loss/codec comparison
+does not claim a new activation mechanism or impose that control-access
+restriction on local memory hardware.
+
+[Goswami et al.'s archived v1 amplitude-damping calculation](https://arxiv.org/abs/1807.07383v1)
+already retains control/target information; that subsection is absent from
+the publication-associated v5. Complete damping loses phase while full
+control records can retain population. [Liu, Ebler and Dahlsten](https://doi.org/10.1103/PhysRevLett.129.230604)
+study full-output classical information with thermodynamic control costs.
+[Tang et al.](https://arxiv.org/abs/2406.02236v1) simulate thermalization
+using a surviving photon's path and polarization. Physical absorption
+destroys both on-carrier optical registers; it does not leave a separate
+path qubit. A separate surviving control, or a different controlled
+vacuum/loss instrument, must be physically supplied and priced. These
+results and the ordinary parity-check prior preclude a novelty claim
+based merely on retaining the control or detecting amplitude damping.
+
+The [loss-memory guard](checks/architecture/loss_memory_qualification_guards.py)
+replays finite channel, encoded/reference, flag and recovery fixtures in
+the existing backaction job. The general shared-history, arbitrary-decoder,
+concentration and physical-access arguments remain analytic. The next
+candidate must supply a useful logical task beyond this family or a
+genuinely noisy/multiple survivor record, its full selector and a benefit
+after ordinary learning, memory, checks and routing have been priced.
+
 ### Direct calibration and measurement-record prediction
 
 For a specified pure-dephasing control word $y$, restore its known sensor frame and write its actual joint evolution as $\operatorname{diag}(U_{y,0},U_{y,1})$. Ordinary preparation in $|+\rangle$ and $X/Y$ readout measure
