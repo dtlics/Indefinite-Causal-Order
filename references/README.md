@@ -67,6 +67,13 @@ credits established permutation symmetrization and exchange-only
 decoupling, and states the additional finite-duration control and
 subsystem-decoder requirements. It makes no new DD priority claim.
 
+The [NR-R16 two-input force-bus comparison](../research/topics/nr-noisy-recovery/geometric-calibration.md#nr-r16-two-input-bus)
+uses [Leibfried et al.'s two-ion geometric gate](https://doi.org/10.1038/nature01492)
+as a concrete required-operation baseline. It preserves the demonstrated
+collective force and closed loop, rather than inferring independent force
+modules or coherent order from that experiment. The ordinary loop and
+protected encoding mechanisms are established controls, not new priority claims.
+
 ## Exposition conventions
 
 The manuscript presents the task, access model, output, and resource accounting before the lower bound. Proofs separate correctness from query cost, identify which random objects stay fixed, and state the conditioning needed before averaging. Diagrams identify an operational experiment or proof step; they do not replace the reduction. Conditional claims and model restrictions stay adjacent to their statements. These conventions are maintained in the one paper source rather than in successive style-review documents.

@@ -209,6 +209,229 @@ displaced bus can carry additional parameter information, and a joint
 bus/control measurement defines a different optimization. The ratios are
 not upper bounds on every full-output switch protocol.
 
+<a id="nr-r16-two-input-bus"></a>
+
+### Two retained inputs and a quantum force bus
+
+An operator-valued Weyl phase gives a distinct retained-output question.
+Two unknown spin inputs must survive, possibly entangled with a passive
+reference; a clean order qubit cannot store the whole four-dimensional
+payload. The following identities concern the complete joint evolution,
+not a switch of reduced dephasing marginals. They do not establish a
+physical cost advantage.
+
+**Fixed forces and complete output.** Let the shared oscillator have
+$[x,p]=i$, and define
+
+$$
+A=e^{-iaZ_1x},\qquad B=e^{-ibZ_2p},\qquad P=Z_1Z_2,\qquad
+\vartheta=\frac{ab}{2},\qquad
+V=e^{-i(aZ_1x+bZ_2p)} .
+$$
+
+The central commutator is $[-iaZ_1x,-ibZ_2p]=-iabP$. Hence
+
+$$
+BA=e^{i\vartheta P}V,\qquad AB=e^{-i\vartheta P}V,\qquad
+W_C=e^{i\vartheta Z_CP}(I_C\otimes V).
+\tag{GB1}
+$$
+
+This commuting product is an operator identity for every initial
+$C,D,E,R$ state, including correlations. It is not a tensor
+factorization separating data $D=1,2$ from bus $E$: $V$ remains
+spin-conditioned. For fresh independent $C=+$, set
+
+$$
+J_\vartheta=
+\frac{|0\rangle_C\otimes e^{i\vartheta P}
+     +|1\rangle_C\otimes e^{-i\vartheta P}}{\sqrt2}.
+$$
+
+For any initial $\Omega_{DRE}$, the complete retained output is
+
+$$
+(J_\vartheta\otimes I_R)
+\operatorname{Tr}_E[V\Omega_{DRE}V^\dagger]
+(J_\vartheta^\dagger\otimes I_R).
+\tag{GB2}
+$$
+
+Both histories use that same initial state and those same joint $A,B$.
+Extra time records, bath copies, resets or differently timed propagators
+cannot be inserted while keeping this identity. Only for an independent
+fixed bath preparation does the middle expression define a channel
+$\mathcal E_V$ on arbitrary data/reference inputs.
+
+An $X_C$ readout has joint data/bus Kraus operators
+$K_+=\cos\vartheta\,V$ and $K_-=i\sin\vartheta\,PV$.
+Product-Pauli $P$ feedback on minus gives the full flag maps
+
+$$
+\cos^2\vartheta\,\mathcal E_V,\qquad
+\sin^2\vartheta\,\mathcal E_V.
+\tag{GB3}
+$$
+
+Their probabilities are independent of the data and bus state. Every
+nonzero conditional channel is the same $\mathcal E_V$, with no reduced
+bus error. A calibrated arbitrary CPTP decoder $\mathcal R_{CD}$ induces
+the data decoder $\mathcal R_{CD}\circ\operatorname{Ad}_{J_\vartheta}$,
+acting as identity on passive $R$. Retaining $C$ therefore adds a known
+output isometry, not a new bath-error record. Implementing that isometry
+or the entangling correction between $V$ and $BA$ is still paid control.
+Other helper measurements can give logical-parity filters after the
+common channel; they are not the scalar flags in (GB3).
+
+With a supplied repeatable half kick,
+$A^{1/2}BA^{1/2}=V$: an ordinary symmetric three-segment sequence matches
+the complete output with the same total $A$ force area and no order
+helper. This also holds for unknown stable amplitudes. Splitting an
+opaque or curved noisy pulse is not automatically such a root operation.
+The preceding four-leg loop becomes
+$B^\dagger A^\dagger BA=e^{iabP}\otimes I_E$ in chronological order
+$A,B,A^\dagger,B^\dagger$. It returns the quantum bus and is entangling
+unless $ab$ is an integer multiple of $\pi/2$. Repeats, sign control,
+local-spin echoes, force energy and actual clock time remain charged.
+
+**A real gate source has a stronger ordinary endpoint.**
+[Leibfried et al., Nature **422**, 412–415 (2003)](https://doi.org/10.1038/nature01492)
+([primary PDF, Eqs. 1–3 and Methods 7–12](https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=104991))
+demonstrate a state-dependent stretch-mode force and closed-loop two-spin
+phase gate. The modes were sideband cooled; $0.97\pm0.02$ is one Bell-state
+preparation fidelity including SPAM. Ideal motional independence has a
+Lamb–Dicke premise, not a measured arbitrary-input thermal-process bound.
+Local rotations, echo and final fluorescence are available; coherent
+order and separately addressed $Z_1/Z_2$ force modules are not demonstrated.
+
+In a convenient normalization the actual force is
+$S=(Z_1-Z_2)/2$, with ideal finite pulse
+$D[\alpha(t)S]e^{i\Phi(t)S^2}$ and $S^2=\Pi_{\rm odd}$.
+At loop closure it gives
+$\operatorname{diag}(1,i,i,1)\otimes I_E$, a CZ up to local phases,
+returning even a reference-purified quantum bus in that model.
+Open opposite-quadrature forces coupling to this same $S$ have (GB1)–(GB2)
+with $\vartheta P$ replaced by $abS^2/2$; their $X$ flags are
+$\cos(abS^2/2)$ and $i\sin(abS^2/2)$, hence data-parity filters rather
+than (GB3). Completed loops commute, but open segments need not.
+Reversing the finite force changes $\alpha$ while leaving its quadratic
+self phase $\Phi$ unchanged; it is not generally the full pulse inverse.
+
+For identity storage only, supplied helper transfer and data CNOTs give
+another ordinary option: store input 1 in the helper, prepare spin 1 in
+$0$, and encode input 2 into $\operatorname{span}\{|00\rangle,|11\rangle\}$
+with CNOT$(2\to1)$. Here $S=0$. Undoing that CNOT and transferring back
+preserves both unknown inputs/reference through the collective-force word.
+It costs two full SWAPs, two CNOTs and helper protection; the source does
+not establish those extra ports. Optional calibrated force pulses can
+also be omitted for memory. None of these storage strategies implements
+an indispensable entangling gate while an input is absent; the source's
+ordinary closed loop is the relevant gate comparator.
+
+**Classically fluctuating forces on a centered Gaussian bus.**
+Unknown launch-dependent amplitudes can correlate $C$ and its flags with
+a classical force program. There is then no single calibrated
+$J_\vartheta$ after the averaged channel, so the fixed-force statement
+alone does not settle the comparison. A different bound closes the
+following ideal identity-memory model.
+
+Let classical $\lambda$, independent of the data/reference input,
+specify Weyl kicks
+$A_\lambda=D(\alpha_\lambda Z_1)$ and
+$B_\lambda=D(\beta_\lambda Z_2)$ on one or more bosonic modes, with the
+same program and bath on both histories. Conditional on $\lambda$, the
+bus is a centered Gaussian state $\tau_\lambda$ independent of the data
+and passive reference $R$, allowing squeezing and inter-mode correlations.
+Its characteristic function
+$\chi_\lambda(\xi)=\operatorname{Tr}[\tau_\lambda D(\xi)]$ is real,
+nonnegative and at most one. Use direct fresh $C=+$ with no additional
+native input encoder, and allow arbitrary joint output recovery on $C,D$.
+
+For each $\lambda$, the Weyl relation gives the post-isometry (GB2)
+after $V_\lambda=D(\alpha_\lambda Z_1+\beta_\lambda Z_2)$.
+Giving $\lambda$ free to the ideal decoder is an upper bound; it permits
+absorbing that isometry into an arbitrary data CPTP decoder. The
+conditional data channel is Schur in the $Z$ basis:
+
+$$
+G_{zw}
+=e^{i\operatorname{Im}(\zeta_z\cdot\zeta_w^*)}
+  \chi_\lambda(\zeta_z-\zeta_w),\qquad
+\zeta_z=\alpha_\lambda z_1+\beta_\lambda z_2 .
+\tag{GB4}
+$$
+
+Write $u_\lambda=\chi_\lambda(2\alpha_\lambda)$ and
+$v_\lambda=\chi_\lambda(2\beta_\lambda)$. Among its sixteen ordered
+entries, four diagonal terms equal one, four spin-1 single flips have
+modulus $u_\lambda$, four spin-2 single flips have modulus $v_\lambda$,
+and four double flips have modulus at most one. For the single thermal
+mode above, $\chi$ gives damping
+$\exp[-(2\bar n+1)\{a^2(z_1-w_1)^2+b^2(z_2-w_2)^2\}/4]$
+and the cross phase in (GB4) is
+$ab(w_1z_2-w_2z_1)/2$. Dropping that phase would incorrectly identify
+the channel with two independent local dephasers.
+
+For completeness, take any CPTP data decoder with Kraus $R_l$ and define
+$r_z=(\langle z|R_l|z\rangle)_l$.
+Trace preservation gives
+$\|r_z\|^2\le\sum_l\|R_l|z\rangle\|^2=1$.
+Its identity-memory entanglement fidelity, with a normalized
+four-dimensional maximally entangled reference, is exactly
+
+$$
+F_e=\frac1{16}\sum_{z,w}G_{zw}\langle r_w,r_z\rangle
+\le\frac1{16}\sum_{z,w}|G_{zw}|
+\le\frac{2+u_\lambda+v_\lambda}{4}.
+\tag{GB5}
+$$
+
+The first inequality is triangle plus Cauchy–Schwarz. It covers all
+CPTP decoders, with ancillary outputs, measurements and failure
+completions folded into the all-launch map. Averaging after the
+$\lambda$ genie bounds every actual retained-control decoder by
+$[2+\mathbb E u_\lambda+\mathbb E v_\lambda]/4$.
+
+An ordinary method attains that upper value without learning
+$\lambda$. A recorded fair coin selects one input to SWAP into a
+protected helper. Prepare its empty force spin in a fixed $Z$ eigenstate,
+apply the exposed input's force first and the dummy spin's force last,
+then SWAP back. The last operation is bath-only and cannot change the
+exposed data/reference marginal. The two complete decoded maps are
+$\mathrm{Id}\otimes\mathrm{dephase}_{v_\lambda}$ and
+$\mathrm{dephase}_{u_\lambda}\otimes\mathrm{Id}$; centered-Gaussian
+positivity makes those coherences real without a phase estimate. Thus
+
+$$
+F_{e,\rm coin}
+=\frac12+\frac{\mathbb E u_\lambda+\mathbb E v_\lambda}{4}
+\ge F_{e,\rm switch}^{\rm opt}.
+\tag{GB6}
+$$
+
+The equality is the ordinary score, not saturation of the native upper.
+Both forces occur once, but this protocol also pays two full SWAPs,
+helper lifetime/protection, preparations, input/output access and
+classical order selection. It stores only one of the two inputs.
+An independent helper-storage channel of fidelity $f_H$ multiplies the
+ideal score when each branch remains a product channel; arbitrary
+correlated storage or gate errors do not justify that scalar model.
+These are separate-force ports, not implied by the source's collective
+$S$ drive. Nor is this identity-memory bypass the required entangling gate.
+
+The bound assumes an independent conditional Gaussian bath, classical
+input-independent programs, actual Weyl interactions and matching
+histories. It is not an accepted-only fidelity frontier or a bound on
+native pre-encodings. Unknown nonzero conditional bath means,
+non-Gaussian conditional bus states, coherent quantum force programs,
+intermediate extra noise/records and general process tensors need another
+argument. A physical reopening must
+identify such a necessary feature, or show that the paid storage/loop
+ports lose at the same deadline, using a full retained-output model.
+Calibrated force hardware and an opaque stochastic bath are different
+interfaces; neither a quantum bus nor a short query count supplies a
+finite hardware winner.
+
 ### Classical shot-order changes with constant initial energy: exact CV construction
 
 A different ordinary construction uses every sample once per shot, no
@@ -591,6 +814,12 @@ orders and any stable reusable-component loop. None is established by
 these analytic baselines alone.
 
 ### Verification and attribution scope
+
+The two-input Weyl/isometry and centered-Gaussian recovery bounds above
+are also analytic. They add no finite-cutoff oscillator or device-fit
+certificate; the stated initial preparations, actual history matching,
+half/inverse forces, helper transfers and deadlines remain explicit
+model or physical-control premises.
 
 The Weyl-loop identities, CV Gaussian statistics and finite-dimensional
 global-risk argument above are analytic proofs. Their dependencies are

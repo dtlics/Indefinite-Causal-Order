@@ -426,6 +426,13 @@ same oracle order in every shot does not settle a reusable two-setting
 calibration experiment. Native cavity conditional-displacement signal
 processing is also an ordinary hardware comparator.
 
+The [two-input quantum-bus comparison](geometric-calibration.md#nr-r16-two-input-bus)
+adds complete retained-control output and a conditional ordinary
+partial-storage baseline for centered Gaussian force buses. It separates
+identity storage from the required ion entangling gate, whose demonstrated
+ordinary closed loop already returns the shared motion. Independent force
+ports, helper transfers and their timed errors remain explicit premises.
+
 The next finite test is the complete single-photon optical echo, including
 polarization-controlled spatial parity, repeat passes, aperture, source
 conditioning and every detector port. Measure its launch-normalized

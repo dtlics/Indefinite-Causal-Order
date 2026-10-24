@@ -161,6 +161,10 @@ ordinary chronological implementation. Predicting a useful held-out
 memory decision at lower total cost remains the next test, with ordinary
 phase-resolved echo, retained records and direct schedule calibration
 included.
+The [two-input force-bus component](geometric-calibration.md#nr-r16-two-input-bus)
+of NR-R16 compares full retained-control memory recovery with paid ordinary
+partial storage, and distinguishes that task from a required entangling
+gate on the actual collective-force platform.
 The [microwave readout comparisons](architecture-baselines.md#nr-r06-readout-noise-floor)
 and [full conditional port model](architecture-baselines.md#nr-r06-conditional-microwave-readout)
 require fixed cavity loading, measured signal/idler/bath correlations and

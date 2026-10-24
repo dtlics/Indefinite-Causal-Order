@@ -309,6 +309,11 @@ position postselection and native factory costs remain analytic conditions.
 The [displacement-calibration note](../research/topics/nr-noisy-recovery/geometric-calibration.md)
 proves ordinary Weyl-loop, CV shot-order and exact finite-dimensional
 global-risk constructions under explicit control and energy assumptions.
+Its [two-input force-bus component](../research/topics/nr-noisy-recovery/geometric-calibration.md#nr-r16-two-input-bus)
+also proves a full retained-output factorization and a centered-Gaussian
+all-decoder fidelity bound with a paid ordinary partial-storage comparator.
+These are analytic arguments; source hashes and the finite suite do not
+certify their hardware ports, transfer errors or common deadline.
 The [rewinding-cost analysis](../research/topics/nr-noisy-recovery/obstructions.md#nr-r05)
 derives infinite mean and independent-erasure success for one specified
 published recursion. These are analytic proofs; finite replay does not

@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-24T12:54:26+00:00",
+  "generated_utc": "2026-10-24T13:35:39+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -15,7 +15,7 @@
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "0579328ad4e1ee6c97072f6591191b6eab8c1c4312167340c7128432650c2b46",
     "research/topics/nr-noisy-recovery/architecture-baselines.md": "59f5c27ba406bae804edfabeb80ea2faf28cd215a55341c72cd6dd8b51c034cd",
-    "research/topics/nr-noisy-recovery/architecture.md": "76d22319fa08ec5b78745e08606ba8974bac3cc1fe47b398afe26edfd5bac740",
+    "research/topics/nr-noisy-recovery/architecture.md": "562cd0167351e68452854b8ef52f5635f40c367a5fe32a7f7d44cd08b2b54a1b",
     "research/topics/nr-noisy-recovery/backaction.md": "9ec4695d37280e4f7b1945199511780666e1491157dc5b1e009e0d61274c5168",
     "research/topics/nr-noisy-recovery/braided-magic.md": "ceae446ab3da27c440de14db2a976a458c29d06045aa79b26da77267c6d0bd34",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_dual_sharp_certificate.json": "95d061e96dd7cdf31ca311b54ac9896995312dd5e2b6407d000bd0e2ff80acaf",
@@ -106,7 +106,7 @@
     "research/topics/nr-noisy-recovery/checks/coupler/verify_mean_query_certificate.py": "2802a4c3e972a76ec0666d8d0fd996c75336bb5e6016faddf21c86ed4594d62d",
     "research/topics/nr-noisy-recovery/checks/local/verify_dimensions.py": "5af10c3fad26a66651d72c4ab42a5402f182e44d8b8b0c616c454a865a20505f",
     "research/topics/nr-noisy-recovery/checks/local/verify_structural.py": "68bd7e55c46b75504c58a2d77621b2192e1df3629979ae23d8c74917eb2e1a97",
-    "research/topics/nr-noisy-recovery/checks/README.md": "1990500a7978c2dc5f32d7c76bc048c134e9da03131600a9d21d9e740e683edc",
+    "research/topics/nr-noisy-recovery/checks/README.md": "757b6268f7d27c6e66aa7da26fee01fa29e39f8f58571968b8faa9bb52fda771",
     "research/topics/nr-noisy-recovery/checks/recovery/expected_cost_D8.py": "fc9944f7aff0698dd99fdce2f34eaadad42fecb3cc99cd41cffdd84bec2de1b4",
     "research/topics/nr-noisy-recovery/checks/recovery/finite_ensemble_D8.py": "fb82731ebb8c239652b65ddfc51933e266694a18ce559cef03a61ff176c40e66",
     "research/topics/nr-noisy-recovery/checks/recovery/local_recovery.py": "38958045476b075a233a1ee1f71fcde934f26f44fbb7a42da4abb30c14a11afc",
@@ -114,7 +114,7 @@
     "research/topics/nr-noisy-recovery/checks/run_all.py": "48aee366d97a7c41f927ece49894bbbd9d32feb6b341a6f9165b1308c1ebbe55",
     "research/topics/nr-noisy-recovery/communication.md": "cc12b026531434f05bca2bd3a5d65accc1629c0fcda31320161c0827b6f759a0",
     "research/topics/nr-noisy-recovery/dispatch.md": "97982b8b9fc3733ca6ae9696b277d48dba80bab3626a727a2f6d2fa14e4232db",
-    "research/topics/nr-noisy-recovery/geometric-calibration.md": "5c28de403801adb62438cf6a6e3496c8775b5ffa20cbcfff38143525a732b57a",
+    "research/topics/nr-noisy-recovery/geometric-calibration.md": "f202ef5c494e4aa9df0c1f9b38a2b0e532e65dbecee0fc2b80a9a07657164dba",
     "research/topics/nr-noisy-recovery/global-noise.md": "b65e344b96022b031ea1e7b6e51182cceb509d84a6a6515393198d88e898eea4",
     "research/topics/nr-noisy-recovery/memory-qualification.md": "664877f10bb76659403be409d2caa99ebd3dbb6ec9782885c672d35571b4f261",
     "research/topics/nr-noisy-recovery/methods/acceptance.md": "5b417a1dcfa51a2b876091a169a661eba331ffa37c9b5c219da7e32de76a12f4",
@@ -142,7 +142,7 @@
     "research/topics/nr-noisy-recovery/metrology.md": "0e4645178bcef56d924ec3fc0f22f7b19467851faf6e07be7676ab81b2206100",
     "research/topics/nr-noisy-recovery/native-lookups.md": "c7dfb67147911198d048d9d0987714d2bf20cbd50f84030298fe5eb64e85e82e",
     "research/topics/nr-noisy-recovery/obstructions.md": "86ac3f4b00fd7b156250486162a6067d4b0524ac26421206a9ae8c30338fe8a9",
-    "research/topics/nr-noisy-recovery/README.md": "141d250bb58335afaf751b5449f818a87e1e627e8a1c45b0d02760aa8dc4678e",
+    "research/topics/nr-noisy-recovery/README.md": "4fe0b171df73f2cef9599010948bbe4853b6442d578dd280c1dd26808f30177d",
     "research/topics/nr-noisy-recovery/references.md": "d8b3fb568f48cf80297e68591fb4027c8ba93df9711aa56407acae507a43c368",
     "research/topics/nr-noisy-recovery/theorem.md": "f55ba54175170100b2f62423583ee72e92efff3fd3cb569f5c190a857de06944"
   },

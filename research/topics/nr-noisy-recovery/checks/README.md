@@ -419,9 +419,10 @@ positive-angle family from every fixed experiment at the exact null. The
 [braided-magic result](../braided-magic.md) checks full flagged state
 identities, rather than equating selected fidelities alone. Those finite
 checks do not certify a coherent anyon trajectory or its physical phase.
-The [displacement-calibration constructions](../geometric-calibration.md)
+The [displacement-calibration constructions](../geometric-calibration.md),
+including the [two-input Gaussian-bus recovery comparison](../geometric-calibration.md#nr-r16-two-input-bus),
 and [rewinding stopping/loss analysis](../obstructions.md#nr-r05) have
 explicit analytic proofs and primary-source assumptions. No finite test
-is substituted for the continuum Weyl identities, global-risk proof or
-infinite-mean stopping argument. All these canonical notes are included
-in the runner's input hashes.
+is substituted for the continuum Weyl identities, all-decoder recovery
+bound, global-risk proof or infinite-mean stopping argument. All these
+canonical notes are included in the runner's input hashes.
