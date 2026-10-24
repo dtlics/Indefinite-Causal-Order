@@ -13,12 +13,23 @@ The supplied state is already maximally entangled. The task restores a **specifi
 | Primary work | Closest connection | Distinction to preserve |
 | --- | --- | --- |
 | [Xiong, Chandra, Ng, and Hanzo, *Circuit Symmetry Verification Mitigates Quantum-Domain Impairments*](https://arxiv.org/html/2112.13904v2), IEEE TSP **71** (2023), Proposition 1 and Eqs. (11)–(13) | A switch separates Kraus commutator and anticommutator branches, permitting symmetry-based error filtering on physical quantum data. | This is the direct filtering-mechanism precedent. Applying it to an anticommuting pair or local Pauli errors does not establish a new filter or the present ordinary-receiver optimum. |
+| [Guo et al., *Physica Scripta* **101**, 375105 (2026)](https://doi.org/10.1088/1402-4896/aea388), publisher-deposited abstract | Explicit commutation-syndrome filtering and optimized qubit recovery. | The accessible abstract specifies memoryless intermediate operations for its solvable depolarizing/axis-flip pair, and receiver-side processing for general Pauli pairs. Its precise side-system qualification and full proof were not accessible in this audit. |
 | [Lee et al., *Error Suppression for Arbitrary-Size Black Box Quantum Operations*](https://arxiv.org/html/2210.10733v2), PRL **131**, 190601 (2023), Fig. 1 | Ordinary controlled-routing filtration improves the physical action of unknown noisy black-box operations. | The basic construction repeats the same complete process. Two copies of a composed $AB$ process consume four primitive module calls. Its constructive filtration theorem is not the expected-cost converse for distinct correlated modules. |
 | [Miguel-Ramiro et al., *Enhancing Quantum Computation via Superposition of Quantum Gates*](https://arxiv.org/html/2304.08529v2), PRA **108**, 062604 (2023), companion to [*Superposed Quantum Error Mitigation*](https://arxiv.org/abs/2304.08528) | Generic SQEM can operate without knowing the unitary. Section II.2.1 and Section IV.3.1 explicitly treat tensor-product output depolarization and physical purification; other sections study outcome recovery and noisy auxiliary gates. | Local module-output noise and physical unknown-operation filtration are established prior. Optimal auxiliary projections can require extra knowledge or resources. Repeating the complete computation and comparing with its unprotected version does not optimize all ordinary receivers under the present mean budget. |
 | [Niwa, Yoshida, and Murao, *Asymptotically optimal purification of noisy unitary channels in any dimension*](https://arxiv.org/html/2608.26061v1) (2026), Eqs. (4)–(5) | An arbitrary-sequential-strategy converse and an achievable construction for noisy unknown-unitary purification. | All slots contain the same noisy unitary, the noise is global depolarization, and the optimum is deterministic and asymptotic. This does not directly give the distinct-product, local-noise, variable-length recovery bound. |
 | [Zhao et al., *Distilling Qubit Unitary Operations: A No-Go Theorem and Minimal Realization*](https://arxiv.org/html/2604.01048v3) (2026) | Deterministic purification of repeated copies of the same noisy qubit unitary; restricted gate sets already exhibit numerical two-slot ICO gaps. | Neither physical purification nor a generic two-slot indefinite-order advantage is a first claim here. The present target, dimension, rejection reward, and expected-resource comparison differ. |
 
 A four-call ordinary filter is **not excluded** by a mean-two-query budget: it can be run on occasional rounds and combined with rejection or other strategies. The cost-sensitive converse must cover such mixtures and adaptive continuations. Fixed call counts explain the constructions' resources; they do not by themselves prove the new comparison. Ordinary postselection and coherent routing must likewise remain allowed.
+
+The Guo comparison above uses the publisher's
+[official deposited abstract](https://api.crossref.org/works/10.1088/1402-4896/aea388),
+which dates online publication to 17 September 2026. The article/PDF
+endpoint did not provide full text in this audit. Its side-system condition
+must not be silently read as either a marginal-only or a throughout-protocol
+restriction. A memory-assisted ordinary fidelity baseline need not reproduce
+the original flagged channel; conversely, a full-instrument memory bound
+does not establish a better recovery score or contradict a theorem for a
+smaller competitor class. The commutation-syndrome mechanism is prior work.
 
 ## Fault-parity controller memory
 

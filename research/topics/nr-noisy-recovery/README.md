@@ -102,9 +102,11 @@ full-channel compiler for calibrated depolarizing slots and separately
 counts all-plus Grover restarts, verification and actual controller costs.
 The [fault-parity controller component](methods/binary-fault-controller.md)
 proves controller-memory requirements for response-uniform fault-parity
-instruments, distinguishing closed controls from intermediate records
-and reset. Bypass, calibrated resampling and pure pilots remain stronger
-ordinary options for other endpoints. The
+instruments, including cross-dual Pauli families and distinct input-arrival
+times. It distinguishes closed controls from intermediate records and
+reset, and counts the quantum programs needed before future input arrives.
+Bypass, calibrated resampling and pure pilots remain stronger ordinary
+options for other endpoints. The
 [controlled-unitary correlator](methods/memory-native-cost.md#nr-r20-controlled-unitary-correlator)
 adds an ordinary one-helper memory test when the specified coherent side
 port is available, with conditional records and repeated-use costs charged.

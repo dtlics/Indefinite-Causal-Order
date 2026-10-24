@@ -5,6 +5,8 @@ belong to the linked NR-R06 method. This checks finite matrix identities and
 complete weighted instruments, not an all-strategy lower bound or native
 hardware implementation. Separate replay groups cover the seven-level
 CSS controller and a bank with intermediate recorded read/reset.
+An additional Gaussian-rational replay covers cross-dual full-Pauli
+families with internal anticommutation and inverse ordered check banks.
 Standard library only; no files are written.
 """
 
@@ -448,6 +450,345 @@ def reset_verify():
             "scope": "CSS family with priced intermediate readout, retained classical records and conditional reset; outside the closed-controller lower bound"}
 
 
+def replay_cross_dual():
+    """Full n=1,2 Pauli instruments, including physical complex phases.
+
+    The established Gaussian scalar engine supplies exact arithmetic. Sparse
+    rows keep the 31-level helper fixture finite without a dense large-matrix
+    multiplication. Physical Paulis come from its tensor-product basis; the
+    older real helper representations supply a separate character resolution.
+    No scratch source or report is imported.
+    """
+    import verify_fault_simulation as g
+
+    class Sparse:
+        def __init__(self, rows, columns, entries):
+            self.shape = rows, columns
+            self.rows = [{} for _ in range(rows)]
+            for (i, j), value in entries.items():
+                require(0 <= i < rows and 0 <= j < columns,
+                        "Cross-dual sparse dimensions")
+                if value != g.ZERO:
+                    self.rows[i][j] = value
+
+        def __eq__(self, other):
+            return (isinstance(other, Sparse) and self.shape == other.shape
+                    and self.rows == other.rows)
+
+        def entries(self):
+            return ((i, j, value) for i, row in enumerate(self.rows)
+                    for j, value in row.items())
+
+    def empty(rows, columns):
+        return Sparse(rows, columns, {})
+
+    def unit(size):
+        return Sparse(size, size, {(i, i): g.ONE for i in range(size)})
+
+    def from_dense(operand, real=False):
+        return Sparse(len(operand), len(operand[0]),
+                      {(i, j): g.gaussian(value) if real else value
+                       for i, row in enumerate(operand)
+                       for j, value in enumerate(row)})
+
+    def plus(left, right):
+        require(left.shape == right.shape, "Cross-dual sum dimensions")
+        out = {(i, j): value for i, j, value in left.entries()}
+        for i, j, value in right.entries():
+            out[i, j] = g.add(out.get((i, j), g.ZERO), value)
+        return Sparse(*left.shape, out)
+
+    def times(scalar, operand):
+        return Sparse(*operand.shape,
+                      {(i, j): g.times(value, scalar)
+                       for i, j, value in operand.entries()})
+
+    def product(left, right):
+        require(left.shape[1] == right.shape[0],
+                "Cross-dual product dimensions")
+        out = {}
+        for i, row in enumerate(left.rows):
+            for middle, x in row.items():
+                for j, y in right.rows[middle].items():
+                    value = y if x == g.ONE else x if y == g.ONE else g.multiply(x, y)
+                    out[i, j] = g.add(out.get((i, j), g.ZERO), value)
+        return Sparse(left.shape[0], right.shape[1], out)
+
+    def adjoint(operand):
+        return Sparse(operand.shape[1], operand.shape[0],
+                      {(j, i): g.conjugate(value)
+                       for i, j, value in operand.entries()})
+
+    def kron(left, right):
+        rows, columns = right.shape
+        return Sparse(left.shape[0] * rows, left.shape[1] * columns,
+                      {(i * rows + k, j * columns + ell): g.multiply(x, y)
+                       for i, j, x in left.entries()
+                       for k, ell, y in right.entries()})
+
+    def tr(operand):
+        out = g.ZERO
+        for i, row in enumerate(operand.rows):
+            out = g.add(out, row.get(i, g.ZERO))
+        return out
+
+    def matrix_unit_image(operator, i, j):
+        return Sparse(operator.shape[0], operator.shape[0],
+                      {(row, column): g.multiply(values[i], g.conjugate(other[j]))
+                       for row, values in enumerate(operator.rows) if i in values
+                       for column, other in enumerate(operator.rows) if j in other})
+
+    def reduced_image(operator, i, j, dimension, size, flag):
+        out = {}
+        for row, values in enumerate(operator.rows):
+            helper, data_row = divmod(row, dimension)
+            if i not in values or int(helper >= size) != flag:
+                continue
+            for data_column in range(dimension):
+                other = operator.rows[helper * dimension + data_column]
+                if j in other:
+                    out[data_row, data_column] = g.add(
+                        out.get((data_row, data_column), g.ZERO),
+                        g.multiply(values[i], g.conjugate(other[j])))
+        return Sparse(dimension, dimension, out)
+
+    def ordered_bank(generators, size, dimension):
+        bank = unit(size * dimension)
+        for bit, generator in enumerate(generators):
+            controlled = empty(size * dimension, size * dimension)
+            for label in range(size):
+                control = Sparse(size, size, {(label, label): g.ONE})
+                controlled = plus(controlled, kron(
+                    control, generator if label & (1 << bit) else unit(dimension)))
+            # Chronological order is bit 0, then bit 1, and so on.
+            bank = product(controlled, bank)
+        return bank
+
+    cases = []
+    counts = {name: 0 for name in (
+        "cross_dual_pairs", "internal_anticommuting_ordered_pairs",
+        "character_projectors", "complete_echo_identities",
+        "full_fault_isometries", "closed_flag_matrix_unit_maps",
+        "open_single_read_kraus", "open_fine_record_operators",
+        "open_flag_matrix_unit_maps", "inverse_order_guards")}
+    for n in (1, 2):
+        dimension, bits = 1 << n, 2 * n
+        size, helper_dimension = 1 << bits, 2 * (1 << bits) - 1
+        basis = g.pauli_basis(n)
+        physical = []
+        # Engine basis digits are I,X,Y,Z; label bits are x below z.
+        digits = {(0, 0): 0, (1, 0): 1, (1, 1): 2, (0, 1): 3}
+        for label in range(size):
+            index = 0
+            for bit in reversed(range(n)):
+                index = 4 * index + digits[((label >> bit) & 1,
+                                           (label >> (n + bit)) & 1)]
+            physical.append(from_dense(basis[index]))
+        ps = tuple(physical)
+        qs = tuple(ps[((label & (dimension - 1)) << n) | (label >> n)]
+                   for label in range(size))
+        data_identity = unit(dimension)
+        for family in (ps, qs):
+            require(any(value[1] for operator in family
+                        for _, _, value in operator.entries()),
+                    "Cross-dual fixtures include imaginary physical amplitudes")
+            anti_count = 0
+            for a, left in enumerate(family):
+                require(adjoint(left) == left and product(left, left) == data_identity,
+                        "Physical Pauli is a Hermitian involution")
+                for right in family:
+                    if product(left, right) == times(-1, product(right, left)):
+                        anti_count += 1
+            require(anti_count == size * size // 2 - size // 2,
+                    "Full Pauli fixture has internal anticommutation")
+            counts["internal_anticommuting_ordered_pairs"] += anti_count
+        for a in range(size):
+            for b in range(size):
+                require(product(ps[a], qs[b]) == times(
+                    hr_character(a, b), product(qs[b], ps[a])),
+                        "All cross-dual commutation characters")
+                counts["cross_dual_pairs"] += 1
+
+        representations = (
+            tuple(hr_first_representation(a, size) for a in range(size)),
+            tuple(hr_second_representation(b, size) for b in range(size)))
+        resolutions = []
+        for representation in representations:
+            dense_projectors = hr_character_projectors(representation, size)
+            projectors = tuple(from_dense(p, real=True) for p in dense_projectors)
+            total = empty(helper_dimension, helper_dimension)
+            for c, projector in enumerate(projectors):
+                require(adjoint(projector) == projector
+                        and product(projector, projector) == projector,
+                        "Cross-dual helper character projector")
+                require(tr(projector) == g.gaussian(size if c == 0 else 1),
+                        "Helper character ranks M,1,...,1")
+                for other in projectors[:c]:
+                    require(product(projector, other)
+                            == empty(helper_dimension, helper_dimension),
+                            "Cross-dual helper projector orthogonality")
+                total = plus(total, projector)
+                counts["character_projectors"] += 1
+            require(total == unit(helper_dimension), "Complete helper resolution")
+            resolutions.append(projectors)
+
+        closed = []
+        for projectors, family in zip(resolutions, (qs, ps)):
+            controller = empty(helper_dimension * dimension,
+                               helper_dimension * dimension)
+            for projector, operator in zip(projectors, family):
+                controller = plus(controller, kron(projector, operator))
+            require(adjoint(controller) == controller
+                    and product(controller, controller)
+                    == unit(helper_dimension * dimension),
+                    "Actual projector controller is a Hermitian involution")
+            closed.append(controller)
+        source = Sparse(helper_dimension * dimension, dimension,
+                        {(j, j): g.ONE for j in range(dimension)})
+        closed_words = [[], []]
+        for which, (controller, family, representation) in enumerate(zip(
+                closed, (ps, qs), representations)):
+            for label, operator in enumerate(family):
+                actual = product(product(controller, kron(unit(helper_dimension),
+                                                           operator)), controller)
+                expected = kron(from_dense(representation[label], real=True), operator)
+                require(actual == expected, "Literal full cross-dual controller echo")
+                closed_words[which].append(actual)
+                counts["complete_echo_identities"] += 1
+        for a in range(size):
+            for b in range(size):
+                target, reverse = product(qs[b], ps[a]), product(ps[a], qs[b])
+                flag = hr_dot(a, b)
+                label = size + a - 1 if flag else a
+                actual = product(closed_words[1][b], product(closed_words[0][a], source))
+                expected = Sparse(helper_dimension * dimension, dimension,
+                                  {(label * dimension + row, column): value
+                                   for row, column, value in target.entries()})
+                require(actual == expected, "Phase-sensitive full closed fault isometry")
+                require(product(adjoint(actual), actual) == data_identity,
+                        "Closed fault-word isometry normalization")
+                for read in (0, 1):
+                    native = times(F(1, 2), plus(target, times(1 if read == 0 else -1,
+                                                             reverse)))
+                    for i in range(dimension):
+                        for j in range(dimension):
+                            image = reduced_image(actual, i, j, dimension, size, read)
+                            require(image == matrix_unit_image(native, i, j),
+                                    "Full complex-linear closed flag instrument")
+                            require(tr(image) == g.gaussian(int(read == flag and i == j)),
+                                    "Closed normalized flag probability")
+                            counts["closed_flag_matrix_unit_maps"] += 1
+                counts["full_fault_isometries"] += 1
+
+        # Normalize the source/read pair jointly: J has M identical helper rows,
+        # and the bra coefficient 1/M includes both physical 1/sqrt(M) factors.
+        open_source = Sparse(size * dimension, dimension,
+                             {(h * dimension + j, j): g.ONE
+                              for h in range(size) for j in range(dimension)})
+        require(product(adjoint(open_source), open_source)
+                == times(size, data_identity), "Open-bank source normalization")
+        read_bras, resets = [], []
+        reset_complete = empty(size, size)
+        for read in range(size):
+            bra = Sparse(1, size, {(0, h): g.gaussian(hr_character(read, h) / size)
+                                   for h in range(size)})
+            projector = Sparse(size, size,
+                               {(i, j): g.gaussian(hr_character(read, i ^ j) / size)
+                                for i in range(size) for j in range(size)})
+            z_read = Sparse(size, size,
+                            {(h, h): g.gaussian(hr_character(read, h))
+                             for h in range(size)})
+            reset = product(z_read, projector)
+            require(adjoint(projector) == projector
+                    and product(projector, projector) == projector,
+                    "Physical X-readout projector")
+            reset_complete = plus(reset_complete, product(adjoint(reset), reset))
+            read_bras.append(kron(bra, data_identity))
+            resets.append(kron(reset, data_identity))
+        require(reset_complete == unit(size), "Complete measured reset instrument")
+
+        reads = [[], []]
+        for which, (check_family, fault_family) in enumerate(((qs, ps), (ps, qs))):
+            bank = ordered_bank(tuple(check_family[1 << bit] for bit in range(bits)),
+                                size, dimension)
+            joint_identity = unit(size * dimension)
+            require(product(adjoint(bank), bank) == joint_identity,
+                    "Ordered controlled-Pauli bank is unitary")
+            require(bank != adjoint(bank) and product(bank, bank) != joint_identity,
+                    "Wrong W-query-W echo fails already on the identity query")
+            require(product(bank, product(bank, open_source)) != open_source,
+                    "Wrong W-squared echo also fails on the initialized meter code")
+            counts["inverse_order_guards"] += 1
+            for label, operator in enumerate(fault_family):
+                actual = product(product(adjoint(bank), kron(unit(size), operator)), bank)
+                z_label = Sparse(size, size,
+                                 {(h, h): g.gaussian(hr_character(label, h))
+                                  for h in range(size)})
+                require(actual == kron(z_label, operator),
+                        "Actual inverse-order bank phase-syndrome echo")
+                after = product(actual, open_source)
+                normalization = empty(dimension, dimension)
+                operators = []
+                for read in range(size):
+                    selected = product(read_bras[read], after)
+                    require(selected == (operator if read == label
+                                          else empty(dimension, dimension)),
+                            "Normalized fine-read target Kraus operator")
+                    require(product(resets[read], after) == product(open_source, selected),
+                            "Middle X-read and conditional Z reset actually reuses meters")
+                    normalization = plus(normalization, product(adjoint(selected), selected))
+                    operators.append(selected)
+                    counts["open_single_read_kraus"] += 1
+                require(normalization == data_identity, "Complete single-read instrument")
+                reads[which].append(operators)
+
+        for a in range(size):
+            for b in range(size):
+                target, reverse = product(qs[b], ps[a]), product(ps[a], qs[b])
+                coarse = [[], []]
+                normalization = empty(dimension, dimension)
+                for read_a in range(size):
+                    for read_b in range(size):
+                        selected = product(reads[1][b][read_b], reads[0][a][read_a])
+                        require(selected == (target if read_a == a and read_b == b
+                                              else empty(dimension, dimension)),
+                                "Both retained fine records preserve complete target phase")
+                        normalization = plus(normalization,
+                                             product(adjoint(selected), selected))
+                        if any(selected.rows):
+                            coarse[hr_dot(read_a, read_b)].append(selected)
+                        counts["open_fine_record_operators"] += 1
+                require(normalization == data_identity, "Complete two-read instrument")
+                for i in range(dimension):
+                    for j in range(dimension):
+                        total = empty(dimension, dimension)
+                        for flag in (0, 1):
+                            image = empty(dimension, dimension)
+                            for selected in coarse[flag]:
+                                image = plus(image, matrix_unit_image(selected, i, j))
+                            native = times(F(1, 2), plus(target, times(
+                                1 if flag == 0 else -1, reverse)))
+                            require(image == matrix_unit_image(native, i, j),
+                                    "Full complex-linear open-bank flag instrument")
+                            require(tr(image) == g.gaussian(
+                                int(flag == hr_dot(a, b) and i == j)),
+                                    "Open-bank normalized flag probability")
+                            total = plus(total, image)
+                            counts["open_flag_matrix_unit_maps"] += 1
+                        require(tr(total) == g.gaussian(int(i == j)),
+                                "Open-bank complete trace preservation")
+        cases.append({"n": n, "r": bits, "M": size, "data_dimension": dimension,
+                      "closed_helper_dimension": helper_dimension,
+                      "open_clean_meter_qubits": bits,
+                      "open_binary_readout_bits": 2 * bits,
+                      "fault_words": size * size})
+    return {"status": "passed", "arithmetic": "exact Gaussian rational; standard library",
+            "cases": cases, **counts, "actual_queries_per_branch": 2,
+            "scope": ("full cross-dual Pauli families n=1,2, all fault words and input "
+                      "matrix units; ordered inverse banks and intermediate read/reset "
+                      "priced; no helper minimum or native hardware certification")}
+
+
 def verify():
     x = matrix([[0, 1], [1, 0]])
     z = matrix([[1, 0], [0, -1]])
@@ -588,6 +929,7 @@ def verify():
         "weighted_flag_matrix_unit_maps": matrix_unit_maps,
         "higher_rank": hr_verify(),
         "reset_upper": reset_verify(),
+        "cross_dual": replay_cross_dual(),
         "scope": ("finite exact replay of the coarse measured flag and full target "
                   "instrument for fixed pure qutrit control; analytic lower bound, "
                   "arbitrary order-control input and native hardware not certified"),

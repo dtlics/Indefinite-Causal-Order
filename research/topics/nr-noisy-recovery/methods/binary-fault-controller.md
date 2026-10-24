@@ -7,9 +7,10 @@ and calibration when the complete unknown payload is supplied before
 the first charged device call. For two known anticommuting Pauli fault families,
 a closed ordinary two-query circuit needs at least three clean helper
 levels; a qutrit reproduces the complete measured SWITCH instrument.
-For $k$-bit CSS fault labels, the minimum is $k$ protected helper qubits
+For $r$-bit cross-dual Pauli fault labels, the minimum is $r$ protected helper qubits
 even with arbitrary subsequent CPTP processing, resets and classical
-records, and $k+1$ in the closed model. Exact preservation of the full
+records, and $r+1$ in the closed model. Complete $n$-qubit Pauli
+families have $r=2n$. Exact preservation of the full
 input when no fault occurs is essential to the former lower bound.
 These are controller-resource comparisons, not practical native
 advantages or priority claims.
@@ -247,14 +248,15 @@ level is a possible comparator only with those real costs included.
 
 ## Many labels: exact memory with arbitrary later CPTP processing
 
-Let $k\ge1$, $n\ge k$, $M=2^k$ and $D=2^n$. On the first $k$ data
-qubits define $X^a=\prod_iX_i^{a_i}$ and
-$Z^b=\prod_iZ_i^{b_i}$ for $a,b\in\mathbb F_2^k$. The remaining
-data are arbitrary. Consider the known CSS fault families
+Let $D=2^n$, $1\le r\le2n$ and $M=2^r$. The known Hermitian
+Pauli families $P_a,Q_b$, indexed by $a,b\in\mathbb F_2^r$, satisfy
+$P_0=Q_0=I$ and the cross-dual relations
+$P_aQ_b=(-1)^{a\cdot b}Q_bP_a$. Their members need not commute
+within either family. Consider
 
 $$
- \mathcal A_p=\sum_a p_a\operatorname{Ad}_{X^a},\qquad
- \mathcal B_q=\sum_b q_b\operatorname{Ad}_{Z^b}.
+ \mathcal A_p=\sum_a p_a\operatorname{Ad}_{P_a},\qquad
+ \mathcal B_q=\sum_b q_b\operatorname{Ad}_{Q_b}.
  \tag{BFC10}
 $$
 
@@ -264,7 +266,7 @@ instrument is
 
 $$
  \mathcal M_f(X)=\sum_{a\cdot b=f}p_aq_b
-                   \operatorname{Ad}_{Z^bX^a}(X),\qquad f=0,1.
+                   \operatorname{Ad}_{Q_bP_a}(X),\qquad f=0,1.
  \tag{BFC11}
 $$
 
@@ -272,8 +274,15 @@ All maps act as identity on passive $R$. The compiler is fixed,
 independent of $p,q$, and exact on an open set of their probability
 simplices. Bilinearity gives the deterministic word demands, just
 as for (BFC2). Independent per-bit Bernoulli rates varying on an open
-$2k$-dimensional box also suffice by polynomial identity. A single
+$2r$-dimensional box also suffice by polynomial identity. A single
 calibrated weighted law does not give this promise.
+
+Cross-duality makes each family Hilbert–Schmidt orthogonal. For
+$a\ne a'$, choose $c$ with $(a+a')\cdot c=1$. Conjugating
+$P_aP_{a'}$ by $Q_c$ reverses its sign, so its trace is zero.
+The same holds for $Q$. Thus $M\le D^2$, explaining $r\le2n$.
+The CSS case $r\le n$, $P_a=X^a$, $Q_b=Z^b$ on $r$ known
+qubits is one example, rather than a condition on the theorem.
 
 At the first query cut, the ordinary device has the queried register
 of dimension $D$ and protected quantum memory of dimension $h$.
@@ -293,7 +302,7 @@ inter-query interval. It does require the full input to return
 exactly at word $(0,0)$; destructive pilots do not satisfy it.
 
 **Open-controller theorem.** Exact simulation of (BFC11), with one
-query per slot, requires $h\ge M$, and $k$ clean helper qubits with
+query per slot, requires $h\ge M$, and $r$ clean helper qubits with
 an intermediate read/reset attain it.
 
 **Proof of the lower bound.** First fix the query order. At word
@@ -317,14 +326,14 @@ Suppose $\mathcal A_p$ is queried first. At deterministic label $a$,
 the state just after that query is
 
 $$
- \rho_a=(I_h\otimes X^a)\rho(I_h\otimes X^a)^\dagger,
+ \rho_a=(I_h\otimes P_a)\rho(I_h\otimes P_a)^\dagger,
  \qquad\operatorname{rank}\rho_a\ge D.
  \tag{BFC13}
 $$
 
 Grant a hypothetical decoder the second label $b=e_i$. It can simulate
 the entire remaining ordinary protocol, replacing the second query
-by the known $Z^{e_i}$. This is a CPTP measurement of $\rho_a$ and
+by the known $Q_{e_i}$. This is a CPTP measurement of $\rho_a$ and
 returns $a_i$ exactly, regardless of the intermediate resets or
 records. For distinct $a,a'$, choose a differing bit $i$. Perfect
 decoding forces their state supports into orthogonal zero- and
@@ -334,40 +343,47 @@ Consequently $hD\ge MD$. The opposite first order interchanges
 $a,b$ and gives the same bound.
 
 Public classical preprocessing and random order do not evade it.
-Let $r$ include the complete classical record before the first query,
-including its order, and let $\mathcal E_r$ be that source branch.
+Let $\gamma$ include the complete classical record before the first query,
+including its order, and let $\mathcal E_\gamma$ be that source branch.
 At word $(0,0)$, the decoded branch maps are CP summands of the
 identity channel. Rank-one Choi implies
-$\mathcal R_r\mathcal E_r=p_r\operatorname{Id}$.
-Since the suffix is TP, $p_r$ is independent of the input, and the
-normalized encoder $\mathcal E_r/p_r$ is reversible whenever $p_r>0$.
+$\mathcal R_\gamma\mathcal E_\gamma=p_\gamma\operatorname{Id}$.
+Since the suffix is TP, $p_\gamma$ is independent of the input, and the
+normalized encoder $\mathcal E_\gamma/p_\gamma$ is reversible whenever $p_\gamma>0$.
 Zero total error at each of the finitely many words forces zero
 conditional error for almost every such record simultaneously.
 Apply the rank argument to any such fixed-order branch. Arbitrarily
 large later classical memory cannot make nonorthogonal first-cut
 states perfectly distinguishable. $\square$
 
-**Attaining $h=M$ with read/reset.** Prepare $k$ meter qubits in
-$|+\rangle^{\otimes k}$. The controlled-$Z_i$ check bank around the
-first slot gives
+**Attaining $h=M$ with read/reset.** Prepare $r$ meter qubits in
+$|+\rangle^{\otimes r}$. Let $W_Q$ be a fixed ordered product of
+controlled-$Q_{e_i}$ gates, controlled by meter $i$. On every meter
+computational word $z$, conjugation by that ordered physical product
+has character $(-1)^{a\cdot z}$. Hence
 
 $$
- C_Z(I\otimes X^a)C_Z=Z_H^a\otimes X^a.
+ W_Q^\dagger(I\otimes P_a)W_Q=Z_H^a\otimes P_a.
  \tag{BFC14}
 $$
 
+Apply $W_Q$ before the first slot and its adjoint, in reverse factor
+order, after it. This ordering is essential when the physical
+generators anticommute; using the same bank twice need not work.
 Read the meters in $X$, retain $a$ classically and reset them to
-$|+\rangle^{\otimes k}$. A controlled-$X_i$ bank around the second
-slot similarly records $b$, while applying $Z^b$ to the data. Return
+$|+\rangle^{\otimes r}$. The corresponding ordered controlled-$P_{e_i}$
+bank and its adjoint around the second slot record $b$, while
+applying $Q_b$ to the data. Return
 $a\cdot b$ and forget the finer records. Every word has exactly the
-data operation $Z^bX^a$, so this is the full (BFC11), including unknown
+data operation $Q_bP_a$, so this is the full (BFC11), including unknown
 reference correlations. It uses the same two noisy queries, four
-known check banks, a middle $k$-bit read/reset and transcript, and
+known check banks, a middle $r$-bit read/reset and transcript, and
 one terminal readout. Every control, reset and classical latency is
 paid. No optimum for the number of reset rounds or arbitrary
 time-dependent space tradeoffs is asserted.
 
-If protected SWAP storage is available, another $k$-helper upper
+For the CSS example with $k=r\le n$, protected SWAP storage gives
+another $k$-helper upper that
 avoids check banks. Store the $k$ active unknown input qubits in the
 helpers, query $\mathcal A_p$ on the replacement $|0\rangle^{\otimes k}$
 and read $a$ in $Z$; reset those queried qubits to
@@ -383,7 +399,9 @@ does not need knowledge of $p,q$ or a controlled unknown slot.
 ## Closed many-label controllers: bounds in levels and exact qubit count
 
 In the closed model of (BFC3), write the word isometries as
-$F_bE_aV$, with $E_0=F_0=I$. If $a\ne a'$, choose $b$ with
+$F_bE_aV$, with $E_0=F_0=I$. No internal commutation or linear
+multiplication rule for these physical fault operators is needed.
+If $a\ne a'$, choose $b$ with
 $(a+a')\cdot b=1$. Opposite flags make $F_bE_aV$ and $F_bE_{a'}V$
 orthogonal; unitarity of $F_b$ cancels. The $M$ ranges of $E_aV$
 are therefore mutually orthogonal. At $b=0$ they all lie in the
@@ -404,8 +422,8 @@ all $a$ and $|a,1\rangle$ for nonzero $a$, initially $|0,0\rangle$.
 Its dimension is $2M-1$. Let $E_x$ translate the plus layer,
 $E_x|a,0\rangle=|a+x,0\rangle$, and fix the minus layer. Let $F_y$
 swap the pair $|a,0\rangle,|a,1\rangle$ iff $a\cdot y=1$, and fix
-$|0,0\rangle$. Each family is a commuting representation of
-$\mathbb F_2^k$ by Hermitian involutions. Their separate character
+$|0,0\rangle$. Each helper family is a commuting representation of
+$\mathbb F_2^r$ by Hermitian involutions. Their separate character
 projectors are
 
 $$
@@ -427,34 +445,46 @@ rank one. Their eigenbases need not coincide.
 The known Hermitian unitaries
 
 $$
- C_E=\sum_c\Pi_c^E\otimes Z^c,
- \qquad C_F=\sum_c\Pi_c^F\otimes X^c
+ C_E=\sum_c\Pi_c^E\otimes Q_c,
+ \qquad C_F=\sum_c\Pi_c^F\otimes P_c
  \tag{BFC17}
 $$
 
-satisfy $C_E(I\otimes X^a)C_E=E_a\otimes X^a$ and
-$C_F(I\otimes Z^b)C_F=F_b\otimes Z^b$, by the Pauli commutation
-characters. Four wrappers around the two ordinary queries give
+are Hermitian involutions because orthogonal helper projectors
+eliminate every cross term and $P_c^2=Q_c^2=I$. The cross-dual
+relations alone give
+$C_E(I\otimes P_a)C_E=E_a\otimes P_a$ and
+$C_F(I\otimes Q_b)C_F=F_b\otimes Q_b$.
+For example, the first expansion is
+$\sum_c\Pi_c^E\otimes Q_cP_aQ_c
+=\sum_c(-1)^{a\cdot c}\Pi_c^E\otimes P_a$.
+No within-family product occurs. Four wrappers around the two
+ordinary queries give
 
 $$
- F_bE_a|0,0\rangle\otimes Z^bX^a
-       =|a,a\cdot b\rangle\otimes Z^bX^a.
+ F_bE_a|0,0\rangle\otimes Q_bP_a
+       =|a,a\cdot b\rangle\otimes Q_bP_a.
  \tag{BFC18}
 $$
 
 Coarse readout of the second helper coordinate, followed by disposal
 of the finer $a$ record, proves the full (BFC11). No rate estimate
-or middle reset is used. The construction is for these CSS groups;
-it is not an upper construction for arbitrary non-isotropic Pauli
-supports.
+or middle reset is used. The physical Pauli families may have
+projective multiplication phases. This causes no contradiction:
+the helper representation is linear, so its tensor product with a
+physical family preserves that family's projective phases, exactly
+as simultaneous conjugation by (BFC17) requires. The upper therefore
+includes non-isotropic cross-dual Pauli families; it does not assert
+such a construction for arbitrary labels lacking the cross characters.
 
-For $k\ge1$, (BFC15) exceeds $2^k$, while $2M-1<2^{k+1}$.
+For $r\ge1$, (BFC15) exceeds $2^r$, while $2M-1<2^{r+1}$.
 The minimum integer number of clean controller qubits in the closed
-model is therefore exactly $k+1$. Literal helper dimension is only
-bounded by $3M/2\le h\le2M-1$ for $k>1$; no equality is claimed
-there. For $k=1$, the construction is precisely the qutrit above.
+model is therefore exactly $r+1$. Literal helper dimension is only
+bounded by $3M/2\le h\le2M-1$ for $r>1$; no equality is claimed
+there. For $r=1$, the construction is precisely the qutrit above.
 
-An efficient full-register implementation uses $k$ helper label
+For the specialized CSS case $k=r\le n$, an efficient full-register
+implementation uses $k$ helper label
 qubits $A$ and a flag qubit $f$, padding with $|0,1\rangle$.
 Extend the composite representations to fix that unused level.
 Writing $H_A$ for Hadamards on every label qubit and $H_f$ for a
@@ -477,6 +507,13 @@ The individual Hadamards can transiently occupy the padded level.
 Thus (BFC19) is an efficient $k+1$-qubit realization, not the same
 cost certificate for a literal $(2M-1)$-level device constrained to
 that subspace at every intermediate instant.
+For a general cross-dual family, (BFC17) still supplies known
+controls, whose character-basis and controlled-Pauli synthesis costs
+must be provided. Coherently controlling a canonical Pauli label
+requires its label-dependent phase as well as its physical string;
+an ordered generator product cannot replace it without those phases.
+No generic gate-time or hardware advantage is asserted by the
+helper-dimension construction.
 
 ## Robust flags when the no-fault data channel remains exact
 
@@ -487,7 +524,7 @@ with arbitrary source and later CPTP processing as above. For fixed
 first order,
 
 $$
- \log_2h\ge k[1-H_2(\epsilon)],
+ \log_2h\ge r[1-H_2(\epsilon)],
  \tag{BFC20}
 $$
 
@@ -513,7 +550,7 @@ the first label, and each normalized conditional encoder is reversible.
 For $b=e_i$, the suffix decodes bit $a_i$ with error at most
 $\epsilon$, averaged over that record. Binary Fano, data processing
 and conditional-entropy subadditivity give information at least
-$k[1-H_2(\epsilon)]$. This proves (BFC20); fresh later ancillas,
+$r[1-H_2(\epsilon)]$. This proves (BFC20); fresh later ancillas,
 resets and transcripts cannot increase the information at the cut.
 One must retain the public seed in this argument, rather than
 select a seed with an unproved uniform error bound.
@@ -524,14 +561,14 @@ word error at most $\epsilon/\alpha\le2\epsilon$. Thus the safe
 order-independent consequence, for $\epsilon<1/4$, is
 
 $$
- \log_2h\ge k[1-H_2(2\epsilon)].
+ \log_2h\ge r[1-H_2(2\epsilon)].
  \tag{BFC21}
 $$
 
 For example, order-control $Z$ dephasing of visibility $0\le v\le1$
 before native $X$ readout flips the ideal bit with probability
 $\epsilon=(1-v)/2$, on every deterministic word, while leaving
-the data operation exactly $\operatorname{Ad}_{Z^bX^a}$. An exact
+the data operation exactly $\operatorname{Ad}_{Q_bP_a}$. An exact
 ordinary simulator of this specified noisy CQ instrument has an
 exact no-fault unflagged data identity, so (BFC20) applies, and
 (BFC21) applies for $v>1/2$. This is not a bound for a generic
@@ -551,7 +588,7 @@ unit cost; this is not a coherent variable-query-count or occupied-
 amplitude convention. Require
 exact full-instrument correctness for **all laws, including point
 masses**, with unflagged output exactly
-$\operatorname{Ad}_{Z^bX^a}$ at every deterministic corner $(a,b)$,
+$\operatorname{Ad}_{Q_bP_a}$ at every deterministic corner $(a,b)$,
 and require
 
 $$
@@ -567,7 +604,7 @@ its own source and interval assumptions.
 To prove this, fix a corner $(a,b)$. Aggregate the terminating
 branches that never call $\mathcal B$ into a CP map $\mathcal T_a$,
 forgetting all flags. It is independent of $b$, but is a CP summand
-of $\operatorname{Ad}_{Z^bX^a}$ for every $b$. Its Choi matrix must
+of $\operatorname{Ad}_{Q_bP_a}$ for every $b$. Its Choi matrix must
 therefore lie on every one of these distinct rank-one unitary rays;
 their intersection is zero. Thus $\mathcal T_a=0$. The same argument
 excludes branches omitting $\mathcal A$. Almost-sure termination
@@ -601,6 +638,136 @@ The payload is retained on both flags. Discarding it on a reject
 branch or requesting only an accepted subchannel does not give the
 unitary unflagged corner and needs a separate argument.
 
+## Complete Pauli families: the input-arrival distinction
+
+For $a=(x,z)$, $x,z\in\mathbb F_2^n$, take the standard Hermitian
+Pauli convention
+
+$$
+ P_{(x,z)}=i^{\sum_i x_iz_i}X^xZ^z,
+ \qquad Q_{(u,v)}=P_{(v,u)}.
+ \tag{BFC23}
+$$
+
+The exponent of $i$ is an integer sum; the commutation dot product
+is modulo two. These families satisfy (BFC10) with $r=2n$ and
+$M=D^2$, including internal anticommutation. When the unknown
+payload is already supplied, the ordinary minimum is therefore
+$h=D^2$, or $2n$ helper qubits, with arbitrary later CPTP processing;
+the closed qubit minimum is $2n+1$. The standard native instrument
+uses one abstract order-control qubit, with its physical routing
+costs still excluded from that count.
+
+Input delivery before the first call is essential. Suppose instead
+that the first ordinary query completes before an independent future
+unknown $D$-dimensional payload arrives. Let the queried probe have
+dimension $D$ and all other retained quantum workspace have dimension
+$h$. Count every accessible purifier, remote program or correlated
+quantum system at that cut. Future input must be independent of
+the entire program, not merely late in clock time. With arbitrary
+later processing, including a second query either before or after
+delivery, the exact minimum is
+
+$$
+ h=D\quad\text{before independent input delivery},\qquad
+ h=D^2\quad\text{with input already supplied}.
+ \tag{BFC24}
+$$
+
+Here and throughout, $h$ is a uniform first-cut dimension cap, not an
+expected-space budget.
+
+**Prearrival lower bound.** Suppose $\mathcal A$ is first. On the
+$b=0$ corner, the program immediately after it is
+
+$$
+ \sigma_a=(P_a\otimes I_h)\sigma(P_a^\dagger\otimes I_h)
+ \quad\text{on dimension }Dh.
+ \tag{BFC25}
+$$
+
+The eventual unflagged channel on the independently arriving input
+must be $\operatorname{Ad}_{P_a}$. Append the same fresh future
+input/reference state $|\Phi_D\rangle$ to each $\sigma_a$, run the
+ordinary suffix with the remaining $\mathcal B$ replaced by its
+known identity, and grant a final joint data/reference Bell readout.
+Exact reference-inclusive simulation returns one of the $D^2$
+orthogonal states $(P_a\otimes I)|\Phi_D\rangle$. Appending that
+fixed independent input, simulating the suffix and reading it form
+one CPTP decoder from $\sigma_a$ to the exact label $a$. Its
+pulled-back effects have eigenvalue one on the corresponding program
+support and zero on every other support. Thus those supports were
+already pairwise orthogonal before any later measurement, reset,
+classical record or fresh independent ancilla. If
+$t=\operatorname{rank}\sigma\ge1$, all program ranks equal $t$, so
+$Dh\ge D^2t$ and $h\ge Dt\ge D$.
+
+This is a mathematical stronger observer for the lower bound, not
+a reference bank supplied to the receiver. It works even if the
+identity second query is postponed until after delivery. Reverse
+order uses $a=0$ and the $Q_b$ programs. Public pre-query seeds and
+order choices are label independent. Exact unitary-corner extremality
+permits conditioning them on one common full-measure set, as above;
+the argument then applies in each selected order. This Pauli-Bell
+proof also covers mixed programs directly. Exact unitary programming
+is established prior work; see
+[Nielsen and Chuang, *Programmable quantum gate arrays*](https://arxiv.org/abs/quant-ph/9703032).
+
+**Prearrival and mixed-timing upper.** Prepare one $D$-by-$D$ Bell
+probe, call $\mathcal A$ on its query half and Bell-read the full
+label $a$. Reset and reuse the query/reference pair for $\mathcal B$
+to obtain $b$, storing $4n$ classical label bits. On input arrival,
+apply known $Q_bP_a$ and return $a\cdot b$. This uses $h=D$, one
+call each and no learning of $p,q$. It pays the Bell reference,
+two preparations/readouts, resets, records, waiting and Pauli replay.
+
+If only the first call is prearrival, Bell-learn $a$ and free that
+quantum program by measurement. On delivery apply known $P_a$ to
+the data and use one reset helper from the same $D$-dimensional bank,
+initialized in $|+\rangle$, for the controlled-$P_a$ check around
+the single $\mathcal B$ call. The identity
+
+$$
+ C(P_a)(I\otimes Q_b)C(P_a)
+ =\operatorname{diag}\bigl(1,(-1)^{a\cdot b}\bigr)\otimes Q_b
+ \tag{BFC26}
+$$
+
+returns the correct flag and $Q_bP_a$ on every unknown reference.
+Learning all of $b$ is unnecessary. Reverse mixed order learns $b$
+first, checks controlled-$Q_b$ around the later $\mathcal A$ call,
+then applies $Q_b$. These known controls, helper reset, feedforward
+and scheduling costs remain charged.
+
+**Already-present upper.** A familiar orthogonal-label comparator
+also attains $h=D^2$: store the full input in a protected $D$-bank
+$S$, and use a second $D$-bank $T$ as Bell reference. Query and
+Bell-read $\mathcal A$, reset/reuse the query/$T$ pair for
+$\mathcal B$, restore the original input from $S$, then replay
+$Q_bP_a$ and compute the flag. All original reference correlations
+are preserved. The $S\otimes T$ helper has $2n$ qubits; on input
+$I/D$, the first-fault states have rank $D$ and saturate the
+open-controller lower bound. Storage, SWAPs, Bell operations, resets,
+records and replay are physical costs, not free native primitives.
+
+The prearrival $n$-helper lower bound alone is already the cost of
+exact unknown-Pauli programming on future data, even for bare serial
+composition. It does not use the switch flag. The full flag is
+essential to the stronger already-present $2n$ bound. Order-control
+dephasing leaves these corner data unitaries unchanged, so it does
+not remove the prearrival programming bound. With public random
+timing, a uniform $h<D^2$ cap cannot include a positive-probability
+already-present branch; an always-prearrival route can attain $h=D$.
+
+These are atomic independent-input timing cases. Partial delivery,
+a future input pre-entangled with the earlier probe, or an uncounted
+input-bearing bypass changes the argument. Extra offline queries,
+exposed labels, supplied probabilities, approximate/probabilistic
+programming and accepted-only output also change it. The mean-two
+reduction applies only under the full hypotheses of (BFC22).
+No inference of useful native hardware advantage follows from
+these dimension statements.
+
 ## Ordinary alternatives and the application boundary
 
 **Data protection.** A public Clifford maps the known anticommuting
@@ -612,8 +779,10 @@ preserved exactly. The faults act on the initialized replacement.
 This does not recover their AND flag, so it is consistent with the
 dimension theorem; it closes a data-protection application in that
 stronger interface.
-For (BFC10), the same construction stores all $k$ active input qubits
-in $k$ protected helpers. Preserving the payload is a different task
+For the CSS example, the same construction stores all $k=r\le n$
+active input qubits in $k$ protected helpers. For full Pauli noise,
+$n$ protected helpers store the whole input and bypass all faults.
+Preserving the payload is a different task
 from returning its complete fault-parity instrument.
 
 **Calibrated probabilities.** Given $p,q$ and optional queries,
@@ -626,14 +795,16 @@ record. Calibration, precision and reuse must be charged in a
 learning task. The theorem requires a response-uniform unknown-rate
 protocol, not a calibrated numerical pair.
 For the many-label families, supplied $p,q$ similarly permit direct
-classical sampling of $a,b$ and synthesis of (BFC11).
+classical sampling of $a,b$ and synthesis of $Q_bP_a$ and its flag
+in (BFC11).
 
-**Queries before payload arrival.** Even unknown $p,q$ do not create
-a memory lower bound if the same-law calls may precede input delivery.
+**Queries before payload arrival.** For the CSS example, even unknown
+$p,q$ do not create an input-bearing memory lower bound if the
+same-law calls may precede input delivery.
 Query $\mathcal A_p$ on a pure zero pilot and read $a$, prepare a plus
 pilot for $\mathcal B_q$ and read $b$, then cache these classical
 labels. When the unknown payload arrives, synthesize $Z^bX^a$ and
-return $a\cdot b$. This reproduces the reduced (BFC11) for all unknown
+return $a\cdot b$. This reproduces the CSS instance of (BFC11) for all unknown
 laws with the same two actual calls and no input-bearing quantum
 memory, without learning the probabilities. A specified noisy-control
 flag coin can also be cached. This timing is outside the already-
@@ -642,6 +813,9 @@ job timing and the validity of earlier same-law samples need an
 actual access model; pipeline warmup must not be excluded merely to
 claim a memory advantage. Correlations with an inaccessible actual
 bath record require a separately declared joint-process endpoint.
+This zero-helper product-pilot argument does not apply to complete
+Pauli families. Their $n$-reference Bell-program minimum and its
+timing assumptions are given in (BFC24)–(BFC26).
 
 **Destructive diagnosis.** For $n\ge2$ and available pure calibration
 probes, prepare a Bell pair between the active virtual qubit and an
@@ -652,7 +826,7 @@ extra helper. Probe preparation, purity and consumption are genuine
 resources; this does not preserve an arbitrary unknown payload.
 It defeats a simple fault-correlation diagnostic when such probes
 are allowed.
-For the known CSS families, even product pilots suffice: query
+For the known CSS example with $k=r\le n$, even product pilots suffice: query
 $\mathcal A_p$ on $|0\rangle^{\otimes k}$ and measure $Z$ to sample
 $a$, then prepare $|+\rangle^{\otimes k}$ for $\mathcal B_q$ and
 measure $X$ to sample $b$. Their independent labels give an exact
@@ -717,9 +891,11 @@ references.
 
 The [standard-library exact replay](../checks/architecture/verify_binary_fault_controller.py)
 checks the wrapped operators, all realized branch isometries,
-coarse flags, many-label CSS constructions and the read/reset upper,
-including weighted reference-inclusive instrument examples.
+coarse flags, CSS and internally noncommuting cross-dual Pauli
+constructions, and the ordered-bank read/reset upper, including
+reference-inclusive instrument examples.
 Its finite examples guard normalization, order and signs. The
 all-dimensional flag lower bound, all-input herald obstruction and
-all-reference identities remain the analytic arguments above;
+all-reference identities, entropy, timing and mean-budget proofs
+remain the analytic arguments above;
 they have not been formalized in Lean by this component.

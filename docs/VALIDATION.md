@@ -43,11 +43,13 @@ native gate costs or availability of a reliable candidate verifier.
 
 The [fault-parity controller component](../research/topics/nr-noisy-recovery/methods/binary-fault-controller.md)
 has analytic closed-controller and general-intermediate-operation memory
-bounds, with exact finite replays of ordinary qutrit, many-label and
-read/reset instruments. The
+bounds and a separate prearrival-programming bound, with exact finite
+replays of ordinary qutrit, cross-dual Pauli and read/reset instruments.
+Complex finite guards retain internal Pauli anticommutation and the
+required reverse-order adjoints in the check banks. The
 [controlled-unitary memory test](../research/topics/nr-noisy-recovery/methods/memory-native-cost.md#nr-r20-controlled-unitary-correlator)
 has finite exact two-readout, signed-map and phase-drift checks. The
-universal dimension, reversible-source, information, uniform-cost, pinching and
+universal dimension, reversible-source, information, timing, uniform-cost, pinching and
 concentration arguments remain analytic;
 these checks establish neither native hardware ports nor a practical
 switch advantage.

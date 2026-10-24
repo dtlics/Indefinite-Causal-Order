@@ -287,6 +287,14 @@ or one-helper Pauli check for the other. Its calibrated global-reference
 noise correction differs from weight-dependent local noise. Existing
 many-eigenvalue learning bounds do not lower-bound this scalar task.
 
+The [fault-parity memory component](methods/binary-fault-controller.md)
+separately fixes the complete retained-output instrument and counts
+protected memory under different input-arrival times. Its full-Pauli
+prearrival comparison includes Bell programming and later one-helper
+checks. A physical comparison must price that reference source and
+measurement alongside the native payload router; abstract helper-qubit
+counts alone do not fix photon, mode, buffer or preparation costs.
+
 The [depolarizing-noise search comparison](methods/noisy-search.md)
 reproduces the full switched channel with ordinary randomized known
 controls and the same noisy calls. It also counts rejected/aborted

@@ -198,15 +198,16 @@ noise, routing and duration count; the product-state option may be cheaper.
 
 **Fault-parity controller memory.** The [controller
 component](methods/binary-fault-controller.md) gives the tight binary
-closed-space comparison and the many-label CSS extension for an
-already-supplied full unknown payload: $k$ protected
-helper qubits attain the full response-uniform instrument with read/reset,
-and $k+1$ are necessary and sufficient with a closed interval. The former
-lower allows arbitrary later CPTP processing and requires exact no-fault
-full-input recovery. Arbitrary terminal joint instruments are allowed.
-Calibrated resampling, payload bypass, consumed pilots, codes and
-controlled-idle routing remain strong ordinary alternatives. The result
-is a memory comparison, not a practical native advantage.
+closed-space comparison and the cross-dual Pauli extension: for an
+already-supplied full unknown payload, $r$ protected helper qubits attain
+the full response-uniform instrument with read/reset, versus $r+1$ with
+a closed interval. The former lower allows arbitrary later CPTP processing
+and requires exact no-fault recovery. Complete Pauli families have $r=2n$;
+independent prearrival programming instead has an $n$-helper minimum,
+already needed for bare unknown-Pauli replay. Calibrated resampling,
+payload bypass, consumed pilots, codes and controlled-idle routing remain
+strong ordinary alternatives. This is a memory comparison, not a
+practical native advantage.
 
 **Known global reference depolarization has an affine correction.**
 Suppose the effective reference noise in the Bell experiment is
