@@ -726,6 +726,85 @@ instrument, single-shot records, reset backaction and start/stop costs.
 Equal-angle coherent selection, if engineered, must also be offered to
 ordinary selector constructions such as (AP15).
 
+## Quantized digital pulses: action and activation costs
+
+<a id="nr-r21-sfq-activation"></a>
+
+[Howe et al., PRX Quantum **3**, 010350 (2022)](https://arxiv.org/html/2111.12778v2),
+Fig. 3, calibrate a Bloch-$\pi$ rotation with 352 Josephson pulse-generator
+events at $2.685\,\mathrm{GHz}$. Their Eq. (7) estimates on-chip driver
+dissipation per array event as $N_{JJ}I_c\Phi_0$, with $N_{JJ}=4650$ and
+$I_c=3.05\,\mathrm{mA}$. Supplement XI uses two idle drive periods per
+library waveform for phase changes. Its readout/reset context and
+concatenated benchmarking support treating the $\ge15T_1$ reset as
+between shots, rather than between coherent gates.
+This is quantized voltage area, not quantized useful
+qubit energy or a lower bound on total controller work.
+
+The following is a derived ideal action diagnostic using that calibration,
+not a fit to its noisy gates. Our $e^{-i\theta A}$ convention rotates the
+Bloch vector by $2\theta$, so $n(\theta)=704|\theta|/\pi$ array events.
+For $\alpha=\pi/4$, $h=\arctan(1/\sqrt2)$, $b=\pi/6$ and failure
+probability $1/9$, the existing exact compiler formulas give:
+
+| Policy | Named trains, or mean | Total action, or mean | Interpolated array events |
+| --- | ---: | --- | ---: |
+| Ordinary Euler | $3$ | $h+b$ | $255.256$ |
+| Native first attempt only | $2$ | $2h$ | $275.846$ |
+| Native with terminal repair | $7/3$ | $2h+(\pi-b)/9$ | $341.031$ |
+| Native rollback/retry | $5/2$ | $(2h+\pi/9)/(8/9)$ | $398.327$ |
+
+These rows grant ideal native flags, signed-axis control and a free helper.
+The first attempt alone is not the completed exact service. Fractions of
+an event are an interpolation: nearest integer words $[69,117,69]$ and
+$[138,138]$ do not inherit the exact gate or failure probability.
+At the representative clock, the interpolated Euler and terminal-repair
+active times are $95.0675$ and $127.0134\,\mathrm{ns}$. A uniform
+unavoidable setup $s$ per named train could reverse this comparison only if
+$s>47.9189\,\mathrm{ns}+(3/2)H_C$, where $H_C$ is additional native-only
+helper time per completed job. The reported two-period padding scale is
+$0.7449\,\mathrm{ns}$ here, and is not an irreducibility theorem.
+The source energy proxy is about $29.3271\,\mathrm{fJ}$ per whole array
+event; do not multiply it by the junction count again. Driver/trigger,
+attenuation, idle, helper, storage and actual recovery costs remain extra.
+
+An $A/B/A$ word can also be scheduled as a single programmed waveform.
+Legal removal or overlap of duplicated boundary padding strengthens the
+ordinary comparison; it does not overlap active events when that changes
+the word. Three named segments therefore do not establish three fresh
+physical activations. At fixed event count, train starts/stops and idle
+gaps must be measured separately from cached waveform preparation and
+between-shot reset.
+
+There is also an access test. If
+$A_\phi=\cos\phi X+\sin\phi Y$ and
+$B_\phi=-\sin\phi X+\cos\phi Y$, then
+$(A_\phi+B_\phi)/\sqrt2=A_{\phi+\pi/4}$.
+A supplied relative-phase setting addresses that bisector without
+learning the common unknown $\phi$. The target still depends on $\phi$;
+it has not become a known laboratory matrix.
+[Liu et al., PRX Quantum **4**, 030310 (2023)](https://journals.aps.org/prxquantum/pdf/10.1103/PRXQuantum.4.030310),
+Sec. II/Fig. 2, explicitly calibrate an equatorial phase family. This
+supplies the access premise, not a measured midpoint-gate fidelity.
+Howe's demonstrated integer grid has orthogonal delay three samples,
+so the midpoint would require 1.5 samples and is not certified by that
+grid. Combining the two experiments' access and count parameters is not
+a same-device demonstration. If midpoint access is calibrated, the
+ideal target needs one 176-event train and no uniform positive setup
+penalty rescues the displayed native policies.
+
+Liu's measured quasiparticle removal time $2.8(4)\,\mu\mathrm{s}$ also
+precludes inferring a fresh independent activation-error model from its
+aggregate benchmarks. That fit does not determine a coherent-order
+cross-history instrument. Neither source demonstrates such an order
+helper. A useful successor needs one device's target/reference and
+leakage process at the actual phase grid, work and error versus starts at
+fixed event count, and the same available phase, echo, selector and reuse
+controls for ordinary operation. The
+[standard-library ledger](checks/architecture/pulse_activation_ledger.py)
+reproduces these scalar cost conversions; it certifies neither noisy
+performance nor exact rounded gates or a native hardware advantage.
+
 The useful device test is the native instrument plus terminal repair
 against ordinary Euler, available selector/LCU controls and adaptive
 ordinary processing on the same clock. Retain unknown data and

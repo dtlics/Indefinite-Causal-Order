@@ -19,7 +19,10 @@ gives a strict ideal expected-call gap for an exact physical gate under a
 continuous unknown anticommuting-axis promise. Its ordinary Euler circuit
 already uses less interaction time than the native first attempt. The
 source-specific NV screen also lacks the required unknown equal-rate
-orthogonal pair and irreducible activation cost. The next test must measure
+orthogonal pair and irreducible activation cost. The
+[digital-pulse cost screen](unknown-pulse-gates.md#nr-r21-sfq-activation)
+counts elementary drive events and admitted phase controls; named Euler
+segments do not establish separate source activations. The next test must measure
 those premises and price every ordinary use of any supplied coherent
 selector; this ideal call gap is not an architecture benefit.
 

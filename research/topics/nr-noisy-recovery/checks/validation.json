@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-24T21:36:01+00:00",
+  "generated_utc": "2026-10-24T22:01:04+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -15,7 +15,7 @@
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "0579328ad4e1ee6c97072f6591191b6eab8c1c4312167340c7128432650c2b46",
     "research/topics/nr-noisy-recovery/architecture-baselines.md": "f44b01403398990c8a3272a0ffcbdf45fe86ad21869cd2c499e82e32ce9f90ea",
-    "research/topics/nr-noisy-recovery/architecture.md": "b794218c2f425531310609ac6acde34371a0a0cf46b407ad55d87468c295102d",
+    "research/topics/nr-noisy-recovery/architecture.md": "787764445d097a1c6d1fac06654960f579d834417bfc02f57936ca5410f149ba",
     "research/topics/nr-noisy-recovery/backaction.md": "7fe7b08d5aa1f28aa4a8e73c7f94703fbc30cf4319deee6f288276da25b0ec20",
     "research/topics/nr-noisy-recovery/braided-magic.md": "5b34e071abc1448940783a5f7a8853fd4c3c7523e3725edd5d6540ea5d808b4c",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_dual_sharp_certificate.json": "95d061e96dd7cdf31ca311b54ac9896995312dd5e2b6407d000bd0e2ff80acaf",
@@ -29,7 +29,7 @@
     "research/topics/nr-noisy-recovery/checks/algebra/brauer_weingarten.py": "402270cb7b61e3ac1d53bba29772f4b5ffd2631d7324f39f378dbb0b593d648b",
     "research/topics/nr-noisy-recovery/checks/architecture/anticommuting_pulse_dual.json": "f2d76e0fd7da4866a365ec2d9b487f5a713bb1cb587bce4e2b0ebf95fa50c136",
     "research/topics/nr-noisy-recovery/checks/architecture/anticommuting_pulse_dual.py": "eb15fd83ac21f1c5f794bcd8b28cd639b5997abaa55e425a63f7fce1aae8ede6",
-    "research/topics/nr-noisy-recovery/checks/architecture/anticommuting_pulse_gates.py": "03374d7b04b5dc47017f8c2140d77bbf80313947bdf2625555de8dfd755df7b2",
+    "research/topics/nr-noisy-recovery/checks/architecture/anticommuting_pulse_gates.py": "c59b1ff380ed80b0af5d80dd0ee288ce8478df2cd891439045433bee2066f135",
     "research/topics/nr-noisy-recovery/checks/architecture/anticommuting_pulse_support.py": "9fb2e8ea592517ad2928095983526a683ca03bcb15de3a2e38f6021fa57c81e9",
     "research/topics/nr-noisy-recovery/checks/architecture/bosonic_order_gates.py": "2f58a84fa42d70396fc7dfaa88fd90d3d26760fbe7171e9c38ce8661cc52a09c",
     "research/topics/nr-noisy-recovery/checks/architecture/final_flag_completion.py": "071db8e9421406eef380498e1a2e9ab829414baec1bab9bc129083c23a2e4099",
@@ -52,6 +52,7 @@
     "research/topics/nr-noisy-recovery/checks/architecture/parity_failure_baselines.py": "1d35212512394ecd13fb889c09f1f33fcbc31314aed0563ceba247b7f61156c5",
     "research/topics/nr-noisy-recovery/checks/architecture/private_program_guards.py": "e739bfec1de2821917c637c206fb2d2b79e4ec41c170c3794bc0134d23b2083b",
     "research/topics/nr-noisy-recovery/checks/architecture/projector_gate_gap.json": "0d39cba7abeec84f2d47c027d65d500a9b762c77fbf5daf4c7fac1f34bd81fe2",
+    "research/topics/nr-noisy-recovery/checks/architecture/pulse_activation_ledger.py": "a5b5a71204ffc61142b870f497074fb3657d618308d7f726fc129d846397c11f",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_baselines.py": "aad9827cad459712d4a8abaa9754fdc6c7874bbba7f62953498839e04ac8b4da",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_bell_certificate.json": "036a490d801df65169e7d253cdc9939abcd962483dfbe65386df00f27bcbbd32",
     "research/topics/nr-noisy-recovery/checks/architecture/raman_direct_temporal.py": "5593c32d10c2447e257744737b9cfaeb1d0f5e31d83ebde69041d8409f28d0ff",
@@ -119,12 +120,12 @@
     "research/topics/nr-noisy-recovery/checks/coupler/verify_mean_query_certificate.py": "2802a4c3e972a76ec0666d8d0fd996c75336bb5e6016faddf21c86ed4594d62d",
     "research/topics/nr-noisy-recovery/checks/local/verify_dimensions.py": "5af10c3fad26a66651d72c4ab42a5402f182e44d8b8b0c616c454a865a20505f",
     "research/topics/nr-noisy-recovery/checks/local/verify_structural.py": "68bd7e55c46b75504c58a2d77621b2192e1df3629979ae23d8c74917eb2e1a97",
-    "research/topics/nr-noisy-recovery/checks/README.md": "c6e88101255f1ef08248ea15662950a2301769b1164abdc772f04b701bf2f005",
+    "research/topics/nr-noisy-recovery/checks/README.md": "27dbe27ab28d554f7b92dcc610217cadbd948f8cfda76eb48bf3be431a4cc423",
     "research/topics/nr-noisy-recovery/checks/recovery/expected_cost_D8.py": "fc9944f7aff0698dd99fdce2f34eaadad42fecb3cc99cd41cffdd84bec2de1b4",
     "research/topics/nr-noisy-recovery/checks/recovery/finite_ensemble_D8.py": "fb82731ebb8c239652b65ddfc51933e266694a18ce559cef03a61ff176c40e66",
     "research/topics/nr-noisy-recovery/checks/recovery/local_recovery.py": "38958045476b075a233a1ee1f71fcde934f26f44fbb7a42da4abb30c14a11afc",
     "research/topics/nr-noisy-recovery/checks/recovery/scalable_global.py": "b1762c233496f7a1225f056305a50b795329caab01cf5099abccbf7d116a328a",
-    "research/topics/nr-noisy-recovery/checks/run_all.py": "d75c629a0aa1b39ede02f6699ef2280929e1a14a8d455affd285162c242eec9b",
+    "research/topics/nr-noisy-recovery/checks/run_all.py": "8435843f421cf2dcc4f9773f60f11d6a7de0c53ee325f26feca3dda7371892a5",
     "research/topics/nr-noisy-recovery/communication.md": "76d8fd5dd7067cd3a2c6c691431ca5da49662fe12209cdd9a987e804bcfb6d90",
     "research/topics/nr-noisy-recovery/dispatch.md": "97982b8b9fc3733ca6ae9696b277d48dba80bab3626a727a2f6d2fa14e4232db",
     "research/topics/nr-noisy-recovery/geometric-calibration.md": "f202ef5c494e4aa9df0c1f9b38a2b0e532e65dbecee0fc2b80a9a07657164dba",
@@ -167,7 +168,7 @@
     "research/topics/nr-noisy-recovery/README.md": "a71e6e5036e1d6ba2e2e5ea22ba2dfa039db6c1aeef968af857034b5875f572f",
     "research/topics/nr-noisy-recovery/references.md": "d24fb5951e8782508d91b08b692912d2cee4ab322d77591c30005b1d42c98cee",
     "research/topics/nr-noisy-recovery/theorem.md": "f55ba54175170100b2f62423583ee72e92efff3fd3cb569f5c190a857de06944",
-    "research/topics/nr-noisy-recovery/unknown-pulse-gates.md": "7ba7f4bff247565ec43be2ab07321386dcde0523095d6bfb38cac5facf2a928a"
+    "research/topics/nr-noisy-recovery/unknown-pulse-gates.md": "4401a4b83115684e3870bd20b907df3d2f25407959f7bf31c44dc777a5e3f445"
   },
   "input_scope": "All topic Markdown notes and required Python/certificate JSON inputs; optional numerics sources/record are fingerprinted but not executed by this standard-library replay. This validation record excluded.",
   "inputs_stable_during_run": true,
@@ -519,7 +520,7 @@
     {
       "id": "architecture-pulse-gates",
       "source": "research/topics/nr-noisy-recovery/checks/architecture/anticommuting_pulse_gates.py",
-      "scope": "Exact pulse/Euler/full-flag and random-order Choi identities, necessary-success support rank, literal Pauli links, positive causal slacks and an all-real-angle matrix sum-of-squares certificate. Adaptive instruments, endpoint/stopping inclusion, global diamond equality and timing/hardware premises are analytic; no approximate ordinary optimum or native hardware advantage.",
+      "scope": "Exact pulse/Euler/full-flag and random-order Choi identities, necessary-success support rank, literal Pauli links, positive causal slacks and an all-real-angle matrix sum-of-squares certificate. Source-parameter activation costs are separately labelled floating-point scalar diagnostics. Adaptive instruments, endpoint/stopping inclusion, global diamond equality and timing/hardware premises are analytic; no exact rounded digital gate, noisy source process, approximate ordinary optimum or native hardware advantage.",
       "outcome": "passed",
       "exit_code": 0,
       "log": "_build/noisy-recovery/logs/architecture-pulse-gates.log"

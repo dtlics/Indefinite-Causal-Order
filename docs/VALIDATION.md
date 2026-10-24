@@ -115,6 +115,12 @@ random-order Choi ingredients are also replayed. Global diamond equality,
 continuous timing inequalities and the source-specific physical comparison
 remain analytic. No approximate ordinary optimum, measured router, hardware
 benefit, priority claim or new Lean audit follows.
+The separate source-parameter pulse-activation ledger checks scalar
+angle/event, on-chip energy-proxy and conditional setup-clock conversions
+with standard-library floating point. It is a cost diagnostic, not an
+interval certificate, an exact rounded digital gate or a phase-resolved
+noisy device model. Its source access and reuse qualifications remain in
+the same result owner.
 
 The [fault-parity controller component](../research/topics/nr-noisy-recovery/methods/binary-fault-controller.md)
 has analytic closed-controller and general-intermediate-operation memory

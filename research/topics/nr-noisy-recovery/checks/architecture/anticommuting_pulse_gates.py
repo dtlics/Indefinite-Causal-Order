@@ -7,8 +7,10 @@ checks a literal random-order CP map, its uncomposed Choi-plane coordinates,
 an exact algebraic error interval and an expected-query ledger.
 All-angle timing and global diamond arguments remain analytic. No general
 adaptive ordinary optimum, control-port grant or hardware-rate claim follows.
-Both arithmetic engines use standard-library exact fractions; import/API is
-quiet, predicates remain active under optimization, and no files are written.
+Both pulse arithmetic engines use standard-library exact fractions. The
+separate source-parameter activation ledger is a floating-point scalar
+diagnostic, not an exact noisy-gate certificate. Import/API is quiet,
+predicates remain active under optimization, and no files are written.
 """
 from fractions import Fraction as F
 from itertools import product
@@ -18,6 +20,7 @@ import sys
 sys.dont_write_bytecode = True
 from bosonic_order_gates import R, require
 from anticommuting_pulse_dual import replay as exact_query_certificate
+from pulse_activation_ledger import verify as activation_ledger
 from retained_photon_serial import (
     G, zeros as gzeros, eye as geye, mm as gmm, adj as gadj,
     kron as gkron, scale as gscale, add as gadd,
@@ -164,12 +167,15 @@ def ordinary_benchmark():
 
 
 def verify():
+    activation = activation_ledger()
+    require(activation.get("status") == "passed", "source activation ledger passed")
     return {
         "status": "passed",
         "pulse_identities": pulse_identities(),
         "ordinary_benchmark": ordinary_benchmark(),
         "ordinary_exact_query_certificate": exact_query_certificate(),
-        "scope": "Exact finite pulse/Euler/flag/rollback and random-order Choi-plane/algebraic-interval ingredients. Universal timing/diamond proofs, any adaptive ordinary optimum and physical controls/noise/clocks remain separate."
+        "source_activation_cost_diagnostic": activation,
+        "scope": "Exact finite pulse/Euler/flag/rollback and random-order Choi-plane/algebraic-interval ingredients; source-parameter scalar activation costs are separately labelled floating-point diagnostics. Universal timing/diamond proofs, any adaptive ordinary optimum and physical controls/noise/clocks remain separate."
     }
 
 
