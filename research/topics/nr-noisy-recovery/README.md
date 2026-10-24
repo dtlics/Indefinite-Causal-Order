@@ -237,6 +237,10 @@ Its [explicit program-resource comparison](backaction.md#nr-r19-private-programs
 keeps coherent correction records and gives a fixed-order compiler plus
 native and ordinary CCZ-resource factories, and input-preserving resource
 injection with distinct control ports.
+Its [deposited-source comparison](backaction.md#nr-r19-reflected-source)
+retains finite-contrast and loss-record qualifications; the
+[retained-carrier alternative](backaction.md#nr-r19-retained-carrier)
+compares coherent cleanup and forward filtering at the actual output endpoint.
 Its [natural-exchange screen](backaction.md#nr-r19-natural-exchange) separates
 the demonstrated atomic sectors from the required two-manifold port and
 gives a scoped constant-hold spectral guard.

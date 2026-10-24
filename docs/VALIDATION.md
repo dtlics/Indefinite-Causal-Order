@@ -406,6 +406,14 @@ counterexample. Its ordinary local
 controlled-H gates and joint optical CCZ are different priced ports;
 the replay establishes neither full physical source/loss instruments,
 composable privacy, timed factory performance nor a resource optimum.
+Its balanced reflected-source extension replays finite complex-amplitude
+fresh columns, input effects, ordinary compiler, corrected factory flags,
+inverse-filter weights and singular/noncontractive witnesses. The
+reversed-role ingredient checks both three-contact coherent cleanups and
+the two-contact retained forward branch. The general one-visit separability
+argument, source-model attribution and rejected-bath ambiguity remain
+analytic or source audits; no deposited simulation was executed, no device
+fit was made and no full hardware loss/clock instrument was certified.
 The natural-exchange source screen and its ideal-vector 3/4
 constant-hold transfer bound are analytic assessments, outside the finite
 certificate's hardware scope. The online detector-feedback comparison

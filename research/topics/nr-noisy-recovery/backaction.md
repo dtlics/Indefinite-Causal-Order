@@ -1456,10 +1456,178 @@ corrections. Destructive client readout changes that endpoint. Encoding
 two photons into one four-mode carrier also changes source, loss and
 client-control ports; dimension alone does not supply that conversion.
 
+<a id="nr-r19-reflected-source"></a>
+
+**A source-backed finite-contrast comparison.** The [author-deposited
+simulation, version 2](https://zenodo.org/records/14854711), linked through
+concept DOI [10.5281/zenodo.14769739](https://doi.org/10.5281/zenodo.14769739),
+allows a more specific accepted-sector test. Static inspection of
+`SimulationCode/SiVgates.py` and `BlindGatesSimulation.py` gives an
+early reflection, a spin pi pulse, late reflection and another pi pulse.
+Its ideal pulses are both $-iY$, leaving the common spin factor $-I$.
+This is a simulation convention, not a reconstruction of every hardware
+phase in the pulse drawing. In general, two equatorial pi pulses leave
+a known frame $D=P_2P_1$: the early component sees $DR_E$, and the late
+component sees $D(XR_LX)$. Remove D coherently or retain it through both
+order arms; separate arm phases cannot be discarded.
+
+For balanced single-photon bins, stationary spin-preserving reflection
+and one pure selected field record, let $h_0,h_1$ be the actual reflected
+one-photon amplitudes in a fixed phase convention. The deposited
+beam-splitter convention conjugates its named cavity-reflection parameter;
+using transfer amplitudes h avoids silently changing their phases.
+After the known spin frame, the selected fresh columns are
+
+$$
+J_Z|s\rangle=|s\rangle
+ \frac{h_s|0\rangle+h_{1-s}|1\rangle}{\sqrt2}
+=(I_S\otimes F)J_Z^{\rm ideal}|s\rangle,\quad
+F=\frac{h_0I+h_1X}{\sqrt2},\quad
+F^\dagger F=\eta I+\kappa X,\quad
+J_Z^\dagger J_Z=\eta I,
+\quad \eta=\frac{|h_0|^2+|h_1|^2}{2},\quad
+\kappa=\operatorname{Re}(h_0^*h_1).
+\tag{PP5}
+$$
+
+Here $J_Z^{\rm ideal}|s\rangle=|s,s\rangle$ and
+$J_X=H_SJ_ZH_S$. Finite contrast gives wrong-bin amplitudes, rather
+than necessarily unequal logical input weights. The 50% ideal-contrast
+reflection ceiling alone does not imply such an imbalance. F is an
+algebraic factor on the copy code, not a supplied photon channel:
+$h_0=h_1=1$ gives $\|F\|=\sqrt2$ while J is still an isometry.
+Unequal early/late responses instead give
+$F_{EL}=\left(\begin{smallmatrix}h_0^E&h_1^E\\h_1^L&h_0^L\end{smallmatrix}\right)/\sqrt2$;
+the scalar input effect and X-commuting structure need not survive.
+
+Let $L=I_C\otimes F_a\otimes F_b$. Since K is a function of $X_a,X_b$,
+it commutes with $F_aF_b$. Thus (PP2)'s ordinary compiler persists on
+these selected fresh columns for every C/S/reference input, with total
+input effect $\eta_a\eta_bI_{CS}$. For the known-S factory, the native
+$X_b$ correction commutes with $F_b$, whereas the ordinary $Z_b$ flips
+its X term. The complete corrected flags are
+
+$$
+N_+=N_-=LE/\sqrt2,\qquad O_+=LE/\sqrt2,\qquad
+O_-=(I_C\otimes F_a\otimes ZF_bZ)E/\sqrt2.
+\tag{PP6}
+$$
+
+Both $|00\rangle$ and $K|00\rangle$ have zero $X_a,X_b,X_aX_b$
+expectations. Orthogonal retained C sectors therefore give every flag
+effect $\eta_a\eta_b I_C/2$. Equal selected mass does not identify
+the two corrected instruments; the ordinary record must be kept.
+If a populated coherent $C\to a$ CNOT is separately supplied, the
+ordinary minus is corrected to $LE/\sqrt2$ by
+$\operatorname{CNOT}_{C\to a}Z_b$, using
+$Z_bE=\operatorname{CNOT}_{C\to a}E$. This is an extra joint port,
+not a final photon-local Pauli granted by a fresh-copy source.
+
+There is also a matching photon-local inverse construction. Write
+$\mu_j^2=\sigma_{\min}(F_j)^2=\eta_j-|\kappa_j|$. When both are
+positive, $Q_j=\mu_jF_j^{-1}$ is a contraction. Apply $Q_a,Q_b$ after
+native flags or ordinary plus, and $Q_a,ZQ_bZ$ after ordinary minus.
+Every accepted map becomes $\mu_a\mu_bE/\sqrt2$, for total exact
+encoding weight $\mu_a^2\mu_b^2$. This includes the selected source
+attenuation and filter rejects; it is a feasible comparison, not an
+optimum over all output operations. If $\kappa_j=0$, F is scaled unitary
+and known local unitary inverses suffice. If either nonzero F has rank
+one, its selected C=1 photon state is product across that photon, so
+photon-local filters, product ancillas and classical communication cannot
+restore the entangled $K|00\rangle$. Extra joint interactions change
+that restriction. Ideal contrast $h_0=1,h_1=0$ gives two-source weight
+$1/4$ before other losses. None of these sector weights supplies an
+event-ready retained photon herald.
+
+Reflection amplitudes also leave the rejected map undetermined. One
+compatible bin-resolved completion for $|h_s|\le1$ has vacuum-output
+Kraus operators $L_0=\operatorname{diag}(\ell_0,\ell_1)/\sqrt2$ and
+$L_1=\operatorname{diag}(\ell_1,\ell_0)/\sqrt2$, where
+$\ell_s=\sqrt{1-|h_s|^2}$. Together with J they are trace preserving.
+Their rejected spin coherence coefficient is $\ell_0\ell_1$; retaining
+an orthogonal bath record of the spin instead makes it zero at the
+same reflected amplitudes and rejection probability. Thus an
+input-independent success rate does not prove harmless retries.
+The deposited weak-coherent/Fock-space simulation has additional
+photon-number sectors; the single-photon specialization above is not
+its full experimental instrument. Actual pulse errors, frequency modes,
+loss records and a coherent source selector still need a joint model.
+
+**A sufficient stationary-emitter selector already exposes ordinary
+controls.** With matched source columns at successive emissions p,q,
+the chronological sequence
+
+$$
+\operatorname{CH}_{C\to S},\quad J_{Z,p},\quad H_S,\quad J_{Z,q},\quad
+\operatorname{CH}_{\neg C\to S},\quad
+\operatorname{ctrl}_C\operatorname{SWAP}_{pq}
+\tag{PP7}
+$$
+
+gives $J_{X,b}J_{Z,a}$ for C=0 and $J_{Z,a}J_{X,b}$ for C=1 after
+the actual photon swap assigns p=b,q=a in the second arm. This uses
+only fresh columns on arbitrary C/S/reference input. It is one
+sufficient construction, not a lower bound on all native selectors.
+It already grants both local controlled-H gates used by the ordinary
+factory and adds a Hadamard and coherent photon routing. Unequal temporal
+response ratios require balancing or an explicit controlled-source
+argument; relabelling photons does not relabel inaccessible loss/time
+records. Common output modes and a matched full dilation remain required.
+
+<a id="nr-r19-retained-carrier"></a>
+
+**Reversing the physical allocation changes the endpoint costs.** If S
+is a flying photon's polarization, C its path and a,b stationary targets,
+a path router can order the carrier's contacts. This is a different
+phase-gate interface: assume full arbitrary-input spin/photon CZs, so
+$U_A=H_a\operatorname{CZ}_{Sa}H_a$ and
+$U_B=H_SH_b\operatorname{CZ}_{Sb}H_bH_S$. The
+[Daiss phase-gate predecessor](https://arxiv.org/html/2103.13095v1)
+supports that mechanism, but does not demonstrate the required four-mode
+carrier, coherent revisit and retained-resource apparatus. Wei's fresh
+amplitude-copy columns do not grant these full gates.
+
+In this allocation the two ordinary controlled-H gates are known
+path-selective polarization optics; their transmission and relative
+phase control must be priced. Destructive S readout would also destroy
+the retained path C. Before readout the native and ordinary states are
+$(|+\rangle_SE+|-\rangle_SX_bE)/\sqrt2$ and
+$(|+\rangle_SE+|-\rangle_SZ_bE)/\sqrt2$, respectively. One additional
+full $U_B$ contact cleans the former to $|0\rangle_SE$; one additional
+$H_S\operatorname{CZ}_{Sb}H_S$ cleans the latter to the same state.
+Both use three occupied contacts, including a revisit of b. Alternatively,
+the terminal polarization filter $|+\rangle\langle+|$ gives both a
+retained forward map $|+\rangle_SE/\sqrt2$ in two contacts. Its ideal
+weight is $1/2$; no dump click certifies that carrier only with a known
+input photon, no other loss and reliable dump detection. A QND readout,
+state transfer or later erasure-aware endpoint is a separate priced port.
+
+A narrow two-contact obstruction helps delimit that comparison. Suppose
+the atoms start in a pure product state, only one full CZ with each is
+allowed in fixed order, and all remaining controls are carrier unitaries
+and local atom unitaries, with no ancilla, measurement, reset or
+postselection. At the last CZ, write its carrier projectors as $\Pi_k$.
+After discarding the carrier, the atomic state has the separable form
+$\sum_k\operatorname{Tr}_P(\Pi_k\rho_{Pa}\Pi_k)
+\otimes Z_b^k|\beta\rangle\langle\beta|Z_b^k$.
+It cannot be the desired fixed-resource marginal
+$\rho_{ab}^{\Omega}=(|00\rangle\langle00|+|g\rangle\langle g|)/2$,
+$g=K|00\rangle$: for $v=(0,1,1,1)^T$,
+$v^\dagger(\rho_{ab}^{\Omega})^{T_b}v=-3/8$.
+This excludes that unitary-only one-visit model, including fixed Omega;
+the two-contact filtered branch is explicitly outside it. Other
+interactions, ancillas, pre-existing entanglement and heralded protocols
+remain available ordinary alternatives. Logical contact counts alone
+do not compare the actual routing, loss, memory or delivery clocks.
+
 The [exact private-program guard](checks/architecture/private_program_guards.py)
 replays the fixed resource matrices, keyed instruments, relative phases,
 both fresh-column factories, the injection/rollback branches and a
-nonblank-extension counterexample.
+nonblank-extension counterexample. It also checks the declared balanced
+reflection model, selected-sector compiler and inverse filters, plus
+the reversed-role three-contact cleanups and common two-contact forward
+branch. The general separability and local-recovery obstructions and
+record-completion arguments remain analytic.
 Physical success/loss maps, timing, security and hardware costs remain
 outside that finite replay.
 

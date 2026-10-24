@@ -197,6 +197,11 @@ two ideal photon-copy resources. Joint optical gates, local matter
 controls and coherent emission order are distinct priced ports. Neither
 the ideal identities nor destructive client detections establish a
 delivered factory yield or advantage on the cited hardware.
+The [deposited-source model](backaction.md#nr-r19-reflected-source)
+now gives a matched finite-contrast comparison, with rejected records
+still undetermined. A [different carrier allocation](backaction.md#nr-r19-retained-carrier)
+gives equal explicit contact counts once retaining the control photon
+is part of the endpoint; its full phase-gate and mode ports remain priced.
 
 One-time programs do not automatically supply the missing physical cap.
 [OTM-backed quantum programs](https://arxiv.org/html/1211.1080v1),

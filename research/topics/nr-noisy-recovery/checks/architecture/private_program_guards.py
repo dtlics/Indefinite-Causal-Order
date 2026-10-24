@@ -170,6 +170,254 @@ def injection_rollback_guards(encoding, photon_k):
             "scope": "finite exact classical-record injection, full C/reference X/X and adaptive rollback, actual fine Kraus histories through cap four, and capped ideal cost ingredients through cap eight. A delivered retained independent resource and a populated-target C-to-c CNOT are premises; source/loss/readout faults, physical ports, asynchronous timing, privacy and resource optimality are not certified."}
 
 
+def balanced_source_factory_guards():
+    """Pure selected fresh-source fixtures; F is not a supplied channel.
+
+    Here r0,r1 name effective selected coefficients h, not the deposited
+    cavity parameter before its complex conjugation and common frame.
+    This does not reconstruct the deposited source or its rejected bath.
+    """
+    identity, x, z = eye(2), [[G(), G(1)], [G(1), G()]], [[G(1), G()], [G(), G(-1)]]
+    p0, p1 = [[G(1), G()], [G(), G()]], [[G(), G()], [G(), G(1)]]
+    hn = [[G(1), G(1)], [G(1), G(-1)]]
+    xm = scale(add(identity, scale(x, -1)), F(1, 2))
+    ua = add(kron(kron(p0, identity), identity), kron(kron(p1, x), identity))
+    ub = add(kron(kron(scale(add(identity, x), F(1, 2)), identity), identity),
+             kron(kron(xm, identity), x))
+    uzb = add(kron(kron(p0, identity), identity), kron(kron(p1, identity), x))
+    kab = add(eye(4), scale(kron(xm, xm), -2))
+    control_k = blockdiag(eye(8), kron(identity, kab))
+    hfull = kron(kron(hn, identity), identity)
+    ordinary_ideal = blockdiag(mm(uzb, ua), scale(mm(uzb, mm(hfull, mm(ua, hfull))), F(1, 2)))
+    cab = blockdiag(eye(4), kab)
+    encoding = [[cab[row][c*4] for c in range(2)] for row in range(8)]
+    ctrl_xa = blockdiag(eye(4), kron(x, identity))
+    extra = mm(ctrl_xa, kron(kron(identity, identity), z))
+    require(mm(extra, encoding) == encoding, "extra populated C-to-a correction stabilizes E")
+    jideal = [[G(int(spin == cin and photon == cin)) for cin in range(2)]
+              for spin, photon in product(range(2), repeat=2)]
+
+    def response(r0, r1, nu):
+        r0, r1 = G(r0), G(r1)
+        sn = add(scale(identity, r0), scale(x, r1))
+        eta = (r0*r0.conj()+r1*r1.conj()).r/2
+        kappa = (r0.conj()*r1).r
+        require(0 <= eta <= 1 and (r0*r0.conj()).r <= 1 and (r1*r1.conj()).r <= 1,
+                "fixtures admit passive spin-dependent reflection amplitudes")
+        require(mm(adj(sn), sn) == scale(add(scale(identity, eta), scale(x, kappa)), 2),
+                "all complex phases enter the exact response Gram")
+        require(nu*nu == 2*(eta-abs(kappa)), "fixture minimum singular value")
+        jz = mm(kron(identity, sn), jideal)
+        jx = scale(mm(kron(hn, identity), mm(jz, hn)), F(1, 2))
+        require(scale(mm(adj(jz), jz), F(1, 2)) == scale(identity, eta)
+                and scale(mm(adj(jx), jx), F(1, 2)) == scale(identity, eta),
+                "both fresh-source effects are scalar on unknown spin/reference")
+        inverse = None
+        det = r0*r0-r1*r1
+        if nu:
+            inverse = scale([[r0/det, -r1/det], [-r1/det, r0/det]], nu)
+            require(mm(inverse, sn) == scale(identity, nu), "uniform inverse amplitude")
+            q = add(identity, scale(mm(adj(inverse), inverse), -1))
+            require(q == adj(q) and q[0][0].i == q[1][1].i == 0
+                    and q[0][0].r >= 0 and q[1][1].r >= 0
+                    and (q[0][0]*q[1][1]-q[0][1]*q[1][0]).i == 0
+                    and (q[0][0]*q[1][1]-q[0][1]*q[1][0]).r >= 0,
+                    "local inverse is a contraction")
+        else:
+            require(det == 0, "singular boundary has zero uniform inverse weight")
+        return sn, eta, kappa, inverse
+
+    mixed_plus, mixed_minus = G(F(3, 5), F(4, 5)), G(F(5, 26), F(6, 13))
+    mixed = ((mixed_plus+mixed_minus)/2, (mixed_plus-mixed_minus)/2, F(1, 2))
+    fixtures = [((F(3, 5), F(1, 5), F(2, 5)), (F(4, 5), F(1, 5), F(3, 5))),
+                ((F(3, 5), G(0, F(4, 5)), F(1)), mixed),
+                (mixed, (mixed[1], mixed[0], mixed[2])),
+                ((F(3, 5), F(3, 5), F()), (F(4, 5), F(1, 5), F(3, 5))),
+                ((1, 1, F()), (F(3, 5), F(1, 5), F(2, 5))),
+                ((0, 0, F()), (F(3, 5), F(1, 5), F(2, 5)))]
+    raw_units = native_units = ordinary_units = inverse_units = extra_units = 0
+    noncontractive_sources = singular_sources = zero_sources = singular_output_cases = 0
+    wrong_filter_witness = None
+    for a, b in fixtures:
+        fa, eta_a, ka, da = response(*a)
+        fb, eta_b, kb, db = response(*b)
+        for spec, eta, kappa in ((a, eta_a, ka), (b, eta_b, kb)):
+            noncontractive_sources += int(eta+abs(kappa) > 1)
+            singular_sources += int(spec[2] == 0)
+            zero_sources += int(eta == 0)
+        filters = kron(kron(identity, fa), fb)
+        require(mm(kron(identity, kab), filters) == mm(filters, kron(identity, kab)),
+                "accepted filters commute with the central photon commutator")
+        uan = mm(kron(kron(identity, fa), identity), ua)
+        ubn = mm(kron(kron(identity, identity), fb), ub)
+        ordered = blockdiag(mm(ubn, uan), mm(uan, ubn))
+        compiled = mm(control_k, blockdiag(mm(ubn, uan), mm(ubn, uan)))
+        require(ordered == compiled, "finite-contrast accepted raw compiler including order phases")
+        fresh = [[ordered[row][c*8+s*4] for c, s in product(range(2), repeat=2)] for row in range(16)]
+        fresh_compiled = [[compiled[row][c*8+s*4] for c, s in product(range(2), repeat=2)] for row in range(16)]
+        raw_units += cp_equal(fresh, fresh_compiled)
+        require(scale(mm(adj(fresh), fresh), F(1, 4)) == scale(eye(4), eta_a*eta_b),
+                "full selected C/S/reference effect")
+        ordinary = mm(kron(identity, filters), ordinary_ideal)
+        le = mm(kron(identity, kron(fa, fb)), encoding)
+        lminus = mm(kron(identity, kron(fa, mm(z, mm(fb, z)))), encoding)
+        if a[2] == 0 or b[2] == 0:
+            g = [le[4+ab][1] for ab in range(4)]
+            require(g[0]*g[3]-g[1]*g[2] == 0,
+                    "singular local source has a product C=1 photon output")
+            singular_output_cases += 1
+        for h in (1, -1):
+            def branch(unitary):
+                return [[sum((unitary[c*8+s*4+ab][cin*8]*h**s for s in range(2)), G())
+                         for cin in range(2)] for c, ab in product(range(2), range(4))]
+            native_raw = branch(ordered)
+            native = native_raw if h == 1 else mm(kron(kron(identity, identity), x), native_raw)
+            ordinary_raw = branch(ordinary)
+            ordinary_corrected = ordinary_raw if h == 1 else mm(kron(kron(identity, identity), z), ordinary_raw)
+            expected = le if h == 1 else lminus
+            require(native == le and ordinary_corrected == expected, "all corrected factory amplitudes")
+            native_units += cp_equal(native, le)
+            ordinary_units += cp_equal(ordinary_corrected, expected)
+            require(scale(mm(adj(native), native), F(1, 8)) == scale(identity, eta_a*eta_b/2)
+                    and scale(mm(adj(ordinary_corrected), ordinary_corrected), F(1, 8)) == scale(identity, eta_a*eta_b/2),
+                    "every flag has input-independent eta-product/2 effect")
+            if h == -1:
+                repaired = mm(extra, ordinary_corrected)
+                require(repaired == le, "paid populated C-to-a gate removes the finite-contrast flag difference")
+                extra_units += cp_equal(repaired, le)
+            if da is not None and db is not None:
+                native_filtered = mm(kron(identity, kron(da, db)), native)
+                db_flag = db if h == 1 else mm(z, mm(db, z))
+                ordinary_filtered = mm(kron(identity, kron(da, db_flag)), ordinary_corrected)
+                ideal = scale(encoding, a[2]*b[2])
+                require(native_filtered == ordinary_filtered == ideal, "same sufficient ideal inverse-filter weight")
+                inverse_units += cp_equal(native_filtered, ideal)+cp_equal(ordinary_filtered, ideal)
+                if h == -1:
+                    wrong_filter_witness = wrong_filter_witness or cp_difference(
+                        mm(kron(identity, kron(da, db)), ordinary_corrected), ideal)
+    require(wrong_filter_witness is not None, "post-Z ordinary inverse cannot ignore its conjugated frame")
+    require(noncontractive_sources == 1 and singular_sources == 3 and zero_sources == 1
+            and singular_output_cases == 3,
+            "retain joint-valid noncontractive, nonzero singular and zero-source fixtures")
+    # Two bin-resolved lost completions with identical selected amplitudes.
+    r0, r1, ell0, ell1 = F(3, 5), F(5, 13), F(4, 5), F(12, 13)
+    jz = mm(kron(identity, add(scale(identity, r0), scale(x, r1))), jideal)
+    losses = [[[G(ell0), G()], [G(), G(ell1)]], [[G(ell1), G()], [G(), G(ell0)]]]
+    effect = scale(mm(adj(jz), jz), F(1, 2))
+    for loss in losses:
+        effect = add(effect, scale(mm(adj(loss), loss), F(1, 2)))
+    require(effect == identity, "selected reflection plus binwise loss is complete")
+    distinguished = [mm(p, loss) for loss in losses for p in (p0, p1)]
+    for i, j, row, col in product(range(2), repeat=4):
+        coherent = sum((loss[row][i]*loss[col][j].conj()/2 for loss in losses), G())
+        tagged = sum((loss[row][i]*loss[col][j].conj()/2 for loss in distinguished), G())
+        if i == j:
+            require(coherent == tagged, "same lost populations for either bath completion")
+        elif row == i and col == j:
+            require(coherent == ell0*ell1 and tagged == 0, "accepted amplitudes do not fix lost coherence")
+    return {"status": "passed", "source_pairs": len(fixtures), "raw_CSR_matrix_units": raw_units,
+            "native_factory_CR_matrix_units": native_units, "ordinary_factory_CR_matrix_units": ordinary_units,
+            "inverse_filter_CR_matrix_units": inverse_units, "extra_populated_CNOT_CR_matrix_units": extra_units,
+            "joint_valid_noncontractive_sources": noncontractive_sources,
+            "singular_sources_including_zero": singular_sources, "zero_sources": zero_sources,
+            "singular_product_output_cases": singular_output_cases,
+            "wrong_inverse_frame_CP_witness": wrong_filter_witness,
+            "scope": "finite declared pure selected-source fixtures only; physical pulses, full timed baths, retained heralds and resource costs are not certified"}
+
+
+def reversed_role_cleanup_guards():
+    """Conditional four-mode carrier and full repeated phase-CZ ports.
+
+    S is photon polarization, C its retained path, and a,b stationary.
+    These ports are not supplied by the Wei fresh-emission isometry.
+    """
+    identity = eye(2)
+    x = [[G(), G(1)], [G(1), G()]]
+    z = [[G(1), G()], [G(), G(-1)]]
+    hn = [[G(1), G(1)], [G(1), G(-1)]]
+    hs = kron(hn, eye(4))  # actual H_S has the factor 1/sqrt(2)
+
+    # Three-wire order S,a,b; native contacts are full arbitrary-input gates.
+    def cnot(which):
+        bit = 1 if which == "a" else 0
+        out = zeros(8)
+        for s, a, b in product(range(2), repeat=3):
+            col = 4*s+2*a+b
+            row = col ^ ((1 << bit) if s else 0)
+            out[row][col] = G(1)
+        return out
+
+    ca, cb = cnot("a"), cnot("b")
+    czb = [[G(((-1)**(((i >> 2) & 1)*(i & 1))) if i == j else 0)
+            for j in range(8)] for i in range(8)]
+    ua = ca
+    ub = scale(mm(hs, mm(cb, hs)), F(1, 2))
+    ordinary_cleanup = scale(mm(hs, mm(czb, hs)), F(1, 2))
+    for gate in (ca, cb, czb, ub, ordinary_cleanup):
+        require(mm(adj(gate), gate) == eye(8), "full contact gate is unitary")
+
+    xm = scale(add(identity, scale(x, -1)), F(1, 2))
+    k = add(eye(4), scale(kron(xm, xm), -2))
+    f0 = [[G(int(i == 0))] for i in range(4)]
+    f1 = mm(k, f0)
+    require(f1 == [[G(F(1, 2))], [G(F(1, 2))],
+                   [G(F(1, 2))], [G(F(-1, 2))]], "graph-state signs")
+    encoding = zeros(8, 2)  # output C,a,b
+    wanted = zeros(16, 2)   # output C,S,a,b, with S reset to zero
+    fresh = zeros(16, 2)
+    for c in range(2):
+        fresh[8*c][c] = G(1)
+        for ab in range(4):
+            encoding[4*c+ab][c] = (f0 if c == 0 else f1)[ab][0]
+            wanted[8*c+ab][c] = encoding[4*c+ab][c]
+    require(mm(adj(wanted), wanted) == identity, "cleaned target is an isometry")
+
+    # Native order convention: C=0 is B after A; C=1 is A after B.
+    native_u = blockdiag(mm(ub, ua), mm(ua, ub))
+    native_before = mm(native_u, fresh)
+    native_after = mm(kron(identity, ub), native_before)
+    require(native_after == wanted, "one extra B contact coherently cleans native S")
+
+    # Literal CH-copy-CH-copy sequence. On C=0 both CHs are I.
+    # On C=1 each CH is H_S, so their two factors give exactly 1/2.
+    ordinary_u = blockdiag(mm(cb, ca), scale(mm(cb, mm(hs, mm(ca, hs))), F(1, 2)))
+    ordinary_before = mm(ordinary_u, fresh)
+    ordinary_after = mm(kron(identity, ordinary_cleanup), ordinary_before)
+    require(ordinary_after == wanted, "one extra phase-CZ contact coherently cleans ordinary S")
+
+    pre_units = final_units = filter_units = 0
+    pplus = scale(add(identity, x), F(1, 2))
+    retained_filter = kron(identity, kron(pplus, eye(4)))
+    forward_wanted = scale(mm(kron(identity, hs), wanted), F(1, 2))
+    for before, byproduct in ((native_before, kron(identity, x)),
+                              (ordinary_before, kron(identity, z))):
+        for sign in (1, -1):
+            # S-X bra numerator has factor 1/sqrt(2) externally.
+            branch_numerator = [[before[8*c+ab][cin]+sign*before[8*c+4+ab][cin]
+                                 for cin in range(2)]
+                                for c, ab in product(range(2), range(4))]
+            target = encoding if sign == 1 else mm(kron(identity, byproduct), encoding)
+            require(branch_numerator == target, "complete coherent pre-readout branch identity")
+            pre_units += cp_equal(branch_numerator, target)
+        forward = mm(retained_filter, before)
+        require(forward == forward_wanted
+                and mm(adj(forward), forward) == scale(identity, F(1, 2)),
+                "both two-contact forward polarization branches retain C at half weight")
+        filter_units += cp_equal(forward, forward_wanted)
+        final_units += cp_equal(native_after if before is native_before else ordinary_after, wanted)
+    require(native_after == ordinary_after, "both full coherent factories agree")
+
+    # The two coherent resets act differently on nonblank input: their
+    # equality above is the intended source endpoint, not a full-W compiler.
+    require(ub != ordinary_cleanup, "do not identify the distinct cleanup gates")
+    return {"status": "passed", "coherent_pre_readout_matrix_units": pre_units,
+            "cleaned_C_reference_matrix_units": final_units,
+            "full_unitary_contact_checks": 5,
+            "retained_polarization_filter_C_reference_matrix_units": filter_units,
+            "contact_counts": {"native": 3, "ordinary": 3},
+            "scope": "conditional ideal four-mode path/polarization carrier with full repeated phase-CZ contacts: both source endpoints clean S coherently in three contacts, and both have a retained half-weight plus-polarization branch after two. These are not Wei fresh-emission ports; no retained-herald, physical loss/route/clock, general obstruction or all-input W certificate"}
+
+
 def verify():
     identity, x, z = eye(2), [[G(), G(1)], [G(1), G()]], [[G(1), G()], [G(), G(-1)]]
     y = [[G(), G(0, -1)], [G(0, 1), G()]]
@@ -307,6 +555,8 @@ def verify():
             "ordinary_CH_factory_local_controls": 2,
             "nonblank_extension_CP_witness": extension_witness,
             "encoding_injection_rollback": injection_rollback_guards(target_factory, kab),
+            "balanced_source_factories": balanced_source_factory_guards(),
+            "reversed_role_coherent_cleanup": reversed_role_cleanup_guards(),
             "scope": "exact finite fresh-resource/key/relative-phase compiler, native and ordinary local-CH factories, and a nonblank-extension counterexample; the supplied joint CCZ and local matter controls are distinct priced ports. All-angle identities, privacy/security, state-dependent source/loss/clock maps and actual hardware comparisons remain analytic or unprovided. No prior, resource optimum or physical advantage certificate."}
 
 if __name__ == "__main__":

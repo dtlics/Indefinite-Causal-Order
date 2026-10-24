@@ -130,6 +130,14 @@ Theorem 1, for established magic activation, and the existing Simonov
 comparison for order-based gate synthesis. The conditional ordinary
 compiler and local-control factory do not certify a native port, security
 claim or hardware resource optimum.
+The [source-backed extension](backaction.md#nr-r19-reflected-source)
+uses the author-deposited [Zenodo v2 code](https://zenodo.org/records/14854711)
+for a static ideal-pulse, single-photon model audit; the concept DOI is
+[10.5281/zenodo.14769739](https://doi.org/10.5281/zenodo.14769739).
+It separates that selected model from calibrated hardware phases,
+weak-coherent sectors and full rejected/loss instruments. The role-reversed
+phase-CZ comparison uses a different physical interface and does not
+infer a retained four-mode apparatus from the cited gate predecessor.
 
 ## Recovery, inversion, and verification
 
