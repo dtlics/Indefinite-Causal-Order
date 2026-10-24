@@ -196,16 +196,17 @@ noise, routing and duration count; the product-state option may be cheaper.
 
 <a id="nr-r06-binary-fault-controller"></a>
 
-**Closed-controller cost of a double-fault flag.** For two known
-anticommuting Pauli fault families, the [binary-fault controller
-component](methods/binary-fault-controller.md) proves that exact
-response-uniform AND flagging needs at least three clean helper levels
-in a closed fixed-order two-query circuit; a qutrit reproduces the full
-measured data/reference instrument. An arbitrary terminal joint
-instrument is allowed. Intermediate reset/records, calibrated
-resampling, logical-qubit bypass and destructive Bell pilots remain
-strong ordinary alternatives, so this dimension bound establishes no
-practical native advantage.
+**Fault-parity controller memory.** The [controller
+component](methods/binary-fault-controller.md) gives the tight binary
+closed-space comparison and the many-label CSS extension for an
+already-supplied full unknown payload: $k$ protected
+helper qubits attain the full response-uniform instrument with read/reset,
+and $k+1$ are necessary and sufficient with a closed interval. The former
+lower allows arbitrary later CPTP processing and requires exact no-fault
+full-input recovery. Arbitrary terminal joint instruments are allowed.
+Calibrated resampling, payload bypass, consumed pilots, codes and
+controlled-idle routing remain strong ordinary alternatives. The result
+is a memory comparison, not a practical native advantage.
 
 **Known global reference depolarization has an affine correction.**
 Suppose the effective reference noise in the Bell experiment is

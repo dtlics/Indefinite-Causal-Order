@@ -100,10 +100,11 @@ source's isotropic and four-box restrictions.
 The [noisy-search component](methods/noisy-search.md) supplies an ordinary
 full-channel compiler for calibrated depolarizing slots and separately
 counts all-plus Grover restarts, verification and actual controller costs.
-The [binary-fault controller component](methods/binary-fault-controller.md)
-gives the tight closed-controller cost of reproducing its measured flag;
-bypass, calibrated resampling, pure pilots and reset records remain
-stronger ordinary options for other endpoints. The
+The [fault-parity controller component](methods/binary-fault-controller.md)
+proves controller-memory requirements for response-uniform fault-parity
+instruments, distinguishing closed controls from intermediate records
+and reset. Bypass, calibrated resampling and pure pilots remain stronger
+ordinary options for other endpoints. The
 [controlled-unitary correlator](methods/memory-native-cost.md#nr-r20-controlled-unitary-correlator)
 adds an ordinary one-helper memory test when the specified coherent side
 port is available, with conditional records and repeated-use costs charged.

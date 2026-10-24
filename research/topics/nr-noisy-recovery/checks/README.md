@@ -12,7 +12,7 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 
 | Directory / job | Proof obligations replayed |
 | --- | --- |
-| `architecture/verify_binary_fault_controller.py` | Exact qutrit-controller echoes, finite complete fault-word isometries, weighted binary flag maps and normalization. The universal closed-controller dimension and unambiguous-herald obstructions remain analytic; hardware and reset costs are not certified. |
+| `architecture/verify_binary_fault_controller.py` | Exact qutrit/many-label echoes, complete finite fault-word isometries, weighted flag maps and read/reset instruments. Universal closed-space, reversible-source, information and uniform-cost bounds remain analytic; hardware and reset costs are not certified. |
 | `architecture/verify_controlled_unitary_correlator.py` | Exact two-readout instruments and signed/nonselective maps, fixed and approximate pinching, mixed-input and phase-drift guards. All-dimension identities, confidence bounds and availability of a coherent controlled-unitary port remain analytic. |
 | `architecture/verify_thermal_attenuator.py` | Exact finite full-joint contact identities, Gaussian coefficient polynomials, source flag/modulo instruments and finite-dimensional kernel guards. Infinite-oscillator density and faithfulness, Gaussian integration, tails and hardware premises remain analytic. |
 | `architecture/verify_unital_entropy.py` | Exact Kraus/Choi contractions, mixed-adjoint energies, nonunitality, pinching, spectral tails and full flagged maps, plus complete Clifford twirls including nonunital and negative-multiplier cases. Entropy integration, relative-entropy convexity and coding remain analytic. |

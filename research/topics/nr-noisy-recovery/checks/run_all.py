@@ -32,7 +32,7 @@ SCOPE = "Finite exact replay, symbolic integer/rational identities and outward r
 
 JOBS = (
     ("architecture-binary-fault-controller", "architecture/verify_binary_fault_controller.py", (),
-     "Exact finite qutrit-controller echo, full fault-word isometries, weighted flag maps and normalization; universal closed-space lower bounds, unknown-rate response and physical controls/costs analytic."),
+     "Exact finite qutrit/many-label echoes, full fault-word isometries, weighted flag maps and read/reset instruments; universal closed-space, reversible-source, information and uniform-cost bounds, unknown-law response and physical costs analytic."),
     ("architecture-controlled-unitary-correlator", "architecture/verify_controlled_unitary_correlator.py", (),
      "Exact finite two-readout instruments, signed/nonselective maps, unitary/pinching and phase-drift guards; all-dimension identities, confidence bounds and controlled-program access/costs analytic."),
     ("architecture-memory-stream-screening", "architecture/verify_memory_stream_screening.py", (),

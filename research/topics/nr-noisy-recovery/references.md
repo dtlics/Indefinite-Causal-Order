@@ -20,6 +20,21 @@ The supplied state is already maximally entangled. The task restores a **specifi
 
 A four-call ordinary filter is **not excluded** by a mean-two-query budget: it can be run on occasional rounds and combined with rejection or other strategies. The cost-sensitive converse must cover such mixtures and adaptive continuations. Fixed call counts explain the constructions' resources; they do not by themselves prove the new comparison. Ordinary postselection and coherent routing must likewise remain allowed.
 
+## Fault-parity controller memory
+
+The [controller-memory component](methods/binary-fault-controller.md)
+owns the response-uniform measured-instrument task and its proofs.
+The controlled-Pauli check is established background; a bounded primary
+screen located no identical full-payload memory statement, without
+establishing priority.
+
+| Primary work | Closest connection | Scope to preserve |
+| --- | --- | --- |
+| [Bisio et al., *Memory cost of quantum protocols*, arXiv:1112.3853](https://arxiv.org/pdf/1112.3853), Definition 3, Proposition 3 and Theorem 3 | Quantum memory accounting with classical records permitted. | A closed unitary controller can overcount memory needed when intermediate measurements are allowed; the two models require separate bounds. |
+| [Nayak, *Optimal lower bounds for quantum automata and random access codes*, quant-ph/9904093v3](https://arxiv.org/pdf/quant-ph/9904093v3), Theorem 2.3 and Section 4.4 | Information lower bounds for recovering selected bits. | The total carrier includes the payload. The component separately proves its reversible-source rank/entropy bound before extracting a helper-memory requirement. |
+| [Chen and Gong, *Efficient Pauli channel estimation with logarithmic quantum memory*, arXiv:2309.14326v5](https://arxiv.org/html/2309.14326v5), Sections 4, 5.1.1 and 7 | Small-memory learning and purification with concatenated calls. | Those learners may consume probes and many invocations. Their learning bounds do not establish the one-call-per-layer full-payload instrument optimum. |
+| [Bavaresco et al., *Simulating the quantum switch with quantum circuits is computationally hard*, arXiv:2409.18202v2](https://arxiv.org/pdf/2409.18202v2), Theorems 1–3 | Ordinary query cost of universal full-SWITCH simulation. | The fault-parity component instead fixes known CSS fault supports and measures the control; its resource is memory at specified query cuts. |
+
 ## Depolarizing-noise search and restart accounting
 
 The [search proof component](methods/noisy-search.md) owns the full

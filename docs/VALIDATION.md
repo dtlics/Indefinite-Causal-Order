@@ -41,12 +41,14 @@ deferred records and exact coefficient discrepancies. Their finite
 scope does not establish the all-dimension or asymptotic arguments,
 native gate costs or availability of a reliable candidate verifier.
 
-The [binary-fault controller component](../research/topics/nr-noisy-recovery/methods/binary-fault-controller.md)
-has an analytic minimum-dimension proof and an exact finite replay of its
-ordinary qutrit echoes and full weighted instruments. The
+The [fault-parity controller component](../research/topics/nr-noisy-recovery/methods/binary-fault-controller.md)
+has analytic closed-controller and general-intermediate-operation memory
+bounds, with exact finite replays of ordinary qutrit, many-label and
+read/reset instruments. The
 [controlled-unitary memory test](../research/topics/nr-noisy-recovery/methods/memory-native-cost.md#nr-r20-controlled-unitary-correlator)
 has finite exact two-readout, signed-map and phase-drift checks. The
-universal dimension, pinching and concentration arguments remain analytic;
+universal dimension, reversible-source, information, uniform-cost, pinching and
+concentration arguments remain analytic;
 these checks establish neither native hardware ports nor a practical
 switch advantage.
 
