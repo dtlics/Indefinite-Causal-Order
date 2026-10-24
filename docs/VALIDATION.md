@@ -304,6 +304,15 @@ fault-tolerance threshold or an architecture advantage.
 
 NR-R11 also replays ideal Raman helper fanout and all four corrected
 remote-SWAP teleportation branches, including reference matrix units.
+The known-gate helper extension checks four-mode heralded CZ and its
+coherently read identity-retry completion, eight-mode deterministic CZ,
+and sixteen-mode known-target teleportation. Full input/reference matrix
+units, every target coefficient direction in the general program and
+source-versus-key dephasing guards support those finite identities.
+The qualified smaller-port timing construction, actual enlarged helper
+ports, gate synthesis, continuum loss and complete clocks remain analytic
+or physical premises. Ideal identity flags do not certify photon-loss
+recovery or an unrestricted noisy ordinary optimum.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
 survivor instruments are checked with exact Gaussian fractions. Its
 local-ancilla extension reconstructs the six-qubit source, both scatters,

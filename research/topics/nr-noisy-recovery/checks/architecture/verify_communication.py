@@ -1017,6 +1017,283 @@ def raman_sprint_examples():
                       "dilation, controls, readout and delivered rates remain analytic.")}
 
 
+def raman_ordinary_gate_programs():
+    """Ideal helper-preserving SWAP gate programs on every unknown ABR.
+
+    Hadamard/Bell square roots are kept as explicit squared normalization:
+    F4/F8 CZ numerators have CP weight1/8, F16 numerators weight1/16.
+    Failures, source coherence, uniform keys and extra query windows are
+    separate instruments/resources, not a noisy Raman or hardware theorem.
+    """
+    def integer_matrix(rows):
+        return [[gaussian(x) for x in row] for row in rows]
+
+    def pauli(xa=0, xb=0, za=0, zb=0):
+        out = zeros(4, 4)
+        for a, b in product(range(2), repeat=2):
+            out[2*(a ^ xa)+(b ^ xb)][2*a+b] = gaussian((-1)**(za*a+zb*b))
+        return out
+
+    def direct_branch(v, m, n, p=None, source_label=None):
+        # Bell source, first SWAP: A=d,D=a,E0=d,E1=0.
+        # After V and second SWAP: A=d,B=x,D=b,E0=f,E1=p.
+        out = zeros(4, 4)
+        for a, b, d, x, f in product(range(2), repeat=5):
+            if source_label is not None and d != source_label:
+                continue
+            if f != (b ^ m):
+                continue
+            value = v[2*x+f][2*a+d] if p is None else v[4*x+2*f+p][4*a+2*d]
+            out[2*d+x][2*a+b] = add(out[2*d+x][2*a+b], times(value, (-1)**(n*b)))
+        return out
+
+    def cp_guard(numerator, target, weight):
+        assert numerator == target
+        assert scale(matmul(adjoint(numerator), numerator), weight) == scale(identity(4), weight)
+        count = 0
+        for i, j, a, b in product(range(4), repeat=4):
+            actual = times(multiply(numerator[i][a], conjugate(numerator[j][b])), weight)
+            desired = times(multiply(target[i][a], conjugate(target[j][b])), weight)
+            assert actual == desired
+            count += 1
+        return count
+
+    def swap_state(state, first, second):
+        out = {}
+        for bits, value in state.items():
+            result = list(bits)
+            result[first], result[second] = result[second], result[first]
+            key = tuple(result)
+            out[key] = add(out.get(key, ZERO), value)
+        return out
+
+    def arbitrary_branch(u, ma, na, mb, nb):
+        # Registers A,B,D,E,F,G; two unnormalized Bell sources.
+        # Source and two normalized Bell bras together supply factor1/4.
+        # Equivalence to the canonical staged Bell preparation is checked
+        # below before B, with common source amplitude normalization1/2.
+        out = zeros(4, 4)
+        for a, b in product(range(2), repeat=2):
+            state = {(a, b, d, d, f, f): ONE for d, f in product(range(2), repeat=2)}
+            for pair in ((0, 2), (2, 4), (1, 2)):
+                state = swap_state(state, *pair)
+            processed = {}
+            for bits, value in state.items():
+                column = 2*bits[4]+bits[2]
+                for x, y in product(range(2), repeat=2):
+                    result = list(bits)
+                    result[4], result[2] = x, y
+                    key = tuple(result)
+                    processed[key] = add(processed.get(key, ZERO), multiply(u[2*x+y][column], value))
+            for (ao, bo, d, e, f, g), value in processed.items():
+                if e == (f ^ ma) and g == (d ^ mb):
+                    out[2*ao+bo][2*a+b] = add(out[2*ao+bo][2*a+b],
+                                              times(value, (-1)**(na*f+nb*d)))
+        return out
+
+    # Canonical RS18 starts Bell(DE),F=G=0, then after AD/DF prepares
+    # Bell(D,G) by H_D/CNOT_D->G. Compare before B with the convenient
+    # preprepared Bell(DE)Bell(FG) form used by arbitrary_branch.
+    for a, b in product(range(2), repeat=2):
+        prepared = {(a, b, d, d, f, f): ONE for d, f in product(range(2), repeat=2)}
+        staged = {(a, b, d, d, 0, 0): ONE for d in range(2)}
+        for pair in ((0, 2), (2, 4)):
+            prepared = swap_state(prepared, *pair)
+            staged = swap_state(staged, *pair)
+        expanded = {}
+        for bits, value in staged.items():
+            assert bits[2] == bits[5] == 0
+            for h in range(2):
+                result = list(bits)
+                result[2] = result[5] = h
+                key = tuple(result)
+                expanded[key] = add(expanded.get(key, ZERO), value)
+        assert expanded == prepared  # both have physical amplitude factor1/2
+    cz = identity(4)
+    cz[3][3] = gaussian(-1)
+    # F4: a genuine accepted contraction, with rejected odd modes halted
+    # BEFORE the B contact. It is not a closed four-mode unitary.
+    even_h = zeros(4, 4)
+    even_h[0][0] = even_h[0][3] = even_h[3][0] = ONE
+    even_h[3][3] = gaussian(-1)
+    even, odd = zeros(4, 4), zeros(4, 4)
+    for j in range(4):
+        (even if j in (0, 3) else odd)[j][j] = ONE
+    assert scale(matmul(adjoint(even_h), even_h), F(1, 2)) == even
+    assert matrix_sum([even, matmul(adjoint(odd), odd)], 4) == identity(4)
+    f4_units, f4_effects = 0, []
+    for m, n in product(range(2), repeat=2):
+        raw = direct_branch(even_h, m, n)
+        expected = matmul(matmul(pauli(xb=m), cz), pauli(za=m, zb=n))
+        assert raw == expected
+        correction = matmul(pauli(za=m, zb=n), pauli(xb=m))
+        f4_units += cp_guard(matmul(correction, raw), cz, F(1, 8))
+        f4_effects.append(scale(matmul(adjoint(raw), raw), F(1, 8)))
+    assert matrix_sum(f4_effects, 4) == scale(identity(4), F(1, 2))
+    rejected = []
+    for a, d in ((0, 1), (1, 0)):
+        branch = zeros(4, 4)
+        for b in range(2):
+            branch[2*d+b][2*a+b] = ONE
+        rejected.append(branch)
+    assert matrix_sum([scale(matmul(adjoint(k), k), F(1, 2)) for k in rejected], 4) == scale(identity(4), F(1, 2))
+    # Tracing these odd ports is a destructive completion, not unavoidable.
+    assert choi(rejected, 4, [F(1, 2)]*2) != choi([identity(4)], 4, [F(1, 2)])
+    # With coherent odd ports available, Bell-read them BEFORE B instead.
+    # Source Bell and odd-Bell bra give amplitude1/2. Each known local
+    # correction restores arbitrary ABR, allowing an ideal fresh-helper retry.
+    odd_bras = [[ZERO, ONE, gaussian((-1)**n), ZERO] for n in range(2)]
+    assert matrix_sum([scale(matmul(adjoint([row]), [row]), F(1, 2))
+                       for row in odd_bras], 4) == odd
+    safe_failure_units, safe_failure_effects = 0, []
+    for n, row in enumerate(odd_bras):
+        raw = zeros(4, 4)
+        for a, b, d in product(range(2), repeat=3):
+            if a != d:
+                raw[2*d+b][2*a+b] = add(raw[2*d+b][2*a+b], row[2*a+d])
+        assert raw == pauli(xa=1, za=n)
+        correction = matmul(pauli(za=n), pauli(xa=1))
+        safe_failure_units += cp_guard(matmul(correction, raw), identity(4), F(1, 4))
+        safe_failure_effects.append(scale(matmul(adjoint(raw), raw), F(1, 4)))
+    assert matrix_sum(f4_effects+safe_failure_effects, 4) == identity(4)
+    # F8: construct the entire known unitary numerator, not only its E1=0
+    # columns: parity copy; CNOT D->E0, H_D, CNOT D->E0.
+    circuit = zeros(8, 8)
+    for d, e0, e1, x in product(range(2), repeat=4):
+        copied = e1 ^ d ^ e0
+        final_e0 = e0 ^ d ^ x
+        circuit[4*x+2*final_e0+copied][4*d+2*e0+e1] = gaussian((-1)**(d*x))
+    assert matmul(adjoint(circuit), circuit) == scale(identity(8), 2)
+    assert matmul(circuit, adjoint(circuit)) == scale(identity(8), 2)
+    key_phase_circuit = [[times(value, (-1)**(row % 2)) for value in values]
+                         for row, values in enumerate(circuit)]
+    f8_units = source_units = key_units = 0
+    f8_effects = []
+    for p, m, n in product(range(2), repeat=3):
+        raw = direct_branch(circuit, m, n, p)
+        r = m ^ p
+        expected = matmul(matmul(pauli(xa=p, xb=r), cz), pauli(za=r, zb=n))
+        assert raw == expected
+        correction = matmul(pauli(za=r, zb=n), pauli(xa=p, xb=r))
+        fixed = matmul(correction, raw)
+        f8_units += cp_guard(fixed, cz, F(1, 8))
+        f8_effects.append(scale(matmul(adjoint(raw), raw), F(1, 8)))
+        # E1 is untouched after BOTH parity-copy CNOTs. An unobserved Z_E1
+        # only supplies the final scalar phase(-1)^p, harmless per flag.
+        key_phased = matmul(correction, direct_branch(key_phase_circuit, m, n, p))
+        assert key_phased == scale(fixed, (-1)**p)
+        pieces = [matmul(correction, direct_branch(circuit, m, n, p, d)) for d in range(2)]
+        minus_source = matrix_sum([pieces[0], scale(pieces[1], -1)], 4)
+        assert minus_source == scale(matmul(pauli(za=1), cz), (-1)**p)
+        for i, j, a, b in product(range(4), repeat=4):
+            ideal = multiply(cz[i][a], conjugate(cz[j][b]))
+            assert multiply(key_phased[i][a], conjugate(key_phased[j][b])) == ideal
+            key_units += 1
+            mixed = add(multiply(pieces[0][i][a], conjugate(pieces[0][j][b])),
+                        multiply(pieces[1][i][a], conjugate(pieces[1][j][b])))
+            assert mixed == (ideal if a//2 == b//2 else ZERO)
+            source_units += 1
+    assert matrix_sum(f8_effects, 4) == identity(4)
+    # Before B, source/H normalization is1/2 in amplitude. Each p effect
+    # is I/2, even on reference-entangled data; measuring p is not granted.
+    for p in range(2):
+        prefix = zeros(16, 4)
+        for a, b, d, x, f in product(range(2), repeat=5):
+            row = 8*d+4*b+2*x+f
+            prefix[row][2*a+b] = add(prefix[row][2*a+b],
+                                      circuit[4*x+2*f+p][4*a+2*d])
+        assert scale(matmul(adjoint(prefix), prefix), F(1, 4)) == scale(identity(4), F(1, 2))
+    # Coherent serialization A,B0,B1 uses two potential B windows. The
+    # unoccupied window is identity, in the declared common idle frame.
+    for bits in product(range(2), repeat=5):
+        actual = list(bits)
+        for window in range(2):
+            if actual[4] == window:
+                actual[1], actual[2] = actual[2], actual[1]
+        desired = list(bits)
+        desired[1], desired[2] = desired[2], desired[1]
+        assert actual == desired
+    # Optional F4 unitary program: known CZ_DE implements physical SWAP*CZ,
+    # not fixed-output-port CZ. All four outcomes are retained.
+    swap_cz = zeros(4, 4)
+    for a, b in product(range(2), repeat=2):
+        swap_cz[2*b+a][2*a+b] = gaussian((-1)**(a*b))
+    swapped_units = 0
+    for m, n in product(range(2), repeat=2):
+        raw = direct_branch(cz, m, n)
+        correction = matmul(pauli(za=n, zb=m), pauli(xa=m))
+        swapped_units += cp_guard(matmul(correction, raw), swap_cz, F(1, 4))
+    # F16: coefficient-complete tensor identity. Testing all sixteen E_ij
+    # proves corrected numerator=U for EVERY complex U by linearity.
+    tensor_entries = 0
+    for row, column in product(range(4), repeat=2):
+        unit = zeros(4, 4)
+        unit[row][column] = ONE
+        for ma, na, mb, nb in product(range(2), repeat=4):
+            raw = arbitrary_branch(unit, ma, na, mb, nb)
+            frame = pauli(xa=ma, xb=mb, za=na, zb=nb)
+            correction = matmul(pauli(za=na, zb=nb), pauli(xa=ma, xb=mb))
+            assert raw == matmul(frame, unit)
+            assert matmul(correction, raw) == unit
+            tensor_entries += 16
+    controlled_phase = identity(4)
+    controlled_phase[3][3] = gaussian(F(3, 5), F(4, 5))
+    x = [[ZERO, ONE], [ONE, ZERO]]
+    z = [[ONE, ZERO], [ZERO, gaussian(-1)]]
+    xx = tensor(x, x)
+    xx_rotation = matrix_sum([scale(identity(4), F(3, 5)),
+                              [[multiply(gaussian(0, F(4, 5)), v) for v in row] for row in xx]], 4)
+    controlled_rotation = identity(4)
+    controlled_rotation[2][2] = controlled_rotation[3][3] = gaussian(F(5, 13))
+    controlled_rotation[2][3], controlled_rotation[3][2] = gaussian(-F(12, 13)), gaussian(F(12, 13))
+    targets = [cz, controlled_phase, xx_rotation, controlled_rotation]
+    product_inputs = [[ONE]*4, [ONE]*4, [ONE, ZERO, ZERO, ZERO], [ONE, ZERO, ONE, ZERO]]
+    generators = [tensor(x, identity(2)), tensor(identity(2), x),
+                  tensor(z, identity(2)), tensor(identity(2), z)]
+    signed_paulis = [scale(v, s) for v in pauli_basis(2) for s in (1, -1)]
+    generic_units = 0
+    for target_index, (u, source) in enumerate(zip(targets, product_inputs)):
+        assert matmul(adjoint(u), u) == identity(4)
+        assert multiply(source[0], source[3]) == multiply(source[1], source[2])
+        output = [row[0] for row in matmul(u, [[v] for v in source])]
+        assert multiply(output[0], output[3]) != multiply(output[1], output[2])
+        if target_index:
+            assert any(matmul(matmul(u, p), adjoint(u)) not in signed_paulis for p in generators)
+        effects = []
+        for ma, na, mb, nb in product(range(2), repeat=4):
+            raw = arbitrary_branch(u, ma, na, mb, nb)
+            correction = matmul(pauli(za=na, zb=nb), pauli(xa=ma, xb=mb))
+            generic_units += cp_guard(matmul(correction, raw), u, F(1, 16))
+            effects.append(scale(matmul(adjoint(raw), raw), F(1, 16)))
+        assert matrix_sum(effects, 4) == identity(4)
+    return {"status": "passed", "arithmetic": "Gaussian rational and explicit squared sqrt(2) normalization; stdlib",
+            "F4_heralded_CZ_flags": 4, "F4_heralded_CZ_probability": "1/2",
+            "F4_heralded_CZ_CP_coefficients": f4_units,
+            "F4_traced_odd_reject_example": "effect I/2; destructive if odd ports are discarded",
+            "F4_coherent_odd_Bell_failure_flags": 2,
+            "F4_corrected_failure_CP_coefficients": safe_failure_units,
+            "F4_complete_success_failure_flags": 6,
+            "F4_corrected_failure_instrument": "two maps (1/4)id_ABR; halt before B",
+            "F8_deterministic_CZ_flags": 8, "F8_deterministic_CZ_CP_coefficients": f8_units,
+            "F8_pre_B_key_effect_entries": 32,
+            "F8_key_phase_invariance_CP_coefficients": key_units,
+            "F8_dephased_source_CP_coefficients": source_units,
+            "F8_dephased_source_channel": "Ad_CZ after complete input-A dephasing",
+            "complementary_B_window_basis_vectors": 32,
+            "F4_SWAP_CZ_flags": 4, "F4_SWAP_CZ_CP_coefficients": swapped_units,
+            "F16_arbitrary_U_flags": 16,
+            "F16_staged_Bell_source_equivalence_inputs": 4,
+            "F16_coefficient_complete_tensor_entries": tensor_entries,
+            "F16_exact_entangling_unitary_fixtures": len(targets),
+            "F16_nonClifford_fixtures": len(targets)-1,
+            "F16_unitary_fixture_CP_coefficients": generic_units,
+            "scope": "ideal literal helper-preserving SWAP contacts, known flying controls, charged "
+                     "filter/reject ports and complete local-Pauli-corrected readouts; unknown ABR "
+                     "and all flags; corrected odd-reject retry requires coherent ports/readout, "
+                     "not noisy Raman simulation, mode optimality, generic harmless loss, "
+                     "a free temporal serialization or measured native gate/rate advantage"}
+
+
 def main():
     from rydberg_memory_schur import verify_rydberg_memory_schur
     from rydberg_exchange_eraser import verify_exchange_eraser
@@ -1039,6 +1316,7 @@ def main():
         "late_record_guard_examples":late_record_guard_examples(),
         "chiral_parity_examples":chiral_parity_examples(),
         "raman_sprint_examples":raman_sprint_examples(),
+        "raman_ordinary_gate_programs":raman_ordinary_gate_programs(),
         "raman_stronger_baselines":verify_raman_stronger_baselines(),
         "raman_multimode_helper":verify_raman_multimode_helper(),
         "raman_phase_covariance":verify_raman_phase_covariance(),
@@ -1050,7 +1328,7 @@ def main():
         "raman_temporal_tail":verify_raman_temporal_tail(),
         "rydberg_memory_schur":verify_rydberg_memory_schur(),
         "rydberg_exchange_eraser":verify_exchange_eraser(),
-        "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, and random-receiver phase/normalized-bus isometry checks. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
+        "scope":"Finite full-Choi identities, including arbitrary-control replacement-channel cycle simulations, random-receiver phase/normalized-bus isometries, and ideal helper-preserving SWAP gate programs with filter, source-coherence and query-window guards. General rank, LOCC, capacity, cooling inequalities, entropy-ledger, stopping and physical resource-graph proofs remain analytic in communication.md; no hardware advantage or priority claim."},indent=2))
 
 
 if __name__ == "__main__":

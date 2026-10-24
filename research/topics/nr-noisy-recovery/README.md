@@ -217,6 +217,9 @@ separation and a repeated ordinary survivor compiler, with explicit
 port and timing qualifications. Its next
 test compares rates and fidelity with the strongest paid ordinary routes;
 ideal accepted weight alone does not establish a hardware advantage.
+The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
+also compare unknown-input gates, helper-space costs and coherently read
+identity failures; their ideal identities do not certify lossy retries.
 Its [Raman local-memory comparisons](communication.md#nr-r11-raman-local-ancillas)
 give stronger ordinary achievable Bell yields, including a certified
 intermediate-transfer example and a coefficient-independent minus-flag

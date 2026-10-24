@@ -251,6 +251,12 @@ or larger-mode ordinary processors.
 
 The four-level flying-helper replay is
 [raman_multimode_helper.py](architecture/raman_multimode_helper.py).
+The existing communication checker also checks known-gate helper programs,
+their full input/reference coefficients, source/key dephasing and coherent
+early identity-retry flags. The general program tests all target coefficient
+directions; it requires actual synthesis of the known target on the helper.
+These are ideal finite identities, with enlarged ports, complete readout,
+loss completion and physical timing still charged.
 The communication job also includes
 [phase-covariant instruments](architecture/verify_raman_phase_covariance.py),
 [reciprocal-port guards](architecture/verify_raman_reciprocal_ports.py) and

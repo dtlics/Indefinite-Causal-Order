@@ -1409,6 +1409,219 @@ Complete polarization/path Bell readout on one photon has an
 That validates the operation class, while its compatibility with the
 actual SPRINT port encoding remains an additional implementation task.
 
+**Known flying programs also give ordinary gates on unknown memories.**
+Keep the same ideal, known-frame contacts and write $D=P$ for their
+flying qubit. All additional helper factors below are accessible to the
+known source, intermediate processor and terminal readout, and are
+preserved by the node contacts. These are sufficient constructions,
+not minimum-mode or minimum-control theorems.
+
+With one helper qubit $E$, prepare $|\Phi^+\rangle_{DE}$ and place the
+known accepted contraction
+
+$$
+V_{\rm even}=\frac{
+ |00\rangle\langle00|+|00\rangle\langle11|
++|11\rangle\langle00|-|11\rangle\langle11|}{\sqrt2},
+\qquad
+V_{\rm even}^\dagger V_{\rm even}=P_{\rm even}
+\tag{RS14}
+$$
+
+between $\mathrm{SWAP}_{AD}$ and $\mathrm{SWAP}_{BD}$.
+It annihilates the odd sector and maps $|a,a\rangle$ to
+$\sum_x(-1)^{ax}|x,x\rangle/\sqrt2$.
+After the second contact the Bell convention of (RS13) gives
+
+$$
+K_{mn}=\frac{X_B^m\,\mathrm{CZ}_{AB}Z_A^m Z_B^n}{2\sqrt2},
+\qquad
+(Z_A^m Z_B^nX_B^m)K_{mn}
+=\frac{\mathrm{CZ}_{AB}}{2\sqrt2}.
+\tag{RS15}
+$$
+
+Indeed the first contact leaves $A=d,D=a,E=d$ in the Bell-source
+sum; the filter enforces $d=a$, and the Bell bra enforces
+$x=b\oplus m$ with phase $(-1)^{ax+nb}$.
+Each of the four useful flags has effect $I/8$ on arbitrary $AB$.
+Thus the complete accepted map is
+$\tfrac12\operatorname{Ad}_{\rm CZ}$, including arbitrary references.
+The complementary probability is $1/2$.
+The filter is not a closed four-mode unitary: $P_{\rm odd}$ is a
+positive reject completion, since
+$V_{\rm even}^\dagger V_{\rm even}+P_{\rm odd}=I$.
+Rejected light must exit failed ports before the B contact and cannot
+be counted as CZ-success readout. Simply tracing those ports can damage
+the unknown input.
+
+There is a stronger completion if the rejected odd optical modes are
+retained coherently and read **before B** in the basis
+$2^{-1/2}(|01\rangle+(-1)^n|10\rangle)$.
+The odd constraint is $d=a\oplus1$, so its two branch operators are
+
+$$
+J_n=\tfrac12(X_A Z_A^n\otimes I_B),\qquad
+(Z_A^nX_A\otimes I_B)J_n=\tfrac12 I_{AB}.
+\tag{RS15a}
+$$
+
+Both have effect $I/4$. Together with the four CZ flags (RS15), these
+give a complete six-flag trace-preserving instrument: corrected success
+is $\tfrac12\operatorname{Ad}_{\rm CZ}$ and corrected early failure is
+$\tfrac12\operatorname{Id}$, on every $ABR$.
+This needs coherent odd-sector erasure, its detectors and local
+feedback; a lost photon is not such a flag. With fresh Bell helpers
+and the exact ideal contacts, these identity failures permit the
+standard [repeat-until-success mechanism](https://arxiv.org/pdf/quant-ph/0408043).
+Stopping at the first CZ flag takes a mean of two attempts, two A
+contacts and one B contact, hence three occupied contacts.
+There is no hard three-contact cap.
+With at most $M$ attempts, the final recorded maps are
+$(1-2^{-M})\operatorname{Ad}_{\rm CZ}$ and
+$2^{-M}\operatorname{Id}$, and the expected occupied-contact count is
+$3(1-2^{-M})$.
+Source/readout/calibration, correction, storage and complete failure
+clocks are charged. Actual Raman loss, partial exchange or unresolved
+records do not inherit this ideal identity-failure completion.
+
+A deterministic CZ uses two preserved helper qubits $E_0,E_1$.
+Prepare $|\Phi^+\rangle_{D E_0}|0\rangle_{E_1}$. After the A contact,
+apply, in chronological order,
+
+$$
+\mathrm{CNOT}_{D\to E_1},\quad
+\mathrm{CNOT}_{E_0\to E_1},\quad
+\mathrm{CNOT}_{D\to E_0},\quad
+H_D,\quad
+\mathrm{CNOT}_{D\to E_0}.
+\tag{RS16}
+$$
+
+This is a unitary on all eight flying modes. On its occupied input
+$|a,d,0\rangle$ it acts as
+$\sum_x(-1)^{ax}|x,x\oplus p,p\rangle/\sqrt2$,
+where $p=a\oplus d$.
+Then contact B, read $E_1=p$ and Bell-measure $D,E_0$ with label
+$(m,n)$. The physical outputs are
+$A=a\oplus p$, $B=b\oplus m\oplus p$.
+Putting $k=m\oplus p$, their phase is $(-1)^{ab+ak+nb}$, so
+
+$$
+K_{pmn}
+=\frac{X_A^pX_B^k\,\mathrm{CZ}_{AB}Z_A^kZ_B^n}{2\sqrt2},
+\qquad
+(Z_A^kX_A^p\otimes Z_B^nX_B^k)K_{pmn}
+=\frac{\mathrm{CZ}_{AB}}{2\sqrt2}.
+\tag{RS17}
+$$
+
+All eight effects are $I/8$ and all outcomes are retained. The
+corrected channel is exactly $\operatorname{Ad}_{\rm CZ}$ on every
+unknown $ABR$. The basis calculation is an operator equality, so it
+also preserves coherences between distinct inputs.
+
+For any prescribed known two-qubit unitary $U$, three preserved helper
+qubits suffice. Prepare
+$|\Phi^+\rangle_{D E_0}|00\rangle_{E_1 E_2}$.
+After $\mathrm{SWAP}_{AD}$, a known $\mathrm{SWAP}_{D E_1}$ stores A's
+unknown input in $E_1$ and leaves $D=0$. Prepare
+$|\Phi^+\rangle_{D E_2}$ with known $H_D$ and
+$\mathrm{CNOT}_{D\to E_2}$, then contact B. For every input
+$|\psi\rangle_{ABR}$ the state is now
+$|\Phi^+\rangle_{A E_0}|\Phi^+\rangle_{B E_2}
+|\psi\rangle_{E_1DR}$.
+Apply the known $U$ to $E_1,D$, then Bell-measure $E_1,E_0$ and
+$D,E_2$. If their Pauli labels are $(m_A,n_A),(m_B,n_B)$,
+the full branch is
+
+$$
+K=\tfrac14
+(X_A^{m_A}Z_A^{n_A}\otimes X_B^{m_B}Z_B^{n_B})U_{AB}.
+\tag{RS18}
+$$
+
+The inverse local Paulis give $U/4$. All sixteen effects are $I/16$,
+and their sum gives $\operatorname{Ad}_U$ on the prescribed A,B ports
+and every reference. No Clifford property of $U$ is assumed:
+it is applied before both output teleportations. The known helper
+processor must actually implement $U$ on the held inputs; the two
+contacts alone do not synthesize it. This uses the standard
+[gate-teleportation primitive](https://arxiv.org/pdf/quant-ph/9908010).
+It supplies no unknown oracle $U$, or compilation of an arbitrary
+switch supermap, for free.
+
+The smaller four-mode Bell program has another distinct corollary:
+inserting a known $\mathrm{CZ}_{DE}$ between the two contacts in
+(RS13) gives raw branches
+$\tfrac12(X_A^mZ_A^n\otimes Z_B^m)
+\mathrm{SWAP}_{AB}\mathrm{CZ}_{AB}$.
+Local inverse-Pauli feedback gives deterministic
+$\mathrm{SWAP}\,\mathrm{CZ}$, whose exchange of the physical outputs
+must not be called fixed-port CZ.
+
+The eight-mode CZ admits a qualified serialization on the same
+four-mode station port. At A, $E_1=0$, so only $D,E_0$ occupy that
+port. After (RS16), the key $p$ has effect $I/2$ on the input.
+It is unchanged by the subsequent gates and is eventually measured.
+For each fixed $p$, the four corrected Bell flags sum to
+$\tfrac12\operatorname{Ad}_{\rm CZ}$.
+Consequently dephasing only $p$, or recording only its arrival bin,
+does not change the final recorded instrument. The coherent initial
+Bell source is essential; it cannot be replaced by a classical
+$00/11$ lottery. For example, that fully dephased source gives the
+corrected map $\operatorname{Ad}_{\rm CZ}\circ\Delta_A$ instead,
+even though all eight flag probabilities remain $1/8$.
+
+A separately supplied coherent mode-to-time router can encode $p$
+in two disjoint B arrival windows while $D,E_0$ use the same
+four-mode port. In an identity-idle/vacuum frame their actions are
+
+$$
+W_0=\Pi_0\otimes F_{DB}+\Pi_1\otimes I,\qquad
+W_1=\Pi_0\otimes I+\Pi_1\otimes F_{DB},\qquad
+W_1W_0=I_{E_1}\otimes F_{DB},
+\quad \Pi_p=|p\rangle\langle p|.
+\tag{RS19}
+$$
+
+Thus the schedule A,B0,B1 has three potential contact windows and one
+occupied A and B contact per history. It needs real mode conversion,
+holds and the processor (RS16), but no early measurement of $p$.
+An actual nondestructive key readout followed by classical routing is
+another sufficient interface with its own latency; final photon
+detection does not supply that intermediate readout. Neither
+serialization follows from merely counting helper labels. The actual
+slot-conditioned scattering, vacuum and idle/bath evolution must
+give the displayed common-frame instrument at one finish, with
+finite-pulse guards and all extra loss and storage charged.
+
+Their flying computational spaces contain four, eight or sixteen
+coherent one-photon modes, respectively; the heralded filter has
+additional rejected ports. These are not multiple-photon Bell
+measurements. Known mode unitaries and complete single-photon mode
+readout are substantive supplied controls, with their synthesis,
+calibration and latency charged. Real two-mode SPRINT access does
+not automatically extend as identity on the extra helper factors;
+the [port and time-bin tests](#nr-r11-raman-route) still apply.
+External helper memories instead need their actual coherent transfer
+and gates. The resources include Bell preparation, pure helper
+registers, internal processing, retained input storage, readout,
+classical messages and local Pauli feedback. Losing D can destroy an
+unknown supplied input; it is not the coherent early rejection in
+(RS15a).
+Replacing a SWAP by the actual partial/lossy Raman operator changes
+every branch, including coherent elastic leakage. No noisy dominance,
+minimum-resource, delivered-rate or hardware-advantage
+claim follows from these ideal ordinary programs.
+
+The [communication replay](checks/architecture/verify_communication.py)
+checks the full finite gate instruments, traced and coherent early
+rejection, helper unitarity, uniform key and complementary B windows.
+Its arbitrary-U
+coefficient identities support the all-unitary proof (RS18); they
+do not certify physical helper-preserving ports or clock costs.
+
 <a id="nr-r11-raman-route"></a>
 
 ### Native Raman ports need a routed temporal helper
@@ -5229,6 +5442,36 @@ calculation neither supplies two independently callable slots nor
 establishes a new switch, a photon-preserving order flag, the gate above,
 or a hardware advantage. The two-photon proofs preceding this subsection
 retain their explicitly stated independent-slot hypotheses.
+
+There is a separate conditional test for the **same full joint
+device**. Let $V_T$ be its actual field--emitter--bath dilation at a
+fixed common finish, retaining emitter memory $M$, all Fock sectors
+and all loss/dephasing records. Suppose the ordinary interface
+independently supplies the proposed input-only external R/L encoder
+$W_{\rm in}$, any retained source/helper register $C$, and terminal
+processor/readout $W_{\rm out},N_z$.
+Both strategies then have the identical recorded operators
+
+$$
+A_z=(N_zW_{\rm out}\otimes I_E)(I_C\otimes V_T)
+       (W_{\rm in}\otimes I_{ME}),
+$$
+
+with the same initial emitter/bath state. Equality before tracing
+inaccessible $E$ proves equality of every retained-field, $M$,
+reference, accepted and lost-output instrument, including nonlinear
+connected multiphoton scattering. Tensoring a passive reference
+preserves the equality. This does not follow from a fixed
+global Hamiltonian alone. An input-only encoder cannot hide a genuine
+internal SWITCH router, and its ordinary availability cannot be inferred
+merely because a native proposal assumes it. The reported classical
+detuning knobs do not by themselves provide independently open photon
+oracles. This identity neither simulates arbitrary independent A/B
+oracles uniformly nor establishes causal separability or extends
+(37)'s reciprocity claim. A distinct coherently controlled internal
+dynamics or feedback during unresolved dwell needs its own full
+instrument and strongest ordinary comparison; being outside this
+input-only premise does not establish an advantage.
 
 ### Boundary of the scattering reductions
 

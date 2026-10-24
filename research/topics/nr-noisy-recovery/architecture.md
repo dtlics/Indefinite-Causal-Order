@@ -962,7 +962,13 @@ response, rather than substituting a dephasing rate for a two-history overlap.
 
 The [Raman exchange screen](communication.md#nr-r11-raman-swap) adds
 same-helper ordinary ideal Bell-generation, remote-SWAP and detuned-serial
-baselines. The [native-port analysis](communication.md#nr-r11-raman-route)
+baselines. Unknown-input gate comparisons must also include its ordinary
+known-gate helper programs and the coherent completion that restores the
+data on specified early rejection flags. Extra helper space can replace
+repeat contacts; those programs require real tensor-preserving ports,
+source coherence, internal gates and joint readout. Their ideal retry
+identity does not make photon loss or partial-exchange errors harmless.
+The [native-port analysis](communication.md#nr-r11-raman-route)
 gives conditional temporal-helper routes and a comparator on the same
 reconfigurable graph. Both physical counterpropagating photon ports must
 be preserved; an independent helper does not fit those two simultaneous
