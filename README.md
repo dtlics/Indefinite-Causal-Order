@@ -12,7 +12,7 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | Memory-capacity qualification, hidden-basis query separation and channel-entropy certificates | [Memory qualification](research/topics/nr-noisy-recovery/memory-qualification.md) |
 | Communication cuts, optical loss and control-resource bounds | [Communication results](research/topics/nr-noisy-recovery/communication.md) |
 | Coherent dispatch, ordinary recovery and microscopic temporal models | [Dispatch result](research/topics/nr-noisy-recovery/dispatch.md) |
-| Bath backaction, calibration transfer and ordinary echo/record controls | [Shared-bath screen](research/topics/nr-noisy-recovery/backaction.md) |
+| Bath backaction, calibration transfer, pair-memory qualification and ordinary controls | [Shared-bath screen](research/topics/nr-noisy-recovery/backaction.md) |
 | Unknown odd couplers, exact correction and expected-query fidelity limits | [Coupler benchmark](research/topics/nr-noisy-recovery/backaction.md#nr-r19) |
 | Noisy phase calibration, finite-query precision and native memory costs | [Metrology benchmark](research/topics/nr-noisy-recovery/metrology.md) |
 | Displacement calibration, energy bookkeeping and ordinary optical loops | [Geometric calibration](research/topics/nr-noisy-recovery/geometric-calibration.md) |

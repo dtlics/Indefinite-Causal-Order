@@ -40,6 +40,17 @@ The mathematical statements and constants used by this project are owned by its 
 
 The OTOC interpretation is a consequence of the SAME/MUB comparison and an exact identity, not another independent lower-bound method. The current [C6 result ownership](../research/topics/c6-hidden-dephasing/README.md) preserves that dependency. The keyed transfer is conditional and does not transfer an unbounded Haar-query claim to a finite keyed ensemble.
 
+## Local records and memory qualification
+
+[Gulácsi, Kattemölle and Burkard](https://doi.org/10.1103/k2lx-vfqp)
+provide correlated-noise diagnostics using product preparation and local
+operations. [Huang, Kueng and Preskill](https://doi.org/10.1038/s41567-020-0932-7)
+provide randomized-measurement prediction of many local observables.
+The [owning NR-R14 comparison](../research/topics/nr-noisy-recovery/backaction.md#nr-r14-pair-qualification)
+states the dedicated-pair and stronger parallel classical-phase memory
+tasks, prior attribution and calibration-transfer limits. A coarse parity
+aggregate must not replace the full labelled ordinary records.
+
 ## Exposition conventions
 
 The manuscript presents the task, access model, output, and resource accounting before the lower bound. Proofs separate correctness from query cost, identify which random objects stay fixed, and state the conditioning needed before averaging. Diagrams identify an operational experiment or proof step; they do not replace the reduction. Conditional claims and model restrictions stay adjacent to their statements. These conventions are maintained in the one paper source rather than in successive style-review documents.

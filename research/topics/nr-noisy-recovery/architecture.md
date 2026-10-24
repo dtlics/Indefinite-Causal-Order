@@ -507,8 +507,12 @@ general exclusion of unknown joint interventions. The
 strengthens this to complete diagnostic outputs on proper bath subsets.
 Ordinary fourth-order phase cycling, direct logical Bell-null tests and
 validated process-learning/DD models are the relevant comparators.
-The next target must predict many useful production histories within
-one justified drift window, with their preparation and training costs.
+The [labelled pair-memory baseline](backaction.md#nr-r14-pair-qualification)
+now connects local records to a concrete code-and-phase decision, with
+separate dedicated-pair and parallel classical-phase assumptions. The next
+target must predict useful production histories beyond those ordinary
+closures within one justified drift window, with preparation and training
+costs.
 
 The [excitation-exchange example in NR-R14](backaction.md#nr-r14) now
 tests that broader setting explicitly. Two cold-spectator models have

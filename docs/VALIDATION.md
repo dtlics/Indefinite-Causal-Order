@@ -220,8 +220,12 @@ has exact finite flagged-Choi echo/switch identities, a rational held-out
 memory counterexample, a maximal ordinary record-correlation example and
 symbolic polynomial calibration/storage counterexamples.
 The all-dimension instrument and known-intervention dilation identities
-are analytic. These checks establish neither a fitted bath model nor a
-switch sampling or architecture advantage. The application assessment's
+are analytic. The [pair-memory ingredient](../research/topics/nr-noisy-recovery/checks/architecture/pair_memory_qualification_guards.py)
+adds exact Schur-channel, encoded matrix-unit, labelled-record, parallel
+phase-estimator and spectator/switch-boundary fixtures. Recovery
+optimality, concentration, general model transfer and physical costs
+remain analytic or separately assumed. These checks establish neither a
+fitted bath model nor a switch sampling or architecture advantage. The application assessment's
 photonic and phononic resource comparisons are primary-source screens,
 not hardware experiments or new security proofs.
 

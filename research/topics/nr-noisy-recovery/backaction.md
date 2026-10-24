@@ -349,6 +349,265 @@ by $h$, with gap $81/625$. The all-instrument support proof and the
 $\pi/8$ values above are analytic arguments, not inferences from those
 finite cases.
 
+
+<a id="nr-r14-pair-qualification"></a>
+
+### Ordinary qualification of labelled pair memories
+
+The concrete decision is which physical memory and phase correction to
+use for one unknown logical qubit at a fixed storage time $T$. Local
+product probes suffice for the following restricted catalogue. The
+calibration model must transfer to production; identifying an aggregate
+noise statistic alone does not establish that transfer.
+
+**Dedicated pair, general Schur channel.** Assume the same
+population-preserving two-qubit CPTP map in calibration and production:
+
+$$
+\mathcal E(|u\rangle\langle v|)=C_{uv}|u\rangle\langle v|,
+\qquad C\succeq0,\quad C_{uu}=1,
+\quad u,v\in\{00,01,10,11\}.
+\tag{DQ1}
+$$
+
+This is a specified single-use channel with an input-independent initial
+bath preparation. It permits within-storage bath memory and need not be
+Gaussian, Markovian or a mixture of classical phases. Leakage, different
+spectator preparations and control histories are not silently included.
+The probes below do not independently certify the entire Schur promise.
+
+Let $V_+|b\rangle=|b,b\rangle$ and
+$V_-|b\rangle=|b,1-b\rangle$. Their coherence factors are
+$L_+=C_{00,11}$ and $L_-=C_{01,10}$. Prepare $|++\rangle$ and retain the
+local outcomes in settings $XX,YY,XY,YX$. With their respective parity
+means $a,b,c,d$, and $Y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$,
+
+$$
+L_+=(a-b)-i(c+d),\qquad L_-=(a+b)+i(c-d).
+\tag{DQ2}
+$$
+
+Indeed $2a=\operatorname{Re}(L_++L_-)$,
+$2b=\operatorname{Re}(-L_++L_-)$,
+$2c=-\operatorname{Im}L_++\operatorname{Im}L_-$ and
+$2d=-\operatorname{Im}L_+-\operatorname{Im}L_-$. These traces recover
+two complex factors, rather than the complete Schur matrix. The full
+bitstrings remain ordinary available records.
+
+For either code, writing an arbitrary logical input/reference state as
+$\sum_{i,j}|i\rangle\langle j|\otimes\rho_{ij,R}$ gives, after ideal
+encoding, storage and decoding,
+
+$$
+\mathcal D_L\otimes\operatorname{id}_R:
+\begin{pmatrix}\rho_{00,R}&\rho_{01,R}\\
+\rho_{10,R}&\rho_{11,R}\end{pmatrix}
+\longmapsto
+\begin{pmatrix}\rho_{00,R}&L\rho_{01,R}\\
+L^*\rho_{10,R}&\rho_{11,R}\end{pmatrix}.
+\tag{DQ3}
+$$
+
+This follows on each encoded matrix unit, including all reference
+coherences; population preservation keeps the state inside the code.
+An output phase $\operatorname{diag}(1,e^{i\theta})$ changes the
+multiplier to $e^{-i\theta}L$, so
+
+$$
+F_e(L,\theta)=\frac{1+\operatorname{Re}(e^{-i\theta}L)}2,
+\qquad F_e^*(L)=\frac{1+|L|}2.
+\tag{DQ4}
+$$
+
+The best phase is $\arg L$ when $L\ne0$, with any phase at zero. This
+score is optimal over deterministic CPTP recovery for each declared code
+without an additional noise record: after phase alignment the channel is
+$p\operatorname{id}+(1-p)\operatorname{Ad}_Z$,
+$p=(1+|L|)/2\ge1/2$. For recovery Kraus operators $A_j$ put
+$f_P=\sum_j|\operatorname{Tr}(A_jP)|^2/4$. Pauli Parseval and trace
+preservation give $\sum_{P\in\{I,X,Y,Z\}}f_P=1$, and the recovered Bell
+fidelity is $pf_I+(1-p)f_Z\le p$. An arbitrary physical decoder restricted
+to the preserved code is such a logical recovery. This does not optimize
+over all encodings or extra records and protected helpers.
+
+**Finite data and ordinary single-site alternatives.** Take $n$
+independent launches for each of the four settings, with the same channel
+and trusted specified measurement means. Hoeffding and a union bound give
+all four parity errors at most
+$e=\sqrt{2\log(8/\delta)/n}$ with probability $1-\delta$. Thus both
+complex errors are simultaneously at most
+
+$$
+\beta=2\sqrt2e=4\sqrt{\log(8/\delta)/n}.
+\tag{DQ5}
+$$
+
+Choose the larger $|\widehat L|$ and apply its estimated phase, taking
+phase zero if the estimate is zero. For every phase the estimated and
+true fidelity differ by at most $\beta/2$. Maximizing the empirical score
+therefore gives actual fidelity at least $\max_\pm F_e^*(L_\pm)-\beta$,
+and at least $(1+|\widehat L_{\rm chosen}|-\beta)/2$. There is no
+division by a small coherence. In particular,
+$n\ge16\epsilon^{-2}\log(8/\delta)$ suffices for fidelity regret
+$\epsilon$, using $4n$ actual storage launches; this constant is not
+claimed optimal.
+
+The strongest ordinary comparator also includes the four unencoded
+options: store in one site with its spectator fixed in $|s\rangle$,
+$s=0,1$. Their factors are $C_{0s,1s}$ and $C_{s0,s1}$. Product probes
+$|+s\rangle$ or $|s+\rangle$ and local $X/Y$ readout give
+$L=\langle X\rangle-i\langle Y\rangle$ in the same prepared context.
+One simple six-option budget uses $n$ launches for each of twelve
+preparation/readout groups. Union over twelve means replaces $\beta$ by
+$4\sqrt{\log(24/\delta)/n}$, which also bounds each single-site error.
+The same joint choice-and-phase regret proof applies. These are the six
+computational-basis two-state subspaces, not every two-qubit code.
+
+Identical one-shot marginals alone do not justify independent-sample
+confidence. Bath/history resets or a separately justified conditional-mean
+martingale model must support it. SPAM bias and calibration/production
+drift require explicit bounds. Preparation, reset, local readout and the
+actual $T$ count on every launch. Production parity codes need ancilla
+preparation and an encoding and decoding CNOT; the odd code uses an
+initial $|1\rangle$ target. Singles need no such entangling gates. Phase
+tracking must be resolved before an incompatible endpoint. Gate errors,
+latency and calibration amortization can change the preferred physical
+memory; (DQ4) is the ideal storage score, not a whole-pipeline optimum.
+
+**Why labelled records matter.** A finite example separates the useful
+decision from a coarse aggregate. On four sites let
+
+$$
+\mathcal E_s=\tfrac12\operatorname{id}+\tfrac12\operatorname{Ad}_{U_s},
+\qquad U_s=e^{-i\pi\sum_j s_jZ_j/4},
+\quad s_A=(+,+,-,-),\quad s_B=(+,-,+,-).
+\tag{DQ6}
+$$
+
+The two models are related by swapping sites 2 and 3. On $|+\rangle^4$
+every common-angle aggregate parity is identical: for
+$M_\phi=\cos\phi X+\sin\phi Y$,
+$\langle M_\phi^{\otimes4}\rangle=(\cos^4\phi+\sin^4\phi)/2$.
+But labelled pair $(1,2)$ has $(L_+,L_-)=(0,1)$ in A and $(1,0)$ in B.
+The wrong parity code has fidelity $1/2$ instead of $1$.
+Ordinary full records already resolve this: pair $XX$ is $1/2$ in both,
+while pair $YY$ is $+1/2$ versus $-1/2$. Global $YYYY$ is $1/2$ in both.
+The insufficiency belongs to discarding labels, not to the underlying
+ordinary measurement interface. This example supplies no switch benefit.
+
+<a id="nr-r14-parallel-phase-qualification"></a>
+
+**Parallel catalogue under a stronger classical-phase promise.** Suppose
+an $N$-site register instead has the state-independent channel
+
+$$
+\Phi(\rho)=\int U_\varphi\rho U_\varphi^\dagger p(d\varphi),
+\qquad U_\varphi=\bigotimes_{j=1}^N e^{-i\varphi_j Z_j/2}.
+\tag{DQ7}
+$$
+
+Spatial correlations and non-Gaussian distributions are allowed. The
+classical field is independent of the supplied state/reference, and the
+same distribution, storage interval and controls apply to independent
+calibration launches and production. Tensor locality makes each reduced
+candidate channel spectator independent. A general register Schur map
+does not grant this: deterministic $CZ$ is diagonal, but one site's
+channel is identity with spectator $|0\rangle$, $Z$ with $|1\rangle$,
+and dephasing with a discarded $|+\rangle$ spectator. Quantum bath-induced
+interactions and changed production contexts need their actual joint model.
+
+Select among $K=N+2P$ options: all $N$ singles and both parity codes on
+$P$ eligible edges. The corresponding factors are
+$L_j=\mathbb E e^{-i\varphi_j}$ and
+$L_{jk,\pm}=\mathbb E e^{-i(\varphi_j\pm\varphi_k)}$.
+Their full logical/reference channels are (DQ3), with optimal
+deterministic recovery score (DQ4) for each fixed candidate.
+Prepare $|+\rangle^N$ on each launch and choose each site's readout axis
+independently and uniformly from $X,Y$, independently of the noise.
+Retain all axes and outcomes $x_j\in\{-1,+1\}$. A single-site unbiased
+complex estimator is $2x_j$ for $X$ and $-2ix_j$ for $Y$.
+For an edge, let $r=x_jx_k$ and use:
+
+| Axes on $j,k$ | Estimator for $L_{jk,+}$ | Estimator for $L_{jk,-}$ |
+| --- | --- | --- |
+| $XX$ | $4r$ | $4r$ |
+| $YY$ | $-4r$ | $4r$ |
+| $XY$ | $-4ir$ | $4ir$ |
+| $YX$ | $-4ir$ | $-4ir$ |
+
+Conditioned on $\varphi$, the $X/Y$ means are $\cos\varphi_j$ and
+$\sin\varphi_j$. Averaging the table, with each axis pair having
+probability $1/4$, yields the stated exponentials. The same shot supplies
+every edge, including overlapping edges; estimates need not be independent
+across candidates. Each real/imaginary component lies in $[-4,4]$.
+For $M$ independent launches, Hoeffding with component tolerance
+$\epsilon/\sqrt2$ and a union bound over $2K$ components gives
+
+$$
+\Pr\{\max_q|\widehat L_q-L_q|>\epsilon\}
+\le4K e^{-M\epsilon^2/64},\qquad
+M\ge\left\lceil64\epsilon^{-2}\log\frac{4(N+2P)}\delta\right\rceil.
+\tag{DQ8}
+$$
+
+Empirical maximum magnitude plus its estimated phase has actual fidelity
+regret at most $\epsilon$: writing
+$\widehat R=\max_q|\widehat L_q|$, the best true factor is at most
+$\widehat R+\epsilon$ and the chosen true aligned factor at least
+$\widehat R-\epsilon$. This also covers a zero estimate.
+If every production factor differs from its calibration factor by at most
+$\kappa$, replace $\epsilon$ by $\epsilon+\kappa$ in that regret and in
+the fidelity lower certificate
+$(1+\widehat R-\epsilon-\kappa)/2$. A separately certified complex bias
+bound adds likewise. Matching only single-site marginals does not bound
+edge drift. The noise-model, sampling and SPAM promises require evidence;
+the protocol does not establish them from its own output.
+
+This uses $M$ storage waits, $MN$ local preparations/readouts and random
+axis choices, $O(MP+MN)$ direct processing, and $O(MN)$ retained axis/outcome
+bits plus metadata. Streaming candidate sums reduces storage but forfeits
+the full records for later questions. It is logarithmic in the number of
+candidates only in launch count, not total hardware/readout work.
+Eligible edges, encoding gates, state transfer, drift windows, inter-shot
+decorrelation and recalibration all count. Optimizing a grid of storage
+times needs its additional data. Pair scores do not certify a joint
+fault-tolerant architecture or every alternative encoding.
+
+**Prior and switch boundary.**
+[Gulácsi, Kattemölle and Burkard, PRResearch **7**, L042067 (2025)](https://doi.org/10.1103/k2lx-vfqp)
+use product preparation and local readout for correlated-noise diagnostics;
+their dephasing parity harmonics recover aggregate coherence sums. The
+published Eq. (12) relates short-time log-ratio slope (white noise) or
+curvature (colored noise) to aggregate correlation strength within the
+paper's weak-coupling model. The earlier
+[arXiv v1](https://arxiv.org/abs/2502.09706v1) has the title *Revealing
+correlated noise with single-qubit operations*; the published title is
+*Characterizing correlated noise with single-qubit operations*.
+Their aggregate characterization is not a claim to infer every labelled
+code choice or certify (DQ7).
+[Huang, Kueng and Preskill](https://doi.org/10.1038/s41567-020-0932-7)
+already provide simultaneous local-observable prediction from randomized
+measurement records. The algebra above supplies an application-specific
+conditional memory score and transfer certificate, with no priority claim
+for randomized measurement or a logarithmic-observable-count method.
+
+For independent channels with diagonal Kraus operators, every $A_a,B_b$
+commutes. Each switch Kraus operator is exactly
+$|0\rangle\langle0|\otimes B_bA_a+
+|1\rangle\langle1|\otimes A_aB_b=I_C\otimes B_bA_a$.
+An initially $|+\rangle$ control stays $|+\rangle$ and the target/reference
+undergoes ordinary composition. This excludes no order-sensitive
+persistent quantum-bath dilation: reduced diagonal channels alone do not
+specify that joint instrument. The next useful test must supply such
+actual noncommuting interactions, a production decision and a comparison
+with full-record ordinary learning within the same priced drift window.
+
+The [pair-memory guard](checks/architecture/pair_memory_qualification_guards.py)
+is included in the backaction job. It replays exact finite Schur,
+encoded-channel, record, estimator and scope fixtures. The recovery,
+concentration and model-transfer arguments above remain analytic;
+no physical noise model, native advantage or new Lean proof is certified.
+
 ### Direct calibration and measurement-record prediction
 
 For a specified pure-dephasing control word $y$, restore its known sensor frame and write its actual joint evolution as $\operatorname{diag}(U_{y,0},U_{y,1})$. Ordinary preparation in $|+\rangle$ and $X/Y$ readout measure

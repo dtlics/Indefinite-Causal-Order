@@ -379,6 +379,11 @@ The [literature comparison](references.md) credits the existing filtering
 and recovery mechanisms. The bounded primary-source check does not
 establish priority.
 
+The [ordinary pair-memory qualification baseline](backaction.md#nr-r14-pair-qualification)
+uses complete local records for code-and-phase selection. Its next native
+test needs a justified order-sensitive quantum-bath instrument and useful
+production prediction beyond that baseline within the same drift window.
+
 ## Updating this topic
 
 Update each result in its owning file. Methods and certificates are
