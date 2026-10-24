@@ -34,6 +34,11 @@ the complete cross-history process through the amplified block. A known
 pointer-state pilot or accessible error records can remove the proposed
 advantage. Compare qualified, usable storage after encoding calibration,
 including helper survival, duty cycle, rejected attempts and reuse.
+An executable unitary fixed by the pinching supplies a separate
+[two-readout ordinary correlator](methods/memory-native-cost.md#nr-r20-controlled-unitary-correlator)
+using one resettable helper and a classical sign across the storage
+interval. A difficult eigenbasis alone therefore does not establish a
+memory advantage when that phase-stable controlled-unitary port exists.
 The [working-code verification bound](methods/memory-code-verification.md)
 makes the deployment issue quantitative: a supplied reliable code admits
 an ordinary test, so its learning and block cost must enter any claimed
@@ -183,6 +188,32 @@ module circuit retains the stated post-module noise model. It must then
 compare a useful confidential computation or recovery task with ordinary
 blind error correction, including communication and client latency. The
 existing privacy protocols do not currently provide that application.
+
+One-time programs do not automatically supply the missing physical cap.
+[OTM-backed quantum programs](https://arxiv.org/html/1211.1080v1),
+Sections 2.2 and 4.4, use classical token transactions alongside
+authenticated quantum registers and teleportation resources. Those ports
+do not establish two coherent orderable module slots. The software-only
+[SEQ security interface](https://arxiv.org/html/2603.00544v1#S4),
+Definition 14, explicitly permits repeated reversible queries. For a
+unitary $H=H^\dagger$ with trivial private dilation register, its query
+unitary specializes to
+$$
+ S(H)=|1\rangle\langle0|\otimes H+
+      |0\rangle\langle1|\otimes H^\dagger=X_{\rm counter}\otimes H.
+$$
+Every physical invocation still applies $H$, including on newly submitted
+data. Applying SEQ instead to a noisy channel retains its private
+environment across queries, unlike the independent fresh noise of
+NR-R01/02. [Secure software leasing](https://arxiv.org/pdf/2005.05289v2),
+Definition 34 and Proposition 35, permits reuse before verified return.
+These inspected interfaces therefore do not justify the proposed cap.
+A private-program application must specify its full consumption/clock
+dilation: orthogonal irreversible invocation timestamps erase order
+interference, whereas a common final spent bit need not. Actual program
+memory, teleportation resources and known controlled evaluation circuits
+also belong to the ordinary comparison. This is a mismatch of the cited
+interfaces, not an impossibility theorem for all private quantum hardware.
 
 ### Gate-layer calibration and scheduling
 

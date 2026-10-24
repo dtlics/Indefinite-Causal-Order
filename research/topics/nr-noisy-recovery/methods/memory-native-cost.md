@@ -73,10 +73,12 @@ Each trial uses one channel call, deterministic parity-sector preparation
 and one sampled Pauli measurement. For polynomially many bounded-weight
 terms, this is a polynomial ordinary test without protected reference
 qubits. Controlled Paulis, local rotations, readout/reset and preparation
-errors must be priced. A constraint that the data remain **exactly**
-$I/D$ removes this contrast: both promised maps are unital. The test
-does not apply to arbitrary hidden $U$ without the stated observable
-and control access.
+errors must be priced. This implementation prepares $\rho_P\ne I/D$.
+Requiring $I/D$ on every record-conditioned branch, independent of retained
+records, excludes that preparation. Requiring only the unconditional target
+marginal $I/D$ does not exclude the correlation test below. The energy test
+does not apply to arbitrary hidden $U$ without the stated observable and
+control access.
 
 ### Unknown coefficients in a known physical operator span
 
@@ -155,9 +157,128 @@ uniform Pauli randomization, or supply a fresh mixed payload. Uniform
 randomization uses $n$ single-qubit Paulis and $2n$ random bits; average
 all keys rather than postselecting them. Preparation, randomization,
 helper reset/feedforward, controlled Paulis, measurement errors and
-freshness remain costs. These witnesses do not apply when the payload
-must stay exactly $I/D$ throughout, when the conserved observable has no
-known low-dimensional physical span, or when those controls are absent.
+freshness remain costs. The displayed polarized-probe implementations
+require the declared input preparation and known physical span. An
+unconditional $I/D$ marginal alone is a weaker restriction than requiring
+$I/D$ independently of all retained records, as the next test illustrates.
+
+<a id="nr-r20-controlled-unitary-correlator"></a>
+
+### A two-readout test with an executable controlled unitary
+
+A different side port removes the need for a known small operator span.
+Suppose a fixed unitary $F$ satisfies $\Delta_U(F)=F$ and an actual clean
+controlled-$F$ operation is supplied. Its matrix, inverse and eigenstates
+need not be known. Start each trial with target $I/D$, decoupled from
+previous records. Choose $\theta$ uniformly from $\{0,\pi/2\}$. Prepare
+a helper in $|+\rangle$, apply controlled-$F$ with the known scalar
+phase $e^{-i\theta}$ on its active branch, and read helper $X$, obtaining
+$z\in\{\pm1\}$. This implements
+
+$$
+ K_z=\frac{I+ze^{-i\theta}F}{2},\qquad
+ H_\theta=\frac{e^{-i\theta}F+e^{i\theta}F^\dagger}{2},\qquad
+ \rho_z=K_z\frac IDK_z^\dagger=\frac{I+zH_\theta}{2D}.
+                                                               \tag{NS4}
+$$
+
+Keep $z$ classically, call the production channel once, then reset/reuse
+the helper for the same phase-matched controlled-$F$ test, obtaining $z'$.
+No trial is discarded. The first signed state is
+$\sum_z z\rho_z=H_\theta/D$ and the second signed measurement effect is
+$H_\theta$, so $Y=zz'\in\{\pm1\}$ has mean
+
+$$
+ \mathbb E[Y\mid\theta]
+   =\frac{\operatorname{Tr}[H_\theta\mathcal E(H_\theta)]}{D},
+ \qquad
+ \mu:=\mathbb EY
+   =\frac{\operatorname{Re}\operatorname{Tr}
+      [F^\dagger\mathcal E(F)]}{2D}.
+                                                               \tag{NS5}
+$$
+
+The second identity follows by expanding the two choices of $H_\theta$:
+the $F,F$ and $F^\dagger,F^\dagger$ terms cancel. Put
+$\tau=\operatorname{Tr}F/D$. Since $F$ is unitary and pinching fixes it,
+the two promised means are $\mu_1=1/2$ and
+$\mu_0=[1-t+t|\tau|^2]/2$. If supplied bounds
+$|\tau|^2\le1-\gamma$ and $t\ge t_0>0$ hold, with $\gamma>0$, their
+gap is at least $g=t_0\gamma/2$. Thresholding the average $Y$ at
+$1/2-g/2$ gives each hypothesis error at most $e^{-Ng^2/8}$ by
+Hoeffding. It suffices that
+
+$$
+ N\ge\frac{32}{t_0^2\gamma^2}\log\frac1\delta.
+                                                               \tag{NS6}
+$$
+
+Unlike (NS2), a lower bound on unknown $t$ suffices here because the
+exact-fixed-point mean $\mu_1$ does not depend on $t$. A nearly scalar
+$F$ need not have a useful $\gamma$; any trace-margin calibration and
+its uncertainty are additional costs.
+
+For approximate preservation, define
+$\|A\|_{2,D}^2=\operatorname{Tr}(A^\dagger A)/D$ and
+$\epsilon_F^2=\|F-\Delta_U(F)\|_{2,D}^2$. Orthogonal pinching preserves
+trace and satisfies
+$\langle F,\Delta_U(F)\rangle_{2,D}=\|\Delta_U(F)\|_{2,D}^2$.
+Consequently
+
+$$
+ \mu_1=\frac{1-t\epsilon_F^2}{2},\qquad
+ \mu_1-\mu_0
+ =\frac t2(1-|\tau|^2-\epsilon_F^2)
+ =\frac t2\|\Delta_U(F)-\tau I\|_{2,D}^2.
+                                                               \tag{NS7}
+$$
+
+With known $t$, bounds $\epsilon_F^2\le\epsilon^2<\gamma$ give a
+known separating midpoint between the bounding means, with gap at
+least $t(\gamma-\epsilon^2)/2$. If only $t\ge t_0$ is known across
+the two composite promises, use instead
+
+$$
+ \mu_1\ge\frac{1-\epsilon^2}{2},\qquad
+ \mu_0\le\frac{1-t_0\gamma}{2}.
+                                                               \tag{NS8}
+$$
+
+These bounds separate when $\epsilon^2<t_0\gamma$, with gap
+$(t_0\gamma-\epsilon^2)/2$; their midpoint and the same Hoeffding
+argument apply. A positive same-$t$ gap from (NS7) alone does not
+provide one uniform threshold when $t$ is unknown and may vary across
+the two promises. The squared-distance identity uses orthogonal
+pinching and is not asserted for an arbitrary approximately conserving
+CPTP map.
+
+Each trial costs one production call, two controlled-$F$ uses, the phase
+setting, two helper preparations/readouts and reset, a retained classical
+sign, and fresh or restored mixed input. No $F^\dagger$ is called and
+no input-bearing quantum reference is kept across the production interval.
+Unitality makes the unconditional target marginal exactly $I/D$ before
+and after that interval and after the second meter. The conditional state
+is correlated with $z$: a port requiring $I/D$ independently of every
+retained record excludes the test. For independent trials, restore $I/D$
+decoupled from earlier records; an unchanged marginal alone is insufficient.
+A complete random-Pauli channel can supply this restoration on known
+qubit hardware, averaging/discarding its key with the costs stated above.
+
+A static unknown global phase of controlled-$F$ cancels in the two-phase
+average. For these self-adjoint promised channels, a relative phase offset
+$\varphi$ between its two uses, common to both choices of $\theta$,
+multiplies the ideal fixed-$F$ means by $\cos\varphi$ and can remove the
+gap; arbitrary meter drift need not have this scalar form. Meter noise
+and phase stability need qualification. Bare unknown
+forward-$F$ access does not supply controlled-$F$. A known circuit whose
+gates can be controlled, or a demonstrated coherent side port, is additional
+access with its own implementation cost. The ordinary Hadamard-test
+primitive is established in the
+[one-clean-qubit framework](https://arxiv.org/abs/quant-ph/9802037);
+[unknown-unitary control requires extra access](https://arxiv.org/abs/1309.7976).
+This comparator covers the stated controlled-unitary subcase, without
+claiming a new diagnostic mechanism, a generic hidden-basis algorithm or
+a native hardware advantage.
 
 ## What the measured interfaces supply
 

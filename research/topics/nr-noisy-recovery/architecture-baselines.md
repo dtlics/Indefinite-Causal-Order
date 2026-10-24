@@ -194,6 +194,19 @@ controlled-$P_b$ layers, each with at most $\operatorname{wt}(P_b)$
 elementary controlled-Pauli gates under suitable connectivity. Their
 noise, routing and duration count; the product-state option may be cheaper.
 
+<a id="nr-r06-binary-fault-controller"></a>
+
+**Closed-controller cost of a double-fault flag.** For two known
+anticommuting Pauli fault families, the [binary-fault controller
+component](methods/binary-fault-controller.md) proves that exact
+response-uniform AND flagging needs at least three clean helper levels
+in a closed fixed-order two-query circuit; a qutrit reproduces the full
+measured data/reference instrument. An arbitrary terminal joint
+instrument is allowed. Intermediate reset/records, calibrated
+resampling, logical-qubit bypass and destructive Bell pilots remain
+strong ordinary alternatives, so this dimension bound establishes no
+practical native advantage.
+
 **Known global reference depolarization has an affine correction.**
 Suppose the effective reference noise in the Bell experiment is
 $\mathcal R_f=f\operatorname{id}+(1-f)\Omega_D$, $0<f\le1$,

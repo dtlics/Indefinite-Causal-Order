@@ -31,6 +31,10 @@ SCHEMA = "noisy-recovery-validation-v1"
 SCOPE = "Finite exact replay, symbolic integer/rational identities and outward rational interval certificates, with separately scoped numerical scalar guards, supporting the linked analytic proofs; no new Lean kernel audit."
 
 JOBS = (
+    ("architecture-binary-fault-controller", "architecture/verify_binary_fault_controller.py", (),
+     "Exact finite qutrit-controller echo, full fault-word isometries, weighted flag maps and normalization; universal closed-space lower bounds, unknown-rate response and physical controls/costs analytic."),
+    ("architecture-controlled-unitary-correlator", "architecture/verify_controlled_unitary_correlator.py", (),
+     "Exact finite two-readout instruments, signed/nonselective maps, unitary/pinching and phase-drift guards; all-dimension identities, confidence bounds and controlled-program access/costs analytic."),
     ("architecture-memory-stream-screening", "architecture/verify_memory_stream_screening.py", (),
      "Exact optimistic-cap, selection/stopping, native rejection/likelihood, pointer-gap, perturbation, full five-use erasure and antidegrading/extendibility guards; C6, all-size reductions, concentration and physical stream/access costs analytic."),
     ("architecture-heat-gkp-tails", "architecture/verify_heat_gkp_tails.py", (),

@@ -100,6 +100,13 @@ source's isotropic and four-box restrictions.
 The [noisy-search component](methods/noisy-search.md) supplies an ordinary
 full-channel compiler for calibrated depolarizing slots and separately
 counts all-plus Grover restarts, verification and actual controller costs.
+The [binary-fault controller component](methods/binary-fault-controller.md)
+gives the tight closed-controller cost of reproducing its measured flag;
+bypass, calibrated resampling, pure pilots and reset records remain
+stronger ordinary options for other endpoints. The
+[controlled-unitary correlator](methods/memory-native-cost.md#nr-r20-controlled-unitary-correlator)
+adds an ordinary one-helper memory test when the specified coherent side
+port is available, with conditional records and repeated-use costs charged.
 Recorded Lüders measurements have the ordinary baseline in NR-R08.
 Its [central-fault comparison](architecture-baselines.md#nr-r08-central-involution)
 also distinguishes paired compatibility from individual logical
