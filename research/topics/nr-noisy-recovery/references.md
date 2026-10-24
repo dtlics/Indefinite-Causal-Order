@@ -123,6 +123,14 @@ resources and adaptive control. Their secrecy restrictions remain in
 the ordinary comparison. The ideal conditional-gate identity is an
 access check, not a new security proof or a physical fresh-coupler claim.
 
+The same [program-resource owner](backaction.md#nr-r19-private-programs)
+now gives explicit correction-key and coherent-resource identities.
+Its CCZ specialization credits [Mo et al., PRA **109**, 062428 (2024), arXiv:2311.15494v2](https://arxiv.org/html/2311.15494v2),
+Theorem 1, for established magic activation, and the existing Simonov
+comparison for order-based gate synthesis. The conditional ordinary
+compiler and local-control factory do not certify a native port, security
+claim or hardware resource optimum.
+
 ## Recovery, inversion, and verification
 
 The [passive-qubit transfer component](communication.md#nr-r09-passive-qubit-transfer)

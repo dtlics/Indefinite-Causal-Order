@@ -398,6 +398,13 @@ is a primary-source assessment, not a new measured drift/error bound or
 an outcome of the finite certificate. Its private-program access check is
 an honest ideal operator identity and source assessment, not a new
 cryptographic security proof or a certified unknown-coupler interface.
+The private-program replay separately checks complete resource/key
+matrices and reference-channel units, relative order phases, the known
+central-commutator compiler, both fresh-column CCZ encoding factories
+and an explicit nonblank-extension counterexample. Its ordinary local
+controlled-H gates and joint optical CCZ are different priced ports;
+the replay establishes neither full physical source/loss instruments,
+composable privacy, timed factory performance nor a resource optimum.
 The natural-exchange source screen and its ideal-vector 3/4
 constant-hold transfer bound are analytic assessments, outside the finite
 certificate's hardware scope. The online detector-feedback comparison

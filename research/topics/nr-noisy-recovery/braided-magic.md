@@ -8,6 +8,13 @@
 
 Coherent order of two Ising exchanges can herald a non-Clifford gate on an unknown logical input. The complete router required for that construction is outside protected Ising braiding and fusion operations. A native hybrid trajectory interface may provide such an additional resource, but it can also provide ordinary magic factories. The results below identify those comparisons without asserting a native advantage, a measured hardware fidelity, or a reduction in fault-tolerant factory cost. They are analytic identities and scoped obstructions, complemented by a finite exact replay; they have not been formalized in Lean.
 
+Magic generation by switching stabilizer-preserving operations is already
+established by [Mo et al., PRA **109**, 062428 (2024), Theorem 1](https://arxiv.org/html/2311.15494v2).
+The separate [photonic program-resource comparison](backaction.md#nr-r19-private-programs)
+keeps its CCZ construction and ordinary controlled-H factory in their
+own physical access model. Neither comparison is a priority claim for
+magic from coherent order.
+
 ### Ideal logical gate and complete branch accounting
 
 Four Ising $\sigma$ anyons with total charge $1$ encode a qubit in the $1/\psi$ fusion channel of a pair. In a fixed exchange orientation, adjacent exchanges have the qubit actions

@@ -1272,6 +1272,8 @@ fidelity or a known-state fringe alone does not specify that service.
 No source in the table supplies the full fast-window access model needed
 to proceed from this qualification test to a physical advantage claim.
 
+<a id="nr-r19-private-programs"></a>
+
 **A private program is a different access premise.**
 [Wei et al., Science **388**, 509–513 (2025), primary v2](https://arxiv.org/html/2412.03020v2)
 hide client-selected operations using photon measurements and private
@@ -1299,6 +1301,121 @@ identification would need an explicit assignment of secrets, quantum and
 classical ports, program consumption/reuse, full transcripts and output
 corrections to each party. This bounded screen does not exclude a
 separately engineered private-oracle architecture or blind computing.
+
+The ideal resource model permits a more explicit comparison. Let a,b
+be fresh photon qubits, and use the mathematical extensions
+$U_A=\operatorname{CNOT}_{S\to a}$ and
+$U_B=H_S\operatorname{CNOT}_{S\to b}H_S$ of its two copy isometries.
+Private photon measurements give $Z^sA/\sqrt2$ and $X^tB/\sqrt2$ on S,
+where $A=\operatorname{diag}(1,e^{i\phi})$ and
+$B=H\operatorname{diag}(1,e^{i\theta})H$.
+If their resource interactions are coherently ordered, the actual
+fine-key operator on arbitrary C/S/reference input is
+
+$$
+F_{st}=\tfrac12\operatorname{diag}_C(X^tBZ^sA,\,Z^sAX^tB).
+\tag{PP1}
+$$
+
+Every key has probability $1/4$. To obtain the desired
+$W_{AB}=\operatorname{diag}_C(BA,AB)$, its required arm corrections are
+$L_0=BZ^sB^\dagger X^t$ and $L_1=AX^tA^\dagger Z^s$.
+Multiplication gives $\operatorname{diag}(L_0,L_1)F_{st}=W_{AB}/2$.
+They generically depend on private angles and are not a common final
+Pauli. Even $A=B=I$, $s=t=1$ gives
+$F_{11}=Z_C\otimes X_SZ_S/2$: dropping separate arm phases destroys
+order coherence. Keeping only key 00 gives weight $1/4$, but announcing
+that key mask is not automatically a private service. A terminal
+measurement may admit its own frame rule; that endpoint must be specified.
+
+An ordinary raw-instrument compiler keeps the same two photons and
+private measurements. In their joint X basis, $U_A$ acts as $Z_S^u$
+and $U_B$ as $X_S^v$. Hence
+
+$$
+U_AU_B=K_{ab}U_BU_A,\quad
+K_{ab}=I-2|--\rangle\langle--|=H_aH_b\operatorname{CZ}_{ab}H_aH_b,
+\qquad
+\operatorname{diag}_C(U_BU_A,U_AU_B)
+=\operatorname{ctrl}_C(K_{ab})(I_C\otimes U_BU_A).
+\tag{PP2}
+$$
+
+Run the two fresh-photon isometries in fixed order, retain C,a,b, then
+apply the known joint gate
+$\operatorname{ctrl}_C(K_{ab})=H_aH_b\operatorname{CCZ}_{Cab}H_aH_b$
+before client readout. Restricting (PP2) to fresh photon columns proves
+equality on every C/S/reference input, so every later fixed or adaptive
+client instrument, including all private keys, also matches. No extra
+phase-program photon or angle disclosure is required. The three-register
+gate and coherent storage/interface are substantial additional resources;
+this identity does not supply them from two separate photon analyzers.
+It is an honest ideal instrument equality, not a security proof or a
+comparison of complete physical loss maps.
+
+**A concrete factory endpoint has a stronger ordinary comparison.**
+Define the encoding isometry
+$E|c\rangle=\operatorname{ctrl}_C(K_{ab})(|c\rangle_C|00\rangle_{ab})$.
+With S initialized to 0, the native coherent order followed by S-X
+readout has two Kraus maps $E/\sqrt2$ and $X_bE/\sqrt2$ on arbitrary
+C/reference input. Indeed
+$U_BU_A|0,00\rangle=(|+\rangle_S|00\rangle+|-\rangle_S|01\rangle)/\sqrt2$;
+the other order inserts K, which commutes with $X_b$.
+Both flags have probability $1/2$; correcting the minus by $X_b$ yields E.
+This uses only fresh-source columns. For C initialized to plus, it gives
+
+$$
+|\Omega\rangle=E|+\rangle=H_aH_b\operatorname{CCZ}|+++\rangle.
+\tag{PP3}
+$$
+
+An ordinary factory avoids a joint photonic CCZ: start with S=0 and
+fresh a=b=0; apply controlled-$H_{C\to S}$, copy S to a, apply
+controlled-$H_{C\to S}$, then copy S to b in fixed order. Read S in X
+and correct the minus by $Z_b$. For C=0 the photons remain 00. For C=1,
+the H–copy–H–copy sequence gives $\operatorname{CZ}|++\rangle$ on plus
+and $Z_b\operatorname{CZ}|++\rangle$ on minus. Since $K|00\rangle$
+is that same graph state, its two maps are exactly $E/\sqrt2$ and
+$Z_bE/\sqrt2$, including every C/reference coherence. A supplied X-copy
+source can be converted to Z-copy by known S Hadamards.
+Controlled H is non-Clifford and needs a real local C–S port. For example,
+$\operatorname{CH}=R_{y,S}(\pi/4)\operatorname{CZ}_{CS}R_{y,S}(-\pi/4)$;
+two such gates use two local CZs and four rotations in this compilation.
+Their pulse, error and storage costs are not inferred from logical counts.
+
+Moving the joint gate in (PP2) before arbitrary resource calls is a
+different option: it feeds entangled, nonblank photon inputs into the
+extensions. Agreement on a fresh-source isometry alone does not grant
+that port. Neither fresh-column factory above needs it. Preparing a
+fixed $|\Omega\rangle$ also cannot replace an unknown C input without
+an input-preserving injection circuit. Such factories must count failed
+preparations, adapters, readout, corrections and memory. General magic
+generation from coherent order is established by
+[Mo et al., PRA **109**, 062428 (2024), v2](https://arxiv.org/html/2311.15494v2);
+the [braided-magic comparison](braided-magic.md#nr-r17) likewise prices
+the additional non-Clifford interface. No priority claim is made for this
+specialization or a hardware factory advantage.
+
+The physical distinction matters in the cited emitters. Wei's prepared
+photon/spin resource does not establish arbitrary-input CNOT; its
+Supplement II.6 limits even ideal-contrast average cavity reflection to
+50%. The stationary spin is not routed through two modules by a photon
+path alone. A native realization needs a coherent spin basis/time
+selector, preserved photon labels, common output modes and no leaked
+emission-order timestamp. The ordinary two-controlled-H factory instead
+needs C local to S, or a priced coherent adapter if C is a flying path.
+Both must retain actual success filters, lost photons and bath records;
+two ideal source calls alone do not imply equal noisy yield. Delivering
+retained $|\Omega\rangle$ needs storage and physical or supported frame
+corrections. Destructive client readout changes that endpoint. Encoding
+two photons into one four-mode carrier also changes source, loss and
+client-control ports; dimension alone does not supply that conversion.
+
+The [exact private-program guard](checks/architecture/private_program_guards.py)
+replays the fixed resource matrices, keyed instruments, relative phases,
+both fresh-column factories and a nonblank-extension counterexample.
+Physical success/loss maps, timing, security and hardware costs remain
+outside that finite replay.
 
 **A general hopping matrix has extra spectral requirements.** For an
 invertible coupling $K=L\Sigma R^\dagger$ between two $d$-state

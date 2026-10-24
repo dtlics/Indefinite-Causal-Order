@@ -189,6 +189,15 @@ compare a useful confidential computation or recovery task with ordinary
 blind error correction, including communication and client latency. The
 existing privacy protocols do not currently provide that application.
 
+The [explicit two-program construction](backaction.md#nr-r19-private-programs)
+goes beyond an access mismatch: it retains every correction key and
+gives an ordinary fixed-order resource compiler. Its separate known-input
+CCZ factory has an ordinary two-controlled-H counterpart using the same
+two ideal photon-copy resources. Joint optical gates, local matter
+controls and coherent emission order are distinct priced ports. Neither
+the ideal identities nor destructive client detections establish a
+delivered factory yield or advantage on the cited hardware.
+
 One-time programs do not automatically supply the missing physical cap.
 [OTM-backed quantum programs](https://arxiv.org/html/1211.1080v1),
 Sections 2.2 and 4.4, use classical token transactions alongside
