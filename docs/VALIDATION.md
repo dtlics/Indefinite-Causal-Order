@@ -388,7 +388,10 @@ oracle-dependent initial advice. It is not a calibrated persistent-device
 throughput bound or an optimal ordinary frontier. Its bounded comparison
 of polarization, multimode-routing and frequency-bin refresh interfaces
 is a primary-source assessment, not a new measured drift/error bound or
-an outcome of the finite certificate. Native coupler access,
+an outcome of the finite certificate. Its private-program access check is
+an honest ideal operator identity and source assessment, not a new
+cryptographic security proof or a certified unknown-coupler interface.
+Native coupler access,
 primitive errors, routing costs and a finite-energy GKP bound remain
 unverified.
 The Andreev extension has finite exact reflection-signature,

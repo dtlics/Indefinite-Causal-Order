@@ -1272,6 +1272,34 @@ fidelity or a known-state fringe alone does not specify that service.
 No source in the table supplies the full fast-window access model needed
 to proceed from this qualification test to a physical advantage claim.
 
+**A private program is a different access premise.**
+[Wei et al., Science **388**, 509–513 (2025), primary v2](https://arxiv.org/html/2412.03020v2)
+hide client-selected operations using photon measurements and private
+correction records. For the ideal resource isometry
+$|j\rangle_S\mapsto|j\rangle_S|j\rangle_\gamma$, choose the client
+bra $(\langle0|+(-1)^s e^{i\phi}\langle1|)/\sqrt2$. Its exact
+conditional operator on arbitrary data/reference input is
+$K_s=Z^s\operatorname{diag}(1,e^{i\phi})/\sqrt2$; forgetting $s$
+instead gives $\sum_s\operatorname{Ad}_{K_s}=(\operatorname{Id}
++\operatorname{Ad}_Z)/2$, independent of $\phi$. The conditional
+unitary and the server's unkeyed channel are different interfaces.
+This honest ideal identity is not a composable security proof or a
+complete physical loss instrument. Calibrating the hardware does not
+reveal the client's current private program, so the ordinary comparison
+must preserve that privacy and its allowed adaptive measurements.
+[Drmota et al., PRL **132**, 150604 (2024)](https://doi.org/10.1103/PhysRevLett.132.150604)
+demonstrate ordinary memory, local gates and feedback;
+[Baranes et al.'s proposal, arXiv:2505.21621v1](https://arxiv.org/html/2505.21621v1)
+adds loss-protected resource preparation under its stated model.
+Their photons, retries, data idling,
+local gates and messages must be charged. These three sources do not
+identify that private-program service with the present arbitrary-data
+coupler pair, coherent order port or fresh qutrit prior. Such an
+identification would need an explicit assignment of secrets, quantum and
+classical ports, program consumption/reuse, full transcripts and output
+corrections to each party. This bounded screen does not exclude a
+separately engineered private-oracle architecture or blind computing.
+
 **A general hopping matrix has extra spectral requirements.** For an
 invertible coupling $K=L\Sigma R^\dagger$ between two $d$-state
 manifolds, the resonant constant Hamiltonian

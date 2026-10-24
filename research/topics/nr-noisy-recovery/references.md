@@ -114,6 +114,15 @@ fresh unknown-coupler prior or a useful retained-output order interface.
 | [Herrera Valencia et al., *A large-scale reconfigurable multiplexed quantum photonic network*, Nature Photonics **20**, 202–207 (2026)](https://doi.org/10.1038/s41566-025-01806-x), Methods | Classical transmission-matrix characterization, inverse-designed phase planes and quantum entanglement routing. | The reported access and destructive state analysis do not establish the proposed fast-refresh two-processor retained-output service. |
 | [Tagliavacche et al., *Frequency-bin entanglement-based Quantum Key Distribution*, npj Quantum Information **11**, 60 (2025)](https://doi.org/10.1038/s41534-025-00991-5), active phase-drift compensation and Fig. 4 | Implemented ordinary RF/pilot compensation and destructive QKD measurements. | Scalar drift and its correction do not establish a pair of required unknown multimode interactions. |
 
+The same owner distinguishes private programs from unkeyed unknown
+hardware oracles. [Wei et al., Science **388**, 509–513 (2025), v2](https://arxiv.org/html/2412.03020v2),
+[Drmota et al., PRL **132**, 150604 (2024)](https://doi.org/10.1103/PhysRevLett.132.150604)
+and [Baranes et al., arXiv:2505.21621v1](https://arxiv.org/html/2505.21621v1)
+supply private client choices together with ordinary matter-photon
+resources and adaptive control. Their secrecy restrictions remain in
+the ordinary comparison. The ideal conditional-gate identity is an
+access check, not a new security proof or a physical fresh-coupler claim.
+
 ## Recovery, inversion, and verification
 
 - [Quintino et al., *Reversing Unknown Quantum Transformations*](https://arxiv.org/abs/1810.06944), PRL **123**, 210502 (2019), gives heralded physical inversion of an unknown unitary and analyzes adaptive strategies and indefinite-order advantages. [Dong et al., *Success-or-Draw*](https://arxiv.org/abs/2011.01055), PRL **126**, 150504 (2021), develops retries whose draw branch preserves the input. Heralding alone does not give the present noisy filter that preservation property.
