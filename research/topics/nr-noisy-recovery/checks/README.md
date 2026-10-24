@@ -10,8 +10,17 @@ Use `--record` to replace the single current [validation record](validation.json
 
 The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs each job in a fresh `python -S -B` process. Reports, logs, bytecode and other generated files stay under `_build/noisy-recovery/`; tracked checker sources remain unchanged. Run individual verifiers from the staged copy if their detailed output is needed, because some save a report beside their source.
 
+The optional [moving-CAPS packet study](../methods/moving-caps.md) lives in
+`../numerics/` and requires NumPy. Its two source files and one
+[current numerical record](../numerics/moving_caps_record.json) are
+fingerprinted by this runner for integrity, but are not executed by the
+standard-library jobs. That record identifies its own commands,
+environment, guards and empirical refinement checks. Finite convergence
+does not certify oscillator tails or a complete physical loss instrument.
+
 | Directory / job | Proof obligations replayed |
 | --- | --- |
+| `architecture/moving_caps_resolvent.py` with `moving_caps_rank.py` | Exact finite passive-resolvent/optical Gram and complete three-port flux identities, energy-shifting words, Lipschitz/moment and clock/phase guards, and measured-flag rank-three decoder fixtures. The infinite-operator and source-specific proofs are analytic in [the moving-CAPS component](../methods/moving-caps.md). No oscillator-tail, full loss instrument or hardware certificate. |
 | `architecture/anticommuting_pulse_gates.py` with `anticommuting_pulse_dual.py`, `anticommuting_pulse_dual.json` and `anticommuting_pulse_support.py` | NR-R21 exact pulse/Euler/full-flag and random-order Choi identities; universal necessary-success support rank, literal Pauli links, causal positive-definite slacks and a matrix sum-of-squares identity for all real pulse angles. Adaptive-instrument and stopping inclusion, global diamond equality, timing and hardware premises are analytic in the canonical proof. No approximate ordinary optimum, physical router or hardware advantage is certified. |
 | `architecture/verify_binary_fault_controller.py` | Exact qutrit/cross-dual Pauli echoes, complete finite fault-word isometries, weighted flags and read/reset instruments; internal anticommutation and inverse-ordered bank guards. Universal space, reversible-source, information, timing and uniform-cost bounds remain analytic; hardware and reset costs are not certified. |
 | `architecture/verify_controlled_unitary_correlator.py` | Exact two-readout instruments and signed/nonselective maps, fixed and approximate pinching, mixed-input and phase-drift guards. All-dimension identities, confidence bounds and availability of a coherent controlled-unitary port remain analytic. |

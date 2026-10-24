@@ -285,6 +285,10 @@ The [passive-converter](backaction.md#nr-r19-passive-converter) and
 [Bragg-rank](backaction.md#nr-r19-bragg-rank) guards further require full
 mode matching and the actual physical input/output band split before
 treating a multimode device as that oracle pair.
+The [moving-atom CAPS component](methods/moving-caps.md) adds a passive
+order-flag bound and a scoped finite-packet thermal comparison with paid
+ordinary phase/delay and spectral processing. Its exact checks and optional
+NumPy evidence have separate scopes; no native hardware benefit follows.
 The [scattering result](communication.md#nr-r11) now includes unequal-rate
 and photon-preserving bath-record comparisons. Conditional spectral
 filtering, pair-preserving readout and ordinary delayed/reused paths must

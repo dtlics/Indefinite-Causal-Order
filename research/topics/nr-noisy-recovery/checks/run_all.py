@@ -120,6 +120,8 @@ JOBS = (
      "Exact Ising quarter-braid branches, stabilizer target bound, both flagged ordinary controlled-S state identities under matched helper visibility, physical-S half-exchange yield and Pauli-loop closures; native trajectories, phases and factory costs remain analytic."),
     ("architecture-pulse-gates", "architecture/anticommuting_pulse_gates.py", (),
      "Exact pulse/Euler/full-flag and random-order Choi identities, necessary-success support rank, literal Pauli links, positive causal slacks and an all-real-angle matrix sum-of-squares certificate. Adaptive instruments, endpoint/stopping inclusion, global diamond equality and timing/hardware premises are analytic; no approximate ordinary optimum or native hardware advantage."),
+    ("architecture-moving-CAPS", "architecture/moving_caps_resolvent.py", (),
+     "Exact finite passive resolvents, complete three-port flux unitarity, energy-shifting serial amplitudes, Lipschitz/moment/clock/phase guards and measured-flag rank-three decoder fixtures. Infinite-operator, packet/thermal and source-support proofs remain analytic. Optional NumPy packet results have separate evidence and are only fingerprinted here; no oscillator-tail, full loss instrument or hardware advantage certificate."),
     ("architecture-alignment", "architecture/verify_alignment.py", (),
      "Exact Haar-Choi sectors, causal null-event witnesses, native adaptive realization, general-axis one-memory QEC/syndrome and differential-coherence identities; calibrated averaged-information scaling and physical costs analytic."),
 )
@@ -134,6 +136,8 @@ def input_hashes() -> dict[str, str]:
     files = set(TOPIC.rglob("*.md"))
     files.update(p for p in HERE.rglob("*.py") if "__pycache__" not in p.parts)
     files.update(p for p in HERE.rglob("*.json") if p != RECORD and "__pycache__" not in p.parts)
+    files.update(p for p in (TOPIC / "numerics").rglob("*")
+                 if p.is_file() and p.suffix in (".py", ".json") and "__pycache__" not in p.parts)
     return {relative(p): hashlib.sha256(p.read_bytes()).hexdigest()
             for p in sorted(files) if p.is_file()}
 
@@ -214,7 +218,7 @@ def main() -> int:
                         "operating_system": platform.system(), "site_disabled": bool(sys.flags.no_site),
                         "optimization": sys.flags.optimize, "third_party_dependencies": []},
         "input_hash_algorithm": "sha256", "input_hashes": before,
-        "input_scope": "All topic Markdown notes and required Python/certificate JSON inputs; this validation record excluded.",
+        "input_scope": "All topic Markdown notes and required Python/certificate JSON inputs; optional numerics sources/record are fingerprinted but not executed by this standard-library replay. This validation record excluded.",
         "inputs_stable_during_run": stable,
         "jobs": jobs,
         "scope": SCOPE,

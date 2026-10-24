@@ -6667,6 +6667,21 @@ dynamics or feedback during unresolved dwell needs its own full
 instrument and strongest ordinary comparison; being outside this
 input-only premise does not establish an advantage.
 
+<a id="nr-r11-moving-caps"></a>
+
+### Retained atomic motion and a passive order-flag bound
+
+The [moving-atom CAPS component](methods/moving-caps.md) supplies a
+source-based energy-shifting reflection model for the retained-inelastic
+question. It proves a passive-resolvent bound on the surviving minus
+flag in terms of full motional energy-transfer moments, and a
+source-specific recovery limit for that measured flag. Its optional
+finite-packet thermal study compares retained spin/photon outputs with
+ordinary random order and paid spectral filtering. The displayed
+plus-only service has no all-launch target-good advantage. Missing
+loss records, routing phases, actual helper ports and numerical tails
+remain explicit; the component establishes no native hardware benefit.
+
 ### Boundary of the scattering reductions
 
 Mode-changing scattering, multiphoton events, order-dependent arrival

@@ -164,6 +164,15 @@ simulation and projected timing retain their distinct scopes.
 - [Salek, Ebler, and Chiribella, *Quantum communication in a superposition of causal orders*](https://arxiv.org/abs/1809.06655) (2018), already gives a heralded error-free physical transmission branch. Its communication task and comparison do not establish restoration of the specified Bell alignment against the present ordinary receivers.
 - [Bai and Chiribella, *Test one to test many: a unified approach to quantum benchmarks*](https://arxiv.org/abs/1711.10240), PRL **120**, 150502 (2018), and [Barizien et al., *Quantifying the fidelity of a quantum memory*](https://arxiv.org/html/2610.08445) (2026), provide channel-test and probabilistic-fidelity context. A Bell overlap and an explicit rejection reward are standard operational tools; the task-specific expected-cost separation is the contribution.
 
+## Retained atomic motion in scattering
+
+The [moving-CAPS component of NR-R11](methods/moving-caps.md) uses
+[Kikura et al., arXiv:2606.26542v1](https://arxiv.org/html/2606.26542v1),
+Eqs. (3)–(8), (12)–(16) and Fig. 2, as its pinned local reflected-sector
+model. The two-node composition, passive bound and ordinary comparisons
+are deductions with separate routing, loss and numerical-tail premises;
+the source does not demonstrate the proposed order-controlled apparatus.
+
 ## Unknown timed-pulse gates
 
 The [unknown timed-pulse gate comparison NR-R21](unknown-pulse-gates.md#nr-r21)

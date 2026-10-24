@@ -1126,6 +1126,14 @@ overlapping photon excitation profiles can emit at the same laboratory
 times. Compute their actual overlap from the pulse and preceding-node
 response, rather than substituting a dephasing rate for a two-history overlap.
 
+The [moving-atom CAPS analysis](methods/moving-caps.md) makes a separate
+retained-motion case concrete. Its passive bound provides an order-flag
+screen before building a router, while the finite-packet thermal example
+gives no all-launch gain for the displayed plus-only protocol. Ordinary
+phase/delay calibration and both ports of a spectral filter are included.
+Full motional tails and phase-aligned, photon-preserving node histories
+must be established before that model becomes a device comparison.
+
 The [Raman exchange screen](communication.md#nr-r11-raman-swap) adds
 same-helper ordinary ideal Bell-generation, remote-SWAP and detuned-serial
 baselines. Its [bare order circuit with two full SWAPs](communication.md#nr-r11-bare-swap-gate)

@@ -62,6 +62,19 @@ Equal worst-case calls do not imply equal early-abort means, and static
 Strang merging requires actual half-duration ports. No routing or
 persistent-bath reduction is certified by these finite fixtures.
 
+The [moving-CAPS component of NR-R11](../research/topics/nr-noisy-recovery/methods/moving-caps.md)
+has an analytic passive-resolvent and energy-transfer-moment bound with
+exact finite Gram, flux-unitarity, frequency-shift, clock and phase guards.
+Separate rank-three input-support fixtures guard its measured-flag decoder
+budget. The optional NumPy finite-packet study has its own
+[current numerical record](../research/topics/nr-noisy-recovery/numerics/moving_caps_record.json),
+including source hashes, environment, actual commands and empirical
+quadrature/cutoff refinements. The standard-library suite fingerprints
+those numerical sources and record but does not execute them. Neither
+finite convergence nor an omitted initial thermal mass bounds all output
+oscillator tails. The model does not certify a complete failed-data
+channel, actual coherent router or hardware advantage.
+
 The [unknown-pulse gate result NR-R21](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21)
 has a standard-library exact replay of the necessary success-support rank,
 literal Pauli-link normalization, causal positive-definite slacks and a
