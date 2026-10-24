@@ -2270,6 +2270,7 @@ def retained_photon_gate_verify():
 
 
 def verify():
+    from parity_failure_baselines import verify as parity_failure_verify
     assert mul(INV_SQRT2, INV_SQRT2) == scale(ONE, F(1, 2))
     assert add(mul(COS, COS), mul(SIN, SIN)) == ONE
     switch_branches, carrier_states = replay_switch_and_one_bus()
@@ -2294,6 +2295,7 @@ def verify():
             "decorated_eight_mode_bus": decorated_bus_verify(),
             "exact_projector_CZ_gate_gap": exact_projector_gap_verify(),
             "retained_photon_gate": retained_photon_gate_verify(),
+            "parity_failure_baselines": parity_failure_verify(),
             "scope": "exact detected/aggregate-vacuum spin instruments under declared reciprocal post-unitary erasures, plus scalar concurrence/Bell-yield, cavity/rank-loss/factory and known-gate identities, a full-rank helper POVM/filter example, constant-control coherent-frequency normal forms, eigen-source survivor compilers and reflected diagonal-gate cone/balancing witnesses, decorated eight-mode coherent survivors and safe four-window compiler, with merged-port rank guards, and an exact restricted projector-kernel primal/dual gate gap; universal proofs, native ports, calibration and clocks remain analytic"}
 
 

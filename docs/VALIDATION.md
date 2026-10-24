@@ -114,6 +114,14 @@ PSD/PPT, phase and complex moment equalities establish a restricted
 accepted-CZ separation; general data filters, intermediate matter
 controls and hardware rates are outside that upper bound. The repeated
 ordinary survivor compiler remains a stronger paid comparator.
+The [direct-parity failure component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-parity-failure)
+adds exact complete accepted/loss maps and finite capped-retry guards.
+The [Bell-resource component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-offline-parity)
+checks fine and coarse unknown-input parity maps, Bell-error Choi
+orthogonality, mixtures and capped delivery ledgers. General instrument
+distance and recovery proofs, physical branching, factory isolation,
+storage and clock costs remain analytic or supplied premises. Perfect
+accepted parity is not a certificate of harmless retries.
 The [retained-photon comparison](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-retained-photon-gate)
 adds exact full-input gate/compiler, four-mode witness and complementary
 branch identities, together with polynomial balance, phase-ratio and
@@ -530,11 +538,26 @@ Gram and support ingredients guard the diagonal-target comparison and
 raw-unitary constraint; the general norm and support proofs remain
 analytic. No arbitrary-target fidelity dominance, joint-receiver optimum
 or device fit follows.
+The [raw parity extension](../research/topics/nr-noisy-recovery/communication.md#nr-r11-inelastic-parity)
+adds projected-target, positive-support and retained-dilation fixtures
+for even and odd parity outcomes with arbitrary unitary output frames.
+Its universal bounds remain analytic. These coefficient fixtures are not
+certified Raman contacts and establish neither conditional-fidelity
+ordering nor a complete parity instrument.
 The passive Bell factory fixtures check prepared-input forward/reverse
 source/contact paths, unitary four-port processing, normalized analyzer/time flags and local
 corrections. Frequency-discard guards retain the distinction from an
 actual coherent time click. The continuous-time and approximate packet
 bounds are analytic, not a measured detector, routing or feedback certificate.
+The [finite-gain bosonic gate component](../research/topics/nr-noisy-recovery/methods/bosonic-order-gates.md)
+checks exact NS success/no-count and higher-number ingredients, all KLM
+record probabilities, successful reference units, irreversible/leakage
+failure witnesses and the auxiliary-photon source probability ledger.
+Infinite primitive normalization, all-count classification, helper
+optimality, recovery obstruction and the full failed KLM coherences
+remain analytic. The accepted-yield comparison is restricted to the
+declared two-primitive helper/readout family; it certifies neither
+full-failure utility dominance nor a general optical or hardware optimum.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
 survivor instruments are checked with exact Gaussian fractions. Its
 local-ancilla extension reconstructs the six-qubit source, both scatters,

@@ -763,6 +763,146 @@ If emission has a separately accessible flag, aborting that destructive
 branch is distinct from repairing it. No claim about all encoded
 repeat-until-success schemes follows.
 
+<a id="nr-r11-parity-failure"></a>
+
+### Balanced reflection does not make an online parity retry harmless
+
+Use the closed-cycling dilation (RS19), independent unobserved intrinsic
+and spontaneous reservoirs, and a fresh input-independent bath on every
+attempt. The balanced carrier setting (RP19) has
+$r_0=-r,r_1=r$, $s=\sqrt{1+C_i}$, $r=(s-1)/(s+1)$ and
+$q=1-r^2$. Here $\kappa_{\rm ex}=\kappa_r$ and
+$\kappa_{\rm in}=\kappa_i=\kappa_\ell$ denote the same amplitude widths.
+Its intrinsic amplitudes satisfy
+$\ell_1/\ell_0=1/s$ and $\ell_0\ell_1^*=q/s$.
+Only intrinsic loss contributes to the atomic off-diagonal term;
+closed-cycling spontaneous emission has right support $|1\rangle$.
+Normalization in (RS19) therefore gives the **unresolved** local failure map
+
+$$
+\mathcal F_j=q\left[\frac{1+\lambda}{2}\operatorname{id}
+       +\frac{1-\lambda}{2}\operatorname{Ad}_{Z_j}\right],
+\qquad \lambda=1/s.
+\tag{PF1}
+$$
+
+Its input-independent probability $q$ does not make its conditional data
+channel identity. This uses the declared cycling branch, not merely a
+reflected amplitude and total linewidth. For example, a spontaneous
+branch returning to $|0\rangle$ with the same norm instead changes the
+failed populations; auxiliary-state decay enlarges the output space.
+The [ordinary architecture comparison](../architecture.md) does not
+supply those missing branching fractions or a native loss router.
+
+Keep the photon bypass at unit amplitude and prepare photon $|+\rangle$.
+Apply node $A$, photon $X$ (vacuum fixed), node $B$, then photon $X$
+readout. This bypass choice differs from attenuating an individual node
+to a scalar CZ. With $R_j=-rZ_j$, the accepted operators are
+
+$$
+L_\pm=\frac{R_A\pm R_B}{2}
+ =-rZ_A\Pi_{\rm even/odd},\qquad
+\Pi_t=\frac{I+(-1)^tZ_AZ_B}{2}.
+\tag{PF2}
+$$
+
+Known $-Z_A$ feedback gives $r\Pi_t$, so their total accepted effect is
+$pI$, $p=r^2$. Initial $V$ interacts with $A$ and then bypasses $B$;
+initial $H$ bypasses $A$ and interacts with $B$. Thus a loss at $B$ on
+its occupied branch has no earlier unobserved interaction with $A$.
+Distinct node loss records give the complete failed map on arbitrary
+unknown $ABR$,
+
+$$
+\mathcal F=\frac12(\mathcal F_A\otimes\operatorname{id}_B+
+                    \operatorname{id}_A\otimes\mathcal F_B).
+\tag{PF3}
+$$
+
+The accepted and failed maps together are trace preserving. This is a
+parity measurement, not a full-space unitary. Either parity encoding
+$\{|00\rangle,|11\rangle\}$ or
+$\{|01\rangle,|10\rangle\}$ has conditional failure coherence
+$\lambda$. Coherences differing in only one bit instead have multiplier
+$(1+\lambda)/2$; the full map is not uniform global dephasing.
+
+For an exact carrier fixture take
+$\kappa_{\rm in}=\gamma=1$, $\kappa_{\rm ex}=3$, $|g|^2=8$.
+Then $s=3,r=1/2$ and
+
+$$
+\mathcal F_j=\tfrac12\operatorname{id}+\tfrac14\operatorname{Ad}_{Z_j},
+\qquad
+\mathcal F=\tfrac12\operatorname{id}
+ +\tfrac18\operatorname{Ad}_{Z_A}+\tfrac18\operatorname{Ad}_{Z_B}.
+\tag{PF4}
+$$
+
+Its probability is $3/4$, with conditional logical visibility $1/3$.
+For comparison, changing only the declared spontaneous final state to
+$|0\rangle$ gives the local failed map $(3/4)\operatorname{AD}_{1/3}$,
+where the subscript denotes survival **amplitude**: the normalized
+output $|1\rangle$ population is $1/9$. These are different completions
+of the same guided response, not fitted device parameters.
+
+With ideal detection, stationary independent attempts and no waiting
+noise, $n$ failures then success has population weight $pq^n$ and
+logical coherence weight $p(q\lambda)^n$. At most $J$ attempts give
+
+$$
+P_J=1-q^J,\qquad
+c_J=\frac{p[1-(q\lambda)^J]}{1-q\lambda},\qquad
+\mathcal J_{\rm reject}=\mathcal F^J.
+\tag{PF5}
+$$
+
+Here $c_J$ is unnormalized coherence; its accepted visibility is
+$c_J/P_J$. For eventual success,
+$c_\infty=p/(1-q\lambda)=(s-1)/(s+3)$, logical entanglement fidelity
+is $(s+1)/(s+3)$, and mean attempts are $1/p$.
+At (PF4), four mean attempts still give visibility $1/3$ and fidelity
+$2/3$, despite an ideal accepted parity operator on every attempt.
+A known phase cannot undo unobserved random dephasing. For the resulting
+logical dephasing channel, arbitrary CPTP recovery cannot exceed
+$(1+c_\infty)/2$: Pauli Parseval gives
+$\sum_{\ell,P}|\operatorname{Tr}(R_\ell P)|^2=4$ for recovery Kraus
+operators, so its weighted Bell overlap is at most the larger Pauli
+probability; identity attains it. This optimizes recovery for these
+encodings and records, not an enlarged error-correcting code or bath access.
+
+External loss has a different placement and data map. For transmission
+$\eta$ after node $B$ but before destructive readout, with orthogonal
+lost-polarization records, add
+
+$$
+\mathcal F_{\rm ext}=\frac{1-\eta}{2}
+   (\operatorname{Ad}_{R_A}+\operatorname{Ad}_{R_B}).
+\tag{PF6}
+$$
+
+At (PF4), unresolved internal plus external loss is
+$\tfrac12\operatorname{id}+(2-\eta)
+(\operatorname{Ad}_{Z_A}+\operatorname{Ad}_{Z_B})/8$ and success is
+$\eta/4$. Its intra-parity failure coherence coefficient is $\eta/4$,
+so eventual retry visibility is $\eta/(4-\eta)$ under the same assumptions.
+If external loss were separately identified, its within-parity logical
+$Z$ could be corrected; a coarse no-click flag does not provide that
+record. Loss between nodes, source vacuum, false heralds, missed clicks,
+spectral processing, spin flips, leakage and storage need their actual
+maps and clocks. An ideal no-interaction source-vacuum branch alone
+changes the launch count but does not remove the internal retry penalty.
+
+The commuting elastic survivor does not determine native no-click
+behavior. Orthogonal order-record loss subspaces imply an ordinary
+classical mixture of history failures, but photon loss or Markov baths
+alone do not imply that premise. For routed loss Kraus maps, column
+orthogonality constrains $\sum_\mu K_{0\mu}^\dagger K_{1\mu}=0$;
+it need not imply
+$\sum_\mu K_{0\mu}\rho K_{1\mu}^\dagger=0$.
+Physical clocks, ports and inaccessible record overlaps must complete
+the native dilation before a full-channel comparison or safe retry is
+claimed. This warning grants no receiver access to those records.
+
 ## Entanglement first: the ordinary baseline with spare matter qubits
 
 If the architecture supplies a separate communication qubit $a,b$ at
@@ -979,6 +1119,158 @@ records are charged ordinary resources; a direct flying-payload
 proposal must compare its actual link cost with that option. Neither
 the matter-transfer endpoint nor its photon consumption supplies a
 nondestructive flying-qubit branch meter for the gate below.
+
+<a id="nr-r11-offline-parity"></a>
+
+### A Bell resource gives a complete ordinary parity instrument
+
+The isolated-factory premise of (RS23) also gives a stronger parity
+comparator. Supply communication qubits $a,b$ in
+$\Phi^+_{ab}=(|00\rangle+|11\rangle)/\sqrt2$, independent of unknown
+$ABR$ and factory records. Apply local CNOTs $A\to a$, $B\to b$,
+then $Z$ readouts $u,v$. For computational data $i,j$, the resource bit
+$k$ becomes $u=k\mathbin\oplus i$, $v=k\mathbin\oplus j$; exactly one
+$k$ contributes when $i\mathbin\oplus j=u\mathbin\oplus v$. Thus
+
+$$
+K_{uv}=\frac{\Pi_{u\oplus v}}{\sqrt2}.
+\tag{PB1}
+$$
+
+This proves the full unknown-input/reference instrument. Coarse graining
+the redundant uniform bit gives $\Pi_t\rho\Pi_t$ without learning a
+logical value inside that parity sector. All four records are useful.
+The protocol consumes one Bell pair, two local CNOTs and two readouts.
+One endpoint needs the other endpoint's bit; both can exchange their
+bits in one simultaneous classical round. Parity-dependent operations
+wait for the actual causal delivery. Under Bell resources and LOCC,
+an exact parity instrument can create one ebit from $|++\rangle$ and
+therefore requires that net shared entanglement on this input. This
+does not exclude direct quantum transmission or flying parity meters.
+
+For a Bell-diagonal accepted resource, retain its correlated weights:
+
+$$
+\rho_{ab}=\sum_{x,z}w_{xz}|\beta_{xz}\rangle\!\langle\beta_{xz}|,
+\qquad |\beta_{xz}\rangle=(I\otimes X^xZ^z)|\Phi^+\rangle.
+\tag{PB2}
+$$
+
+Its expansion $\sum_k(-1)^{zk}|k,k\oplus x\rangle/\sqrt2$ and
+$k=u\oplus i$ give every fine operator and the reported-parity map:
+
+$$
+K_{uv}^{xz}=\frac{(-1)^{zu}}{\sqrt2}
+ Z_A^z\Pi_{u\oplus v\oplus x},\qquad
+\Gamma_t(\rho)=\sum_{x,z}w_{xz}
+ Z_A^z\Pi_{t\oplus x}\rho\Pi_{t\oplus x}Z_A^z.
+\tag{PB3}
+$$
+
+An $x$ error flips the announced parity; a $z$ error adds a data phase.
+The correlation $w_{11}$ is not two independent error rates. Keeping
+$u,v$ divides each coarse term into two equal fine records.
+
+Let $\mathcal M_w$ output $AB$ and the actual syndrome, or the full
+$u,v$ pair. With ideal local operations, its exact completed-instrument
+distance from a perfect-resource $\mathcal M_0$ is
+
+$$
+\frac12\|\mathcal M_w-\mathcal M_0\|_\diamond=1-w_{00}.
+\tag{PB4}
+$$
+
+Convexity and the unit upper bound for channels prove $\le$.
+For the lower bound use normalized $\Phi_4$ on $AB:R$. In a common
+classical block the error Choi-vector overlaps are proportional to
+$\operatorname{Tr}[\Pi_{t\oplus x}Z_A^{z\oplus z'}
+\Pi_{t\oplus x'}]$. Distinct $x$ have orthogonal parity support;
+equal $x$ and distinct $z$ have zero trace because
+$\operatorname{Tr}(Z_A\Pi_t)=0$. Hence the four normalized error Choi
+states have mutually orthogonal supports, also with fine records.
+Their half trace distance is exactly $1-w_{00}$, attaining the bound.
+
+For an arbitrary resource, CPTP contraction of this fixed circuit instead
+gives
+
+$$
+\frac12\|\mathcal M_\rho-\mathcal M_0\|_\diamond
+ \le\frac12\|\rho-\Phi^+\|_1\le\sqrt{1-F_B}.
+\tag{PB5}
+$$
+
+A paid bilateral Pauli twirl preserves $F_B$ and makes the averaged
+resource Bell diagonal. Its random seed must be discarded for (PB4);
+retaining it need not leave conditionally Bell-diagonal resources.
+Retained source flags $f$ require the actual conditional corrected state:
+if each is Bell diagonal, (PB4) averages to
+$\sum_fp_f(1-F_f)$; otherwise (PB5) gives
+$\sum_fp_f\sqrt{1-F_f}\le\sqrt{1-F_{\rm average}}$.
+The ideal comparator retains the same public flag distribution.
+False heralds belong in the accepted resource, not an omitted loss term.
+
+Local gates, readout, frames, reset crosstalk and storage remain paid
+ports. Separately certified half-diamond errors $\epsilon_\ell$ give
+$\delta_{\rm parity}\le\delta_{\rm resource}+
+\sum_\ell\epsilon_\ell$, clipped at one, by telescoping. An average
+gate infidelity or prepared-state stabilizer statistic is not one of
+these channel certificates. Correlated noise needs a joint bound.
+The [architecture comparison](../architecture.md) supplies the physical
+baseline context, not a grant of free extra processor qubits or controls.
+
+For stationary independent factory attempts, let $p_B>0$ be qualified
+delivery probability and $q_B=1-p_B$. The duration $\tau_B$ includes
+source, propagation, herald/timeout, reset and required cooling. If $n$
+attempts fit before local readout and required syndrome communication,
+
+$$
+a_n=1-q_B^n,\qquad
+\mathbb E\min(N,n)=\frac{1-q_B^n}{p_B},\qquad
+\mathbb E C_{\rm node}=\frac{2(1-q_B^n)}{p_B},\qquad
+\mathbb E C_{\rm CNOT}=\mathbb E C_{\rm read}=2a_n.
+\tag{PB6}
+$$
+
+The node count is for a two-opportunity factory, not automatically two
+occupied interactions per optical amplitude. For identical serial
+attempts, $n=\max(0,\lfloor(T-t_{\rm local}-t_{\rm classical})/
+\tau_B\rfloor)$; overlapped schedules need their actual event times.
+The public attempt count and reject output complete the instrument:
+
+$$
+\Gamma_{k,u,v}=p_Bq_B^{k-1}\mathcal M_{uv}^{(k)}\circ\mathcal W_k,
+\quad1\le k\le n,\qquad
+\Gamma_{\rm reject}=q_B^n\mathcal W_{\rm reject}.
+\tag{PB7}
+$$
+
+Here $\mathcal W_k$ is the actual TP data-waiting channel, independent
+of qualification, and $\mathcal M_{uv}^{(k)}$ includes the delivered
+resource's age and local operations. Reject returns the actual stored
+data without a parity answer, not a free input reset. Data/factory
+crosstalk or shared-bath correlations require joint CP history maps
+instead of this factorization. Identical source/storage quality is
+needed before replacing the successful part by $a_n$ times one map.
+Pipelining, distillation and buffered pre-arrival Bell pairs may improve
+the frontier, with their extra interfaces, preparation and storage paid.
+
+Applying the (PF4) parity factory to fresh communication qubits in $++$
+gives a perfect Bell pair after accepted detection and its known frame,
+with probability $1/4$ in that carrier fixture. After mean four attempts,
+(PB1) measures arbitrary data parity without exposing the data to (PF4).
+It pays two spare memories, local operations and the full waiting clock.
+Thus direct-retry fidelity alone is not an architecture advantage; the
+native comparison must beat this resource/deadline frontier with the
+same physical isolation, controls and records.
+
+The separate [parity checker](../checks/architecture/parity_failure_baselines.py)
+replays the literal vacuum-extended contact composition, all accepted
+and loss flags, downstream attenuation and capped logical retries.
+Its second API checks the Bell-error/readout instrument once, fine and
+coarse Choi orthogonality, mixture weights and capped factory ledgers.
+General diamond/recovery proofs and physical continuum, branching,
+router, storage and clock premises remain the arguments above; these
+finite fixtures establish neither a native optimum nor a hardware rate.
 
 The exact checker replays resonant scattering-kernel normalization,
 finite rank-loss examples, the ideal factory and remote-gate Kraus

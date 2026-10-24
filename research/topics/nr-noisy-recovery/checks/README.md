@@ -18,6 +18,8 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_unital_entropy.py` | Exact Kraus/Choi contractions, mixed-adjoint energies, nonunitality, pinching, spectral tails and full flagged maps, plus complete Clifford twirls including nonunital and negative-multiplier cases. Entropy integration, relative-entropy convexity and coding remain analytic. |
 | `architecture/verify_remote_spin_phase.py` | Complete detected spin-gate, four-mode and erasure maps; scattering/rank-loss, scalar concurrence and rational Bell-yield guards; two-CZ online branches, coherent-spectrum, full-helper, constant-optics, survivor-compiler and local-phase gate-cone identities. Exact arithmetic also checks balanced/opposite-phase gates, decorated eight-mode programs, joint readout, four-window survivors, qualified three-window ports and a rational pooled-primal/fixed-word-dual CZ separation. Retained-photon guards add full-input ordinary compilers, the sharp four-mode witness, complementary branches, balance/terminal-phase identities and declared loss ledgers. General instrument bounds remain analytic and retain their intermediate-control, memory and correction restrictions; continuum physics, native ports and clock costs are not certified. |
 | `architecture/verify_remote_spin_pulse.py` | Outward rational interval integration of the full declared Gaussian cavity-response witness, including strip and tail errors. General helper attainment and physical temporal-mode analyzer costs remain analytic. |
+| `architecture/parity_failure_baselines.py` | Parent remote-spin-phase job ingredient: complete finite direct-parity success/loss maps and capped retries; Bell-resource fine/coarse recorded maps, Choi-error orthogonality, mixtures and deadline ledgers. General diamond/recovery arguments and physical branching, isolation, storage and clock premises remain analytic. |
+| `architecture/bosonic_order_gates.py` | Parent communication job ingredient: exact finite-gain NS success, no-count and higher-PNR ingredients; all KLM record probabilities, successful reference units, failure witnesses and an auxiliary-photon source ledger. Infinite normalization, all-count classification, helper optimum, recovery obstruction and full failed KLM coherences remain analytic; no general optical optimum or hardware rate is certified. |
 | `architecture/verify_code_bootstrap.py` | Complete self-switch, projection/Petz and framed-qubit echo instruments, Clifford moments, adaptive cost guards and normalized serial-history rank/completeness examples. C6, universal history bounds, all-instance interfaces and coding remain analytic. |
 | `architecture/verify_memory_stream_screening.py` | Optimistic caps, direct-sum/stopping ledgers, native early rejection and likelihoods, pointer learning/perturbation, complete five-use erasure maps and antidegrading/extendibility guards. C6, all-size reductions, concentration and physical addressing/flux/clock assumptions remain analytic. |
 | `architecture/verify_bosonic_logical_frontier.py` | Rational retention/prior bounds, Gaussian-control/Weyl and syndrome phases, energy, coherent gauge-tag recovery and finite-SDP bookkeeping. Heat positivity, continuous integration, Fourier completeness, recovery duality and physical decoder costs remain analytic. |
@@ -106,6 +108,11 @@ unitary-support ingredients. They are declared lossless examples.
 The general selected-map norm and raw-unitary bounds remain analytic;
 the diagonal-target comparison is not arbitrary-receiver, equal-yield or
 device-rate dominance.
+The raw parity extension checks projected targets with arbitrary output
+unitaries, positive-support and retained-dilation ingredients. Its general
+even/odd bounds remain analytic; coefficient fixtures are not certified
+Raman contacts, and no conditional-fidelity ordering or complete parity
+instrument is established by those selected-map checks.
 Passive Bell factory fixtures reconstruct both fixed-order/source
 variants, contacts, passive midpoint/analyzer, normalized port/time flags and
 corrections, including a frequency-discard/no-eraser guard. The continuous

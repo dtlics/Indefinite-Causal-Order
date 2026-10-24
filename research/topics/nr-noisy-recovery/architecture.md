@@ -1165,6 +1165,11 @@ controls the added component and unnormalized selected-map distance
 near any raw full-input unitary. It does not order arbitrary-target
 fidelities or cover joint recovery, lower codes, other readouts,
 product-input Bell tasks or full-instrument/rate comparisons.
+The [raw parity-outcome extension](communication.md#nr-r11-inelastic-parity)
+bounds the same exchange contribution for even and odd parity targets,
+including known unitary output frames. Exact raw parity targets force
+an ordinary selected-map match; neither conditional-fidelity ordering
+nor a complete two-outcome parity instrument follows.
 A separate [passive Bell factory](communication.md#nr-r11-passive-inelastic-bell)
 attains unit ideal Bell probability in the declared fixed-contact
 lossless fixture from prepared product memories and consumes the photon.
@@ -1190,12 +1195,44 @@ in-cavity reset. These figures concern resource-state generation.
 Finite-pulse, temporal impurity and spectator errors are modeled; actual
 link/detector losses and the deployment clock need the target ledger.
 
-The next [NR-R11 instrument test](communication.md#nr-r11-two-port-gate)
-is an online nonlocal parity/stabilizer measurement on unknown data, including
-failed-herald damage and recovery costs: derive intrinsic/spontaneous-loss
-maps and compare all-launch logical quality and cost at a fixed deadline
-with ordinary encoding/recovery and offline CAPS Bell resources plus
-teleportation/feedforward.
+The [complete direct-parity instrument](methods/remote-spin-phase.md#nr-r11-parity-failure)
+retains intrinsic and spontaneous-loss damage to unknown data. In its
+declared balanced fixture, perfect accepted parity does not make direct
+retry harmless. The [Bell-resource comparator](methods/remote-spin-phase.md#nr-r11-offline-parity)
+gives a full ordinary parity instrument on arbitrary data and references,
+with resource errors, source flags, local gates and capped delivery
+included. Its factory must actually be isolated from the data; source
+failures then consume time and ancillas while the data undergo their
+real storage channel.
+
+[Ainley et al. (v2, 15 October 2026)](https://arxiv.org/html/2609.13065v2)
+experimentally use shared Bell ancillas, local gates and exchanged
+records for remote stabilizer measurements between ion-trap modules.
+Their $3.6(6)\%$ error concerns prepared $|++\rangle$, not a
+diamond-distance bound or QEC on arbitrary logical states. The
+demonstrations prepare logical zero or correct a known Bell state.
+Recooling needed for local gates reduces remote entanglement generation
+from about $100$ to $10$ pairs/s; data coherence is about $10$ s.
+Cooling, waiting, calibration and decoder costs belong in the comparator,
+and the calibrated error budget excludes slow drift.
+
+The next [NR-R11 instrument test](methods/remote-spin-phase.md#nr-r11-offline-parity)
+must supply the native timed routing and complete intrinsic/spontaneous-loss
+instrument for an online nonlocal parity/stabilizer measurement on unknown
+data. Compare all-launch logical quality and cost at a fixed deadline,
+including failed-herald damage, ordinary encoding/recovery and isolated
+offline Bell resources with local processing and feedforward. A reflected
+success amplitude alone does not determine those failed data maps.
+
+The separate [finite-gain bosonic gate comparison](methods/bosonic-order-gates.md#nr-r11-bosonic-order-gates)
+closes the exact qutrit NS proposal within its one-addition/one-subtraction,
+independent-helper, number-resolved and final-phase-only family. Ordinary
+KLM has a larger achievable accepted yield, also in the explicit ideal
+ledger charging an isolated auxiliary-photon source opportunity. Both
+instruments retain damaging failures; neither receives free exact retries.
+Source isolation, waiting, passive modes, counters and reset still require
+their actual costs. This is not an optimum over arbitrary optical gadgets
+or a hardware-rate comparison; a positive application remains open.
 
 Unknown-input gate comparisons must also include its ordinary
 known-gate helper programs and the coherent completion that restores the

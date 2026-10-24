@@ -957,7 +957,15 @@ loss-record or adaptive-control simulations.
 Actual router records, encoded recovery and matched physical clocks
 remain open comparisons.
 
-This screen applies to the elastic two-time-bin state-carving model of
+A separate [finite-gain bosonic gate screen](methods/bosonic-order-gates.md)
+treats a retained unknown Fock-mode qutrit and a nonlinear sign gate.
+It keeps all physical addition/subtraction number records, optimizes the
+declared two-order family, and includes the ordinary KLM gate's complete
+failure instrument. Independent control, auxiliary photons, detector
+resolution and recovery remain explicit resources; the comparison does
+not optimize arbitrary optical gadgets or all failed-output utilities.
+
+The accepted-label screen (9) applies to the elastic two-time-bin model of
 [Knaut et al.](https://doi.org/10.1038/s41586-024-07252-z). Its local
 successful-reflection operator has the form
 
@@ -2440,6 +2448,72 @@ unitary is diagonal. Every filtered $J$ action therefore vanishes on
 the actual source, giving full selected-map equality with the ordinary
 flag, including retained field output. No lower-dimensional code or
 preencoding is implicit.
+
+<a id="nr-r11-inelastic-parity"></a>
+
+**The same selected support limits a raw parity outcome.** This is a
+separate endpoint from a full-input unitary gate. Put
+$P_e=(I+Z_AZ_B)/2$, $P_o=(I-Z_AZ_B)/2$, and allow any fixed known
+unitary output frame $V$. The normalized Choi target for one ideal
+parity outcome is
+$|\pi_s(V)\rangle=\operatorname{vec}(VP_s)/\sqrt2$, $s=e,o$.
+Keep the source, common field filter and selected readout of (IG1)--(IG3).
+Let $p_{D,e},p_{D,o}$ be the Choi masses on the even and odd diagonal
+matrix-unit subspaces. The same $\Phi_4$ normalization as (IG2) gives
+$p_N=p_{D,e}+p_{D,o}+e$ and $p_F=p_{D,e}+p_{D,o}$; $e$ is unchanged.
+For $p_N>0$, the selected normalized target overlaps obey
+
+$$
+F_N^{(e)}(V)\le\frac{p_{D,e}}{p_N},\qquad
+F_N^{(o)}(V)\le\frac{p_{D,o}+e/2}{p_N}.
+\tag{IG4p}
+$$
+
+For the even target, projection onto the native Choi support lies only
+in the even diagonal subspace, with squared norm at most one. For the
+odd target, that projection has components
+$(a,b,c)/\sqrt2$ on the two odd diagonal units and $E$, where
+$a=V_{01,01}$, $b=V_{10,10}$, $c=V_{01,10}$.
+The norm of row $01$ and column $10$ gives
+$|a|^2+|c|^2\le1$ and $|b|^2+|c|^2\le1$.
+Thus $(|a|^2+|b|^2+2|c|^2)/2\le1$, without assuming that $V$
+preserves either parity subspace. Weighted rank-one Cauchy consequently
+dominates the projected target projector by
+$P_{\mathcal D_o}+P_{\mathcal J}/2$.
+Tensoring this operator inequality with identity on retained field and
+filter outputs and evaluating the positive Choi operator proves (IG4p),
+including its possible coherent diagonal/exchange cross terms. The even
+bound loses all odd-diagonal and exchange mass; the odd bound loses all
+even-diagonal and half the exchange mass.
+
+Set $\kappa_e=1$, $\kappa_o=2$. Combining (IG4p) with (IG3) gives
+
+$$
+F_N^{(s)}(V)\ge1-\eta\ \Longrightarrow\quad
+e\le\kappa_s p_N\eta,\qquad
+p_F\ge(1-\kappa_s\eta)p_N,\qquad
+\tfrac12\|\Gamma_N-\Gamma_F\|_\diamond
+\le\min\{1,2\sqrt{\kappa_s p_N\eta}\}.
+\tag{IG4q}
+$$
+
+In particular, an exact raw parity outcome up to $V$ has $e=0$ and the
+same full selected map as the ordinary flag, including retained field
+output. These are maximally mixed-input Choi weights and unnormalized
+map bounds. They do not order the ordinary and native conditional
+fidelities for arbitrary $V$, equate yields or rejects, or imply a
+worst-input normalized guarantee after rare acceptance. Both parity
+records and every failed herald still require their actual instruments.
+The statement excludes different source/readout choices, joint AB--field
+recovery, preencoding and general logical codes; it does not extend a
+full-space recovery obstruction to every encoded parity protocol.
+
+The [same Raman checker](checks/architecture/raman_baselines.py) adds
+Gaussian-rational projected-target and retained-dilation guards for this
+argument. Its independently chosen support coefficients are not claimed
+to be realizable by the complete Raman contacts; the universal weighted
+inequality and parity consequences are the analytic proof above.
+
 
 A real frequency-changing example is
 [Inomata et al., PRL 113, 063604 (2014)](https://arxiv.org/abs/1405.5592).

@@ -1719,6 +1719,184 @@ def inelastic_gate_remainder():
             "scope": "Declared stationary lossless Raman energy-sector fixtures and common paid field filters. General CPTNI bound, triangular-unitary argument, source/interface and converter costs remain analytic; no actual converter fit, full bath-loss instrument or all-readout optimum."}
 
 
+def inelastic_parity_support():
+    """Raw rank-two parity targets in the existing diagonal-plus-E support.
+
+    Exact Gaussian-rational support fixtures; the weighted inequality,
+    near-parity and retained-output bounds are analytic. All guards remain
+    active under -O. This is not an all-readout or encoded-instrument bound.
+    """
+    from fractions import Fraction as F
+    from itertools import combinations, permutations, product
+    from retained_photon_serial import G, require, eye, zeros, mm, adj, add, scale
+
+    def squared(z):
+        value = z*z.conj()
+        require(value.i == 0 and value.r >= 0, 'exact squared complex modulus')
+        return value.r
+
+    def determinant(matrix):
+        n = len(matrix)
+        total = G()
+        for perm in permutations(range(n)):
+            inversions = sum(perm[i] > perm[j] for i in range(n) for j in range(i+1,n))
+            term = G((-1)**inversions)
+            for i in range(n):
+                term *= matrix[i][perm[i]]
+            total += term
+        return total
+
+    def psd(matrix):
+        require(matrix == adj(matrix), 'Hermitian parity-support slack')
+        checked = 0
+        for size in range(1,len(matrix)+1):
+            for subset in combinations(range(len(matrix)),size):
+                value = determinant([[matrix[i][j] for j in subset] for i in subset])
+                require(value.i == 0 and value.r >= 0, 'all principal minors of parity slack')
+                checked += 1
+        return checked
+
+    def permutation_unitary(word):
+        out = zeros(4)
+        for col,row in enumerate(word):
+            out[row][col] = G(1)
+        return out
+
+    def rotation(a,b,imaginary=False):
+        out = eye(4)
+        out[a][a] = out[b][b] = G(F(3,5))
+        out[a][b] = G(0,F(4,5)) if imaginary else G(F(4,5))
+        out[b][a] = G(0,F(4,5)) if imaginary else G(F(-4,5))
+        return out
+
+    phase = zeros(4)
+    for i,z in enumerate((G(1),G(0,1),G(-1),G(0,-1))):
+        phase[i][i] = z
+    unitaries = [eye(4),phase]
+    unitaries += [permutation_unitary(word) for word in
+                  ((0,2,1,3),(3,1,2,0),(1,2,3,0),(0,1,3,2))]
+    unitaries += [rotation(1,2),rotation(1,2,True),rotation(0,1),rotation(2,3,True)]
+    unitaries += [mm(rotation(0,1),rotation(1,2,True)),
+                  mm(phase,mm(rotation(0,2),rotation(1,3,True)))]
+    principal_minors = 0
+    target_cases = 0
+    mixed_parity_target = False
+    for unitary in unitaries:
+        require(mm(adj(unitary),unitary) == eye(4), 'full output target is unitary')
+        a,b,c = unitary[1][1],unitary[2][2],unitary[1][2]
+        require(squared(a)+squared(c) <= 1 and squared(b)+squared(c) <= 1,
+                'row and column norms bound arbitrary odd-target projection')
+        require((squared(a)+squared(b)+2*squared(c))/2 <= 1,
+                'odd rank-one weighted norm d+2q is at most one')
+        vector = (a,b,c)
+        slack = [[G((1,1,F(1,2))[i] if i == j else 0)
+                  - vector[i]*vector[j].conj()/2 for j in range(3)] for i in range(3)]
+        principal_minors += psd(slack)
+        even_vector = (unitary[0][0],unitary[3][3])
+        even_slack = [[G(int(i == j))-even_vector[i]*even_vector[j].conj()/2
+                       for j in range(2)] for i in range(2)]
+        principal_minors += psd(even_slack)
+        target_cases += 2
+        mixed_parity_target = mixed_parity_target or any(
+            unitary[row][col] != 0 for row,col in product((0,3),(1,2)))
+    require(mixed_parity_target, 'targets include unitaries that mix parity output ranges')
+
+    # Each pair contains two coherent retained-field coefficients. Scaling
+    # bounds the stacked selected operator by its Frobenius norm, so both
+    # it and its diagonal ordinary comparator are contractions.
+    raw_cases = (
+        (((1,1,1,1),0),((0,0,0,0),0)),
+        (((1,0,0,1),0),((0,0,0,0),0)),
+        (((0,1,1,0),0),((0,0,0,0),0)),
+        (((0,0,0,0),1),((0,0,0,0),0)),
+        (((0,1,1,0),1),((0,0,0,0),0)),
+        (((1,G(0,1),2,G(1,-1)),G(1,1)),((0,1,G(0,1),1),G(0,1))),
+        (((G(0,1),1,0,1),G(F(1,2))),((1,0,1,0),G(F(-1,2),F(1,2)))),
+    )
+    score_cases = 0
+    gram_entries = 0
+    exact_targets = 0
+    coherent_cross = False
+    nonordering_case = None
+    for case_index,raw in enumerate(raw_cases):
+        native,ordinary = [],[]
+        for diagonals,j in raw:
+            diagonal = zeros(4)
+            for i,z in enumerate(diagonals):
+                diagonal[i][i] = G(z)/8
+            actual = [row[:] for row in diagonal]
+            actual[1][2] += G(j)/8
+            ordinary.append(diagonal)
+            native.append(actual)
+        mass = lambda bank: sum(squared(z) for matrix in bank for row in matrix for z in row)/4
+        p_n,p_f = mass(native),mass(ordinary)
+        e = sum(squared(n[1][2]) for n in native)/4
+        p_de = sum(squared(k[i][i]) for k in ordinary for i in (0,3))/4
+        p_do = sum(squared(k[i][i]) for k in ordinary for i in (1,2))/4
+        require(4*p_n <= 1 and 4*p_f <= 1, 'stacked native and ordinary contractions by Frobenius bound')
+        require(p_n == p_f+e and p_f == p_de+p_do, 'same Phi4 acceptance and exchange normalization')
+        gram = zeros(4)
+        for n,f in zip(native,ordinary):
+            difference = add(n,scale(f,-1))
+            gram = add(gram,mm(adj(difference),difference))
+        wanted = zeros(4)
+        wanted[2][2] = G(4*e)
+        require(gram == wanted, 'retained-field dilation difference Gram gives 2sqrt(e)')
+        gram_entries += 16
+        for target_index,unitary in enumerate(unitaries):
+            for parity,columns in ((0,(0,3)),(1,(1,2))):
+                overlap = lambda k: sum(unitary[row][col].conj()*k[row][col]
+                                         for row in range(4) for col in columns)
+                good_n = sum(squared(overlap(k)) for k in native)/8
+                good_f = sum(squared(overlap(k)) for k in ordinary)/8
+                upper = p_de if parity == 0 else p_do+e/2
+                require(good_n <= upper, 'complete selected parity score, including coherent D/E cross terms')
+                factor = 1 if parity == 0 else 2
+                require(e <= factor*(p_n-good_n), 'near-parity accepted error bound')
+                require(p_f >= p_n-factor*(p_n-good_n), 'near-parity ordinary acceptance bound')
+                if p_n and good_n == p_n:
+                    require(e == 0 and native == ordinary, 'exact parity target gives retained selected-map equality')
+                    exact_targets += 1
+                # Cross terms are possible for a non-diagonal output target;
+                # no conditional target-fidelity ordering is being checked.
+                if parity == 1:
+                    exchange_only = [add(n,scale(f,-1)) for n,f in zip(native,ordinary)]
+                    good_exchange = sum(squared(overlap(k)) for k in exchange_only)/8
+                    coherent_cross = coherent_cross or good_n != good_f+good_exchange
+                if case_index == 4 and target_index == 6 and parity == 1:
+                    nonordering_case = (p_n,p_f,e,good_n,good_f)
+                score_cases += 1
+    require(exact_targets >= 2 and coherent_cross, 'exact parity cases and coherent target cross terms retained')
+
+    # A support-only counterexample prevents a false fidelity-order claim.
+    # It is not asserted to be realizable by the complete Raman contacts.
+    require(nonordering_case == (F(3,256),F(1,128),F(1,256),F(1,128),F(9,3200)),
+            'literal support matrices give the nonordering witness normalization')
+    p_n,p_f,e,good_n,good_f = nonordering_case
+    require(good_n/p_n == F(2,3) and good_f/p_f == F(9,25), 'support-class nonordering witness')
+    mutants = 0
+    try:
+        c = G(1)  # an odd SWAP target, pure-E selected output
+        require(squared(c)/2 <= F(1,4), 'incorrect quarter-weight exchange bound')
+    except ValueError:
+        mutants += 1
+    else:
+        raise ValueError('false exchange-weight strengthening escaped')
+    try:
+        require(good_n/p_n <= good_f/p_f, 'incorrect ordinary conditional-fidelity ordering')
+    except ValueError:
+        mutants += 1
+    else:
+        raise ValueError('false fidelity-order strengthening escaped')
+    return {'status':'passed','unitary_targets':len(unitaries),
+            'weighted_projection_target_cases':target_cases,
+            'principal_minor_guards':principal_minors,
+            'selected_coefficient_fixtures':len(raw_cases),'parity_score_cases':score_cases,
+            'retained_dilation_gram_entries':gram_entries,'exact_parity_cases':exact_targets,
+            'detected_false_strengthenings':mutants,
+            'scope':'Finite Gaussian-rational diagonal-plus-one-way selected supports and raw even/odd rank-two parity targets up to arbitrary known unitary output. Coefficient fixtures are not certified full-contact Raman realizations. General weighted-support, near-parity and retained-map bounds remain analytic; no conditional-fidelity ordering, other readout, encoded input or full-instrument/rate optimum.'}
+
+
 def passive_inelastic_bell_factory():
     """Exact passive-port Bell factories and finite proof ingredients.
 
@@ -2152,6 +2330,7 @@ def verify_raman_stronger_baselines():
         "operator_partial_swap_frontier": operator_partial_swap_frontier(),
         "two_port_selected_map": two_port_selected_map(),
         "inelastic_gate_remainder": inelastic_gate_remainder(),
+        "inelastic_parity_support": inelastic_parity_support(),
         "passive_inelastic_bell_factory": passive_inelastic_bell_factory(),
         "scope": "Exact achievable ordinary instruments and polynomial identities. No complete physical ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
     }
