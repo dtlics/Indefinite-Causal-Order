@@ -50,6 +50,18 @@ deferred records and exact coefficient discrepancies. Their finite
 scope does not establish the all-dimension or asymptotic arguments,
 native gate costs or availability of a reliable candidate verifier.
 
+The [final-flag completion component](../research/topics/nr-noisy-recovery/methods/final-flag-completion.md)
+adds finite exact random-order CP complements, all plus/minus histories,
+common CPTP-decoded payload/reference maps, abort effects/traces,
+mean-call ledgers and nonzero cubic witnesses to the native-check job.
+Its general full-flag diamond/payoff and survival/error bounds are analytic.
+The comparison requires a realizable ordinary completion, an
+always-delivered target and a common payload decoder; accepted-only,
+branch-dependent and joint retained-control services are outside it.
+Equal worst-case calls do not imply equal early-abort means, and static
+Strang merging requires actual half-duration ports. No routing or
+persistent-bath reduction is certified by these finite fixtures.
+
 The [fault-parity controller component](../research/topics/nr-noisy-recovery/methods/binary-fault-controller.md)
 has analytic closed-controller and general-intermediate-operation memory
 bounds and a separate prearrival-programming bound, with exact finite

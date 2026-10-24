@@ -1499,8 +1499,12 @@ If a known implementable involution commutes with the ideal Hamiltonian,
 the same before/after check in NR-R06 preserves its full evolution and
 tests arbitrary interval faults without learning that evolution. Its
 controlled helper and readout costs remain real. Short-time coherent
-order symmetrization must also be compared with randomized ordering and
-ordinary symmetric splitting, including available half-duration controls.
+order symmetrization has a sharper [ordinary completion comparison](methods/final-flag-completion.md#nr-r06-final-flag-completion):
+for the bare all-plus state-output protocol, random ordering has no greater
+all-launch error to an always-delivered target under a common payload decoder.
+Early-abort mean cost, branch-dependent recovery, accepted-only services and
+actual bath histories retain their separate qualifications. Ordinary symmetric
+splitting also merges adjacent half steps when those duration controls exist.
 [Vrajitoarea et al.](https://arxiv.org/abs/2602.06108) demonstrate genuine
 quantum-controlled many-body dynamics and a many-body echo, but do not
 supply two opaque switchable many-body modules. Similarly,
@@ -1629,14 +1633,34 @@ large multiphoton Fock space does not invalidate this shortcut. A
 is a concrete instance of the programmable interface; actual programming,
 calibration drift and compilation errors must be included.
 
-[Nielsen et al.](https://doi.org/10.1038/s41467-025-66205-w) provide a more
-substantive next model: two-photon nonlinear scattering interleaved with
-programmable linear optics, used for anharmonic molecular dynamics.
-Nonlinearity removes the passive matrix-squaring shortcut. The published
-platform has one quantum dot, however, and its measured nonlinear response
-includes spectral-mode distortion. A fitted nonlinear fringe phase is not
-by itself a reusable controlled-phase channel. Two matched independent
-modules and an order router cannot be assumed from that experiment.
+[Nielsen et al.](https://doi.org/10.1038/s41467-025-66205-w) demonstrate
+nonlinear two-photon scattering interleaved with programmable linear
+optics for anharmonic molecular simulation. Nonlinearity removes the
+passive matrix-squaring shortcut. The platform has one quantum dot and
+spectral-mode distortion; a fitted fringe phase is not by itself
+a reusable controlled-phase channel. The separately checked
+[arXiv v1, Appendix A.1, Eq. (11)](https://arxiv.org/html/2405.17941v1)
+describes six detection outputs: two spatial ports times early, middle
+and late bins, with interference in the middle bin and destructive
+pseudo-number-resolved counting. These apparatus details are pinned to
+v1 and were not checked here against the final 2025 paper. They supply
+neither an independent coherent order helper nor two matched nonlinear
+modules; a full unknown two-qubit encoder also needs its actual modes.
+
+For one known ideal linear unitary on the complete field-mode space
+and one scatterer, the existing [known-auxiliary compiler (IQ1)](metrology.md#nr-r15-known-control-qec)
+already reproduces the stipulated full single-scatterer instrument.
+This requires executable controlled linear operations before and after
+the scattering, including vacuum, lower-photon-number outputs and all
+spectral modes. The two programmed placements, whole-payload routing, helper
+coherence and delay remain costs; each history occupies the linear
+operation once. Classical mesh programming or a selected two-mode fringe
+does not supply that controlled extension. Discarded linear-loss ports
+can instead tag the two placements differently, so matching survivor
+optics does not identify the complete herald and rejected instruments.
+Actual early/late scattering also needs its common-clock bath cross map.
+The distinct target of two unknown nonlinear primitives with full
+records remains open.
 
 The [scattering comparisons in NR-R11](communication.md#nr-r11) now separate
 three cases. Bare detuning-only pairs with common monitored coupling commute

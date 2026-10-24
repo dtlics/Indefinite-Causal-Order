@@ -73,6 +73,13 @@ flags, retained references, restart identities and the primary-source
 coefficient discrepancy. The all-dimension unitary-basis proof,
 arbitrary-length induction and uniform restart bounds remain analytic.
 Known control/calibration and reliable verification ports are charged.
+The job's [final-flag completion ingredient](../methods/final-flag-completion.md),
+`architecture/final_flag_completion.py`, checks finite random-order CP
+complements, all plus/minus histories, common decoded payload/reference
+maps, abort effects/traces, mean-call ledgers and nonzero cubic terms.
+The full-flag diamond comparison and general survival/error bounds remain
+analytic. It does not certify physical routing, accepted-only or
+branch-dependent recovery, or exact equality of early-abort mean costs.
 The measurement job checks [central inverse-fault cancellation](../architecture-baselines.md#nr-r08-central-involution)
 on full coherent recorded Kraus operators, noninvolutory faults and
 covariance counterexamples, plus a known-state logical probe. These are

@@ -32,6 +32,12 @@ gives a full ordinary controlled-unitary compiler, the complete
 measurement-timing identity and a counted-restart comparison.
 Its known-control, calibration and verification ports remain explicit.
 
+The [final-flag completion component](methods/final-flag-completion.md)
+compares bare all-plus two-order simulation with realizable ordinary
+random order for an always-delivered target and a common payload decoder.
+Accepted-only or branch-dependent services, retained-control recovery,
+early-abort mean costs and static Strang half-duration ports remain distinct.
+
 ### Physical hypothesis
 
 In cycle $t$, module-labelled faults realize known unitaries

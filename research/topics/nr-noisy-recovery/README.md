@@ -125,6 +125,12 @@ source's isotropic and four-box restrictions.
 The [noisy-search component](methods/noisy-search.md) supplies an ordinary
 full-channel compiler for calibrated depolarizing slots and separately
 counts all-plus Grover restarts, verification and actual controller costs.
+The [final-flag completion component](methods/final-flag-completion.md)
+shows that a realizable ordinary CP completion has no greater full-flag
+diamond error to an always-delivered target with the same payload decoder.
+It covers bare all-plus two-order simulation; accepted-only services,
+branch-dependent or retained-control decoding need a separate comparison.
+Early-abort mean costs and half-duration access remain explicit.
 The [fault-parity controller component](methods/binary-fault-controller.md)
 proves controller-memory requirements for response-uniform fault-parity
 instruments, including cross-dual Pauli families and distinct input-arrival

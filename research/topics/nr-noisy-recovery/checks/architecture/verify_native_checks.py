@@ -3209,6 +3209,7 @@ def main():
     five_pulse_cases = replay_five_pulse_gate_witness()
     jc_cases = verify_jc_energy_baseline()
     noisy_search_cases = replay_noisy_search_filters()
+    from final_flag_completion import verify as verify_final_flag_completion
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian and Eisenstein rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
@@ -3231,6 +3232,7 @@ def main():
         "ordinary_five_pulse_gate_witness": five_pulse_cases,
         "jaynes_cummings_energy_baseline": jc_cases,
         "noisy_search_filter_instruments": noisy_search_cases,
+        "final_flag_completion": verify_final_flag_completion(),
         "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",
     }, sort_keys=True))
 
