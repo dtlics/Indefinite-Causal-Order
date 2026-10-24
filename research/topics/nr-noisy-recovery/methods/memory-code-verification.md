@@ -178,6 +178,134 @@ and readout. It does not remove SPAM calibration. The average-fidelity
 identity is established; see
 [Nielsen, *Physics Letters A* 303, 249–252 (2002)](https://arxiv.org/abs/quant-ph/0205035).
 
+<a id="nr-r20-logical-policy-qualification"></a>
+
+### Complete logical-policy instruments, acceptance and measured records
+
+The same six-state identity extends to a trace-nonincreasing logical
+policy map. Fix a complete finite-duration physical policy $j$, a common
+logical encoder $\mathcal A$, and a fixed transcript-conditioned decoder.
+Let $\mathcal J_{j,h}$ be its CP instrument for the entire syndrome,
+ancilla-readout and reset transcript $h$, at the cut **before** the
+terminal logical test. Include leakage and failed outputs in the full
+instrument. Its accepted logical map is
+$$
+\Gamma_j=\sum_h\mathcal B_{j,h}^{\rm acc}\circ
+                 \mathcal J_{j,h}\circ\mathcal A,\qquad
+J_j=(\operatorname{id}\otimes\Gamma_j)(\Phi_2),\quad
+p_j=\operatorname{Tr}J_j,\quad g_j=\operatorname{Tr}(\Phi_2J_j).
+\tag{DC7a}
+$$
+Here $g_j$ is the **unnormalized Bell-good weight**, not the conditional
+fidelity $g_j/p_j$. The policy may contain arbitrary temporal quantum
+memory, adaptive controls and correlated faults **within a run**.
+Summing its complete records still defines one CP map under the common
+input-independent initialization and encoder. Destructive terminal
+readout bits score the test; they are not fed into a fictitious quantum
+decoder after the unknown output has been destroyed.
+
+For a uniformly chosen Pauli eigenstate
+$\rho_{a,s}=(I+s\sigma_a)/2$, let $A\in\{0,1\}$ mark acceptance and
+$C\in\{0,1\}$ mark acceptance **and** correct decoded return, so $C\le A$.
+The normalized-Choi identity
+$$
+\frac16\sum_{a,s}\rho_{a,s}^{\mathsf T}\otimes\rho_{a,s}
+ =\frac{I_4+2\Phi_2}{6}
+$$
+and the average input $I/2$ give
+$$
+\mathbb EA=p_j,\qquad
+\mathbb EC=\frac{p_j+2g_j}{3},\qquad
+Z:=\frac{3C-A}{2},\quad\mathbb EZ=g_j.
+\tag{DC7b}
+$$
+This proves the extension for every accepted CP map, including nonunital
+ones and input-dependent acceptance. $Z\in\{-1/2,0,1\}$ counts every
+attempt. For $m$ fixed policies, independent complete runs per policy
+give simultaneous additive error at most $\epsilon$ in $g_j$ with
+failure probability at most $\delta$ when
+$$
+N\ge\frac{9}{8\epsilon^2}\ln\frac{2m}{\delta}.
+\tag{DC7c}
+$$
+This is Hoeffding with range $3/2$ and a union bound; the maximum
+estimated score has regret at most $2\epsilon$. Acceptance $p_j$ can be
+estimated separately from $A$. Conditional fidelity requires a positive
+acceptance bound and its additional precision cost. Preparation, every
+cycle, resets, aborted runs, terminal basis conversion/readout and
+classical decoding remain costs.
+
+The independence premise concerns **complete runs**, with a repeatable
+input-independent initialization and a stationary qualification epoch.
+It imposes no independent-cycle or short-memory assumption. Persistent
+inter-run baths or drift need their own confidence analysis. Train
+candidate decoders on separate records, then freeze them for validation;
+reusing a transcript across fixed classical decoders does not make
+training or its selection error free. A Pauli-frame decoder is sufficient
+only when the declared output permits that frame; physical restoration
+requires the actual correction. No protected copy of the payload is
+granted.
+
+With only the two measured bases, put $x_j,z_j$ equal to the accepted
+correct-return probabilities averaged over both signs in $X,Z$.
+The commuting Choi effects
+$\Pi_X=(I+X_RX_B)/2$, $\Pi_Z=(I+Z_RZ_B)/2$ obey
+$\Phi_2=\Pi_X\Pi_Z$, giving the tight interval
+$$
+\boxed{\max\{0,x_j+z_j-p_j\}\le g_j\le\min\{x_j,z_j\}.}
+\tag{DC7d}
+$$
+Indeed $\Pi_X+\Pi_Z-I\le\Phi_2\le\Pi_X,\Pi_Z$.
+For any feasible $0\le x,z\le p\le1$, every $g$ in this interval is
+attained by a Pauli subchannel whose unnormalized Bell weights are
+$(g,x-g,p-x-z+g,z-g)$ in order $(I,X,Y,Z)$. Thus the interval is not
+generally an equality; joint confidence intervals must be propagated
+rather than substituted as exact point values.
+
+A concrete application is selecting leakage-removal or walking
+surface-code policies at a fixed logical-memory deadline.
+[Google Quantum AI and Collaborators, *Demonstrating dynamic surface
+codes*, Fig. 3e](https://arxiv.org/html/2412.14360v2) report detector
+correlations lasting nearly 50 cycles without leakage removal and their
+suppression by DQLR or walking. The experiment supplies chronological
+syndrome/reset records and logical $X/Z$ memory tests. It does not by
+itself supply logical $Y$ tests, a common pre-readout quantum decoder or
+a coherent superposition of QEC/reset schedules. Basis-dependent
+classical decoding warrants its operational return scores until a
+common logical map/POVM implementation is justified.
+
+Even full earlier records need not remove the two-basis ambiguity.
+Choose the explicit logical fixture
+$\mathcal J_{j,h}(\rho)=P_j(h)\rho$, with any input-independent
+policy-specific full-record laws, then append either
+$$
+\mathcal C=\tfrac34\operatorname{id}+\tfrac14\operatorname{Ad}_{Y_L},
+\qquad
+\mathcal D=\tfrac12\operatorname{id}
+ +\tfrac14\operatorname{Ad}_{X_L}+\tfrac14\operatorname{Ad}_{Z_L}.
+\tag{DC7e}
+$$
+Both have $p=1$ and $x=z=3/4$, while $g_{\mathcal C}=3/4$ and
+$g_{\mathcal D}=1/2$. Logical normalizer faults after the syndrome cut
+leave every earlier record unchanged. Swapping $\mathcal C,\mathcal D$
+between two policies therefore preserves all full-record and terminal
+$X/Z$ test distributions but reverses the better Bell score. This is a
+valid counterexample instrument, not a fit to the measured device.
+A paid $Y$ test separates them with return probabilities $1$ and $1/2$;
+the missing observable has no switch monopoly.
+
+The six-state extension requires actual logical $Y$ preparation/readout,
+one common encoder and decoder, and controlled preparation/reset errors.
+These do not follow from the source's two destructive basis tests.
+Its ordinary comparator is complete policy rollout and retained-record
+reuse, not reconstruction of an unrestricted process tensor.
+A proposed coherent selector must preserve the actual detector/reset
+history; the [record-overlap bound](../backaction.md#nr-r14-record-overlap-qualification)
+states the additional cross-history requirement. This application
+extends (DC7) and the accepted-score accounting only. It does **not**
+apply the memoryless low-channel ceiling (DC4), or its C6 training
+consequence, to arbitrary temporally correlated histories.
+
 ## Learning and running the code obey the original query ledger
 
 Suppose ordinary training makes a random number $N_{\rm train}$ of

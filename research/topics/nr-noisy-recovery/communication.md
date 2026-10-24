@@ -2043,6 +2043,202 @@ fixtures and two coherently retained frequency bins check the selected
 identity and cross-frequency coefficients; the continuum multiplier
 extension is the analytic operator argument above.
 
+<a id="nr-r11-raman-operator-gate"></a>
+
+**Noncommuting field coefficients have a measurable selected-map boundary.**
+Retain a common field/bath space $H$, and let its coefficients commute
+with the displayed logical swaps but not necessarily with each other:
+$U_A=A_0I+A_1F_{SA}$, $U_B=B_0I+B_1F_{SB}$.
+Use the same Bell source and flags as (RS19f). Suppress tensor identities
+on $H$ and $AB$, and write $P_{kA}=|k\rangle\langle k|_A$.
+The forward ordinary selected operator and the native remainder are
+
+$$
+\begin{aligned}
+L_F&=\left(\frac{B_0A_1}{2}+\frac{B_1A_1}{4}\right)Z_A
+    +\left(\frac{B_1A_0}{2}+\frac{B_1A_1}{4}\right)Z_B,\\
+N-L_F&=\frac12\left([B_0,A_0]I+[B_0,A_1]P_{1A}
+              +[B_1,A_0]P_{1B}+[B_1,A_1]P_{1B}F_{AB}\right).
+\end{aligned}
+\tag{OG1}
+$$
+
+These are full $HAB$ operator identities, so retain arbitrary passive
+references and correlations before a bath trace. Indeed the native
+contraction is
+$\tfrac12(\langle0|U_BU_A|0\rangle-\langle1|U_AU_B|1\rangle)$.
+Use $\langle k|F_{Sj}|k\rangle=P_{kj}$ and
+$\langle0|F_{SB}F_{SA}|0\rangle=P_{0A}F_{AB}$,
+$\langle1|F_{SA}F_{SB}|1\rangle=P_{1B}F_{AB}$.
+The forward midpoint contraction expands as
+$\tfrac12[(B_0+B_1P_{0B})(A_0+A_1P_{0A})
+-(B_0+B_1P_{1B})(A_0+A_1P_{1A})]$; subtracting gives (OG1).
+An arbitrary CS-only forward midpoint/readout still has the ordered
+field words $B_jA_i$, so the commuting proof does not manufacture the
+reverse words. A field commutator alone is not a useful gate.
+
+The source-like **one bright sector** has the stronger constraint
+$A_0+A_1=B_0+B_1=I_H$. Put $X=A_1$, $Y=B_1$,
+$J=[Y,X]$, $D=(X-Y)/2$, and
+$u=(X+Y-XY)/2$, $v=-(X+Y-YX)/2$. Then
+
+$$
+\begin{gathered}
+N=\begin{pmatrix}
+u&0&0&0\\0&D&J/2&0\\0&0&-D&0\\0&0&0&v
+\end{pmatrix}_{AB},\qquad
+L_F=\operatorname{diag}(-v,D,-D,v),\\
+L_R=\operatorname{diag}(u,D,-D,-u),\qquad
+N-L_F=\tfrac12J P_{0A}F_{AB}.
+\end{gathered}
+\tag{OG2}
+$$
+
+$L_R$ uses ordinary B-then-A visits with the same $V$, Bell source and
+Bell-plus flag; it does not swap the physical memory labels.
+
+For a channel statement, fix a common specified initial field/bath state
+$\tau_H$, including any purification, independent of logical $ABR$ and
+the CS Bell source. The theorem permits a joint field/bath state; a
+photon--bath product is not its general premise. Apply the same H-only
+accepted CP filter with Kraus $M_r$ after the flag, and let $\Gamma_N$,
+$\Gamma_F$ retain $H$, $AB$ and the stated available records. Kraus
+refinement includes unobserved outcomes only for the proof; acceptance
+cannot use hidden records. A physical filter acts only on available
+ports, as identity on inaccessible baths; formally retaining $H$ does
+not grant access to those baths or their purification. Directly from
+the odd block of (OG2),
+
+$$
+\Delta p:=p_N(10)-p_N(01)=\frac{q_M}{4}\ge0,\qquad
+q_M=\sum_r\operatorname{Tr}(M_rJ\tau J^\dagger M_r^\dagger).
+\tag{OG3}
+$$
+
+Thus equal acceptance on these **two** logical basis inputs suffices:
+$q_M=0$ forces every $M_rJ\sqrt\tau=0$, and (OG2) proves equality of
+the complete selected outputs $\Gamma_N=\Gamma_F$, including all
+unknown $ABR$ coherences and retained field records. Any common later
+TP decoder preserves equality. In particular, an input-independent
+heralded gate/recovery component cannot gain a new selected output here.
+
+There is also a robust unnormalized bound. Choose one fixed purification
+$|\psi\rangle_{HE}$ of $\tau$ and identical fine record labels for the
+two accepted Stinesprings $V_N,V_F$. Their difference is the tensor
+product of $\tfrac12\sum_r|r,\mathrm{records}\rangle
+(M_rJ\otimes I_E)|\psi\rangle$ with $P_{0A}F_{AB}$.
+Since $\|P_{0A}F_{AB}\|_{\rm op}=1$,
+$\|V_N-V_F\|_{\rm op}=\sqrt{q_M}/2=\sqrt{\Delta p}$.
+Physical accepted contacts and filters make both Stinesprings
+contractions. Expanding their two left/right multiplication maps gives
+
+$$
+\frac12\|\Gamma_N-\Gamma_F\|_\diamond
+\le\min\{1,\sqrt{\Delta p}\}.
+\tag{OG4}
+$$
+
+Discarding inaccessible purification systems or applying common
+downstream channels only contracts this bound. It controls the selected
+map **before normalization**; conditioning on a rare event still needs
+its success-probability account. Two measured populations do not by
+themselves certify the one-bright model, the matched physical dilation
+or its stationarity.
+
+The displayed CZ benchmark has a second ordinary comparison even when
+acceptance depends on the input. Use the raw target
+$G=\operatorname{diag}(1,i,-i,-1)$ from (RS19b), with its same known
+local output correction. For a selected operator $K$ define
+$p=\operatorname{Tr}[K(\tau\otimes I_4)K^\dagger]/4$ and
+$g=\operatorname{Tr}(T\tau T^\dagger)/16$,
+$T=\operatorname{Tr}_{AB}(G^\dagger K)$.
+These are accepted Choi mass and unnormalized target Bell weight.
+First take no extra H filter, so $q=\operatorname{Tr}(J\tau J^\dagger)$.
+The three traces are
+
+$$
+\begin{aligned}
+T_F&=X+Y-YX-i(X-Y),\\
+T_R&=X+Y-XY-i(X-Y),\qquad T_N=(T_F+T_R)/2.
+\end{aligned}
+\tag{OG5}
+$$
+
+A recorded fair coin chooses the ordinary forward or reverse route
+before launch. Let $p_O=(p_F+p_R)/2$, $g_O=(g_F+g_R)/2$. Then
+
+$$
+g_O-g_N=\frac q{64},\qquad
+p_N-p_O=\frac q{16},\qquad
+(p_N-g_N)-(p_O-g_O)=\frac{5q}{64}.
+\tag{OG6}
+$$
+
+The first identity is the parallelogram identity applied to (OG5).
+For the second, the native input-column norms sum to
+$u^\dagger u+2D^\dagger D+v^\dagger v+J^\dagger J/4$;
+the fair-coin sum is the same expression without its last term.
+The third identity follows. The argument holds after a common H-only
+filter as well, replacing $q$ by $q_M$ and summing the filtered traces.
+If $p_N>0$, then $p_O>0$ and the ordinary conditional target Bell
+fidelity $F_O=g_O/p_O$ is at least $F_N=g_N/p_N$. Ordinary accepts
+**less** mass, so this is not domination of every yield--fidelity
+frontier or equality of the two selected maps.
+
+There is a useful high-fidelity constraint. The native off-diagonal
+block $J/2$ is Hilbert--Schmidt orthogonal to the diagonal target $G$,
+so $p_N-g_N\ge q_M/16$. Consequently
+
+$$
+p_O\ge g_N=p_NF_N,\qquad
+F_N\ge1-\epsilon\ \Longrightarrow\
+p_O\ge(1-\epsilon)p_N,\quad F_O\ge F_N.
+\tag{OG7}
+$$
+
+This is the declared Choi-average selected-G benchmark, not a
+worst-input gate certificate, a clock comparison or an optimized
+statement over other CS measurements and data-dependent/joint TNI
+acceptance filters.
+
+A declared microscopic connection combines the quantized equal-leg
+Lambda model above with the trion-conditioned linear phonon term in
+[Koong et al., SI S14--S22](https://arxiv.org/abs/1904.05103).
+With selective matched optical legs and identical ground orbital
+potentials, only the bright sector scatters through $S_b$ on common
+photon frequency and local phonons. Thus
+$T=I+P_b\otimes(S_b-I)$; the known bus-$Z$ frame gives
+$a=(I+S_b)/2$, $b=(I-S_b)/2$ and $a+b=I$.
+Independent local baths need not make these coefficients commute,
+because they share the flying frequency. This is a declared Hamiltonian
+extension: Koong's Zeeman-split free-space driven Raman experiment
+certifies neither an incoming unknown-spin two-channel port nor a
+two-node order router. The microscopic thermal scattering extension
+may additionally assume product input preparation; it is not needed
+for the operator theorem's common joint $\tau_H$.
+
+Both comparisons still pay for their actual routes, helper-preserving
+ports, Bell source/readout, midpoint filter/reject collection, carriers,
+local phase frames, record access and complete clocks. In particular,
+the fair coin needs BOTH ordinary classical visit orders with a
+preserved CS helper and the supplied midpoint operation; those ports
+are not inferred merely from a native order-selector drawing. The
+same initial preparation and physical reset/reuse rule must apply per
+launch. This is not a simulation of a reused bath's entire conditional
+trajectory. Other flags, general symmetric-sector operators, unmatched
+time kernels, preencoding, and joint/data-dependent acceptance are
+outside the stated comparisons. A remaining application must specify
+a useful required output and a complete costed instrument beyond
+these premises; a nonzero phonon or field commutator alone does not
+provide one.
+
+The [existing Raman checker](checks/architecture/raman_baselines.py)
+replays literal one-bright contacts on finite field spaces, Bell
+source/flag contractions, common-filter contrast and retained-output
+matrix ingredients, and the accepted/good/bad weight identities.
+The all-input positivity, diamond bound, continuum and physical-model
+claims are the analytic arguments and assumptions above.
+
 <a id="nr-r11-raman-route"></a>
 
 ### Native Raman ports need a routed temporal helper

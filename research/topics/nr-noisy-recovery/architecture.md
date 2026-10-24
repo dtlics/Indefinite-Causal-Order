@@ -42,7 +42,19 @@ memory advantage when that phase-stable controlled-unitary port exists.
 The [working-code verification bound](methods/memory-code-verification.md)
 makes the deployment issue quantitative: a supplied reliable code admits
 an ordinary test, so its learning and block cost must enter any claimed
-end-to-end saving. The [decoder-bootstrap extension](methods/memory-code-bootstrap.md)
+end-to-end saving. Its
+[logical-policy extension](methods/memory-code-verification.md#nr-r20-logical-policy-qualification)
+scores unnormalized accepted Bell-good weight. For a common logical map,
+$X/Z$ returns give only a tight interval. The actual dynamic-code tests
+do not by themselves supply that map, logical $Y$ tests, a common
+pre-readout quantum decoder or a coherent schedule selector.
+General memory within a policy run is allowed; statistical
+confidence separately requires independent complete runs. This does not
+extend the memoryless capacity ceiling to general correlated histories.
+The [record-overlap bound](backaction.md#nr-r14-record-overlap-qualification)
+requires actual inaccessible-record dilations; visible logs alone
+do not establish coherent erasure.
+The [decoder-bootstrap extension](methods/memory-code-bootstrap.md)
 includes retained receiver quantum programs under an all-instance
 unassisted deployment interface. Unframed high-case self-switches compile
 to serial calls, while Petz inverse filters and ordinary heralded code
@@ -1114,6 +1126,19 @@ the remaining instruments, optimal yields or complete physical routers.
 Only the center's specified early ordinary identity flags are safe for
 ideal retry. Source coherence, filter/reject ports, readout and the
 complete clock remain paid.
+The [one-bright operator-contact model](communication.md#nr-r11-raman-operator-gate)
+allows noncommuting field/bath dynamics with a common initial state
+independent of the payload for each launch. Equal native selected
+acceptance on logical inputs $01$ and $10$ forces equality with the
+forward ordinary selected map; the acceptance contrast also bounds
+their unnormalized map distance. For the declared fixed gate target, a
+fair coin over ordinary visit orders gives at least as much target Bell
+mass, no more erroneous accepted mass and at least as high conditional
+target fidelity, with reduced or equal acceptance. High-fidelity points
+have nearly matching acceptance. That Choi comparison does not establish
+worst-input or rate dominance; neither result simulates the other flags
+or a reused-bath trajectory. Helper/filter ports and both classical
+routes must actually be supplied and paid.
 Unknown-input gate comparisons must also include its ordinary
 known-gate helper programs and the coherent completion that restores the
 data on specified early rejection flags. Extra helper space can replace

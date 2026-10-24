@@ -1361,6 +1361,91 @@ The physical ledger is one shared-bath interval, one order memory, two coherent 
 
 An ignored optical outcome need not be a coherent record. If the two histories emit distinguishable timing states $|T_0\rangle,|T_1\rangle$, tracing them multiplies the order off-diagonal block by $\langle T_1|T_0\rangle$. Orthogonal tags yield exactly a classical random order; outcome-dependent tags require their full overlap matrix. Delayed module-labelled readout can retain interference, but its quantum buffer, erasure and losses are resources. Intermediate detector logs and accessible records belong to both strategies. Unknown intervention-induced bath kicks likewise require a complete joint model; the reduced sensor CPTP maps do not specify the coherent temporal experiment.
 
+<a id="nr-r14-record-overlap-qualification"></a>
+
+### Inaccessible records bound the complete coherent-history output
+
+There is a quantitative version for an actual controlled-history
+interface. Fix its two branch isometries $W_0,W_1$, their common finish,
+and the same initial state, including the physical bath and all
+route/vacuum inputs. The independent selector starts in $|+\rangle$.
+Purify the initial state and write the normalized branch vectors as
+$|a\rangle,|b\rangle$ on $A\otimes E$. Here $A$ comprises the actual
+retained output and coherent record systems, together with any **passive**
+reference kept for analysis. The decoder never accesses that reference.
+The inaccessible environment $E$ includes every discarded purifier,
+emitted field, reset/amplifier copy and unavailable record. These are
+the **actual joint branch dilations**; reduced channel maps alone do
+not specify their cross term.
+
+Put $X=\operatorname{Tr}_E|a\rangle\langle b|$. The controlled output
+and its dephased-selector comparator have identical diagonal blocks,
+so their half trace distance is
+$$
+\Delta=\frac12\left\|
+\frac12\begin{pmatrix}0&X\\X^\dagger&0\end{pmatrix}
+\right\|_1
+=\frac12\|X\|_1.
+\tag{RO1}
+$$
+The equality follows because the off-diagonal Hermitian block has
+singular values equal to those of $X$, each repeated twice.
+The comparator is an ordinary fair random choice of the two actual
+native histories, retaining its classical selector and every output.
+
+For complete orthogonal pointer projectors $\{\Pi_r\}$ on $E$
+(including an unrecorded complement when needed), $\sum_r\Pi_r=I_E$, let
+$|a_r\rangle=(I_A\otimes\Pi_r)|a\rangle$ and similarly $|b_r\rangle$,
+with actual tag probabilities
+$P_0(r)=\|a_r\|^2$, $P_1(r)=\|b_r\|^2$. Distinct pointer sectors have
+zero cross partial trace. Variational trace norm and Cauchy–Schwarz give
+$$
+\begin{aligned}
+\|X\|_1
+&\le\sum_r\|\operatorname{Tr}_E|a_r\rangle\langle b_r|\|_1\\
+&=\sum_r\sup_{U_A\ {\rm unitary}}
+ |\langle b_r|(U_A\otimes I_E)|a_r\rangle|\\
+&\le\sum_r\sqrt{P_0(r)P_1(r)},\qquad
+\boxed{\Delta\le\frac12\sum_r\sqrt{P_0(r)P_1(r)}.}
+\end{aligned}
+\tag{RO2}
+$$
+The variational unitary is a mathematical norm certificate, not access
+to the passive reference or the environment. Mixed inputs are already
+covered by including discarded purifiers in $E$. Keeping an extra
+purifier first and later discarding it instead gives an upper bound
+by trace-distance contractivity.
+
+Any common subsequent CPTP decoding/instrument, tensored with identity
+on the passive reference, preserves the bound. Every bounded
+$[0,1]$ **all-launch** payoff differs by at most $\Delta$, including
+accepted Bell-good weight when leakage and rejection remain part of
+the instrument. Conditional accepted fidelities require an additional
+positive-yield normalization bound. For a declared channel interface
+with fixed input-independent environment, a bound uniform over inputs
+and passive references gives the corresponding half-diamond bound;
+a one-input estimate is only that input's statement.
+
+Disjoint inaccessible order/timing-tag laws give $\Delta=0$ and exact
+equality with the ordinary mixture. Independent tensor-factor tags
+with branch-state overlaps $\gamma_\ell$ contribute a factor
+$\prod_\ell|\gamma_\ell|$. That factorization is an extra physical
+premise: a one-cycle visibility does not establish an exponential
+multi-cycle law for a correlated bath. Conversely, identical coarse
+visible histograms do not certify interference; unobserved orthogonal
+timing tags can still make $X=0$.
+
+This bound does not assert that every dynamic-QEC or reset selector
+has orthogonal records. A native proposal must supply its complete
+cross-history instrument, with coherent buffers or erased records
+actually available and charged to both strategies. The
+[logical-policy qualification application](methods/memory-code-verification.md#nr-r20-logical-policy-qualification)
+separates that requirement from ordinary measured syndrome/reset
+policies. Finite tag/cross-block and accepted logical-map fixtures are
+checked in the existing [memory-qualification replay](checks/architecture/verify_memory_qualification.py);
+(RO1)–(RO2), contractivity and physical interface assumptions remain
+analytic.
+
 ### Exchange backaction: identical isolated channels, opposite good schedules
 
 The following finite model includes energy exchange with an inaccessible two-level defect, rather than a sensor-controlled pure-dephasing bath. It isolates a scheduling decision and its strongest full-output discrimination baseline. It is not a fitted processor model or a model of irreversible leakage reset.

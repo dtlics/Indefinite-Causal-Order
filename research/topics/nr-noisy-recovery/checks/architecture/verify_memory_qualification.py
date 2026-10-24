@@ -1,6 +1,7 @@
 """Exact finite guards for memory qualification and amplified switch blocks.
 
-The all-dimension capacity, query and stopping arguments are analytic.
+The all-dimension capacity, query, stopping, logical-policy qualification
+and record-overlap arguments are analytic.
 No third-party dependencies, file writes, or import-time output.
 """
 
@@ -120,6 +121,166 @@ def verify_code_verification():
     require(F(1, 2) * (F(2, 3) * F(11, 12) + F(11, 12)) == F(55, 72) > F(2, 3),
             "successful-code training gives sufficient balanced discrimination")
     return cases
+
+
+def verify_logical_policy_qualification():
+    """Finite Choi/acceptance, full-record and tag fixtures for DC7a--e/RO1--2."""
+    import sys
+    from itertools import product
+    sys.dont_write_bytecode = True
+    # Reuse the existing staged Gaussian-rational engine and Choi helpers.
+    import verify_dispatch as g
+
+    zero, one = g.ZERO, g.ONE
+    ident = g.identity(2)
+    x = [[zero, one], [one, zero]]
+    y = [[zero, g.gaussian(0, -1)], [g.gaussian(0, 1), zero]]
+    z = [[one, zero], [zero, g.gaussian(-1)]]
+    paulis = [ident, x, y, z]
+    states = [g.scaled(g.plus(ident, g.scaled(p, sign)), F(1, 2))
+              for p in (x, y, z) for sign in (-1, 1)]
+    phi = g.normalized_choi([(F(1), ident)])
+    moment = g.zeros(4, 4)
+    for state in states:
+        require(g.matmul(state, state) == state and g.adjoint(state) == state,
+                "logical input is a pure Pauli eigenstate")
+        moment = g.plus(moment, g.scaled(g.tensor(list(map(list, zip(*state))), state),
+                                         F(1, 6)))
+    require(moment == g.scaled(g.plus(g.identity(4), g.scaled(phi, 2)), F(1, 6)),
+            "six-state normalized Choi moment")
+    px = g.scaled(g.plus(g.identity(4), g.tensor(x, x)), F(1, 2))
+    pz = g.scaled(g.plus(g.identity(4), g.tensor(z, z)), F(1, 2))
+    require(g.matmul(px, pz) == g.matmul(pz, px) == phi,
+            "commuting X/Z effects multiply to the Bell projector")
+    lower_gap = g.plus(g.plus(g.identity(4), phi),
+                       g.scaled(g.plus(px, pz), -1))
+    projectors = [px, pz, lower_gap, g.plus(px, g.scaled(phi, -1)),
+                  g.plus(pz, g.scaled(phi, -1))]
+    for projector in projectors:
+        require(projector == g.adjoint(projector) and
+                g.matmul(projector, projector) == projector,
+                "X/Z Bell-bound gap is an orthogonal projector")
+
+    def real_trace(matrix):
+        value = g.trace(matrix)
+        require(value[1] == 0, "logical-policy trace is real")
+        return value[0]
+
+    def apply(terms, state):
+        output = g.zeros(len(terms[0][1]), len(terms[0][1]))
+        for probability, k in terms:
+            output = g.plus(output, g.scaled(g.matmul(g.matmul(k, state), g.adjoint(k)),
+                                            probability))
+        return output
+
+    k0 = [[one, zero], [zero, g.gaussian(F(3, 5))]]
+    k1 = [[zero, g.gaussian(F(4, 5))], [zero, zero]]
+    g.require_tp_choi(g.normalized_choi([(F(1), k0), (F(1), k1)]), 2, 2)
+    fixtures = [([(F(1), k0)], F(17, 25), F(16, 25)),
+                ([(F(1), k1)], F(8, 25), F(0)),
+                ([(F(1), k0), (F(1), k1)], F(1), F(16, 25))]
+    outcome_checks = 0
+    for terms, expected_p, expected_good in fixtures:
+        choi = g.normalized_choi(terms)
+        p = real_trace(choi)
+        good = real_trace(g.matmul(phi, choi))
+        accepts, corrects = [], []
+        for state in states:
+            output = apply(terms, state)
+            accepted = real_trace(output)
+            correct = real_trace(g.matmul(state, output))
+            require(0 <= correct <= accepted <= 1, "valid accepted/correct outcome law")
+            accepts.append(accepted)
+            corrects.append(correct)
+            outcome_checks += 1
+        require((p, good) == (expected_p, expected_good), "accepted-map Bell fixture")
+        require(sum(accepts)/6 == p and sum(corrects)/6 == (p+2*good)/3,
+                "trace-nonincreasing six-state moments")
+        require(sum((3*c-a)/2 for c, a in zip(corrects, accepts))/6 == good,
+                "all-attempt unbiased logical Bell-good estimator")
+    require(real_trace(apply(fixtures[0][0], states[4])) !=
+            real_trace(apply(fixtures[0][0], states[5])),
+            "accepted fixture really has input-dependent acceptance")
+    require(F(3, 2)**2/2 == F(9, 8), "Hoeffding range prefactor")
+
+    endpoints = 0
+    for p_num in range(3):
+        for x_num, z_num in product(range(p_num+1), repeat=2):
+            p, xv, zv = F(p_num, 2), F(x_num, 2), F(z_num, 2)
+            for good in (max(F(0), xv+zv-p), min(xv, zv)):
+                weights = [good, xv-good, p-xv-zv+good, zv-good]
+                require(min(weights) >= 0 and sum(weights) == p <= 1,
+                        "tight X/Z endpoint has valid Pauli subchannel weights")
+                choi = g.normalized_choi(list(zip(weights, paulis)))
+                require((real_trace(choi), real_trace(g.matmul(px, choi)),
+                         real_trace(g.matmul(pz, choi)), real_trace(g.matmul(phi, choi)))
+                        == (p, xv, zv, good), "X/Z endpoint is attained")
+                endpoints += 1
+
+    laws = [[F(3, 4), F(0), F(1, 4), F(0)],
+            [F(1, 2), F(1, 4), F(0), F(1, 4)]]
+    for law in laws:
+        require(min(law) >= 0, "positive normalizer error law")
+        g.require_tp_choi(g.normalized_choi(list(zip(law, paulis))), 2, 2)
+    returns = [[real_trace(g.matmul(state, apply(list(zip(law, paulis)), state)))
+                for state in states] for law in laws]
+    require([real_trace(g.matmul(phi, g.normalized_choi(list(zip(law, paulis)))))
+             for law in laws] == [F(3, 4), F(1, 2)], "logical normalizer Bell ambiguity")
+    require(returns[0][2:4] == [F(1), F(1)] and
+            returns[1][2:4] == [F(1, 2), F(1, 2)], "paid Y tests resolve the ambiguity")
+    records = list(product((0, 1), repeat=3))
+    record_laws = [
+        {r: F(4, 5) if r == (0, 0, 0) else F(1, 5) if r == (1, 1, 1)
+         else F(0) for r in records},
+        {r: F(1, 5)**sum(r)*F(4, 5)**(3-sum(r)) for r in records},
+    ]
+    record_outcomes = 0
+    for record_law in record_laws:
+        require(sum(record_law.values()) == 1, "complete earlier record law")
+        for state_index, record, correct in product((0, 1, 4, 5), records, (0, 1)):
+            c, d = returns[0][state_index], returns[1][state_index]
+            require(record_law[record]*(c if correct else 1-c) ==
+                    record_law[record]*(d if correct else 1-d),
+                    "full earlier record plus terminal X/Z outcome is indistinguishable")
+            record_outcomes += 1
+
+    tag_units = 0
+    for alpha, beta in ((F(0), F(1)), (F(3, 5), F(4, 5)), (F(1), F(0))):
+        require(alpha**2+beta**2 == 1, "physical pure pointer tag")
+        # W_e: input data -> selector/data, with pointer e traced out.
+        branches = [ident+g.scaled(x, alpha), g.zeros(2, 2)+g.scaled(x, beta)]
+        terms = [(F(1, 2), k) for k in branches]
+        g.require_tp_choi(g.normalized_choi(terms), 2, 4)
+        for row, column in product(range(2), repeat=2):
+            unit = g.zeros(2, 2)
+            unit[row][column] = one
+            actual = apply(terms, unit)
+            expected = g.zeros(4, 4)
+            for c0, c1 in product(range(2), repeat=2):
+                left, right = (ident, x)[c0], (ident, x)[c1]
+                block = g.scaled(g.matmul(g.matmul(left, unit), g.adjoint(right)),
+                                 F(1, 2)*(1 if c0 == c1 else alpha))
+                for i, j in product(range(2), repeat=2):
+                    expected[2*c0+i][2*c1+j] = block[i][j]
+            require(actual == expected, "full tag-reduced cross block")
+            if row == column == 0:
+                dephased = [r[:] for r in actual]
+                for i, j in product(range(4), repeat=2):
+                    if i//2 != j//2:
+                        dephased[i][j] = zero
+                difference = g.plus(actual, g.scaled(dephased, -1))
+                wanted = g.zeros(4, 4)
+                wanted[0][3] = wanted[3][0] = g.gaussian(alpha/2)
+                require(difference == wanted, "tag fixture half-distance is alpha/2")
+            tag_units += 1
+
+    return {"status": "passed", "arithmetic": "exact Gaussian rational",
+            "six_state_moment_entries": 16, "xz_checked_projectors": len(projectors),
+            "accepted_channel_fixtures": len(fixtures),
+            "accepted_outcome_laws": outcome_checks, "tight_xz_endpoint_fixtures": endpoints,
+            "full_record_xz_outcome_probabilities": record_outcomes,
+            "pointer_tag_pairs": 3, "tag_cross_map_matrix_units": tag_units,
+            "scope": "Finite Choi/TNI, X/Z, normalizer-record and tag factors; general full-run statistics, cross-history norms and native ports remain analytic."}
 
 
 def verify_memory_qualification():
@@ -275,6 +436,7 @@ def verify_memory_qualification():
             "complete_flagged_instruments": full_instrument_cases,
             "adaptive_mean_ledger_cases": mean_ledger_cases,
             "code_verification_isometry_entries": code_cases,
+            "logical_policy_qualification": verify_logical_policy_qualification(),
             "scope": "Finite exact Pauli-channel instruments and stopping ledgers; general capacity/C6 reduction, coherent interface, native costs and all-dimension proofs remain analytic."}
 
 

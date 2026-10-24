@@ -15,11 +15,20 @@ Repository organization preserves the distinction between mathematical claims, e
 | RG | The source package documents integrity and certificate tiers, including [supporting helpers absent from the supplied material](../research/topics/rg-routed-graph/source/REPRODUCIBILITY.md) |
 | C6 scalar checks | The exact-arithmetic replay checks both the paper's `212/10000` estimate and the formal `215/10000` allowance; it does not replace the shared-Haar proof |
 | NR physical recovery | The [canonical analytic proofs](../research/topics/nr-noisy-recovery/README.md) and [standard-library exact replays](../research/topics/nr-noisy-recovery/checks/README.md) have one [current input-hash validation record](../research/topics/nr-noisy-recovery/checks/validation.json). Replays check causal PSD certificates, exact contractions, Weyl/dimension identities, and resource/score constants; they do not prove every prose assertion or constitute a Lean audit |
-| NR memory qualification | [NR-R20](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) has analytic capacity/query reductions and a general-channel Choi-entropy certificate with a nonunitality correction, alongside unitary-realization entropy proofs. Standard-library jobs check finite flagged maps, stopping ledgers, code-verification Bell isometries, general Kraus/Choi/Gram/tail/pinching identities, ordinary calibration and full helper-port noise maps. Entropy integration, coding, all-dimension learning and native resource arguments remain analytic; no new Lean endpoint or measured native advantage is claimed |
+| NR memory qualification | [NR-R20](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) has analytic capacity/query reductions and a general-channel Choi-entropy certificate with a nonunitality correction, alongside unitary-realization entropy proofs. Standard-library jobs check finite flagged maps, stopping ledgers, code-verification Bell isometries, accepted logical-policy scores/X/Z intervals, full-record/tag fixtures, general Kraus/Choi/Gram/tail/pinching identities, ordinary calibration and full helper-port noise maps. General confidence and record-overlap bounds, entropy integration, coding, all-dimension learning and native resource arguments remain analytic; no new Lean endpoint or measured native advantage is claimed |
 
 The paper compilation used MiKTeX 25.12. Shell escape was disabled; its related warning and an update reminder do not affect the required build. The visual sample covers four pages, not a complete visual review or an online Overleaf run. The source checksum is `7aafc806fa3573757f3e3a73ffb3476a770ca1928aac17fb2371829f2a43a33a`.
 
 The selected proof-verification record reports 32 endpoints checked with Lean 4.30.0 at trust level zero, using compiled objects matched to the selected sources. It does not claim a second clean elaboration of every module. A new full Lean rebuild or kernel audit was not performed as part of repository consolidation. Source fingerprints and finite Python replays do not replace that audit.
+
+The [logical-policy extension](../research/topics/nr-noisy-recovery/methods/memory-code-verification.md#nr-r20-logical-policy-qualification)
+permits temporal memory within a run; its confidence bound separately
+requires independent complete validation runs. Measured $X/Z$ returns
+do not demonstrate logical $Y$ access, a common quantum decoder or a
+coherent schedule selector. It does not transfer the memoryless capacity
+ceiling to general non-Markov histories. The generic
+[record-overlap bound](../research/topics/nr-noisy-recovery/backaction.md#nr-r14-record-overlap-qualification)
+uses actual inaccessible records, not visible histograms alone.
 
 The new NR recovery theorems have not been formalized in Lean or externally peer reviewed. Their mathematical arguments use the explicitly cited mixed-tensor decomposition and approximate-design theorem in addition to the exact certificates. The local result averages over fresh private frames, uses noise once after each whole module with rate of order `1/n`, and bounds a specified signed recovery utility. Its control tolerance is the declared scalar dephasing model. No deployed-runtime, fixed native fault-rate, persistent-frame throughput, or capacity validation is recorded.
 
@@ -491,6 +500,14 @@ scalar elastic responses is analytic. CZ and corrected early identity
 retries refer to the calibrated center. Stopping costs remain analytic; neither
 full-instrument equality, optimized yield nor a physical/noisy
 implementation is certified.
+The one-bright operator-contact fixtures use field dimensions two and
+three to check literal selected contractions, common filters, the
+acceptance contrast between logical inputs $01$ and $10$, and the
+declared fixed-target Choi comparison. The general selected-map and
+diamond-distance statements and microscopic bridge are analytic.
+The ordinary target-score comparison trades acceptance for conditional
+fidelity; it is not a whole-instrument, worst-input, rate or reused-bath
+guarantee.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
 survivor instruments are checked with exact Gaussian fractions. Its
 local-ancilla extension reconstructs the six-qubit source, both scatters,

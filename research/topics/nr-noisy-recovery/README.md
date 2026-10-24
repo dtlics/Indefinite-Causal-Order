@@ -75,7 +75,13 @@ proof components for the [general-channel entropy certificate](methods/unital-en
 [structured memory tests](methods/memory-ordinary-tests.md),
 [working-code verification](methods/memory-code-verification.md),
 [decoder bootstrap and Petz costs](methods/memory-code-bootstrap.md), and
-[native cost screens](methods/memory-native-cost.md). The
+[native cost screens](methods/memory-native-cost.md).
+Its [logical-policy extension](methods/memory-code-verification.md#nr-r20-logical-policy-qualification)
+scores unnormalized accepted Bell-good weight. Two-basis returns give
+only a tight interval for a common logical map; that map and logical
+$Y$ tests need actual implementations. Coherent policies additionally
+need [record-overlap qualification](backaction.md#nr-r14-record-overlap-qualification).
+The
 [rare-good screening component](methods/memory-stream-screening.md)
 prices an explicit survivor code and gives a conditional classical-address
 selection saving, while leaving the physical stream and native interface
@@ -311,6 +317,11 @@ has a selected map matched by an ordinary midpoint filter using the same
 helper, including coherent frequency in the stated stationary elastic
 model. Its calibrated center gives CZ. The other flags differ; only the
 center's specified early ordinary identity flags support ideal retries.
+The [one-bright operator-contact frontier](communication.md#nr-r11-raman-operator-gate)
+compares noncommuting field/bath dynamics with a common initial state
+independent of the payload. Equal selected acceptance on two logical
+test inputs forces an ordinary selected-map match. Its separate fixed-gate
+comparison trades acceptance for conditional target fidelity.
 The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
 also compare unknown-input gates, helper-space costs and coherently read
 identity failures; their ideal identities do not certify lossy retries.

@@ -31,7 +31,7 @@ The runner copies executable inputs into `_build/noisy-recovery/stage/` and runs
 | `architecture/verify_pauli_slot_noise.py` | Exact local depolarizing-noise kernels, all-parameter polynomial envelopes, complete control/target/memory matrix units and KL constants. Its general helper-port converse does not cover retaining or processing the output target. |
 | `architecture/verify_memory_partial_bell.py` | Exact finite partial-Bell kernel Gram forms for commuting error streams, equivalence of streaming and full-kernel tests, and uniform-label detection conditioned on observed local syndromes. The general sample bound and physical controls remain analytic. |
 | `architecture/verify_memory_fixed_probe.py` | Exact small-instance fixed-layout likelihood ratios, full-rank syndrome probabilities, total-variation guards and expected-budget constants. Its lower bound excludes changing layouts and coherent multiquery receivers. |
-| `architecture/verify_memory_qualification.py` | Finite exact burst compositions, complete flagged target-channel instruments for amplified self-switches, local-mode blindness, helper visibility and a quasistatic counterexample. Also checks history-dependent mean-cost simulation ledgers, the C6 truncation constant and code-verification Bell isometries/confidence. Capacity coding, all-dimension query reductions and the native process remain analytic. |
+| `architecture/verify_memory_qualification.py` | Finite exact burst compositions, complete flagged target-channel instruments for amplified self-switches, local-mode blindness, helper visibility and a quasistatic counterexample. Also checks history-dependent mean-cost simulation ledgers, the C6 truncation constant, code-verification Bell isometries, accepted logical-policy scores and tight X/Z intervals, full-record counterexamples and pointer-tag cross maps. General full-run confidence, record-overlap norms, capacity coding, all-dimension query reductions and native logical/control ports remain analytic. |
 | `architecture/verify_entropy_capacity.py` | Exact character orthogonality, spectral-tail and conditional-identity arithmetic, rational square-root confidence enclosures, a full-support capacity witness and counterexamples. The Shannon tail integral and quantum coding theorem are analytic; finite cases are not a capacity experiment. |
 | `architecture/verify_pauli_subspace.py` | Finite low-rank symplectic geometry, injective syndrome readout, span-expansion and false empirical-constraint mass guards. Distribution-free concentration, all-dimension learning bounds and physical preparation/readout costs remain analytic. |
 | `algebra/brauer_objective.py --validate` | Independent sparse physical Choi contractions: every diagram at dimension 2, selected diagrams at dimension 4, both device labels and fidelity/probability objectives. Gaussian integers and fractions only. |
@@ -90,6 +90,12 @@ selected-map identity in the stated stationary elastic model; the
 continuum lift is analytic. CZ and the specified early identity retries
 refer to the calibrated center. This does not certify full-instrument
 equality, an optimal yield or a complete physical/noisy implementation.
+Two- and three-dimensional field fixtures also check the one-bright
+operator-contact selected contractions, common filters, logical-input
+acceptance contrast and fixed-target Choi scores. General map-distance
+bounds and the microscopic model bridge remain analytic. The comparison
+does not certify whole-instrument or rate dominance, arbitrary readouts
+or a reused-bath trajectory.
 
 The encoded-Pauli checks include the full code-input and retained-record
 channels, reference matrix units, actual deferred record gates and a

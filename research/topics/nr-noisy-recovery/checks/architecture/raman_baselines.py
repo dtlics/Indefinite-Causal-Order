@@ -1011,6 +1011,233 @@ def partial_swap_gate_instruments():
             'scope': 'Exact opposite ideal partial contacts, Bell source/readout and paid ordinary midpoint parity filter. All-input flags and source/contact normalizations; no POVM/filter optimum, noisy instrument, clock or hardware certificate.'}
 
 
+def operator_partial_swap_frontier():
+    from fractions import Fraction as F
+    from itertools import product
+    from retained_photon_serial import G, add, adj, eye, kron, mm, require, scale, zeros
+
+    def matrix(rows):
+        return [[G(x) for x in row] for row in rows]
+
+    def total(items, size):
+        out = zeros(size)
+        for item in items:
+            out = add(out, item)
+        return out
+
+    def trace(a):
+        return sum((a[i][i] for i in range(len(a))), G())
+
+    def real(z):
+        require(z.i == 0, 'real exact probability or squared norm')
+        return z.r
+
+    def gram(a):
+        return mm(adj(a), a)
+
+    def outer(v):
+        return [[x*y.conj() for y in v] for x in v]
+
+    def comm(a, b):
+        return add(mm(a,b), scale(mm(b,a), -1))
+
+    def column(a, j):
+        return [row[j] for row in a]
+
+    def embed_vector(v):
+        h = len(v)
+        out = zeros(4*h,4)
+        for j,a in product(range(h),range(4)):
+            out[4*j+a][a] = v[j]
+        return out
+
+    def lift2(a, third):
+        out = zeros(3)
+        for i,j in product(range(2), repeat=2):
+            out[i][j] = a[i][j]
+        out[2][2] = G(third)
+        return out
+
+    def partial_target(a, h):
+        return [[sum((target[k].conj()*a[4*i+k][4*j+k] for k in range(4)), G())
+                 for j in range(h)] for i in range(h)]
+
+    swap = matrix([[1,0,0,0],[0,0,1,0],[0,1,0,0],[0,0,0,1]])
+    za = matrix([[1,0,0,0],[0,1,0,0],[0,0,-1,0],[0,0,0,-1]])
+    zb = matrix([[1,0,0,0],[0,-1,0,0],[0,0,1,0],[0,0,0,-1]])
+    p0a = matrix([[1,0,0,0],[0,1,0,0],[0,0,0,0],[0,0,0,0]])
+    remainder = mm(p0a, swap)
+    require(remainder == matrix([[1,0,0,0],[0,0,1,0],[0,0,0,0],[0,0,0,0]]),
+            'directed data-dependent remainder and physical output ports')
+    target = [G(1),G(0,1),G(0,-1),G(-1)]
+    va2 = matrix([[F(3,5),G(0,F(4,5))],[G(0,F(4,5)),F(3,5)]])
+    vb2 = matrix([[G(0,F(5,13)),F(12,13)],[G(0,-F(12,13)),F(5,13)]])
+    v = [G(F(1,3)),G(0,F(2,3)),G(F(2,3))]
+    w3 = add(eye(3), scale(outer(v), -2))
+    require(gram(w3) == eye(3), 'dense exact complex field basis')
+    fields = (
+        (2,va2,vb2,eye(2)),
+        (3,mm(w3,mm(lift2(va2,1),adj(w3))),
+           mm(w3,mm(lift2(vb2,G(0,1)),adj(w3))),w3),
+    )
+    selected_entries = triangular_entries = source_filter_cases = 0
+    contrast_cases = kernel_cases = dilation_gram_entries = coherence_coefficients = 0
+    conditional_cases = 0
+    for h,va,vb,basis in fields:
+        require(gram(va) == gram(vb) == eye(h), 'unitary bright field sectors')
+        require(all(x != 0 for row in va for x in row)
+                and all(x != 0 for row in vb for x in row), 'dense complex field contacts')
+        x,y = scale(add(eye(h),scale(va,-1)),F(1,2)), scale(add(eye(h),scale(vb,-1)),F(1,2))
+        a0,b0 = add(eye(h),scale(x,-1)), add(eye(h),scale(y,-1))
+        c,d = comm(y,x), scale(add(x,scale(y,-1)),F(1,2))
+        require(c != zeros(h), 'genuinely noncommuting field coefficients')
+        for alpha,beta in ((a0,x),(b0,y)):
+            contact = add(kron(alpha,eye(4)),kron(beta,swap))
+            require(gram(contact) == eye(4*h), 'literal one-bright contact unitary')
+
+        def accumulate(state,key,value):
+            state[key] = state.get(key,G())+value
+
+        def apply_contact(state,station):
+            alpha,beta = (a0,x) if station == 'A' else (b0,y)
+            out = {}
+            for (field,control,s,a,b),value in state.items():
+                for output in range(h):
+                    accumulate(out,(output,control,s,a,b),alpha[output][field]*value)
+                    key = ((output,control,a,s,b) if station == 'A'
+                           else (output,control,b,a,s))
+                    accumulate(out,key,beta[output][field]*value)
+            return out
+
+        def literal_selected(mode):
+            out = zeros(4*h)
+            for field,a,b in product(range(h),range(2),range(2)):
+                initial = {(field,0,0,a,b):G(1),(field,1,1,a,b):G(1)}
+                state = {}
+                if mode == 'native':
+                    for control in (0,1):
+                        branch = {k:v for k,v in initial.items() if k[1] == control}
+                        first,second = ('A','B') if control == 0 else ('B','A')
+                        branch = apply_contact(apply_contact(branch,first),second)
+                        for key,value in branch.items():
+                            accumulate(state,key,value)
+                else:
+                    first,second = ('A','B') if mode == 'forward' else ('B','A')
+                    state = apply_contact(initial,first)
+                    state = {k:v*((-1)**k[1]) for k,v in state.items() if k[1] == k[2]}
+                    state = apply_contact(state,second)
+                for (output,control,s,aa,bb),value in state.items():
+                    if control == s:
+                        sign = (-1)**control if mode == 'native' else 1
+                        out[4*output+2*aa+bb][4*field+2*a+b] += sign*value/2
+            return out
+
+        native,forward,reverse = (literal_selected(mode) for mode in ('native','forward','reverse'))
+        yx,xy = mm(y,x),mm(x,y)
+        lf = add(kron(add(scale(x,F(1,2)),scale(yx,-F(1,4))),za),
+                 kron(add(scale(y,F(1,2)),scale(yx,-F(1,4))),zb))
+        lr = add(kron(add(scale(x,F(1,2)),scale(xy,-F(1,4))),za),
+                 kron(add(scale(y,F(1,2)),scale(xy,-F(1,4))),zb))
+        difference = kron(scale(c,F(1,2)),remainder)
+        expected = (add(lf,difference),lf,lr)
+        for actual,wanted in zip((native,forward,reverse),expected):
+            for i,j in product(range(4*h),repeat=2):
+                require(actual[i][j] == wanted[i][j], 'literal full retained selected operator')
+                selected_entries += 1
+        fixed_phase = scale(add(x,scale(y,-1)),G(0,-1))
+        tf = add(add(add(x,y),scale(yx,-1)),fixed_phase)
+        tr = add(add(add(x,y),scale(xy,-1)),fixed_phase)
+        require(partial_target(forward,h) == tf and partial_target(reverse,h) == tr
+                and partial_target(native,h) == scale(add(tf,tr),F(1,2)),
+                'fixed target G adjoint and exact operator partial traces')
+        for outbit,inbit,wanted in ((1,1,d),(1,2,scale(c,F(1,2))),(2,1,zeros(h)),(2,2,scale(d,-1))):
+            for i,j in product(range(h),repeat=2):
+                require(native[4*i+outbit][4*j+inbit] == wanted[i][j], 'native odd triangular field block')
+                triangular_entries += 1
+        filters = [('identity',eye(h)),('noncommuting',matrix([[F(i+1,h+1) if i==j else 0
+                                                           for j in range(h)] for i in range(h)]))]
+        require(mm(filters[1][1],va) != mm(va,filters[1][1])
+                and mm(filters[1][1],vb) != mm(vb,filters[1][1]), 'common field filter is noncommuting')
+        sources = [('active',[(F(1),column(basis,0))]),
+                   ('second',[(F(1),column(basis,1))])]
+        if h == 3:
+            sources += [('kernel',[(F(1),column(basis,2))]),
+                        ('mixed',[(F(1,2),column(basis,0)),(F(1,2),column(basis,2))])]
+        for source_name,ensemble in sources:
+            tau = total((scale(outer(vector),weight) for weight,vector in ensemble),h)
+            require(all(weight >= 0 for weight,_ in ensemble) and sum(weight for weight,_ in ensemble) == 1
+                    and trace(tau) == 1 and all(real(trace(outer(vector))) == 1 for _,vector in ensemble),
+                    'normalized independent pure or mixed field source')
+            for filter_name,m in filters:
+                filter_effect = gram(m)
+                require(all((0 <= real(filter_effect[i][i]) <= 1) if i == j else filter_effect[i][j] == 0
+                            for i,j in product(range(h),repeat=2)), 'common field filter contraction')
+                lift = kron(m,eye(4))
+                kn,kf,kr = (mm(lift,k) for k in (native,forward,reverse))
+                effects = [gram(k) for k in (kn,kf,kr)]
+                density = kron(tau,eye(4))
+                masses = [real(trace(mm(effect,density)))/4 for effect in effects]
+                scores = [real(trace(mm(t,mm(tau,adj(t)))))/16
+                          for t in (partial_target(k,h) for k in (kn,kf,kr))]
+                pn,pf,pr = masses
+                gn,gf,gr = scores
+                po,go = (pf+pr)/2,(gf+gr)/2
+                q = real(trace(mm(m,mm(c,mm(tau,mm(adj(c),adj(m)))))))
+                basis_masses = []
+                for bit in (1,2):
+                    block = [[effects[0][4*i+bit][4*j+bit] for j in range(h)] for i in range(h)]
+                    basis_masses.append(real(trace(mm(block,tau))))
+                require(basis_masses[1]-basis_masses[0] == q/4 and q >= 0, 'positive all-input acceptance contrast')
+                if source_name == 'kernel':
+                    require(q == 0, 'nontrivial commutator has an exact source-input kernel')
+                require(pn-po == q/16 and go-gn == q/64, 'direct Choi mass and target-weight coin ledger')
+                require((pn-gn)-(po-go) == 5*q/64, 'bad-weight improvement ledger')
+                require(all(0 <= g <= p <= 1 for p,g in zip(masses,scores)), 'physical selected Choi probabilities')
+                require(pn-gn >= q/16 and po >= gn, 'offdiagonal error and high-fidelity yield bound')
+                if pn > 0:
+                    require(po > 0 and go*pn >= gn*po, 'conditional target fidelity improves under ordinary order coin')
+                    fn,fo = gn/pn,go/po
+                    require(0 <= fn <= fo <= 1 and po >= pn*fn, 'conditional fidelity and high-fidelity yield normalization')
+                    conditional_cases += 1
+                delta_gram = zeros(4)
+                for weight,vector in ensemble:
+                    embedding = embed_vector(vector)
+                    dn = mm(add(kn,scale(kf,-1)),embedding)
+                    delta_gram = add(delta_gram,scale(gram(dn),weight))
+                wanted = scale(gram(remainder),q/4)
+                for i,j in product(range(4),repeat=2):
+                    require(delta_gram[i][j] == wanted[i][j], 'full retained dilation difference operator-norm ingredient')
+                    dilation_gram_entries += 1
+                require(real(trace(delta_gram)) == q/2, 'retained difference Hilbert-Schmidt norm')
+                if q == 0:
+                    require(delta_gram == zeros(4), 'flat-contrast full selected equality on source support')
+                    kernel_cases += 1
+                else:
+                    contrast_cases += 1
+                # A few complete retained-output matrix units check the CP
+                # expansion including reference coherences; no exhaustive CP grid.
+                if source_name == 'active' and filter_name == 'identity':
+                    embedding = embed_vector(ensemble[0][1])
+                    an,af = mm(kn,embedding),mm(kf,embedding)
+                    delta = add(an,scale(af,-1))
+                    for a,b in ((1,2),(0,3),(2,2)):
+                        for i,j in product(range(4*h),repeat=2):
+                            lhs = an[i][a]*an[j][b].conj()-af[i][a]*af[j][b].conj()
+                            rhs = (af[i][a]*delta[j][b].conj()+delta[i][a]*af[j][b].conj()
+                                   +delta[i][a]*delta[j][b].conj())
+                            require(lhs == rhs, 'retained output CP difference and passive-reference coefficient')
+                            coherence_coefficients += 1
+                source_filter_cases += 1
+    require(contrast_cases > 0 and kernel_cases > 0, 'both nonzero contrast and exact input-kernel fixtures')
+    return {'status':'passed','field_dimensions':[2,3],
+            'literal_selected_matrix_entries':selected_entries,'odd_block_entries':triangular_entries,
+            'source_filter_cases':source_filter_cases,'positive_contrast_cases':contrast_cases,
+            'zero_contrast_cases':kernel_cases,'dilation_difference_gram_entries':dilation_gram_entries,
+            'chosen_retained_CP_coefficients':coherence_coefficients,'conditional_fidelity_cases':conditional_cases,
+            'target':'G=diag(1,i,-i,-1), with fixed output-local CZ correction',
+            'scope':'Finite physical one-bright-sector field unitaries, literal Bell-selected native and ordinary words, common field filters and exact mass/score/error ledgers. General diamond and flat-herald proofs, continuum extension and physical source/interface/cost assumptions are outside this finite replay; no optimum or full-instrument compiler.'}
+
+
 def verify_raman_stronger_baselines():
     from verify_raman_bell_certificate import verify
     return {
@@ -1024,5 +1251,6 @@ def verify_raman_stronger_baselines():
         "balanced_cavity_frontier": verify_raman_cavity_frontier(),
         "bare_swap_gate_rank": bare_swap_rank_guards(),
         "partial_swap_cz_instruments": partial_swap_gate_instruments(),
+        "operator_partial_swap_frontier": operator_partial_swap_frontier(),
         "scope": "Exact achievable ordinary instruments and polynomial identities. No ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
     }
