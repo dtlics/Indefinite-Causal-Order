@@ -66,7 +66,10 @@ The [moving-CAPS component of NR-R11](../research/topics/nr-noisy-recovery/metho
 has an analytic passive-resolvent and energy-transfer-moment bound with
 exact finite Gram, flux-unitarity, frequency-shift, clock and phase guards.
 Separate rank-three input-support fixtures guard its measured-flag decoder
-budget. The optional NumPy finite-packet study has its own
+budget. Its isolated-blue-band Bell-factory comparison has exact atomic
+score and frontier polynomial identities plus rational source-constant
+guards; the motion, sideband and ordinary routing premises are analytic.
+The optional NumPy finite-packet study has its own
 [current numerical record](../research/topics/nr-noisy-recovery/numerics/moving_caps_record.json),
 including source hashes, environment, actual commands and empirical
 quadrature/cutoff refinements. The standard-library suite fingerprints

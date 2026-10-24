@@ -383,7 +383,7 @@ def verify_resolvent_and_order():
 
 
 def verify():
-    """Quiet exact finite replay, including the separate rank-budget fixture."""
+    """Quiet exact finite replay, including rank and blue-band factory guards."""
     own = verify_resolvent_and_order()
     rank_path = Path(__file__).resolve().with_name("moving_caps_rank.py")
     rank_spec = importlib.util.spec_from_file_location("_moving_caps_rank_resolvent", rank_path)
@@ -392,8 +392,17 @@ def verify():
     rank = importlib.util.module_from_spec(rank_spec)
     rank_spec.loader.exec_module(rank)
     budget = rank.verify()
-    require(own["status"] == budget["status"] == "passed", "both exact fixture families passed")
-    return {"status": "passed", "resolvent_and_order": own, "rank_budget": budget}
+    factory_path = Path(__file__).resolve().with_name("moving_caps_factory.py")
+    factory_spec = importlib.util.spec_from_file_location("_moving_caps_factory_resolvent", factory_path)
+    require(factory_spec is not None and factory_spec.loader is not None,
+            "factory helper import specification")
+    factory = importlib.util.module_from_spec(factory_spec)
+    factory_spec.loader.exec_module(factory)
+    factory_budget = factory.verify()
+    require(own["status"] == budget["status"] == factory_budget["status"] == "passed",
+            "all three exact fixture families passed")
+    return {"status": "passed", "resolvent_and_order": own,
+            "rank_budget": budget, "blue_band_factory": factory_budget}
 
 
 if __name__ == "__main__":

@@ -607,6 +607,194 @@ build directory rather than stored as scan histories. Main exact-runner
 fingerprints provide integrity for these inputs; they do not execute
 the NumPy calculation or certify its floating-point results.
 
+<a id="nr-r11-moving-caps-coherent-motion"></a>
+
+## Symmetric coherent motion and a blue-band Bell factory
+
+The number-diagonal separability statement does not cover coherent
+initial motion. Consider identical standing-wave nodes, each prepared
+in the same-phase local state
+$(|0\rangle+\epsilon_N|2\rangle)/\sqrt{1+\epsilon_N^2}$,
+with $\epsilon_N\ge0$, and atoms initially in known $|++\rangle$.
+A single $V$ photon has normalized spectral envelope supported on
+$[-L,L]$, $L<\mu$. Select the blue band
+$[2\mu-L,2\mu+L]$ with a frequency-diagonal transmission and bucket
+click, then discard the remaining photon record and all final motion.
+The bands are disjoint because local standing-wave transitions are
+even. Hard spectral isolation is an idealization, not a finite-time
+filter certificate. Preparation, phase alignment, filtering,
+detection and all other output ports are paid.
+
+For a general packet the initial coherent number amplitudes must be
+summed at fixed **final** frequency before squaring:
+$K_{\boldsymbol m}(\nu)=\sum_{\boldsymbol n}
+c_{\boldsymbol n}f(\nu+E_{\boldsymbol m\boldsymbol n})
+T_{\boldsymbol m\boldsymbol n}(\nu+E_{\boldsymbol m\boldsymbol n})$.
+The thermal probability evaluator cannot be substituted for this
+sum, and a Gaussian output window does not isolate an exact transfer
+sector. The compact blue band here leaves only final motions
+$00,02,20$: $20$ and $02$ initial components feed $00$ coherently,
+while the initial $22$ component feeds $02$ or $20$.
+
+Put $\delta=2\mu$, $a(w)=s^{0,2}(w)$,
+$\Delta_0(w)=r_{\rm dark}(w+\delta)-r_{\rm dark}(w)$,
+$\Delta_2(w)=s^{2,2}(w+\delta)-s^{2,2}(w)$, $z=\epsilon_N^2$,
+and
+$u=\epsilon_Na\Delta_0/[2(1+z)]$,
+$v=\epsilon_Na\Delta_2/[2(1+z)]$.
+For native minus, the exact diagonal atomic Kraus densities, up to
+overall signs and the common incident/filter amplitude, are
+
+$$
+K_{00}=u(P_{10}-P_{01}),\qquad
+K_{02}=\epsilon_N(uP_{10}+vP_{11}),\qquad
+K_{20}=-\epsilon_N(uP_{01}+vP_{11}),
+\tag{MC10}
+$$
+
+where $P_{ij}=|ij\rangle\langle ij|$.
+The $00$ bright-bright terms cancel without equating their two
+frequency responses. The other two records remain distinguishable
+in discarded motion and must not be deleted. Thus (MC10), integrated
+over frequency as a CP Kraus sum, also specifies the full selected
+map on arbitrary $ABR$. The following Bell scores use only the
+factory input $++$.
+
+Absorb any common passive frequency-diagonal blue transmission,
+$|\chi(\nu)|\le1$, into
+$W(w)=|f(w)|^2|\chi(w+\delta)|^2$, without renormalizing the
+original normalized packet after filtering, and define
+$I_0=\int W|a|^2$, $I_d=\int W|a\Delta_0|^2$,
+$I_{22}=\int W|a\Delta_2|^2$.
+For $I_d>0$, write $\rho=I_{22}/I_d$ and $q=I_d/I_0$.
+All final motions in (MC10) give native probability and singlet-good
+mass
+
+$$
+p_N=\frac{I_dz[1+(1+\rho)z]}{8(1+z)^2},\qquad
+g_N=\frac{I_dz(1+z/2)}{8(1+z)^2},\qquad
+F_N=\frac{1+z/2}{1+(1+\rho)z}.
+\tag{MC11}
+$$
+
+At $\epsilon_N=1$, $F_N\le3/4$; small excitation approaches unit
+singlet fraction while suppressing probability. Isolating only the
+$00$ singlet would give the wrong selected state.
+
+Supply an ordinary balanced coherent path that visits **only $A$**
+or **only $B$**, followed by minus which-node erasure and the same
+blue selection. This needs actual bypass/termination ports, not
+merely the native ability to visit $AB$ or $BA$. Using the same
+local preparation family with $z_O=\epsilon_O^2$ gives
+
+$$
+J_{00}=\frac{\epsilon_Oa(P_{10}-P_{01})}{2(1+z_O)},\quad
+J_{02}=\frac{\epsilon_O^2aP_{1,A}}{2(1+z_O)},\quad
+J_{20}=-\frac{\epsilon_O^2aP_{1,B}}{2(1+z_O)},
+$$
+
+and
+
+$$
+p_O=\frac{I_0z_O(1+2z_O)}{8(1+z_O)^2},\qquad
+g_O=\frac{I_0z_O(1+z_O/2)}{8(1+z_O)^2}.
+\tag{MC12}
+$$
+
+For $z>0$ and $F_N>1/2$, equivalently $\rho z<1$, the choice
+$z_O=(1+2\rho)z/[3+(1-\rho)z]$ lies in $(0,1)$.
+Substitution gives $F_O=F_N$ and
+
+$$
+\frac{p_O}{p_N}
+=\frac{3(1+2\rho)(1+z)^2}{q[3+(2+\rho)z]^2}
+\ge\frac1{3q}.
+\tag{MC13}
+$$
+
+The denominator is positive. To prove the inequality, subtract its
+squared positive denominators:
+$9(1+2\rho)(1+z)^2-[3+(2+\rho)z]^2
+=18\rho+6z+29\rho z+5z^2+14\rho z^2+\rho z(1-\rho z)\ge0$,
+using $0\le\rho z<1$. If $I_d=0$ there is no native singlet-good mass.
+This matches quality by changing a paid preparation amplitude; it is
+not dominance at an identical fixed coherent state.
+
+The empty-cavity response bounds $q$ without bright-kernel numbers.
+For $\delta\le2\kappa$,
+
+$$
+q\le\sup_w|\Delta_0(w)|^2
+=\frac{4\kappa_{\rm ex}^2\delta^2}
+ {(\kappa^2+\delta^2/4)^2}<\frac{53}{1000}<\frac1{18}
+\tag{MC14}
+$$
+
+at the stated nominal rates. Indeed, setting $t=w+\delta/2$ makes
+the product of the two reflection denominators
+$(\kappa^2+\delta^2/4)^2+
+2(\kappa^2-\delta^2/4)t^2+t^4$, minimized at zero.
+Here $\kappa_{\rm ex}^2=1459/375$,
+$\kappa_{\rm ex}>493/250$, $\kappa>543/250$ and
+$\delta=69/250$ prove the strict rational bound.
+Consequently the ideal ordinary selected probability is more than
+six times the native value at matched useful raw singlet quality,
+independently of a Fock cutoff or a numerical bright response.
+
+There is a separate paid extension for a common accepted photon
+effect $0\le E\le I$ after blue-band isolation. At $\nu=w+\delta$,
+cascade the two Lorentzian transmissions
+$L_\delta(\nu)=\kappa/[\kappa-i(\nu-\delta)]$ and
+$L_0(\nu)=\kappa/(\kappa-i\nu)$ with constant phase $-i$.
+Each is a causal passive two-port component: at detuning $\Omega$,
+its complementary amplitude is $R=-i\Omega/(\kappa-i\Omega)$
+and the matrix with rows $(R,L)$, $(L,R)$ is unitary.
+The product obeys
+$-iL_\delta L_0=\Delta_0(w)/M'$,
+$M'=2\kappa_{\rm ex}\delta/\kappa^2$.
+Thus the ordinary field vector before $E$ is exactly
+$fa\Delta_0/M'$. Replacing the bucket integrals by the corresponding
+$E$-weighted inner products gives $I_0'=I_d/M'^2$; the same matching
+algebra (MC11)–(MC13) applies with $q=M'^2$.
+At the nominal rates
+$M'^2<1543622000/28978644267<1/18$.
+This requires two additional filter rejection ports, phase control,
+dispersion/ringdown, latency and real insertion loss to be paid.
+It is an analytic construction, not a claim that the source supplies
+these components or that the finite helper/packet runs test it.
+
+This is a bounded comparison of symmetric, same-phase preparations
+and measured-minus blue-band factories, not all coherent-motion
+protocols. Arbitrary relative preparation phases, local spin filters,
+coherent red/blue erasure, photon-outcome-dependent atomic decoders
+and retained-control recovery are separate optimizations.
+The paid extension covers only a common accepted photon effect after
+the isolated band. Actual preparation/reset,
+router loss, arm overlap, phase stability, detection, latency and
+rejected launches determine delivered rates. Neither two-node router
+is established by the source; if bypass is absent, its availability
+must be tested rather than assumed. There is no global hardware-rate
+or unrestricted factory optimum claim.
+
+The factory endpoint may destroy the photon, unlike (MC1). Ordinary
+processing must therefore also include the source's $H$ reference:
+prepare photon $|+\rangle$, visit $AB$, and read $X$. In the common
+reference convention its joint retained-field branch operators are
+$(hI\pm T_{AB})/2$ before the actual field readout. The ideal CZ limit
+gives the two parity projections on $++$, both Bell outputs with
+known Pauli correction. No packet fidelity or physical rate for that
+additional comparator is asserted here, and a $V$-only restriction
+requires an actual interface reason.
+
+Ordinary which-node erasure is established by
+[Cabrillo et al., PRA **59**, 1025 (1999)](https://arxiv.org/abs/quant-ph/9810013)
+and the trapped-ion single-photon-interference experiment of
+[Slodička et al., PRL **110**, 083603 (2013)](https://arxiv.org/abs/1207.5468v2).
+Those sources do not claim this CAPS kernel or quality-matched bound.
+The separate [exact factory helper](../checks/architecture/moving_caps_factory.py)
+checks its algebraic ingredients; the optional packet record above
+does not numerically test this coherent-input construction.
+
 ## Remaining physical test and executable scope
 
 A positive successor must supply the same complete oriented contacts,

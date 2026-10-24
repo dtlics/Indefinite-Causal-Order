@@ -1097,6 +1097,13 @@
     "python_version": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]"
   },
   "kind": "current supplemental NumPy numerical replay; not part of the standard-library check runner",
+  "method_extension_interpretation": {
+    "method_extension_scope": "The newly added coherent-motion Bell-factory and paid-filter comparison (MC10-MC14) is analytic and uses a separate exact helper. It is not a numerical result of the recorded packet or running-wave calculations.",
+    "method_hash_interpretation": "The method source pin tracks the current consolidated exposition. Updating it does not expand the scope of the unchanged numerical runs.",
+    "numerical_scope": "The two numerical source files and all eight original commands, configurations, environment, output hashes, baseline values, guard residuals and convergence differences remain unchanged.",
+    "original_numerical_evidence_unchanged": true,
+    "original_recorded_at_utc_preserved": true
+  },
   "normal_optimized_bytes_equal": {
     "packet": true,
     "running": true
@@ -1409,7 +1416,7 @@
     "source_hardware": "no two-module routing/helper realization, propagation phase calibration or apparatus-rate fit is certified"
   },
   "sources_sha256": {
-    "research/topics/nr-noisy-recovery/methods/moving-caps.md": "da6767522fd39abd2a524a1383e51e1856fb61e25af081e02f20a73b8dba17f8",
+    "research/topics/nr-noisy-recovery/methods/moving-caps.md": "45da7f95f736f0338012437bf047ee2df4affcd51a989a93880e22af6e40a290",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_packet.py": "f2ddea3c287c081b22bd0eccee01b070262dd96e0f8caf14569fcd51cb4da34a",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_running.py": "b3b449c89e3fc7ffa2c7b854812e4805e1efe5cf2dfa1e458cb380e81f7642e5"
   }
