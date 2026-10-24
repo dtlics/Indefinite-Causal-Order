@@ -2043,6 +2043,90 @@ fixtures and two coherently retained frequency bins check the selected
 identity and cross-frequency coefficients; the continuum multiplier
 extension is the analytic operator argument above.
 
+<a id="nr-r11-two-port-gate"></a>
+
+**The selected-map compiler needs two flying ports, not a SWAP sector.**
+Let the flying photon have exactly two retained channels $S$, with arbitrary
+local memory spaces $A$ and $B$. Write the callable contractions as
+
+$$
+T_A=\sum_{s,t=0}^1|s\rangle\langle t|_S\otimes A_{st},\qquad
+T_B=\sum_{s,t=0}^1|s\rangle\langle t|_S\otimes B_{st}.
+$$
+
+The blocks are arbitrary local operators, not scalar amplitudes or
+excitation-preserving matrices. The interface must actually compose these
+contractions: excluded outputs are selected away per contact, enter
+absorbing orthogonal failure records, or are proved unable to leave and
+return through omitted flying modes. A final surviving-photon or code
+projection alone does not justify multiplying projected sub-blocks.
+
+Use the normalized $\Phi^+_{CS}$ source, native histories $T_BT_A$ and
+$T_AT_B$, and terminal $\Phi^-_{CS}$. Direct expansion gives
+
+$$
+K_N=\frac{B_{00}A_{00}+B_{01}A_{10}
+                 -A_{10}B_{01}-A_{11}B_{11}}2
+   =\frac{B_{00}A_{00}-B_{11}A_{11}}2=L_F.
+\tag{RS19h}
+$$
+
+The cancellation uses only that every $A$ block commutes with every $B$
+block on disjoint memories. $L_F$ is the ordinary sequence $T_A$, then
+the photon-only contraction
+$V=|00\rangle\langle00|_{CS}-|11\rangle\langle11|_{CS}$, then $T_B$,
+and terminal $\Phi^+_{CS}$. $V$ removes the off-diagonal intermediate
+photon paths. Both normalized Bell factors are included, so this is exact
+equality of selected trace-nonincreasing maps for every unknown $ABR$
+input and arbitrary local dimensions, with output labels unchanged.
+For a supplied local instrument the identity holds per fine Kraus pair,
+including its records, if the actual common-clock dilation pairs those
+history labels. Equality of separately measured channel marginals alone
+does not establish that physical pairing.
+
+Common commuting frequency multipliers preserve the cancellation and
+every coherent cross-frequency/reference block in the same final frame.
+This does not identify other flags or a full lost-photon instrument.
+Bell preparation/readout, preserved $C/S$ tensor-product ports, $V$ and
+its rejected output, routes, phases and clocks remain paid requirements;
+a native route alone does not supply the ordinary midpoint processor.
+
+[Rosenblum, Borne and Dayan, arXiv:1412.0604v3, Secs. IV–V](https://arxiv.org/html/1412.0604v3)
+provide a concrete extension beyond the one-bright model: an opposite-sign
+excited pathway gives two bright responses. Their larger Eq. (12) retains
+cavity modes $a,b$ and local ground states $G_0,G_1,G_2$; unwanted
+polarization components are within those two modes. Thus a declared
+stationary elastic, degenerate-ground, two-mode guided scattering model
+with a common frequency offset fits (RS19h) on the full local qutrit
+outputs, when its loss is absorbing and its contacts compose. Two cavity
+modes alone do not certify this complete traveling-field interface.
+Local code exits do not defeat equality; a common
+later code filter preserves it. This is not a fitted timed two-node
+instrument, a code-herald apparatus or a demonstrated order router.
+Motion during a pulse, frequency-changing ground transitions, additional
+flying modes, coherent loss returns and shared bath records need their
+actual full interface.
+
+If the blocks instead share a noncommuting field/bath $H$, the exact
+remainder is
+
+$$
+K_N-L_F=\tfrac12\bigl([B_{01},A_{10}]+[B_{11},A_{11}]\bigr).
+$$
+
+Only their sum must vanish; separate locality or common scalar frequency
+multipliers suffice. A nonzero remainder alone is not a useful gate.
+The concrete remaining test is a useful retained output of an actual
+noncommuting or larger-flying-space instrument, with its physical erasure,
+loss and ordinary-control ports supplied. The
+[same exact Raman replay](checks/architecture/raman_baselines.py) checks
+literal Bell/filter/readout contractions for dense excitation-changing
+local qubit and qutrit contacts, populated local code exits, full reference
+coefficients, and coherent frequency blocks of declared passive two-bright
+fixtures. The universal local-block and multiplier arguments, physical
+dilation and costs remain analytic or supplied assumptions; these finite
+checks certify no device fit or rate advantage.
+
 <a id="nr-r11-raman-operator-gate"></a>
 
 **Noncommuting field coefficients have a measurable selected-map boundary.**

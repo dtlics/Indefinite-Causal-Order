@@ -1238,6 +1238,239 @@ def operator_partial_swap_frontier():
             'scope':'Finite physical one-bright-sector field unitaries, literal Bell-selected native and ordinary words, common field filters and exact mass/score/error ledgers. General diamond and flat-herald proofs, continuum extension and physical source/interface/cost assumptions are outside this finite replay; no optimum or full-instrument compiler.'}
 
 
+def two_port_selected_map():
+    """Finite local two-port selected-map and coherent-frequency guards.
+
+    The all-coefficient theorem and callable contraction/dilation/port
+    assumptions remain in communication.md; these are not device fits.
+    Every new guard stays active in an optimized extracted-body replay.
+    """
+    from retained_photon_serial import G, require, zeros, eye, mm, adj, add, scale
+
+    def diag(values):
+        out = zeros(len(values))
+        for k, value in enumerate(values):
+            out[k][k] = G(value)
+        return out
+
+    def rotation(c, s):
+        return [[G(c), G(-s)], [G(s), G(c)]]
+
+    def abs2(z):
+        return (z*z.conj()).r
+
+    def six_vertex(s0, s3, active):
+        out = zeros(4)
+        out[0][0], out[3][3] = G(s0), G(s3)
+        for r, c in product(range(2), repeat=2):
+            out[1+r][1+c] = active[r][c]
+        return out
+
+    def contact_from_singular(s0, s3, left, values, right):
+        require(mm(adj(left), left) == eye(2), "left bright basis")
+        require(mm(adj(right), right) == eye(2), "right bright basis")
+        require(all(abs2(G(z)) <= 1 for z in (s0, s3, *values)),
+                "contact singular values are contractions")
+        return six_vertex(s0, s3, mm(mm(left, diag(values)), adj(right)))
+
+    def source_contact(w, node):
+        # Positive widths and kappa_ex <= kappa give passive contractions.
+        # The rational constants are illustrative and are not source fits.
+        kappa, kex = F(1), F(3, 4)
+        dc = G(kappa, w+F(node, 5))
+        de = G(F(1, 4), w-F(node, 3))
+        dep = G(F(1, 3), w+F(5, 3)+F(node, 7))
+        gp, gm = F(2, 3), F(3, 5)
+        s0 = G(1)-G(2*kex)/dc
+        sp = G(1)-G(2*kex)/(dc+G(2*gp*gp)/de)
+        sm = G(1)-G(2*kex)/(dc+G(2*gm*gm)/dep)
+        require(all(abs2(z) <= 1 for z in (s0, sp, sm)),
+                "passive two-bright responses")
+        require(sp != sm and sp != s0 and sm != s0,
+                "genuine three elastic responses")
+        phase = G(F(3, 5), F(4, 5)) if node else G(1)
+        active = [[(sp+sm)/2, phase*(sp-sm)/2],
+                  [phase.conj()*(sp-sm)/2, (sp+sm)/2]]
+        return six_vertex(s0, s0, active)
+
+    def step(state, contact, site):
+        # Literal C,S,A,B basis. The source helper is never overwritten.
+        out = {}
+        for (c, s, a, b), value in state.items():
+            bit = a if site == 0 else b
+            for so, bo in product(range(2), repeat=2):
+                z = contact[2*so+bo][2*s+bit]
+                key = (c, so, bo, b) if site == 0 else (c, so, a, bo)
+                out[key] = out.get(key, G())+z*value
+        return out
+
+    def selected(contact_a, contact_b, native=True):
+        out = zeros(4)
+        for a, b in product(range(2), repeat=2):
+            if native:
+                state = {}
+                for c in range(2):
+                    branch = {(c, c, a, b): G(1)}
+                    if c == 0:
+                        branch = step(step(branch, contact_a, 0), contact_b, 1)
+                    else:
+                        branch = step(step(branch, contact_b, 1), contact_a, 0)
+                    for key, z in branch.items():
+                        state[key] = state.get(key, G())+z
+            else:
+                state = step({(0, 0, a, b): G(1), (1, 1, a, b): G(1)},
+                             contact_a, 0)
+                # V = |00><00| - |11><11| on the preserved C/S registers.
+                state = {key: z*((-1)**key[0] if key[0] == key[1] else 0)
+                         for key, z in state.items()}
+                state = step(state, contact_b, 1)
+            for (c, s, ao, bo), z in state.items():
+                if c == s:
+                    out[2*ao+bo][2*a+b] += z*((-1)**c if native else 1)/2
+        return out
+
+    def expected(a, b):
+        return diag([(a[x][x]*b[y][y]-a[2+x][2+x]*b[2+y][2+y])/2
+                     for x, y in product(range(2), repeat=2)])
+
+    def householder(values):
+        norm = sum(abs2(G(z)) for z in values)
+        out = eye(len(values))
+        for i, j in product(range(len(values)), repeat=2):
+            out[i][j] -= G(values[i])*G(values[j]).conj()*2/norm
+        require(mm(adj(out), out) == eye(len(values)), "exact dense local bright basis")
+        return out
+
+    def dense_contact(d, node):
+        vectors = ([G(1+i, (i+node) % 3-1) for i in range(2*d)],
+                   [G(2+(i+node) % 3, (-1)**i) for i in range(2*d)])
+        left, right = (householder(v) for v in vectors)
+        values = [G(F(1+(i % 3), 5), F((-1)**i, 7)) for i in range(2*d)]
+        require(all(abs2(z) <= 1 for z in values), "dense contact contraction singular values")
+        out = mm(mm(left, diag(values)), adj(right))
+        require(out[0][1] != 0 and out[0][d] != 0,
+                "dense contact does not preserve displayed excitation number")
+        return out
+
+    def general_step(state, contact, site, da, db):
+        out = {}
+        d = da if site == 0 else db
+        for (c, s, a, b), value in state.items():
+            bit = a if site == 0 else b
+            for so, bo in product(range(2), range(d)):
+                z = contact[d*so+bo][d*s+bit]
+                key = (c, so, bo, b) if site == 0 else (c, so, a, bo)
+                out[key] = out.get(key, G())+z*value
+        return out
+
+    def general_selected(ta, tb, da, db, native=True):
+        out = zeros(da*db)
+        for a, b in product(range(da), range(db)):
+            if native:
+                state = {}
+                for c in range(2):
+                    branch = {(c, c, a, b): G(1)}
+                    if c == 0:
+                        branch = general_step(general_step(branch, ta, 0, da, db), tb, 1, da, db)
+                    else:
+                        branch = general_step(general_step(branch, tb, 1, da, db), ta, 0, da, db)
+                    for key, z in branch.items():
+                        state[key] = state.get(key, G())+z
+            else:
+                state = general_step({(0, 0, a, b): G(1), (1, 1, a, b): G(1)}, ta, 0, da, db)
+                state = {key: z*((-1)**key[0] if key[0] == key[1] else 0)
+                         for key, z in state.items()}
+                state = general_step(state, tb, 1, da, db)
+            for (c, s, ao, bo), z in state.items():
+                if c == s:
+                    out[db*ao+bo][db*a+b] += z*((-1)**c if native else 1)/2
+        return out
+
+    def general_expected(ta, tb, da, db):
+        out = zeros(da*db)
+        for ao, bo, ai, bi in product(range(da), range(db), range(da), range(db)):
+            out[db*ao+bo][db*ai+bi] = (tb[bo][bi]*ta[ao][ai]
+                -tb[db+bo][db+bi]*ta[da+ao][da+ai])/2
+        return out
+
+    r = rotation(F(3, 5), F(4, 5))
+    t = rotation(F(5, 13), F(12, 13))
+    algebraic = (
+        (contact_from_singular(G(F(2, 3), F(1, 5)), F(1, 3), r,
+             (G(F(1, 2), F(1, 3)), G(F(-2, 5), F(1, 5))), t),
+         contact_from_singular(F(4, 5), G(F(1, 4), F(-1, 3)), t,
+             (G(F(3, 5), F(-2, 5)), F(-1, 2)), r)),
+        (six_vertex(1, G(0, 1), [[G(), G(1)], [G(0, 1), G()]]),
+         six_vertex(G(0, -1), 1, [[G(F(3, 5)), G(F(4, 5))],
+                                 [G(F(-4, 5)), G(F(3, 5))]])),
+    )
+    point_entries = cp_coefficients = 0
+    for a, b in algebraic:
+        n, o, e = selected(a, b), selected(a, b, False), expected(a, b)
+        require(n == e, "literal native six-vertex selected operator")
+        require(o == e, "ordinary V selected operator")
+        point_entries += 32
+        for r0, c0, r1, c1 in product(range(4), repeat=4):
+            require(n[r0][c0]*n[r1][c1].conj() ==
+                    o[r0][c0]*o[r1][c1].conj(), "full AB/R CP coefficient")
+            cp_coefficients += 1
+    # Frequency is an actual retained coherent output register, not a
+    # classical mixture. Test every pair of frequency/input/output indices.
+    bins = (F(-2, 5), F(0), F(3, 7))
+    ns, os = [], []
+    for w in bins:
+        a, b = source_contact(w, 0), source_contact(w, 1)
+        n, o, e = selected(a, b), selected(a, b, False), expected(a, b)
+        require(n == o == e, "two-bright elastic source reduction")
+        ns.append(n)
+        os.append(o)
+        point_entries += 32
+    frequency_coefficients = cross_frequency = 0
+    for f, g, r0, c0, r1, c1 in product(range(3), range(3),
+                                      range(4), range(4), range(4), range(4)):
+        require(ns[f][r0][c0]*ns[g][r1][c1].conj() ==
+                os[f][r0][c0]*os[g][r1][c1].conj(),
+                "coherent retained-frequency full-reference CP coefficient")
+        frequency_coefficients += 1
+        cross_frequency += int(f != g)
+    require(any(ns[0][r][r]*ns[1][c][c].conj() != 0
+                for r, c in product(range(4), repeat=2)),
+            "cross-frequency test is nonvacuous")
+    dense_entries = dense_cp = local_qutrit_entries = 0
+    dense_pairs = ((2, 2), (3, 3))
+    for da, db in dense_pairs:
+        ta, tb = dense_contact(da, 0), dense_contact(db, 1)
+        n = general_selected(ta, tb, da, db)
+        o = general_selected(ta, tb, da, db, False)
+        e = general_expected(ta, tb, da, db)
+        require(n == e, "dense local-block native source and terminal flag")
+        require(o == e, "dense local-block ordinary midpoint source and flag")
+        dense_entries += 2*(da*db)**2
+        if da == 3:
+            require(any(n[db*2+b][db*a+bi] != 0 for a, bi, b in
+                        product(range(2), range(2), range(db))),
+                    "local qutrit output includes populated code exits")
+            local_qutrit_entries += 2*(da*db)**2
+        for r0, c0, r1, c1 in product(range(da*db), repeat=4):
+            require(n[r0][c0]*n[r1][c1].conj() ==
+                    o[r0][c0]*o[r1][c1].conj(),
+                    "dense local-block full input-reference CP coefficient")
+            dense_cp += 1
+    return {"dense_local_memory_pairs": [list(p) for p in dense_pairs],
+            "dense_literal_selected_entries": dense_entries,
+            "local_qutrit_selected_entries": local_qutrit_entries,
+            "dense_full_reference_coefficients": dense_cp,
+            "algebraic_contraction_pairs": len(algebraic),
+            "two_bright_frequency_bins": len(bins),
+            "literal_selected_entries": point_entries,
+            "full_AB_reference_coefficients": cp_coefficients,
+            "retained_frequency_coefficients": frequency_coefficients,
+            "off_diagonal_frequency_coefficients": cross_frequency,
+            "scope": "Finite selected-map identities only; arbitrary local two-port/commuting-multiplier proof and full physical loss/router instrument remain analytic or supplied."}
+
+
+
+
 def verify_raman_stronger_baselines():
     from verify_raman_bell_certificate import verify
     return {
@@ -1252,5 +1485,6 @@ def verify_raman_stronger_baselines():
         "bare_swap_gate_rank": bare_swap_rank_guards(),
         "partial_swap_cz_instruments": partial_swap_gate_instruments(),
         "operator_partial_swap_frontier": operator_partial_swap_frontier(),
+        "two_port_selected_map": two_port_selected_map(),
         "scope": "Exact achievable ordinary instruments and polynomial identities. No ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
     }

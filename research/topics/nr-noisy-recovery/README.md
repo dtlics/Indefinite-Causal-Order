@@ -202,7 +202,13 @@ raw full-register correct-output weight at fixed terminal site noise. Its
 local-output bound also permits arbitrary globally interacting preprocessing
 when both terminal noise layers have independent replacement components;
 global decoding before discard remains distinct. The same owner gives
-full calibrated bosonic noise compilers. NR-R09 separates those storage
+full calibrated bosonic noise compilers.
+The [active-gate/AQEC comparison](architecture-baselines.md#nr-r06-active-gate-aqec)
+uses the actual optimized EsT gate followed by recovery as its ordinary
+baseline. Its full-system dummy construction includes the shared transmon,
+timed records and paid routing. Intermediate accepted heralds require a
+true-excitation error account and retain their rejection costs; readout
+labels alone are insufficient. NR-R09 separates those storage
 comparisons from unknown-loss inference and tests the complete passive
 optical transfer matrix and its directional loss records.
 Its [single-rail transfer component](communication.md#nr-r09-passive-qubit-transfer)
@@ -317,6 +323,11 @@ has a selected map matched by an ordinary midpoint filter using the same
 helper, including coherent frequency in the stated stationary elastic
 model. Its calibrated center gives CZ. The other flags differ; only the
 center's specified early ordinary identity flags support ideal retries.
+The selected-map identity extends to
+[arbitrary local two-port contacts](communication.md#nr-r11-two-port-gate)
+at any local memory dimension, including common commuting spectral
+responses. Local code exits can be retained; omitted flying-mode
+leave-and-return paths still require the full interface.
 The [one-bright operator-contact frontier](communication.md#nr-r11-raman-operator-gate)
 compares noncommuting field/bath dynamics with a common initial state
 independent of the payload. Equal selected acceptance on two logical

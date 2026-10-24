@@ -1617,6 +1617,227 @@ def local_loss_recovery_guards():
             'fixed_local_loss_decoder_upper_eta_3_over_5':'21/25',
             'scope':'Finite rational fixed-encoding local-loss ingredients with inaccessible local records. All-CPTP recovery and fixed-product-helper implications are analytic; no source-specific channel fit, optimality equality, new encoder, QEC impossibility, native selector, pulse or finite-cycle certificate.'}
 
+def active_gate_aqec_guards():
+    """Finite ideal recovery compiler; no source GRAPE, loss model or port fit."""
+    # Cavity basis C0=(|0>+|4>)/sqrt2,C1=|2>,E0=|3>,E1=|1>,
+    # B=(|0>-|4>)/sqrt2, followed by the shared transmon g/e.
+    n, code = 10, (0, 2)
+    rp = list(range(n))
+    for i, j in ((4, 1), (6, 3)):
+        rp[i], rp[j] = j, i
+    r = zeros(n)
+    for i in range(n):
+        r[rp[i]][i] = I
+    require(mm(adj(r), r) == eye(n) and all(rp[i] == i for i in code),
+            "ideal AQEC is unitary and fixes both encoded g columns")
+    require(rp[4] == 1 and rp[6] == 3, "AQEC transfers E to C and excites the transmon")
+    u = eye(n)
+    for i, j, c, s in ((0, 7, F(3, 5), F(4, 5)), (2, 8, F(5, 13), F(12, 13)),
+                        (0, 4, F(8, 17), F(15, 17))):
+        g = eye(n)
+        g[i][i] = g[j][j] = G(c)
+        g[i][j], g[j][i] = G(-s), G(s)
+        require(mm(adj(g), g) == eye(n), "rational nonparity gate rotation")
+        u = mm(g, u)
+    d0, d1 = eye(n), zeros(n)
+    for i, j in ((0, 4), (1, 5), (2, 6), (3, 7)):
+        d0[i][i], d1[j][i] = G(F(3, 5)), G(F(4, 5))
+    ops = [mm(d0, u), mm(d1, u)]
+    require_tp(ops)
+    require(any(k[7][0] != 0 for k in ops) and any(k[8][2] != 0 for k in ops),
+            "A actually includes shared-transmon excitation and bright leakage")
+
+    def emit(v, key, value):
+        if value != 0:
+            v[key] = v.get(key, O)+value
+            if v[key] == 0:
+                del v[key]
+
+    def native(j, ks, tagged=False):
+        # Both control amplitudes omit the same external 1/sqrt2.
+        out = {}
+        for b in (0, 1):
+            rin = rp[j] if b else j
+            for ell, k in enumerate(ks):
+                for s in range(n):
+                    target = rp[s] if b == 0 else s
+                    tag = int((s if b == 0 else j) in code) if tagged else 0
+                    emit(out, (b, target, 0, ell, tag), k[s][rin])
+        return out
+
+    def after_a(j, ks):
+        out = {}
+        for b, ell, s in product(range(2), range(len(ks)), range(n)):
+            emit(out, (b, s, 0, ell, 0), ks[ell][s][j])
+        return out
+
+    def swap(v, cavity_only=False):
+        out = {}
+        for (b, s, d, ell, tag), value in v.items():
+            if b:
+                if cavity_only:
+                    cav, q = divmod(s, 2)
+                    key = (b, 2*d+q, cav, ell, tag)
+                else:
+                    key = (b, d, s, ell, tag)
+            else:
+                key = (b, s, d, ell, tag)
+            emit(out, key, value)
+        return out
+
+    def recover(v, controlled=False, tagged=False):
+        out = {}
+        for (b, s, d, ell, tag), value in v.items():
+            require(tag == 0, "recovery starts with the declared ready record")
+            target = rp[s] if not controlled or b == 0 else s
+            record = int(s in code) if tagged else tag
+            emit(out, (b, target, d, ell, record), value)
+        return out
+
+    def cavity_route(j, ks):
+        return swap(recover(swap(after_a(j, ks), True)), True)
+
+    def dot(v, w, qg=False):
+        return sum((value.conj()*w.get(key, O) for key, value in v.items()
+                    if not qg or key[1] % 2 == 0), O)
+
+    def mass(ks, j):
+        return sum((norm2(k[s][j]) for k in ks for s in range(n)), F())
+
+    def flags(columns):
+        result = []
+        for sign in (1, -1):
+            projected = []
+            for v in columns:
+                out = {}
+                for (b, s, d, ell, tag), value in v.items():
+                    emit(out, (s, d, ell, tag), value*F(1 if b == 0 else sign, 2))
+                projected.append(out)
+            p = sum((sum((norm2(x) for x in v.values()), F()) for v in projected), F())/2
+            bell = {}
+            for j, v in enumerate(projected):
+                for (s, d, ell, tag), value in v.items():
+                    cav, q = divmod(s, 2)
+                    if cav == j:
+                        emit(bell, (d, ell, tag, q), value/2)
+            q = sum((norm2(x) for x in bell.values()), F())
+            require(0 <= q <= p <= 1, "unnormalized helper flag good and acceptance weights")
+            result.append((p, q))
+        total = sum((sum((norm2(x) for x in v.values()), F()) for v in columns), F())/4
+        require(sum(p for p, _ in result) == total, "both helper flags retain all attempted mass")
+        return result
+
+    core, tagged = [], []
+    for j in code:
+        expected = native(j, ops)
+        require(expected == recover(after_a(j, ops), controlled=True),
+                "A then controlled recovery preserves complete encoded isometry")
+        expected_tag = native(j, ops, tagged=True)
+        dummy = swap(recover(swap(after_a(j, ops)), tagged=True))
+        require(expected_tag == dummy and all(key[2] == 0 for key in dummy),
+                "one recovery call restores full dummy and nonready code record")
+        require(dot(expected, expected) == dot(expected_tag, expected_tag) == 2,
+                "complete encoded isometry retains every A environment amplitude")
+        core.append(expected)
+        tagged.append(expected_tag)
+    for i, j in product(range(2), repeat=2):
+        require(dot(core[i], core[j]) == dot(tagged[i], tagged[j]) == 2*int(i == j),
+                "encoded cross columns preserve arbitrary logical references")
+    expected_q = (F(2830801, 37570000), F(17246329, 488410000))
+    core_flags, tag_flags = flags(core), flags(tagged)
+    require(core_flags == list(zip((F(109099371, 122102500), F(13003129, 122102500)), expected_q))
+            and tag_flags == list(zip((F(63552971, 122102500), F(58549529, 122102500)), expected_q)),
+            "frozen all-record flags distinguish retained nonready recovery tags")
+
+    # Literal cavity-only routing leaves the shared transmon in the wrong state.
+    xq = zeros(n)
+    for i in range(n):
+        xq[i ^ 1][i] = I
+    require(mm(adj(xq), xq) == eye(n), "shared-transmon X gate is unitary")
+    native_x = [native(j, [xq]) for j in code]
+    route_x = [cavity_route(j, [xq]) for j in code]
+    for i, j in product(range(2), repeat=2):
+        delta = int(i == j)
+        require(dot(native_x[i], route_x[j])/2 == G(F(delta, 2))
+                and dot(native_x[i], native_x[j], True)/2 == G(F(delta, 2))
+                and dot(route_x[i], route_x[j], True)/2 == G(delta),
+                "literal cavity route overlap and final qg effect differ from native order")
+    require(all(any(key[0] == 1 and key[2] == 2 for key in v) for v in route_x),
+            "second cavity unroute retains the changed E0 dummy")
+
+    # P_g follows A inside either native order. Its map is TNI, never normalized.
+    ag = [[[x if i % 2 == 0 else O for x in row] for i, row in enumerate(k)] for k in ops]
+    af = [[[x if i % 2 else O for x in row] for i, row in enumerate(k)] for k in ops]
+    require_tp(ag+af)
+    accepted = [native(j, ag) for j in code]
+    accepted_route = [cavity_route(j, ag) for j in code]
+    require(accepted == accepted_route, "qg-restricted cavity route matches the full accepted isometry")
+    pg, pf = [mass(ag, j) for j in code], [mass(af, j) for j in code]
+    require(pg == [F(9, 25), F(1)] and pf == [F(16, 25), F()]
+            and all(p+f == 1 for p, f in zip(pg, pf)),
+            "post-A success and rejection retain their input-dependent masses")
+    require(sum(pg)/2 == F(17, 25) and sum(pf)/2 == F(8, 25),
+            "mixed logical input success plus rejection is one")
+    for i, j in product(range(2), repeat=2):
+        require(dot(accepted[i], accepted[j], True) == dot(accepted_route[i], accepted_route[j], True),
+                "accepted route also preserves the final shared-transmon qg effect")
+    accepted_flags = flags(accepted)
+    require(accepted_flags == list(zip((F(70026571, 122102500), F(13003129, 122102500)), expected_q)),
+            "frozen accepted flags keep unnormalized Bell good weights")
+    # True post-A excitation, not an observed success flag, bounds route error.
+    for ks in (ops, ag, af):
+        left, right = [native(j, ks) for j in code], [cavity_route(j, ks) for j in code]
+        diff = [{key: v.get(key, O)-w.get(key, O) for key in v.keys() | w.keys()}
+                for v, w in zip(left, right)]
+        gram_diff = [[dot(diff[i], diff[j])/2 for j in range(2)] for i in range(2)]
+        excited = [[sum((k[s][code[i]].conj()*k[s][code[j]]
+                         for k in ks for s in range(1, n, 2)), O)
+                    for j in range(2)] for i in range(2)]
+        slack = add(scale(excited, 2), scale(gram_diff, -1))
+        determinant = slack[0][0]*slack[1][1]-slack[0][1]*slack[1][0]
+        require(slack == adj(slack) and all(slack[i][i].i == 0 and slack[i][i].r >= 0 for i in range(2))
+                and determinant.i == 0 and determinant.r >= 0,
+                "twice true excitation dominates normalized route-difference Gram")
+        if ks is ag:
+            require(excited == gram_diff == zeros(2), "true-ground success has zero route error")
+        else:
+            require(excited == [[G(F(16, 25)), O], [O, O]],
+                    "unfiltered and wrong-herald fixtures retain actual excited mass")
+    # Derive number in these coordinates from literal Fock vectors, not a fitted loss map.
+    fock_n = [[G(i*int(i == j)) for j in range(5)] for i in range(5)]
+    vectors = [[I, O, O, O, I], [O, O, I, O, O], [O, O, O, I, O],
+               [O, I, O, O, O], [I, O, O, O, -I]]
+    v = list(map(list, zip(*vectors)))
+    gram = mm(adj(v), v)
+    norms = tuple(gram[i][i].r for i in range(5))
+    require(gram == [[G((2, 1, 1, 1, 2)[i]*int(i == j)) for j in range(5)] for i in range(5)],
+            "literal Fock code/error/bright vectors have the stated normalization")
+    raw = mm(adj(v), mm(fock_n, v))
+    number, expected_number = zeros(5), zeros(5)
+    for i, j in product(range(5), repeat=2):
+        require(norms[i] == norms[j] or raw[i][j] == 0,
+                "mixed Fock normalization sectors have zero number overlap")
+        number[i][j] = raw[i][j]/norms[i] if norms[i] == norms[j] else O
+    for i, value in enumerate((2, 2, 3, 1, 2)):
+        expected_number[i][i] = G(value)
+    expected_number[0][4] = expected_number[4][0] = G(-2)
+    require(number == expected_number,
+            "Fock-derived number retains the bright no-jump component outside the code")
+    return {"status": "passed", "system_dimension": n, "A_environment_records": 2,
+            "controlled_recovery_isometry_columns": 2, "nonready_record_dummy_columns": 2,
+            "encoded_cross_column_entries": 4, "cavity_only_overlap_qg_entries": 4,
+            "accepted_cavity_route_columns": 2, "accepted_final_qg_entries": 4,
+            "all_record_helper_flag_pairs": 6, "literal_cavity_only_overlap": "1/2",
+            "true_excitation_Gram_slacks": 3,
+            "native_vs_cavity_final_qg": ["1/2", "1"],
+            "accepted_p_C0_C1": [str(x) for x in pg], "rejected_p_C0_C1": [str(x) for x in pf],
+            "mixed_accepted_p": "17/25", "mixed_rejected_p": "8/25",
+            "core_flags_p_q": [[str(p), str(q)] for p, q in core_flags],
+            "nonready_record_flags_p_q": [[str(p), str(q)] for p, q in tag_flags],
+            "accepted_flags_p_q": [[str(p), str(q)] for p, q in accepted_flags],
+            "scope": "Exact Fock5-coordinate/ancilla2 ideal-recovery fixtures retain A environment, dummy and recovery records. No GRAPE pulse, full oscillator-loss model, native controlled recovery/SWAP, physical record overlap, fitted fidelity or hardware advantage is certified. Post-A qg selection is TNI and every rejected mass remains charged."}
+
+
 def verify():
     return {"status": "passed", "arithmetic": "exact Gaussian rationals",
             "collective_relaxation": collective_guards(),
@@ -1630,6 +1851,7 @@ def verify():
             "protected_helper_transfer": protected_helper_transfer_guards(),
             "permutation_control": permutation_control_guards(),
             "local_loss_recovery": local_loss_recovery_guards(),
+            "active_gate_aqec": active_gate_aqec_guards(),
             "scope": "Finite full-input/reference channels, flags and model-boundary ingredients for a declared loss-only family. Universal decoder/norm/concentration proofs remain analytic; unique survivor vacuum, bath preparation, selectors, protected checks, mode/phase controls, active excitation, rejects and physical clocks are premises. No full instrument, conditional-fidelity frontier, arbitrary-code or hardware advantage certificate. Separate dual-rail fixtures use declared common-success four-mode physical loss slots and paid independent Pauli seeds; seed-index products are not distinct nonzero physical records. Distinct multiple-survivor collection fixtures assume a common pure vacuum history record and final vacuum/one-excitation support, allow other survivor records and loss/survivor coherences, and add paid non-number-preserving CNOT collection, garbage reset and active recovery; they do not replace the earlier pure-loss AD/discard family. The unequal-vacuum-record witness and exact one-word controlled-conjugation closure are separate finite code-level guards, not a physical advantage or an assumed control port. Fixed-deadline collective fixtures distinguish an ideal singlet code from nominal projected-H leakage, explicitly declared GAD/phase channels and a ground-heating normalization test; no fitted device fidelity, unknown-state encoder or native selector is certified. A separate one-bit transfer fixture assumes pre-wait alignment, a protected helper and a spectator-safe target measurement instrument; equal POVM probabilities alone do not certify that transfer. Timed helper-noise axes and finite embedded mutants are checked, without supplying those ports. Conditional permutation-control fixtures add finite S4 averages, character/doublon factors, literal binary SWAP paths and rate/sign hazards with a paid exact interaction ledger; Schur decompositions, finite-period bounds, leakage-valid pulses and hardware schedules remain analytic or supplied. Separate rational local-loss fixtures replay binary jump outputs, trace-distance and normalized Bell-contraction ingredients for a fixed product encoding; universal recovery bounds and general code choices are not inferred from finite samples."}
 
 

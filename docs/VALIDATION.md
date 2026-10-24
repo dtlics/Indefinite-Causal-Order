@@ -248,6 +248,13 @@ they do not fit or certify a device storage channel. Group/character,
 doublon-Gram, binary pulse, sign/hazard and fixed local-loss
 ingredients support the linked ordinary symmetry-control component;
 general Schur, finite-period diamond and recovery bounds remain analytic.
+Active-gate fixtures check code-fixed recovery, complete dummy/record
+outputs, the cavity-only boundary and intermediate accepted heralds,
+including finite true-excitation bound ingredients. General isometry and
+norm bounds, oscillator tails, actual EsT/AQEC pulse performance and
+compound routing remain analytic or physical premises. Final ground-state
+postselection does not replace the intermediate instrument; true-excitation,
+readout and encoder/SPAM calibration remain required.
 Shared-history, arbitrary
 decoder, finite-confidence and physical-cost proofs remain analytic;
 no experimental selector or bath model is certified. These checks
@@ -493,13 +500,18 @@ promise, remain analytic. Partial exchange requires its actual complete
 instrument; an isolated transfer fidelity does not supply that promise.
 The fixed opposite-partial-contact example checks all four native and
 six ordinary branch maps, source/contact normalization and full gate
-matrix-unit coefficients. Scalar-coefficient and coherent-frequency
-guards support the ordinary midpoint filter's selected-map identity;
+matrix-unit coefficients. Scalar, local two-port and
+coherent-frequency guards support the ordinary midpoint filter's selected-map identity;
 the continuum extension under the stated common frequency-diagonal
 scalar elastic responses is analytic. CZ and corrected early identity
 retries refer to the calibrated center. Stopping costs remain analytic; neither
 full-instrument equality, optimized yield nor a physical/noisy
 implementation is certified.
+The two-port extension checks dense local qubit/qutrit contacts, including
+code exits, and coherent spectral blocks of declared passive two-bright
+responses, without fitting the source device. Contact composition and
+paired timed records are premises; final code projection does not exclude
+omitted flying-mode return paths.
 The one-bright operator-contact fixtures use field dimensions two and
 three to check literal selected contractions, common filters, the
 acceptance contrast between logical inputs $01$ and $10$, and the

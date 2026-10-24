@@ -2020,6 +2020,230 @@ a mechanism-priority claim. Native helper faults, time/energy, actual
 coherent order routing and the complete environmental history determine
 the remaining hardware frontier.
 
+<a id="nr-r06-active-gate-aqec"></a>
+
+### Active bosonic gates and a code-fixing recovery have a paid ordinary comparator
+
+Photon loss during an amplitude-mixing logical gate is outside the
+number-diagonal loss check above. [Roy, Wetherbee and Fatemi,
+arXiv:2603.15356v3](https://arxiv.org/html/2603.15356v3)
+([published article](https://doi.org/10.1038/s41467-026-78317-y))
+implement error-semitransparent (EsT) gates on the binomial kitten code
+$|0_C\rangle=(|0\rangle+|4\rangle)/\sqrt2$,
+$|1_C\rangle=|2\rangle$, with one-loss words
+$|0_E\rangle=|3\rangle$, $|1_E\rangle=|1\rangle$.
+The strong ordinary comparator is their optimized EsT gate block followed
+by autonomous quantum error correction (AQEC), rather than their weaker
+code-space-only gate. Their $X,H$ gates and coherent AQEC pulse each take
+$1\,\mu\mathrm s$; AQEC readout/reset adds $1.2\,\mu\mathrm s$.
+The same transmon participates in both controls. Appendix C.2 targets
+$R|\psi_E,g\rangle=|\psi_C,e\rangle$ and
+$R|\psi_C,g\rangle=|\psi_C,g\rangle$; these are ideal pulse targets,
+not uniform error bounds for the implemented recovery or a demonstrated
+coherent order port.
+
+**Exact full-output reduction.** Let $P$ embed the admitted encoded input
+in the entire target $S$ passed between an active gate $A$ and recovery
+$R$. Include every subsequently interacting ancilla and leakage level in
+$S$. In particular, unrestricted use of the shared transmon requires
+$S$ to contain both cavity and transmon. Let $V_A:S\to S E_A$ be an
+arbitrary gate isometry, retaining photon-loss times, ancilla faults and
+failure outputs. For a fixed independent ready bath let the actual
+recovery dilation satisfy
+
+$$
+V_RP=P\otimes|e\rangle,\qquad \langle e|e\rangle=1.
+\tag{AQ1}
+$$
+
+The constant $e$ includes all recovery records and discarded purifiers.
+It need not equal the ready bath state or have a known classical
+description. A constant unknown code phase is included in $e$ and is
+physically reproduced below. Each map leaves the other's private
+environment untouched; shared interacting memory belongs in $S$.
+The interface must specify one common finish and the actual temporal
+output modes. A reduced identity channel does not identify an early
+readout pulse with a late pulse.
+
+For selector initially plus, the standard common-interface order
+isometry on encoded inputs obeys
+
+$$
+\begin{aligned}
+W_{\rm sw}P
+ &=\frac{|0\rangle V_RV_AP+|1\rangle V_AV_RP}{\sqrt2}\\
+ &=\frac{|0\rangle V_RV_AP
+       +|1\rangle(V_AP)\otimes|e\rangle}{\sqrt2}.
+\end{aligned}
+\tag{AQ2}
+$$
+
+Products have a common ordering of $E_A,E_R$. Thus one chronological
+$A$ call followed by a coherent choice of $V_R$ or
+$I_S\otimes|e\rangle$ reproduces the entire output. Such a choice is
+a physical resource. No inverse or matrix description of $A$ is used.
+In Kraus form, identity on every pure code state implies
+$R_rP=c_rP$, $\sum_r|c_r|^2=1$: each Kraus output must be parallel to
+that pure input, and linearity on code superpositions makes $c_r$
+independent of the input. The encoded switch Kraus are consequently
+$(|0\rangle R_rA_iP+|1\rangle c_rA_iP)/\sqrt2$, including every
+fine failure label. This argument preserves arbitrary logical/reference
+coherences; it does not grant access to hidden records or purifiers.
+
+**One recovery call with a codeword dummy.** Prepare an additional full
+$S$ register $D$ in one pure codeword $\chi$. Let $T$ swap $S,D$ only
+in selector branch 1. Run $A$, then $T$, one actual recovery call on
+$S$, then $T$ again. In branch 0 the recovery acts on $A$'s entire
+output. In branch 1 it acts on $\chi$, creates the same actual $e$,
+and the second swap restores the payload and dummy. Therefore
+
+$$
+W_{\rm ord}P|\chi\rangle_D
+ =W_{\rm sw}P|\chi\rangle_D.
+\tag{AQ3}
+$$
+
+Equality holds before tracing any environment or measuring the helper,
+so every subsequent full quantum output, flag, rejection and decoder
+agrees. The exact identities also hold for arbitrary selector inputs,
+including selector/reference entanglement. They use one $A$ call, one
+$R$ call, two controlled full-system swaps and the extra initialized
+register. This is an application of the established dummy-task mechanism
+in [Miguel-Ramiro, Pirker and Dür, npj Quantum Information **7**, 135
+(2021)](https://doi.org/10.1038/s41534-021-00472-5), particularly the
+record discussion after Eq. (20), rather than a new generic way to add
+control to an arbitrary channel.
+
+Charge dummy encoding, transient energy, storage, restoration and reset,
+both noisy controlled swaps, selector coherence and the complete clock.
+A kitten-codeword dummy has mean photon number two. Extra clean storage
+also permits an ordinary payload-storage comparison. The
+[demonstrated cavity-mode swap](#nr-r06-cat-physical-route) does not
+establish a swap of a cavity plus its possibly excited transmon. Neither
+(AQ3) nor the source supplies physical time/error dominance for this
+compound routing operation.
+
+**Approximate code fixing.** For a common normalized $e$, put
+$\epsilon=\|V_RP-P\otimes e\|_{\rm op}$ and
+$\epsilon_\chi=\|V_R\chi-\chi\otimes e\|_2\le\epsilon$.
+The two actual circuits have identical selector-0 branches. In branch 1,
+inserting the ideal code-fixed reference bounds their vector difference
+by $\epsilon+\epsilon_\chi$. For an independently prepared plus
+selector, vector norm bounds pure-state half trace distance; purification
+and contractivity extend the bound to every logical/reference input:
+
+$$
+\Delta\le\min\left\{1,
+ \frac{\epsilon+\epsilon_\chi}{\sqrt2}\right\}
+ \le\min\{1,\sqrt2\epsilon\}.
+\tag{AQ4}
+$$
+
+Uniformity gives the restricted-input half-diamond bound. Arbitrary
+selector inputs remove the factor $1/\sqrt2$. Any common subsequent
+instrument and bounded $[0,1]$ all-launch payoff, including unnormalized
+accepted Bell-good weight, obey the same bound; conditional fidelity
+requires positive yield. Average process fidelity is not the stated
+isometry defect. Actual native and ordinary router errors, dummy
+initialization, and departures from the independent timed-slot interface
+need separate error budgets.
+
+**Why a cavity-only route can fail.** Complete the ideal AQEC unitary by
+swapping $|j_E,g\rangle\leftrightarrow|j_C,e\rangle$ and fixing
+$|j_C,g\rangle$, $j=0,1$. Let $A=X_q$ flip the shared transmon while
+preserving an unknown cavity code state. With dummy $\chi_C$, the native
+and literal cavity-only swap--recover--unswap outputs are respectively
+
+$$
+\begin{aligned}
+|\Psi_{\rm sw}\rangle
+ &=\frac{|0\rangle|\psi_E,g\rangle
+          +|1\rangle|\psi_C,e\rangle}{\sqrt2}|\chi_C\rangle_D,\\
+|\Psi_{\rm cav}\rangle
+ &=\frac{|0\rangle|\psi_E,g\rangle|\chi_C\rangle_D
+          +|1\rangle|\psi_C,g\rangle|\chi_E\rangle_D}{\sqrt2}.
+\end{aligned}
+\tag{AQ5}
+$$
+
+Their overlap is $1/2$ and half trace distance is $\sqrt3/2$.
+Final transmon-ground acceptance is $1/2$ versus one. The second swap
+has moved the branch-1 error into the dummy; discarding the dummy and
+transmon can hide the failure. This refutes that undersized literal
+construction, not every ordinary circuit with other controls.
+
+**An intermediate herald has an exact endpoint and a costed robust bound.**
+If an actual end-of-$A$ accepted instrument $A_g$ factors the shared
+transmon into pure $g$ before further coherent processing, retain all accepted
+Kraus/measurement records and its possibly input-dependent mass
+$p_g(\rho)=\operatorname{Tr}A_g(\rho)$. Under the same common-clock
+premise, cavity-only controlled swaps now reproduce the complete
+**accepted** switched $A_g,R$ output: the shared transmon starts $g$,
+and recovery on the dummy fixes $\chi_C,g$. Both accepted selector
+flags, the final transmon, leakage and records agree without normalizing
+by $p_g$. Failed launches have mass $1-p_g$ and zero declared reward;
+their actual resources remain charged. Equality of arbitrary rejected
+quantum maps is not inferred. Final $q=g$ postselection after the
+unrestricted shared-transmon process is not this intermediate instrument,
+as (AQ5) shows.
+
+For an imperfect accepted instrument $A_h$, let $Q_e$ project onto the
+actual transmon states other than $g$, with identity on all other outputs,
+and define the positive logical effect
+$E_h=P^\dagger A_h^*(Q_e)P$, $\delta=\|E_h\|_\infty$.
+This is the unnormalized joint accepted-and-excited probability, uniformly
+over encoded inputs, rather than a conditional error or a reported
+ground-state label. In the exact code-fixing comparison, the branch-1
+constructions agree on the $q=g$ component; their difference on the
+remaining accepted Stinespring vector
+is at most $2\sqrt\delta$. Together with (AQ4), the restricted-input
+half-diamond distance of the accepted maps for a separately prepared
+plus selector satisfies
+
+$$
+\Delta_h\le\min\left\{1,
+ \frac{\epsilon+\epsilon_\chi+2\sqrt\delta}{\sqrt2}\right\}.
+\tag{AQ6}
+$$
+
+Accepted vectors have norm at most one, so their half trace distance is
+at most their vector difference; purification gives the uniform claim.
+Exact code fixing yields $\Delta_h\le\min\{1,\sqrt{2\delta}\}$;
+$\delta=0$ recovers the pure-$g$ endpoint. For two calibrated logical
+basis inputs, let $\eta_b=\langle b|E_h|b\rangle$, $b=0,1$.
+Positivity gives $\delta\le\operatorname{Tr}E_h=\eta_0+\eta_1$.
+Upper confidence bounds on these two **true**, all-launch excitation
+probabilities therefore suffice; charge encoding, readout/SPAM calibration,
+repeatability and their confidence budget. A noisy herald label alone
+does not supply them. The bound controls unnormalized accepted rewards;
+conditional fidelity again needs a positive accepted yield.
+
+The herald adds real readout/reset time, dephasing, phase compensation,
+feedforward and calibration costs. Early/late measurement or emitted
+reset records also require the complete
+[record-overlap qualification](backaction.md#nr-r14-record-overlap-qualification);
+there is no independent-cycle factor without its product premise.
+A pure cavity displacement alone is not excluded by its noncommutation
+with loss:
+$D(\alpha)^\dagger aD(\alpha)=a+\alpha I$ remains in the kitten code's
+correctable span $\{I,a\}$. This identity does not cover the source's
+combined dispersive, Kerr and transmon-driven Hamiltonian.
+A deterministic parity flag is a weaker
+ordinary comparator than recovery of the full transported error family.
+
+The decisive device test is the complete EsT block's accepted instrument,
+accepted mass, true transmon excitation and cavity leakage, the AQEC
+code-fixing defect, and a
+compatible paid route with dummy restoration and temporal records.
+Compare held-out, all-launch logical performance with chronological EsT
+control followed by recovery, including every failed launch and extra
+storage/reset cost. No native QC advantage is established here.
+The existing [loss-memory guards](checks/architecture/loss_memory_qualification_guards.py)
+replay exact finite Fock-five/transmon-two recovery, noisy-gate, dummy,
+record and herald fixtures. The general isometry/norm proof, oscillator
+tails, noisy GRAPE performance and actual coherent ports remain analytic
+or physical premises, rather than consequences of that finite replay.
+
 ### Matched noisy copies admit an ordinary same-order path comparator
 
 An unknown many-body matrix is not enough to establish a self-switch

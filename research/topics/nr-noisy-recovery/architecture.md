@@ -1126,6 +1126,14 @@ the remaining instruments, optimal yields or complete physical routers.
 Only the center's specified early ordinary identity flags are safe for
 ideal retry. Source coherence, filter/reject ports, readout and the
 complete clock remain paid.
+The [two-port extension](communication.md#nr-r11-two-port-gate)
+preserves that selected-map identity for arbitrary local memory
+dimensions, without excitation conservation, when cross-station blocks
+commute. Common commuting frequency responses retain spectral coherence.
+Local code exits are allowed; the retained two-port contacts must actually
+compose with per-contact selection, absorbing failures or no omitted
+flying-mode return paths. Separately measured channel marginals do not
+establish the paired timed records required by the physical instrument.
 The [one-bright operator-contact model](communication.md#nr-r11-raman-operator-gate)
 allows noncommuting field/bath dynamics with a common initial state
 independent of the payload for each launch. Equal native selected
@@ -1353,6 +1361,21 @@ parity helper detects every first-order photon loss. These are existing
 verification resources, not free controls for an unknown eigenbasis or
 unavailable traveling-photon QND measurements. NR-R06 states their exact
 scope, double-fault counterexample and native costs.
+
+The [active-gate/AQEC screen](architecture-baselines.md#nr-r06-active-gate-aqec)
+compares the actual optimized error-semitransparent gate followed by
+recovery. The established dummy-task mechanism needs a full compound
+register, including the shared transmon, an initialized codeword dummy,
+controlled routing and matched recovery records at a common finish.
+A cavity-mode swap alone does not supply that interface. A genuine
+intermediate accepted herald can permit a smaller route; calibrated
+true-excitation weight, counted per launch, enters an explicit error
+bound, while a reported ground-state label alone is insufficient.
+Final ground-state postselection is a different instrument.
+Compare all-launch logical
+performance, including every rejected attempt, dummy restoration,
+readout/reset, storage and router errors. No hardware advantage follows
+from the ideal reduction or finite fixtures.
 
 The [recorded parity-braid screen in NR-R08](architecture-baselines.md#nr-r08)
 compares an ordinary three-parity-measurement braid with a specified balanced
