@@ -141,8 +141,11 @@ unequal responses or finite-bandwidth hardware rates. Two independent
 coherent-order programs are now exactly attainable in a declared
 eight-mode interface. An exact rational primal/dual comparison also
 establishes a strict gate-yield separation from the two fixed words in
-the declared local-phase-feedback class; broader data filters and
-intermediate matter controls are outside that upper bound.
+the declared class with [terminal separable corrections after complete
+photon readout](methods/remote-spin-phase.md#nr-r11-terminal-separable-gate),
+including amplitude filters and their failures. Spin operations before or
+interleaved with that readout and intermediate matter controls remain outside
+the upper bound.
 A repeated ordinary route matches their full
 survivor on unknown spin/reference inputs: four windows suffice with
 the same four-mode port per visit. A direct three-window photon replay

@@ -2429,8 +2429,10 @@ fixed words and their recorded classical lotteries. The scalar kernel
 is $A_a=I-aP$, $B_b=I-bQ$: dark reflection is one and bright
 reflection is zero. The prescribed accepted gate is
 $D=\operatorname{CZ}=\operatorname{diag}(1,1,1,-1)$ on unknown
-$ABR$, with an arbitrary terminal photon POVM and only local
-output $Z$-phase corrections. All rejected launches are counted;
+$ABR$. The coherent attainment uses local output $Z$-phase corrections.
+The ordinary upper below permits an arbitrary complete photon POVM followed
+by a terminal trace-nonincreasing separable correction, including local
+filters and LOCC. All rejected launches are counted;
 physical no-click branches are not accepted.
 
 For the conventional feature Gram of
@@ -2536,8 +2538,8 @@ Pauli directions of $\mathcal E$, including their imaginary
 entries, and all five moment directions. These are not restrictions
 to real ordinary programs or a finite Pauli correction dictionary.
 
-For any ordinary feasible $H,\Omega$, positivity, PPT and
-the reflected residual yield the weak-duality chain
+For the local-phase-feedback subclass, feasible $H,\Omega$, positivity,
+PPT and the reflected residual yield the weak-duality chain
 
 $$
 \begin{aligned}
@@ -2563,6 +2565,87 @@ transpose. Homogeneity bounds each recorded order arm by
 $\gamma_o/6$, hence their lottery by $1/6$ when
 $\sum_o\gamma_o=1$. It does not grant a classical lottery the
 coherent pooled purifier.
+
+<a id="nr-r11-terminal-separable-gate"></a>
+
+The same upper extends to **any terminal separable correction after complete
+photon readout**. This includes local unentangled ancillas, amplitude filters,
+phases, LOCC and recorded failures. It excludes spin operations before or
+interleaved with the photon readout, shared entangled resources and retained
+quantum processing of the photon after a spin filter.
+
+Refine the photon measurement mathematically and write one raw spin Kraus
+operator as $K=\operatorname{diag}(k)$. If its accepted separable correction
+has product Kraus operators $Q_l=A_l\otimes B_l$, exact CZ on every unknown
+$ABR$ implies
+
+$$
+Q_lK=c_lD,\qquad
+p_k=\sum_l|c_l|^2\le\min_{a,b}|k_{ab}|^2.
+\tag{RS67a}
+$$
+
+The accepted unitary channel has rank-one Choi matrix, so each refined
+successful history must be proportional to $D$. For nonzero $c_l$, $K$ is
+invertible and $Q_l=c_lDK^{-1}$ is a diagonal product. Consequently
+$k=D(u\otimes v)$ for two nonzero complex vectors. Completeness
+$\sum_lQ_l^\dagger Q_l\preceq I$ proves the probability bound in (RS67a)
+entry by entry. A zero component of $k$ precludes nonzero full-space CZ
+success. For an allowed product atom the bound is attained by the local
+contractions $\operatorname{diag}(m_u/u_a)$ and
+$\operatorname{diag}(m_v/v_b)$, where $m_u=\min_a|u_a|$ and
+$m_v=\min_b|v_b|$. Their complementary filter outcomes are failures;
+multiple success records share this one budget.
+
+Put $C=DZD$ for the same ordinary dual $Z$ as in (RS66). The
+[shared rational certificate](../checks/architecture/projector_gate_gap.json)
+also supplies four sector decompositions. Set
+$S_0=\operatorname{diag}(-1,1)$, $S_1=\operatorname{diag}(1,-1)$ and
+$E_{ij}=|ij\rangle\langle ij|$. For each $i,j\in\{0,1\}$ it gives
+real symmetric positive-definite matrices $A_{ij},B_{ij}$ of size four
+and $M_{A,ij},M_{B,ij}$ of size two, with denominator $6000000$, such that
+
+$$
+C-E_{ij}=A_{ij}+B_{ij}^{T_B}
+       +S_i\otimes M_{B,ij}+M_{A,ij}\otimes S_j.
+\tag{RS67b}
+$$
+
+Tensor indices are $2a+b$ and
+$(B^{T_B})_{ab,cd}=B_{ad,cb}$. The exact replay checks all 64 entry
+identities and all 48 positive leading principal minors. Sylvester's
+criterion proves positivity without a numerical tolerance. In the sector
+where $|u_i|=\min_a|u_a|$ and $|v_j|=\min_b|v_b|$, both $S$ expectations
+are nonnegative. The partially transposed term on $u\otimes v$ is the
+expectation of $B_{ij}$ on $u\otimes\overline v$, and is also nonnegative.
+Thus the four sectors, including ties and zero-minimum endpoints, prove
+
+$$
+(u\otimes v)^\dagger C(u\otimes v)
+ \ge\min_a|u_a|^2\min_b|v_b|^2
+\quad(u,v\in\mathbb C^2).
+\tag{RS67c}
+$$
+
+Real certificate matrices do not restrict the amplitudes or phases.
+Let $G$ be the unnormalized raw photon-readout covariance. Its accepted
+raw atoms satisfy $G-\sum_k kk^\dagger\succeq0$. Equations (RS67a)–(RS67c)
+and $Z\succeq0$ now give
+
+$$
+p_{\rm CZ}\le\sum_k k^\dagger Zk
+ \le\operatorname{Tr}(ZG_{AB})\le\gamma/6.
+\tag{RS67d}
+$$
+
+The last inequality uses the unchanged moment dual of (RS66), with
+$G_{AB}=LH^{\mathsf T}L^{\mathsf T}$; no phase-cone restriction on the
+accepted atoms remains. For $BA$, use $JZJ$: $D$ commutes with $J$ and
+$J(u\otimes v)=v\otimes u$, so (RS67c) also bounds that dual. Recorded
+classical order lotteries again sum their separate launch weights. Photon
+and filter rejections have not been renormalized away. This is an exact
+unknown-input gate statement, including passive references, rather than a
+known-input entanglement-factory fidelity.
 
 Consequently the exact restricted optima obey
 
@@ -2590,10 +2673,11 @@ gives the projector kernel. This is a single-frequency model point,
 not a fit to the measured modules, a normalizable finite-pulse
 certificate or evidence for the required four/eight-mode ports.
 
-This checkpoint concerns only the specified CZ flag and the
-phase-only fixed-word two-encounter class. Intermediate data
-controls, general local data filters, encodings, protected
-data bypasses, spare memories, entanglement-first protocols,
+This checkpoint concerns the specified CZ flag and the fixed-word
+two-encounter class with terminal separable correction after complete
+photon readout. Intermediate data controls, spin operations before or
+interleaved with that readout, encodings, shared entangled resources,
+protected data bypasses, spare payload memories, entanglement-first protocols,
 extra calls and different spectral or no-click interfaces are
 outside the ordinary dual. The safe four-window survivor compiler,
 or the qualified calibrated three-window construction, matches
@@ -4900,7 +4984,13 @@ The selected projector-kernel certificate additionally checks its
 primal PSD/PPT and reflected rejection matrices, both ordinary duals
 with a positive rational margin, every real/imaginary moment and
 phase direction, transpose conventions and homogeneous lottery
-weights. Its checked scalar cavity point is single-frequency.
+weights. Its [terminal-filter component](../checks/architecture/projector_filter_dual.py)
+additionally checks four all-complex-product sector decompositions with
+64 integer entry identities and 48 strictly positive leading minors.
+The Choi-rank, separable-correction and completeness argument above connects
+that certificate to all terminal LOCC after complete photon readout;
+it does not cover premeasurement or interleaved controls.
+Its checked scalar cavity point is single-frequency.
 These exact tests establish the bounds in (RS68), not either optimum,
 a finite-pulse rate or a physical separation from the longer or
 entanglement-first ordinary protocols.

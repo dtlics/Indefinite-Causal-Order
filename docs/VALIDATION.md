@@ -183,8 +183,13 @@ records, physical buffers or throughput.
 An additional rational projector-response certificate supplies a
 coherent pooled gate primal and ordinary fixed-word duals. Exact
 PSD/PPT, phase and complex moment equalities establish a restricted
-accepted-CZ separation; general data filters, intermediate matter
-controls and hardware rates are outside that upper bound. The repeated
+accepted-CZ separation. Four additional exact sector decompositions extend
+the ordinary upper to terminal separable/LOCC correction after complete
+photon readout, including amplitude-filter failures: 64 integer identities
+and 48 positive leading minors prove the all-complex-product inequality.
+The unknown-input Choi-rank/completeness bridge remains analytic. Spin
+operations before/interleaved with readout, intermediate matter controls
+and hardware rates remain outside that upper bound. The repeated
 ordinary survivor compiler remains a stronger paid comparator.
 The [direct-parity failure component](../research/topics/nr-noisy-recovery/methods/remote-spin-phase.md#nr-r11-parity-failure)
 adds exact complete accepted/loss maps and finite capped-retry guards.

@@ -1599,7 +1599,8 @@ def exact_projector_gap_verify():
     """Exact pooled CZ primal and both ordinary-word weak-dual certificates.
 
     The gap is a lower/upper comparison in the declared constant-projector
-    reflected gate class, with local phase feedback. No optimum equality,
+    reflected gate class, with terminal separable correction after complete
+    photon readout. No optimum equality,
     adaptive ordinary bound, no-click recovery or hardware rate is inferred.
     """
     from pathlib import Path
@@ -1735,6 +1736,9 @@ def exact_projector_gap_verify():
     upper = objectives[0]
     assert probability-upper == F(1, 120)
     assert probability/upper == F(21, 20)
+    from projector_filter_dual import verify as verify_projector_filter_dual
+    terminal_filters = verify_projector_filter_dual(data)
+    assert terminal_filters['status'] == 'passed'
     return {'status': 'passed', 'arithmetic': 'Gaussian rational, stdlib',
             'coherent_pooled_CZ_probability': str(probability),
             'ordinary_AB_BA_recorded_lottery_upper': str(upper),
@@ -1748,8 +1752,9 @@ def exact_projector_gap_verify():
             'complex_projector_Gram_orientation_fixtures': 1,
             'homogeneous_recorded_order_lotteries': 1,
             'projector_reflection_kernel_fixtures': 1,
+            'terminal_separable_corrections': terminal_filters,
             'scope': 'exact pooled reflected CZ primal and fixed-word/classically recorded-order '
-                     'weak duals with terminal pure-helper POVM and local phase feedback; '
+                     'weak duals with complete photon POVM then terminal separable/LOCC correction; '
                      'lower/upper gap and ratio only, no optimum equality, adaptive-ordinary '
                      'upper, no-click acceptance or native hardware/clock advantage'}
 
