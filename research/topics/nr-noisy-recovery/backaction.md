@@ -842,8 +842,9 @@ every attempt. Choosing the better actual word already reaches or exceeds
 inequality. No negative flag is discarded. The meter must be available in
 addition to any routing degree that must stay fixed to implement the
 ordinary word. Neither a path qubit nor demonstrated local drives alone
-grant these controlled parity gates. If a logical SWAP into the protected
-meter is also supplied, direct helper storage is a further comparator.
+grant these controlled parity gates. A supplied logical SWAP gives direct
+helper storage; the conditional one-bit transfer below needs less than a
+SWAP but requires a spectator-safe input readout instrument.
 For an unflagged endpoint, a supplied coherent helper-conditional active
 recovery followed by helper discard replaces intermediate readout; its
 gate and reset costs remain. In the pure-loss case $p_S=s^2$, and the
@@ -903,6 +904,183 @@ rejected attempts count too. Independent launches, SPAM, drift and model
 transfer require validation; a single-shot channel marginal does not
 justify calibration reuse. These ideal endpoint inequalities alone do
 not establish a native wall-clock or gate-cost optimum.
+
+<a id="nr-r14-helper-transfer"></a>
+
+**Input transfer and the retained-helper readout port.** A one-qubit
+memory can have a stronger ordinary comparator than (LM6). Suppose a
+known, paid, vacuum-preserving input mode operation sends $v$ to one
+site $j$; no such operation is needed for a localized input. Suppose also
+that phase-resolved $X_j$ readout can leave a separate helper's unknown
+state intact, that the helper admits the indicated Clifford corrections
+and independent storage channel, and that it can be the delivered logical
+output. These are joint production ports, not consequences of (LM2)'s
+calibration means or of an alignment gate supplied only at the output.
+
+Prepare the helper in $+$, apply one controlled excitation parity and
+measure $X_j$ before the waiting interval. For result $a=0,1$, its raw
+logical-input-to-helper Kraus operator and correction are
+
+$$
+T_a=H_C Z^a/\sqrt2,\qquad R_a=Z_C^a H_C,\qquad
+R_aT_a=I/\sqrt2.
+\tag{LM8}
+$$
+
+Thus each recorded branch is exactly $\rho_{LR}/2$, with the logical
+output now in $C$. The measured payload is independent of that unknown
+state; any subsequent channel confined to it can be discarded. If the
+corrected helper has storage channel $\Lambda_C$, each branch instead
+is $(\Lambda_C\otimes\mathrm{id}_R)(\rho_{LR})/2$. No noisy-word
+calibration, population collector or target-to-helper SWAP is needed for
+this identity. This is the established
+[one-bit teleportation primitive of Zhou, Leung and Chuang, Section II](https://arxiv.org/pdf/quant-ph/0002039v2),
+applied to the stated memory interface, not a new teleportation mechanism.
+
+The complete readout instrument matters even when its POVM is known.
+Follow the good $X_j$ instrument by $Z_C$ dephasing before $R_a$.
+Every flag probability is unchanged for every joint data/helper input,
+yet $R_a Z_C T_a=(-1)^a X/\sqrt2$ makes the corrected branch
+$\Delta_X(\rho_{LR})/2$, where
+$\Delta_X(\rho)=(\rho+X\rho X)/2$. Its summed logical channel is
+entanglement breaking, with $F_e=1/2$. A helper used or reset by the
+payload readout therefore cannot silently be treated as a spectator.
+More generally, raw helper $Z$ dephasing of visibility $r$ becomes
+logical $X$ dephasing. Follow it by corrected-helper storage $Z$
+dephasing of visibility $\kappa$; the all-attempt fidelity is
+$(1+r)(1+\kappa)/4$. The axes depend on when the noise occurs.
+
+Charge input alignment, one controlled parity (or one site-selective CZ
+when that port exists), the payload readout, one classical bit, helper
+correction/reset, its complete protected lifetime and delivery. Include
+all transfer and waiting times in the same deadline. Returning the state
+to a prescribed physical target requires an additional supplied transfer;
+delivering $C$ does not prove that endpoint. For independently certified
+half-diamond transfer error at most $\epsilon$ and actual helper
+entanglement fidelity $f_C$, contractivity and the Bell-test bound give
+$F_e\ge f_C-\epsilon$. Transfer error includes SPAM, spectator
+disturbance, gates and feedforward. It must be certified on the joint
+instrument, not estimated from the flag counts. When
+$f_C-\epsilon\ge(1+s_{\rm best})/2$, this paid bypass already reaches
+the ideal-selector upper bound (LM5). For ideal transfer and the stated
+$Z$-dephasing helper this sufficient condition is $\kappa\ge s_{\rm best}$.
+This is a conditional cost comparison, not an assertion that any cited
+dark-state experiment provides that helper or readout port.
+
+<a id="nr-r14-two-qubit-deadline"></a>
+
+**Two logical qubits at a fixed storage deadline.** Increasing the input
+size avoids storing the entire input in one helper, but still requires
+ordinary codes and partial helper storage. A concrete next model is
+[Du, Guo and Ma's four-transmon array, v1](https://arxiv.org/html/2605.12442v1).
+Its strong waveguide decay is enabled by flux modulation, so storage with
+that modulation off must be compared at the same deadline. The reported
+hold excludes two 244 ns ramps. The supplement's S10/A.1 and E.3 use
+different intrinsic Purcell rates, about $2\pi\times2$ and
+$2\pi\times10$ kHz; S13 omits local dephasing. Those passages do not
+fix one predictive arbitrary-input storage channel without reconciling
+the rate convention and measuring the relevant joint dephasing process.
+Known-state preparation does not supply an unknown-state encoder or a
+coherent order selector.
+
+There is an exact ordinary limiting comparison. On four two-level spins,
+write $J_-=\sum_i\sigma_i^-$ and $J_+=J_-^\dagger$. The orthogonal vectors
+
+$$
+\begin{aligned}
+u_0&=|0101\rangle-|0110\rangle-|1001\rangle+|1010\rangle,\\
+u_1&=2|0011\rangle-|0101\rangle-|0110\rangle
+      -|1001\rangle-|1010\rangle+2|1100\rangle
+\end{aligned}
+$$
+
+have squared norms 4 and 12. Thus
+$P=u_0u_0^\dagger/4+u_1u_1^\dagger/12$ is a rank-two projector and
+$J_\pm P=0$. Every collective dissipator
+$\gamma_-(t)\mathcal D[J_-]+\gamma_+(t)\mathcal D[J_+]$ vanishes on
+all four code matrix units. If the Hamiltonian preserves $P$, correct
+its known logical action. One logical qubit in this standard singlet
+code and another in an actually protected helper then preserve all two-
+logical-qubit/reference operators. This ideal noiseless-code comparison
+is not a claim about the complete transmon device.
+
+Indeed, its nominal hopping already breaks that simple code. In
+$\widetilde H=\sum_{i<j}j_{ij}
+(\sigma_i^+\sigma_j^-+\sigma_i^-\sigma_j^+)$, use the dimensionless
+numerical Table S1 cycles-MHz values $j_{01}=j_{23}=5.86$, $j_{12}=5.89$,
+$j_{02}=j_{13}=0.60$, $j_{03}=0$. The exact projected identity is
+
+$$
+\|(I-P)\widetilde H P\|^2=\frac{277759}{15000}>0.
+\tag{LM9}
+$$
+
+To check it directly, the complementary-pair cut weights are
+$A=7.09$, $B=17.61$, $C=12.92$ for $01|23$, $02|13$, $03|12$.
+The leakage Gram has range along the normalized two-excitation Dicke
+vector and nonzero eigenvalue
+$(B-C)^2/6+(2A-B-C)^2/18$, giving (LM9). The hopping Hamiltonian obeys
+$H_{\rm XY}/\hbar=2\pi\,\mathrm{MHz}\,\widetilde H$. This is a coherent leakage
+coefficient, not a logical lifetime or fidelity curve. A known final
+inverse does not remove records acquired while a state leaves the code.
+In the full three-level model, additional double-occupancy outputs are
+orthogonal to this binary-sector leakage, so they cannot cancel it.
+
+A measured single-target channel gives another paid two-qubit benchmark:
+store one logical qubit in the helper and the other in that target. For a
+declared stationary two-level thermal-relaxation/phase model, let $0\le p\le1$ be
+the stationary excited population, $0\le r\le1$ the relaxation amplitude
+and $|\chi|\le1$ the additional coherence factor. Its complete images are
+
+$$
+\begin{aligned}
+E_{00}&\mapsto[1-p(1-r^2)]E_{00}+p(1-r^2)E_{11},\\
+E_{11}&\mapsto(1-p)(1-r^2)E_{00}+[p+(1-p)r^2]E_{11},\\
+E_{10}&\mapsto r\chi E_{10},\qquad
+E_{01}\mapsto r\chi^*E_{01}.
+\end{aligned}
+\tag{LM10}
+$$
+
+Tensoring the helper identity specifies all 16 logical matrix-unit images
+and all reference extensions. It gives
+$F_{e,4}=(1+r^2+2r\operatorname{Re}\chi)/4$, independent of $p$;
+a learned phase replaces $\operatorname{Re}\chi$ by $|\chi|$.
+Measuring the second input in $Z$, saving its bit and preparing it at
+delivery instead gives the distinct classical fallback
+$\mathrm{id}\otimes\Delta_Z$ with $F_{e,4}=1/2$. Both require actual
+helper transfer/storage and all encoder, reset, readout and timing costs.
+A Ramsey $T_2^*$ alone determines neither $\chi$ for the production
+waveform nor echo performance.
+
+For the independent product-slot model with at least one entanglement-
+breaking slot, the [retained-output rank bound](communication.md#nr-r10)
+gives $F_{e,4}\le1/2$ after arbitrary receiver decoding, even in each
+normalized accepted branch. The paid partial-helper/classical fallback
+therefore saturates that endpoint when its transfer ports exist. The
+rank premise concerns the complete available slot, including useful
+records; an averaged marginal or a shared bath does not establish it.
+No such slot decomposition is inferred for the four-transmon device.
+
+The intrinsic two-level jump model itself offers a rate-disambiguation
+test: from the all-ground state, its initial excitation-number slope is
+$4n_p\gamma_p+\sum_i n_i\gamma_{{\rm nr},i}$ for collective upward
+coefficient $n_p\gamma_p$ and the four local upward coefficients.
+Measure that heating together with decay under the same modulation-off
+conditions; do not fit a logical score by silently selecting one rate
+recipe. Finite readout time, resonator dynamics and the validity of this
+reduced model also require checks.
+
+The next useful decision is the complete two-logical-qubit retention
+channel at a fixed wall time under modulation-off storage, calibrated
+code/helper encodings, refocusing and programmed schedules. Include loss,
+thermal events and leakage in the full channel and keep all available
+flags and rejects. Use held-out drift
+episodes and include preparation, both ramps, decoding, helper survival,
+calibration and reset. Only an actual pair of full history dilations
+with their cross-history records can add a coherent-order comparison;
+the source's Lindblad marginal is insufficient. These exact limits and
+declared channel fixtures establish no device fidelity or switch win.
 
 **Fresh-slot flags, prior and remaining scope.** For independent loss-only
 ports, $M_{ij,-}=(B_jA_i-A_iB_j)/2$ kills $G$. On a ground-plus-mode code

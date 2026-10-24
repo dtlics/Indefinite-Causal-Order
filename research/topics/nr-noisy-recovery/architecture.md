@@ -515,7 +515,14 @@ retained-control recovery with paid parity checks and active excitation,
 including complete shared-bath histories under a common pure vacuum
 record. The multiple-survivor baseline uses phase-cycled calibration and
 paid population-collection gates; reduced ground preservation alone does
-not specify that coherent history interface. The next target must beat these accessible ordinary controls
+not specify that coherent history interface.
+The [input-transfer comparison](backaction.md#nr-r14-helper-transfer)
+requires a readout that preserves an unknown state in the helper;
+calibration outcome statistics alone do not establish that port.
+The [four-transmon storage test](backaction.md#nr-r14-two-qubit-deadline)
+specifies a two-logical-qubit deadline and ordinary code/helper
+comparisons while leaving a predictive device channel unverified.
+The next target must beat these accessible ordinary controls
 within a justified drift window, with preparation and training costs.
 
 The [excitation-exchange example in NR-R14](backaction.md#nr-r14) now

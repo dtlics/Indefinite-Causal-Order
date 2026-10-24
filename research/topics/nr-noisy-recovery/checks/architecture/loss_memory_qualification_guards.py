@@ -800,6 +800,463 @@ def unequal_vacuum_record_boundary_guards():
     return run_boundary_replay()
 
 
+def collective_deadline_guards():
+    def unit(d, i, j):
+        out = zeros(d)
+        out[i][j] = G(1)
+        return out
+
+
+    def tr(a):
+        return sum((a[i][i] for i in range(len(a))), G())
+
+
+    def channel(weighted, rho):
+        out = zeros(len(weighted[0][1]))
+        for weight, k in weighted:
+            out = add(out, scale(mm(k, mm(rho, adj(k))), weight))
+        return out
+
+
+    def weighted_tp(weighted, d):
+        out = zeros(d)
+        for weight, k in weighted:
+            out = add(out, scale(mm(adj(k), k), weight))
+        require(out == eye(d), 'declared channel trace preserving')
+
+
+    def entanglement_fidelity(weighted, d):
+        return sum((G(weight) * tr(k) * tr(k).conj() for weight, k in weighted), G()) / G(d*d)
+
+
+    def bitop(site, up=False):
+        out = zeros(16)
+        for source in range(16):
+            bit = (source >> (3-site)) & 1
+            if bit != int(up):
+                target = source ^ (1 << (3-site))
+                out[target][source] = G(1)
+        return out
+
+
+    def singlet_and_hopping():
+        u0 = zeros(16, 1)
+        for index, value in {5:1, 6:-1, 9:-1, 10:1}.items():
+            u0[index][0] = G(value)
+        u1 = zeros(16, 1)
+        for index, value in {3:2, 5:-1, 6:-1, 9:-1, 10:-1, 12:2}.items():
+            u1[index][0] = G(value)
+        require(mm(adj(u0), u0) == [[G(4)]] and mm(adj(u1), u1) == [[G(12)]]
+                and mm(adj(u0), u1) == [[G()]], 'singlet Gram factors')
+        p = add(scale(mm(u0, adj(u0)), F(1, 4)), scale(mm(u1, adj(u1)), F(1, 12)))
+        require(p == adj(p) and mm(p, p) == p and tr(p) == G(2), 'rank-two singlet projector')
+        lower = [bitop(i) for i in range(4)]
+        jm = zeros(16)
+        for a in lower:
+            jm = add(jm, a)
+        require(mm(jm, p) == mm(adj(jm), p) == zeros(16), 'both thermal collective jumps annihilate code')
+        # Nominal S4 two-level projection, measured Table S1 values in cycles MHz.
+        couplings = {(0,1):F(586,100), (1,2):F(589,100), (2,3):F(586,100),
+                     (0,2):F(60,100), (1,3):F(60,100)}
+        h = zeros(16)
+        for (i,j), value in couplings.items():
+            hop = add(mm(adj(lower[i]), lower[j]), mm(adj(lower[j]), lower[i]))
+            h = add(h, scale(hop, value))
+        require(h == adj(h), 'source spin-projected Hamiltonian Hermitian')
+        leakage = mm(add(eye(16), scale(p,-1)), mm(h,p))
+        dvec = zeros(16,1)
+        for i in (3,5,6,9,10,12):
+            dvec[i][0] = G(1)
+        dicke = scale(mm(dvec, adj(dvec)), F(1,6))
+        require(mm(p, dicke) == zeros(16), 'Dicke complement orthogonal to singlets')
+        a,b,c = F(709,100), F(1761,100), F(1292,100)
+        kappa2 = (b-c)**2/F(6) + (2*a-b-c)**2/F(18)
+        require(kappa2 == F(277759,15000), 'exact source cut polynomial')
+        require(mm(leakage, adj(leakage)) == scale(dicke,kappa2), 'full projected leakage Gram and norm')
+        require(leakage != zeros(16), 'real hopping does not preserve simple DFS')
+        # For every operator supported on P, each collective dissipator is zero.
+        supported_units = 0
+        for ui in (u0,u1):
+            for uj in (u0,u1):
+                # Nonzero scalar normalization factors do not affect annihilation;
+                # these four operators span the normalized logical code algebra.
+                rho = mm(ui,adj(uj))
+                for jump in (jm,adj(jm)):
+                    jj = mm(adj(jump),jump)
+                    dissipator = add(mm(jump,mm(rho,adj(jump))),
+                                     scale(add(mm(jj,rho),mm(rho,jj)), F(-1,2)))
+                    require(dissipator == zeros(16), 'all supported-code basis operators dark')
+                supported_units += 1
+        return {'projected_code_operator_checks': supported_units,
+                'nominal_hopping_leakage_norm_squared_cycles_MHz': str(kappa2),
+                'scope':'Exact collective-noise code limit and nominal source-H projection; not a storage fidelity or full three-level simulation.'}
+
+
+    def helper_channel_fixtures():
+        ident = eye(2)
+        z = [[G(1),G()],[G(),G(-1)]]
+        fallback = [(F(1),kron(ident,unit(2,zbit,zbit))) for zbit in range(2)]
+        weighted_tp(fallback,4)
+        require(entanglement_fidelity(fallback,4) == G(F(1,2)), 'one-helper classical fallback Fe4')
+        units = 0
+        fixtures = 0
+        for p in (F(0),F(1,20),F(1,2)):
+            for r in (F(0),F(3,5),F(1)):
+                for eta in (F(0),F(4,5),F(1)):
+                    phase = G(F(3,5),F(4,5))
+                    chi = G(eta)*phase
+                    phasegate = [[G(1),G()],[G(),phase]]
+                    base = [
+                        (1-p, [[G(1),G()],[G(),G(r)]]),
+                        ((1-p)*(1-r*r), unit(2,0,1)),
+                        (p, [[G(r),G()],[G(),G(1)]]),
+                        (p*(1-r*r), unit(2,1,0)),
+                    ]
+                    weighted = []
+                    for w,k in base:
+                        for v,frame in (((1+eta)/2,ident),((1-eta)/2,z)):
+                            weighted.append((w*v,kron(ident,mm(phasegate,mm(frame,k)))))
+                    weighted_tp(weighted,4)
+                    expected = [
+                        add(scale(unit(2,0,0),1-p*(1-r*r)),scale(unit(2,1,1),p*(1-r*r))),
+                        scale(unit(2,0,1),G(r)*chi.conj()),
+                        scale(unit(2,1,0),G(r)*chi),
+                        add(scale(unit(2,0,0),(1-p)*(1-r*r)),scale(unit(2,1,1),p+(1-p)*r*r)),
+                    ]
+                    for i in range(4):
+                        for j in range(4):
+                            ai,bi,aj,bj=i//2,i%2,j//2,j%2
+                            desired=kron(unit(2,ai,aj),expected[2*bi+bj])
+                            require(channel(weighted,unit(4,i,j))==desired,'all two-logical operator images')
+                            units+=1
+                    formula=(G(1+r*r)+G(2*r)*G(chi.r))/G(4)
+                    require(entanglement_fidelity(weighted,4)==formula,'thermal population-independent full Fe4')
+                    fixtures+=1
+        return {'declared_channel_fixtures':fixtures,'full_two_logical_matrix_units':units,
+                'fallback_Fe4':'1/2', 'source_fit':False,
+                'scope':'Parameterized CPTP family, not a source-inferred T2* or numerical device channel.'}
+
+
+    def ground_heating_normalization():
+        ground = unit(16,0,0)
+        number = zeros(16)
+        jm = zeros(16)
+        local_up = []
+        for i in range(4):
+            down = bitop(i)
+            jm = add(jm,down)
+            number = add(number,mm(adj(down),down))
+            local_up.append(adj(down))
+        def dissipator(jump):
+            jj=mm(adj(jump),jump)
+            return add(mm(jump,mm(ground,adj(jump))),
+                       scale(add(mm(jj,ground),mm(ground,jj)),F(-1,2)))
+        require(tr(mm(number,dissipator(jm))) == G(), 'ground downward slope zero')
+        require(tr(mm(number,dissipator(adj(jm)))) == G(4), 'collective upward slope factor four')
+        require(all(tr(mm(number,dissipator(up))) == G(1) for up in local_up),
+                'each local upward slope factor one')
+        np,nq = F(27,500),F(1,20)
+        low = 4*(np*2+nq*2)
+        high = 4*(np*F(5,2)+nq*F(5,2))
+        e3 = 4*(np*10+nq*4)
+        require((low,high,e3)==(F(104,125),F(26,25),F(74,25)), 'literal nominal slope recipes')
+        require(e3>high, 'rate-normalization ambiguity is experimentally distinguishable')
+        return {'A1_nominal_slope_bracket_times_2pi_kHz':[str(low),str(high)],
+                'E3_literal_slope_times_2pi_kHz':str(e3),
+                'scope':'Ground-heating model-disambiguation recipes, not confidence intervals or logical-memory fidelity.'}
+
+
+    def run_deadline_replay():
+        return {'singlet_hopping':singlet_and_hopping(), 'helper_target_family':helper_channel_fixtures(),
+                'ground_heating_normalization':ground_heating_normalization()}
+
+
+    return run_deadline_replay()
+
+
+def protected_helper_transfer_guards():
+    I2 = eye(2)
+    Z = [[G(1), G()], [G(), G(-1)]]
+    X = [[G(), G(1)], [G(1), G()]]
+    HN = [[G(1), G(1)], [G(1), G(-1)]]
+
+
+    def unit(n, i, j):
+        out = zeros(n)
+        out[i][j] = G(1)
+        return out
+
+
+    def trace(a):
+        return sum((a[i][i] for i in range(len(a))), G())
+
+
+    def cp(terms, rho):
+        out = zeros(len(terms[0][1]))
+        for weight, op in terms:
+            out = add(out, scale(mm(mm(op, rho), adj(op)), weight))
+        return out
+
+
+    def ref_terms(terms):
+        return [(weight, kron(op, I2)) for weight, op in terms]
+
+
+    def physical_fixture(omit_second_parity=False):
+        # Data ordering q1,q2; target site q1, collective mode 3|10>/5+4i|01>/5.
+        code = zeros(4, 2)
+        code[0][0] = G(1)
+        code[2][1] = G(F(3, 5))
+        code[1][1] = G(0, F(4, 5))
+        alignment = eye(4)
+        alignment[2][2] = alignment[1][1] = G(F(3, 5))
+        alignment[2][1] = alignment[1][2] = G(0, F(-4, 5))
+        require(mm(adj(alignment), alignment) == eye(4), "physical alignment unitary")
+        aligned = mm(alignment, code)
+        expected = zeros(4, 2)
+        expected[0][0] = expected[2][1] = G(1)
+        require(aligned == expected, "complex collective-mode alignment")
+
+        parity = eye(4)
+        parity[1][1] = parity[2][2] = G(-1)
+        require(mm(alignment, parity) == mm(parity, alignment), "vacuum/parity alignment")
+        cz = []
+        for bit in (1, 0):
+            gate = eye(8)
+            for c in range(2):
+                for d in range(4):
+                    gate[4*c+d][4*c+d] = G((-1)**(c*((d >> bit) & 1)))
+            cz.append(gate)
+        controlled_parity = cz[0] if omit_second_parity else mm(cz[1], cz[0])
+        if not omit_second_parity:
+            expected_parity = eye(8)
+            for d in range(4):
+                expected_parity[4+d][4+d] = parity[d][d]
+            require(controlled_parity == expected_parity, "two literal controlled-Z parity gates")
+        # C+ numerator; its omitted normalization is restored by CP weights below.
+        source = code + code
+        encoded = mm(kron(I2, alignment), mm(controlled_parity, source))
+        return encoded
+
+
+    def measure_row(a, other):
+        # Unnormalized X bra on q1; q2 is traced by its Kraus index 'other'.
+        row = zeros(2, 8)
+        for c in range(2):
+            for q1 in range(2):
+                row[c][4*c+2*q1+other] = G((-1)**(a*q1))
+        return row
+
+
+    def raw_rows(encoded, a):
+        return [mm(measure_row(a, other), encoded) for other in range(2)]
+
+
+    def corrected_terms(encoded, a, r=F(1), kappa=F(1), wrong_order=False):
+        za = I2 if a == 0 else Z
+        correction = mm(HN, za) if wrong_order else mm(za, HN)
+        out = []
+        for raw in raw_rows(encoded, a):
+            for b in range(2):
+                wb = (1+r)/2 if b == 0 else (1-r)/2
+                for c in range(2):
+                    wc = (1+kappa)/2 if c == 0 else (1-kappa)/2
+                    op = mm(I2 if c == 0 else Z,
+                            mm(correction, mm(I2 if b == 0 else Z, raw)))
+                    # Source, X bra, and correction contribute 1/(2 sqrt(2)).
+                    out.append((wb*wc/8, op))
+        return out
+
+
+    def logical_terms(r, kappa):
+        out = []
+        for b in range(2):
+            wb = (1+r)/2 if b == 0 else (1-r)/2
+            for c in range(2):
+                wc = (1+kappa)/2 if c == 0 else (1-kappa)/2
+                out.append((wb*wc/2, mm(I2 if c == 0 else Z, I2 if b == 0 else X)))
+        return out
+
+
+    def reference_equal(terms, expected, label):
+        left, right = ref_terms(terms), ref_terms(expected)
+        count = 0
+        for i in range(4):
+            for j in range(4):
+                rho = unit(4, i, j)
+                require(cp(left, rho) == cp(right, rho), label + " full L/R matrix unit")
+                count += 1
+        return count
+
+
+    def measurement_terms(a, r):
+        correction = mm(I2 if a == 0 else Z, HN)
+        out = []
+        for other in range(2):
+            row = measure_row(a, other)
+            for b in range(2):
+                wb = (1+r)/2 if b == 0 else (1-r)/2
+                out.append((wb/4, mm(correction, mm(I2 if b == 0 else Z, row))))
+        return out
+
+
+    def effect(terms):
+        out = zeros(len(terms[0][1][0]))
+        for weight, op in terms:
+            out = add(out, scale(mm(adj(op), op), weight))
+        return out
+
+
+    def trace_data(full):
+        # Full output ordering C,D,R; retained output ordering C,R.
+        out = zeros(4)
+        for c in range(2):
+            for r in range(2):
+                for cc in range(2):
+                    for rr in range(2):
+                        out[2*c+r][2*cc+rr] = sum(
+                            (full[2*(4*c+d)+r][2*(4*cc+d)+rr] for d in range(4)), G())
+        return out
+
+
+    def later_target_check(encoded):
+        count = 0
+        target_channels = []
+        # Complete reset and complete computational dephasing on discarded data.
+        target_channels.append([unit(4, 0, d) for d in range(4)])
+        target_channels.append([unit(4, d, d) for d in range(4)])
+        for ops in target_channels:
+            require(sum_effect(ops) == eye(4), "later target channel is trace preserving")
+            for a in range(2):
+                pxnum = [[G(1), G((-1)**a)], [G((-1)**a), G(1)]]
+                projected = mm(kron(I2, kron(pxnum, I2)), encoded)
+                full = mm(kron(mm(I2 if a == 0 else Z, HN), eye(4)), projected)
+                terms = [(F(1, 16), kron(mm(kron(I2, op), full), I2)) for op in ops]
+                for i in range(4):
+                    for j in range(4):
+                        rho = unit(4, i, j)
+                        require(trace_data(cp(terms, rho)) == scale(rho, F(1, 2)),
+                                "later independent target channel cannot affect retained C/R")
+                        count += 1
+        return count
+
+
+    def sum_effect(ops):
+        out = zeros(len(ops[0][0]))
+        for op in ops:
+            out = add(out, mm(adj(op), op))
+        return out
+
+
+    def expected_failure(action, label):
+        try:
+            action()
+        except ValueError:
+            return 1
+        raise ValueError("meaningful mutant was not rejected: " + label)
+
+
+    def run_transfer_replay():
+        encoded = physical_fixture()
+        ideal_units = 0
+        for a in range(2):
+            rows = raw_rows(encoded, a)
+            require(rows[0] == mm(HN, I2 if a == 0 else Z), "raw H Z^a numerator")
+            require(rows[1] == zeros(2), "unused data mode is vacuum")
+            ideal_units += reference_equal(corrected_terms(encoded, a), [(F(1, 2), I2)], "ideal")
+
+        noisy_units = 0
+        fe_checks = 0
+        phi_vec = [[G(1)], [G()], [G()], [G(1)]]
+        phi = scale(mm(phi_vec, adj(phi_vec)), F(1, 2))
+        complex_vec = [[G(1)], [G()], [G()], [G(0, 1)]]
+        complex_rho = scale(mm(complex_vec, adj(complex_vec)), F(1, 2))
+        complex_checks = 0
+        for r in (F(0), F(3, 5), F(1)):
+            for kappa in (F(0), F(4, 5), F(1)):
+                total_phi = zeros(4)
+                for a in range(2):
+                    actual = corrected_terms(encoded, a, r, kappa)
+                    expected = logical_terms(r, kappa)
+                    noisy_units += reference_equal(actual, expected, "timed helper noise")
+                    actual_complex = cp(ref_terms(actual), complex_rho)
+                    require(actual_complex == cp(ref_terms(expected), complex_rho), "complex entangled input")
+                    require(trace(actual_complex) == G(F(1, 2)), "state independent flag weight")
+                    complex_checks += 1
+                    total_phi = add(total_phi, cp(ref_terms(actual), phi))
+                require(trace(mm(phi, total_phi)) == G((1+r)*(1+kappa)/4), "entanglement fidelity formula")
+                fe_checks += 1
+
+        # Initial helper Z flips and raw pre-correction Z flips have the same axis.
+        initial_units = 0
+        for r in (F(0), F(3, 5), F(1)):
+            for a in range(2):
+                actual = []
+                for b in range(2):
+                    wb = (1+r)/2 if b == 0 else (1-r)/2
+                    initial = mm(kron(I2 if b == 0 else Z, eye(4)), encoded)
+                    actual.extend((weight*wb, op) for weight, op in corrected_terms(initial, a))
+                initial_units += reference_equal(actual, logical_terms(r, F(1)), "initial helper Z becomes logical X")
+
+        # Equality of effects implies equal probabilities for arbitrary C,D,R input.
+        povm_units = 0
+        effects = []
+        for a in range(2):
+            clean = measurement_terms(a, F(1))
+            noisy = measurement_terms(a, F(0))
+            expected_effect = scale(kron(I2, kron(
+                [[G(1), G((-1)**a)], [G((-1)**a), G(1)]], I2)), F(1, 2))
+            require(effect(clean) == expected_effect == effect(noisy), "same entire X POVM on arbitrary joint C/D")
+            effects.append(expected_effect)
+            for i in range(8):
+                for j in range(8):
+                    rho = unit(8, i, j)
+                    require(trace(cp(clean, rho)) == trace(cp(noisy, rho)), "same-POVM CD matrix unit")
+                    povm_units += 1
+        require(add(effects[0], effects[1]) == eye(8), "complete joint measurement POVM")
+        require(effects[0] != scale(eye(8), F(1, 2)), "arbitrary CD flags need not be fair")
+
+        # Entanglement-breaking raw dephasing is literally measurement/preparation in X.
+        x_measure_prepare = []
+        for sign in (1, -1):
+            projector = scale([[G(1), G(sign)], [G(sign), G(1)]], F(1, 2))
+            x_measure_prepare.append((F(1, 2), projector))
+        eb_units = reference_equal(corrected_terms(encoded, 0, F(0), F(1)), x_measure_prepare,
+                                   "same-POVM channel is half Delta_X")
+        require(cp(corrected_terms(encoded, 0, F(0), F(1)), unit(2, 0, 0)) != scale(unit(2, 0, 0), F(1, 2)),
+                "same flags do not establish identity transfer")
+
+        later_units = later_target_check(encoded)
+        mutant_count = 0
+        mutant_count += expected_failure(lambda: reference_equal(
+            corrected_terms(physical_fixture(True), 0), [(F(1, 2), I2)], "omitted parity coupling"),
+            "omitted second controlled parity contact")
+        mutant_count += expected_failure(lambda: reference_equal(
+            corrected_terms(encoded, 1, wrong_order=True), [(F(1, 2), I2)], "wrong correction order"),
+            "interchanged H and flag-Z correction")
+        mutant_count += expected_failure(lambda: reference_equal(
+            corrected_terms(encoded, 0, F(3, 5), F(1)), logical_terms(F(1), F(3, 5)), "wrong noise axis"),
+            "raw spectator noise mistaken for final storage noise")
+        return {
+            "status": "passed",
+            "physical_data_qubits": 2,
+            "complex_collective_mode": "3|10>/5+4i|01>/5",
+            "ideal_reference_matrix_units": ideal_units,
+            "timed_noise_reference_matrix_units": noisy_units,
+            "initial_helper_noise_reference_matrix_units": initial_units,
+            "same_povm_joint_CD_matrix_units": povm_units,
+            "complex_entangled_input_flags": complex_checks,
+            "entanglement_fidelity_fixtures": fe_checks,
+            "entanglement_breaking_reference_matrix_units": eb_units,
+            "later_target_CPTP_reference_matrix_units": later_units,
+            "meaningful_mutants_rejected": mutant_count,
+            "scope": "Literal paid parity/alignment/retained-helper X-instrument; exact finite replay, no hardware or novelty claim."
+        }
+
+
+    return run_transfer_replay()
+
+
 def verify():
     return {"status": "passed", "arithmetic": "exact Gaussian rationals",
             "collective_relaxation": collective_guards(),
@@ -809,7 +1266,9 @@ def verify():
             "dualrail_projector_routes": dualrail_projector_route_guards(),
             "multiple_survivor_collection": multiple_survivor_collection_guards(),
             "unequal_vacuum_record_boundary": unequal_vacuum_record_boundary_guards(),
-            "scope": "Finite full-input/reference channels, flags and model-boundary ingredients for a declared loss-only family. Universal decoder/norm/concentration proofs remain analytic; unique survivor vacuum, bath preparation, selectors, protected checks, mode/phase controls, active excitation, rejects and physical clocks are premises. No full instrument, conditional-fidelity frontier, arbitrary-code or hardware advantage certificate. Separate dual-rail fixtures use declared common-success four-mode physical loss slots and paid independent Pauli seeds; seed-index products are not distinct nonzero physical records. Distinct multiple-survivor collection fixtures assume a common pure vacuum history record and final vacuum/one-excitation support, allow other survivor records and loss/survivor coherences, and add paid non-number-preserving CNOT collection, garbage reset and active recovery; they do not replace the earlier pure-loss AD/discard family. The unequal-vacuum-record witness and exact one-word controlled-conjugation closure are separate finite code-level guards, not a physical advantage or an assumed control port."}
+            "collective_deadline_guard": collective_deadline_guards(),
+            "protected_helper_transfer": protected_helper_transfer_guards(),
+            "scope": "Finite full-input/reference channels, flags and model-boundary ingredients for a declared loss-only family. Universal decoder/norm/concentration proofs remain analytic; unique survivor vacuum, bath preparation, selectors, protected checks, mode/phase controls, active excitation, rejects and physical clocks are premises. No full instrument, conditional-fidelity frontier, arbitrary-code or hardware advantage certificate. Separate dual-rail fixtures use declared common-success four-mode physical loss slots and paid independent Pauli seeds; seed-index products are not distinct nonzero physical records. Distinct multiple-survivor collection fixtures assume a common pure vacuum history record and final vacuum/one-excitation support, allow other survivor records and loss/survivor coherences, and add paid non-number-preserving CNOT collection, garbage reset and active recovery; they do not replace the earlier pure-loss AD/discard family. The unequal-vacuum-record witness and exact one-word controlled-conjugation closure are separate finite code-level guards, not a physical advantage or an assumed control port. Fixed-deadline collective fixtures distinguish an ideal singlet code from nominal projected-H leakage, explicitly declared GAD/phase channels and a ground-heating normalization test; no fitted device fidelity, unknown-state encoder or native selector is certified. A separate one-bit transfer fixture assumes pre-wait alignment, a protected helper and a spectator-safe target measurement instrument; equal POVM probabilities alone do not certify that transfer. Timed helper-noise axes and finite embedded mutants are checked, without supplying those ports."}
 
 
 if __name__ == "__main__":

@@ -231,6 +231,11 @@ fixtures on complete encoded matrix units, plus single-carrier dual-rail
 success/seed/reject maps. The multiple-survivor extension checks signed
 phase cycling, literal CNOT collection/discard, full flagged reference
 maps and an unequal-vacuum-record/ordinary-conjugation boundary.
+Helper-transfer fixtures include a literal readout instrument and
+its same-POVM disturbed-helper counterexample. Two-logical-qubit
+fixtures check ideal singlet protection, nominal hopping leakage,
+declared thermal/phase channels and intrinsic heating arithmetic;
+they do not fit or certify a device storage channel.
 Shared-history, arbitrary
 decoder, finite-confidence and physical-cost proofs remain analytic;
 no experimental selector or bath model is certified. These checks

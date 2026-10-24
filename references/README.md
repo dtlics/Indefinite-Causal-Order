@@ -58,6 +58,10 @@ qualification and the stronger ground-preserving population-collection
 comparison. It keeps physical photon absorption, simulated optical
 thermalization and a separate surviving control distinct. The
 encoding-specific endpoint comparison is not a universal switch no-go.
+The same owner applies established one-bit teleportation conditionally
+to the retained-helper readout port and screens the full model needed
+for a two-logical-qubit collective-memory deadline. Calibration POVMs
+do not certify the quantum state left in a spectator helper.
 
 ## Exposition conventions
 
