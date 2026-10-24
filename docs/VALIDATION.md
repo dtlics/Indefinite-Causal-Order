@@ -102,6 +102,14 @@ Finite-code parity/coin-twirl and factorial-moment guards support the
 separate parameter-free ordinary receiver; its complete infinite-gain
 CP bound and actual control costs are analytic or supplied premises;
 no conditional-fidelity optimum, capacity or native hardware is certified.
+The clock-port helpers add exact thermal-mean coefficients and a negative-sign
+coherence, the standard-versus-fresh vacuum statistic, complete finite-source
+beam-splitter sectors/control maps and abstract rational multiarm receiver
+matrix units, classical-order difference and thermal norm endpoint guards.
+The finite bath mixtures are explicitly non-Gaussian; they
+are not thermal Fock-cutoff certificates. The infinite thermal mean trace,
+common-occupation full-output compiler, unequal-occupation norm/payoff
+bounds and physical gating, clocks and decoder costs remain analytic.
 
 The [unknown-pulse gate result NR-R21](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21)
 has a standard-library exact replay of the necessary success-support rank,

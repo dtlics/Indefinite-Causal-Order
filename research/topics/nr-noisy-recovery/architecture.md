@@ -175,7 +175,18 @@ general approximate unknown-state recovery open. For identical thermal
 slots, its [exact visibility budget](methods/thermal-attenuator.md#nr-r04-thermal-visibility)
 bounds every all-launch positive-payoff improvement over the same serial
 contacts and receiver: at fixed input mean energy and bath occupation,
-the budget is quadratic in weak loss, or cubic for a vacuum bath.
+the budget is quadratic in weak loss, or cubic for a vacuum bath. Its
+[clock-resolved bath comparison](methods/thermal-attenuator.md#nr-r04-clock-thermal-ports)
+distinguishes module-paired standard SWITCH baths from fresh time-window
+baths. Under explicitly gated unused windows, an ordinary delayed route
+matches the entire accessible helper/signal/reference channel at common
+bath occupation, even for unequal losses. At unequal occupations, the
+measured flag instrument still matches; a complete multiarm ordinary route
+approximates the unmeasured output with error decreasing inversely with
+the number of time bins. A cheaper classical order lottery also bounds
+the remaining coherent-output improvement by the squared thermal return
+amplitude, including every attempt. Extra storage, coherent routing, inactive-port
+gating and actual decoder controls remain paid physical requirements.
 
 [NR-R01](theorem.md) concerns physical Bell-frame restoration with a fresh
 private frame for each job. For $n\geq8$, each unknown module is followed once

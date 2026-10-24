@@ -60,9 +60,12 @@ $$
 
 The sum includes the continuous Kraus indices. Both the helper and oscillator
 are retained; no helper outcome is discarded. Baths are inaccessible and
-traced. A real implementation must establish this coherent extension with
-fresh independent slots. Extra direction, timing or accessible bath records
-are additional physical ports, not implicit parts of (TA3).
+traced. A real implementation must establish this module-paired coherent
+extension with independent module baths. The same module-labelled bath
+and its purification are paired between the two histories; fresh clock
+windows need a separate extension, derived below. Extra direction, timing
+or accessible bath records are additional physical ports, not implicit
+parts of (TA3).
 
 **Claim.** $\Omega$ is faithful on
 $\mathbb C^2_C\otimes\mathcal H_S\otimes\operatorname{supp}\rho_R$:
@@ -485,6 +488,332 @@ that control's relevance; they do not implement this whole receiver.
 A rare high-quality switch branch must be compared against this
 near-unit-acceptance ordinary alternative when these same controls exist.
 
+## Clock-resolved baths and the complete retained-output comparison
+
+<a id="nr-r04-clock-thermal-ports"></a>
+
+This qualification concerns the physical extension of two attenuators,
+not their reduced Gaussian-channel marginals alone. It specializes the
+[record-sensitive temporal comparison](../communication.md#photon-preserving-markov-records-the-complete-routed-instrument)
+to thermal beam-splitter baths and preserves the full retained helper.
+The earlier faithfulness and visibility results concern the standard
+module-paired SWITCH; the fresh-clock extension below is a different
+physical model.
+
+Let $U_j$ mix the signal with one bath mode, with one-particle matrix
+$R_j=\bigl(\begin{smallmatrix}c_j&s_j\\-s_j&c_j\end{smallmatrix}\bigr)$,
+$c_j=\sqrt{\eta_j}\in[0,1]$, $s_j=\sqrt{1-c_j^2}$. Prepare the bath in
+$\tau_j=(1-z_j)\sum_{n\ge0}z_j^n|n\rangle\langle n|$,
+$z_j=\bar n_j/(1+\bar n_j)<1$, independently of all input, helper and
+passive-reference systems. Fix a thermal purification
+$|\Theta_j\rangle=\sum_n\sqrt{(1-z_j)z_j^n}|n\rangle_{E_j}|n\rangle_{F_j}$.
+All discarded purifiers remain in the physical record ledger.
+
+The standard module-labelled SWITCH uses the same pair $E_A,F_A$ in
+both histories and the same pair $E_B,F_B$ in both histories. Its two
+complete words are $U_BU_A$ and $U_AU_B$. Expanding in outgoing bath
+number and incoming purifier number gives the usual Kraus-paired sum:
+the labels $(m_A,n_A,m_B,n_B)$ agree between the two orders. Merely
+putting equal reduced attenuators at two different clock times does not
+establish that pairing.
+
+For comparison, declare four independent bath/purifier pairs
+$A_1,A_2,B_1,B_2$ and the controlled histories
+
+$$
+V_0=U_{B_2}U_{A_1},\qquad V_1=U_{A_2}U_{B_1}.
+\tag{TA23}
+$$
+
+Every unused opportunity is assumed to act as the identity on its bath
+and on every other field. This is an **inactive-window gating premise**.
+An always-on warm beam splitter with a vacuum input can emit thermal
+photons into that signal port. Such unused signal outputs must instead
+be included explicitly; they are not an identity extension of (TA23).
+The words also assume matched signal/output modes, control phases and
+the common finish, without additional inaccessible route tags.
+
+The one-sided thermal mean of a contact is a bounded operator
+
+$$
+M_j=\langle\Theta_j|U_j|\Theta_j\rangle
+=\operatorname{Tr}_{E_j}(\tau_jU_j)
+=\alpha_j\beta_j^N,\qquad
+\alpha_j=\frac{1-z_j}{1-z_jc_j},\quad
+\beta_j=\frac{c_j-z_j}{1-z_jc_j}.
+\tag{TA24}
+$$
+
+Here $0<\alpha_j\le1$ and $|\beta_j|\le1$. In particular $\beta_j$
+can be negative; it must not be replaced by an unsigned loss amplitude.
+This amplitude supplies neither a no-jump measurement nor access to a
+thermal purifier. To prove the identity, phase covariance
+makes $M_j$ number diagonal, and for $0\le y<1$ the symmetric-power
+trace identity gives
+
+$$
+\sum_{m\ge0}y^m\langle m|M_j|m\rangle
+=\frac{1-z_j}{\det[I-R_j\operatorname{diag}(y,z_j)]}
+=\frac{1-z_j}{1-z_jc_j-y(c_j-z_j)}.
+\tag{TA25}
+$$
+
+The trace is absolutely convergent because
+$\|R_j\operatorname{diag}(y,z_j)\|<1$. The determinant formula follows
+by tracing each symmetric power, or by the two-mode eigenvalue identity
+and continuity. Expanding its geometric series proves (TA24) on the
+infinite oscillator. It also gives the endpoints: $z=0$ yields $c^N$,
+$c=1$ yields $I$, and $c=0$ yields $(1-z)(-z)^N$.
+
+Write an arbitrary initial normal state on $C,S,R$ as
+$\sum_{h,k}|h\rangle\langle k|\otimes\rho_{hk}$; the blocks need not be
+positive individually. Tracing the four bath/purifier pairs in (TA23)
+gives the exact accessible map
+
+$$
+\rho_{CSR}\longmapsto
+\begin{pmatrix}
+(\mathcal E_B\mathcal E_A\otimes I_R)(\rho_{00})&
+(K\otimes I_R)\rho_{01}(K^\dagger\otimes I_R)\\
+(K\otimes I_R)\rho_{10}(K^\dagger\otimes I_R)&
+(\mathcal E_A\mathcal E_B\otimes I_R)(\rho_{11})
+\end{pmatrix},\qquad K=M_BM_A=M_AM_B.
+\tag{TA26}
+$$
+
+Indeed each bath acts on only one side of the cross-history expression,
+so its contraction is $M_j$ or $M_j^\dagger$. Before using commutativity,
+the upper-right block is
+$M_BM_A\rho_{01}(M_AM_B)^\dagger$. All $M_j$ are functions of $N$, so
+they commute even at unequal bath occupations. This proof includes the
+thermal purifiers; independently relabelling them is not an allowed
+change of physical history. The result differs from the standard
+module-paired Kraus cross sum.
+
+For an independent helper $+$, (TA26) also gives the exact fresh-clock
+minus probability on every normal input,
+
+$$
+p_-(\rho)=\frac12\left[1-\alpha_A^2\alpha_B^2
+\operatorname{Tr}\bigl((\beta_A^2\beta_B^2)^N\rho_S\bigr)\right].
+\tag{TA27}
+$$
+
+The convention $0^0=1$ includes a zero base on the vacuum. This scalar
+visibility loses the sign of $\beta_A\beta_B$, whereas the full cross
+map on $|0\rangle\langle1|$ has coefficient
+$\alpha_A^2\alpha_B^2\beta_A\beta_B$. The sign is retained in (TA26)
+and in its reference-sensitive coherence, not discarded as a visibility
+convention.
+
+If both baths have the same occupation $\bar n$, their reduced
+attenuators commute, even for unequal transmissivities. The characteristic
+action of either composition has signal multiplier
+$\sqrt{\eta_A\eta_B}$ and noise exponent
+$(1-\eta_A\eta_B)(\bar n+1/2)$. Now consider an ordinary same-order
+coherent delayed route with words $A_1B_2$ and $A_2B_3$, using the same
+gated fresh-window model. Both diagonal blocks are
+$\mathcal E_B\mathcal E_A$, and the cross block is the same
+$\operatorname{Ad}_K$. Therefore it equals (TA26) on **every initial
+helper/signal/reference state**, before measuring or discarding the
+helper. Any common joint receiver, code decoder or all-launch payoff on
+$C,S$ consequently has the same output. This statement does not need a
+Fock cutoff, a Gaussian input or an oscillator-to-qubit encoding. Equal
+physical temperatures imply equal occupations only for matched carrier
+frequencies, as in this same-carrier attenuator convention.
+
+For unequal occupations, the two reduced diagonal compositions generally
+differ: their noise exponents differ by
+$(1-\eta_A)(1-\eta_B)(\bar n_B-\bar n_A)$. Full retained-helper equality
+with that one same-order route is then not asserted. For an independently
+prepared helper $+$ and signal/reference input $\rho$, the native measured
+$X$ instrument is
+
+$$
+\mathcal I_\pm(\rho)=
+\frac{\mathcal E_B\mathcal E_A(\rho)+
+\mathcal E_A\mathcal E_B(\rho)\pm2K\rho K^\dagger}{4}.
+\tag{TA28}
+$$
+
+A fair recorded choice of the ordinary delayed forward and reverse
+experiments gives exactly (TA28), by the existing temporal-filter
+construction. This matches both flags, complete signal output and any
+reference. It does not match an arbitrary unmeasured helper at unequal
+bath occupations or an arbitrary different prescribed measurement history.
+
+The full-output common-occupation comparator uses the same two occupied
+contacts in each history but a third global clock window. Its extra
+delay, coherent whole-mode route, helper survival and storage noise remain
+costs. Equality here concerns accessible $C,S,R$, not the bath-output
+isometry or a future persistent environment: the ordinary route has
+different clock registers. If a bath or its emissions are retained or
+accessible, their actual outputs must be compared too. Swapping only mixed
+bath marginals or deleting a classical log does not supply coherent access
+to their purifiers. The accessible-bath identity (TA13) provides a distinct
+exact ordinary compiler when its actual controlled bath swaps are supplied.
+
+There is an exact elementary falsifier before attempting logical-recovery
+optimization. With $c_A=c_B=3/5$, $\bar n_A=\bar n_B=1$, a vacuum signal
+and independent helper $+$, (TA24) gives
+$M=(5/7)(1/7)^N$. The fresh-clock cross visibility is $(5/7)^4$, whereas
+the standard module-paired visibility from (TA15) is $625/1201$. Thus
+
+$$
+p_-^{\rm clock}=\frac{888}{2401},\qquad
+p_-^{\rm module}=\frac{288}{1201}.
+\tag{TA29}
+$$
+
+Both instruments have the same ordered thermal signal channels. These
+different flag probabilities expose a changed physical extension, not a
+memory advantage. Agreement with one vacuum statistic alone would not
+verify the entire coherent channel or a future bath process.
+
+### A complete ordinary approximation at unequal bath occupations
+
+The measured-$X$ equality also has a controlled approximation for the full
+unmeasured helper. Here the helper is initially independent in $|+\rangle$;
+the signal may have any inaccessible reference. Retain the same gated,
+stationary fresh-bath premises. Put $\mathcal A=\mathcal E_B\mathcal E_A$,
+$\mathcal B=\mathcal E_A\mathcal E_B$, $\mathcal T=\operatorname{Ad}_K$,
+and $P_h=|h\rangle\langle h|$. Projection of the two used purified bath
+outputs onto their initial joint vector gives the Kraus operator $K$.
+Its orthogonal complement proves that
+$\mathcal D_A=\mathcal A-\mathcal T$ and
+$\mathcal D_B=\mathcal B-\mathcal T$ are CP and trace-nonincreasing.
+The complete native accessible-output channel is
+
+$$
+\mathcal N=P_+\otimes\mathcal T+
+ \frac{P_0\otimes\mathcal D_A+P_1\otimes\mathcal D_B}{2}.
+\tag{TA30}
+$$
+
+For an integer $m\ge2$, prepare a uniform coherent superposition
+$|s_m\rangle$ of ordinary fixed-order histories $A_jB_{j+1}$,
+$j=1,\ldots,m$. Distinct histories have disjoint module/time bath
+supports: even adjacent arms use different modules in their shared clock
+window. Their diagonal time blocks are $\mathcal A/m$, and every
+off-diagonal block is $\mathcal T/m$. Thus their full output is
+
+$$
+\mathcal W_{AB}=\frac{I_m}{m}\otimes\mathcal D_A+
+ |s_m\rangle\langle s_m|\otimes\mathcal T.
+\tag{TA31}
+$$
+
+Measure the helper projectors $P_s=|s_m\rangle\langle s_m|$ and $I-P_s$.
+Prepare the output helper in $P_+$ on the first record and $P_0$ on the
+second. Both records are used; this is a complete CPTP receiver. Its output
+is $P_+\otimes\mathcal T+[P_+/m+(1-1/m)P_0]\otimes\mathcal D_A$.
+For the corresponding $BA$ circuit prepare $P_1$ on the complementary
+record. A fair classical choice between these ordinary circuits gives a
+CPTP channel $\mathcal F_m$ with exact difference
+
+$$
+\mathcal F_m-\mathcal N=
+ \frac{(P_+-P_0)\otimes\mathcal D_A+
+       (P_+-P_1)\otimes\mathcal D_B}{2m}.
+\tag{TA32}
+$$
+
+For a bounded normal CP map $\mathcal D$ on trace class,
+$\|\mathcal D\|_\diamond=\|\mathcal D^\dagger(I)\|_\infty$.
+Both remainders have norm at most one, and
+$\|P_+-P_h\|_1=\sqrt2$ for $h=0,1$. The triangle inequality proves
+
+$$
+\frac12\|\mathcal F_m-\mathcal N\|_\diamond
+ \le\epsilon_m=\frac1{\sqrt2\,m}.
+\tag{TA33}
+$$
+
+This includes arbitrary signal/reference inputs without a Fock cutoff,
+photon-moment hypothesis or input-energy restriction. There is no rejected
+attempt in this ordinary approximation. Any common later recovery and
+complete accept/reject instrument preserves the bound. Acceptance
+probabilities $p,q$ and joint accepted Bell-good masses each differ by at
+most $\epsilon_m$. If $\sigma,\tau$ are the accepted subnormalized
+states, retaining the complementary reject records gives
+$\|\sigma-\tau\|_1+|p-q|\le2\epsilon_m$. Consequently, for
+$p>\epsilon_m$,
+
+$$
+q\ge p-\epsilon_m>0,\qquad
+\frac12\|\sigma/p-\tau/q\|_1\le\frac{\epsilon_m}{p}.
+\tag{TA34}
+$$
+
+This follows by normalizing the accepted difference with denominator $p$
+and applying the preceding complete-flag bound. A rare branch has no
+normalized-quality guarantee independent of its probability.
+
+The construction uses two occupied contacts per history, but $2m$ possible
+module/time visits over $m+1$ global windows, an $m$-dimensional coherent
+whole-payload route and receiver, up to $m-1$ extra windows of relative
+storage, phase stabilization, mode matching, readout/reset and the classical
+order choice. It is an ordinary timing construction, rather than a hard
+two-call comb simulation. Achieving error $\epsilon$ requires
+$m=O(1/\epsilon)$. A two-path native router does not automatically supply
+this larger route port or its storage quality.
+
+All pairs of distinct arms must obey the specified common coherence. A
+uniform calibrated scalar ordinary visibility at least as large as the
+native visibility can be deliberately reduced to match it; the proof then
+uses the corresponding scaled $\mathcal T$ and CP remainders. Generic
+delay-dependent or payload-dependent noise, attenuation, nonstationarity or
+bath reuse requires its actual instrument. No uniform multiarm quality
+follows from a scalar memory lifetime. This bound establishes neither an
+exact unequal-occupation compiler, an optimal ordinary frontier nor a
+measured clock or throughput advantage.
+
+### A classical-order coherence budget without extra time bins
+
+There is also a cheaper complete ordinary comparison for the same initial
+helper $+$ and arbitrary signal/reference input. Choose $AB$ or $BA$ with
+equal classical probability and retain that choice as output helper
+$P_0$ or $P_1$. With the notation of (TA30), this channel and its exact
+distance from the native fresh-clock output are
+
+$$
+\begin{aligned}
+\mathcal N_{\rm cl}&=\frac{P_0\otimes\mathcal A+
+                              P_1\otimes\mathcal B}{2},\\
+\mathcal N-\mathcal N_{\rm cl}&=\frac{X_C}{2}\otimes\mathcal T,\\
+\frac12\|\mathcal N-\mathcal N_{\rm cl}\|_\diamond
+ &=\frac{\|K\|^2}{2}
+  =\frac{(\alpha_A\alpha_B)^2}{2}=:\epsilon_{\rm cl}.
+\end{aligned}\tag{TA35}
+$$
+
+The trace norm of $X_C/2$ is one and the CP map
+$\operatorname{Ad}_K$ has diamond norm $\|K\|^2$. Since
+$|\beta_j|\le1$, the vacuum eigenvalue attains
+$\|K\|=\alpha_A\alpha_B$; the vacuum input also attains the displayed
+channel distance. This proves equality on the infinite oscillator.
+Negative $\beta_j$ retains its parity sign without changing that norm;
+$\beta_j=0$ uses the vacuum convention $0^0=1$. The cases $c_j=0,1$ and
+$z_j=0$ are included, while a nonnormalizable $z_j=1$ bath is excluded.
+Equivalently $\alpha_j=[1+\bar n_j(1-\sqrt{\eta_j})]^{-1}$, so this
+budget can be small for hot baths at fixed nonunit transmissivities.
+
+Any common complete recovery has acceptance and joint accepted Bell-good
+mass differences at most $\epsilon_{\rm cl}$, with the conditional-state
+bound (TA34) using that error. Each ordinary route occupies two contacts
+over two windows. Classical route selection, transport, loss, readout/reset
+and the retained order bit still cost resources; a receiver needing a
+computational-basis helper must be supplied one. This baseline needs no
+coherent superposition of time paths. It compares accessible outputs,
+rather than bath records or actual laboratory rates.
+
+Where both ordinary interfaces are admitted, the ideal output error is
+bounded by $\min\{\epsilon_{\rm cl},1/(\sqrt2 m)\}$ with their respective
+costs. The separate common-occupation two-path compiler is exact and
+remains stronger in its scope. None of these comparisons supplies a
+physical standard module-paired SWITCH or validates ungated thermal idle
+ports.
+
 ## Native source and port test
 
 [Xi et al., PRL **133**, 040401 (2024)](https://arxiv.org/html/2406.01951)
@@ -541,6 +870,31 @@ an exact state-recovery certificate. Their real duration, number dependence,
 readout/reset faults, storage loss and rejected runs must be included.
 Available active preparation, cooling and reuse are additional comparators.
 
+A coherent finite-code receiver is a separate port from number resolution.
+[Ni et al., Nature **616**, 56–60 (2023)](https://arxiv.org/html/2211.09319v2)
+use the binomial code $(|0\rangle+|4\rangle)/\sqrt2,|2\rangle$ and a
+tailored transmon frequency comb to extract the $\{1,3\}$ loss syndrome,
+with readout, reset, feedback and recovery. This preserves the relevant
+coherences; it does not establish an exact arbitrary threshold predicate
+on an unbounded thermal output or transfer their loss-dominated measured
+performance to a thermal gain/loss channel. Measuring every number and
+then forgetting it destroys the binomial code's $0/4$ coherence.
+
+An ideal coherent optical threshold has a constructive resource cost:
+[Guanzon et al., PRL **128**, 160501 (2022), Eqs. (2)–(3)](https://arxiv.org/html/2110.03172v4)
+at gain one and with all corrected bunched-resource heralds realizes
+$\sqrt{c_K}P_{\le K}$, where
+$c_K=K!/[(K+1)^{K-1}2^K]$. For example $c_4=3/250$.
+A prepared and stored alternative resource gives an online factor at least
+$1/[(K+1)2^K]$. These are achievable factors of named optical networks,
+not upper bounds on a threshold receiver. Resource photons, multiport
+interference, number-resolving heralds, phase correction, preparation,
+storage and any microwave capture/conversion remain costs. Neither this
+ideal optical construction nor number-distribution calibration supplies a
+measured microwave cutoff instrument. A combined accepted decoder need
+not use a separate threshold meter, but its coherent accepted effect and
+all complementary failures still need a physical implementation.
+
 For the vacuum-input model, if $\delta=1-\eta\to0$ with fixed $\bar n$,
 (TA7) gives
 $p_-=\delta^2\bar n(\bar n+1)/2+O(\delta^3)$. Moreover
@@ -549,16 +903,25 @@ $\tau_m=p_+\rho_++p_-\rho_-$. Thus a nearly lossless warm cable does not
 automatically give a sizeable order-conditioned source change. This is a
 model consequence, not a fit to the measured link's nonuniform baths.
 
-The surviving physical test is an approximate **unknown-state/reference**
-task with a specified code, energy and all-attempt acceptance/rate metric.
-It needs the full temporal Gaussian ports, independent bath freshness,
+The remaining physical test is an approximate **unknown-state/reference**
+task with a specified code, energy and all-attempt acceptance/rate metric,
+using either an established module-paired extension or an unequal-occupation
+fresh-clock route with its actual finite timing and coherence costs. The
+gated common-occupation fresh-clock output is already exactly compiled;
+for unequal occupations (TA33) gives the larger ordinary temporal baseline.
+It needs the full temporal Gaussian ports, declared bath memory/freshness,
 loss and timing records, and a helper that survives vacuum. A router
 acting on an empty thermal port can receive bath photons, so a vacuum
 dummy is not automatically an identity branch. Neither the abstract
 faithfulness theorem nor the two reduced channel marginals establishes
-that interface. The source-specific ordinary filter and accessible-bath
-compiler above close their stated endpoints; a matched approximate
-thermal-memory advantage remains open.
+that interface. The source-specific ordinary filter, accessible-bath
+compiler and clock-resolved comparisons close their stated endpoints; a matched
+approximate thermal-memory advantage remains open. If an actual reversible
+code/controller transfer is available, ordinary intermediate correction,
+energy restoration and logical parking must also be compared at their
+real storage, reset, measurement and gate costs. An independent route
+helper alone does not imply a code-to-helper transfer or a separate free
+syndrome meter while that helper stores the data.
 
 The [exact checker](../checks/architecture/verify_thermal_attenuator.py)
 replays the Gaussian determinant and ratio polynomials, full finite
@@ -571,3 +934,14 @@ the infinite trace, sharp mean-energy budget and all-input payoff bound
 remain analytic. Faithfulness, bounded strong density, Gaussian
 integration, infinite tails and the physical source premises are analytic
 or measured inputs, not conclusions of a Fock-cutoff numerical replay.
+The [clock-port checker](../checks/architecture/thermal_clock_ports.py)
+adds exact thermal-mean coefficients, a sign-sensitive coherence and the
+vacuum pairing falsifier, plus complete finite non-Gaussian bath-sector
+fixtures for retained-control and measured-flag maps. These finite bath
+mixtures are not thermal-channel truncations. The
+[temporal receiver checker](../checks/architecture/thermal_temporal_receiver.py)
+checks the complete multiarm receiver and channel difference on matrix
+units for two abstract rational CPTP maps sharing a Kraus operator. The
+infinite thermal trace, channel-commutation theorem, all-reference norm
+and conditional-state bounds, and actual ports remain analytic premises
+or proofs, not conclusions of those finite fixtures.

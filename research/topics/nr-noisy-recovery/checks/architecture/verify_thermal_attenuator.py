@@ -302,7 +302,25 @@ def _vacuum_retained_flag_guards():
     return number_blocks, modulo_records
 
 
+def _verify_clock_port_helpers():
+    results = []
+    for filename, function in (("thermal_clock_ports.py", "verify"),
+                               ("thermal_temporal_receiver.py", "verify_temporal_approx")):
+        path = Path(__file__).resolve().with_name(filename)
+        spec = importlib.util.spec_from_file_location("_" + path.stem, path)
+        if spec is None or spec.loader is None:
+            raise RuntimeError("Thermal clock-port helper import specification failed.")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        result = getattr(module, function)()
+        if result.get("status") != "passed":
+            raise RuntimeError("Thermal clock-port helper did not pass.")
+        results.append(result)
+    return tuple(results)
+
+
 def verify():
+    clock_ports, temporal_receiver = _verify_clock_port_helpers()
     result = _verify_contacts_and_polynomials()
     ranks, kernels = _matrix_unit_boundary_guards()
     number_blocks, modulo_records = _vacuum_retained_flag_guards()
@@ -320,6 +338,8 @@ def verify():
                   retained_source_number_blocks=number_blocks,
                   modulo_source_records=modulo_records,
                   unknown_input_visibility=visibility_budget,
+                  clock_resolved_ports=clock_ports,
+                  temporal_receiver=temporal_receiver,
                   scope=('Exact finite-bath/Choi, polynomial, retained-source and '
                          'matrix-unit boundary checks. Infinite-oscillator '
                          'faithfulness, bounded strong density, Gaussian integration, '
