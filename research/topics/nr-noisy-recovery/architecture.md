@@ -420,9 +420,11 @@ bare switch's best entanglement fidelity. Tensor-product qutrit Weyl noise
 has a corresponding construction supported on at most two qutrits. The
 [full comparison](architecture-baselines.md#nr-r06-deterministic-pauli-weyl)
 includes common control preparation faults and a common final control-noise
-channel, with the helper phase applied before that noise. The dominant error
-labels, corrections and decoder still require calibration, and the check
-gates have real errors. Noise around arbitrary ideal gates need not obey
+channel, with the helper phase applied before that noise. The
+[product-probe corollary](architecture-baselines.md#nr-r06-deterministic-pauli-calibration)
+counts sufficient training for approximate Pauli recovery under fixed-law
+reuse, without a quantum reference bank. Corrections and check gates still
+have real costs and errors. Noise around arbitrary ideal gates need not obey
 the shared-net-error model used by this theorem. The next storage comparison
 therefore needs the actual gate sequence, in-circuit helper faults and a
 useful output or heralded frontier beyond these closed models.
@@ -1165,13 +1167,16 @@ matched hardware advantage.
 Quasiparticle poisoning supplies another concrete memory test. The
 [graded fermionic comparison](architecture-baselines.md#nr-r06-fermionic-poisoning)
 uses the even system/reservoir dilation and the final code-parity record.
-In its independent isotropic tetron model, an ordinary controlled-even-parity
-check dominates the specified collision-filter yield/fidelity comparison;
-calibrated classical flag processing also reproduces the measured
-parity-accepted code instrument. This uses one surviving helper and real
-controlled bilinear gates, rather than odd Majoranas treated as unrelated
-tensor factors. It does not simulate rejected odd-parity outputs or all
-poisoning models. A useful native test must derive the actual contact
+For arbitrary even mode counts in its independent isotropic model, an
+ordinary fixed balanced even-product check dominates the minus-filter yield and
+entanglement fidelity even after the best native recovery or additional
+receiver filter scored on a Bell input.
+This uses one surviving helper, with controlled even-product gates whose
+weight can grow with the memory. In the tetron specialization, calibrated
+classical flag processing also reproduces the measured parity-accepted
+code instrument using controlled bilinears. These comparisons do not
+simulate rejected odd-parity outputs or all poisoning models. A useful
+native test must derive the actual contact
 operators and early/late reservoir overlaps, then compare ordinary parity
 monitoring at the same gate error, memory exposure, reset and rejected-launch
 cost. Unequal rates or retained reservoir coherence require their own

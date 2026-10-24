@@ -1566,6 +1566,338 @@ def replay_fermionic_collision():
             "scope":"Specified even CAR collision dilation; exact CAR and polynomial replay. Rational grid points only guard transcription. General positivity, calibrated accepted-instrument postprocessing and native costs remain analytic."}
 
 
+def replay_even_majorana_modes():
+    """Finite FP11--FP17 class weights and fixed balanced-check comparison.
+
+    Raw fault-pair counts are evaluated with exact Bernoulli weights for
+    m=2,4,6,8. Independent net-mask enumeration also includes m=10. Actual
+    Jordan--Wigner matrices on the m=4,6 positive-parity codes check full
+    complex matrix-unit maps and finite CPTP/TNI decoder examples. General
+    Parseval/decoder bounds and all-even-m inequalities remain analytic.
+    """
+    modes = (2, 4, 6, 8, 10)
+    rates = (F(0), F(1, 10), F(1, 4), F(1, 2), F(3, 4), F(9, 10), F(1))
+    visibilities = (F(0), F(1, 2), F(1))
+    counters = {name: 0 for name in (
+        "raw_fault_pairs", "raw_weighted_net_checks", "rate_cases",
+        "logical_class_weights", "alpha_interval_checks", "logical_settings",
+        "fixed_even_size_checks", "visibility_cases", "optimized_score_checks",
+        "physical_code_unitaries", "physical_code_matrix_unit_maps",
+        "nonzero_offdiagonal_code_maps", "decoder_score_examples",
+        "nonidentity_best_decoder_guards")}
+    code_fixtures = {}
+
+    def phase_matrix(operator, power):
+        phase = (ONE, gaussian(0, 1), gaussian(-1), gaussian(0, -1))[power % 4]
+        return [[multiply(phase, value) for value in row] for row in operator]
+
+    def monomial_columns(operator):
+        columns = []
+        for j in range(len(operator)):
+            occupied = [(i, operator[i][j]) for i in range(len(operator))
+                        if operator[i][j] != ZERO]
+            require(len(occupied) == 1 and absolute_squared(occupied[0][1]) == 1,
+                    "Logical Majorana representative is a phase-sensitive monomial")
+            columns.append(occupied[0])
+        return columns
+
+    def weighted_unit_image(columns, weights, i, j):
+        out = {}
+        for label, weight in weights.items():
+            if not weight:
+                continue
+            row, left = columns[label][i]
+            column, right = columns[label][j]
+            key = row, column
+            out[key] = add(out.get(key, ZERO),
+                           times(multiply(left, conjugate(right)), weight))
+        return {key: value for key, value in out.items() if value != ZERO}
+
+    # Canonical P=(-i)^n gamma_all is (-1)^n Gamma_all. Its literal
+    # Jordan--Wigner matrix is standard occupation-bit parity, also at m=6.
+    for m in (4, 6):
+        n, full = m // 2, (1 << m) - 1
+        system_dimension = 1 << n
+        i2, x2, y2, z2 = pauli_basis(1)
+        gammas = []
+        for mode in range(n):
+            for local in (x2, y2):
+                operator = [[ONE]]
+                for site in range(n):
+                    operator = tensor(operator, z2 if site < mode
+                                      else local if site == mode else i2)
+                gammas.append(operator)
+        for j, first in enumerate(gammas):
+            require(matmul(first, first) == identity(system_dimension)
+                    and adjoint(first) == first, "Physical Hermitian Majorana")
+            for other in gammas[:j]:
+                require(matmul(first, other) == scaled(matmul(other, first), -1),
+                        "Full system Majorana CAR")
+        physical = {}
+        for mask in range(1 << m):
+            operator = identity(system_dimension)
+            for j, gamma in enumerate(gammas):
+                if mask & (1 << j):
+                    operator = matmul(operator, gamma)
+            ell = mask.bit_count()
+            physical[mask] = phase_matrix(operator, ell * (ell - 1) // 2)
+        parity = scaled(physical[full], (-1) ** n)
+        require(all(parity[i][j] == ZERO for i in range(system_dimension)
+                    for j in range(system_dimension) if i != j),
+                "Declared total Majorana parity is diagonal")
+        require(all(parity[i][i] == gaussian((-1) ** i.bit_count())
+                    for i in range(system_dimension)),
+                "Literal total-parity convention agrees with canonical P=(-i)^n gamma_all")
+        code = [i for i in range(system_dimension) if parity[i][i] == ONE]
+        d = len(code)
+        require(d == 1 << (n - 1), "Positive total-parity code dimension")
+        logical, columns = {}, {}
+        for mask, operator in physical.items():
+            restricted = [[operator[i][j] for j in code] for i in code]
+            if mask.bit_count() % 2:
+                require(restricted == zeros(d, d), "Odd monomials fail final code parity")
+                continue
+            require(adjoint(restricted) == restricted
+                    and matmul(restricted, restricted) == identity(d),
+                    "Even physical representative restricts to a logical unitary")
+            logical[mask] = restricted
+            columns[mask] = monomial_columns(restricted)
+            counters["physical_code_unitaries"] += 1
+        representatives = tuple(mask for mask in logical if mask <= (mask ^ full))
+        require(len(representatives) == d * d, "Complete logical Pauli class count")
+        for first in representatives:
+            for second in representatives:
+                overlap = trace(matmul(adjoint(logical[first]), logical[second]))
+                require(overlap == gaussian(d if first == second else 0),
+                        "Restricted even/complement classes are an orthogonal unitary basis")
+        for mask in logical:
+            for i in range(d):
+                for j in range(d):
+                    require(weighted_unit_image(columns, {mask: F(1)}, i, j)
+                            == weighted_unit_image(columns, {mask ^ full: F(1)}, i, j),
+                            "Complement phases cancel on every complex input matrix unit")
+        code_fixtures[m] = d, logical, columns
+
+    for m in modes:
+        size, full = 1 << m, (1 << m) - 1
+        even = tuple(mask for mask in range(size) if mask.bit_count() % 2 == 0)
+        representatives = tuple(mask for mask in even if mask <= (mask ^ full))
+        require(len(representatives) == 1 << (m - 2), "All even/complement classes counted once")
+        balanced = min(range(0, m + 1, 2), key=lambda s: abs(2 * s - m))
+        fixed_setting = (1 << balanced) - 1
+        for target in representatives:
+            commuting = sum((setting & target).bit_count() % 2 == 0
+                            for setting in representatives)
+            require(commuting == (len(representatives) if target == 0
+                                   else len(representatives) // 2),
+                    "Uniform logical checks balance every nonidentity commutation character")
+
+        # Count literal (J,K) records before substituting any rate or closed
+        # formula. Orthogonal bath records add probabilities, including the
+        # distinct records whose even net monomials share one logical class.
+        raw = None
+        if m <= 8:
+            raw = [[[0] * (2 * m + 1) for _ in range(size)] for _ in (0, 1)]
+            populations = [mask.bit_count() for mask in range(size)]
+            for first in range(size):
+                for second in range(size):
+                    raw[(first & second).bit_count() % 2][first ^ second][
+                        populations[first] + populations[second]] += 1
+                    counters["raw_fault_pairs"] += 1
+            require(sum(sum(coefficients) for flag in raw for coefficients in flag)
+                    == size * size, "Every orthogonal bath word counted once")
+
+        for r in rates:
+            x = 1 - 2 * r
+            y, a, q = x * x, (1 + x * x) / 2, (1 - x * x) / 2
+            p_parity = (1 + x ** (2 * m)) / 2
+            p_native = (1 + x ** (2 * m) - (x + q) ** m - (x - q) ** m) / 4
+            p_identity = a ** m + q ** m
+            net_parity, net_native = {}, {}
+            bernoulli = [r ** jumps * (1 - r) ** (2 * m - jumps)
+                         for jumps in range(2 * m + 1)]
+            raw_total = F(0)
+            for mask in range(size):
+                ell = mask.bit_count()
+                expected_parity = q ** ell * a ** (m - ell)
+                expected_native = q ** ell * (a ** (m - ell) - x ** (m - ell)) / 2
+                if raw is not None:
+                    plus_weight, minus_weight = (
+                        sum(count * weight for count, weight in zip(raw[flag][mask], bernoulli))
+                        for flag in (0, 1))
+                    require(plus_weight + minus_weight == expected_parity
+                            and minus_weight == expected_native,
+                            "Raw ordered bath-pair weights equal independent net-mask formulas")
+                    raw_total += plus_weight + minus_weight
+                    counters["raw_weighted_net_checks"] += 1
+                if ell % 2 == 0:
+                    net_parity[mask] = (plus_weight + minus_weight if raw is not None
+                                        else expected_parity)
+                    net_native[mask] = minus_weight if raw is not None else expected_native
+            if raw is not None:
+                require(raw_total == 1, "All retained and rejected bath-word weights normalize")
+            require(sum(net_parity.values()) == p_parity
+                    and sum(net_native.values()) == p_native,
+                    "Exact final-parity and native-minus generating functions")
+            class_parity, class_native = {}, {}
+            u = (1 - (abs(x) / a) ** m) / 2
+            for label in representatives:
+                ell = label.bit_count()
+                pp = q ** ell * a ** (m - ell) + q ** (m - ell) * a ** ell
+                ss = (q ** ell * (a ** (m - ell) - x ** (m - ell))
+                      + q ** (m - ell) * (a ** ell - x ** ell)) / 2
+                require(net_parity[label] + net_parity[label ^ full] == pp
+                        and net_native[label] + net_native[label ^ full] == ss,
+                        "Complete even/complement logical class weights")
+                require(0 <= ss <= pp <= p_identity, "Identity maximizes unflagged class mass")
+                if pp:
+                    alpha = ss / pp
+                    require(u / 2 <= alpha <= u
+                            and p_native >= alpha * (p_parity + pp) / 2,
+                            "Alpha interval and target-class uniform-check fidelity bound")
+                    counters["alpha_interval_checks"] += 1
+                else:
+                    require(ss == 0, "Zero unflagged class has no native weight")
+                class_parity[label], class_native[label] = pp, ss
+                counters["logical_class_weights"] += 1
+            require(class_parity[0] == p_identity
+                    and class_native[0] == (a ** m - x ** m) / 2,
+                    "Identity-class probability formulas")
+            if r == F(1, 2) and m >= 4:
+                require(max(class_native.values()) == 2 * class_native[0]
+                        and max(class_native, key=class_native.get) != 0,
+                        "Wrong raw-identity-only decoder misses the best native class")
+                counters["nonidentity_best_decoder_guards"] += 1
+
+            fixed_by_size = {}
+            for setting_size in range(0, m + 1, 2):
+                setting = (1 << setting_size) - 1
+                actual = sum(weight for mask, weight in net_parity.items()
+                             if (mask & setting).bit_count() % 2 == 0)
+                expected = (1 + y ** setting_size) * (1 + y ** (m - setting_size)) / 4
+                require(actual == expected and actual >= p_native,
+                        "Physical even-setting yield and native-yield dominance")
+                fixed_by_size[setting_size] = actual
+                counters["fixed_even_size_checks"] += 1
+            p_balanced = fixed_by_size[balanced]
+            require(p_balanced == min(fixed_by_size.values()),
+                    "An even size nearest half minimizes fixed-check accepted yield")
+            setting_sum = F(0)
+            for setting in representatives:
+                actual = sum(weight for mask, weight in net_parity.items()
+                             if (mask & setting).bit_count() % 2 == 0)
+                require(actual == fixed_by_size[setting.bit_count()],
+                        "Every physical setting has the claimed size-only yield")
+                setting_sum += actual
+                counters["logical_settings"] += 1
+            p_uniform = setting_sum / len(representatives)
+            require(p_uniform == (p_parity + p_identity) / 2
+                    and p_balanced <= p_uniform,
+                    "Balanced fixed check is at least the uniform logical-check fidelity")
+
+            for nu in visibilities:
+                selected = {label: nu * ss + (1 - nu) * class_parity[label] / 2
+                            for label, ss in class_native.items()}
+                ps = nu * p_native + (1 - nu) * p_parity / 2
+                po = nu * p_balanced + (1 - nu) * p_parity / 2
+                go = (1 + nu) * p_identity / 2
+                beta_min, beta_max = (1 - nu) / 2 + nu * u / 2, (1 - nu) / 2 + nu * u
+                require((1 + nu) * beta_min - beta_max
+                        == nu * (1 - nu) * (1 - u) / 2 >= 0,
+                        "Common-visibility alpha interval bridge")
+                require(sum(selected.values()) == ps and po >= ps
+                        and po - ps == nu * (p_balanced - p_native)
+                        and po <= (p_parity + nu * p_identity) / 2,
+                        "Common-visibility yields and fixed-versus-uniform bridge")
+                for label, weight in selected.items():
+                    pc = class_parity[label]
+                    require(weight * (p_parity + nu * pc)
+                            <= (1 + nu) * pc * ps,
+                            "Every corrected native class obeys the noisy uniform bound")
+                    counters["optimized_score_checks"] += 1
+                require(go * ps >= max(selected.values()) * po,
+                        "Fixed ordinary fidelity dominates the best native class")
+                counters["visibility_cases"] += 1
+
+                if m in code_fixtures:
+                    d, logical, columns = code_fixtures[m]
+                    actual_native = {mask: nu * net_native[mask]
+                                     + (1 - nu) * weight / 2
+                                     for mask, weight in net_parity.items()}
+                    actual_ordinary = {mask: weight * ((1 + nu) / 2
+                        if (mask & fixed_setting).bit_count() % 2 == 0 else (1 - nu) / 2)
+                                       for mask, weight in net_parity.items()}
+                    ordinary_classes = {label: pc * ((1 + nu) / 2
+                        if (label & fixed_setting).bit_count() % 2 == 0 else (1 - nu) / 2)
+                                        for label, pc in class_parity.items()}
+                    for i in range(d):
+                        for j in range(d):
+                            for raw_weights, analytic_weights in (
+                                    (actual_native, selected), (actual_ordinary, ordinary_classes)):
+                                actual_image = weighted_unit_image(columns, raw_weights, i, j)
+                                require(actual_image == weighted_unit_image(
+                                    columns, analytic_weights, i, j),
+                                        "Raw physical-code map equals logical class map on every Eij")
+                                if r == F(1, 4) and nu == 1 and (i, j) == (0, 1):
+                                    require(any(row != column for row, column in actual_image),
+                                            "Code-map fixture retains nonzero off-diagonal information")
+                                    counters["nonzero_offdiagonal_code_maps"] += 1
+                                counters["physical_code_matrix_unit_maps"] += 1
+                    require(sum(ordinary_classes.values()) == po
+                            and ordinary_classes[0] == go,
+                            "Actual fixed-check full code map has asserted yield/good weight")
+
+                    if r in (F(1, 4), F(1, 2), F(3, 4)):
+                        best = max(selected, key=selected.get)
+                        filter_operator = [[gaussian(F(1) if i == 0 else F(3, 5))
+                                            if i == j else ZERO for j in range(d)]
+                                           for i in range(d)]
+                        decoders = (
+                            (True, [(F(1), identity(d))]),
+                            (True, [(F(1), adjoint(logical[best]))]),
+                            (True, arbitrary_noise(m // 2 - 1)),
+                            (False, [(F(1), filter_operator)]))
+                        for decoder_index, (cptp, decoder) in enumerate(decoders):
+                            completeness = zeros(d, d)
+                            for weight, operator in decoder:
+                                completeness = plus(completeness, scaled(
+                                    matmul(adjoint(operator), operator), weight))
+                            if cptp:
+                                require(completeness == identity(d), "Finite decoder is CPTP")
+                            else:
+                                require(all(completeness[i][j] == ZERO for i in range(d)
+                                            for j in range(d) if i != j)
+                                        and all(0 <= completeness[i][i][0] <= 1
+                                                and completeness[i][i][1] == 0 for i in range(d)),
+                                        "Finite heralded decoder is trace nonincreasing")
+                            tau = trace(completeness)[0] / d
+                            coefficients = {label: sum(weight * absolute_squared(
+                                trace(matmul(operator, logical[label]))) / (d * d)
+                                for weight, operator in decoder) for label in representatives}
+                            require(min(coefficients.values()) >= 0
+                                    and sum(coefficients.values()) == tau,
+                                    "Finite decoder Parseval weights sum to its trace budget")
+                            decoded = [(probability * weight, matmul(operator, logical[label]))
+                                       for label, probability in selected.items()
+                                       for weight, operator in decoder]
+                            accept, good = pq(decoded)
+                            require(accept == ps * tau
+                                    and good == sum(selected[label] * coefficient
+                                                    for label, coefficient in coefficients.items())
+                                    and good <= tau * max(selected.values()),
+                                    "Actual finite CPTP/TNI Bell score obeys the best-class bound")
+                            if decoder_index == 1:
+                                require(good == max(selected.values()),
+                                        "Inverse maximum-weight logical Pauli attains the bound")
+                            counters["decoder_score_examples"] += 1
+            counters["rate_cases"] += 1
+    return dict(status="passed", arithmetic="exact Gaussian/rational; standard library",
+                even_mode_counts=list(modes), raw_fault_pair_mode_counts=[2, 4, 6, 8],
+                physical_code_mode_counts=[4, 6], rational_rates=[str(r) for r in rates],
+                common_visibilities=[str(nu) for nu in visibilities], **counters,
+                scope="Finite all-record and net-mask weights, actual positive-parity JW code maps, fixed even-setting and common-dephasing comparisons, and finite CPTP/TNI decoder examples. The all-even-mode inequalities, arbitrary-decoder Parseval proof, bath/history coherence, physical control availability and costs remain analytic; no rejected-sector or unread-order simulation claim.")
+
+
 def verify_jc_energy_baseline():
     """Exact isometry/PVM, arbitrary JC-form CP weights and dummy guards."""
     from fractions import Fraction as F
@@ -2062,6 +2394,7 @@ def main():
     common_control_cases = replay_common_control_noise()
     encoded_cases = replay_encoded_pauli()
     fermionic_cases = replay_fermionic_collision()
+    even_majorana_cases = replay_even_majorana_modes()
     jc_cases = verify_jc_energy_baseline()
     noisy_search_cases = replay_noisy_search_filters()
     print(json.dumps({
@@ -2080,6 +2413,7 @@ def main():
         "common_control_noise_recovery": common_control_cases,
         "encoded_pauli_instrument": encoded_cases,
         "fermionic_collision_instruments": fermionic_cases,
+        "even_majorana_class_instruments": even_majorana_cases,
         "jaynes_cummings_energy_baseline": jc_cases,
         "noisy_search_filter_instruments": noisy_search_cases,
         "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",

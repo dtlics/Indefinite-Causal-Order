@@ -103,7 +103,7 @@ JOBS = (
     ("architecture-communication", "architecture/verify_communication.py", (),
      "Exact absorbing-loss/wire/reset/NXY and bus identities, emitter guards, Raman/local-memory/multimode instruments, known-gate helper programs and coherent identity-retry flags, temporal source/clock/tail and phase/reciprocal/double-herald guards, ordered kernels and cavity/source identities, retained Rydberg-memory/exchange eraser and feedback records; continuum instruments, native ports, loss completion and clocks analytic."),
     ("architecture-native-checks", "architecture/verify_native_checks.py", (),
-     "Exact native-layer/bit-oracle, Pauli/Weyl/qutrit and encoded-record checks, graded tetron code flags, Jaynes-Cummings decision identities, known-basis/number-lowering faults, common control noise, Bell/clock Choi and terminal replacement/SWAP guards; universal/energy/timing/access and costs analytic."),
+     "Exact native-layer/bit-oracle, Pauli/Weyl/qutrit and encoded-record checks, graded tetron code flags and larger-mode balanced Majorana checks, Jaynes-Cummings decision identities, known-basis/number-lowering faults, common control noise, Bell/clock Choi and terminal replacement/SWAP guards; universal/energy/timing/access and costs analytic."),
     ("architecture-dispatch", "architecture/verify_dispatch.py", (),
      "Exact full flagged-Choi dispatch, event-head/clock/reuse models, temporal phase-path equivalences and three/four-call routing; Gaussian fronts and physical costs analytic."),
     ("architecture-dispatch-baselines", "architecture/verify_dispatch_baselines.py", (),

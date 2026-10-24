@@ -4435,6 +4435,79 @@ This is a use of the ordinary coherent-check mechanism above, with both
 outcomes corrected rather than postselected. It does not make the checks,
 helper memory or calibration physically noiseless.
 
+<a id="nr-r06-deterministic-pauli-calibration"></a>
+
+**Two dominant Pauli errors can be calibrated with product probes.**
+For a fixed reused $n$-qubit Pauli pair, let $p_e$ be the net-error law
+in (DW1). Repeated ordinary serial blocks must draw independently from
+this same input-independent law; for independent slots their channel is
+$\mathcal C=\mathcal B\circ\mathcal A$. The
+[population-recovery input (NL3)](#nr-r06-pauli-spectral-closure), from
+[Flammia and O'Donnell, Theorem 1](https://arxiv.org/html/2105.02885v2#S1),
+uses
+
+$$
+ m=O\!\left(\alpha^{-2}\log\frac{n}{\alpha\delta}\right)
+ \tag{DW3a}
+$$
+
+probes of $\mathcal C$, product six-state preparations and product Pauli
+readout, with no extra quantum references. With probability at least
+$1-\delta$, its sparse list has at most $4/\alpha$ entries and
+$\|\widehat p-p\|_\infty\le\alpha$, treating unlisted values as zero.
+Classical postprocessing takes $O(mn/\alpha)$ time. No error-support
+sparsity or low-weight promise is required. Each block costs two actual
+module calls; product preparation, readout and reset are additional costs.
+
+Clip estimates into $[0,1]$, which preserves the coordinate error, and
+pad to at least two distinct labels with zero estimates if needed.
+Choose two labels $T$ of largest estimated probability, and let $S$ be
+the true two most likely labels. Normalizing the sparse list is unnecessary.
+On the simultaneous recovery event,
+
+$$
+ \sum_{e\in T}p_e
+ \ge\sum_{e\in T}\widehat p_e-2\alpha
+ \ge\sum_{e\in S}\widehat p_e-2\alpha
+ \ge p_{(1)}+p_{(2)}-4\alpha.
+ \tag{DW3b}
+$$
+
+Apply the single-site separator and correction construction of (DW3) to
+these two selected labels. For $\alpha=\varepsilon/4$, the resulting
+post-training service channel satisfies, with calibration probability
+at least $1-\delta$,
+
+$$
+ F_{e,\mathrm{ordinary}}
+ \ge p_{(1)}+p_{(2)}-\varepsilon
+ \ge F_{e,\mathrm{switch}}-\varepsilon.
+ \tag{DW3c}
+$$
+
+Including failed calibration records gives
+$\mathbb E F_{e,\mathrm{ordinary}}\ge
+F_{e,\mathrm{switch}}-\varepsilon-\delta$, because every selected-label
+correction is a valid TP channel with nonnegative fidelity. Training uses
+$2m=O(\varepsilon^{-2}\log[n/(\varepsilon\delta)])$ module calls and no
+extra coherent quantum bank; each service then uses the same two calls,
+one helper, two **local** controlled-Pauli gates and known product-Pauli
+correction. Only the selected labels, not the switch's conditional control
+states, are needed for that service.
+
+Training consumes known calibration probes. If it precedes input delivery,
+$L$ services cost $2m+2L$ module calls, besides their controls and readouts;
+calibration while unknown inputs are waiting must charge their storage or
+sacrificed jobs. Fixed-law reuse and trusted product preparation/readout
+are assumptions: this invocation removes no arbitrary unknown SPAM or
+drift. The guarantee concerns additive **unconditional** entanglement
+fidelity; it neither learns $\eta$ nor simulates the complete flagged
+instrument or a heralded fidelity/yield frontier. It does not change an
+exact response-uniform two-query theorem with no calibration calls.
+In particular, high full-input switch fidelity already requires most net
+probability on two errors by (DW2), even if the underlying history law has
+many labels; this does not imply sparse errors in each individual module.
+
 An exact correlated two-qubit example makes the comparison strict.
 Enumerate $(I,X,Y,Z)^{\otimes2}$ lexicographically from zero and set
 
@@ -5133,19 +5206,194 @@ this declared helper-noise law. Calibration of $r,\nu$, classical
 randomization and the actual three available controlled-parity settings
 are real costs. No general efficient experimental learner is asserted.
 
-The ordinary comparison has two occupied poisoning contacts, one coherent
-helper, two known controlled-even-bilinear gates, and the same final code
-parity readout. A switch additionally needs the actual coherent order
-interface. These are resource inventories, not measured fault or latency
-equalities. If controlled bilinears are unavailable, their compilation
-cannot be imported for free; a native proposal must compare their actual
-cost with its router. A stationary coherent selector has the ordinary
-chronological comparator already described above. A clean helper that
-can directly hold the encoded logical state supplies further ordinary
-storage options.
+**A fixed balanced check closes the same recovery endpoint at every even
+size.** Take $m=2n\ge4$ and supply an arbitrary unknown state of the
+$d=2^{n-1}$ dimensional $+1$ code of
+$P=(-i)^n\gamma_1\cdots\gamma_m$, with any passive reference. The
+even subsets modulo complementation give $d^2$ logical Pauli classes.
+For an even subset $L$, the Hermitian monomial
+$\Gamma_L=i^{|L|/2}\prod_{j\in L}\gamma_j$ restricts to a logical
+unitary; complementary subsets differ only by a phase on the code.
+The empty/full class, denoted $0$, is identity. These classes are
+orthogonal: inserting $(I+P)/2$ in the full trace shows that
+$\operatorname{Tr}_{\rm code}(\Gamma_L^\dagger\Gamma_T)$ vanishes
+unless $L\triangle T$ is empty or full. Odd subsets leave the code and
+are rejected by the same final parity measurement.
 
-This closes the specified symmetric tetron collision-filter candidate
-under the stated ordinary ports. It is not an all-Majorana-noise no-go.
+Retain $x,a,q,y$ as above. For every even $m$ the total parity-accepted
+weight, identity-class weight, native minus weight and native
+identity-class minus weight are
+
+$$
+\begin{aligned}
+p_P&=(1+x^{2m})/2,&p_0=g_P&=a^m+q^m,\\
+p_S&=\frac{1+x^{2m}-(x+q)^m-(x-q)^m}{4},&
+t_0&=(a^m-x^m)/2.
+\end{aligned}
+\tag{FP11}
+$$
+
+The same per-index character calculation used for (FP4) proves these
+formulas, including all multiple-jump histories. For a proper logical
+class with representative cardinality $\ell\le m/2$, $\ell$ even, its
+unflagged and minus weights are
+
+$$
+\begin{aligned}
+p_L&=A+B,\quad A=a^{m-\ell}q^\ell,\quad B=a^\ell q^{m-\ell},\\
+t_L&=\frac{q^\ell(a^{m-\ell}-x^{m-\ell})
+                  +q^{m-\ell}(a^\ell-x^\ell)}2.
+\end{aligned}
+\tag{FP12}
+$$
+
+Indeed a net-one site cannot be a collision. At the other $m-\ell$
+sites, the odd-collision weight is $(a^{m-\ell}-x^{m-\ell})/2$;
+then add the orthogonal bath histories for the complementary net
+subset. Sum each logical class once. In particular, at $x=0$ every
+proper class has $t_L=2^{-m}$ while $t_0=2^{-m-1}$: identity correction
+need not be the best native decoder.
+
+Let $\mathcal R$ be any code-output CPTP decoder, with Kraus operators
+$R_j$, after the measured minus/parity flag. Its unnormalized fidelity
+with the pure code/reference Bell state $|\Phi_d\rangle$ is
+
+$$
+G(\mathcal R)=\sum_L t_L f_L,\qquad
+f_L=\frac1{d^2}\sum_j|\operatorname{Tr}(R_j\Gamma_L)|^2,
+\qquad \sum_Lf_L=1.
+\tag{FP13}
+$$
+
+The last equality is Pauli-basis Parseval and trace preservation.
+Thus the best conditional entanglement fidelity is
+$\max_Lt_L/p_S$, attained by correcting a most likely class. This also
+bounds a trace-nonincreasing receiver filter: now
+$\sum_Lf_L=\tau=\operatorname{Tr}[\mathcal R(I/d)]\le1$.
+Since the selected Pauli map sends $I/d$ to $p_S I/d$, its Bell-input
+success weight after that filter is $p_S\tau$, and its Bell-good
+weight is at most $\tau\max_Lt_L$. Additional receiver heralding
+therefore cannot improve this conditional Bell score and can only
+decrease its Bell-input yield. This does not grant access to bath
+records, rejected odd-parity outputs or an unread coherent order wire.
+
+For $0<r<1$ put $z=|x|/a\in[0,1]$,
+$u_j=(1-z^j)/2$ for $j>0$, $u_0=0$, and $u=u_m$.
+Write $\alpha_L=t_L/p_L$. The even exponents make (FP12) valid with
+$|x|$ also when $r>1/2$. Since $A\ge B$ and
+$u_{m-\ell}\ge u_\ell$,
+
+$$
+\alpha_L=\frac{A u_{m-\ell}+B u_\ell}{A+B}
+ \ge\frac{u_{m-\ell}+u_\ell}{2}\ge\frac u2,
+\qquad \alpha_L\le u.
+\tag{FP14}
+$$
+
+The second lower bound is
+$(1-z^\ell)(1-z^{m-\ell})\ge0$. Identity satisfies
+$\alpha_0=a^m u/(a^m+q^m)\in[u/2,u]$ as well. Moreover
+$p_0-p_L=(a^\ell-q^\ell)(a^{m-\ell}-q^{m-\ell})\ge0$.
+Consequently, for every candidate corrected class $C$,
+
+$$
+p_S=\sum_Lp_L\alpha_L
+ \ge\frac{\alpha_C}{2}(p_P+p_C),\qquad
+\frac{t_C}{p_S}\le\frac{2p_C}{p_P+p_C}
+ \le\frac{2p_0}{p_P+p_0}.
+\tag{FP15}
+$$
+
+For interpretation, a uniformly chosen logical Pauli check, including
+identity, accepts the identity error always and any other class half
+the time. It would have yield $p_U=(p_P+p_0)/2$ and good weight $p_0$.
+This average is only a proof device: no randomized control menu is
+needed by the following fixed comparator.
+
+Choose an even subset $S$ with size $s$ closest to $m/2$:
+$s=m/2$ for $m\equiv0\pmod4$, and either adjacent even size for
+$m\equiv2\pmod4$. Supply one known controlled application of
+$Q_S=\Gamma_S$ before the two fixed-order contacts and another after
+them. The even operator commutes with all bath Majoranas, squares to
+identity, and has word character
+$(-1)^{|(J\triangle K)\cap S|}$. Keep helper plus and final parity
+plus. Each of $S,S^c$ must have even net cardinality, so
+
+$$
+\begin{aligned}
+p_{O,s}&=\frac{(1+y^s)(1+y^{m-s})}{4},&g_{O,s}&=p_0,\\
+p_{O,s}-p_S
+ &=\frac{y^s+y^{m-s}+(x+q)^m+(x-q)^m}{4}\ge0.
+\end{aligned}
+\tag{FP16}
+$$
+
+All powers in the last expression are even. The function
+$y^s+y^{m-s}$ is symmetric and minimized at the stated balanced even
+size for $0\le y\le1$. Hence this fixed setting minimizes yield
+among all even-subset checks and in particular has
+$p_{O,s}\le p_U$, with the same good weight $p_0$. Combining
+(FP13)--(FP16) proves that it has at least the native yield and at
+least the conditional entanglement fidelity of **every** CPTP decoder
+of the native minus/parity-accepted code map. The same holds for its
+Bell-score receiver filters just described. The setting depends on
+$m$, not on $r$, and uses no rate calibration. At $r=0,1$ the ideal
+native minus yield is zero, so no conditional native fidelity is
+defined; the unnormalized inequalities remain valid. The $m=2$ code
+is one-dimensional and supplies no nontrivial memory endpoint.
+
+The common final helper dephasing in (FP7) preserves this all-decoder
+comparison, not merely its raw identity special case. Put
+$\beta_L=(1-\nu)/2+\nu\alpha_L$, so the native selected class weights
+are $p_L\beta_L$. With
+$\beta_{\min}=(1-\nu)/2+\nu u/2$ and
+$\beta_{\max}=(1-\nu)/2+\nu u$,
+
+$$
+\begin{aligned}
+(1+\nu)\beta_{\min}-\beta_{\max}
+ &=\nu(1-\nu)(1-u)/2\ge0,\\
+\frac{p_C\beta_C}{p_{S,\nu}}
+ &\le\frac{(1+\nu)p_C}{p_P+\nu p_C}
+ \le\frac{(1+\nu)p_0}{p_P+\nu p_0},\\
+p_{O,s,\nu}&=\nu p_{O,s}+(1-\nu)p_P/2
+ \le(p_P+\nu p_0)/2,&g_{O,s,\nu}&=(1+\nu)p_0/2.
+\end{aligned}
+\tag{FP17}
+$$
+
+The yield difference is $\nu(p_{O,s}-p_S)\ge0$. Parseval applies to
+these noisy Pauli weights unchanged. At $\nu=0$ the two flags are
+random thinnings of the same parity-accepted channel, with equal
+yield; the identity class is still most likely before selection.
+Only the declared final dephasing is covered, not faults in the
+controlled gates, bath-correlated helper errors or arbitrary routing
+noise. The complete two-flag simulation (FP9)--(FP10) remains the
+distinct, calibrated $m=4$ statement; (FP11)--(FP17) do not assert
+complete instrument simulation for larger codes.
+
+The ordinary comparison has two occupied poisoning contacts, one coherent
+helper, two known controlled-even-product gates, and the same final code
+parity readout. For $m=4$ these products are the bilinears in (FP5).
+In general the chosen check has weight $s\simeq m/2$; it is not a
+constant-weight free control. Pairing its indices writes $Q_S$ as a
+product of $s/2$ disjoint Hermitian bilinears, so each controlled-$Q_S$
+can be compiled into $s/2$ controlled-bilinear gates if those actual pair
+ports exist. Connectivity, duration, errors, final parity measurement
+and the two wrappers must all be priced. A switch additionally needs
+the actual whole-code coherent order interface and its storage or
+routing resources. These are resource inventories, not measured fault
+or latency equalities. A stationary coherent selector has the ordinary
+chronological comparator already described above. A clean helper that
+can directly hold the full encoded state supplies further ordinary
+storage options; one qubit does not hold this unknown code for $m>4$.
+
+This closes the specified symmetric fixed-parity collision-filter
+recovery candidate at every even $m\ge4$ under the stated ordinary ports.
+It is not an all-Majorana-noise no-go or a comparison of all downstream
+utilities. In particular, the general comparison concerns conditional
+Bell fidelity and accepted yield, while the stronger complete accepted
+instrument statement above is confined to $m=4$.
 Unequal rates, correlated poisoning, accessible quasiparticle records,
 nonvacuum reservoirs, additional Hamiltonian terms and physical timing
 records change the model. In particular, emitted early/late reservoir
@@ -5158,8 +5406,15 @@ The [microscopic tetron analysis of Bhattacharyya and van Heck](https://arxiv.or
 includes charging energy, Majorana overlap and thermal lead spectra.
 Its transition operators are energy-projected Majoranas, rather than
 the homogeneous bare-generator product (FP1). The declared contact model
-cannot be silently substituted for that physical master equation. A
-surviving application would have to identify its actual coherent bath
+cannot be silently substituted for that physical master equation. Its
+Hamiltonian and lead correlations, Eqs. (3), (5)--(8), supply ingredients
+for a microscopic calculation, with actual schedules for two contact
+families still required. The next test is the retained-bath cross map
+$\mathcal G_{01}(X)=\operatorname{Tr}_B[V_0(X\otimes\tau_B)V_1^\dagger]$
+for those schedules, alongside their diagonal maps and ordinary controls.
+The island Hamiltonian acts once throughout each physical trajectory.
+A reduced Born--Markov generator or measured parity lifetime alone does
+not bound this cross map. A surviving application would have to identify its actual coherent bath
 history and beat ordinary parity monitoring, accessible quasiparticle
 records and production-schedule calibration at matched memory, gate,
 reset, discarded-launch and routing costs.
@@ -7634,13 +7889,18 @@ arguments remain analytic. The same native-check replay verifies the
 complete fixed-plus two-qubit correlated-Pauli channel on all input
 matrix units, local separators, cyclic Weyl character images, ternary
 affine assignments and noisy-control grouped-POVM examples for
-(DW1)--(DW6) and (DN1)--(DN4). It also checks every encoded Pauli
+(DW1)--(DW6) and (DN1)--(DN4).
+The training guarantee (DW3a)--(DW3c) instead uses the cited learning
+theorem and the analytic estimate-selection proof.
+It also checks every encoded Pauli
 error/readout branch, logical/reference matrix units, correlated laws,
 retained records, the deferred coherent-record circuit and helper-noise
 boundary for (EP1)--(EP5). It verifies the even fermionic CAR branches
-and exact probability/positivity polynomial identities for (FP1)--(FP10);
-the rational rate/visibility grid is only an additional scope and
-transcription guard. For (J1)--(J17), it verifies the finite isometry,
+and exact probability/positivity polynomial identities for (FP1)--(FP10).
+Larger-mode fault-pair enumeration checks logical-class weights and fixed
+balanced checks in (FP11)--(FP17); the all-mode inequalities and optimal
+decoder arguments remain analytic. The rational rate/visibility grid is
+an additional scope and transcription guard. For (J1)--(J17), it verifies the finite isometry,
 complete projective measurement, ordinary and switched CP-weight
 identities, nonnegative gap and full invariant-sector atomic-dummy
 counterexample. The all-Fock sums, strict finite-energy inequality,

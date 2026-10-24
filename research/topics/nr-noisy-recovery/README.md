@@ -85,16 +85,23 @@ interface on one platform. In particular, the fresh-frame converse does
 not extend to reused devices after calibration; the ordinary reuse
 baseline is in NR-R07. NR-R06 also closes deterministic bare-switch recovery
 for calibrated Pauli and tensor-product qutrit Weyl noise using one helper
-and checks on at most two physical sites. Its common preparation/final-control
+and checks on at most two physical sites. Its
+[product-probe calibration corollary](architecture-baselines.md#nr-r06-deterministic-pauli-calibration)
+counts training and reuse for approximate Pauli recovery without a quantum
+reference bank. Its common preparation/final-control
 noise extension preserves the comparison under its specified ordering;
 in-circuit correlated faults and heralded tasks require separate analysis.
 The encoded-Pauli comparison separately preserves the full output on the
 specified two-qubit code using ordinary decoding, clean control storage
 and either two nondemolition reads or two coherent record qubits. These
 extra ports and their timed errors remain charged.
-The graded tetron-poisoning model has a separate ordinary parity comparator
-on its final parity-accepted code; unequal or correlated physical poisoning
-requires a new analysis. The finite-energy Jaynes--Cummings comparison
+The [graded poisoning comparison](architecture-baselines.md#nr-r06-fermionic-poisoning)
+extends to arbitrary even mode counts: one ordinary helper matches or
+exceeds the minus-filter yield and its best recovered Bell fidelity on
+the final parity-accepted code, including receiver filters scored on a
+Bell input. Its separate
+tetron flag compiler reproduces that code instrument; unequal or correlated
+physical poisoning requires a new analysis. The finite-energy Jaynes--Cummings comparison
 closes its specified equatorial decision benchmark while preserving the
 source's isotropic and four-box restrictions.
 The [noisy-search component](methods/noisy-search.md) supplies an ordinary

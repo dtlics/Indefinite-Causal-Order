@@ -277,8 +277,11 @@ deterministic-fidelity comparison are analytic, with explicit ideal-code
 and syndrome-port assumptions. NR-R06 also has exact finite Pauli/Weyl
 separator, sparse qutrit interpolation and common-final-control-noise
 checks. Its arbitrary-register deterministic recovery comparisons use
-the complete analytic recovery-to-POVM and vertex-grouping proofs; they
-do not model faults throughout the check gates. The conditional NR-R10
+the complete analytic recovery-to-POVM and vertex-grouping proofs. The
+product-probe calibration corollary uses the cited population-recovery
+theorem and an analytic estimate-selection bound, with training and reuse
+charged. These claims do not model faults throughout the check gates or
+remove arbitrary unknown preparation/readout errors. The conditional NR-R10
 network comparisons have full control/data parity identities and all-branch
 travelling-bus checks. Their physical controller ports, protected transport
 and source-loading resources remain explicit assumptions.
@@ -288,13 +291,15 @@ a non-phase helper-noise counterexample. Its proof assumes clean decoded
 control storage and the priced nondemolition-read or coherent-record ports.
 It preserves the source's restricted fixed-map comparison and does not
 establish equal laboratory time or simulate arbitrary joint inputs.
-The graded tetron extension separately uses an even fermionic collision
+The graded Majorana extension separately uses an even fermionic collision
 dilation, independent isotropic mode faults and a measured final code-parity
-record. Its finite exact checks support parity-accepted code maps,
-controlled-even-parity flags and calibrated stochastic flag processing;
-the general positivity/postprocessing proof remains analytic, with
-rational-grid instrument checks guarding transcription. They do not
-certify microscopic poisoning or simulate rejected odd-parity outputs.
+record. Finite exact checks support its tetron code maps, controlled-even-parity
+flags and calibrated stochastic flag processing, together with larger-mode
+logical-class weights, balanced even-product checks and common final helper
+visibility. The all-even-mode comparison with native decoders and Bell-input
+receiver filters, and the general tetron postprocessing proof, remain analytic;
+rational-grid replays guard transcription. They do not certify microscopic
+poisoning, arbitrary noisy check gates or rejected odd-parity outputs.
 The Jaynes--Cummings extension checks the explicit ordinary
 isometry/measurement and decision identities. Its complete infinite-Fock
 inequality for all positive field energies and high-energy remainder are
