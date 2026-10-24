@@ -1501,6 +1501,132 @@ The elastic $t_A$ term is accepted leakage, rather than a scalar
 efficiency. Optimizing actual photon/helper operations, readout and
 spin filtering with (RS1) remains necessary before assigning an advantage.
 
+<a id="nr-r11-bare-swap-gate"></a>
+
+**A bare two-SWAP switch cannot deliver a full unknown-memory unitary.**
+Known-input Bell preparation in (RS4) is different from a gate on
+arbitrary unknown $ABR$. Let $A,B,S$ each have dimension $d\ge2$,
+$D=d^2$, and let binary $C$ remain the actual order label in
+
+$$
+W=|0\rangle\langle0|_C\otimes
+  \operatorname{SWAP}_{SB}\operatorname{SWAP}_{SA}
+ +|1\rangle\langle1|_C\otimes
+  \operatorname{SWAP}_{SA}\operatorname{SWAP}_{SB}.
+\tag{SG1}
+$$
+
+The initial state $\rho_{CS}$ may be arbitrary, including entanglement,
+but is independent of the input $ABR$. There is no additional accessible
+correlated program or purification. After (SG1), allow arbitrary joint
+$CS$ measurement, postselection on available classical records, and any
+conditional CPTP/TNI decoder on $AB$ with fresh independent ancillas.
+The Kraus refinement below includes accessible and unobserved outcomes
+for the proof; it does not grant access to hidden records or purification.
+The target output is the two memories, not a reassigned $S$-inclusive
+payload. Extra coherent bus–memory gates, intermediate processors or
+input encoding into protected registers define different protocols.
+
+For a pure source write
+$|\Psi\rangle_{CS}=|0\rangle|\chi_0\rangle+|1\rangle|\chi_1\rangle$,
+with unnormalized $\chi_i$. On basis input $|a,b\rangle$ the output is
+$|0\rangle_C|b\rangle_S|\chi_0,a\rangle_{AB}
+ +|1\rangle_C|a\rangle_S|b,\chi_1\rangle_{AB}$.
+Thus its $AB$ support lies in
+
+$$
+\mathcal L=\chi_0\otimes\mathcal H_d+
+           \mathcal H_d\otimes\chi_1,\qquad
+\dim\mathcal L\le r=2d-1<D .
+\tag{SG2}
+$$
+
+When both vectors are nonzero the two summands intersect only on
+$\operatorname{span}\{\chi_0\otimes\chi_1\}$; if one is zero the dimension
+is $d$. Contracting any fine $CS$ measurement row gives an $AB$ operator
+with range in $\mathcal L$. Composing a decoder Kraus operator cannot
+increase its rank. For mixed $\rho_{CS}$, refine its pure-state
+decomposition in an inaccessible preparation record: each fine Kraus
+$K_\mu$ still has rank at most $r$, though there need not be one common
+$\mathcal L$ for the mixture. This is a full-input isometry argument and
+therefore includes every passive reference.
+
+For target unitary $U$ define the mean accepted yield and unnormalized
+target Bell overlap
+
+$$
+p=\frac1D\sum_\mu\operatorname{Tr}K_\mu^\dagger K_\mu,\qquad
+g=\frac1{D^2}\sum_\mu|\operatorname{Tr}(U^\dagger K_\mu)|^2.
+$$
+
+These use a normalized maximally entangled $D$-dimensional input; a
+general accepted yield need not be input independent. The trace-norm
+inequality gives
+$|\operatorname{Tr}(U^\dagger K_\mu)|^2
+ \le r\|K_\mu\|_{\rm HS}^2$, hence
+
+$$
+g\le\frac rD p\le\frac{2d-1}{d^2}.
+\tag{SG3}
+$$
+
+For a complete protocol this is an all-attempt entanglement-fidelity
+ceiling; rejected erasures have zero good overlap. For $p>0$ its accepted
+normalized Choi overlap also obeys $g/p\le r/D$. An exact accepted map
+$q\operatorname{Ad}_U$ has rank-one Choi support, so every fine Kraus
+must be $c_\mu U$. Since those have full rank unless zero, (SG2) forces
+$q=0$. Coarsening or rare postselection cannot remove the obstruction.
+For qubit memories the ceiling is $3/4$; it concerns a full unknown gate,
+not a known Bell output or a promised lower-dimensional code.
+
+There is also a quantitative exact-yield boundary near this ideal.
+Suppose the actual and ideal **whole-circuit**, normalized Stinespring
+isometries from the $D$-dimensional input $AB$ into the same
+output/dilation space satisfy
+$\|W_{\rm actual}-W_0\|_{\rm op}\le\epsilon$, with aligned source,
+relative order phase and inaccessible-environment labels. Apply the
+same allowed terminal instrument, decoder and acceptance to both.
+Its common dilation and acceptance projection give
+$\sum_\mu\|K_\mu-K^0_\mu\|_{\rm HS}^2\le D\epsilon^2$.
+If the actual accepted map is exactly $q\operatorname{Ad}_U$, then
+$K_\mu=c_\mu U$, whereas $\operatorname{rank}K^0_\mu\le r$.
+The best rank-$r$ approximation misses $D-r$ equal singular values, so
+
+$$
+(D-r)q\le D\epsilon^2,\qquad
+q\le\min\!\left\{1,\frac{d^2}{(d-1)^2}\epsilon^2\right\}.
+\tag{SG4}
+$$
+
+For $d=2$ this is $\min\{1,4\epsilon^2\}$, not a strict noisy no-herald
+claim. Per-slot errors must first be composed: two aligned slot bounds
+$\epsilon_A,\epsilon_B$ give whole error at most
+$\epsilon_A+\epsilon_B$, hence $16\epsilon_{\rm slot}^2$ for equal
+qubit-slot bounds. Reduced-channel fidelity or a selected reflected
+process does not certify that full coherent distance. The Raman model
+above supplies literal SWAP only in its equal-leg resonant long-pulse
+limit, with both local phase frames handled; finite-pulse delays,
+partial exchange, loss and additional modes require their actual
+complete instrument. The measured transfer experiment is not a
+certificate of (SG1) or of $\epsilon$.
+
+The source restriction is substantive. An extra preserved Bell-correlated
+$Q$ can escape it even when consumed at terminal readout. More strongly,
+if the route can be fixed and preserves the same physical $C$, an
+ordinary circuit may repurpose it as that Bell helper rather than as the
+order label, implementing (RS13) below. Initial Bell entanglement of
+$C,S$ does not itself escape (SG2) while $C$ still controls the two orders.
+All helper-preserving ports, readout, feedforward, storage and extra
+visits remain charged. This consolidates the singular-branch boundary
+for the restricted source and adds its quantitative consequences; it is
+not an obstruction to every two-contact Raman program.
+
+The existing [Raman replay](checks/architecture/raman_baselines.py) adds
+literal $d=2,3$ word/support, complex joint-readout, normalization and
+rank/overlap ingredients. Arbitrary-decoder, all-dimension and
+whole-isometry perturbation statements (SG2)–(SG4) are analytic proofs,
+not conclusions inferred from those finite examples.
+
 **Unknown-memory SWAP has an ordinary teleportation comparator.**
 With the same ideal SWAP ports, prepare a Bell pair of flying $P$ and
 clean helper $Q$, perform SWAP$(P,A)$ then SWAP$(P,B)$, and jointly

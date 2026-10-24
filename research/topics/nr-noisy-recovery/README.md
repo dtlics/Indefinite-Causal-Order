@@ -129,7 +129,10 @@ options for other endpoints. The
 [controlled-unitary correlator](methods/memory-native-cost.md#nr-r20-controlled-unitary-correlator)
 adds an ordinary one-helper memory test when the specified coherent side
 port is available, with conditional records and repeated-use costs charged.
-Recorded Lüders measurements have the ordinary baseline in NR-R08.
+With stable recorded Lüders outcomes, [NR-R08](architecture-baselines.md#nr-r08)
+reproduces the switched calibration bit at mean $3/2$ calls and a hard
+cap of three. Its ideal QPUF mapping keeps public labels and retained
+eigenstates explicit; this is not a full-output simulator.
 Its [central-fault comparison](architecture-baselines.md#nr-r08-central-involution)
 also distinguishes paired compatibility from individual logical
 correctness using a separately charged ordinary known-state probe.
@@ -300,7 +303,10 @@ an output port needs no QND readout for either architecture. The next test
 compares their full routing, storage, vacuum and common-finish dynamics,
 including ordinary access to raw auxiliary ports. Ideal
 accepted weight alone does not establish a hardware advantage.
-The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
+The [bare full-SWAP endpoint](communication.md#nr-r11-bare-swap-gate)
+cannot herald a full-input unitary on both unknown memories under its
+stated terminal-readout interface. Larger coherent programs change that
+resource premise. The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
 also compare unknown-input gates, helper-space costs and coherently read
 identity failures; their ideal identities do not certify lossy retries.
 Its [Raman local-memory comparisons](communication.md#nr-r11-raman-local-ancillas)

@@ -805,6 +805,10 @@ Lüders outcome records, the ordinary sequence $E$–$F$–$E$ on $I/D$ estimate
 $v$ by comparing its first and last labels. Neither method needs a classical
 description of the basis. [NR-R08](architecture-baselines.md#nr-r08) states
 these shortcuts and the separate role of the number of unread sectors.
+A prelaunch coin reproduces the switched calibration bit at mean $3/2$
+calls, with a hard cap of three. The proposed ideal random-measurement
+QPUF supplies a concrete returned-record API; privacy does not turn it
+into an unread dephaser or provide coherent order access.
 
 Complete rank-one dephasing is entanglement breaking. This interpretation
 therefore concerns classical pointer retention, rather than storage of an
@@ -1094,7 +1098,12 @@ response, rather than substituting a dephasing rate for a two-history overlap.
 
 The [Raman exchange screen](communication.md#nr-r11-raman-swap) adds
 same-helper ordinary ideal Bell-generation, remote-SWAP and detuned-serial
-baselines. Unknown-input gate comparisons must also include its ordinary
+baselines. Its [bare order circuit with two full SWAPs](communication.md#nr-r11-bare-swap-gate)
+cannot herald an exact unitary on both unknown memories under the stated
+terminal-readout interface. The rank/fidelity and perturbative-yield
+bounds do not cover extra coherent programs, later bus-memory gates or
+delivery of the bus as part of the payload. Unknown-input gate comparisons
+must also include its ordinary
 known-gate helper programs and the coherent completion that restores the
 data on specified early rejection flags. Extra helper space can replace
 repeat contacts; those programs require real tensor-preserving ports,

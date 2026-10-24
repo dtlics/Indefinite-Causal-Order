@@ -476,6 +476,12 @@ The qualified smaller-port timing construction, actual enlarged helper
 ports, gate synthesis, continuum loss and complete clocks remain analytic
 or physical premises. Ideal identity flags do not certify photon-loss
 recovery or an unrestricted noisy ordinary optimum.
+The bare full-SWAP guard checks literal columns and output supports,
+terminal completeness, matrix ranks and target-trace inequalities at
+$d=2,3$. Its all-dimension, mixed-source and arbitrary-decoder bounds,
+including exact-unitary yield under a whole-isometry perturbation
+promise, remain analytic. Partial exchange requires its actual complete
+instrument; an isolated transfer fidelity does not supply that promise.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
 survivor instruments are checked with exact Gaussian fractions. Its
 local-ancilla extension reconstructs the six-qubit source, both scatters,

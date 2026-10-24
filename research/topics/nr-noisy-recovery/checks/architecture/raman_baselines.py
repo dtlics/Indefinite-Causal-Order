@@ -673,6 +673,142 @@ def verify_raman_passive_filter():
                       "scope": "Two accepted heralds; second includes the actual diag(1,1/2) spin-filter success. Rejected optical ports, other readouts, filter failure and photon loss are charged."}
 
 
+def bare_swap_rank_guards():
+    """Finite literal bare-SWAP rank ingredients; general bounds are analytic."""
+    from fractions import Fraction as F
+    from retained_photon_serial import G, add, adj, eye, kron, mm, require, scale, zeros
+
+    def rank(a):
+        a=[row[:] for row in a]
+        row=0
+        for col in range(len(a[0])):
+            pivot=next((i for i in range(row,len(a)) if a[i][col] != 0),None)
+            if pivot is None:
+                continue
+            a[row],a[pivot]=a[pivot],a[row]
+            factor=a[row][col]
+            a[row]=[x/factor for x in a[row]]
+            for i in range(len(a)):
+                if i != row and a[i][col] != 0:
+                    factor=a[i][col]
+                    a[i]=[x-factor*y for x,y in zip(a[i],a[row])]
+            row+=1
+            if row==len(a):
+                break
+        return row
+
+    def tr(a):
+        return sum((a[i][i] for i in range(len(a))),G())
+
+    def norm2(z):
+        return z.r*z.r+z.i*z.i
+
+    def outer(v):
+        return [[x*y.conj() for y in v] for x in v]
+
+    def run_guards():
+        source_cases=columns=flag_cases=rank_cases=score_cases=0
+        max_rank=0
+        for d in (2,3):
+            D=d*d
+            swap_a,swap_b=zeros(d**3),zeros(d**3)
+            for s in range(d):
+                for a in range(d):
+                    for b in range(d):
+                        j=(s*d+a)*d+b
+                        swap_a[(a*d+s)*d+b][j]=G(1)
+                        swap_b[(b*d+a)*d+s][j]=G(1)
+            require(mm(swap_a,swap_a)==mm(swap_b,swap_b)==eye(d**3),
+                    'literal full bus-memory SWAP matrices')
+            e0=[G(int(i==0)) for i in range(d)]
+            e1=[G(int(i==1)) for i in range(d)]
+            u=([G(F(3,5)),G(0,F(4,5))] if d==2 else
+               [G(F(1,3)),G(0,F(2,3)),G(F(2,3))])
+            v=[x.conj() for x in u]
+            f=eye(d)
+            f[0][0]=f[1][1]=G(F(3,5))
+            f[0][1]=f[1][0]=G(0,F(4,5))
+            if d==3:
+                f[2][2]=G(0,1)
+            require(mm(adj(f),f)==eye(d),'literal complex terminal bus rotation')
+            h=[[G(1),G(1)],[G(1),G(-1)]]
+            measurement=kron(h,f) # normalized rows carry an external 1/2 effect weight
+            ab_swap=zeros(D)
+            for a in range(d):
+                for b in range(d):
+                    ab_swap[d*b+a][d*a+b]=G(1)
+            for chi0,chi1 in ((u,u),(u,v),(e0,e1),(u,[G()]*d)):
+                source_norm=sum((norm2(x) for x in chi0+chi1),F(0))
+                require(source_norm in (F(1),F(2)),'source normalization ledger')
+                # The source is |0>chi0+|1>chi1; raw W is not divided by sqrt(source_norm).
+                w=zeros(2*d*D,D)
+                for a in range(d):
+                    for b in range(d):
+                        for k in range(d):
+                            w[((0*d+b)*d+k)*d+a][d*a+b]+=chi0[k] # B_S A_S product: A=chi0,B=a,S=b
+                            w[((1*d+a)*d+b)*d+k][d*a+b]+=chi1[k] # reverse: A=b,B=chi1,S=a
+                initial=[]
+                for chi in (chi0,chi1):
+                    entry=zeros(d**3,D)
+                    for s in range(d):
+                        for a in range(d):
+                            for b in range(d):
+                                entry[(s*d+a)*d+b][d*a+b]=chi[s]
+                    initial.append(entry)
+                literal=mm(swap_b,mm(swap_a,initial[0]))+mm(swap_a,mm(swap_b,initial[1]))
+                require(w==literal,'independently multiplied two-SWAP word images')
+                require(mm(adj(w),w)==scale(eye(D),source_norm),'literal controlled two-SWAP isometry')
+                p0,p1=outer(chi0),outer(chi1)
+                if all(x==0 for x in chi1):
+                    p= kron(p0,eye(d))
+                    expected_dimension=d
+                else:
+                    p=add(add(kron(p0,eye(d)),kron(eye(d),p1)),scale(kron(p0,p1),-1))
+                    expected_dimension=2*d-1
+                require(p==adj(p) and mm(p,p)==p and tr(p)==G(expected_dimension),'AB range projector dimension')
+                require(mm(kron(eye(2*d),p),w)==w,'full column support after literal words')
+                require(expected_dimension < D,'full-unknown-input rank deficit')
+                columns+=D
+                ks=[]
+                for m in range(2*d):
+                    k=zeros(D)
+                    for a in range(D):
+                        for b in range(D):
+                            k[a][b]=sum((measurement[m][cs]*w[cs*D+a][b] for cs in range(2*d)),G())
+                    require(mm(p,k)==k,'complex joint terminal CS row preserves low output support')
+                    require(rank(k)<=expected_dimension,'fine terminal Kraus rank')
+                    ks.append(k)
+                    flag_cases+=1
+                weight=F(1,2)/source_norm
+                effect=zeros(D)
+                for k in ks:
+                    effect=add(effect,scale(mm(adj(k),k),weight))
+                require(effect==eye(D),'all terminal flags complete with normalized source/readout')
+                for decoder in (eye(D),ab_swap):
+                    decoded=[mm(decoder,k) for k in ks]
+                    for k in decoded:
+                        actual_rank=rank(k)
+                        max_rank=max(max_rank,actual_rank)
+                        require(actual_rank<=expected_dimension,'conditional AB decoder cannot raise rank')
+                        rank_cases+=1
+                    for target in (eye(D),ab_swap):
+                        score=F(0)
+                        for k in decoded:
+                            overlap=norm2(tr(mm(adj(target),k)))
+                            require(overlap<=expected_dimension*tr(mm(adj(k),k)).r,'rank versus trace overlap ingredient')
+                            score+=weight*overlap/F(D*D)
+                        require(score<=F(2*d-1,D),'all-attempt unitary-target ceiling ingredient')
+                        score_cases+=1
+                source_cases+=1
+        return {'status':'passed','dimensions':[2,3],'source_fixtures':source_cases,
+                'literal_input_columns':columns,'terminal_joint_rows':flag_cases,
+                'decoded_fine_operator_ranks':rank_cases,'unitary_target_scores':score_cases,
+                'maximum_observed_operator_rank':max_rank,
+                'scope':'Literal finite source/CS readout/AB-unitary support and normalization ingredients only. General rank, arbitrary decoder, exact herald and full-isometry perturbation bounds are analytic; no physical SWAP/process/dilation certificate or all-resource two-contact no-go.'}
+
+    return run_guards()
+
+
 def verify_raman_stronger_baselines():
     from verify_raman_bell_certificate import verify
     return {
@@ -684,5 +820,6 @@ def verify_raman_stronger_baselines():
         "fixed_beta_ordinary_lower_bound": verify(Path(__file__).with_name("raman_bell_certificate.json")),
         "source_and_occupied_visit_frontier": verify_raman_source_clock_frontier(),
         "balanced_cavity_frontier": verify_raman_cavity_frontier(),
+        "bare_swap_gate_rank": bare_swap_rank_guards(),
         "scope": "Exact achievable ordinary instruments and polynomial identities. No ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
     }

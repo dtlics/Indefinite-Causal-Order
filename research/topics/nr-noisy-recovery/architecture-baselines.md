@@ -6986,7 +6986,14 @@ $$
 No $F$ record, hidden basis, encoder, inverse or quantum memory is needed.
 If labels agree output plus; otherwise flip a fair coin. The resulting
 minus probability is exactly $(1-v)/2$. Thus a three-call ordinary trial
-reproduces the switched calibration bit. Estimating $v$ to additive
+reproduces the switched calibration bit. The fair coin can instead be
+drawn before any call: with probability $1/2$, output plus immediately;
+otherwise perform $E,F,E$ and output minus exactly when $I\ne K$.
+This has the same minus probability, expected cost $3/2$ calls per
+attempt and hard cap three. It matches the bit distribution, not the
+full retained quantum output or a hard-two-call interface. All skip
+records, preparation and classical costs remain charged.
+Estimating $v$ to additive
 $\epsilon$ at confidence $1-\delta$ costs
 $O(\epsilon^{-2}\log(1/\delta))$ trials, independent of $D$.
 The record-return comparison is already present in the measurement
@@ -6996,6 +7003,23 @@ incompatibility literature, including
 Records must be stable and the instrument must be Lüders. Extra hidden
 backaction or unreliable labels require their own model. These
 qualifications also apply to interpreting the switch signal.
+
+A concrete private-basis service with these records is the ideal random-
+measurement QPUF of [Ghosh et al., PRR **6**, 043306 (2024), Eq. (4)
+and Sections III.C--D](https://journals.aps.org/prresearch/pdf/10.1103/PhysRevResearch.6.043306).
+Its proposed authentication model returns a public identifier and the
+retained private-basis eigenstate. On this ideal interface, a proposed
+two-device SAME/MUB qualification test has return-label probability one
+versus $1/D$, even without a known initial eigenstate: conditioned on
+the first rank-one $E$ outcome $i$, it is
+$\sum_j|\langle p_i|q_j\rangle|^4$. Only equality of the two same-device
+$E$ labels is used, so fixed unknown label permutations are harmless.
+This neither forges a new identifier nor contradicts the authentication
+claim. The source does not demonstrate a two-device order-controlled
+qualification service. Its approximate phase-estimation construction
+needs its actual repeatability/error bounds and does not establish a
+coherent record-order interface. Privacy alone therefore does not
+justify replacing that returned-record API by unread C6 dephasers.
 
 ### Protected dimension is not the number of unread sectors
 
