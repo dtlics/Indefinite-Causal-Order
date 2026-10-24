@@ -1383,13 +1383,58 @@ $\operatorname{CH}=R_{y,S}(\pi/4)\operatorname{CZ}_{CS}R_{y,S}(-\pi/4)$;
 two such gates use two local CZs and four rotations in this compilation.
 Their pulse, error and storage costs are not inferred from logical counts.
 
+An already delivered resource $|\Omega\rangle_{cab}$ can also inject E
+onto an unknown C without a joint photonic correction. Apply
+$\operatorname{CNOT}_{C\to c}$ and measure c in Z. Its two maps are
+$E/\sqrt2$ and $(I_C\otimes K_{ab})E/\sqrt2$. The latter could be
+corrected by the joint Clifford K; instead, measure a and b in X
+and discard those two photons. With outcome bras
+$\langle s_X|=(\langle0|+(-1)^s\langle1|)/\sqrt2$ and
+$\langle t_X|=(\langle0|+(-1)^t\langle1|)/\sqrt2$, one has
+$\langle s_X,t_X|00\rangle=1/2$ and
+$\langle s_X,t_X|K|00\rangle=(-1)^{st}/2$.
+Each failed fine record therefore acts on C as
+$\operatorname{diag}((-1)^{st},1)/(2\sqrt2)$.
+The Pauli correction $Z_C^{st}$ restores the same unknown
+C/reference state exactly. Each such record has probability $1/8$;
+the total failure probability is $1/2$, independent of that input.
+Measuring b first saves a readout: if t=0, a is already 0 and C is
+restored; if t=1, measure a in X and apply $Z_C^s$. The two t values
+are equally likely on a failed injection, giving 1.5 photon readouts
+on average per rollback. Both failed photons are discarded.
+This adaptive option must hold a until b's flag is available or supply
+an equivalent selection port; two fixed X readouts avoid that dependency.
+Retrying with a fresh resource gives the complete capped instrument
+
+$$
+\mathcal S_J(\rho)=(1-2^{-J})E\rho E^\dagger,\qquad
+\mathcal R_J(\rho)=2^{-J}\rho.
+\tag{PP4}
+$$
+
+The cap uses $2(1-2^{-J})$ delivered resources on average. The infinite
+retry process uses two,
+or four fresh-copy calls if each ideal factory succeeds in its two calls.
+It also averages two input-to-resource CNOTs, two c readouts and 1.5
+photon readouts with the adaptive option (two with fixed readout), plus
+memory and feedback. The Z frame commutes with later C-to-c CNOTs, so
+it can be tracked across retries; its record must be available before an
+incompatible use of C. Real factory losses and storage add further costs;
+a destructive click does not herald retained output photons. Undetected
+loss after injection is outside the ideal instrument (PP4).
+This comparison needs an actual C-to-c gate and reliable retained-resource
+availability. It does not grant those ports from separate client analyzers.
+Resource-first preparation and retrying teleportation are already explicit
+ordinary methods in [Wei et al., Supplement I.8](https://arxiv.org/html/2412.03020v2);
+this is a scoped exact graph-resource construction, not a priority claim
+or a compiler for the full arbitrary-S instrument (PP1).
+
 Moving the joint gate in (PP2) before arbitrary resource calls is a
 different option: it feeds entangled, nonblank photon inputs into the
 extensions. Agreement on a fresh-source isometry alone does not grant
-that port. Neither fresh-column factory above needs it. Preparing a
-fixed $|\Omega\rangle$ also cannot replace an unknown C input without
-an input-preserving injection circuit. Such factories must count failed
-preparations, adapters, readout, corrections and memory. General magic
+that port. Neither fresh-column factory nor the resource injection above
+needs it. Such factories must count failed preparations, adapters,
+readout, corrections and memory. General magic
 generation from coherent order is established by
 [Mo et al., PRA **109**, 062428 (2024), v2](https://arxiv.org/html/2311.15494v2);
 the [braided-magic comparison](braided-magic.md#nr-r17) likewise prices
@@ -1413,7 +1458,8 @@ client-control ports; dimension alone does not supply that conversion.
 
 The [exact private-program guard](checks/architecture/private_program_guards.py)
 replays the fixed resource matrices, keyed instruments, relative phases,
-both fresh-column factories and a nonblank-extension counterexample.
+both fresh-column factories, the injection/rollback branches and a
+nonblank-extension counterexample.
 Physical success/loss maps, timing, security and hardware costs remain
 outside that finite replay.
 

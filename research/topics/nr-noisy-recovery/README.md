@@ -235,7 +235,8 @@ Its private-program comparison also preserves client secrecy and ordinary
 adaptive controls; blindness alone does not supply a callable fresh oracle.
 Its [explicit program-resource comparison](backaction.md#nr-r19-private-programs)
 keeps coherent correction records and gives a fixed-order compiler plus
-native and ordinary CCZ-resource factories with distinct control ports.
+native and ordinary CCZ-resource factories, and input-preserving resource
+injection with distinct control ports.
 Its [natural-exchange screen](backaction.md#nr-r19-natural-exchange) separates
 the demonstrated atomic sectors from the required two-manifold port and
 gives a scoped constant-hold spectral guard.

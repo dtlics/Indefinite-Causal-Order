@@ -400,8 +400,9 @@ an honest ideal operator identity and source assessment, not a new
 cryptographic security proof or a certified unknown-coupler interface.
 The private-program replay separately checks complete resource/key
 matrices and reference-channel units, relative order phases, the known
-central-commutator compiler, both fresh-column CCZ encoding factories
-and an explicit nonblank-extension counterexample. Its ordinary local
+central-commutator compiler, both fresh-column CCZ encoding factories,
+unknown-control injection and rollback, and an explicit nonblank-extension
+counterexample. Its ordinary local
 controlled-H gates and joint optical CCZ are different priced ports;
 the replay establishes neither full physical source/loss instruments,
 composable privacy, timed factory performance nor a resource optimum.

@@ -14,6 +14,162 @@ import sys
 sys.dont_write_bytecode = True
 from retained_photon_serial import G, add, adj, blockdiag, cp_difference, cp_equal, eye, kron, mm, require, scale, zeros
 
+
+def injection_rollback_guards(encoding, photon_k):
+    """Finite recorded C/reference instruments, with square roots cleared.
+
+    Resource Omega has an external factor 1/sqrt(2). Each unnormalized
+    X bra below has its external factor 1/sqrt(2) kept in a CP weight.
+    Only actual classical fine records are combined: their global phases
+    are not asserted to agree for a coherent history register.
+    """
+    identity = eye(2)
+    z = [[G(1), G()], [G(), G(-1)]]
+    f0 = [[G(int(i == 0))] for i in range(4)]
+    f1 = mm(photon_k, f0)
+    require(f1 == [[G(F(1, 2))], [G(F(1, 2))],
+                   [G(F(1, 2))], [G(F(-1, 2))]], "injection resource graph signs")
+    require(adj(photon_k) == photon_k and mm(photon_k, photon_k) == eye(4),
+            "injection joint-K correction is an involution")
+    expected_encoding = zeros(8, 2)
+    for c, ab in product(range(2), range(4)):
+        expected_encoding[c*4+ab][c] = (f0 if c == 0 else f1)[ab][0]
+    require(encoding == expected_encoding and mm(adj(encoding), encoding) == identity,
+            "injection encoding includes its nonorthogonal photon overlap")
+    # Registers are input C, resource c, a, b. C and c are distinct.
+    incoming = kron(identity, f0+f1)
+    cnot = [[G(int(row == ((col ^ 4) if col >= 8 else col)))
+             for col in range(16)] for row in range(16)]
+    require(mm(adj(cnot), cnot) == eye(16), "injection C-to-resource-c CNOT")
+    after = mm(cnot, incoming)
+    branches = []
+    injection_units = 0
+    for m in range(2):
+        branch = [[after[c*8+m*4+ab][cin] for cin in range(2)]
+                  for c, ab in product(range(2), range(4))]
+        target = encoding if m == 0 else mm(kron(identity, photon_k), encoding)
+        require(branch == target and mm(adj(branch), branch) == identity,
+                "both injection flags preserve all C/reference amplitudes at half weight")
+        injection_units += cp_equal(branch, target)
+        repaired = branch if m == 0 else mm(kron(identity, photon_k), branch)
+        require(repaired == encoding, "joint-K deterministic injection correction")
+        branches.append(branch)
+    require(add(scale(mm(adj(branches[0]), branches[0]), F(1, 2)),
+                scale(mm(adj(branches[1]), branches[1]), F(1, 2))) == identity,
+            "complete recorded injection is trace preserving")
+    failed = branches[1]
+    rollback_units = 0
+    rollback_effect = zeros(2)
+    always_read = []
+    for s, t in product(range(2), repeat=2):
+        bra = [[G((-1)**(s*a+t*b)) for a, b in product(range(2), repeat=2)]]
+        sign = G((-1)**(s*t))
+        require(mm(bra, f0) == [[G(1)]] and mm(bra, f1) == [[sign]],
+                "X/X photon erasure overlap signs")
+        raw = mm(kron(identity, bra), failed)
+        require(raw == [[sign, G()], [G(), G(1)]],
+                "fine X/X rollback retains its relative C phase")
+        corrected = mm(z if s*t else identity, raw)
+        require(corrected == scale(identity, sign),
+                "local Z rollback leaves only a classical-record global sign")
+        rollback_units += cp_equal(corrected, identity)
+        rollback_effect = add(rollback_effect, scale(mm(adj(raw), raw), F(1, 8)))
+        always_read.append((corrected, F(1, 8)))
+    require(rollback_effect == scale(identity, F(1, 2)),
+            "all four X/X rollback records sum to half-weight identity")
+    # Adaptive b-X first: t=0 leaves a known |0>, with no a measurement.
+    after_b = []
+    for t in range(2):
+        after_b.append([[sum((G((-1)**(t*b))*failed[c*4+a*2+b][cin]
+                              for b in range(2)), G())
+                         for cin in range(2)]
+                        for c, a in product(range(2), repeat=2)])
+    blank_a = kron(identity, [[G(1)], [G()]])
+    copied_a = [[G(), G()], [G(1), G()], [G(), G(1)], [G(), G()]]
+    require(after_b[0] == blank_a and after_b[1] == copied_a,
+            "adaptive first flag distinguishes blank-a from the coherent C/a copy")
+    adaptive_units = cp_equal(after_b[0], blank_a)
+    # Removing the known blank a is safe on every C/reference matrix unit.
+    erased_blank = [[after_b[0][c*2][cin] for cin in range(2)] for c in range(2)]
+    require(erased_blank == identity, "unmeasured blank photon factors from C/reference")
+    adaptive = [(erased_blank, F(1, 4))]
+    adaptive_effect = scale(mm(adj(after_b[0]), after_b[0]), F(1, 4))
+    for s in range(2):
+        raw = mm(kron(identity, [[G(1), G((-1)**s)]]), after_b[1])
+        corrected = mm(z if s else identity, raw)
+        require(corrected == scale(identity, (-1)**s),
+                "adaptive first-minus uses a-X and one local Pauli frame")
+        adaptive_units += cp_equal(corrected, identity)
+        adaptive_effect = add(adaptive_effect, scale(mm(adj(raw), raw), F(1, 8)))
+        adaptive.append((corrected, F(1, 8)))
+    require(adaptive_effect == scale(identity, F(1, 2)),
+            "three adaptive rollback records sum to half-weight identity")
+    require(F(1, 4)*1+2*F(1, 8)*2 == F(3, 4),
+            "adaptive readouts average three halves conditional on rollback")
+    # A delayed Z key commutes through future injection CNOTs. It still
+    # must be known before an incompatible C use or a fixed-frame output.
+    frame = kron(z, eye(8))
+    require(mm(frame, cnot) == mm(cnot, frame)
+            and mm(encoding, z) == mm(kron(z, eye(4)), encoding),
+            "rollback phase frames can be transported through later injections")
+
+    def fine_histories(records):
+        # Multiply actual corrected fine Kraus numerators. CP tests keep
+        # every input E_ij, hence arbitrary references, at every frontier.
+        frontier = [(identity, F(1))]
+        accepted = F()
+        success_histories = rejection_histories = units = 0
+        for attempt in range(1, 5):
+            this_success = F()
+            for prefix, weight in frontier:
+                leaf = mm(branches[0], prefix)
+                units += cp_equal(leaf, encoding)
+                require(mm(adj(leaf), leaf) == identity,
+                        "each actual success history is the normalized encoding channel")
+                this_success += weight/2
+                success_histories += 1
+            require(this_success == F(1, 2)**attempt,
+                    "actual fine histories have the first-success probability")
+            accepted += this_success
+            frontier = [(mm(op, prefix), weight*op_weight)
+                        for prefix, weight in frontier for op, op_weight in records]
+            rejected = F()
+            for prefix, weight in frontier:
+                units += cp_equal(prefix, identity)
+                require(mm(adj(prefix), prefix) == identity,
+                        "the final capped failure is also erased and corrected")
+                rejected += weight
+                rejection_histories += 1
+            require(rejected == F(1, 2)**attempt and accepted+rejected == 1,
+                    "actual fine success and restored-rejection instruments are complete")
+        return {"maximum_cap": 4, "success_histories": success_histories,
+                "restored_rejection_histories": rejection_histories,
+                "C_reference_matrix_units": units}
+
+    always_histories = fine_histories(always_read)
+    adaptive_histories = fine_histories(adaptive)
+    cap_cases = 0
+    for cap in range(1, 9):
+        reject = F(1, 2)**cap
+        accepted = sum((F(1, 2)**j for j in range(1, cap+1)), F())
+        attempts = sum((F(1, 2)**j for j in range(cap)), F())
+        failures = attempts-accepted
+        require(accepted == 1-reject and attempts == 2*(1-reject)
+                and failures == 1-reject,
+                "capped delivered/restored-rejected probability and mean resource ledger")
+        require(2*attempts == 4*(1-reject)
+                and 2*failures+2*accepted == 2*attempts
+                and F(3, 2)*failures == F(3, 2)*(1-reject),
+                "ideal two-call factories, consumed/retained photons and adaptive readouts")
+        cap_cases += 1
+    return {"status": "passed", "injection_C_reference_matrix_units": injection_units,
+            "X_X_rollback_C_reference_matrix_units": rollback_units,
+            "adaptive_rollback_C_reference_matrix_units": adaptive_units,
+            "always_read_fine_histories": always_histories,
+            "adaptive_fine_histories": adaptive_histories, "rational_cap_cases": cap_cases,
+            "scope": "finite exact classical-record injection, full C/reference X/X and adaptive rollback, actual fine Kraus histories through cap four, and capped ideal cost ingredients through cap eight. A delivered retained independent resource and a populated-target C-to-c CNOT are premises; source/loss/readout faults, physical ports, asynchronous timing, privacy and resource optimality are not certified."}
+
+
 def verify():
     identity, x, z = eye(2), [[G(), G(1)], [G(1), G()]], [[G(1), G()], [G(), G(-1)]]
     y = [[G(), G(0, -1)], [G(0, 1), G()]]
@@ -150,6 +306,7 @@ def verify():
             "ordinary_CH_factory_CR_matrix_units": ordinary_factory_units,
             "ordinary_CH_factory_local_controls": 2,
             "nonblank_extension_CP_witness": extension_witness,
+            "encoding_injection_rollback": injection_rollback_guards(target_factory, kab),
             "scope": "exact finite fresh-resource/key/relative-phase compiler, native and ordinary local-CH factories, and a nonblank-extension counterexample; the supplied joint CCZ and local matter controls are distinct priced ports. All-angle identities, privacy/security, state-dependent source/loss/clock maps and actual hardware comparisons remain analytic or unprovided. No prior, resource optimum or physical advantage certificate."}
 
 if __name__ == "__main__":
