@@ -235,7 +235,10 @@ Helper-transfer fixtures include a literal readout instrument and
 its same-POVM disturbed-helper counterexample. Two-logical-qubit
 fixtures check ideal singlet protection, nominal hopping leakage,
 declared thermal/phase channels and intrinsic heating arithmetic;
-they do not fit or certify a device storage channel.
+they do not fit or certify a device storage channel. Group/character,
+doublon-Gram, binary pulse, sign/hazard and fixed local-loss
+ingredients support the linked ordinary symmetry-control component;
+general Schur, finite-period diamond and recovery bounds remain analytic.
 Shared-history, arbitrary
 decoder, finite-confidence and physical-cost proofs remain analytic;
 no experimental selector or bath model is certified. These checks

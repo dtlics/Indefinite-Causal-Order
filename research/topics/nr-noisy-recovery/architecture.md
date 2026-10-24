@@ -522,6 +522,10 @@ calibration outcome statistics alone do not establish that port.
 The [four-transmon storage test](backaction.md#nr-r14-two-qubit-deadline)
 specifies a two-logical-qubit deadline and ordinary code/helper
 comparisons while leaving a predictive device channel unverified.
+The [ordinary symmetry-control bound](methods/collective-memory-control.md)
+adds finite-period/pulse costs and a full three-level subsystem
+comparison; a computational-subspace swap or symmetric reduced
+dissipator alone does not provide the required controls or protection.
 The next target must beat these accessible ordinary controls
 within a justified drift window, with preparation and training costs.
 

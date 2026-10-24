@@ -1081,6 +1081,11 @@ calibration and reset. Only an actual pair of full history dilations
 with their cross-history records can add a coherent-order comparison;
 the source's Lindblad marginal is insufficient. These exact limits and
 declared channel fixtures establish no device fidelity or switch win.
+The [ordinary symmetry-control component](methods/collective-memory-control.md)
+supplies the next conditional comparator: finite-period/pulse errors,
+full three-level subsystem decoding, residual local-loss limits and
+an explicit control/deadline ledger. Its ideal permutations are
+additional paid ports, not demonstrated gates on this device.
 
 **Fresh-slot flags, prior and remaining scope.** For independent loss-only
 ports, $M_{ij,-}=(B_jA_i-A_iB_j)/2$ kills $G$. On a ground-plus-mode code

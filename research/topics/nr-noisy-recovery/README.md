@@ -386,7 +386,10 @@ retains the order control and compares complete quantum outputs with paid
 parity recovery and population collection, including noisy survivors.
 Its [helper-transfer test](backaction.md#nr-r14-helper-transfer) specifies
 the retained-helper readout port; the [two-qubit deadline test](backaction.md#nr-r14-two-qubit-deadline)
-includes ordinary codes and partial helper storage. The next native test needs a justified joint instrument
+includes ordinary codes and partial helper storage. Its
+[symmetry-control proof component](methods/collective-memory-control.md)
+prices finite pulses and the full three-level decoder while keeping
+local loss and missing control ports explicit. The next native test needs a justified joint instrument
 and a useful production decision beyond these scoped baselines within
 the same drift window.
 

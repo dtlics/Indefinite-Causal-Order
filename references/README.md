@@ -62,6 +62,10 @@ The same owner applies established one-bit teleportation conditionally
 to the retained-helper readout port and screens the full model needed
 for a two-logical-qubit collective-memory deadline. Calibration POVMs
 do not certify the quantum state left in a spectator helper.
+Its [ordinary symmetry-control component](../research/topics/nr-noisy-recovery/methods/collective-memory-control.md)
+credits established permutation symmetrization and exchange-only
+decoupling, and states the additional finite-duration control and
+subsystem-decoder requirements. It makes no new DD priority claim.
 
 ## Exposition conventions
 

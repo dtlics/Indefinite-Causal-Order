@@ -1257,6 +1257,366 @@ def protected_helper_transfer_guards():
     return run_transfer_replay()
 
 
+def permutation_control_guards():
+    """Finite S4, literal binary-gate and rate ingredients; no pulse certificate."""
+    from collections import Counter
+    from itertools import permutations
+
+    def bitop(site, up=False):
+        out = zeros(16)
+        for source in range(16):
+            bit = (source >> (3-site)) & 1
+            if bit != int(up):
+                target = source ^ (1 << (3-site))
+                out[target][source] = G(1)
+        return out
+
+    def tr(a):
+        return trace(a)
+
+    def conj_perm(a,p):
+        def idx(i):
+            bits=[(i>>(3-k))&1 for k in range(4)]
+            out=0
+            for k in p:
+                out=2*out+bits[k]
+            return out
+        indices=[idx(i) for i in range(16)]
+        out=zeros(16)
+        for i in range(16):
+            for j in range(16):
+                out[indices[i]][indices[j]]=a[i][j]
+        return out
+
+    def perm_matrix(p):
+        out=zeros(16)
+        for j in range(16):
+            bits=[(j>>(3-k))&1 for k in range(4)]
+            i=0
+            for k in p:
+                i=2*i+bits[k]
+            out[i][j]=G(1)
+        return out
+
+    def projector():
+        us=[]
+        for entries in ({5:1,6:-1,9:-1,10:1},{3:2,5:-1,6:-1,9:-1,10:-1,12:2}):
+            u=zeros(16,1)
+            for i,v in entries.items(): u[i][0]=G(v)
+            us.append(u)
+        p=add(scale(mm(us[0],adj(us[0])),F(1,4)),scale(mm(us[1],adj(us[1])),F(1,12)))
+        return p,us
+
+    def cycle_shape(p):
+        seen=set(); lengths=[]
+        for i in range(4):
+            if i not in seen:
+                j=i; length=0
+                while j not in seen:
+                    seen.add(j); length+=1; j=p[j]
+                lengths.append(length)
+        return tuple(sorted(lengths,reverse=True))
+
+    def sjt(n):
+        if n==1: return [(0,)]
+        out=[]
+        for k,p in enumerate(sjt(n-1)):
+            for pos in (range(n-1,-1,-1) if k%2==0 else range(n)):
+                out.append(p[:pos]+(n-1,)+p[pos:])
+        return out
+
+    def group_guards():
+        ps=list(permutations(range(4)))
+        p,us=projector()
+        lower=[bitop(i) for i in range(4)]
+        jm=zeros(16)
+        for a in lower: jm=add(jm,a)
+        require(mm(jm,p)==mm(adj(jm),p)==zeros(16),'binary singlet annihilation')
+        edges={}
+        for i in range(4):
+            for j in range(i+1,4):
+                edges[i,j]=add(mm(adj(lower[i]),lower[j]),mm(adj(lower[j]),lower[i]))
+        edge_sum=zeros(16)
+        for e in edges.values(): edge_sum=add(edge_sum,e)
+        require(mm(edge_sum,p)==scale(p,-2),'uniform XY is scalar on spin singlet')
+        for edge in edges.values():
+            avg=zeros(16)
+            for pi in ps: avg=add(avg,scale(conj_perm(edge,pi),F(1,24)))
+            require(avg==scale(edge_sum,F(1,6)),'every hopping edge averages uniformly')
+        zsum=zeros(16)
+        zs=[]
+        for i in range(4):
+            zi=add(eye(16),scale(mm(adj(lower[i]),lower[i]),-2))
+            zs.append(zi); zsum=add(zsum,zi)
+        for zi in zs:
+            avg=zeros(16)
+            for pi in ps: avg=add(avg,scale(conj_perm(zi,pi),F(1,24)))
+            require(avg==scale(zsum,F(1,4)),'every local static offset becomes collective')
+        require(mm(zsum,p)==zeros(16),'collective Z annihilates singlet')
+        char={(1,1,1,1):2,(2,1,1):0,(2,2):2,(3,1):-1,(4,):0}
+        qutrit_sector=F(0)
+        for pi in ps:
+            require(conj_perm(jm,pi)==jm,'full permutation preserves collective lowering')
+            require(conj_perm(p,pi)==p,'singlet subspace invariant under permutations')
+            chi=char[cycle_shape(pi)]
+            require(tr(mm(p,perm_matrix(pi)))==G(chi),'binary singlet carries [22] character')
+            qutrit_sector+=F(2,24)*chi*3**len(cycle_shape(pi))
+        require(qutrit_sector==12 and qutrit_sector/2==6,'qutrit [22] logical/gauge dimensions')
+        # Target-only twirl of each site-cavity coupling has every target coefficient 1/4.
+        for i in range(4):
+            require(all(sum(pi[i]==j for pi in ps)==6 for j in range(4)), 'unpermuted bath coupling average')
+        # Covariant local loss still damages the code: compare it with D[J_-].
+        rho=scale(mm(us[0],adj(us[0])),F(1,4))
+        loc=zeros(16)
+        for a in lower:
+            aa=mm(adj(a),a)
+            loc=add(loc,add(mm(a,mm(rho,adj(a))),scale(add(mm(aa,rho),mm(rho,aa)),F(-1,2))))
+        require(tr(mm(p,loc))==G(-2),'local loss is not made collective by twirl')
+        # Full-qutrit creation has sqrt(2) times these doublon amplitudes; binary part cancels.
+        doublon=[]
+        for u in us:
+            amps={}
+            for index,row in enumerate(u):
+                if row[0]:
+                    digits=[(index>>(3-k))&1 for k in range(4)]
+                    for site,bit in enumerate(digits):
+                        if bit:
+                            output=list(digits); output[site]=2
+                            key=tuple(output); amps[key]=amps.get(key,G())+row[0]
+            doublon.append(amps)
+        for i in range(2):
+            for j in range(2):
+                gram=G(2)*sum((a.conj()*doublon[j].get(key,G()) for key,a in doublon[i].items()),G())
+                require(gram==G(4)*mm(adj(us[i]),us[j])[0][0], 'P A A-dagger P equals four P')
+        return {'permutation_frames':24,'edge_average_checks':6,'offset_average_checks':4,
+                'qutrit_22_sector_dimension':12,'qutrit_logical_dimension':2,'qutrit_gauge_dimension':6,
+                'local_loss_remains_error':True,'qutrit_binary_slice_not_heating_dark':True}
+
+    def path_and_gate_guards():
+        frames=sjt(4)
+        require(len(frames)==len(set(frames))==24 and frames[0]==(0,1,2,3),'SJT visits every frame once')
+        counts=Counter()
+        for a,b in zip(frames,frames[1:]+frames[:1]):
+            changed=[i for i in range(4) if a[i]!=b[i]]
+            require(len(changed)==2 and changed[1]==changed[0]+1,'each closing-path transition adjacent')
+            i,j=changed
+            require(a[i]==b[j] and a[j]==b[i],'literal physical SWAP transition')
+            counts[(i,j)]+=1
+        x=[[G(),G(1)],[G(1),G()]]
+        y=[[G(),G(0,-1)],[G(0,1),G()]]
+        z=[[G(1),G()],[G(),G(-1)]]
+        xx,yy,zz=kron(x,x),kron(y,y),kron(z,z)
+        swap=[[G(1),G(),G(),G()],[G(),G(),G(1),G()],[G(),G(1),G(),G()],[G(),G(),G(),G(1)]]
+        sigma=add(add(xx,yy),zz)
+        require(sigma==add(scale(swap,2),scale(eye(4),-1)),'exchange Casimir SWAP identity')
+        require(mm(swap,swap)==eye(4),'SWAP involution')
+        require(all(mm(a,b)==mm(b,a) for a,b in ((xx,yy),(yy,zz),(zz,xx))),'three generator components commute')
+        hxy=scale(add(xx,yy),F(1,2))
+        expected=(scale(add(xx,zz),F(1,2)),scale(add(yy,zz),F(1,2)))
+        for axis,want in zip((x,y),expected):
+            numer=add(eye(2),scale(axis,G(0,-1)))
+            pair=kron(numer,numer) # actual pair rotation is numerator / 2
+            require(scale(mm(pair,mm(hxy,adj(pair))),F(1,4))==want,'quarter-turn conjugated exchange')
+        iswap=[[G(1),G(),G(),G()],[G(),G(),G(0,-1),G()],
+               [G(),G(0,-1),G(),G()],[G(),G(),G(),G(1)]]
+        require(mm(adj(iswap),iswap)==eye(4) and iswap!=swap,'XY iSWAP is not full permutation')
+        plus=[[G(1)],[G(1)],[G(1)],[G(1)]] # actual vector /2
+        v=mm(iswap,plus)
+        require(v[0][0]*v[3][0]-v[1][0]*v[2][0]==G(2),'iSWAP entangles product plus input')
+        source_j={(0,1):F(586,100),(1,2):F(589,100),(2,3):F(586,100)}
+        # 3*pi/(4J)=3/(8 j_MHz) microseconds for the literal three-segment implementation.
+        exchange_us=sum((count*F(3,8)/source_j[edge] for edge,count in counts.items()),F(0))
+        require(sum(counts.values())==24,'twenty-four full SWAPs per cycle')
+        return {'adjacent_SWAP_edge_counts':{str(k):v for k,v in sorted(counts.items())},
+                'full_SWAPs_per_cycle':24,'exchange_segments_per_cycle':72,
+                'unmerged_single_qubit_quarter_turns_per_cycle':192,
+                'conditional_exchange_on_microseconds_exact':str(exchange_us),
+                'scope':'Literal binary SWAP synthesis interaction time only, not a source gate time/fidelity or qutrit pulse certificate.'}
+
+    def sign_guards():
+        signs=((1,1,1,1),(1,1,-1,-1),(1,-1,1,-1),(1,-1,-1,1))
+        for i in range(4):
+            for j in range(4):
+                avg=F(sum(s[i]*s[j] for s in signs),4)
+                require(avg==int(i==j),'Hadamard signs kill off-diagonal hopping and jump cross terms')
+        # All exact quarter-turn phases illustrate the continuous compensation identity;
+        # its all-angle statement remains the analytic Hamiltonian calculation.
+        phases=(G(1),G(0,1),G(-1),G(0,-1))
+        for phase in phases:
+            require(phase*phase.conj()==G(1),'compensated pump times toggling phase constant')
+        for d,u in ((F(0),F(0)),(F(1),F(0)),(F(0),F(1)),(F(3,5),F(1,20))):
+            diagonal=(u,d+2*u,2*d)
+            # Squared finite-qutrit ladder amplitudes, checked independently
+            # of the maximum-hazard enumeration below.
+            require(diagonal == tuple(d*n+u*m for n,m in zip((0,1,2),(1,2,0))),
+                    'truncated-qutrit downward/upward rate normalization')
+            rmax=4*max(diagonal)
+            require(all(sum(diagonal[i] for i in levels)<=rmax for levels in product(range(3),repeat=4)),
+                    'qutrit local no-jump hazard upper bound')
+        return {'sign_patterns':4,'jump_cross_term_identity_checks':16,
+                'scope':'Finite algebraic ingredients only; full angle, process bound, and finite-width control claims are analytic/conditional.'}
+
+    def verify():
+        return {'group':group_guards(),'path_and_binary_gate':path_and_gate_guards(),'signs_and_hazard':sign_guards(),
+                'scope':'Conditional ordinary-control ingredients; no finite-time device fidelity, source-rate fit, or new DD priority claim.'}
+
+    return verify()
+
+
+def local_loss_recovery_guards():
+    """Rational fixed-code local-loss and normalized recovery-bound ingredients.
+
+    The all-decoder trace-distance/Helstrom and product-helper implications
+    are analytic statements. These checks replay the explicit finite inputs,
+    jump outputs, sign witness and normalized Bell-contraction algebra only.
+    """
+    def lower(site):
+        out = zeros(16)
+        for source in range(16):
+            mask = 1 << (3-site)
+            if source & mask:
+                out[source ^ mask][source] = G(1)
+        return out
+
+    def vector(entries):
+        out = zeros(16, 1)
+        for i, value in entries.items():
+            out[i][0] = G(value)
+        return out
+
+    def projector(v, denominator=1):
+        return scale(mm(v, adj(v)), F(1, denominator))
+
+    def weighted_map(terms, rho):
+        out = zeros(len(terms[0][1]))
+        for weight, k in terms:
+            out = add(out, scale(mm(k, mm(rho, adj(k))), weight))
+        return out
+
+    def weighted_effect(terms):
+        out = zeros(len(terms[0][1][0]))
+        for weight, k in terms:
+            out = add(out, scale(mm(adj(k), k), weight))
+        return out
+
+    u0 = vector({5:1, 6:-1, 9:-1, 10:1})
+    u1 = vector({3:2, 5:-1, 6:-1, 9:-1, 10:-1, 12:2})
+    require(mm(adj(u0),u0) == [[G(4)]] and mm(adj(u1),u1) == [[G(12)]]
+            and mm(adj(u0),u1) == [[G()]], 'rational binary singlet Gram')
+    rho0, rho1 = projector(u0, 4), projector(u1, 12)
+    require(mm(rho0,rho1) == zeros(16), 'orthogonal logical density inputs')
+    annihilators = [lower(i) for i in range(4)]
+    jumps = [matrix_sum([mm(a,mm(rho,adj(a))) for a in annihilators])
+             for rho in (rho0,rho1)]
+    pv12 = projector(vector({8:1,4:-1}), 2)
+    pv34 = projector(vector({2:1,1:-1}), 2)
+    pw = projector(vector({8:1,4:1,2:-1,1:-1}), 4)
+    require(jumps[0] == add(pv12,pv34), 'first binary logical jump density')
+    require(jumps[1] == add(scale(jumps[0],F(1,3)),scale(pw,F(4,3))),
+            'second binary logical jump density')
+    require(trace(jumps[0]) == trace(jumps[1]) == G(2), 'local jump mass two')
+    subspaces = [rho0,rho1,pv12,pv34,pw]
+    for i,p in enumerate(subspaces):
+        require(p == adj(p) and mm(p,p) == p and trace(p) == G(1),
+                'rank-one trace-distance spectral projector')
+        for q in subspaces[i+1:]:
+            require(mm(p,q) == zeros(16), 'orthogonal trace-distance sectors')
+    for u,norm,value in ((u0,4,F(-1,2)),(u1,12,F(1,6))):
+        require(mm(adj(mm(annihilators[0],u)),mm(annihilators[1],u)) == [[G(norm*value)]],
+                'local-loss KL cross term is not scalar')
+    jm = matrix_sum(annihilators)
+    require(mm(jm,rho0) == mm(jm,rho1) == zeros(16), 'collective jump is different from local loss')
+    ground = unit(16,0,0)
+    sign = add(add(add(rho0,scale(rho1,-1)),pv12),add(pv34,scale(pw,-1)))
+    require(mm(sign,sign) == matrix_sum(subspaces), 'trace-distance sign support')
+    distance_cases = 0
+    for eta in (F(0),F(1,5),F(3,5),F(9,25),F(16,25),F(1)):
+        states = [add(add(scale(rho,eta**2),scale(j,eta*(1-eta))),
+                      scale(ground,(1-eta)**2)) for rho,j in zip((rho0,rho1),jumps)]
+        require(all(trace(state) == G(1) for state in states), 'complete fixed-code local-loss ledger')
+        delta = add(states[0],scale(states[1],-1))
+        absolute = add(scale(add(rho0,rho1),eta**2),
+                       scale(add(scale(add(pv12,pv34),F(2,3)),scale(pw,F(4,3))),eta*(1-eta)))
+        require(mm(sign,delta) == absolute, 'literal absolute-value spectral decomposition')
+        d = eta**2+F(4,3)*eta*(1-eta)
+        require(trace(absolute) == G(2*d), 'exact output trace distance')
+        require(1-d == (1-eta)*(3-eta)/3, 'trace-distance deficit polynomial')
+        require((d<1) == (eta<1), 'strict finite local-loss contraction')
+        fe_upper = (1+d)/2
+        require(fe_upper <= 1, 'fixed-code Helstrom upper in unit interval')
+        if eta == F(3,5):
+            require(fe_upper == F(21,25), 'fixed-code decoder upper example')
+        distance_cases += 1
+
+    # Independent literal four-site amplitude-damping products. Jump
+    # probabilities are carried as rational weights, not square roots.
+    product_cases = 0
+    for amplitude in (F(0),F(3,5),F(4,5),F(1)):
+        single = [(F(1),[[G(1),G()],[G(),G(amplitude)]]),
+                  (1-amplitude**2,unit(2,0,1))]
+        terms = []
+        for indices in product(range(2),repeat=4):
+            weight,k = F(1),[[G(1)]]
+            for index in indices:
+                wi,ki = single[index]
+                weight *= wi
+                k = kron(k,ki)
+            terms.append((weight,k))
+        require(weighted_effect(terms) == eye(16), 'literal four-site damping is trace preserving')
+        eta = amplitude**2
+        for rho,j in zip((rho0,rho1),jumps):
+            expected = add(add(scale(rho,eta**2),scale(j,eta*(1-eta))),scale(ground,(1-eta)**2))
+            require(weighted_map(terms,rho) == expected, 'literal products reproduce zero/one/two-loss blocks')
+            product_cases += 1
+
+    # Finite normalization ingredients of the fixed-product-helper lemma.
+    # A fresh normalized Bell pair and Bell projection contract an arbitrary
+    # joint recovery Kraus k to Tr_A(k)/2, a TNI map on B.
+    def partial_trace_kraus(k):
+        return [[sum((k[2*a+i][2*a+j] for a in range(2)),G())/G(2)
+                 for j in range(2)] for i in range(2)]
+
+    def fidelity(terms, dimension):
+        return sum((weight*norm2(trace(k)) for weight,k in terms),F(0))/dimension**2
+
+    x = [[G(),G(1)],[G(1),G()]]
+    z = [[G(1),G()],[G(),G(-1)]]
+    y = [[G(),G(0,-1)],[G(0,1),G()]]
+    swap = zeros(4)
+    cnot = zeros(4)
+    for a,b in product(range(2),repeat=2):
+        swap[2*b+a][2*a+b] = G(1)
+        cnot[2*a+(b^a)][2*a+b] = G(1)
+    phase = eye(4)
+    phase[3][3] = G(0,1)
+    recoveries = [[(F(1),u)] for u in (eye(4),swap,cnot,phase)]
+    recoveries.append([(F(1),kron(unit(2,0,a),eye(2))) for a in range(2)])
+    noises = [[(F(1),eye(2))],[(F(1),z)],
+              [(F(3,5),eye(2)),(F(2,5),x)],
+              [(F(1,3),eye(2)),(F(2,3),y)]]
+    contractions = 0
+    for recovery in recoveries:
+        require(weighted_effect(recovery) == eye(4), 'finite joint recovery is CPTP')
+        reduced = [(weight,partial_trace_kraus(k)) for weight,k in recovery]
+        defect = add(eye(2),scale(weighted_effect(reduced),-1))
+        require(defect == adj(defect) and defect[0][0].i == defect[1][1].i == 0
+                and defect[0][0].r >= 0 and defect[1][1].r >= 0
+                and (defect[0][0]*defect[1][1]-defect[0][1]*defect[1][0]).r >= 0,
+                'normalized Bell contraction is TNI')
+        for noise in noises:
+            full = [(wr*we,mm(k,kron(eye(2),e))) for wr,k in recovery for we,e in noise]
+            one = [(wr*we,mm(t,e)) for wr,t in reduced for we,e in noise]
+            require(fidelity(full,4) == fidelity(one,2), 'fixed-product-helper Bell fidelity normalization')
+            contractions += 1
+    require(partial_trace_kraus(eye(4)) == eye(2), 'normalized Bell-pair identity contraction')
+    return {'status':'passed','arithmetic':'exact Gaussian rationals',
+            'binary_code_vectors':2,'logical_jump_density_fixtures':2,
+            'trace_distance_spectral_projectors':5,'trace_distance_rate_fixtures':distance_cases,
+            'literal_four_site_damping_density_maps':product_cases,
+            'normalized_product_helper_fidelity_fixtures':contractions,
+            'fixed_local_loss_decoder_upper_eta_3_over_5':'21/25',
+            'scope':'Finite rational fixed-encoding local-loss ingredients with inaccessible local records. All-CPTP recovery and fixed-product-helper implications are analytic; no source-specific channel fit, optimality equality, new encoder, QEC impossibility, native selector, pulse or finite-cycle certificate.'}
+
 def verify():
     return {"status": "passed", "arithmetic": "exact Gaussian rationals",
             "collective_relaxation": collective_guards(),
@@ -1268,7 +1628,9 @@ def verify():
             "unequal_vacuum_record_boundary": unequal_vacuum_record_boundary_guards(),
             "collective_deadline_guard": collective_deadline_guards(),
             "protected_helper_transfer": protected_helper_transfer_guards(),
-            "scope": "Finite full-input/reference channels, flags and model-boundary ingredients for a declared loss-only family. Universal decoder/norm/concentration proofs remain analytic; unique survivor vacuum, bath preparation, selectors, protected checks, mode/phase controls, active excitation, rejects and physical clocks are premises. No full instrument, conditional-fidelity frontier, arbitrary-code or hardware advantage certificate. Separate dual-rail fixtures use declared common-success four-mode physical loss slots and paid independent Pauli seeds; seed-index products are not distinct nonzero physical records. Distinct multiple-survivor collection fixtures assume a common pure vacuum history record and final vacuum/one-excitation support, allow other survivor records and loss/survivor coherences, and add paid non-number-preserving CNOT collection, garbage reset and active recovery; they do not replace the earlier pure-loss AD/discard family. The unequal-vacuum-record witness and exact one-word controlled-conjugation closure are separate finite code-level guards, not a physical advantage or an assumed control port. Fixed-deadline collective fixtures distinguish an ideal singlet code from nominal projected-H leakage, explicitly declared GAD/phase channels and a ground-heating normalization test; no fitted device fidelity, unknown-state encoder or native selector is certified. A separate one-bit transfer fixture assumes pre-wait alignment, a protected helper and a spectator-safe target measurement instrument; equal POVM probabilities alone do not certify that transfer. Timed helper-noise axes and finite embedded mutants are checked, without supplying those ports."}
+            "permutation_control": permutation_control_guards(),
+            "local_loss_recovery": local_loss_recovery_guards(),
+            "scope": "Finite full-input/reference channels, flags and model-boundary ingredients for a declared loss-only family. Universal decoder/norm/concentration proofs remain analytic; unique survivor vacuum, bath preparation, selectors, protected checks, mode/phase controls, active excitation, rejects and physical clocks are premises. No full instrument, conditional-fidelity frontier, arbitrary-code or hardware advantage certificate. Separate dual-rail fixtures use declared common-success four-mode physical loss slots and paid independent Pauli seeds; seed-index products are not distinct nonzero physical records. Distinct multiple-survivor collection fixtures assume a common pure vacuum history record and final vacuum/one-excitation support, allow other survivor records and loss/survivor coherences, and add paid non-number-preserving CNOT collection, garbage reset and active recovery; they do not replace the earlier pure-loss AD/discard family. The unequal-vacuum-record witness and exact one-word controlled-conjugation closure are separate finite code-level guards, not a physical advantage or an assumed control port. Fixed-deadline collective fixtures distinguish an ideal singlet code from nominal projected-H leakage, explicitly declared GAD/phase channels and a ground-heating normalization test; no fitted device fidelity, unknown-state encoder or native selector is certified. A separate one-bit transfer fixture assumes pre-wait alignment, a protected helper and a spectator-safe target measurement instrument; equal POVM probabilities alone do not certify that transfer. Timed helper-noise axes and finite embedded mutants are checked, without supplying those ports. Conditional permutation-control fixtures add finite S4 averages, character/doublon factors, literal binary SWAP paths and rate/sign hazards with a paid exact interaction ledger; Schur decompositions, finite-period bounds, leakage-valid pulses and hardware schedules remain analytic or supplied. Separate rational local-loss fixtures replay binary jump outputs, trace-distance and normalized Bell-contraction ingredients for a fixed product encoding; universal recovery bounds and general code choices are not inferred from finite samples."}
 
 
 if __name__ == "__main__":
