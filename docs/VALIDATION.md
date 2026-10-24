@@ -313,6 +313,17 @@ full-reference identity remain analytic under Pauli-diagonal and scalar
 cross-map hypotheses, with calibration and controlled-gate costs explicit.
 These compiler hypotheses still require derivation for the split-energy
 physical model or any application with required contact operations.
+The required BCS-gate component instead derives its threshold tail,
+signed virtual contraction, full ideal pulse compiler and restricted
+static spectral-dressing estimate analytically. No finite replay proves
+the continuum limit, the global spectral hypotheses, a fourth-order gate
+truncation or an actual coherent selector. Its separate hypothetical
+two-point static-drift test has exact Gaussian matrix guards and outward
+rational trigonometric certificates for two ordinary five-pulse words,
+including delivered Bell fidelity, mean reciprocal retry cost, commanded
+area and safe common-window overheads. One witness is pointwise at the
+two drift values; its equal-rate companion is a prior-average comparison.
+Neither is an optimized native bound or a source-fitted noise/time model.
 The Jaynes--Cummings extension checks the explicit ordinary
 isometry/measurement and decision identities. Its complete infinite-Fock
 inequality for all positive field energies and high-energy remainder are

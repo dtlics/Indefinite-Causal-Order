@@ -64,12 +64,20 @@ distinguishes a controlled physical contact schedule from an abstract
 SWITCH of reduced channels. Its temporal bath-copy comparison uses
 established Gaussian correlation methods; it does not claim a new general
 stability technique or a demonstrated memory advantage.
+Its [required-gate component](architecture-baselines.md#nr-r06-required-bcs-gate)
+keeps the source's virtual Cooper-pair process separate from an explicitly
+hypothetical common-amplitude stress test. Its pulse witnesses establish
+achievable comparisons with that declared retry protocol, without a new
+gate-synthesis or composite-control priority claim.
 
 | Primary work | Input used | Scope to preserve |
 | --- | --- | --- |
 | [Bhattacharyya and van Heck, *Dynamics of Majorana tetron qubits under quasiparticle poisoning*, arXiv:2608.18042v1](https://arxiv.org/html/2608.18042v1), Sections II, V--VI and Appendices B--C | Island Hamiltonian, thermal lead correlations, charging-energy protection and split-energy dynamics. | The source supplies neither two coherently orderable contact families nor their controlled bath cross map. The exact isotropic specialization and the split-energy case require different comparisons. |
 | [Huang, Zhu, Park and Lin, *Unified error bounds for perturbations of non-Markovian open quantum systems in Gaussian environments*, arXiv:2411.08741v2](https://arxiv.org/html/2411.08741v2), Theorem 2.9, Lemmas 2.10--2.11 and Appendix B | Correlation-perturbation resummation for bosonic and fermionic environments. | The contact proof adapts the insertion argument to piecewise controlled unitary propagators and a localized two-time covariance change. Its reference-complete code-input bound is an application with explicit parity and continuum assumptions. |
 | [Mascherpa et al., *Open systems with error bounds: spin-boson model with spectral density variations*, PRL **118**, 100401 (2017), arXiv:1611.03377v4](https://arxiv.org/html/1611.03377v4), Eqs. (6)--(9) | Earlier non-Markovian observable bounds from changes in bath correlations. | This is a bosonic spin-boson precedent, rather than the fermionic controlled-contact statement. Gaussian influence and correlation-error bounds are established background. |
+| [Schrade and Fu, *Majorana Superconducting Qubit*, arXiv:1803.01002v1](https://arxiv.org/html/1803.01002v1), Eqs. (4)--(6), (10)--(14) and supplement II | Quadratic BCS leads, charge-changing tunnelling, a required fourth-order entangler and continuously timed ordinary gates. | Both leads participate in each gate block. The source provides neither a native selector nor the stress test's common drift covariance, measured gate-speed ratio or full noisy order instrument. |
+| [Bravyi, DiVincenzo and Loss, *Schrieffer-Wolff transformation for quantum many-body systems*, arXiv:1105.0675v1](https://arxiv.org/html/1105.0675v1), Sections 2--3 | Standard direct rotation and exact effective low-energy Hamiltonians. | The component supplies an elementary retained-bath/reference estimate under bounded global perturbation and a common bare vacuum. Weak on-shell hybridization, fourth-order truncation, finite temperature and ramps need additional arguments. |
+| [Simonov et al., *Universal Quantum Computation via Superposed Orders of Single-Qubit Gates*, arXiv:2311.13654v4](https://arxiv.org/html/2311.13654v4), Sections II--III | Gate synthesis through commutator/anticommutator branches. | Order-based synthesis is established. Vacuum extensions, controlled implementations and the full input/output interface must be priced; this is not a source for the component's drift law or a practical robustness advantage. |
 
 ## Recovery, inversion, and verification
 

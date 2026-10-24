@@ -1196,6 +1196,18 @@ contact action: an ordinary device can turn off purely harmful switchable
 contacts. The next physical test therefore needs that action, its complete
 retained output and the actual storage/control alternatives.
 
+The [required BCS-gate screen](architecture-baselines.md#nr-r06-required-bcs-gate)
+provides one such physical action: a Cooper-pair-mediated entangler needs
+both leads together. Its clean threshold has a divergent absolute
+correlation moment, so the poisoning certificate cannot be transferred.
+A separate static spectral estimate needs explicit global perturbation
+bounds. Ordinary continuous controls reproduce the ideal two-flag gate,
+and certified five-pulse words beat a specified common-drift retry
+protocol under their stated timing assumptions. That drift law remains
+hypothetical. The next microscopic calculation must retain two complete
+gate blocks, their shared bath and records, and compare their actual
+delivered-gate costs with calibrated and composite ordinary controls.
+
 The [native-check baselines](architecture-baselines.md#nr-r06) also prevent
 promoting a known Clifford layer or a read-only classical-bit lookup merely
 because recompiling its full unitary is expensive. Cheap transported checks

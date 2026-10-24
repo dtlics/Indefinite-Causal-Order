@@ -5804,6 +5804,336 @@ required operations need their own retained-output calculation and
 ordinary parity, known-energy, QEC and protected-storage comparison.
 They remain open rather than established native gains.
 
+<a id="nr-r06-required-bcs-gate"></a>
+
+### Required Cooper-pair gates need a different bath comparison
+
+[Schrade and Fu, *Majorana Superconducting Qubit*,
+arXiv:1803.01002v1](https://arxiv.org/html/1803.01002v1),
+Eqs. (4), (5), (11)--(14) and supplement II, supply a concrete required
+operation: Gaussian BCS electrodes and linear electron tunnelling into
+charging Majorana islands generate a fourth-order $X_aX_b$ entangler.
+Both superconducting leads and all selected links participate together
+in one complete gate block. Scheduling the left and right electrodes
+in disjoint windows does not implement the source's stationary
+entangling Hamiltonian. Two complete gate blocks can reuse those
+electrodes, but that shared-bath process does not automatically satisfy
+the independent-station and disjoint-history hypotheses behind
+(FP19)'s unchanged diagonals and factorization. Two independent complete
+lead pairs and a coherent selector would be additional physical
+resources. The source supplies neither that selector nor a full noisy
+order instrument.
+
+**The clean BCS threshold fails the absolute-moment hypothesis.**
+With $\hbar=1$, a representative zero-temperature normal contraction
+with a smooth finite ultraviolet cutoff $0\le h\le1$, $h(\Delta)=1$,
+and $A>0$ has
+
+$$
+\begin{aligned}
+C(t)&=A\int_\Delta^\infty
+ h(E)\frac{E}{\sqrt{E^2-\Delta^2}}e^{-iEt}\,dE,\\
+C(t)&=a e^{-i(\Delta t+\pi/4)}t^{-1/2}+O(t^{-3/2}),
+ \qquad a=A\sqrt{\pi\Delta/2},\\
+c_1&=\int_0^\infty t|C(t)|dt=\infty,\qquad
+J_{\rm cross}(\tau)\sim\frac83(\sqrt2-1)a\tau^{3/2}.
+\end{aligned}
+\tag{BG1}
+$$
+
+Here $A$ contains the normal density and the relevant squared tunnel
+amplitude; it is not the source's two-amplitude pair hybridization
+$\Gamma'$. Expanding the density at $E=\Delta$ gives
+$\sqrt{\Delta/2}(E-\Delta)^{-1/2}+O((E-\Delta)^{1/2})$.
+Its endpoint Fourier transform gives the displayed tail; the cutoff
+vanishes smoothly at its upper endpoint. Integrating this absolute
+tail against the triangular weight in (FP22) gives the last coefficient.
+Anomalous BCS contractions, which mediate the pair gate, have the same
+threshold power. At finite $T>0$, the normal leading term is
+$at^{-1/2}[(1-f_\Delta)e^{-i(\Delta t+\pi/4)}
++f_\Delta e^{i(\Delta t+\pi/4)}]$, where
+$f_\Delta=(e^{\Delta/T}+1)^{-1}$; its leading modulus is at least
+$a\tanh(\Delta/2T)t^{-1/2}$. Thus finite thermal weights do not remove
+the divergent first absolute moment. A form factor suppressing the
+threshold needs its own calculation. The finite Lorentzian moment in
+(FP22b) cannot be assigned to these clean BCS electrodes.
+
+The failure of this sufficient absolute estimate proves neither a large
+physical error nor an order advantage. In a ground charge sector,
+creating a quasiparticle of energy $E\ge\Delta$ and paying a charging
+cost $U\ge0$ instead gives a positive virtual denominator:
+
+$$
+\begin{aligned}
+\int_0^\tau dt\int_\tau^{2\tau}ds\,e^{-i(E+U)(s-t)}
+ &=e^{-i(E+U)\tau}
+   \frac{4\sin^2[(E+U)\tau/2]}{(E+U)^2},\\
+|B_\times|
+ &\le4A\int_\Delta^\infty
+ \frac{h(E)E\,dE}{\sqrt{E^2-\Delta^2}(E+U)^2}
+ \le\frac{2\pi A}{\Delta}.
+\end{aligned}
+\tag{BG2}
+$$
+
+The last denominator integral is maximal at $U=0$, where its value
+without $A$ and $h$ is $\pi/(2\Delta)$ by $E=\Delta\cosh x$;
+it is ultraviolet convergent. Equation (BG2) treats one signed
+second-order ground-sector contraction. It does not bound the
+fourth-order gate's complete retained-output instrument, its other
+virtual orders, or resonant transitions from excited charge or
+quasiparticle sectors. A comparison must retain the actual Bohr phases,
+complete gate blocks, common bath and accessible charge/parity records.
+
+**Continuous ordinary controls reproduce the ideal two-flag gate.**
+The source's Eqs. (6), (10), (11) and their pulse prescriptions supply
+continuous local and entangling angles. Put $P=X_aX_b$, $Q=Z_a$,
+$A_\theta=e^{-i\theta P}$, $B_\varphi=e^{-i\varphi Q}$ with
+$0\le\theta,\varphi\le\pi/2$. Since $PQ=-QP$, the ideal balanced
+order control measured in $X$ gives
+
+$$
+\begin{aligned}
+M_+&=\cos\theta\cos\varphi I
+ -i\sin\theta\cos\varphi P-i\cos\theta\sin\varphi Q,
+&p_+&=1-\sin^2\theta\sin^2\varphi,\\
+M_-&=\sin\theta\sin\varphi PQ,
+&p_-&=\sin^2\theta\sin^2\varphi,\\
+M_+/\sqrt{p_+}
+ &=e^{-i\varphi Q/2}e^{-i\eta P}e^{-i\varphi Q/2},
+&\eta&=\operatorname{atan2}(\sin\theta\cos\varphi,\cos\theta)
+ \le\theta\quad(p_+>0).
+\end{aligned}
+\tag{BG3}
+$$
+
+Direct expansion proves the last identity using
+$\cos\eta=\cos\theta/\sqrt{p_+}$ and
+$\sin\eta=\sin\theta\cos\varphi/\sqrt{p_+}$.
+The effects are $M_\pm^\dagger M_\pm=p_\pm I$, and
+$PQ=-iY_aX_b$ is a local Pauli product. An ordinary circuit can draw
+the final flag first, run the shorter $XX_\eta$ pulse with two half-$Z$
+pulses on plus, and apply the physical local Pauli on minus. This
+reproduces both subnormalized maps on every unknown code/reference
+input. A task requesting the plus unitary alone can run that ordinary
+word deterministically. At $\theta=\varphi=\pi/4$, $p_+=3/4$ and
+$\eta=\arcsin(1/\sqrt3)<\pi/4$. The single $\pi/2$ endpoints give
+Pauli plus outputs; at the double endpoint $p_+=0$, only the local
+minus map is implemented, without normalizing a zero branch. Pulse
+edges, signed-angle control, calibration and physical corrections or
+a permitted frame count. This ideal identity is not equality of the
+actual noisy BCS instruments or a new synthesis mechanism.
+
+**A restricted static spectral bound retains the bath.**
+A separate sufficient condition uses a ground-state spectral gap,
+rather than the absolute moment in (BG1). Suppose a finite-rank bare
+code/vacuum projection $P_0$ obeys $H_0P_0=0$ and
+$Q_0H_0Q_0\ge gQ_0$, where $Q_0=I-P_0$ and $g>0$.
+For one complete static block assume a bounded perturbation
+$V=V^\dagger$, $v=\|V\|<g/2$. Its isolated low spectral projection
+$\widetilde P_0$ has the same rank as $P_0$. The canonical isometry
+$J=\widetilde P_0P_0(P_0\widetilde P_0P_0)^{-1/2}$ defines the
+**exact** effective Hamiltonian $H_{\rm eff}=J^\dagger(H_0+V)J$.
+For $n$ complete static blocks satisfying these conditions with the
+same bare $P_0,H_0$ and respective $d_j$, one has
+
+$$
+\begin{aligned}
+d&=\|P_0-\widetilde P_0\|\le v/(g-v),\\
+\|e^{-i(H_0+V)t}P_0-P_0e^{-iH_{\rm eff}t}\|
+ &\le2\sqrt2d,\\
+\|\Phi_{1:n}-\Phi_{{\rm eff},1:n}\|_\diamond
+ &\le\min\{2,4\sqrt2\sum_{j=1}^n d_j\}.
+\end{aligned}
+\tag{BG4}
+$$
+
+These channels start in the bare code/vacuum and retain the joint
+system and bath, with arbitrary passive references. In fermionic use
+the inputs are physical fixed-parity code embeddings. The effective
+product acts on the code with the same bare vacuum at the output.
+Including the controller in $P_0$ covers coherent order histories when
+each branch satisfies the same perturbation bound; it does not supply
+the selector. For two blocks with $d_j\le d$, the bound is
+$\min\{2,8\sqrt2d\}$, uniformly in their durations.
+
+Here is the proof, a standard spectral-dressing argument related to
+[Bravyi, DiVincenzo and Loss's direct-rotation formulation](https://arxiv.org/abs/1105.0675v1).
+Set $X=Q_0\widetilde P_0$, $A=Q_0H_0Q_0\ge g$ and
+$B=(H_0+V)|_{\operatorname{ran}\widetilde P_0}\le v$.
+The equation $AX-XB=-Q_0V\widetilde P_0$ has integral solution
+$X=-\int_0^\infty e^{-sA}(Q_0V\widetilde P_0)e^{sB}ds$,
+so $\|X\|\le v/(g-v)$. Equal ranks give $\|X\|=d$.
+Principal angles give
+$\|J-P_0\|=\sqrt{2-2\sqrt{1-d^2}}\le\sqrt2d$.
+Exact intertwining $e^{-i(H_0+V)t}J=Je^{-iH_{\rm eff}t}$ proves the
+second line. Two isometries have channel diamond distance at most
+twice their operator-norm distance, including any reference.
+Telescope that estimate through the full unitaries, comparing each
+ideal intermediate with the same bare vacuum, to obtain the last line
+without a bath reset. Earlier dressing/leakage errors remain in the
+norm bound. Different bare projections, or an inserted physical reset,
+require their own embeddings and reset map or error terms.
+
+This is not a numerical certificate for the source device. Finite
+ultraviolet regularization can make tunnelling fields bounded, but a
+weak on-shell hybridization does not establish $v\ll g$: a field norm
+can grow as $|\lambda|\sqrt{\nu W}$ with bandwidth $W$. Replacing
+the exact $H_{\rm eff}$ by a fourth-order truncation $H_4$ adds
+$2t\|H_{\rm eff}-H_4\|$ per block. Long gate duration must therefore
+be included in the truncation budget. Ramps and nonadiabatic errors,
+finite-temperature macroscopic baths and excited-sector resonances need
+separate estimates. Thermal purification does not create a positive
+spectral gap for the doubled Liouvillian. Small $\Gamma/\Delta$ alone
+does not establish these static global-norm hypotheses.
+
+**A separate hypothetical common-amplitude stress test.**
+The source does not characterize the following noise law or give gate
+speed ratios. At nominal $\theta=\varphi=\pi/4$, let every commanded
+angle acquire the same unknown multiplier $\nu=1+\epsilon$ throughout
+one job, including negative commands. Set $u=\pi\nu/4$, $c=\cos u$,
+$s=\sin u$ and target $G_0=(I-iP-iQ)/\sqrt3$. For $p_\epsilon>0$,
+the complete measured native branches and their legitimate retry ledger are
+
+$$
+\begin{aligned}
+K_+&=c^2I-isc(P+Q),&K_-&=s^2PQ,&p_\epsilon&=1-s^4,\\
+F_N(\epsilon)&=\frac{(c^2+2sc)^2}{3p_\epsilon},
+&\overline F_{N,\rm delivered}&=\mathbb E[F_N],
+&\mathbb E[N]&=\mathbb E[1/p_\epsilon],\\
+S_L(\epsilon)&=1-(1-p_\epsilon)^L,
+&\mathbb E[N_L\mid\epsilon]&=S_L/p_\epsilon,
+&B_L(\epsilon)&=S_LF_N.
+\end{aligned}
+\tag{BG5}
+$$
+
+Here $F_N$ is entanglement fidelity to $G_0$ on the normalized plus
+output. Every nonzero branch is a scalar times a unitary on the whole
+unknown input/reference. Physically undoing $PQ$ after minus, or using
+a consistently adapted allowed Pauli frame, restores the input for
+retry. Actual recovery, helper reset/readout, routing, survival and
+waiting count. An uncharacterized noisy minus map would not justify
+this argument. A final capped rejection can retain the restored input,
+but has not delivered $G_0$; $B_L$ is its subnormalized target Bell mass
+with zero delivery reward on that flagged rejection. At $p_\epsilon=0$,
+the cap uses $L$ attempts and has zero delivery mass, by continuity.
+
+For drift fixed through all retries with $p_\epsilon>0$ almost surely,
+eventual delivery leaves the original drift prior unchanged, giving
+(BG5)'s averages. Fresh drift
+resampled every attempt instead gives
+$\mathbb E[p_\epsilon F_N]/\mathbb E[p_\epsilon]$ and
+$1/\mathbb E[p_\epsilon]$. The minus Choi vector is orthogonal to
+$G_0$, so the raw all-launch target score is $p_\epsilon F_N$, tending
+to $3/4$ at zero drift; it is not a unit-yield entangler. Unlimited
+retry costs also require a proper drift law. Near $\epsilon=1$,
+$p_\epsilon\sim(\pi^2/8)(\epsilon-1)^2$, so a literal continuous
+unbounded law with nonzero density there has divergent
+$\mathbb E[1/p_\epsilon]$. A bounded range, adaptive protocol or
+explicit cap is needed for a finite expected-cost claim.
+
+The native conditional infidelity is
+$(\pi^2/18)\epsilon^2+O(\epsilon^3)$, compared with
+$[\eta^2+\pi^2/24]\epsilon^2+O(\epsilon^3)$ for the bare ordinary
+word in (BG3), where $\eta=\arcsin(1/\sqrt3)$.
+This is only a comparison with one bare compiler. If local $Z$ control
+avoids the amplitude error, its ordinary coefficient improves to
+$\eta^2<\pi^2/18$; applying the same improvement to native leaves its
+leading coefficient $\pi^2/18$. Independently calibrated or virtual
+controls must be included when available, while a software frame is
+not automatically the needed physical coherent rotation. Ordinary
+composite pulses, calibration reuse and PCS with their actual
+hypotheses and gate faults remain part of a full comparison.
+
+A finite ordinary witness avoids assuming perfect local control.
+Write $R(x)=e^{-ixR}$ and choose either $\alpha=\pi/5$ or
+$\alpha=117/200$, with the principal branches below. Every pulse in
+this five-pulse word has the same uncertain multiplier:
+
+$$
+\begin{aligned}
+\beta&=\tfrac12\operatorname{atan2}(1,\cos2\alpha+\sin2\alpha),
+&\zeta&=\arcsin[(\cos2\alpha-\sin2\alpha)/\sqrt3],\\
+W_\nu&=Q(\alpha\nu)P(\beta\nu)Q(\zeta\nu)
+        P(\beta\nu)Q(\alpha\nu)
+       =wI-ixP-iyQ,\\
+r&=\cos(\zeta\nu)\cos(2\beta\nu),
+&h&=\sin(\zeta\nu),\qquad x=\cos(\zeta\nu)\sin(2\beta\nu),\\
+w&=r\cos(2\alpha\nu)-h\sin(2\alpha\nu),
+&y&=r\sin(2\alpha\nu)+h\cos(2\alpha\nu),\\
+W_1&=G_0,
+&F_O(\epsilon)&=(w+x+y)^2/3.
+\end{aligned}
+\tag{BG6}
+$$
+
+The nominal equality follows from
+$\cos\zeta\sin2\beta=1/\sqrt3$,
+$\cos\zeta\cos2\beta=(\cos2\alpha+\sin2\alpha)/\sqrt3$
+and $\sin\zeta=(\cos2\alpha-\sin2\alpha)/\sqrt3$.
+This gives a deterministic gate on every unknown input/reference,
+not a preparation on a selected state. The normalized trace in this
+four-dimensional Pauli algebra equals that in its repeated
+two-dimensional representation, giving the fidelity formula.
+Both choices have $\zeta<0$: signed local control, its calibration
+and its switching overhead are required physical resources.
+
+Take a bounded stress-test prior: $\epsilon=-0.1,+0.1$ with equal
+probabilities, fixed for the entire job. Unlimited corrected native
+retries deliver mean fidelity $0.994513232402\ldots$ with
+$\mathbb E[N]=1.359327796269\ldots$ and mean commanded absolute area
+$C=(\pi/4)\mathbb E[N]=1.067613554645\ldots$ in **each** of $P,Q$.
+An ordinary word runs once, with areas
+$A_P=2\beta$, $A_Q=2\alpha+|\zeta|$.
+With a common additional overhead $h_0$ per pulse window, compare
+$c_PA_P+c_QA_Q+5h_0$ with
+$C(c_P+c_Q)+2\mathbb E[N]h_0$; other native overhead is omitted
+in its favor.
+
+For $\alpha=\pi/5$, the ordinary quadratic infidelity coefficient is
+$0.476732721890\ldots<\pi^2/18$. Its delivered fidelities at
+$\epsilon=-0.1,+0.1$ are respectively
+$0.994719004510\ldots$ and $0.995756540388\ldots$, exceeding the
+native values $0.994227125884\ldots$ and $0.994799338920\ldots$.
+The equal-prior ordinary mean exceeds $0.995237772449$.
+Its areas are $A_P=0.670829058795\ldots$ and
+$A_Q=1.636379954257\ldots$. With nominal duration per commanded
+radian $c_P,c_Q$, zero edge overhead and native selector/read/reset
+and correction costs set to zero in its favor, ordinary time is no
+larger if $c_Q/c_P\le0.6976229$. At $c_Q/c_P=1/2$, the same remains
+true with a common extra overhead per pulse window up to
+$0.04926976c_P$, despite five ordinary windows versus native mean
+$2\mathbb E[N]=2.718655592537\ldots$.
+
+The companion $\alpha=117/200$ has coefficient
+$0.545393482367\ldots<\pi^2/18$ and equal-prior mean fidelity
+greater than $0.994559738877$. It is worse at the negative endpoint
+and better at the positive one, so this is a **prior-average**
+comparison. Its areas are $0.651663996937\ldots$ and
+$1.481347286658\ldots$. Even at equal nominal $P,Q$ duration per
+radian its interaction time is below $2.133011283596c_P$, whereas
+native mean time exceeds $2.135227109289c_P$. A common extra overhead
+per pulse window no larger than $0.00097128c_P$, rounded down, still
+preserves that small strict time advantage under the same generous
+native overhead convention. Actual boundary and controller costs
+cannot be replaced by this narrow mathematical margin.
+
+[The existing native-check replay](checks/architecture/verify_native_checks.py)
+certifies the exact pulse identities and finite fidelity and commanded
+interaction-time inequalities for the two-point prior. The paid-overhead
+margins above follow from those certified time and mean-attempt bounds
+and the stated five versus $2\mathbb E[N]$ pulse-window counts.
+It does not certify a microscopic BCS noise law, the global spectral
+assumptions of (BG4), a measured speed ratio or hardware optimality.
+These ordinary witnesses compare with the declared fixed-angle,
+undo-and-retry native protocol. They do not upper-bound stronger native
+adaptive methods, including retuning after learning from failure
+records. Full records, calibration reuse, imperfect gates and recovery,
+control lifetime, protected storage, loss and waiting must enter a
+physical comparison. No native gain or universal ordinary converse
+follows from this stress test.
+
 <a id="nr-r06-jc-energy"></a>
 
 ### Finite-energy Jaynes--Cummings rotations have a stronger ordinary comparator
@@ -8296,7 +8626,15 @@ checks, including a non-Clifford wrong-transport guard. The continuous-bath limi
 stability resummation, infinite Matsubara sum, correlation-moment and
 diamond bounds, and isotropic symmetry reduction remain analytic under
 the stated parity, reference and access assumptions. These finite checks
-do not establish microscopic hardware performance. For (J1)--(J17), it verifies the finite isometry,
+do not establish microscopic hardware performance.
+For (BG1)--(BG6), the threshold Fourier asymptotic, signed virtual
+integral, full ideal-gate synthesis and spectral-dressing/channel proof
+remain analytic. Outward rational certificates and exact physical Pauli
+products verify the two five-pulse words at their stated static drift
+points, their mean-reciprocal retry ledger and safe timing/overhead
+inequalities. The companion's fidelity comparison is prior-averaged;
+these checks do not establish a continuous drift interval, a microscopic
+noise law or an optimized controller. For (J1)--(J17), it verifies the finite isometry,
 complete projective measurement, ordinary and switched CP-weight
 identities, nonnegative gap and full invariant-sector atomic-dummy
 counterexample. The all-Fock sums, strict finite-energy inequality,

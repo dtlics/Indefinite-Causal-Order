@@ -2440,6 +2440,273 @@ def replay_uniform_pauli_copy_compiler():
                 scope="Uniform complete-Pauli sampling including identity; actual one-helper check/read and one symmetric independent flag flip on anisotropic accepted code maps, plus known non-Clifford transported controls. Complete finite input maps retain passive references. Microscopic scalar-cross assumptions, calibration, transported-control availability and costs remain analytic; no generic unknown-frame or arbitrary coherent-order-input simulator.")
 
 
+def replay_five_pulse_gate_witness(alpha_rational=None):
+    """Outward rational certificate for one shared-static-drift gate witness.
+
+    Exact Gaussian XX/ZA products guard the pulse-composition identity.
+    The existing dyadic interval engine supplies outward rounding and a
+    Machin-series pi bracket; every additional transcendental evaluation has
+    an explicit rational Taylor remainder. No floating arithmetic is used.
+    """
+    from math import factorial
+    from verify_heat_gkp_tails import I, PI
+
+    def square(x):
+        return I(0 if x.lo <= 0 <= x.hi else min(x.lo * x.lo, x.hi * x.hi),
+                 max(x.lo * x.lo, x.hi * x.hi))
+
+    def widen(x, radius):
+        return I(x.lo - radius, x.hi + radius)
+
+    def sincos(x):
+        x2 = square(x)
+        sine, cosine = I(0), I(0)
+        term_s, term_c = x, I(1)
+        for n in range(24):
+            sine = sine + (term_s if n % 2 == 0 else -term_s)
+            cosine = cosine + (term_c if n % 2 == 0 else -term_c)
+            term_s = term_s * x2 / ((2 * n + 2) * (2 * n + 3))
+            term_c = term_c * x2 / ((2 * n + 1) * (2 * n + 2))
+        radius = max(abs(x.lo), abs(x.hi))
+        require(radius < 2, "Fixed pulse Taylor domain")
+        # Zero even/odd coefficients allow Taylor orders 48 and 47.
+        return (widen(sine, radius ** 49 / factorial(49)),
+                widen(cosine, radius ** 48 / factorial(48)))
+
+    def arctan(x):
+        # Principal atan(x)=2 atan[x/(1+sqrt(1+x^2))]. The reduced
+        # argument is inside (-1/2,1/2), where the alternating remainder
+        # is bounded by the first omitted term, also for negative x.
+        reduced = x / (1 + (1 + square(x)).sqrt())
+        radius = max(abs(reduced.lo), abs(reduced.hi))
+        require(radius < F(1, 2), "Reduced arctangent Taylor domain")
+        term, total = reduced, I(0)
+        for n in range(48):
+            total = total + term * F((-1) ** n, 2 * n + 1)
+            term = term * square(reduced)
+        return 2 * widen(total, radius ** 97 / 97)
+
+    def qadd(a, b):
+        return tuple(x + y for x, y in zip(a, b))
+
+    def qmul(a, b):
+        w, x, y, z = a
+        v, p, q, r = b
+        return (w * v - x * p - y * q - z * r,
+                w * p + x * v + y * r - z * q,
+                w * q + y * v + z * p - x * r,
+                w * r + z * v + x * q - y * p)
+
+    def qscale(a, value):
+        return tuple(x * value for x in a)
+
+    def qdot(a, b):
+        return sum((x * y for x, y in zip(a, b)), I(0))
+
+    def qnorm(a):
+        return sum((square(x) for x in a), I(0))
+
+    require(alpha_rational in (None, F(117, 200)), "Only the two stated finite pulse witnesses")
+    companion = alpha_rational is not None
+    root3 = I(3).sqrt()
+    alpha = I(alpha_rational) if companion else PI / 5
+    sin2a, cos2a = sincos(2 * alpha)
+    positive = cos2a + sin2a
+    require(positive.lo > 0, "The defining atan2 has its stated first-quadrant branch")
+    beta = arctan(1 / positive) / 2
+    h = (cos2a - sin2a) / root3
+    require(h.hi < 0 and square(h).hi < 1, "The principal central pulse is negative")
+    zeta = arctan(h / (1 - square(h)).sqrt())
+    angles = (alpha, beta, zeta, beta, alpha)
+    axes = (3, 1, 3, 1, 3)
+    target = (1 / root3, 1 / root3, I(0), 1 / root3)
+
+    def word(eta):
+        current, derivative = (I(1), I(0), I(0), I(0)), (I(0),) * 4
+        for axis, angle in zip(axes, angles):
+            sine, cosine = sincos(angle * eta)
+            pulse, tangent = [cosine, I(0), I(0), I(0)], [-angle * sine, I(0), I(0), I(0)]
+            pulse[axis], tangent[axis] = sine, angle * cosine
+            derivative = qadd(qmul(tangent, current), qmul(pulse, derivative))
+            current = qmul(pulse, current)
+        return current, derivative
+
+    # Literal physical matrices independently check the palindrome formula.
+    paulis = pauli_basis(2)
+    p, q, unit = paulis[5], paulis[12], identity(4)  # XX and Z_A.
+    require(matmul(p, p) == unit and matmul(q, q) == unit
+            and matmul(p, q) == scaled(matmul(q, p), -1), "Physical anticommuting pulse axes")
+    require(scaled(plus(matmul(p, q), scaled(matmul(q, p), -1)), F(1, 2))
+            == matmul(p, q), "Exact native failure commutator is the known third Pauli")
+
+    def rotation(operator, cosine, sine):
+        return plus(scaled(unit, cosine),
+                    [[multiply(gaussian(0, -sine), value) for value in row] for row in operator])
+
+    rational_fixtures = (
+        ((F(3, 5), F(4, 5)), (F(5, 13), F(12, 13)), (F(12, 13), F(-5, 13))),
+        ((F(5, 13), F(-12, 13)), (F(3, 5), F(4, 5)), (F(4, 5), F(3, 5))),
+        ((F(1), F(0)), (F(4, 5), F(-3, 5)), (F(3, 5), F(-4, 5))))
+    for (ca, sa), (cb, sb), (cz, sz) in rational_fixtures:
+        actual = unit
+        for operator, cosine, sine in ((q, ca, sa), (p, cb, sb), (q, cz, sz),
+                                      (p, cb, sb), (q, ca, sa)):
+            actual = matmul(rotation(operator, cosine, sine), actual)
+        r, x = cz * (cb * cb - sb * sb), cz * 2 * cb * sb
+        c2, s2 = ca * ca - sa * sa, 2 * ca * sa
+        scalar, z = r * c2 - sz * s2, r * s2 + sz * c2
+        expected = plus(scaled(unit, scalar), plus(
+            [[multiply(gaussian(0, -x), value) for value in row] for row in p],
+            [[multiply(gaussian(0, -z), value) for value in row] for row in q]))
+        require(actual == expected and matmul(adjoint(actual), actual) == unit,
+                "Exact XX/ZA matrix word equals the scalar five-pulse formula")
+    htarget = plus(unit, plus([[multiply(gaussian(0, -1), value) for value in row] for row in p],
+                              [[multiply(gaussian(0, -1), value) for value in row] for row in q]))
+    require(matmul(adjoint(htarget), htarget) == scaled(unit, 3),
+            "Target normalization and nominal native plus probability 3/4")
+
+    # The angle definitions enforce sqrt(3)*(r,h,x)=(c+s,c-s,1),
+    # with c=cos(2alpha),s=sin(2alpha). These exact polynomial products
+    # reduce both outer coefficients to c^2+s^2=1; no tiny residual is
+    # treated as an exact nominal gate identity.
+    def polynomial_product(left, right):
+        out = {}
+        for (i, j), x in left.items():
+            for (k, ell), y in right.items():
+                key = i + k, j + ell
+                out[key] = out.get(key, F(0)) + x * y
+        return {key: value for key, value in out.items() if value}
+
+    def polynomial_sum(left, right):
+        out = dict(left)
+        for key, value in right.items():
+            out[key] = out.get(key, F(0)) + value
+        return {key: value for key, value in out.items() if value}
+
+    c, s = {(1, 0): F(1)}, {(0, 1): F(1)}
+    cplus, cminus = polynomial_sum(c, s), polynomial_sum(c, {(0, 1): F(-1)})
+    norm_poly = {(2, 0): F(1), (0, 2): F(1)}
+    require(polynomial_sum(polynomial_product(cplus, c),
+                           {key: -value for key, value in polynomial_product(cminus, s).items()})
+            == norm_poly, "Exact nominal scalar coefficient reduces to c^2+s^2")
+    require(polynomial_sum(polynomial_product(cplus, s), polynomial_product(cminus, c))
+            == norm_poly, "Exact nominal Q coefficient reduces to c^2+s^2")
+
+    nominal, tangent = word(I(1))
+    residual = max(max(abs((x - y).lo), abs((x - y).hi)) for x, y in zip(nominal, target))
+    require(residual < F(1, 10 ** 35), "Certified angle branches agree with the exact nominal root identities")
+    ordinary_coefficient = qnorm(tangent) - square(qdot(nominal, tangent))
+    native_coefficient = square(PI) / 18
+    coefficient_margin = F(2, 1000) if companion else F(71, 1000)
+    require(ordinary_coefficient.hi + coefficient_margin < native_coefficient.lo,
+            "Strict quadratic shared-amplitude Bell-loss advantage")
+
+    rows = []
+    native_fidelities, ordinary_fidelities, native_probabilities = [], [], []
+    for epsilon in (F(-1, 10), F(1, 10)):
+        eta = 1 + epsilon
+        ordinary, _ = word(I(eta))
+        fo = square(qdot(target, ordinary))
+        sine, cosine = sincos(PI * eta / 4)
+        # Derive K+ from the two actual SU(2) products. Its commutator K-
+        # is proportional to the known third Pauli, so corrected failures
+        # return the entire unknown input before the next static-drift trial.
+        up, uq = (cosine, sine, I(0), I(0)), (cosine, I(0), I(0), sine)
+        ab, ba = qmul(up, uq), qmul(uq, up)
+        kp = qscale(qadd(ab, ba), F(1, 2))
+        km = qscale(qadd(ab, qscale(ba, -1)), F(1, 2))
+        probability = qnorm(kp)
+        expected_probability = 1 - square(square(sine))
+        require(probability.lo > 0 and expected_probability.lo > 0
+                and max(abs((probability - expected_probability).lo),
+                        abs((probability - expected_probability).hi)) < F(1, 10 ** 35),
+                "Native plus probability is input-independent and equals 1-sin^4(t)")
+        require(all(max(abs(component.lo), abs(component.hi)) < F(1, 10 ** 35)
+                    for component in (km[0], km[1], km[3])),
+                "Certified native failure coefficients agree with the exact commutator identity")
+        fn = square(qdot(target, kp)) / probability
+        if not companion:
+            require(fo.lo > fn.hi + F(49, 100000),
+                    "First ordinary witness beats corrected native RUS at each specified drift point")
+        native_fidelities.append(fn)
+        ordinary_fidelities.append(fo)
+        native_probabilities.append(probability)
+        rows.append((epsilon, fo, fn, probability))
+    mean_ordinary = sum(ordinary_fidelities, I(0)) / 2
+    mean_native = sum(native_fidelities, I(0)) / 2
+    fidelity_margin = F(4, 100000) if companion else F(7, 10000)
+    require(mean_ordinary.lo > mean_native.hi + fidelity_margin,
+            "Strict delivered-fidelity advantage for the specified equiprobable static drift")
+    attempts = sum((1 / probability for probability in native_probabilities), I(0)) / 2
+    resampled_attempts = 1 / (sum(native_probabilities, I(0)) / 2)
+    require(attempts.lo > resampled_attempts.hi,
+            "Job-static drift retains mean reciprocal success, rather than resampling per retry")
+    native_area = PI * attempts / 4
+    p_area, q_area = 2 * beta, 2 * alpha - zeta
+    require(p_area.hi < native_area.lo < native_area.hi < q_area.lo,
+            "The timing threshold has a positive numerator and denominator")
+    threshold = (native_area - p_area) / (q_area - native_area)
+    if companion:
+        require(threshold.lo > 1 and threshold.hi < F(101, 100),
+                "Rational-alpha companion beats native even at equal commanded rates")
+        require((p_area + q_area).hi + F(2, 1000) < (2 * native_area).lo,
+                "Companion has a strict equal-rate mean commanded-area margin")
+    else:
+        require(threshold.lo > F(6976229, 10 ** 7) and threshold.hi < F(697623, 10 ** 6),
+                "Certified timing threshold bracket uses a safe inclusive decimal condition")
+    ordinary_time, native_time = p_area + q_area / 2, 3 * native_area / 2
+    require(ordinary_time.hi + F(112, 1000) < native_time.lo,
+            "Q pulses twice as fast give a strict mean commanded-duration advantage")
+    # Charge the same nonnegative overhead per actual commanded pulse window:
+    # five ordinary windows versus two per corrected native attempt. The
+    # positive window difference makes the endpoint guard valid uniformly
+    # for every overhead below the stated safe inclusive bound.
+    ordinary_base = p_area + q_area if companion else ordinary_time
+    native_base = 2 * native_area if companion else native_time
+    window_difference = 5 - 2 * attempts
+    require(window_difference.lo > 0, "Ordinary word uses more pulse windows than mean native RUS")
+    overhead_threshold = (native_base - ordinary_base) / window_difference
+    safe_overhead = F(97128, 10 ** 8) if companion else F(4926976, 10 ** 8)
+    paid_endpoint_margin = (native_base + 2 * attempts * safe_overhead) - (
+        ordinary_base + 5 * safe_overhead)
+    require(overhead_threshold.lo > safe_overhead and paid_endpoint_margin.lo > 0,
+            "Safe common-window overhead endpoint retains a strict delivered-duration advantage")
+
+    def bracket(x):
+        denominator = 10 ** 12
+        lo = (x.lo * denominator).numerator // (x.lo * denominator).denominator
+        hi = -((-x.hi * denominator).numerator // (-x.hi * denominator).denominator)
+        return [str(F(lo, denominator)), str(F(hi, denominator))]
+
+    result = dict(status="passed", arithmetic="192-bit outward rational intervals and exact Gaussian matrices",
+                exact_physical_five_pulse_matrix_fixtures=len(rational_fixtures),
+                exact_nominal_root_polynomial_identities=2, static_drift_points=2,
+                alpha=bracket(alpha), beta=bracket(beta), zeta=bracket(zeta),
+                ordinary_quadratic_Bell_loss=bracket(ordinary_coefficient),
+                native_quadratic_Bell_loss=bracket(native_coefficient),
+                delivered_mean_ordinary_fidelity=bracket(mean_ordinary),
+                delivered_mean_native_RUS_fidelity=bracket(mean_native),
+                mean_native_attempts=bracket(attempts), mean_native_area_each=bracket(native_area),
+                ordinary_P_area=bracket(p_area), ordinary_Q_area=bracket(q_area),
+                Q_per_radian_timing_threshold=bracket(threshold),
+                safe_inclusive_Q_per_radian_ratio="1" if companion else "6976229/10000000",
+                pointwise_fidelities=[dict(epsilon=str(epsilon), ordinary=bracket(fo),
+                    native_RUS=bracket(fn), native_plus_probability=bracket(probability))
+                    for epsilon, fo, fn, probability in rows],
+                equal_rate_ordinary_area=bracket(p_area + q_area),
+                equal_rate_native_area=bracket(2 * native_area),
+                native_mean_pulse_windows=bracket(2 * attempts), ordinary_pulse_windows=5,
+                common_window_overhead_threshold=bracket(overhead_threshold),
+                safe_inclusive_common_window_overhead=str(safe_overhead),
+                remaining_time_advantage_at_safe_overhead=bracket(paid_endpoint_margin),
+                Q_twice_fast_ordinary_time=bracket(ordinary_time),
+                Q_twice_fast_native_time=bracket(native_time),
+                scope="One finite XX/ZA gate witness with a common static amplitude multiplier and equiprobable +/-1/10 drift held through every corrected native retry. Certified interval comparisons concern delivered Bell fidelity, mean commanded pulse area and the stated common per-window overhead model. No optimizer, source-fitted speed/noise law, pulse-optimality or hardware advantage; native selector/reset/readout/feedback costs are omitted in its favor.")
+    if not companion:
+        result["equal_rate_companion"] = replay_five_pulse_gate_witness(F(117, 200))
+    return result
+
+
 def verify_jc_energy_baseline():
     """Exact isometry/PVM, arbitrary JC-form CP weights and dummy guards."""
     from fractions import Fraction as F
@@ -2939,6 +3206,7 @@ def main():
     even_majorana_cases = replay_even_majorana_modes()
     gaussian_contact_cases = replay_gaussian_contact_copy()
     uniform_pauli_copy_cases = replay_uniform_pauli_copy_compiler()
+    five_pulse_cases = replay_five_pulse_gate_witness()
     jc_cases = verify_jc_energy_baseline()
     noisy_search_cases = replay_noisy_search_filters()
     print(json.dumps({
@@ -2960,6 +3228,7 @@ def main():
         "even_majorana_class_instruments": even_majorana_cases,
         "gaussian_contact_copy_instruments": gaussian_contact_cases,
         "uniform_pauli_scalar_cross_instruments": uniform_pauli_copy_cases,
+        "ordinary_five_pulse_gate_witness": five_pulse_cases,
         "jaynes_cummings_energy_baseline": jc_cases,
         "noisy_search_filter_instruments": noisy_search_cases,
         "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",

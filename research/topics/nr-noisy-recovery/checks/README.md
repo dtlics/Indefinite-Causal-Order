@@ -100,6 +100,14 @@ character balance, anisotropic two-flag maps and known-gate transport,
 including a non-Clifford fixture. Its general reference-complete identity
 assumes a Pauli-diagonal accepted map and scalar copied cross map;
 parameter knowledge and actual transported-check costs are charged.
+The same job certifies the required-gate component's two five-pulse
+witnesses with outward rational sine/cosine/arctangent bounds and exact
+physical Pauli products. Its finite two-point drift comparisons retain
+static-per-job retry costs, both endpoint fidelities, the companion's
+prior-average scope and explicit commanded-time/window-overhead bounds.
+The BCS threshold, signed integral, ideal synthesis and restricted static
+spectral estimate are analytic; the replay does not validate their
+microscopic hypotheses or optimize physical controllers.
 The Jaynes--Cummings checks support the explicit ordinary
 isometry/measurement and decision identities. The all-positive-energy
 infinite-Fock proof, its asymptotic remainder and matched hardware costs

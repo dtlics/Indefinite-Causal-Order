@@ -108,6 +108,11 @@ specified isotropic contact schedule. Its general Pauli-diagonal,
 scalar-cross-map compiler also covers anisotropy with paid known-frame
 checks and calibrated parameters. A useful application still needs a
 required contact operation and a matched storage/control comparison.
+The [required BCS-gate screen](architecture-baselines.md#nr-r06-required-bcs-gate)
+derives the clean-gap correlation boundary, a restricted static
+retained-bath estimate and ordinary ideal-gate compilers. Two certified
+five-pulse witnesses delimit a separate hypothetical drift comparison;
+neither the noise law nor a native selector is established by that source.
 The finite-energy Jaynes--Cummings comparison
 closes its specified equatorial decision benchmark while preserving the
 source's isotropic and four-box restrictions.
