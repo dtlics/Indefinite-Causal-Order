@@ -137,6 +137,107 @@ def record_correlation_check():
     return 2
 
 
+def recovery_record_pairing_checks():
+    """Declared one-way correction/record fixtures, not a physical sBs fit."""
+    def matrix_sum(items):
+        out = zeros(len(items[0]), len(items[0][0]))
+        for item in items:
+            out = plus(out, item)
+        return out
+
+    def channel(kraus, rho):
+        return matrix_sum([matmul(k, matmul(rho, adjoint(k))) for k in kraus])
+
+    def minus_flag(full):
+        out = zeros(n, n)
+        for i, j in product(range(n), repeat=2):
+            out[i][j] = times(add(add(full[i][j], full[n+i][n+j]),
+                                     times(add(full[i][n+j], full[n+i][j]), -1)), F(1, 2))
+        return out
+
+    def record_outputs(rho):
+        module, chronological, both = {}, [], []
+        for a, b in product(range(2), repeat=2):
+            ba, ab = matmul(k[b], k[a]), matmul(k[a], k[b])
+            # List concatenation vertically stacks the two helper amplitudes.
+            module[a, b] = scaled(channel([ba + ab], rho), F(1, 2))
+            chronological.append(scaled(channel([ba + ba], rho), F(1, 2)))
+            if a == b:
+                both.append(module[a, b])
+            else:
+                both.append(scaled(channel([ba + zeros(n, n),
+                                            zeros(n, n) + ab], rho), F(1, 2)))
+        return module, matrix_sum(chronological), matrix_sum(both)
+
+    n, s, t = 4, F(3, 5), F(4, 5)
+    d = tensor([[ONE, ZERO], [ZERO, gaussian(s)]], identity(2))
+    v = tensor([[ZERO, ONE], [ZERO, ZERO]], identity(2))
+    k = [d, scaled(v, t)]
+    require(matrix_sum([matmul(adjoint(a), a) for a in k]) == identity(n),
+            "The recorded correction instrument is not complete.")
+    helper_plus = scaled([[ONE, ONE], [ONE, ONE]], F(1, 2))
+    tau10 = scaled([[ONE, gaussian(s)], [gaussian(s), gaussian(s*s)]], 1/(1+s*s))
+    tau01 = scaled([[gaussian(s*s), gaussian(s)], [gaussian(s), ONE]], 1/(1+s*s))
+    for tau in (tau10, tau01):
+        require(trace(tau) == ONE and matmul(tau, tau) == tau,
+                "End-prepared recovery helper is not a normalized pure state.")
+
+    # Raw isometries omit only a common 1/sqrt(2). Rows are C,E1,E2,target.
+    module_isometry, chronological_isometry = zeros(8*n, n), zeros(8*n, n)
+    for a, b, i, j in product(range(2), range(2), range(n), range(n)):
+        ba, ab = matmul(k[b], k[a]), matmul(k[a], k[b])
+        module_isometry[(2*a+b)*n+i][j] = ba[i][j]
+        module_isometry[(4+2*a+b)*n+i][j] = ab[i][j]
+        chronological_isometry[(2*a+b)*n+i][j] = ba[i][j]
+        chronological_isometry[(4+2*a+b)*n+i][j] = ba[i][j]
+    swapped_records = zeros(8*n, n)
+    for c, a, b, i in product(range(2), range(2), range(2), range(n)):
+        row = (4*c+2*a+b)*n+i
+        destination = (4*c+2*(b if c else a)+(a if c else b))*n+i
+        swapped_records[destination] = list(chronological_isometry[row])
+    require(swapped_records == module_isometry,
+            "A coherent complete-record swap does not restore module pairing.")
+    require(matmul(adjoint(module_isometry), module_isometry) == scaled(identity(n), 2),
+            "The complete record isometry has the wrong plus-input normalization.")
+
+    for i, j in product(range(n), repeat=2):
+        rho = zeros(n, n)
+        rho[i][j] = ONE
+        module, chronological, both = record_outputs(rho)
+        nojump = channel([matmul(k[0], k[0])], rho)
+        anyjump = channel([matmul(k[0], k[1]), matmul(k[1], k[0])], rho)
+        ordinary = {(0, 0): tensor(helper_plus, nojump),
+                    (1, 0): scaled(tensor(tau10, anyjump), F(1, 2)),
+                    (0, 1): scaled(tensor(tau01, anyjump), F(1, 2)),
+                    (1, 1): zeros(2*n, 2*n)}
+        require(module == ordinary, "The full recorded ordinary recovery processor differs.")
+        full = matrix_sum(list(module.values()))
+        target = channel([matmul(b, a) for a in k for b in k], rho)
+        require(chronological == tensor(helper_plus, target),
+                "The same chronological setting did not decouple the helper.")
+        for state in (full, chronological, both):
+            require(trace(state) == gaussian(i == j), "A record interface lost attempt mass.")
+            require([row[:n] for row in state[:n]] == scaled(target, F(1, 2))
+                    and [row[n:] for row in state[n:]] == scaled(target, F(1, 2)),
+                    "Record interfaces changed the ordered target diagonals.")
+        require(minus_flag(full) == scaled(matmul(v, matmul(rho, adjoint(v))),
+                                          t*t*(1-s)**2/2),
+                "The self-switch minus map is not the stated thinned ordinary jump.")
+    error_input = zeros(n, n)
+    error_input[2][2] = ONE
+    module, chronological, both = record_outputs(error_input)
+    probabilities = [trace(minus_flag(state)) for state in
+                     (matrix_sum(list(module.values())), chronological, both)]
+    require(probabilities == [gaussian(F(32, 625)), ZERO, gaussian(F(272, 625))],
+            "The three physical record pairings have incorrect minus probabilities.")
+    return {"target_dimension": n, "input_matrix_units": n*n,
+            "recorded_subchannel_equalities": 4*n*n,
+            "coherent_record_swap_isometry": 1,
+            "error_input_minus_probabilities": [str(p[0]) for p in probabilities],
+            "ordinary_correction_calls": 2, "protected_helper_through_calls": False,
+            "scope": "Exact declared one-way correction and complete record pairings; no sBs fit, inaccessible-purification/future-bath equality or physical order-port claim."}
+
+
 def p_reduce(terms):
     """Gaussian-rational R[c,s]/(c^2+s^2-1), canonical s degree <=1."""
     pending = list(terms.items())
@@ -738,6 +839,7 @@ def main():
     print(json.dumps({"status": "passed", "flagged_full_choi_cases": cases,
                       "data_dimensions": [2, 3], "arithmetic": "exact Gaussian rational",
                       "ordinary_three_window_record_contrast": contrast,
+                      "recovery_record_pairing": recovery_record_pairing_checks(),
                       "symbolic_ramsey_and_storage": symbolic,
                       "exchange_backaction": exchange,
                       "odd_couplers": odd_couplers,

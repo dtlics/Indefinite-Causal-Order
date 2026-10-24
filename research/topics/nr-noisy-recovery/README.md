@@ -166,7 +166,11 @@ screen. These query statements alone are not deployed runtime gains.
 The shared-bath result makes a useful calibration failure explicit, but
 ordinary Hahn echo already produces the complete proposed order-controlled
 instrument. Known controllable measurement/reset dilations also have an
-ordinary chronological implementation. Predicting a useful held-out
+ordinary chronological implementation.
+The [recovery-record comparison](backaction.md#nr-r14-recovery-records)
+separates clock from module labels and supplies an ordinary monitored
+realization for its stated one-way recovery instrument.
+Predicting a useful held-out
 memory decision at lower total cost remains the next test, with ordinary
 phase-resolved echo, retained records and direct schedule calibration
 included.
@@ -333,6 +337,11 @@ compares noncommuting field/bath dynamics with a common initial state
 independent of the payload. Equal selected acceptance on two logical
 test inputs forces an ordinary selected-map match. Its separate fixed-gate
 comparison trades acceptance for conditional target fidelity.
+The [weighted Raman translation model](communication.md#nr-r11-raman-inelastic-gate)
+keeps the same diagonal-target Bell-good weight in the ordinary flag at
+reduced or equal acceptance. Its separate near-unitary bound constrains raw
+full-input gates; it does not establish ordinary fidelity dominance for
+arbitrary targets or receivers.
 The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
 also compare unknown-input gates, helper-space costs and coherently read
 identity failures; their ideal identities do not certify lossy retries.

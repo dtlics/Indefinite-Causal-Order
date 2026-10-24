@@ -521,7 +521,16 @@ also have ordinary controlled-dilation implementations. Limited echo data
 need not predict a held-out uninterrupted decoupling sequence, so direct
 target-sequence calibration and pump/reset/record tests remain comparators.
 This is a calibration-transport screen, not an architecture advantage or a
-general exclusion of unknown joint interventions. The
+general exclusion of unknown joint interventions.
+The [recovery-record comparison](backaction.md#nr-r14-recovery-records)
+distinguishes clock-labelled from module-labelled dilations. Its
+one-way model has an ordinary processor using two monitored calls,
+final helper preparation and calibrated synthetic labels. Equality
+concerns its declared accessible instrument on arbitrary code/error
+inputs and references, not discarded purifications, a future bath or
+the actual sBs device. Readout/preparation errors, calibration and
+controller costs remain paid.
+The
 [high-order transfer test](backaction.md#nr-r14-high-order-transfer)
 strengthens this to complete diagnostic outputs on proper bath subsets.
 Ordinary fourth-order phase cycling, direct logical Bell-null tests and
@@ -1147,6 +1156,15 @@ have nearly matching acceptance. That Choi comparison does not establish
 worst-input or rate dominance; neither result simulates the other flags
 or a reused-bath trajectory. Helper/filter ports and both classical
 routes must actually be supplied and paid.
+The [weighted Raman translation model](communication.md#nr-r11-raman-inelastic-gate)
+keeps commuting elastic diagonal blocks while allowing frequency-shifting
+exchange blocks. With the stated readout and common field-only filter,
+its ordinary diagonal-target flag retains the Bell-good weight and
+removes accepted exchange error at reduced or equal acceptance. A separate bound
+controls the added component and unnormalized selected-map distance
+near any raw full-input unitary. It does not order arbitrary-target
+fidelities or cover joint recovery, lower codes, other readouts,
+product-input Bell tasks or full-instrument/rate comparisons.
 Unknown-input gate comparisons must also include its ordinary
 known-gate helper programs and the coherent completion that restores the
 data on specified early rejection flags. Extra helper space can replace

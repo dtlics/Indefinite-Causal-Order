@@ -1471,6 +1471,254 @@ def two_port_selected_map():
 
 
 
+def inelastic_gate_remainder():
+    """Exact stationary Raman shifts, flags and selected-gate ingredients.
+
+    Fixtures use a nonperiodic frequency line and are not a converter fit.
+    Universal TNI/decoder and physical port/dilation statements are analytic.
+    Every new guard stays active in an optimized extracted-body replay.
+    """
+    from retained_photon_serial import G, require, eye, zeros, mm, adj, add, scale
+
+    def norm(values):
+        return sum((z*z.conj()).r for z in values)
+
+    def response(energy, node, flat=False):
+        if flat:
+            return G(F(3, 5)), G(0, F(4, 5))
+        delta = G(energy-F(node, 2))
+        denominator = delta+G(0, 1)
+        t, r = delta/denominator, G(0, -1)/denominator
+        require((t*t.conj()+r*r.conj()) == 1 and
+                t*r.conj()+r*t.conj() == 0, "energy-sector unitary contact")
+        return t, r
+
+    def step(state, node, gaps, flat=False):
+        out = {}
+        gap = gaps[node]
+        for (c, s, a, b, w), z in state.items():
+            bit = a if node == 0 else b
+            key = (c, s, a, b, w)
+            if s == bit:
+                out[key] = out.get(key, G())+z
+            else:
+                t, r = response(w+gap*bit, node, flat)
+                out[key] = out.get(key, G())+z*t
+                # Physical energy conservation; there is no cyclic wrap.
+                target = ((c, bit, s, b, w+gap*(bit-s)) if node == 0 else
+                          (c, bit, a, s, w+gap*(bit-s)))
+                out[target] = out.get(target, G())+z*r
+        return {key: z for key, z in out.items() if z != 0}
+
+    def frequency_range():
+        return tuple(range(-4, 5))
+
+    def index(w, a, b):
+        return 4*(w+4)+2*a+b
+
+    def circuit(packet, gaps, native, flat=False):
+        flags = {(m, n): zeros(36, 4) for m, n in product(range(2), repeat=2)}
+        reject = zeros(144, 4)
+        for a, b in product(range(2), repeat=2):
+            col = 2*a+b
+            if native:
+                state = {}
+                for c in range(2):
+                    branch = {(c, c, a, b, w): z for w, z in packet.items()}
+                    first, second = (0, 1) if c == 0 else (1, 0)
+                    branch = step(step(branch, first, gaps, flat), second, gaps, flat)
+                    for key, z in branch.items():
+                        state[key] = state.get(key, G())+z
+            else:
+                state = {(c, c, a, b, w): z for c in range(2) for w, z in packet.items()}
+                state = step(state, 0, gaps, flat)
+                kept = {}
+                for (c, s, ao, bo, w), z in state.items():
+                    if c == s:
+                        kept[(c, s, ao, bo, w)] = z*((-1)**c)
+                    else:
+                        reject[36*(2*c+s)+index(w, ao, bo)][col] += z
+                state = step(kept, 1, gaps, flat)
+            for (c, s, ao, bo, w), z in state.items():
+                require(w in frequency_range(), "all output frequency records retained")
+                for m, n in product(range(2), repeat=2):
+                    if s == (c ^ m):
+                        flags[(m, n)][index(w, ao, bo)][col] += z*((-1)**(n*c))/2
+        return flags, reject
+
+    def diagonal(node, s, bit, w, gaps, flat):
+        return G(1) if s == bit else response(w+gaps[node]*bit, node, flat)[0]
+
+    def commutator_packet(packet, gaps, flat=False):
+        out = {}
+        ga, gb = gaps
+        for w, value in packet.items():
+            p_then_q = response(w+ga, 0, flat)[1]*response(w+ga, 1, flat)[1]
+            q_then_p = response(w, 1, flat)[1]*response(w+ga-gb, 0, flat)[1]
+            out[w+ga-gb] = (p_then_q-q_then_p)*value
+        return out
+
+    def expected(packet, gaps, flat=False):
+        ordinary = zeros(36, 4)
+        for a, b in product(range(2), repeat=2):
+            for w, value in packet.items():
+                coefficient = (diagonal(0, 0, a, w, gaps, flat)*diagonal(1, 0, b, w, gaps, flat)
+                             -diagonal(0, 1, a, w, gaps, flat)*diagonal(1, 1, b, w, gaps, flat))/2
+                ordinary[index(w, a, b)][2*a+b] += coefficient*value
+        native = [list(row) for row in ordinary]
+        for w, value in commutator_packet(packet, gaps, flat).items():
+            native[index(w, 0, 1)][2] += value/2
+        return native, ordinary
+
+    def filtered(matrix, field_filter):
+        out = zeros(36, 4)
+        for wo, wi, a, b, col in product(range(9), range(9), range(2), range(2), range(4)):
+            out[4*wo+2*a+b][col] += field_filter[wo][wi]*matrix[4*wi+2*a+b][col]
+        return out
+
+    def field_filters():
+        # A complex noncommuting spectral processor is a PAID hypothetical port.
+        vector = [G(1, (i % 3)-1) for i in range(9)]
+        house = eye(9)
+        weight = norm(vector)
+        for i, j in product(range(9), repeat=2):
+            house[i][j] -= vector[i]*vector[j].conj()*2/weight
+        require(mm(adj(house), house) == eye(9), "spectral mixing is unitary")
+        diagonal_filter = zeros(9)
+        for i in range(9):
+            diagonal_filter[i][i] = G(F(i % 4, 3))
+        kill_shift = zeros(9)
+        kill_shift[4][4] = G(1)
+        filters = {"identity": [eye(9)],
+                   "two_record_complex": [scale(mm(house, diagonal_filter), F(3, 5)),
+                                          scale(eye(9), F(4, 5))],
+                   "zero_frequency": [kill_shift]}
+        for records in filters.values():
+            effect = zeros(9)
+            for m in records:
+                effect = add(effect, mm(adj(m), m))
+            defect = add(eye(9), scale(effect, -1))
+            require(all(defect[i][j] == 0 for i, j in product(range(9), repeat=2) if i != j)
+                    and all(defect[i][i].i == 0 and defect[i][i].r >= 0 for i in range(9)),
+                    "common field filter has a positive diagonal CP/TNI defect")
+        return filters
+
+    def mass(matrix):
+        return sum(norm(row) for row in matrix)/4
+
+    def good(matrix, target):
+        return sum(norm([sum(target[ab].conj()*matrix[4*w+ab][ab] for ab in range(4))])
+                   for w in range(9))/16
+
+    def unitary_targets():
+        rotation = eye(4)
+        rotation[1][1], rotation[2][2] = G(F(3, 5)), G(F(3, 5))
+        rotation[1][2], rotation[2][1] = G(F(4, 5)), G(F(-4, 5))
+        vector = [G(1), G(0, 1), G(2), G(-1)]
+        house = eye(4)
+        for i, j in product(range(4), repeat=2):
+            house[i][j] -= vector[i]*vector[j].conj()*2/norm(vector)
+        targets = (eye(4), rotation, house)
+        for u in targets:
+            require(mm(adj(u), u) == eye(4), "full unitary target")
+            diagonal_weight = sum(norm([u[i][i]]) for i in range(4))/4
+            jump_weight = norm([u[1][2]])/4
+            require(diagonal_weight+2*jump_weight <= 1,
+                    "unitary cut-flow and weighted support metric ingredient")
+        return targets
+
+    def arbitrary_unitary_good(matrix, target):
+        return sum(norm([sum(target[i][j].conj()*matrix[4*w+i][j]
+                             for i, j in product(range(4), repeat=2))])
+                   for w in range(9))/16
+
+    def cp_map(matrix, i, j):
+        # Exact sparse full-output map of |i><j|, including all zero blocks.
+        return {(r, s): matrix[r][i]*matrix[s][j].conj()
+                for r, s in product(range(36), repeat=2)
+                if matrix[r][i] != 0 and matrix[s][j] != 0}
+
+    packets = {"coherent": {-1: G(F(1, 3)), 0: G(0, F(2, 3)), 1: G(F(2, 3))},
+               "single": {0: G(1)}}
+    require(all(norm(packet.values()) == 1 for packet in packets.values()), "normalized independent field sources")
+    filters = field_filters()
+    target = [G(1), G(0, 1), G(0, -1), G(-1)]
+    counts = {"native_complete_instruments": 0, "ordinary_complete_instruments": 0,
+              "selected_entries": 0, "full_reference_units": 0,
+              "source_filter_ledgers": 0, "positive_error_cases": 0,
+              "zero_error_cases": 0, "dilation_gram_entries": 0,
+              "near_unitary_support_cases": 0}
+    coherent_cross = False
+    for flat, source in product((False, True), packets):
+        packet, gaps = packets[source], (1, 2)
+        nflags, _ = circuit(packet, gaps, True, flat)
+        oflags, rejected = circuit(packet, gaps, False, flat)
+        require(sum(mass(k) for k in nflags.values()) == 1, "all native flags have unit total Choi mass")
+        ng = zeros(4)
+        og = scale(mm(adj(rejected), rejected), F(1, 2))
+        for key in nflags:
+            ng = add(ng, mm(adj(nflags[key]), nflags[key]))
+            og = add(og, mm(adj(oflags[key]), oflags[key]))
+        require(ng == eye(4), "native four-flag full-input trace preservation")
+        require(og == eye(4), "ordinary early reject and four late flags trace preservation")
+        counts["native_complete_instruments"] += 1
+        counts["ordinary_complete_instruments"] += 1
+        n, o = nflags[(0, 1)], oflags[(0, 0)]
+        en, eo = expected(packet, gaps, flat)
+        require(n == en and o == eo, "literal weighted-translation source and selected map")
+        counts["selected_entries"] += 288
+        # Exact nonnormal weighted-translation witness, not a generic 2x2 unitary.
+        if not flat:
+            require(norm([response(1, 0)[1]]) != norm([response(0, 0)[1]]),
+                    "Raman frequency shift has nonnormal weight")
+        for name, record_filters in filters.items():
+            if source != "single" and name == "zero_frequency":
+                continue
+            an = [filtered(n, m) for m in record_filters]
+            ao = [filtered(o, m) for m in record_filters]
+            dn = [add(x, scale(y, -1)) for x, y in zip(an, ao)]
+            jvec = zeros(9, 1)
+            for w, z in commutator_packet(packet, gaps, flat).items():
+                jvec[w+4][0] += z
+            q = sum(norm(row) for m in record_filters for row in mm(m, jvec))
+            pn, po = sum(map(mass, an)), sum(map(mass, ao))
+            gn, go = sum(good(k, target) for k in an), sum(good(k, target) for k in ao)
+            require(pn-po == q/16 and gn == go, "same Bell-good mass and exact added accepted error")
+            require((pn-gn)-(po-go) == q/16 and po >= gn, "accepted-error and high-fidelity yield ledger")
+            if po:
+                require(go*pn >= gn*po, "ordinary conditional Choi fidelity is no lower")
+                require(po >= gn, "ordinary retains at least native good mass")
+            else:
+                require(gn == 0, "zero ordinary acceptance has no native target weight")
+            gram = zeros(4)
+            for delta in dn:
+                gram = add(gram, mm(adj(delta), delta))
+            wanted = zeros(4)
+            wanted[2][2] = G(q/4)
+            require(gram == wanted, "retained filtered dilation difference and half-diamond norm ingredient")
+            counts["dilation_gram_entries"] += 16
+            for u in unitary_targets():
+                gu = sum(arbitrary_unitary_good(k, u) for k in an)
+                require(gu <= pn-q/32, "arbitrary unitary target near-support bound ingredient")
+                counts["near_unitary_support_cases"] += 1
+            for actual, prediction in ((an, [filtered(en, m) for m in record_filters]),
+                                       (ao, [filtered(eo, m) for m in record_filters])):
+                for raw, predicted in zip(actual, prediction):
+                    for i, j in product(range(4), repeat=2):
+                        require(cp_map(raw, i, j) == cp_map(predicted, i, j),
+                                "all AB/reference matrix units with retained frequency and filter record")
+                        counts["full_reference_units"] += 1
+            # Acceptance order is NOT pointwise on all coherent data inputs.
+            cross = sum(mm(adj(x), d)[1][2] for x, d in zip(ao, dn))
+            coherent_cross = coherent_cross or cross != 0
+            counts["source_filter_ledgers"] += 1
+            counts["positive_error_cases" if q else "zero_error_cases"] += 1
+    require(coherent_cross, "coherent input acceptance cross term retained; no CP/order dominance")
+    require(counts["positive_error_cases"] and counts["zero_error_cases"], "nonzero and erased/flat commutator cases")
+    return {"status": "passed", **counts,
+            "scope": "Declared stationary lossless Raman energy-sector fixtures and common paid field filters. General CPTNI bound, triangular-unitary argument, source/interface and converter costs remain analytic; no actual converter fit, full bath-loss instrument or all-readout optimum."}
+
+
 def verify_raman_stronger_baselines():
     from verify_raman_bell_certificate import verify
     return {
@@ -1486,5 +1734,6 @@ def verify_raman_stronger_baselines():
         "partial_swap_cz_instruments": partial_swap_gate_instruments(),
         "operator_partial_swap_frontier": operator_partial_swap_frontier(),
         "two_port_selected_map": two_port_selected_map(),
+        "inelastic_gate_remainder": inelastic_gate_remainder(),
         "scope": "Exact achievable ordinary instruments and polynomial identities. No ordinary optimum, source/clock advantage, microscopic device fit or native architecture advantage is asserted."
     }

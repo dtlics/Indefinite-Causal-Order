@@ -228,6 +228,10 @@ The [shared-bath calibration screen](../research/topics/nr-noisy-recovery/backac
 has exact finite flagged-Choi echo/switch identities, a rational held-out
 memory counterexample, a maximal ordinary record-correlation example and
 symbolic polynomial calibration/storage counterexamples.
+Recovery-record fixtures distinguish chronological, module-labelled and
+copied records, and check the full accessible monitored one-way
+instrument. They do not fit sBs, match discarded purifications or
+certify future persistent-bath dynamics.
 The all-dimension instrument and known-intervention dilation identities
 are analytic. The [pair-memory ingredient](../research/topics/nr-noisy-recovery/checks/architecture/pair_memory_qualification_guards.py)
 adds exact Schur-channel, encoded matrix-unit, labelled-record, parallel
@@ -520,6 +524,12 @@ diamond-distance statements and microscopic bridge are analytic.
 The ordinary target-score comparison trades acceptance for conditional
 fidelity; it is not a whole-instrument, worst-input, rate or reused-bath
 guarantee.
+Weighted Raman fixtures include complete declared lossless flags,
+coherent field/reference maps and certified CP/TNI filters. Exact ledgers,
+Gram and support ingredients guard the diagonal-target comparison and
+raw-unitary constraint; the general norm and support proofs remain
+analytic. No arbitrary-target fidelity dominance, joint-receiver optimum
+or device fit follows.
 Finite full-radiative Lambda resolvents and flat symmetric lossy
 survivor instruments are checked with exact Gaussian fractions. Its
 local-ancilla extension reconstructs the six-qubit source, both scatters,

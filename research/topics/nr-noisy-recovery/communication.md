@@ -2323,6 +2323,156 @@ matrix ingredients, and the accepted/good/bad weight identities.
 The all-input positivity, diamond bound, continuum and physical-model
 claims are the analytic arguments and assumptions above.
 
+<a id="nr-r11-raman-inelastic-gate"></a>
+
+**A Raman frequency record can add accepted error without adding a gate.**
+Consider the following declared stationary selection-rule extension of
+(RS19h), keeping the complete frequency/bath space $H$:
+
+$$
+T_j=\sum_{s,a}u_j(s,a)|s,a\rangle\langle s,a|
+       +p_j|10\rangle\langle01|+q_j|01\rangle\langle10|.
+$$
+
+The elastic diagonal blocks are commuting frequency multipliers across
+nodes, while $p_j,q_j$ may be nonnormal weighted frequency translations.
+More generally only $[D_{B,1},D_{A,1}]=0$ is needed. This allows a
+nonzero exchange commutator beyond the two-port local-block hypothesis.
+All intermediate frequencies remain part of the callable interface;
+final collection of two bands cannot replace the composability/no-return
+conditions above. Prepare $\Phi^+_{CS}$ tensor a common $\tau_H$, both
+independent of the full unknown $ABR$ input. Match the physical history
+records, final frame and clock; these are not inferred from marginal
+channel measurements or an input-independent bath rate.
+
+With the same native minus flag and ordinary two-contact midpoint-$V$
+plus flag as (RS19h), literal paths give
+
+$$
+K_N=L_F+\frac J2E,\qquad J=[q_B,p_A],\quad
+E=|01\rangle\langle10|_{AB},\qquad
+L_F=\frac{D_{B,0}D_{A,0}-D_{B,1}D_{A,1}}2.
+\tag{IG1}
+$$
+
+Here $L_F$ is diagonal on $AB$. For
+$T_\delta|\omega\rangle=|\omega+\delta\rangle$,
+$p_A=T_{\Delta_A}M_a$ and $q_B=T_{-\Delta_B}M_b$ give
+$J|\omega\rangle=[a(\omega)b(\omega+\Delta_A)
+-b(\omega)a(\omega-\Delta_B)]
+|\omega+\Delta_A-\Delta_B\rangle$.
+Unequal constant-amplitude shifts still cancel; dispersive weights
+produce the new one-way logical exchange.
+
+Allow the same field-only CP trace-nonincreasing filter with Kraus
+$M_r$ in both circuits. It acts as identity on inaccessible baths and
+purifiers; retaining them in the proof grants no access. Acceptance uses
+available records, although hidden outcomes may refine the proof.
+Set $q_M=\sum_r\operatorname{Tr}(\tau J^\dagger M_r^\dagger M_rJ)$
+and $e=q_M/16$. Let $p_N,p_F$ be acceptance on the maximally mixed
+two-qubit input, and $g_N,g_F$ the **unnormalized** Bell overlaps with a
+fixed diagonal unitary target $G$, using the normalized four-dimensional
+Choi input and tracing $H$. A fine memory Kraus $K_\mu$ contributes
+$\operatorname{Tr}K_\mu^\dagger K_\mu/4$ to $p$ and
+$|\operatorname{Tr}G^\dagger K_\mu|^2/16$ to $g$. Diagonal/$E$
+Hilbert--Schmidt orthogonality therefore gives
+
+$$
+p_N=p_F+e,\qquad g_N=g_F=g,\qquad
+(p_N-g_N)-(p_F-g_F)=e\ge0.
+\tag{IG2}
+$$
+
+These are Choi averages: $L_F^\dagger JE$ can change acceptance on a
+coherent data input. There is no pointwise acceptance or CP ordering.
+If $p_F>0$, the ordinary conditional target fidelity is no lower, and
+$p_F\ge g=p_NF_N$. Thus a native diagonal-target fidelity at least
+$1-\eta$ has an ordinary flag with at least $(1-\eta)p_N$ acceptance
+and no lower conditional fidelity. If $p_F=0$, then $g=0$; native may
+still accept pure error. This is not equal yield or an optimized
+yield--fidelity frontier.
+
+There is also an all-input selected-map bound. Purify $\tau$ by
+$|\chi\rangle$ and stack common filter/environment records. The
+Stinespring difference is
+$A_N-A_F=\tfrac12\sum_r|r\rangle M_rJ|\chi\rangle\otimes E$,
+of operator norm $2\sqrt e$. Both accepted Stinesprings are contractions,
+so their two-term channel difference gives
+
+$$
+\frac12\|\Gamma_N-\Gamma_F\|_\diamond
+ \le\min\{1,2\sqrt e\},\qquad
+e\le p_N(1-F_N)\quad\text{for diagonal }G.
+\tag{IG3}
+$$
+
+This retains the common spectral/filter outputs and all references,
+before normalization. It does not equate rejects, normalized rare-event
+channels or arbitrary all-launch payoff discrepancies.
+
+For **any** raw unitary target $U$ there is a separate near-unitary
+constraint. The accepted Choi support is the four diagonal matrix units
+$\mathcal D$ plus $\mathcal J=\operatorname{span}\{|01,10\rangle\}$,
+whose population is $e/p_N$. For $|u\rangle=\operatorname{vec}(U)/2$,
+put $d_U=\sum_i|U_{ii}|^2/4$, $q_U=|U_{01,10}|^2/4$.
+Unitarity equates squared-entry flow across the cut
+$\{00,01\}\mid\{10,11\}$ in both directions, so $d_U+2q_U\le1$.
+Weighted rank-one Cauchy gives
+$P_{\mathcal D+\mathcal J}|u\rangle\langle u|P_{\mathcal D+\mathcal J}
+\le P_{\mathcal D}+P_{\mathcal J}/2$. Consequently
+
+$$
+F_N(U)\le1-\frac e{2p_N},\qquad
+F_N(U)\ge1-\eta\Longrightarrow
+p_F\ge(1-2\eta)p_N,\quad
+\tfrac12\|\Gamma_N-\Gamma_F\|_\diamond
+\le\min\{1,2\sqrt{2p_N\eta}\}.
+\tag{IG4}
+$$
+
+This does not order conditional fidelities for a nondiagonal $U$.
+Known record-dependent output unitaries pull back the target branchwise
+and remain paid controls; arbitrary AB--field CP recovery is outside
+this support argument. For an **exact** full-input accepted unitary,
+rank-one Choi forces every fine memory Kraus to be proportional to $U$.
+Its diagonal-plus-one-way support is triangular, and a triangular square
+unitary is diagonal. Every filtered $J$ action therefore vanishes on
+the actual source, giving full selected-map equality with the ordinary
+flag, including retained field output. No lower-dimensional code or
+preencoding is implicit.
+
+A real frequency-changing example is
+[Inomata et al., PRL 113, 063604 (2014)](https://arxiv.org/abs/1405.5592).
+Their driven circuit-QED device has nondegenerate dressed lower states,
+two upper states, a waveguide and a separate qubit-loss bath. Its
+initialized continuous-probe conversion establishes Raman shifts, not
+an unknown joint-memory gate, a two-node router, or the independent
+polarization-$S$ tensor offset-frequency interface assumed here.
+Lower-state relaxation, off-resonant frequencies and full loss records
+require a finite-window model. It motivates weighted translations;
+these equations are not a fit to its conversion spectra.
+
+Known photon-only conditional frequency adapters can restore commuting
+local blocks in a matched stationary model. For
+$R_j=\sum_s|s\rangle\langle s|\otimes T_{\kappa_js}$, the wrapped
+contact is $R_j^\dagger T_jR_j$. The ordinary physical sequence is
+pre-$R_A$, $T_A$, midpoint $R_BVR_A^\dagger$, $T_B$, post-$R_B^\dagger$.
+This is a comparison of wrapped contacts, not the unmodified native
+circuit without those frames. Converter work, coherence, loss, helper
+ports, failed launches, preparation, reset/reuse and the full clock are
+charged; spectroscopy alone does not supply such an adapter.
+
+The [existing exact Raman replay](checks/architecture/raman_baselines.py)
+uses an unwrapped frequency line, energy-sector unitary contacts,
+all native Bell flags and the ordinary midpoint rejects/late flags.
+It checks coherent spectral/reference maps, certified CP/TNI field
+filters, added-error ledgers and norm/support ingredients. These are
+declared lossless fixtures, not the device's full bath-loss instrument;
+the general diamond and unitary-support proofs remain analytic. A
+remaining application must use a useful Bell output from known product
+inputs, another CS measurement, or noncommuting elastic diagonal blocks,
+with its actual frequency/bath eraser and ordinary controls supplied.
+
 <a id="nr-r11-raman-route"></a>
 
 ### Native Raman ports need a routed temporal helper
