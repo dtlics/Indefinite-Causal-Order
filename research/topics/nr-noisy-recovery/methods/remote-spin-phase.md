@@ -2321,6 +2321,20 @@ angle its normalized gate becomes, up to a global phase,
 $[\cos\theta I-i\sin\theta(P+Q)]/\sqrt{1+\sin^2\theta}$;
 equal drift therefore does not preserve the fixed target $G$.
 
+A different service forwards the **designated plus output port** and
+dumps minus, without measuring the surviving photon or waiting for a
+classical result. Its accepted map is $(3/4)\operatorname{Ad}_G$ in
+the lossless ideal model. It needs no QND order readout or measurement-
+decision storage, but gives no online occupancy herald or same-input
+retry. The full device still includes vacuum: dumping ideal minus
+alone gives the remaining-spin map
+$\tfrac14\operatorname{Tr}_F[PQ\rho(PQ)^\dagger]$ in that sector.
+Other optical losses have their own spin/reference maps. The ordinary
+$9/16$ construction below can likewise forward its selected helper
+port, apply its fixed known spin-phase correction unconditionally and
+dump the complement, with no QND readout. Neither architecture receives
+late receiver postselection as exclusive access.
+
 One ideal cavity CZ and known local phases implement each $\pi/4$
 Ising rotation; a photon Hadamard changes its $Z_F$ axis to $X_F$.
 Those phases, rotations and coherent routes are supplied controls with
@@ -2381,6 +2395,12 @@ uncontrolled two-contact word.
   joint four-outcome meter is an alternative to two binary readouts.
   There is no minimum-two-devices or minimum-two-periods claim. Known
   $U(8)$ synthesis, extra modes, readout, feedback and delay are paid.
+  For terminal Pauli or compatible fixed-Clifford continuations, one
+  may instead defer the helper keys until final helper/photon detection
+  and use all four results by classical Pauli-frame postprocessing.
+  That can remove the readout/return requirement for those workloads;
+  it does not deliver an arbitrary reusable fixed-frame $ABF$ gate
+  before those keys are accessible.
   With an independent $3/4$ coin this circuit, or identity contacts on
   helpers prepared in $0$, also reproduces the corrected classical
   instrument in (RP1). It does not reproduce unspecified loss branches
@@ -2428,6 +2448,110 @@ ordinary gate-teleportation/program baselines in
 priority. Arbitrary joint processing of one photon's modes is a control
 assumption, not a free unknown gate or a demonstration that each module
 preserves those spectator modes.
+
+### Two occupied contacts with controlled-vacuum opportunity calls
+
+The fixed-two-query bounds below must also be distinguished from the
+vacuum-extended schedules in (RS58)–(RS62). For the retained photon
+there is a direct same-local-port specialization. Write
+$\Pi_c=|c\rangle\langle c|$ on the coherent route label. For any
+operators $A,B$ on the retained payload, let
+$A_0=\Pi_0\otimes A+\Pi_1\otimes I$,
+$A_1=\Pi_0\otimes I+\Pi_1\otimes A$ and define $B_0,B_1$ analogously.
+Then the chronological four-opportunity word $A_0,B_0,B_1,A_1$ obeys
+
+$$
+A_1B_1B_0A_0
+=\Pi_0\otimes BA+\Pi_1\otimes AB
+=A_1(I_C\otimes B)A_0.
+\tag{RP4a}
+$$
+
+Each surviving history occupies one $A$ and one $B$ contact; the
+inactive alternative is coherently stored/bypassed. This is a
+constructive four-encounter-window serialization using the original
+local $F$ port, not four occupied contacts. A three-window version
+uses the right-hand expression only when the middle node supplies
+$I_C\otimes B$ on both alternatives simultaneously. Its modal port,
+storage, phase and timing are substantive premises. Calling two
+sequential $B$ subvisits one macro-window does not remove their pulse,
+switching and cavity-tail guard times.
+
+The known initial $C=+$ does not generally compress that middle input
+to a single $F$ qubit. For already wrapped Ising $A$ the pre-middle
+graphs are
+$(|0\rangle e^{-i\pi aZ_F/4}|f\rangle+|1\rangle|f\rangle)/\sqrt2$,
+$a=\pm1$; their span is four because the two upper blocks differ by
+$-i\sqrt2 Z_F$. With the physical spin phase deferred as below, the
+photon-only blocks are instead $R_{A,+}=S_F$ and $R_{A,-}=S_FZ_F$.
+Their graph span is **three**, namely
+$\operatorname{span}\{|+\rangle_C|0\rangle_F,
+|0\rangle_C|1\rangle_F,|1\rangle_C|1\rangle_F\}$.
+Both exceed a single two-dimensional arrival port. No four-dimensional
+projector-rank conclusion is inferred for the deferred three-dimensional
+span. A genuine spectator-path extension, additional coherent modes or
+memory, or timed subvisits can supply a different interface and must
+be modeled rather than excluded by dimension terminology alone.
+
+The spin phases must be implemented in the correct vacuum frame.
+Using $S=\operatorname{diag}(1,i)$,
+
+$$
+U_A=e^{-i\pi/4}S_FS_A\operatorname{CZ}_{AF},\qquad
+U_B=e^{-i\pi/4}(H_FS_FH_F)S_B
+                         (H_F\operatorname{CZ}_{BF}H_F).
+\tag{RP4b}
+$$
+
+$S_A,S_B$ commute with both contacts and all photon wrappers. Attach
+the photon factors to the occupied routed visits and apply each spin
+phase **once** at a common finish. The two omitted scalar phases are
+the same in each complete surviving history. Applying $S_A$
+unconditionally at both possible $A$ windows would rotate even the
+empty alternative twice and give the wrong gate. Real phases on
+failed/vacuum branches and their leakage-space extension remain part
+of the full device. Free spin evolution must be matched or compensated;
+extra idle dephasing is a physical cost.
+
+For stationary frequency-diagonal **actual coherent survivor** kernels
+$R_A(\omega),R_B(\omega)$, the same multiplication matches
+$\Pi_0 R_BR_A+\Pi_1 R_AR_B$ pointwise, even when the raw kernels are
+complex, nonunitary, spin dependent and include auxiliary polarization.
+Matched output delays and known wrappers therefore give the same
+accepted map on every $ABFR$, with spectral coherence retained. The
+kernel must describe the actual selected Kraus amplitude with matched
+purified environmental records, not just a thermally averaged or
+measured mean reflection amplitude. Inelastic reflected light,
+zero-energy dephasing, motion and nonstationary records require their
+own cross-history completion. Retiming elastic products does not
+retime the complete vacuum/loss/bath instrument.
+
+If $A,B$ are fixed joint dilations and controlled idle is literally
+identity in that same frame, (RP4a) holds before any environment is
+traced. This stronger statement needs its declared independent
+controller/vacuum extension. A photon's path label disappears on loss;
+stationary reduced channels do not by themselves fix the emitted-time
+records or the bath's intervening free evolution. Actual full-channel
+equality needs an argument from the complete physical network/dilation,
+not a scalar reflectivity or an event diagram.
+
+Nor is four serialization windows a latency lower bound. At the
+controlled-event level, $A_0$ commutes with $B_1$, $B_0$ with $A_1$,
+and $B_0$ with $B_1$. Thus the same four opportunity operations can
+form the two layers $(A_0\parallel B_1)$ and
+$(B_0\parallel A_1)$ if the actual coherent routing/bypass access
+permits them. Giving a comparator that same network gives the same
+physical realization, including its full channel when the hardware
+is identical. This is enlarged vacuum-controlled access, **not** a
+two-opaque-query fixed-order simulation or a proof of causal
+separability. The distinction between time-controlled circuits and
+time-delocalized local operations is discussed by
+[Oreshkov, Quantum **3**, 206 (2019)](https://arxiv.org/html/1801.07594v4);
+[Simonov et al.](https://arxiv.org/html/2311.13654v4) explicitly use
+vacuum extensions in this setting. A practical timing comparison must
+specify the allowed opportunity calls, network, common-finish modes,
+storage and idle noise. A topology count alone proves neither a
+two-versus-four latency gap nor an occupied-contact advantage.
 
 ### What exactly two CZ contacts and one terminal flag can do
 
@@ -3150,6 +3274,11 @@ separate ordinary resources in the physical comparison.
 
 ### A physical meter is a complete instrument, not one efficiency
 
+This readout/retry discussion concerns the online classical-flag
+service. The designated one-shot output port following (RP1), and its
+ordinary selected-port and serialized comparisons, do not require this
+meter or its measurement-decision hold.
+
 After a path interferometer, plus and minus occupy different rails.
 Reading that label destructively absorbs the photon carrying $F$.
 An unmeasured output rail is a quantum key, not an available classical
@@ -3385,24 +3514,152 @@ its QND order readout or matched ordinary modal ports.
 In particular its efficiency quoted for incident $|+\rangle$ with an
 ideal bypass is not a state-independent whole-gate survival scalar.
 
-The next physical comparison must therefore specify a node, router,
-meter and clock dilation on unknown $ABFR$ including vacuum, with
-finite-pulse spectral records, actual feedback delays and all loss
-outcomes. It must compare all-launch delivered-good weight and false
-herald/error separately against (RP2)–(RP4), the middle-instrument
-construction (RP12j)–(RP12m) with its weak QND meter, generalized
-ordinary readout/programs, spare-matter entanglement-first gates and repeated
-calibration. A gate on a future-discarded known photon is a different
-workload. The $9/16$ bounds concern one corrected flag with arbitrary
-finite photon helper or all terminal unitary-feedback flags in four
-photon dimensions with a fixed middle unitary. Allowing arbitrary
-middle photon instruments changes the latter optimum to
-$3/(3+\sqrt5)$ for unitary spin feedback. The weaker $3/5$ bound
-also permits terminal spin filters after those middle photon records.
-These bounds exclude middle spin filtering and pre-contact node
-encodings. They do not prove a best-ordinary physical rate, and
-the scalar break-even curves do not
-establish a practical advantage.
+### Raw cavity ports and a finite-pulse certificate
+
+The local loss-complete closed-cycling model is already given in
+(RS19): reflected, intrinsic-loss and spontaneous-emission amplitudes
+are orthogonal one-excitation outputs with squared norms summing to
+one. Raman flips, motion, extra levels and inelastic reflected records
+need additional columns; these formulas are not an experimental fit.
+For the symmetric two-polarization extension, let $p$ denote its
+auxiliary polarization, distinct from retained logical $F$. At spin
+eigenvalue $z=\pm1$ its **raw** reflected operator and two linear
+polarization modes are
+
+$$
+R_z=mI_p+zdZ_p,\qquad
+m=\frac{r_g+r_0}{2},\quad d=\frac{r_g-r_0}{2}
+ =\frac{\kappa_r g^2}{D_c(D_cD_a+g^2)},\qquad
+u=\frac{\sigma_++\sigma_-}{\sqrt2},\quad
+v=\frac{\sigma_+-\sigma_-}{\sqrt2}.
+\tag{RP18}
+$$
+
+Thus $R_zu=mu+zdv$. The selected $v$ output gives $dZ_{\rm spin}$;
+the other reflected $u$ output gives $mI_{\rm spin}$. It remains a
+coherent accessible port until actually dumped. The complete selected
+logical node is
+$b(\omega)|0\rangle\langle0|_F\otimes I+
+d(\omega)|1\rangle\langle1|_F\otimes Z_{\rm spin}$,
+so a scalar CZ survivor requires $b=d$ as full complex transfers,
+including delays. A matched filter must have its causal realization,
+reservoir phases, loss and timing specified; equal moduli alone do not
+provide it.
+
+Spatial logical $F$, order/program label $C$ and this auxiliary
+polarization normally mean **eight raw optical modes**, despite four
+kept logical code modes. Ordinary processors must receive the same raw
+ports, including $m$, rather than have them discarded by definition.
+The fixed-CZ bounds do not by themselves upper-bound this general raw
+finite-cooperativity kernel. On a band where $r_g=-r_0$, a known
+photon phase conditioned on the interacting rail removes $Z_p$ from
+the raw $zdZ_p$ action and leaves $p$ as a spectator. Away from that
+condition the extra $m$ term remains. Whether such a raw interface
+supplies the middle spectator port in (RP4a) is an actual operator/
+mode test, not an inference from the four kept modes.
+
+A direct one-polarization node avoids the auxiliary selection and has
+a useful explicit bandwidth bound. In the amplitude-decay convention
+of (RS19), take $\kappa_i=\kappa-\kappa_r>0$,
+$C_i=g^2/(\kappa_i\gamma)$, $s=\sqrt{1+C_i}$ and choose
+
+$$
+\kappa_r=\kappa_i s,\qquad \kappa=\kappa_i(1+s),\qquad
+\alpha_0=\frac{s-1}{s+1}.
+\tag{RP19}
+$$
+
+At common cavity/atomic resonance, $r_g(0)=\alpha_0$ and
+$r_0(0)=-\alpha_0$. A bypass with carrier amplitude $\alpha_0$
+therefore gives $\alpha_0\operatorname{CZ}$ on the carrier. A
+constant attenuator and its beamsplitter loss port specify one such
+bypass; this does not make the node exactly broadband. Set
+$\delta=\omega-\omega_0$, $D_0=\kappa\gamma+g^2$.
+Subtraction of the rational amplitudes in (RS19) gives exactly
+
+$$
+\begin{aligned}
+|r_0(\delta)-r_0(0)|
+ &=\frac{2\kappa_r|\delta|}{\kappa\sqrt{\kappa^2+\delta^2}},\\
+|r_g(\delta)-r_g(0)|
+ &=\frac{2\kappa_r|\delta|
+       \sqrt{(\gamma^2-g^2)^2+\gamma^2\delta^2}}
+ {D_0\sqrt{(D_0-\delta^2)^2+\delta^2(\kappa+\gamma)^2}}.
+\end{aligned}
+\tag{RP20}
+$$
+
+For $|\delta|\le B$ with $B^2<D_0$, bound the first expression by
+its value at $B$ and the second by
+$2\kappa_rB\sqrt{(\gamma^2-g^2)^2+\gamma^2B^2}/[D_0(D_0-B^2)]$.
+Let $\epsilon_j$ bound the **full wrapped-node operator** residual
+from $\alpha_{j0}U_j$ on that band. With ideal known wrappers this is
+the maximum of the two diagonal residuals and
+$|b_j(\delta)-\alpha_{j0}|$; known unitary wrappers preserve operator
+norm, while calibrated wrapper errors must be added. For contraction
+nodes and an otherwise ideal equal-history router, telescoping each
+two-node product and averaging the two histories gives
+
+$$
+\left\|K_+(\omega)
+ -\frac{\sqrt3}{2}\alpha_{A0}\alpha_{B0}G\right\|_{\mathrm{op}}
+\le\epsilon_A+\epsilon_B.
+\tag{RP21}
+$$
+
+Take a normalized **known** incident pulse $f$ independent of logical
+$ABFR$, and let $q_{\rm tail}$ be its intensity outside the band.
+Outside it both accepted operators have norm at most one, so their
+difference is at most two. The accepted Stinespring-operator error is
+at most
+$e=\epsilon_A+\epsilon_B+2\sqrt{q_{\rm tail}}$.
+The two Stinespring operators are contractions, hence the full
+diamond distance of their subnormalized CP maps is at most
+$\min\{2,2e\}$. This follows from expanding
+$V\rho V^\dagger-W\rho W^\dagger$ into the two terms containing
+$V-W$ and tensors with every passive reference. The ideal comparison
+map is $(3/4)|\alpha_{A0}\alpha_{B0}|^2\operatorname{Ad}_G$.
+Add calibrated router error at the Stinespring level. This is an
+all-launch absolute bound; conditional fidelity at small yield needs
+a separate normalization/yield bound. No numerical bandwidth or rate
+is asserted without actual parameters, pulse, bypass and routing.
+
+More generally, matched scalar node transfers and equal history
+transfer $h$ give the exact factorization
+
+$$
+V_+|\psi\rangle
+=\frac{\sqrt3}{2}G|\psi\rangle\otimes
+  \int f(\omega)h(\omega)\alpha_A(\omega)\alpha_B(\omega)
+                      |\omega\rangle\,d\omega,
+\quad
+\mathcal A_+=\frac34\eta\operatorname{Ad}_G,\quad
+\eta=\int|fh\alpha_A\alpha_B|^2d\omega.
+\tag{RP22}
+$$
+
+Literal weight $3/4$ per launched pulse requires $\eta=1$ in this
+prescription. If spectrum is correlated with logical data, retain the
+common spectral filter in the declared output rather than replace it
+by a scalar. For a general scattering device, exact accepted
+$p\operatorname{Ad}_G$ requires every unresolved accepted frequency/
+reservoir Kraus to be a scalar multiple of the same $G$, by rank-one
+Choi support. A mean reflection amplitude or one polarization fringe
+does not certify that condition.
+
+The next physical comparison must specify a complete node/router/clock
+dilation on unknown $ABFR$, with pulse tails, raw ports, vacuum and
+all accessible records. Its endpoint must distinguish immediate
+delivered output from an online herald, harmless retry or a deferred
+Pauli-frame workload. It must include the same-two-occupied-contact
+serialization in (RP4a), its qualified parallel hardware access,
+(RP2)–(RP4), middle instruments (RP12j)–(RP12m), spare-matter gates,
+ordinary raw-mode processing and reusable calibration. The fixed-two-
+query bounds remain valid for their specified call interfaces; they
+exclude neither four controlled-vacuum opportunities nor an identical
+supplied hardware route. No best-ordinary physical rate, universal
+latency gap or native architecture advantage follows from them or
+from the scalar break-even curves.
 
 
 The [exact finite replay](../checks/architecture/verify_remote_spin_phase.py)
@@ -3422,6 +3679,16 @@ effects, midpoint probabilities, all 64 corrected channel matrix
 units and the all-angle trace-cost polynomial ingredients. Positive
 $Q_j$ supply the square-root existence; no expanded radical Kraus
 entries or formalized pinching/minimization proof are claimed.
+The imported
+[serial-survivor component](../checks/architecture/retained_photon_serial.py)
+checks the complete retained-input survivor and both output maps,
+one-time spin wrappers, nonunitary raw kernels, retained auxiliary
+polarization, coherent frequency inputs and the two middle-input
+spans. It also guards the commuting-event layering and the rational
+local-response identities underlying the finite-pulse certificate.
+Retiming unresolved reservoir histories is not certified. The general
+norm, causal-interface and continuum error arguments remain analytic;
+no physical port or clock is supplied by these replays.
 These finite/formal algebra checks support the general analytic
 proofs; they do not enumerate arbitrary
 controller instruments, establish the optical ports, reconstruct the

@@ -2200,6 +2200,13 @@ def retained_photon_gate_verify():
     helper_require(middle_certificate["pass"] is True,
                    "Imported four-mode middle-photon-instrument exact certificate")
 
+    from retained_photon_serial import verify as verify_retained_photon_serial
+    serial_certificate = verify_retained_photon_serial()
+    helper_require(serial_certificate["status"] == "passed"
+                   and serial_certificate["full_control_data_matrix_units"] == 256
+                   and serial_certificate["both_flag_data_matrix_units"] == 128,
+                   "Imported conditional ordinary serial-survivor exact certificate")
+
     # Rational ledgers price every fatal erasure. These finite identities do
     # not establish an actual detector, survival law or safe vacuum retry.
     ledger_guards = 0
@@ -2249,8 +2256,9 @@ def retained_photon_gate_verify():
             "four_mode_total_terminal_separable_filter_probability_upper": "3/5",
             "all_phase_arbitrary_finite_helper_dual": all_phase_dual,
             "four_mode_photon_middle_instrument": middle_certificate,
+            "ordinary_serial_survivor": serial_certificate,
             "finite_capped_ledger_guards": ledger_guards,
-            "scope": "Exact retained-F instruments and ordinary compilers, U4 witness/projective complement Gram identities, terminal-contraction and fixed-four-mode phase-ratio polynomial ingredients, common-correction compression, complex-circulant and terminal product-effect budget guards, all-phase finite-helper SDP dual certificate, middle-photon-instrument construction and polynomial optimization ingredients, and finite scalar ledgers. General pinching, instrument and norm deductions remain analytic: four photon modes with one arbitrary photon instrument between two fixed CZ contacts have unitary-spin-feedback optimum 3/(3+sqrt5), and terminal separable spin filters obey 3/5. These scopes exclude spin filters or spin-ancilla encodings before or between contacts; no broader intermediate-adaptive upper, actual survival/readout port, microscopic scattering or hardware advantage."}
+            "scope": "Exact retained-F instruments and ordinary compilers, U4 witness/projective complement Gram identities, terminal-contraction and fixed-four-mode phase-ratio polynomial ingredients, common-correction compression, complex-circulant and terminal product-effect budget guards, all-phase finite-helper SDP dual certificate, middle-photon-instrument construction and polynomial optimization ingredients, conditional ordinary serial raw-survivor and local-response algebra, and finite scalar ledgers. General pinching, instrument and norm deductions remain analytic: four photon modes with one arbitrary photon instrument between two fixed CZ contacts have unitary-spin-feedback optimum 3/(3+sqrt5), and terminal separable spin filters obey 3/5. These scopes exclude spin filters or spin-ancilla encodings before or between contacts; no broader intermediate-adaptive upper, actual survival/readout port, microscopic scattering or hardware advantage. Serial raw-survivor equality requires supplied coherent-vacuum, stationary common-record kernels and matched output modes. Its disjoint event layers imply neither an opaque-query simulation nor a four-versus-two hardware-latency lower bound; full retimed bath/loss maps remain unproved."}
 
 
 def verify():

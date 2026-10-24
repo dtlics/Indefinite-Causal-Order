@@ -1440,9 +1440,20 @@ filters, intermediate weak photon measurements, multiple feedback records
 and larger coherent programs. Its intermediate-instrument optimum requires
 a full-rank partial measurement; complete helper readout/reset cannot
 replace it. Extra return visits can
-replace photon-preserving measurements. The physical comparison must keep
-flag-dependent storage loss, erroneous vacuum repeats and actual helper
-ports; the ideal branch bounds do not establish a device advantage.
+replace photon-preserving measurements. More broadly, a same-local-port
+ordinary schedule reproduces the elastic survivor with two occupied node
+contacts in four encounter windows; three windows require a genuine
+spectator-path middle port. This is a sufficient schedule, not a lower
+bound on ordinary latency. Granting the identical crossed two-round
+physical network gives the identical execution; this enlarged call
+interface does not simulate two opaque queries or settle causal
+separability. Both architectures can forward a selected
+quantum output without QND readout. Their actual router, delay, spin-storage
+and common-finish costs therefore decide this broader comparison. Raw
+reflected auxiliary ports remain available to ordinary controls. Equal
+elastic survivors do not establish equal lost-history or retained-bath
+instruments; online heralding and safe retries need those maps as well.
+The ideal branch bounds do not establish a device advantage.
 
 There are now more specific physical starting points than an assumed pair
 of copies of Nielsen's processor.

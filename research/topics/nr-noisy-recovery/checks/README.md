@@ -159,6 +159,14 @@ Additional modules run inside the same existing architecture jobs:
   Its 167 explicit checks also execute under optimized Python. Operator
   convexity, the general optimization and physical weak-readout access
   remain analytic or additional premises.
+- [Serial survivor and local response](architecture/retained_photon_serial.py)
+  checks the complete controlled and both-flag maps, raw auxiliary
+  polarization and coherent frequency inputs, atomic phases, the qualified
+  middle-port spans and regrouping into two event layers. Polynomial
+  checks cover a declared closed-transition node's normalization, detuning
+  residuals and carrier balance. These identities do not establish a
+  hardware latency gap, two-opaque-query simulation, calibrated router or
+  complete timed loss/bath channel.
 - [Mechanical strength](architecture/mechanical_pointer_strength.py) checks
   exact finite full-control partial-meter blocks and Gram/Choi witnesses;
   [mechanical clocks](architecture/mechanical_pointer_clock.py) checks exact

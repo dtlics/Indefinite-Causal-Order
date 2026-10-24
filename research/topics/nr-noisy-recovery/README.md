@@ -253,10 +253,15 @@ explicit port and timing qualifications. Its
 keeps the unknown photon as quantum output and distinguishes one corrected
 flag from multiple corrected records. It also gives an exact ordinary
 weak-measurement optimum when intermediate photon instruments are allowed
-with four preserved modes. The next test fixes a full physical
-node, readout, vacuum and clock instrument, then compares delivery with
-ordinary extra modes, actual weak measurements, memories and return
-visits. Ideal
+with four preserved modes. A broader ordinary serialization matches the
+native elastic survivor with two occupied contacts in four encounter
+windows; three windows require a preserved spectator-path port. This
+construction alone gives no latency lower bound; granting the identical
+crossed physical network gives the identical execution, with a different
+call ledger from the opaque two-query model. Selecting
+an output port needs no QND readout for either architecture. The next test
+compares their full routing, storage, vacuum and common-finish dynamics,
+including ordinary access to raw auxiliary ports. Ideal
 accepted weight alone does not establish a hardware advantage.
 The [ordinary Raman gate programs](communication.md#nr-r11-raman-swap)
 also compare unknown-input gates, helper-space costs and coherently read

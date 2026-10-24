@@ -115,7 +115,15 @@ corrected flag with arbitrary photonic memory from the total terminal
 instrument with four preserved modes. A further exact certificate checks
 the four-mode intermediate photon instrument's positive effects, complete
 Kraus budget, all input matrix units and all-angle trace-cost polynomials.
-Its pinching/optimization proof remains analytic. Spin filters before or between
+Its pinching/optimization proof remains analytic. A further exact
+serial-survivor replay checks both encounter schedules, full control/data
+matrix units, both output flags, common atomic phases, nonunitary raw
+kernels, raw auxiliary polarization, coherent frequency blocks, middle-port
+span guards and regrouping into two event layers. Polynomial checks cover
+a declared closed-transition node's normalization, detuning residuals and
+carrier balance. Its
+pointwise elastic identity is distinct from a complete timed loss/bath
+dilation or hardware clock certificate. Spin filters before or between
 contacts, spin encodings before contacts, physical detector channels and an optimal ordinary rate
 are outside those bounds. Finite replay does not certify optical ports,
 a measured loss model, novelty or a hardware advantage.
