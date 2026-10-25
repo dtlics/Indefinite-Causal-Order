@@ -1969,6 +1969,113 @@ $2\to1$ leakage. It also checks the one-postcheck projection and absence
 of a diagonal-phase alarm. These operator equalities imply complete-channel
 equalities on the tested examples; the general algebra is given above.
 
+### Selective-pulse leakage flags need a matched phase-control comparison
+
+Let $P$ project onto a computational qubit and $Q=I-P$ onto all retained
+leakage levels. Put $J=Q-P$ and suppose the complete ideal pulses obey
+
+$$
+A=A_C\oplus A_L,\quad B=B_C\oplus B_L,\qquad
+B_CA_C=-A_CB_C,\quad [A_L,B_L]=0.
+$$
+
+The commuting leakage blocks may carry arbitrary unknown phases; they
+are not replaced by identities. Since $AB=JBA$ and $J$ commutes with both
+pulses, the native controlled-order unitary and its plus-prepared $X$ flags are
+
+$$
+W=|0\rangle\langle0|\otimes BA+|1\rangle\langle1|\otimes AB,
+\qquad K_+=QBA,\quad K_-=PBA.
+$$
+
+The unitary identities apply to arbitrary helper/payload states and passive
+references; the displayed flags use the stated plus preparation. They
+preserve within-sector coherence and measure the sector label. For the convention
+$A_C=-iX$, $B_C=-iZ$, the code output is $-iY$ times its input;
+restoring it uses the paid, flag-conditioned correction $iY$. Other
+calibrated code phase conventions require their corresponding correction.
+
+An ordinary two-contact, two-window circuit is exactly equal to $W$ if
+it can first apply the coherent selector $\operatorname{SELECT}\{A,\widetilde A\}$,
+with $\widetilde A=JA$, then apply $B$ unconditionally. Indeed,
+
+$$
+B\widetilde A=BJA=JBA=AB.
+$$
+
+Thus the entire unmeasured helper/payload/reference output agrees, before
+any common readout or feedback; this is not an accepted-only comparison.
+For a selective equatorial $\pi$ pulse, reversing its carrier phase by
+$\pi$ negates the active qubit block. The required extra assertion is that
+this leaves the leakage action and all physical record amplitudes unchanged.
+Classical phase programmability or an order router alone does not grant
+that coherent selector. Its coupling, helper, routing, common finish and
+readout costs remain in the comparison; two windows do not establish a
+measured latency advantage.
+
+For recorded noisy pulses, sufficient literal conditions are
+$B_j\widetilde A_i=A_iB_j$ and the same branch-zero $B_jA_i$ for every
+paired fine record, or the corresponding complete joint-dilation identity
+on the actual bath support. Equal reduced channels do not suffice: attach
+orthogonal program tags to the two selector branches without changing
+their reduced pulse actions. A code input then gives minus probability
+$1/2$ rather than the native ideal value $1$. Exported module/time records,
+idle dynamics and helper backaction must be matched, not erased by relabeling.
+
+A controlled sector reflection $J$ would also give the same instrument
+after ordinary $BA$, but is a paid binary QND port. Two identical selective
+$\pi$ pulses need not supply it: if $A_C=-iX$, $B_C=-iZ$ and
+$A_L=B_L=iI_L$, then $A^2=B^2=-I$ on the whole physical space. A Ramsey
+test of either square cannot distinguish the sectors. True inverses give
+
+$$
+A^\dagger B^\dagger AB=J,
+$$
+
+but a controlled readout of this group word needs four calls, qualified
+inverses, its helper and its complete clock. This is an ordinary comparator,
+not a four-call lower bound. The [known-auxiliary compiler](metrology.md#nr-r15-known-control-qec)
+is another paid comparator when its controlled full-space pulse is supplied.
+
+[Sutherland, PRA **111**, 052627 (2025)](https://arxiv.org/html/2410.23531v1),
+Sec. III.2, Eqs. (22)–(25), proposes a geometric-phase logic/readout-ion
+interaction that gives both qubit states the same ancilla response and a
+leakage state the other response. Its binary QND measurement preserves
+qubit amplitudes and is insensitive to the leakage amplitude's phase.
+The motional interaction, shelving, readout and imperfect QND purity are
+physical costs; the proposal supplies neither this selector nor a native router.
+
+[Chow et al., PRX Quantum **5**, 040343 (2024)](https://arxiv.org/pdf/2405.10434),
+Sec. II/Fig. 2, demonstrates an ordinary two-entangling-gate leakage check
+retaining data-qubit coherence. This is not an ordinary optimum: App. A/Fig. 8b
+combines two fully entangling $R_{zz}(\pi/2)$ gates into one larger-angle
+$R_{zz}(\pi)R_\phi(\pi)$ interaction to reduce Rydberg pulses, without a
+measured optimized fidelity claim here. Sec. III's teleportation-based
+SWAP check relocates data using one entangling gate; conditional $Z$ was
+applied in postprocessing in their test. Leakage detection in that version needs
+three-outcome readout and does not detect hyperfine leakage in their
+implementation. Ancilla-loss risk and experimental postselection remain
+explicit. Relocation, online correction or an accepted Pauli frame, pulse
+durations and readout must be priced. These are stronger ordinary comparators, not demonstrations
+of the native switch or the record-matched phase selector assumed above.
+
+[Zhang et al.](https://arxiv.org/html/2506.13724v2) demonstrate erasure-informed
+QEC and adaptive ancilla selection in $^{171}$Yb. Erasure imaging takes
+$20\,\mu\mathrm s$ and heats detected ground-state atoms out of the trap,
+with negligible backaction on code qubits. Current image-end-to-next-waveform latency is $25$ ms
+through the computer/controller, rather than a fundamental detection limit.
+Global RF $\Omega\simeq2\pi\times200$ Hz implies ideal $\pi$ duration
+$2.5$ ms; the $1\,\mu\mathrm s$ local $Z$ uses off-resonant UV.
+Programmed $2.5$-ms transport preserves internal coherence. These resources
+do not calibrate full-leakage-space Pauli operations or coherent path
+ordering with an independent protected helper. Ordinary fluorescence and
+control comparators need complete acquisition, feedback, refill and release costs;
+no native order port or total-cost advantage is established.
+
+A useful native comparison must therefore qualify the actual pulse/router
+dilations and their complete timings against these ordinary controls.
+The ideal flag algebra alone establishes no hardware advantage.
+
 ### Distinct commuting layers in a known basis admit ordinary fault checks
 
 Let $A=\operatorname{diag}(a_x)$ and $B=\operatorname{diag}(b_x)$ be two

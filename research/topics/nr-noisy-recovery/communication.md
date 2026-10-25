@@ -346,13 +346,12 @@ interface.
 
 The theoretical [Li, Li and Dahlsten, EPJ Quantum Technology **13**,
 78 (2026)](https://link.springer.com/article/10.1140/epjqt/s40507-026-00523-w)
-uses effective erasure/fading loss and proposes quantum-controlled MZI
-routing in Appendix A; it supplies no measured loss-localization
-interface or full bosonic pure-loss analysis. The models should be
-distinguished: with a vacuum bath, a pure-loss beamsplitter maps
-$|1\rangle\langle0|$ to $\sqrt\eta|1\rangle\langle0|$, whereas a
-transmitted-or-vacuum-replaced interpolation scales it by $\eta$.
-Its illumination error bounds are not needed for the reductions above.
+uses effective erasure/fading loss. Appendix A models a separate control,
+endpoint MZIs and the controlled interior (A.12); it supplies no realized
+actuator or common-clock detector characterization. It establishes neither
+measured loss-localization access nor full bosonic loss analysis. With a
+vacuum bath, pure loss scales $|1\rangle\langle0|$ by $\sqrt\eta$;
+transmitted-or-vacuum replacement scales it by $\eta$.
 
 There is a separate **target-channel qualification** in its Eqs. (4),(6).
 For $0<\eta<1$ and a centered independent thermal mode $E$ of mean $N$, the stated
@@ -549,6 +548,60 @@ and price their common clock, calibration and physical implementation.
 If two physical target hypotheses instead have identical $T(v)$, as in
 the compensated-bath vacuum example above, $R,\sigma$ and the complete
 native vacuum outputs also coincide.
+
+An **endpoint-only implementation test** distinguishes routing from the
+stronger controlled-interior promise. Suppose a vacuum launch and a plus
+control are initially independent of all baths. The only control contacts
+are unitary endpoint routers that act identically on joint optical vacuum,
+including its calibrated phase. The interior is control-independent.
+The first router fixes vacuum, so immediately before the last router the
+state is $|+\rangle\langle+|_C\otimes\rho_{SR}$. Here $S$ contains every
+optical mode touched by that router; $R$ includes arbitrary passive
+references and bath records. The interior may emit photons.
+
+Write the final router as
+$|0\rangle\langle0|\otimes U_0+|1\rangle\langle1|\otimes U_1$,
+with $U_0|\mathrm{vac}\rangle=U_1|\mathrm{vac}\rangle
+=|\mathrm{vac}\rangle$. Put $P=|\mathrm{vac}\rangle\langle\mathrm{vac}|$,
+$\epsilon=1-\operatorname{Tr}(P\rho_S)$ and $W=U_0^\dagger U_1$.
+Unitarity gives $WP=PW=P$, hence
+
+$$
+\operatorname{Tr}(W\rho_S)=1-\epsilon+
+\operatorname{Tr}[W(I-P)\rho_S(I-P)],\qquad
+\left|\operatorname{Tr}[W(I-P)\rho_S(I-P)]\right|\le\epsilon.
+$$
+
+The cross terms vanish, and the last inequality follows from a positive
+block of trace $\epsilon$ and $\|W\|=1$. Thus
+$P_-=[1-\operatorname{Re}\operatorname{Tr}(W\rho_S)]/2\le\epsilon$.
+More strongly, the minus operator is $(U_0-U_1)/2$, and
+$P(U_0-U_1)=0$. Therefore
+
+$$
+\Pr(X_C=-,\ S\text{ jointly vacuum})=0.
+$$
+
+This holds with vacuum/nonvacuum coherences and arbitrary reference
+correlations, even when the interior creates photons. It is a conditional
+statement about the complete mode inventory and a calibrated plus control.
+Vacuum at one signal port is insufficient; an omitted output may carry
+photons. Raw detector no-clicks can include missed photons. Loss after
+the router, control dephasing and relative vacuum phases require their own
+measured error budgets.
+
+The full controlled-interior model above instead gives
+$P(0,-)=(1-p)(1-t_0)/2$ with its unused arm vacuum. A positive value is
+compatible with that stronger promise and excludes only the narrower
+endpoint-only implementation under the stated assumptions. No numerical
+relation between the marginal survival $p$ and the multimode
+$\epsilon$ is presumed. A concrete test launches vacuum, reads the
+control on every attempt, qualifies joint vacuum across all relevant
+outputs and compares joint-minus/vacuum counts with detector and control
+backgrounds. It must locate any interior control contact or surviving
+bypass, and separately qualify ordinary pre-final-loss record/store access.
+The required preparation, calibration, observation, storage and release
+clock remain costs; this test supplies no hardware-advantage claim.
 
 Unknown background changes identifiability. Put $h=1-\eta$, with
 $N>0$, $0<p\le1$ and $0<\eta<1$. For ordinary target-only on/off data, the

@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-25T23:12:47+00:00",
+  "generated_utc": "2026-10-25T23:42:16+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -14,7 +14,7 @@
   "input_hash_algorithm": "sha256",
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "c06e21fc3a70e7b1e59343cae0f9d5b419c85f350b7c2e26226d269202b0e2a9",
-    "research/topics/nr-noisy-recovery/architecture-baselines.md": "ae77af5c99581147641cebde10d10c998b6c25e80079f4b6f2c062c525ba1c54",
+    "research/topics/nr-noisy-recovery/architecture-baselines.md": "82c55d94f4a161f8641637d167f3bb205babd5629da75dc634b840669b46fe72",
     "research/topics/nr-noisy-recovery/architecture.md": "b1717e17b78e2b498d3880be3b9b49ec39d86790bfa99098adbd87753cdbf3a5",
     "research/topics/nr-noisy-recovery/backaction.md": "7fe7b08d5aa1f28aa4a8e73c7f94703fbc30cf4319deee6f288276da25b0ec20",
     "research/topics/nr-noisy-recovery/braided-magic.md": "5b34e071abc1448940783a5f7a8853fd4c3c7523e3725edd5d6540ea5d808b4c",
@@ -149,7 +149,7 @@
     "research/topics/nr-noisy-recovery/checks/recovery/local_recovery.py": "38958045476b075a233a1ee1f71fcde934f26f44fbb7a42da4abb30c14a11afc",
     "research/topics/nr-noisy-recovery/checks/recovery/scalable_global.py": "b1762c233496f7a1225f056305a50b795329caab01cf5099abccbf7d116a328a",
     "research/topics/nr-noisy-recovery/checks/run_all.py": "295eba4e9302b16ca1355b8b3649edc3693f227f69af0328459fc6667c63cd5f",
-    "research/topics/nr-noisy-recovery/communication.md": "89fec192c00ecb89ce1db047badd3dd083c1505c9e792cb7a93045db060788c9",
+    "research/topics/nr-noisy-recovery/communication.md": "1007be3cf96bf41a3559ebce06847255998b5b195b391658ea95856789da8263",
     "research/topics/nr-noisy-recovery/dispatch.md": "97982b8b9fc3733ca6ae9696b277d48dba80bab3626a727a2f6d2fa14e4232db",
     "research/topics/nr-noisy-recovery/geometric-calibration.md": "f202ef5c494e4aa9df0c1f9b38a2b0e532e65dbecee0fc2b80a9a07657164dba",
     "research/topics/nr-noisy-recovery/global-noise.md": "b65e344b96022b031ea1e7b6e51182cceb509d84a6a6515393198d88e898eea4",
