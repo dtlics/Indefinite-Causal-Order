@@ -20,7 +20,7 @@ This is a useful distinction from absorbing-vacuum models: terminal good occupan
 
 ## Strong ordinary controls, including a deferred marker
 
-The ordinary side receives the actual repeated source check/readout records and CPMG controls. It also receives any coherent prefix marker actually qualified by the same ancillary coupling. For code projector P and Q=I-P, the ideal M=P tensor I + Q tensor X on a clean helper records one bad midpoint without changing a good unknown payload/reference. Execute M once, do not overwrite the flag, finish the service, and read helper plus terminal code occupancy once at the end. A classical midpoint readout/reset is not intrinsically required. Tables S2/S3 give two-photon ancilla T1 entries of 7 and 14/31 microseconds; retained-flag lifetime needs qualification.
+The ordinary side receives the actual repeated source check/readout records and CPMG controls. It also receives any coherent prefix marker actually qualified by the same ancillary coupling. For code projector P and Q=I-P, the ideal M=P tensor I + Q tensor X on a clean helper records one bad midpoint without changing a good unknown payload/reference. Execute M once, do not overwrite the flag, finish the service, and read helper plus terminal code occupancy once at the end. A classical midpoint readout/reset is not intrinsically required. A retained flag needs a qualified lifetime and complete helper-noise instrument.
 
 Repeated controlled-X markers into the same two-level helper store parity, not a permanent OR: two bad samples can erase its flag. An exact update that preserves the sampled data and maps both helper values to 1 on bad occupancy is not unitary. More samples may use additional coherent storage, a larger helper, or measured records/reset; those are physical costs, not an automatic requirement for the one-midpoint case. Neither endpoint nor midpoint sampling detects a loss-and-return wholly between samples.
 
@@ -50,6 +50,44 @@ The next discriminating experiment is therefore the ordinary full-instrument cad
 ## Verification scope
 
 The companion exact rational guard verifies the literal Lindblad generator on every operator matrix unit at code dimensions 2, 3 and 4, using separate loss/return rate bases. It verifies reset idempotence, formal accepted-map composition coefficients and deferred-marker Kraus amplitudes, plus the helper parity warning. It refuses optimized Python and imports quietly. The continuous-time formulas remain the analytic ODE/exponential proof above. These finite identities do not fit or certify a source-device instrument. The closest existing comparison is the required-TIP deferred midpoint marker and returned-leakage discussion.
+
+## Prior ingredients and distinct objectives
+
+The full self-SWITCH anticommutator/commutator decomposition, orthogonal
+balanced-control flags and conditional Pauli correction are established
+mechanisms: [Chiribella et al., NJP 23, 033039 (2021)](https://arxiv.org/html/1810.10457v4),
+Section II Eq. (3) and Section III Eq. (5). The present two-rail maps apply
+that structure; they do not claim priority for it. The product-Kraus
+result for composition-commuting channels in
+[Aslanbas, Alkan and Karpat (2026)](https://arxiv.org/html/2609.00168v1),
+III.4/III.5, also covers common-stationary GAD. Its control-target
+entanglement objective does not imply a Bell-reference recovery bound;
+separable control-target outputs can retain useful classical error flags.
+
+The ordinary one-interval odd acceptance is already calculated in
+[Ranu, Prabhakar and Mandayam (2022)](https://arxiv.org/html/2210.05297v1),
+Fig. 2, Section 4.1 and Appendix D (PDF Eqs. (D.3)-(D.4); HTML (65)-(66)): with their
+gamma=1-x and ground population p=1-u, acceptance is x+2B and each BB84
+bit/phase error is B/(x+2B) when x+2B>0. This credits the parity/acceptance ingredient;
+the arbitrary-input/reference maps, two-contact instruments and stated
+cold inequality are derived below. The adjacent printed population
+expansion is not used as a verified map here.
+
+At x=0, reuse the existing
+[complete-replacement ordinary realization](../communication.md#complete-replacement-channels-have-an-exact-ordinary-realization),
+which reproduces the full control-target-reference channel with paid
+input storage, replacement-state registers and controlled exchanges.
+It does not automatically simulate x>0 finite-time GAD. The thermal
+cooling/work contracts of
+[Felce and Vedral (2020)](https://doi.org/10.1103/PhysRevLett.125.070603),
+[Cao et al. (2022)](https://doi.org/10.1103/PhysRevResearch.4.L032029) and
+[Sharma and Kumar (2026)](https://arxiv.org/html/2511.17357v2)
+have different inputs, outputs and allowed controls. Felce-Vedral and Cao
+account for failed branches in cycle performance; Sharma-Kumar report
+success probabilities and leave full thermodynamic costs open. A selected
+temperature is not the retained-reference service metric used here.
+These bounded primary comparisons establish neither novelty of the
+specific cold cutoff nor an all-ordinary or hardware advantage.
 
 ## Full two-rail thermal GAD instrument and terminal recovery
 
@@ -186,10 +224,9 @@ whose physical cost is not established here.
 The ideal ordinary marker flips on BOTH |00> and |11>, namely all of
 P_even. The separately audited Huang vacuum-selective |00> pulse is only
 a motivation for testing one of these states; it does not certify the
-full parity gate or higher-leakage coverage. The native order-coherent
-GAD-contact port is likewise unprovided. A measured joint upward/downward
-thermal-rate fit is needed to assign any device to the cold or warm
-regime; a fridge temperature or T1 alone does not establish u.
+full parity gate or higher-leakage coverage. Applying the native comparison requires a qualified order-coherent
+GAD-contact port and a measured joint upward/downward thermal-rate fit.
+A temperature or T1 alone is insufficient to assign the model population u.
 
 One bounded stronger-cadence example exposes that resource dependence.
 At u=x=1/2 and lambda=3, the same balanced two-module native protocol has
@@ -296,6 +333,89 @@ native-minus utility when the single-midpoint comparator rejects every
 output. More ordinary checks can change that comparison and require
 their additional coherent memory or actual readout/reset clocks. No
 general ordinary-control or hardware separation follows from this cutoff.
+
+<a id="nr-r06-gate-on-prefix"></a>
+
+## Gate-on leakage: qualify the required operation before a noise scan
+
+The [one-marker compiler](../metrology.md#nr-r15-one-marker-compiler)
+closes a whole noisy gate plus an ideal known endpoint marker under one
+common gate dilation. Its measured ordinary implementation uses one gate,
+one marker, helper preparation/readout rotations and paid classical
+three-way splitting. The full quantum-helper endpoint additionally uses
+a second helper and a fixed two-helper unitary. It retains final leakage
+and code/leak coherence, so discarding those outputs is not the reason
+for the equality. Noisy actual checkers or slot-dependent shared baths
+require their own complete instruments.
+
+For a declared gate-on model, four Duffing data modes and a coupler c have
+
+ H(t)/hbar=sum_i[omega_i(t)n_i+alpha_i*n_i*(n_i-1)/2]
+           +sum_edges g_ij(t)(a_i^dagger*a_j+a_j^dagger*a_i).
+
+With two intra-pair edges, one inter-pair edge and two data/coupler edges,
+the number-conserving N=2 sector has 15 states: four code states with one
+excitation in each data pair and vacuum coupler, six states with both
+excitations in one data pair, four one-data/one-coupler states and the
+two-coupler state. Downward loss adds N=1,0 for 21 states. Heating and
+counterrotating terms require larger sectors and convergence checks.
+This is a declared effective model, not a fit to the measured device.
+Eliminating the coupler also transforms bath operators; retaining a clean
+logical matrix alone does not model its noise. A quantitative scan needs
+the full pulse, microscopic noise and retained/rejected records, without
+double-counting dressed shifts as bare frequencies.
+
+Within this N<=2 model every two-logical-qubit code exit leaves a data
+pair empty. Two perfect vacuum flags would cover that endpoint complement,
+but their coherent action and environment independence are separate
+requirements. Toggling both into one two-level helper can cancel when
+both pairs are empty; separate records or a qualified OR are needed.
+
+For a required gate mediated by virtual noncode excursions, an ideal
+midgate P test can disturb the clean entangler itself. In an off-resonant
+perturbative model with P V P=0 and an invertible separated Q block,
+the second-order induced term has Schrieffer-Wolff form
+-P V Q*(Q H Q-E_0)^(-1)*Q V P. The frequent-P-test limit removes this
+path rather than freely correcting it. A useful midpoint comparison
+therefore needs a code-closed prefix, a dressed marker or a recalibrated
+checked gate that implements the same W, with their actual control cost.
+
+
+Splitting the gate as U2 U1 is a new route only after BOTH coherent words
+have a calibrated common clean action. For A=U1, B=U2 the requirement is
+
+ BA E=AB E=E W,                                        (L2)
+
+or a separately supplied and paid coherent frame correction that makes
+L2 true. Knowing only BA E=E W, or only a reduced logical process in one
+order, does not imply L2. Equal halves of the same constant Hamiltonian
+commute globally and provide no clean distinction by themselves.
+
+Opposite drive phase is not generally a reversed full propagator. In an
+active two-level block put H_+= (delta Z+Omega X)/2 and
+H_-=(delta Z-Omega X)/2. For equal duration tau, omega=sqrt(delta^2+Omega^2),
+
+ U_-U_+-U_+U_-= -4i delta Omega sin^2(omega tau/2)Y/omega^2. (L3)
+
+The unchanged detuning makes this nonzero generically. For example
+delta=Omega=1 and omega tau/2=pi/4 give the two products a common
+I/2-i Z/sqrt(2) part but opposite iY/2 parts. Their action on |0> is
+not even parallel, so an order-control scalar phase cannot repair L2.
+At resonance delta=0 the sign-reversed pair is inverse and yields
+identity on that block, not the desired nontrivial exchange by itself.
+Mirror envelopes likewise require the actual time ordering and full
+Hamiltonian sign; a logical Z toggle reverses X but leaves Z detuning.
+Logical frame data alone do not specify the toggle on populated leakage
+levels. Full scalar/dark-state phases and the source's complete occupied
+subspace must be qualified before asserting a common target.
+
+L2 can hold for specially calibrated finite pulse words. Then compare
+their full noisy instruments with ordinary calibrated words and logical
+phase corrections from the same control family, including any extra
+gates, delay and helper storage. This component supplies no source waveform,
+no opposite-half implementation and no advantage for that different
+resource. The whole-G/ideal-terminal-marker proposal already has the linked
+ordinary one-marker compilers once the same qualified M is admitted.
 
 ## Replay and remaining experiment
 

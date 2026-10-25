@@ -398,6 +398,15 @@ number-lowering cases now test physical Bell metrics, nonzero Choi cross
 terms, the exact no-loss CP remainder and explicit double-fault/parity
 limitations. The all-dimension proofs and native helper costs remain analytic.
 
+The [one-marker code-input refinement](../research/topics/nr-noisy-recovery/metrology.md#nr-r15-one-marker-compiler)
+has exact Q(sqrt(2),sqrt(3)) fixtures for nine whole-gate matrix units,
+36 measured outcomes and a known auxiliary unitary. Its arbitrary-input/
+reference and common-dilation proof is analytic, as are the noisy-checker
+full-joint-commutation condition and clean-target prefix requirements.
+Measured flags and unmeasured quantum helpers have distinct paid
+preparation, sampling and auxiliary-control requirements. The replay
+certifies no physical marker, shared-bath law, waveform or complete clock.
+
 NR-R15 also has exact known-unitary pre/post compiler identities and
 full-output, conditional-channel, syndrome and SLD/QFI checks for two
 coherent signal/noise extensions. Its general common-dilation compiler,
@@ -551,6 +560,13 @@ identities outside the ready-column scope or physical charging advantage.
 The cold entangler's conserved-number/outer-rail argument is also analytic
 within the published loss/dephasing surrogate; it is not a full measured
 accepted/erased instrument, online-herald or controlled-order certificate.
+
+The [programmed cyclic-chip comparison](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06-programmed-cyclic-chip)
+uses the existing known-record compiler. Its four-cycle launched ledger,
+BB84 measure-and-prepare bound and coarse-flag identifiability example are
+analytic; the replay fingerprints the owner without a new source-specific
+guard. They establish no corrected-chip fidelity, raw-data EB fit, retained
+unknown-input port or complete clock.
 
 The [thermal-return/cadence component](../research/topics/nr-noisy-recovery/methods/thermal-return-cadence.md#nr-r06-thermal-return-cadence)
 adds exact finite generator, reset, formal-composition and deferred-marker

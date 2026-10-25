@@ -370,6 +370,112 @@ different interface; equality of isolated reduced channels does not
 establish the common-dilation premise. Nor does a classically selectable
 opaque auxiliary operation automatically provide its controlled unitary.
 
+<a id="nr-r15-one-marker-compiler"></a>
+
+#### A code-input cost refinement for one binary endpoint marker
+
+The generic known-unitary compiler (IQ1) already covers a whole unknown
+gate switched with a known marker. For code inputs the following
+refinement uses **one actual marker call**, with different paid controls
+for measured classical flags and unmeasured quantum helper outputs. It is
+not a comparison of two unknown thermal modules or a new result identity.
+
+Let E embed a logical input into a physical code P=EE^dagger, Q=I-P.
+G is the entire actual gate channel, with arbitrary full fine operators
+K_h, including its internal excursions, returns and environment history.
+The known ideal marker on data and helper m is M=P tensor I+Q tensor X.
+The initial marker is 0, independent of the unknown input/reference, and
+the abstract SWITCH uses a fresh balanced control c. A single common
+whole-gate Stinespring dilation of G is used in both histories, G acts
+only on data/environment, and M leaves that environment inert. These are
+full-amplitude premises; matching reduced noisy gates at two clock slots
+does not establish them. No internal leave/return model is assumed.
+
+Choose control 0 for G then M and control 1 for M then G. Since PE=E,
+the measured c-X/m-Z fine operators before a final P/Q readout are
+
+ J_(+,0,h)=(P+Q/2)K_h E,
+ J_(-,0,h)=-(Q/2)K_h E,
+ J_(+,1,h)=J_(-,1,h)=(Q/2)K_h E.                       (L1)
+
+After final code projection ONLY (+,0,P) survives, with operator P K_h E.
+Every final-Q flag has the same CP map, one quarter of
+Q K_h E rho E^dagger K_h^dagger Q. A simple ordinary late marker therefore
+has exactly the same accepted code map. Any internal returned leakage
+already contained in P K_h E passes this switch unchanged. This holds for
+arbitrary input/reference and arbitrary unknown G, including coherent
+leave/return amplitudes and hidden non-Markov records inside that one G.
+
+There is a stronger exact ordinary compiler for the ENTIRE measured
+(c-X,m-Z) instrument L1, even without final P/Q measurement. Prepare
+phi=cos(pi/12)|0>+sin(pi/12)|1>, apply G then ONE M, and measure m in
+{phi,phi_perp}, where phi_perp=-sin(pi/12)|0>+cos(pi/12)|1>.
+The two fine operators are (P+Q/2)K_h E and (sqrt(3)/2)Q K_h E.
+Keep the first as label (+,0). Split the second recorded outcome by a
+uniform classical three-way coin into the other three labels. Each has
+the CP map of (Q/2)K_h E; one native global Kraus sign is irrelevant.
+Thus all measured flags, data, reference and the P/Q coherence retained
+inside outcome (+,0) match exactly. Count one qualified M, one G, helper
+preparation R_y(pi/6), its inverse measurement-basis rotation, helper
+readout, the uniform ternary randomization/bookkeeping and their clock.
+Neither classical randomness nor calibration is assumed free.
+
+If unmeasured quantum auxiliary outputs are part of the service, they
+also admit a matched ordinary construction with paid extra auxiliary
+control. In m,c order the native fine isometry is
+
+ K_h E -> P K_h E tensor a+Q K_h E tensor b,
+ a=|0_m,+_c>, b=(|1_m0_c>+|0_m1_c>)/sqrt(2), <a|b>=1/2.
+
+Use phi as above and a second clean auxiliary c=0 after G and M. Let
+u0=phi tensor 0, u1=phi_perp tensor 0, u2=phi tensor 1,
+u3=phi_perp tensor 1. In the auxiliary basis 00,01,10,11 define
+
+ v0=(1,1,0,0)/sqrt(2),
+ v1=(-1,1,2,0)/sqrt(6),
+ v2=(1,-1,1,0)/sqrt(3), v3=(0,0,0,1).
+
+Both {u_j} and {v_j} are orthonormal. The known unitary
+R_aux=sum_j |v_j><u_j| maps phi tensor 0 to a and X phi tensor 0 to b,
+because X phi=(1/2)phi+(sqrt(3)/2)phi_perp. Applying R_aux after the
+ordinary G/M therefore reproduces the entire native fine isometry for
+each h, including code/leak coherence and any untouched reference.
+This costs the second auxiliary and one calibrated two-auxiliary unitary
+in addition to G, M and phi preparation; it is not a free source port.
+Starting the ordinary marker in 0 instead gives orthogonal pointers,
+which no auxiliary-only unitary can map to a,b of overlap 1/2. Weak
+preparation is essential for this particular full-quantum compiler.
+
+With a noisy checker of full fine operators R_j, the actual switched
+operators instead contain [R_j(K_h tensor I) +/- (K_h tensor I)R_j]/2.
+L1 is not justified unless the checker is qualified. A sufficient
+condition for equality of the two accepted-code placement amplitudes,
+and hence absence of an accepted control-minus event, is that every R_j
+preserves P/Q and acts on P as
+identity on logical data tensor one helper/environment operator that
+commutes with every whole-gate fine operator K_h on the full joint
+space. For example, it may act only on the helper and an independent
+checker environment left inert by G. Block preservation and identity on
+logical data alone do not suffice if the checker and G also act on a
+shared environment: even P=I, G=X_E and checker=Z_E give a control-minus
+event. This condition alone does not restore the ideal marker labels:
+for example, R=I tensor X_m gives accepted code with marker 1. Checker
+backaction that mixes Q back to P or acts nontrivially on the logical
+code can generate other accepted histories; it requires its own full
+instrument and ordinary comparator. Likewise slot-dependent G isometries
+can create control-minus events from drift or distinguishable clock
+records. These are different physical mechanisms, not evidence that an
+ideal terminal marker detected an internal excursion that had returned.
+
+The [thermal-return architecture component](methods/thermal-return-cadence.md#nr-r06-gate-on-prefix)
+applies this refinement to endpoint leakage checks and separately states
+the clean-target hurdle for a check placed inside an entangling pulse.
+The arbitrary-dimension/reference proof above is analytic. The companion
+`whole_gate_marker_guards.py` replays nine full-gate matrix-unit fixtures,
+36 measured outcomes and the explicit auxiliary unitary using exact
+Q(sqrt(2),sqrt(3)) arithmetic. It supplies no physical checker, cross-slot
+bath law, gate waveform or clock certificate.
+
 **Parallel signal and noise require the coherent extension.** To make
 the premise concrete, use parameter $\omega$ and signal Hamiltonian
 $\omega Z_P$, rather than the dimensionless $\phi Z/2$ convention of

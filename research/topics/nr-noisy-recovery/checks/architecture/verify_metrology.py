@@ -339,13 +339,15 @@ def verify_known_controls_and_direction_extensions():
 
 
 def main():
+    from whole_gate_marker_guards import verify as verify_whole_gate_marker
     certificate=json.loads((HERE/'metrology_sequential_certificate.json').read_text(encoding='utf-8'))
-    report=dict(status='passed',arithmetic='Python standard library; exact rational intervals, LDL and integer polynomials',
+    report=dict(status='passed',arithmetic='Python standard library; exact rational certificates and separately reported algebraic marker fixtures',
                 sequential_dual=verify_sequential(certificate),
                 SWITCH_readout_and_robustness=verify_switch_and_echo(),
                 retained_collision_echo=verify_regular_echo(),
                 longer_ordinary_block=verify_longer_ordinary_block(),
                 known_controls_and_direction_extensions=verify_known_controls_and_direction_extensions(),
+                whole_gate_binary_marker=verify_whole_gate_marker(),
                 scope='Finite algebra/certificate replay. General tester semantics, all-input covariance/concavity and native collision-interface proofs remain in metrology.md; no numerical SDP or hardware-runtime certificate.')
     print(json.dumps(report,indent=2))
 

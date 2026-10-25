@@ -1517,6 +1517,10 @@ ordinary-dominance theorem. Warm single-marker counterexamples require
 comparison with stronger paid checking cadences. Applying these models requires calibrated thermal parameters,
 qualified parity-marker/order controls and a complete clock budget.
 The uniform-reset cadence and GAD models remain distinct declared baselines.
+The linked [whole-gate/check refinement](metrology.md#nr-r15-one-marker-compiler)
+has an ordinary one-marker implementation; the
+[gate-on prefix test](methods/thermal-return-cadence.md#nr-r06-gate-on-prefix)
+requires the same clean entangler before comparing noisy outputs.
 
 The [joint-vacuum flag comparison](architecture-baselines.md#nr-r06-joint-vacuum-flag)
 gives an exact shared-probe ideal instrument and ordinary one-check and

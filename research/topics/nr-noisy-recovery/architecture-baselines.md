@@ -129,6 +129,100 @@ Bell-assisted Pauli learning is established prior work; see
 The complete trajectory and output simulation above are direct deductions
 from the orthogonal process-state observation, without a novelty claim.
 
+<a id="nr-r06-programmed-cyclic-chip"></a>
+
+### A programmed four-channel chip needs its controller records and input prior
+
+[Wang et al., Communications Physics 9, 279 (2026)](https://www.nature.com/articles/s42005-026-02698-1),
+Scheme, Experimental demonstration, Fig. 2 and Methods, implement four
+depolarizers with programmed MZI Pauli operations and average 256
+configurations. Six analyzer projections at one second per configuration give
+1536 seconds per output tomography. Their four inputs are the equatorial
+BB84 states and detection is destructive. Because the electronics chooses
+the batch, we infer same-controller knowledge of its configuration; this
+is not a public seed API or eventwise access to uncontrolled physical
+faults. Tomography acquisition time is not an unknown-output release clock.
+
+This is a direct application of the existing NR-R06 known-record
+comparator. In the ideal uniform-Pauli model, configuration
+$h=(a,b,c,d)$ has one ordinary-word fine operator
+$K_h=P_h/16$, where $P_h=P_dP_cP_bP_a$. Apply the known inverse $P_h^\dagger$:
+every corrected operator is $I/16$, and all 256 configurations sum to the
+identity channel on any input and inaccessible reference. It needs the
+same four occupied traversals, known record processing and a real output
+correction; no Bell-label inference or hidden-channel learning is needed.
+For a destructive endpoint the correction can instead be absorbed into
+the analyzer. An external service that withholds the setting label has
+a different access contract requiring an operational justification.
+
+Physical setting errors are distinct from the programmed label. If each
+setting's actual module has half-diamond error $\epsilon_{h,i}$ and the
+inverse correction has error $\epsilon_{\mathrm{corr},h}$, telescoping and
+contractivity bound that corrected branch's error by
+$\sum_{i=1}^4\epsilon_{h,i}+\epsilon_{\mathrm{corr},h}$; average over actual
+configuration weights. This does not certify measured fidelity or rate.
+Input-dependent loss, rejected trials, source preparation, phase calibration,
+setting/correction delays, output release and reset require the complete
+instrument and clock. Calibrated programmed labels do not reveal additional
+hidden stochastic faults.
+
+For comparison, in the declared ideal four-cyclic-order model with a
+uniform control prepared and projected onto its plus state, each diagonal
+order term is completely depolarizing and each distinct cyclic cross term
+is $\rho/4$. These contractions follow from the Pauli identities
+$\sum_aP_aXP_a=2\operatorname{Tr}(X)I$ and
+$\sum_a\operatorname{Tr}(P_aX)P_a=2X$. Thus
+
+$$
+\sigma_+(\rho)=\frac{3\rho}{16}+\frac{I\operatorname{Tr}\rho}{8},
+\quad p_+=\frac7{16},\quad p_{\mathrm{reject}}=\frac9{16},
+\quad q_{\mathrm{Bell},+}=\frac14,\quad b_{\mathrm{Bell},+}=\frac3{16}.
+$$
+
+The accepted Choi block is $I_4/16+3|\Phi\rangle\langle\Phi|/16$.
+Conditional Bell fidelity is $4/7$, pure-state fidelity is $5/7$, and
+plus-only launched utility is $(4-3\lambda)/16$. These are different
+metrics; none includes physical source/router/detector loss or clocks.
+This model's accepted isotropic channel is non-entanglement-breaking,
+since its Choi fidelity exceeds $1/2$.
+
+The four tested input directions alone have a different qualification
+power. For a uniform $\{+x,-x,+y,-y\}$ ensemble, write a measure-and-prepare
+POVM effect as $E_m=w_m(I+\mathbf m_m\cdot\boldsymbol\sigma)$ and its prepared
+Bloch vector as $\mathbf s_m$, with $\sum_mw_m=1$ and both vector norms
+at most one. The average fidelity is
+
+$$
+\overline F=\frac12+\frac14\sum_mw_m(s_{mx}m_{mx}+s_{my}m_{my})
+\le\frac34.
+$$
+
+Cauchy-Schwarz proves the bound. Measuring $X$ or $Y$ uniformly and
+preparing its observed eigenstate attains it on every input. In particular,
+with complete dephasings $\Delta_X,\Delta_Y$ and replacement $R(\rho)=I/2$,
+the entanglement-breaking channel
+$E_{\mathrm{EB}}=(3/7)\Delta_X+(3/7)\Delta_Y+(1/7)R$ has Bloch matrix
+$\operatorname{diag}(3/7,3/7,0)$. It matches the entire ideal selected
+output density matrix on all four inputs, whereas the isotropic model
+has matrix $\operatorname{diag}(3/7,3/7,3/7)$.
+
+Even both coarse flags can agree on those inputs: use $p_+E_{\mathrm{EB}}$
+as the plus map and the actual ideal coarse-reject map
+$\sigma_{\mathrm{reject}}(\rho)=3I\operatorname{Tr}\rho/8-3\rho/16$.
+Its normalized channel has Bloch matrix $-I_3/3$ and is EB: measure a
+uniformly chosen Pauli axis and prepare the opposite eigenstate.
+Both alternatives have constant trace, so together form a valid EB
+instrument. This is an identifiability example, not a fit to measured
+data, equality of the full unmeasured order register, or a contradiction
+of the trusted Pauli/cyclic model. A $Z$-axis probe or independently
+qualified isotropy distinguishes the channels. Four-input fidelity alone
+and the Haar-uniform $2/3$ benchmark do not certify this broader service.
+
+The cyclic and ensemble calculations here are analytic source-specific
+applications; the existing replay fingerprints this owner and the general
+record compiler. It does not certify a corrected physical chip, a raw-data
+EB fit, a retained unknown-input port or a complete operational clock.
+
 <a id="nr-r06-pauli-statistic-memory"></a>
 
 ### A commutation statistic needs one Bell-label sample, not full channel learning
@@ -2574,7 +2668,11 @@ example reverses one such comparison, with additional access and record costs.
 Testing this abstract native comparison requires measured u, qualified
 full parity markers and selectable module/order controls, with complete
 clocks. The service comparison prices terminal unknown-input rejection
-and the strongest paid ordinary cadence. No hardware advantage is established.
+and the strongest paid ordinary cadence. The
+[one-marker code-input refinement](metrology.md#nr-r15-one-marker-compiler)
+also closes a whole gate plus ideal endpoint check, including retained
+leakage; a check inside the gate must preserve its required clean action.
+No hardware advantage is established.
 
 ### Required TIP entanglers need shared-qubit and common-clock comparisons
 

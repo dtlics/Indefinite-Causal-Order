@@ -115,7 +115,7 @@ JOBS = (
     ("coupler-mean-query", "coupler/verify_mean_query_certificate.py", (),
      "Exact qutrit expected-two-query upper certificate: complete invariant basis, highest-weight kernels/dimensions, regenerated causal rows, rational PSD duals and residual trace bounds. Prior/covariance/stopping inclusion and physical trace bounds analytic; no native advantage."),
     ("architecture-metrology", "architecture/verify_metrology.py", (),
-     "Exact two-query phase/AD dual, achievable Fisher information and visibility/erasure arithmetic, known-unitary compiler, contrasting coherent sign/noise extensions and state/syndrome/SLD identities; continuous-time/access/global-risk and hardware arguments analytic."),
+     "Exact two-query phase/AD dual, achievable Fisher information and visibility/erasure arithmetic, known-unitary compiler, contrasting coherent sign/noise extensions and state/syndrome/SLD identities; exact Q(sqrt(2),sqrt(3)) one-marker full-isometry, measured-flag and auxiliary-unitary fixtures; arbitrary-dimension/reference, noisy-checker commutation and clean-target pulse-prefix arguments remain analytic, physical helper/checker/selector clocks remain application premises; continuous-time/access/global-risk and hardware arguments analytic."),
     ("architecture-braided-magic", "architecture/verify_braided_magic.py", (),
      "Exact Ising quarter-braid branches, stabilizer target bound, both flagged ordinary controlled-S state identities under matched helper visibility, physical-S half-exchange yield and Pauli-loop closures; native trajectories, phases and factory costs remain analytic."),
     ("architecture-pulse-gates", "architecture/anticommuting_pulse_gates.py", (),
