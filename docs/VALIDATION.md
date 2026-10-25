@@ -532,6 +532,16 @@ order port, cross-history bath model, complete reuse clock or fault benefit.
 The separate transmon symmetric-readout source supplies an ordinary
 benchmark, with its integration and device scope kept explicit.
 
+The [TIP gate component](../research/topics/nr-noisy-recovery/methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)
+contains analytic shared-qubit, dressed-return, equal-window common-clock
+fault and rectangular-selector arguments. The current replay fingerprints
+this source; it does not numerically replay its timed pulse integration or
+perform a new Lean audit. Independent scratch calculations check its finite
+coefficients. The retained source-like rates include explicitly unmeasured
+copied parameters; they are not a device prediction. No optimal recovery,
+ordinary pulse-control lower bound, calibrated selector, actual noise
+correlation instrument or practical hardware advantage is certified.
+
 The separate encoded-Pauli replay checks full code-input and retained-record
 channels, mixed/reference states, the deferred coherent-record circuit and
 a non-phase helper-noise counterexample. Its proof assumes clean decoded

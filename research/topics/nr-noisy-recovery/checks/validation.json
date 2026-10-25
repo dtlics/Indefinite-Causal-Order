@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-25T01:41:30+00:00",
+  "generated_utc": "2026-10-25T17:50:22+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -14,8 +14,8 @@
   "input_hash_algorithm": "sha256",
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "0579328ad4e1ee6c97072f6591191b6eab8c1c4312167340c7128432650c2b46",
-    "research/topics/nr-noisy-recovery/architecture-baselines.md": "94fdc30f401abf6b0a9db2e4c3f80fefe8d9e79160acc0ac1033ce77a3b72156",
-    "research/topics/nr-noisy-recovery/architecture.md": "61cc5d0b880024b787e4ef00ba18bf5b281ee8825bfabd8312c3fb99d5554aaa",
+    "research/topics/nr-noisy-recovery/architecture-baselines.md": "e3f1f9c8e95ed581f353e646be4d1e5d723cda32c96b7d86d4b9144ed9ee3f05",
+    "research/topics/nr-noisy-recovery/architecture.md": "d5d9bf5ba23a48862c139ebad365b9d27421582c8d0782a16d44fd7e834e6bea",
     "research/topics/nr-noisy-recovery/backaction.md": "7fe7b08d5aa1f28aa4a8e73c7f94703fbc30cf4319deee6f288276da25b0ec20",
     "research/topics/nr-noisy-recovery/braided-magic.md": "5b34e071abc1448940783a5f7a8853fd4c3c7523e3725edd5d6540ea5d808b4c",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_dual_sharp_certificate.json": "95d061e96dd7cdf31ca311b54ac9896995312dd5e2b6407d000bd0e2ff80acaf",
@@ -164,6 +164,7 @@
     "research/topics/nr-noisy-recovery/methods/pauli-subspace-calibration.md": "1ef622895962fa0c561c4c067797e74bd0043937f7072e003fe7d8a264be023a",
     "research/topics/nr-noisy-recovery/methods/remote-spin-phase.md": "7265cfb2dc33557df5824ee70c086b54e40e1349992032cf7c736a6ad85c944f",
     "research/topics/nr-noisy-recovery/methods/thermal-attenuator.md": "58cec7f2710dbdcb96c12d7109852df111a1babd989a9252786cbf8a7ec58c6e",
+    "research/topics/nr-noisy-recovery/methods/tip-gate-screen.md": "14984921dafdc136b8fdf068a273fae6d68704b5caa81d5c0505212b5653f4de",
     "research/topics/nr-noisy-recovery/methods/unital-entropy-capacity.md": "7698c4cc0d25848dd712f0f99354b9bfe6cfdaad0dc373105083eb009f94492f",
     "research/topics/nr-noisy-recovery/methods/unitary-error-overlap.md": "e52a67fcfacf9fbda3b9b4a9e0f34c7c7b214bd4e5abb327d3dbe8ad985e67e3",
     "research/topics/nr-noisy-recovery/metrology.md": "0e4645178bcef56d924ec3fc0f22f7b19467851faf6e07be7676ab81b2206100",

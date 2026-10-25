@@ -1495,6 +1495,14 @@ the ordinary monitoring baseline without importing its timings into the
 cavity device. The next discriminating test is a specified noisy native
 pulse word against these matched ordinary controls.
 
+The [required TIP gate component](methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)
+retains spectator idle errors and actual chronological record labels.
+Its shared-qubit ordinary proof, complete equal-window fault ledgers and
+selector-pulse guard delimit the proposed benefit; source-like copied
+rates do not beat the tested ordinary check. Fast private-coupler noise
+and held offsets have different flags. Their actual temporal correlations,
+joint selector calibration and stronger ordinary controls remain required.
+
 The [required charging comparison](architecture-baselines.md#nr-r06-charging-records)
 uses the same conditional work and meter-record service on both sides.
 For identical contacts with pure accessible chargers, ordinary serial

@@ -2540,6 +2540,22 @@ whole-payload routing and the same ordinary gate, echo and delayed-erasure
 decoder at a common accuracy and deadline. A diagonal residual-noise
 SWITCH scan cannot establish the missing benefit.
 
+### Required TIP entanglers need shared-qubit and common-clock comparisons
+
+The [TIP gate proof component](methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)
+adds a source-backed partial-erasure gate service, a one-helper ordinary
+shared-qubit check, source-model return channels, and complete equal-window
+relaxation/dephasing ledgers. It distinguishes local code-closed faults
+from spectator idle errors and retained-coupler histories. The tested
+source-like rate illustration fails against the ordinary comparator before
+selector and readout costs; the same control couplings, deferred midpoint
+checks and simultaneous ordinary drives remain part of the physical test.
+
+The component also gives a scoped exact obstruction for one rectangular
+selector pulse. Shaped or jointly designed controls remain open. A partial
+erasure fraction or reduced noisy-CZ fit supplies neither that selector's
+timed bath instrument nor a practical advantage.
+
 <a id="nr-r06-required-state-preparation"></a>
 
 ### Required projector filtering and feedback cooling need different comparisons
