@@ -60,6 +60,77 @@ def echo_instrument_guard():
     return count
 
 
+def recovery_and_prefix_guards():
+    # Q1 is an illustrative copied/exponential-white model, not a fitted bath.
+    gamma, ramsey = F(50, 3849), F(20, 1013)
+    big_gamma = ramsey - gamma / 2
+    s, d, odd = big_gamma + gamma / 2, big_gamma - gamma / 2, F(1, 128)
+    assert s == F(20, 1013) and d == F(20, 1013) - F(50, 3849)
+    assert 0 < d < 2 * odd and d < odd
+    a, b = d / (2 * odd), F(1)
+    p = s * (a * a + b * b) / 2 + odd * a * a
+    q = (s * (a * a + b * b) + 2 * d * a * b) / 4
+    assert 2 * q - p == d * d / (4 * odd) > 0
+    # Identity/Pauli at lambda=1 loses, whereas a physical partial filter wins.
+    assert d - odd < 0
+    # Lambda=5 diagonal filter quadratic is negative definite, exactly.
+    assert s > 0 and s + 5 * odd > 0
+    assert s * (s + 5 * odd) - 9 * d * d / 4 > 0
+    # Broad weak boundary-tag bound: helper good loss >= mandatory bad.
+    # All rate copies and white laws are declared hypotheses of this example.
+    ga, gb, gc = F(1, 168), F(1, 80), F(1, 168)
+    phi_sum = 2 * (F(1, 26) - F(1, 64))
+    gn = ga + 5 * gb / 8 + gc + F(165, 512) * phi_sum + F(6297, 8192) * gamma + big_gamma
+    bn = F(183, 256) * (ga + gc) + F(15, 32) * gb + F(27, 512) * phi_sum + F(1097, 8192) * gamma
+    gbare = ga + 5 * gb / 8 + gc + F(69, 256) * phi_sum
+    bbare = F(119, 128) * (ga + gc) + F(5, 8) * gb + F(27, 256) * phi_sum
+    native_vs_bare = gbare + 5 * bbare - gn - 5 * bn
+    weak_vs_bare_bound = max(F(0), 5 * odd - 6 * gamma / 2)
+    assert big_gamma >= gamma / 2
+    assert native_vs_bare == F(373165517, 1453311455232)
+    assert weak_vs_bare_bound == F(15, 164224)
+    margin = native_vs_bare - weak_vs_bare_bound
+    assert margin == F(240421997, 1453311455232) > 0
+
+    # Common-pump paired-sector difference, in units with 2*pi removed.
+    from verify_fault_simulation import (ZERO, gaussian, add as gadd,
+                                         times, zeros)
+    pump_cases = ((gaussian(0), gaussian(0)),
+                  (gaussian(F(3, 2), F(4, 5)), gaussian(-2, F(1, 3))),
+                  (gaussian(F(-5, 4), F(12, 7)), gaussian(F(2, 3), -1)))
+    f, chi, cap = F(10), F(929, 100), F(9)
+    epsilon = abs(chi - f)
+    for gu, gv in pump_cases:
+        hs = []
+        for diagonal in ((0, -f / 2, -f / 2), (chi, f / 2, f / 2)):
+            h = zeros(3, 3)
+            for i, value in enumerate(diagonal):
+                h[i][i] = gaussian(value)
+            h[0][1], h[0][2] = times(gu, F(1, 2)), times(gv, F(1, 2))
+            h[1][0] = (h[0][1][0], -h[0][1][1])
+            h[2][0] = (h[0][2][0], -h[0][2][1])
+            hs.append(h)
+        for i in range(3):
+            for j in range(3):
+                expected = gaussian(chi if i == 0 else f) if i == j else ZERO
+                assert gadd(hs[1][i][j], times(hs[0][i][j], -1)) == expected
+    low, high = 1 / (2 * (f + epsilon)), 1 / (2 * (f - epsilon))
+    next_low = 3 / (2 * (f + epsilon))
+    assert (low, high, next_low) == (F(50, 1071), F(50, 929), F(50, 357))
+    assert epsilon * next_low < F(1, 2)  # epsilon_angle*h < pi below this point
+    # Start/end leaf return bounds integral |u| by G*h^2/4.
+    # Exact CZ needs pi <= Delta*G*h^2/4; pi < 22/7 excludes first band.
+    assert F(22, 7) * f * cap * high * high / 2 < 1
+    assert next_low > F(1, 10)
+    return {"partial_filter_gain_per_T_us": str(d * d / (4 * odd)),
+            "lambda5_ordinary_flag_negative_definite": True,
+            "lambda5_native_minus_weak_tag_bound_per_T_us": str(margin),
+            "paired_sector_common_pump_fixtures": len(pump_cases),
+            "first_phase_band_us": [str(low), str(high)],
+            "exact_prefix_lower_us": str(next_low),
+            "scope": "Exact rational recovery quadratic, finite sector differences and first-band arithmetic; symmetry/CP reductions and continuous speed/return bounds analytic. No full-device or arbitrary-control timing claim."}
+
+
 def verify():
     r = [F(1), F(-3), F(3)]
     pf = [F(0), F(3), F(-3)]
@@ -100,7 +171,8 @@ def verify():
             "data_T1_and_private_dephasing_rational_moments": True,
             "finite_held_phase_echo_operator_cases": echo_cases,
             "complete_pointer_PED_probability_guard": True,
-            "scope": "Exact polynomial moments, isolated-helper utility arithmetic and finite matrix-unit echo instruments; continuum propagator, general echo and physical bath/control proofs analytic."}
+            "recovery_and_prefix_ingredients": recovery_and_prefix_guards(),
+            "scope": "Exact polynomial moments, helper/recovery utility arithmetic, finite matrix-unit echo and paired-sector/prefix-band ingredients; continuous propagation, speed bounds, CP/symmetry reductions and physical bath/control proofs analytic."}
 
 
 if __name__ == "__main__":

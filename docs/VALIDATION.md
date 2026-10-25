@@ -438,6 +438,13 @@ the finite-sample concentration and averaged local-information scaling
 are analytic. The bound concerns increasingly long rounds at a shrinking
 positive nominal angle, with all calibration queries counted. It supplies
 no uniform estimation-risk gain, numeric onset, or noisy-helper guarantee.
+The same job now replays rational known-anchor photonic measurement
+fixtures, including intrinsic reject weights, the two-angle swap symmetry
+and ordinary pointer/output Fisher matrices. The continuous calibration
+identities and source interpretation are analytic. These recorded
+measure-and-prepare fixtures do not certify a fresh-Haar unread meter,
+optimized native readout, full failed-photon instrument or apparatus
+throughput.
 The [braided-magic result](../research/topics/nr-noisy-recovery/braided-magic.md)
 has exact gate-branch, full flagged raw-state, visibility and Pauli-loop
 identities. Protected Ising closure, the complete physical braid phase,
@@ -535,16 +542,17 @@ benchmark, with its integration and device scope kept explicit.
 The [TIP gate component](../research/topics/nr-noisy-recovery/methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)
 contains analytic shared-qubit, dressed-return, equal-window common-clock
 fault, helper-relaxation, ordinary echo and rectangular-selector arguments.
-Its exact guard replays rational moment ingredients for the data, coupler
-and helper ledgers, isolated-helper utility arithmetic, and finite
-matrix-unit held-phase echo identities. It does not propagate the full
-timed Hamiltonian or perform a new Lean audit. The continuous propagator
-reductions, general instrument identities and physical bath/control
-premises remain analytic. Independent scratch calculations also check
-the finite coefficients. Source-like rates include explicitly unmeasured
-copied parameters; they are not a device prediction. No optimal recovery,
-ordinary pulse-control lower bound, calibrated selector, actual noise
-correlation instrument or practical hardware advantage is certified.
+Its exact guard replays rational data/coupler/helper moments, held-phase
+matrix-unit echo identities, flag-recovery quadratics, static weak-tag
+margin arithmetic, and common-pump sector/prefix-band ingredients.
+The one-flag CP optimization, general static-tag bound and continuous
+intermediate-ready prefix proof are analytic; the guard does not propagate
+the full timed Hamiltonian or perform a new Lean audit. These scoped
+bounds establish neither a global ordinary optimum nor a full-device
+speed limit. Source-like white-noise rates include unmeasured copied
+parameters. The actual correlation instrument, selector calibration,
+additional controls and full recovery/readout costs remain physical
+premises, not a device prediction or practical advantage certificate.
 
 The separate encoded-Pauli replay checks full code-input and retained-record
 channels, mixed/reference states, the deferred coherent-record circuit and
@@ -572,6 +580,14 @@ accepted flag maps, anisotropy, zero-weight endpoints and correctly
 transported known-gate checks. Its all-dimensional character balance and
 full-reference identity remain analytic under Pauli-diagonal and scalar
 cross-map hypotheses, with calibration and controlled-gate costs explicit.
+A separate multitime guard checks one correlated two-time Pauli history
+law, including cancellation, both physical purification/ordinary records,
+and positive control effects. The all-time/full-reference identities,
+copy-law reduction and dominant-no-error-history payoff comparison are
+analytic. The ordinary comparator needs exposed noise slots and actual
+transported coherent checks; it is not a generic nonunitary-process or
+shared-bath compiler. Signed reconstruction does not certify delivery of
+the virtual purified state.
 These compiler hypotheses still require derivation for the split-energy
 physical model or any application with required contact operations.
 The required BCS-gate component instead derives its threshold tail,

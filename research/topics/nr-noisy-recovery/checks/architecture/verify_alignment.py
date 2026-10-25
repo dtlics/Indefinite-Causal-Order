@@ -349,6 +349,8 @@ def main():
                 passed=['Bell sector projectors and exact orthogonal completeness','C0 kernel and C90 null weight','causal normalization prefix','R positive definite','causal tester slack PSD','native projective effect identity','dual PSD Gram form','dual objective normalization','both causal dual prefix equalities','complementary slackness','explicit wire-order reversal and converted prefix identities'])
     result['supplementary']=extra
     result['qec_reuse_exact_identities']=qec_checks()
+    from photonic_alignment_guards import check as check_photonic_alignment
+    result['recorded_photonic_calibration']=check_photonic_alignment()
     print(json.dumps({k:v for k,v in result.items() if k not in ['primal_normalization_matrix_16R','dual_gram_vectors']},indent=2))
 
 

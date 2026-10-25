@@ -561,3 +561,282 @@ operator identities. The propagator reduction, continuous-time integrals,
 general echo identity and physical bath/control premises remain analytic.
 It is not a numerical propagation of the full Hamiltonian or a new
 architecture advantage.
+
+<a id="nr-r06-tip-recovery"></a>
+
+## One measured flag can benefit from a non-Pauli ordinary recovery
+
+In the equal-T cold model, consider the **observed** direct-CZ-helper
+minus/gg flag after summing every hidden bath and emission time. Keep
+identity on the ideal plus/gg branch. Put $\gamma=\gamma_D$,
+$\Gamma=\Gamma_D$ and $O=5\gamma_B/8$. Per unit T, the minus/gg map
+relative to W contains $\Gamma\operatorname{id}$,
+$(\gamma/2)\operatorname{Ad}_{Z_B}$, and the data-B lowering channel
+of total norm O. The latter has output B=0 and uniform A/C population.
+No A/C relaxation or private-f dephasing enters this flag in this model.
+
+Apply the same accepted recovery operator to the whole flag,
+$F=aP_{B=0}+bP_{B=1}$, with $0\le a,b\le1$.
+The complementary operator $\sqrt{I-F^\dagger F}$ supplies its rejected
+outcome. This is a quantum instrument with a new acceptance record,
+rather than a hidden-fault correction or classical reweighting of data.
+For $S=\Gamma+\gamma/2$ and $D=\Gamma-\gamma/2$ its accepted norm and
+target-good coefficients are
+
+$$
+ p_F=S(a^2+b^2)/2+Oa^2,\qquad
+ q_F=[S(a^2+b^2)+2Dab]/4. \tag{TR2}
+$$
+
+The B-lowering term has zero target trace under this diagonal filter.
+Its contribution to $U_\lambda=q-\lambda bad$ is therefore
+
+$$
+ g_\lambda=(1-\lambda)S(a^2+b^2)/4
+ +(1+\lambda)Dab/2-\lambda Oa^2. \tag{TR3}
+$$
+
+At $\lambda=1$ and $0<D<2O$, this family is optimized by
+$b=1$, $a=D/(2O)$, giving $g_1=D^2/(4O)>0$.
+For the explicitly hypothetical Q1 white-noise rates
+$\gamma=1/(76.98\,\mu s)$,
+$\Gamma=1/(50.65\,\mu s)-\gamma/2$, and
+$\gamma_B=1/(80\,\mu s)$, this gives $a\simeq0.432189$ and an
+extra utility $0.00145927\,T/\mu s$. Here even identity has
+$g_1=D-O<0$ and every Pauli/reject choice is no better than rejection.
+Thus a restriction to Pauli corrections can miss a feasible ordinary
+improvement. The separate constituent's Ramsey value does not establish
+the assumed white bath, and the filter's control, measurement, erasure
+record and duration still need a physical implementation.
+
+**Reference support gives a recovery bound.** Suppose a measured flag has
+$K_h=K_hP_{B=1}$ for every hidden history. Its joint output/reference state
+then has reference B=1 support, which output-only CP recovery preserves.
+The target maximally entangled vector has squared norm 1/2 in this
+subspace. Hence $q\le p/2$ after **any** trace-nonincreasing CP recovery,
+so $g_\lambda\le0$ for $\lambda\ge1$. This applies to all excited-coupler
+flags and ordinary CNOT-store odd/gg in the cold model. Full-Duffing
+return channels and readout backaction are outside this support argument.
+
+**For this direct-CZ flag the quadratic is the full recovery optimum
+when $D>0$ and $\lambda\ge1$.** Each fine operator has a fixed data
+bit-XOR shift, so the summed flag map is covariant under all diagonal
+Pauli Z strings. W is diagonal. Twirling a recovery by this symmetry
+preserves q, p and trace-nonincreasing feasibility. Its Choi matrix splits
+into eight positive blocks labelled output XOR input. Blocks outside the
+diagonal block have good weight only from B lowering, to which the
+reference-support bound applies; helper I/Z terms only add norm there.
+They may be discarded for $\lambda\ge1$.
+
+In the diagonal block the good coefficients are
+$[\Gamma+(\gamma/2)z_i z_j]/64$, $z_i=(-1)^{B_i}$, and are nonnegative
+when $D>0$. For fixed Choi diagonal, positivity bounds each off-diagonal
+entry by $\sqrt{d_i d_j}$; one aligned rank-one filter attains them all.
+For fixed diagonal weight in each B sector, Cauchy--Schwarz makes the
+A/C amplitudes equal. The norm penalty depends only on those sector
+weights, since B lowering has uniform A/C population. This reduces the
+entire trace-nonincreasing CP optimization to (TR3).
+
+For example, at $\lambda=5$ its matrix is
+
+$$
+ M=\begin{pmatrix}-S-5O&3D/2\\3D/2&-S\end{pmatrix}.
+$$
+
+The Q1 values are exactly $S=20/1013$, $D=20/1013-50/3849$ and
+$O=1/128$, per microsecond. Negative diagonal and
+$\det M=S(S+5O)-9D^2/4>0$ prove $g_5\le0$, attained by erasing this
+flag. A stronger recovery changes the $\lambda=1$ comparison without
+making this flag useful at every error penalty. This is an optimization
+for the stated observed flag and encoding, not a global ordinary control
+optimum. Different helper codewords, pulse schedules, additional checks
+and their physical costs remain part of the architecture comparison.
+
+### A full-interval weak-tag bound with arbitrary flag recovery
+
+This is a fixed-lambda first-order statement in the declared cold TIP
+model. A single helper uses static conditional-unitary tags before and
+after the entire D-independent two-gate body of duration 2T. Conditional
+helper codewords d_0,d_1 may be any pure states, including nonorthogonal
+complex states. The noiseless ready flag preserves W and uses identity;
+every rare measured helper/coupler flag may use an arbitrary trace-
+nonincreasing CP recovery, completed by a retained reject outcome.
+Hidden bath labels and times are never decoder inputs. Intermediate
+retagging/echo, different pulse schedules and a real dispersive selector
+are not part of this family.
+
+Write d_b=sqrt(1-p_b)|0>+exp(i phi_b)sqrt(p_b)|1> and
+t_b=sqrt[p_b(1-p_b)]exp(i phi_b). Its distinguishability is
+
+ a=1-|<d_0|d_1>|^2=|t_0-t_1|^2+(p_0-p_1)^2, 0<=a<=1.
+
+For physical white helper jumps sqrt(gamma)|0><1| and
+sqrt(2 Gamma)P_D1, the mandatory ready-flag bad weight per T is
+
+ b_0=gamma |t_0-t_1|^2/2+Gamma(p_0-p_1)^2.
+
+If Gamma>=gamma/2, then b_0>=gamma*a/2. With helper noise alone,
+every completed recovery instrument satisfies q+bad<=1; hence target-
+good loss is at least total accepted bad and at least b_0. Its utility
+cost for U_lambda=q-lambda*bad is therefore at least
+(lambda+1)gamma*a*T/2, whatever the rare-flag recovery.
+
+Let O=5 gamma_B/8 be the total accepted B-lowering norm per T in this
+body. Weak tagging sends fraction a to the rare flag and leaves
+fraction 1-a in the mandatory flag. Every such lowering history has
+initial/reference B=e. A recovery on the output cannot change that
+reference support, and the target Bell vector has squared norm 1/2
+there: q<=p/2 for any CP recovery. For lambda>=1, the rare B-lowering
+contribution is nonpositive, so its maximum possible improvement over
+bare PED is lambda*O*a*T. Other accepted code-closed core faults
+preserve B and are unchanged by tag/uncompute. Excited-coupler flags
+also have reference B=e and nonpositive recoverable utility.
+
+First-order noise contributions add for the same fixed measured-flag
+recovery. Combining the bounds and maximizing 0<=a<=1 gives
+
+ U_weak-U_bare <= max[0, lambda O-(lambda+1)gamma/2] T.       (W1)
+
+This bound can be loose: it does not assert that bare PED is optimal.
+It allows arbitrary codeword centers, polar/azimuthal angles, gauge
+phases, and general CP recovery throughout the stated tag family.
+
+For the Q1 nominal-white illustration at lambda=5, use
+gamma_A=gamma_C=1/168, gamma_B=1/80,
+gamma_phi,u=gamma_phi,v=1/26-1/64,
+gamma=50/3849 and Gamma=20/1013-25/3849, all per us.
+Thus O=1/128, Gamma>=gamma/2, and (W1) is at most
+15*T/164224 per us, approximately 0.0000913386594*T/us.
+
+The already derived **feasible native plus/gg** rule, without using
+an SDP optimum, exceeds bare PED at these copied rates by
+373165517*T/1453311455232 per us. Therefore its first-order excess
+over every member of this weak-tag family is at least
+
+ 240421997*T/1453311455232 per us
+   =0.0001654304699*T/us >0.                              (W2)
+
+All fractions follow from the earlier exact equal-T moments. These
+are first-order utility coefficients at fixed lambda, not a finite-rate
+error bound. Multiplying (W2) by an illustrative T=0.14 us gives only
+2.32e-5 utility units before higher orders or any physical overhead;
+the source 140 ns waveform has not been transferred to this model.
+C/v rates are copied assumptions and the helper Gamma is an assumed
+exponential white subtraction from a separate constituent Ramsey
+T2*, not an identified TIP/helper bath. System-dependent helper
+emission under real chi_DB, selector activation, finite tag/control
+durations, readout/recovery latency and stronger ordinary schedules
+remain outside this bound. It establishes a conditional utility
+mechanism within a defined comparator family, not an architecture gain.
+
+<a id="nr-r06-tip-prefix"></a>
+
+### A pulse-independent bound for the declared TIP prefix
+
+This is a clean, closed-system bound in the specified retained-\(\chi\)
+star model, not a measured source limit or a full-Hamiltonian speed theorem.
+Let \(T_0>0\), \(\delta=\pi/T_0\), \(\Delta=2\delta\), and take angular
+frequencies. For \(a,c,d\in\{0,1\}\), on
+\(b=|B1,u_g,v_g\rangle,u=|B0,u_f,v_g\rangle,v=|B0,u_g,v_f\rangle\), use
+\[
+h_{acd}(t)=\operatorname{diag}(\chi d,(-1)^a\delta,(-1)^c\delta)
+ +\tfrac12[g_u(t)|b\rangle\langle u|+g_v(t)|b\rangle\langle v|+\mathrm{h.c.}].
+\]
+The same arbitrary complex physical fields act in every sector, including
+off-resonant responses and actual carrier phases. The eight logical
+\(B0,u_g,v_g\) columns are dark identity. There are no extra sector-dependent
+controls, data/helper flips, or free conditional phase corrections.
+
+The first-prefix contract at a common time \(h\) requires both couplers
+to return for all sixteen logical columns, with returned \(b\)-phases
+\[
+z_{acd}=e^{i\beta}(-1)^{a(1-d)+cd}.
+\]
+Thus one common \(B\) frame is allowed. This specifies the entire unknown
+input/reference isometry; final-only return after two windows is weaker.
+The common frame is a clean-code convention, not an inferred action on
+leaked \(f/h\) sectors or a bath compiler.
+
+Compare sectors \(s_0=(1,1,0)\) and \(s_1=(0,0,1)\). With
+\(P_b=|b\rangle\langle b|\) and \(\kappa=\chi-\Delta\),
+\(h_1-h_0=\Delta I+\kappa P_b\): the pump terms cancel exactly.
+For their propagators define \(Z(t)=e^{i\Delta t}U_0^\dagger(t)U_1(t)\).
+Direct differentiation gives
+\[
+\dot Z=-i\kappa U_0^\dagger P_bU_0Z,\qquad
+\|\dot Z(t)b\|\le |\kappa|.
+\]
+Exact prefix return requires \(Z(h)b=e^{i(\Delta h+\pi)}b\).
+Distance on the complex unit sphere regarded as a real sphere is
+\(d_S(x,y)=\arccos\operatorname{Re}\langle x,y\rangle\), and does not
+exceed path length. Therefore, without any pulse-family assumption,
+\[
+L(h):=\operatorname{dist}(\Delta h+\pi,2\pi\mathbb Z)
+ \le |\chi-\Delta|h. \tag{TP1}
+\]
+These relative phases cannot be discarded: the dark columns fix the
+references. A common \(B\) frame cancels in the ratio, and marginal
+\(A,C,D\) phases multiply the ready and dark columns equally.
+
+There is also a direct approximate version without assuming exact return.
+If \(\|U_j(h)b-z_jb\|\le\eta\) for both selected columns, each chord error
+costs at most \(2\arcsin(\eta/2)\) in real-sphere angle. Applying the triangle
+inequality to \(U_1b,e^{-i\Delta h}U_0b\) and their two targets yields
+\[
+\eta\ge 2\sin\!\left(\frac{[L(h)-|\chi-\Delta|h]_+}{4}\right). \tag{TP2}
+\]
+This is a ready-column norm bound, not a separately derived diamond or
+average-fidelity estimate. For the declared rounded input
+\(\chi/(2\pi)=9.29\,\mathrm{MHz}\), at \(h=T_0=100\,\mathrm{ns}\),
+\(|\kappa|h=0.142\pi\) and \(\eta\ge1.24803\).
+At \(h=T_0=140\,\mathrm{ns}\), \(\eta\ge0.61624\).
+
+A declared per-pump cap \(|g_j|\le\Omega_{\max}\) strengthens the exact
+result. At \(d=0\), fix \(c\) and compare \(a=0,1\); their Hamiltonian
+difference is \(-\Delta P_u\), and their target phases differ by \(\pi\).
+The relative-vector path length consequently gives
+\(\pi\le\Delta\int_0^h|u_1(t)|\,dt\).
+Put \(G=\Omega_{\max}/2\), the actual off-diagonal magnitude cap.
+Because there is no direct \(u\)-\(v\) edge,
+\(|d|u_1|/dt|\le G|b_1|\le G\sqrt{1-|u_1|^2}\).
+Exact start and final return make \(\arcsin|u_1|\) a \(G\)-Lipschitz
+function with zero endpoints. Hence
+\[
+|u_1(t)|\le\sin\min\{Gt,G(h-t),\pi/2\},\quad
+\frac\pi\Delta\le I_{\rm cap}(h)=
+\begin{cases}2[1-\cos(Gh/2)]/G,&h\le\pi/G,\\
+h-(\pi-2)/G,&h\ge\pi/G.\end{cases} \tag{TP3}
+\]
+
+Take \(T_0=0.1\,\mu\mathrm s\) and the exploratory, not source-hard,
+cap \(\Omega_{\max}/(2\pi)=9\,\mathrm{MHz}\). Then
+\(\Delta=20\pi\), \(G=9\pi\), \(|\kappa|=1.42\pi\) in inverse microseconds.
+Equation (TP1) allows bands
+\([(2n-1)\pi/(\Delta+|\kappa|),(2n-1)\pi/(\Delta-|\kappa|)]\).
+Its first band is \([50/1071,50/929]\,\mu\mathrm s\).
+Throughout it, monotonicity and \(1-\cos x\le x^2/2\), \(\pi<4\), give
+\[
+I_{\rm cap}(h)\le\tfrac{9\pi}{4}(50/929)^2
+ <22500/863041<1/20=\pi/\Delta\quad(\mu\mathrm s).
+\]
+Thus the whole first band fails (TP3); the next band starts at
+\[
+h\ge 50/357\,\mu\mathrm s=140.056\,\mathrm{ns}. \tag{TP4}
+\]
+Two exact intermediate-ready windows therefore require at least
+\(100/357\,\mu\mathrm s=280.112\,\mathrm{ns}\) under these assumptions.
+The symmetric second window uses the \(v\)-leaf argument. In contrast,
+ordinary \(D=0\) serial ideal TIP pulses each take \(T_0\), with
+\(\Omega=\sqrt3\pi/T_0<\Omega_{\max}\), and return the couplers;
+their product is \(Z_B\,CZ_{AB}CZ_{CB}\), repaired by one common \(B\) frame.
+This certifies the clean \(2T_0=200\,\mathrm{ns}\) target only, not its noisy
+performance or a compiled helper-independent PCS body.
+
+The bound does not exclude longer or corrected prefixes. A paid conditional
+\(DB\) phase \(\zeta\) replaces \(L(h)\) by
+\(\operatorname{dist}(\Delta h+\pi+\zeta,2\pi\mathbb Z)\).
+Extra controls, dissipation, sector-dependent matrix elements or the full
+source Hamiltonian can change the premises; the 9 MHz cap is a model choice.
+No prototype, full-device minimum time, noisy dominance or SWITCH advantage
+follows. Carrier-only labels and final endpoint equality remain insufficient
+to certify the complete physical opposite-order instrument.

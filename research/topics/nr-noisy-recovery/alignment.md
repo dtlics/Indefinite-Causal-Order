@@ -526,6 +526,189 @@ experiment for a smaller positive nominal angle; it does not interchange
 these limits or give a zero-false-positive alarm. The all-length exact-null
 optimization remains a different question.
 
+<a id="nr-r18-recorded-photonic"></a>
+
+### Recorded photonic measurement: a calibration comparison
+
+This compares a
+declared known-anchor calibration family using the accepted measurement
+primitive of the 2026 experiment. It is not a QKD/security statement, a
+physical throughput certificate, or a converse for optimized native
+strategies or NR-R18's fresh-Haar-frame model.
+
+#### What the new sources actually supply
+
+[Experimental Quantum Key Distribution in an Indefinite Causal Order](https://arxiv.org/html/2608.13561v1),
+III.1–III.2, uses Alice's chosen polarization filters and Bob's ancilla-PBS
+measurement. SPDC path pre-entanglement and ancilla-path recombination
+erase the order information. The final control record resides in both
+photons' paths; final detections also reveal Bob's pointer polarization.
+The work explicitly uses post-selection and describes a proof of principle.
+Its reported 0.964 key agreement and 0.033 false-positive probability are
+conditional statistics, not an all-launch pair yield or process fidelity.
+The text does not give a complete preparation/loss/reset/clock ledger for
+a drift-calibration service. Its scanned angle describes an inserted
+attack; the Bob drift angles below are our different proposed experiment.
+
+The underlying
+[measurement-primitive experiment](https://arxiv.org/html/2604.11878v1),
+Sec. II, explicitly allows different waveplate angles before and after
+the PBS, setting measurement and re-preparation bases separately.
+Its Sec. III reports passive interferometer stability beyond 30 minutes;
+this supplies no measured short calibration deadline.
+
+The distinct
+[2026 three-kilometer witness](https://arxiv.org/pdf/2506.20516)
+uses the recorded measure-and-prepare operators
+$M_{a|x}=|x\rangle\langle a|$. Forgetting a produces a replacement
+channel, not NR-R18's unread Lüders dephaser. It uses spools simulating
+separation and a stated 20-microsecond trial with 1-microsecond bins;
+these are not the QKD apparatus's clock. Its stable-interference record
+over 15 minutes also supplies no fresh-Haar two-query drift deadline.
+
+#### A precise two-angle instrument model
+
+Fix a known laboratory Z anchor and a real rotation plane. Let
+$R(\theta)=\exp(-i\theta Y/2)$ and
+
+$$
+ P_a=(I+aZ)/2,\qquad
+ M_b=R(\theta_o)|b_Z\rangle\langle b_Z|R(\theta_i)^\dagger,
+ \qquad a,b\in\{+1,-1\}.
+$$
+
+Here $\theta_i$ is Bob's input POVM angle and $\theta_o$ the output
+preparation angle. This is a complete recorded projective measurement:
+$\sum_b M_b^\dagger M_b=I$. Independent drift of a measurement's pre-
+and post-rotation need not preserve the one-angle Lüders relation
+$\theta_i=\theta_o$. The accepted ideal PBS primitive has Kraus
+operators $M_b/\sqrt2$, giving intrinsic success 1/2. Its rejected
+complement has effect $I/2$; this does not specify all failed-photon maps.
+
+For the source-style native rule, prepare the signal in Y+, choose a
+uniformly at random, use the corresponding Alice filter $P_a$, and read
+the order control in X after Bob's pointer erasure. Include the actual
+classical-choice and PBS amplitudes. The accepted refined operators are
+
+$$
+ K_{ab,s}=(M_bP_a+sP_aM_b)/4,\qquad s=\pm1.
+$$
+
+Put $c_j=\cos\theta_j$ and $t_j=(1+ab c_j)/2$. Since these matrices are
+real, their probabilities on Y+ equal those on I/2. Direct multiplication
+gives
+
+$$
+ p_{ab,s}=\frac{t_i+t_o+2s t_i t_o}{32},\qquad
+ \sum_{a,b,s}p_{ab,s}=\frac14.
+ \tag{PA1}
+$$
+
+All unaccepted intrinsic filter/PBS events count as rejects. After
+normalizing by this constant success probability, the minus probability
+is $(1-c_i c_o)/4$.
+
+**Identification obstruction for this readout.** The entire probability
+law (PA1), including a and b, is invariant under
+$\theta_i\leftrightarrow\theta_o$. Thus these records cannot distinguish
+an input-measurement rotation from the same output-preparation rotation.
+On the diagonal $\theta_i=\theta_o$, the two derivative columns coincide,
+so the local Fisher matrix has a null direction for their difference.
+This is an obstruction for the stated source-style records, not for a
+native protocol augmented with additional preparations or target readout.
+
+#### An ordinary probe separates the two drifts
+
+Prepare $|0_Z\rangle$, pass it through the same recorded Bob primitive,
+retain b, and measure the retained signal in Z with outcome z=±1.
+No Bell input, quantum memory or inaccessible Kraus record is required.
+The unnormalized measured probabilities are
+
+$$
+ p_{b,z}^{O}=\frac{(1+b c_i)(1+bz c_o)}8,\qquad
+ \sum_{b,z}p_{b,z}^{O}=\frac12. \tag{PA2}
+$$
+
+Conditional on acceptance, b has Fisher information 1 about
+$\theta_i$, and z conditional on b has information 1 about $\theta_o$.
+Their score cross term vanishes by conditional normalization. The
+all-prepared-pair Fisher matrix is therefore
+
+$$
+ F^O=\frac12\begin{pmatrix}1&0\\0&1\end{pmatrix}.
+ \tag{PA3}
+$$
+
+This holds at interior angles; singular alignment endpoints require
+one-sided limits. The final two-outcome Z readout and Bob's successful
+retained-target instrument must actually be available and priced. If
+desired, an Alice $P_+$ filter may remain before Bob: the known input
+passes it intrinsically with probability one, while insertion loss counts.
+
+For the tied one-angle Lüders family, (PA1) gives conditional information
+$12/(9-\cos^2\theta)$. After its success 1/4, the actual displayed
+record rule has
+
+$$
+ F^S_{\mathrm{pair}}=\frac3{9-\cos^2\theta}\le\frac38,
+ \qquad F^O_{\mathrm{pair}}=1. \tag{PA4}
+$$
+
+The first expression is not a native QFI optimum. It includes more than
+the native control alone, but not an added polarization tomography of
+the target. The ordinary result uses the already accessible Bob record
+and a standard terminal readout; cryptographic restrictions on who may
+inspect a secret bit are not a measurement-calibration restriction.
+
+There is a still simpler comparison if only input-POVM alignment matters.
+Retain b and use the signal detection only to identify successful PBS
+events, without resolving its output polarization. Then
+$p_b^O=(1+b\cos\theta_i)/4$ and its information per prepared pair is
+1/2, independent of $\theta_o$. Even this pointer-only result exceeds
+the tied-angle native record rule's bound 3/8. It does not separately
+calibrate the output preparation; (PA2)–(PA3) supply that additional task.
+
+#### Physical rate cut and next experiment
+
+The pair in (PA1)–(PA4) is a prepared ideal two-photon input, not a pump pulse
+or a detected coincidence. Let $\eta_O,\eta_S$ include extra pair
+preparation, routing, collection and detector efficiencies, and let
+$T_O,T_S$ be their complete average trial clocks. If these efficiencies
+are parameter independent and other errors are absent, the information
+rates are $\eta_O/T_O$ and
+$3\eta_S/[(9-\cos^2\theta)T_S]$. The ordinary readout wins whenever
+
+$$
+ \frac{\eta_O/T_O}{\eta_S/T_S}\ge
+ \frac3{9-\cos^2\theta}.
+$$
+
+Unknown or parameter-dependent loss instead requires the full count
+likelihood and nuisance-parameter fit. The paper's conditional agreement
+and control visibility do not determine these quantities. Extra source
+readiness, reset, pointer-photon production, output readout, no-clicks,
+false heralds, finite visibility and frame stability all remain charged.
+For the pointer-only ordinary rule the sufficient rate condition becomes
+$(\eta_O/T_O)/(\eta_S/T_S)\ge6/(9-\cos^2\theta)\le3/4$.
+
+The discriminating same-apparatus test is a two-dimensional sweep of
+Bob's pre- and post-rotation angles. Measure the source-style native
+records and the ordinary (b,z) records at the same pair supply. Retain
+all clock, source-herald, detector and rejection counts, rather than
+renormalizing independent successful subsets. Verify the swap symmetry
+and the separately identifiable ordinary likelihood, then compare
+information per elapsed time with fitted loss/background nuisance
+parameters. A hard two-query cap needs a measured drift/deadline reason;
+neither source establishes NR-R18's fresh common orientation.
+
+The standard-library [photonic alignment guard](checks/architecture/photonic_alignment_guards.py) verifies five rational
+one-angle matrix fixtures and nine two-angle fixtures, including success
+weights, derivatives, the swap-symmetric native law and ordinary Fisher
+matrix. Its matrices retain the complete intrinsic reject weight;
+continuous identities (PA1)–(PA4) are the analytic derivation above. No
+physical phase/bath/record overlap, full failed-photon instrument or
+hardware advantage is certified by these finite checks.
+
 ### Physical and verification scope
 
 The model assumes a shared arbitrary orientation that is fresh between rounds yet stable across both order histories; independent unread meters for each query; no accessible frame-control words or reusable pointer records; and coherent recombination of the same slot-labeled meter histories. None is implied merely by observing polarization drift or by fitting two reduced dephasing channels. Unreset shared baths, distinct visit timestamps and chronological records require their full instrument, as discussed in [the bath screen](backaction.md). If the ordinary experiment can fit more probes in the same stability window, a hard two-query deadline needs a measured resource reason. If both outcome labels exist in the switch apparatus, (17) is a mandatory baseline.

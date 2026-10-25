@@ -360,8 +360,14 @@ Accessible consistent measurement labels also change the comparison.
 Fixed control background destroys the ideal local null advantage. An
 application must explain why two modules share a frame
 throughout a round, why it is fresh before the next round, and why useful
-records and pilots are unavailable. Existing polarization tracking and
-recorded-meter experiments do not yet supply that full interface.
+records and pilots are unavailable. Existing polarization tracking does
+not supply that full interface. The separate
+[recorded photonic calibration comparison](alignment.md#nr-r18-recorded-photonic)
+uses a known anchor and accessible pointer records. Its displayed native
+records confound input-measurement and output-preparation drift; an
+ordinary probe and terminal readout separate their local responses at
+interior angles. A same-apparatus test must retain source, rejection,
+detector and clock counts. This does not change the fresh-frame theorem.
 
 A switch minus probability measures Kraus-commutator information, which need
 not equal a useful scheduling quantity. Commuting channel superoperators can
@@ -1459,6 +1465,13 @@ Pauli-diagonal accepted map with a scalar copied cross map, including a
 known required gate when its transported checks are available. Coherent
 noise and nonscalar cross maps need a separate calculation. The correlation
 moments, calibration and controlled gates are charged assumptions.
+The [multitime comparison](architecture-baselines.md#nr-r06-multitime-purification)
+allows correlated Pauli histories within each independent process copy
+and separates signed virtual purification from delivered plus outputs.
+When the no-error history is dominant, exposed noise slots and paid
+transported coherent checks give a stronger ordinary unitary-target
+comparison. This does not compile arbitrary nonunitary middle processes
+or an uncleared shared bath.
 An application must include a required gate, readout or other useful
 contact action: an ordinary device can turn off purely harmful switchable
 contacts. The next physical test therefore needs that action, its complete
@@ -1496,14 +1509,18 @@ cavity device. The next discriminating test is a specified noisy native
 pulse word against these matched ordinary controls.
 
 The [required TIP gate component](methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)
-retains spectator idle errors and actual chronological record labels.
-Its shared-qubit ordinary proof, complete equal-window fault ledgers and
-selector-pulse guard delimit the proposed benefit; source-like copied
-rates do not beat the tested ordinary check. Fast private-coupler noise
-and held offsets have different flags. Their actual temporal correlations,
-joint selector calibration and stronger ordinary controls remain required.
-The same component now retains mid-pulse helper decay, both physical
-ordinary helper encodings, and a complete measured-check echo baseline.
+retains spectator idle errors, mid-pulse helper decay and chronological
+records, with shared-qubit, equal-window and measured-check echo baselines.
+Its [recovery analysis](methods/tip-gate-screen.md#nr-r06-tip-recovery)
+shows why Pauli-only flag correction is too restrictive; a conditional
+first-order gap remains against the stated static weak-tag family at
+copied white-noise rates. The
+[prefix bound](methods/tip-gate-screen.md#nr-r06-tip-prefix) excludes short
+exact intermediate-ready windows in the declared common-pump star model;
+an ordinary clean serial word is faster at the stated cap. Neither result
+supplies a noisy full-device comparison. Actual temporal correlations,
+selector calibration, dynamic ordinary controls and full readout/recovery
+clocks remain required.
 
 The [required charging comparison](architecture-baselines.md#nr-r06-charging-records)
 uses the same conditional work and meter-record service on both sides.

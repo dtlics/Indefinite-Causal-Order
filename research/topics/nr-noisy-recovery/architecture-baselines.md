@@ -2552,9 +2552,15 @@ selector and readout costs; the same control couplings, deferred midpoint
 checks and simultaneous ordinary drives remain part of the physical test.
 
 The component also gives a scoped exact obstruction for one rectangular
-selector pulse. Shaped or jointly designed controls remain open. A partial
-erasure fraction or reduced noisy-CZ fit supplies neither that selector's
-timed bath instrument nor a practical advantage.
+selector pulse. Its [flag-recovery analysis](methods/tip-gate-screen.md#nr-r06-tip-recovery)
+includes a non-Pauli optimum for one observed flag and a conditional
+first-order bound for a broader static weak-tag family. The separate
+[prefix proof](methods/tip-gate-screen.md#nr-r06-tip-prefix) concerns the
+specified intermediate-ready common-pump contract under a declared cap,
+not a full-device minimum time. Shaped, jointly designed or intermediate
+controls remain outside those bounds. A partial erasure fraction or
+reduced noisy-CZ fit supplies neither the selector's timed bath instrument
+nor a practical advantage.
 
 <a id="nr-r06-required-state-preparation"></a>
 
@@ -6813,6 +6819,136 @@ residual noise when inactive. Finite splitting, anisotropy and such
 required operations need their own retained-output calculation and
 ordinary parity, known-energy, QEC and protected-storage comparison.
 They remain open rather than established native gains.
+
+<a id="nr-r06-multitime-purification"></a>
+
+### Multi-time virtual purification and the physical-output comparator
+
+**Source facts (under 180 words).** Liu et al.'s [experiment v1](https://arxiv.org/html/2511.20304v1)
+(published as [PRL 137, 030601](https://doi.org/10.1103/77n6-slpf)) uses a same-size
+maximally mixed ancillary register, one plus control, four register-CSWAPs and
+middle ancillary depolarization for two noise times. Pauli twirling gives
+classically correlated temporal error histories. Appendix B, Eqs. (21)--(24),
+gives physical positive branches and a signed reconstruction; C gives its
+observable-ratio variance; D extends times, copies and unequal distributions.
+The theory's [v1 Theorem 2, Eqs. (9)--(10)](https://arxiv.org/html/2412.11220v1)
+explicitly distinguishes virtual purification from physical plus postselection.
+The experiment uses calibrated NMR controls, pseudo-pure preparation and
+ensemble observable readout. It implements the simplified circuit for its
+nonunitary target. Calibration-free refers to the target noise distribution;
+known Pauli frames and calibrated wrappers remain necessary. Main-text
+twirl compilation invokes weak-noise gate factorization. Appendix B factors
+the two full-history copy laws; temporal memory inside a copy is allowed,
+starting from decoupled system/environment inputs.
+Neither equal marginals nor reusing one uncleared bath establishes this product law.
+
+**Actual CP instrument.** Write `h` for a whole Pauli history and `V_h` for
+its ideal-unitary-interleaved operation; `V_0=U`. For independent equal copies,
+put `N=sum_h p_h Ad(V_h)`, `C_m=sum_h p_h^m Ad(V_h)` and `S_m=sum_h p_h^m`.
+The two-copy subnormalized output maps and their probabilities are
+
+```
+A_+=(N+C_2)/2,   A_-=(N-C_2)/2,   P_+=(1+S_2)/2,   P_-=(1-S_2)/2.
+```
+
+History coefficients `p_h(1+/-p_h)/2` are nonnegative; the maps sum to N.
+These are complete accepted/rejected quantum maps on every input/reference,
+with input-independent record probabilities. Plus returns weights
+`p_h(1+p_h)/(1+S_2)`. The squared weights belong instead to the signed ratio
+`(A_+-A_-)/S_2=C_2/S_2`; measuring both signs reconstructs its observables.
+The control does not herald equality of the two hidden histories: a mismatch
+still contributes to both records. Unequal independent laws p,q give
+`A_+/-=(N_p+N_q+/-2 sum_h p_h q_h Ad(V_h))/4`.
+
+Let `p_0=1-epsilon`, `r_m=sum_(h!=0) p_h^m`. The physical plus history-error
+weight is `(epsilon+r_2)/(1+S_2)=epsilon/2+O(epsilon^2)`, whereas the virtual
+weight is `r_2/S_2=O(epsilon^2)`. For actual Bell infidelity use
+`b_h=1-|Tr(U^dagger V_h)|^2/d^2`, including b_h=0 for cancelling histories:
+
+```
+B_+=(B_N+sum_h p_h^2 b_h)/(1+S_2) >= B_N/(1+S_2) >= B_N/2.
+```
+
+Thus plus alone does not quadratically suppress a family with `B_N=Theta(epsilon)`.
+In the ideal m-copy cyclic construction, mixed-register traces force all
+copy labels equal at every noise time, giving the same `(N+/-C_m)/2` form.
+The virtual error decreases exponentially in m if p_0 is strictly largest;
+physical plus retains at least half B_N and tends back to N as S_m tends to
+zero for a fixed nontrivial distribution. More copies do not turn the
+signed state into a delivered purified payload.
+
+**Control-only postselection cannot remove the original map.** Before X
+measurement the control blocks are `[[N,C_2],[C_2,N]]/2`. A positive control
+effect F gives `A_F=alpha N+beta C_2`, with `alpha=Tr(F)/2` and
+`beta=Re(F_01)`. Positivity implies `|beta|<=alpha`; hence cancelling N also
+cancels C_2. X-plus already maximizes the collision/original coefficient
+ratio. A different positive control readout or nonnegative record selection
+cannot physically extract C_2 alone. This is a control-only statement,
+not a prohibition on new data recovery, encodings or additional syndrome ports.
+
+**The existing ordinary Pauli-check baseline is stronger when its ports exist.**
+Extend (FP24a) to t exposed twirled noise times separated by known unitary
+targets. Independently sample a uniform phase-free Pauli Q_s at each time;
+use the same clean helper to accumulate the before/after controlled-Q_s
+commutation sign. If a noisy slot includes U_s, its matching controlled
+output/input check must be transported by U_s; it is not merely a Pauli frame
+label. Conditioned on h the data operation remains V_h, while the helper sign is
+`chi_Q(h)=product_s (-1)^[Q_s,P_(h_s)]`. Character orthogonality gives
+`E_Q chi_Q(h)=1_(h=0)`, independently of correlations between the h_s. Thus
+
+```
+O_+=(N+p_0 Ad(U))/2,   O_-=(N-p_0 Ad(U))/2,
+P_O+=(1+p_0)/2,         P_O-=(1-p_0)/2.
+```
+
+All coefficients are nonnegative and both records remain in the ledger.
+Every pure input/reference has nonnegative target infidelity b_h, so
+`B_O+=sum_h p_h b_h/(1+p_0)`. If p_0 is dominant, `S_2<=p_0`, and for each
+nonzero h
+
+```
+p_h/(1+p_0) <= p_h(1+p_h)/(1+S_2).
+```
+
+Therefore the normalized ordinary plus output has no larger pure-target
+infidelity than VCP plus. Its history-error weight is `epsilon/(2-epsilon)`.
+The launched comparison is also favorable: write `q_C=sum_h p_h^2(1-b_h)`.
+Ordinary plus has bad mass `B_N/2` versus `(B_N+sum_h p_h^2 b_h)/2` for VCP;
+its good mass exceeds VCP's by `(p_0-q_C)/2>=0`, since `q_C<=S_2<=p_0`.
+Thus ordinary plus weakly dominates every launched score `q-lambda*b`,
+`lambda>=0`, for each pure unitary-target/reference input under these ports.
+Its signed difference is `p_0 Ad(U)`, so an observable ratio reconstructs the
+ideal unitary expectation when p_0>0. This uses coherent controlled checks;
+classical twirling alone does not supply them. It does not extend through an
+arbitrary nonunitary middle channel without a compatible supplied isometry.
+
+**Resources and statistics.** VCP needs two full process realizations with
+matched Pauli frames and the stated copy law, another n-qubit register,
+CSWAPs of the whole payload, middle mixed reset, control memory and readout.
+The ordinary check uses one process realization and one helper, but needs
+2t real controlled register-Pauli checks (including transported checks),
+2nt additional random check-setting bits, and helper coherence through the same clock.
+Their synthesis, noise, bath disturbance, reset and latency must be paid.
+CSWAP access does not grant cheap transported controls. The source's NMR
+signed tomography does not demonstrate a single-shot retained-payload service.
+
+For signed VCP shots `(s,o)`, define `mu=Tr(O C_m(rho))/S_m` and
+`a=Tr(O N(rho))`. The same-shot ratio has large-sample variance
+`[Tr(O^2 N(rho))-2mu*a+mu^2]/(K S_m^2)`, with numerator at most four for
+`||O||<=1`; it can vanish, so this is not a universal lower bound.
+The denominator must concentrate away from zero; finite ratios may be biased.
+For a strictly dominant p_0<1, `S_m~p_0^m` and the generic factor is `p_0^(-2m)`.
+For the signed ordinary check replace S_m by p_0. Charge every repetition.
+
+A plain SWITCH sorts commutation, not history equality: for commuting I/Z
+noise its minus record vanishes and its output is N composed with N.
+A native known-Pauli/noise ordering can supply a physical parity check, but
+the matched ordinary controlled-P sandwich has that same full instrument
+when it has the same bath access. A useful hybrid must establish cheaper
+actual coherent checks or a different useful physical instrument; neither
+calibration-free wording nor signed squared weights establish that advantage.
+An unknown private gate also need not expose the matched-frame compilation
+port: this comparator does not alter the fresh-frame physical-return theorem.
 
 <a id="nr-r06-required-bcs-gate"></a>
 

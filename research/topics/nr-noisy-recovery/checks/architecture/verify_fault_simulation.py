@@ -547,6 +547,77 @@ def passive_reordering_checks():
             "scope": "Exact finite seed symmetrizer, dimension/coefficient, explicit qutrit second-design, CP Choi-overlap and target-statistic identities. Representation decomposition, Haar twirling, all-mode variance proof and physical source/SWAP/routing costs remain analytic; no approximate finite passive design or hardware certificate."}
 
 
+def check_multitime_purification_comparator():
+    # Phase-free I,X,Z,Y labels. For U=I, equal nonzero temporal labels cancel.
+    labels = tuple(product(range(2), repeat=2))
+    zero = (0, 0)
+    p = {(zero, zero): F(3, 5), ((0, 1), (0, 1)): F(1, 5),
+         ((1, 0), zero): F(1, 10), (zero, (1, 1)): F(1, 10)}
+    require(sum(p.values()) == 1, "History distribution not normalized")
+    marginal0 = sum(v for (a, _), v in p.items() if a == zero)
+    marginal1 = sum(v for (_, b), v in p.items() if b == zero)
+    require(p[(zero, zero)] != marginal0*marginal1, "Fixture is temporally independent")
+    p0 = p[(zero, zero)]
+    require(all(weight <= p0 for weight in p.values()), "No-error history is not dominant")
+    s2 = sum(v*v for v in p.values())
+    ordinary = [{g: F(0) for g in labels} for _ in range(2)]
+    vcp = [{g: F(0) for g in labels} for _ in range(2)]
+    original = {g: F(0) for g in labels}
+    collision = {g: F(0) for g in labels}
+    settings = tuple(product(labels, repeat=2))
+    for history, weight in p.items():
+        net = tuple(a ^ b for a, b in zip(*history))
+        original[net] += weight
+        collision[net] += weight*weight
+        for pointer, sign in enumerate((1, -1)):
+            vcp[pointer][net] += weight*(1+sign*weight)/2
+        for checks in settings:
+            exponent = sum(q[0]*h[1]+q[1]*h[0] for q, h in zip(checks, history)) % 2
+            ordinary[exponent][net] += weight/F(len(settings))
+    for g in labels:
+        require(vcp[0][g]+vcp[1][g] == original[g], "VCP lost a record")
+        require(vcp[0][g]-vcp[1][g] == collision[g], "Signed collision map disagrees")
+        require(ordinary[0][g]+ordinary[1][g] == original[g], "PCS lost a record")
+        require(ordinary[0][g]-ordinary[1][g] == (p0 if g == zero else 0), "History character projection failed")
+        require(all(out[g] >= 0 for out in vcp+ordinary), "Negative CP Pauli coefficient")
+    pv = sum(vcp[0].values())
+    po = sum(ordinary[0].values())
+    require(pv == (1+s2)/2 and po == (1+p0)/2, "Wrong launched acceptance")
+    bv = sum(v for g, v in vcp[0].items() if g != zero)/pv
+    bo = sum(v for g, v in ordinary[0].items() if g != zero)/po
+    bad_v = sum(v for g, v in vcp[0].items() if g != zero)
+    bad_o = sum(v for g, v in ordinary[0].items() if g != zero)
+    good_v, good_o = vcp[0][zero], ordinary[0][zero]
+    require(bad_o <= bad_v and good_o >= good_v,
+            "Launched utility dominance for every lambda>=0 failed")
+    require(good_o-good_v == (p0-collision[zero])/2,
+            "Launched good-mass difference disagrees")
+    base_bad = 1-original[zero]
+    require(bo <= bv and bv >= base_bad/2, "Physical comparison inequality failed")
+    for history, weight in p.items():
+        if history != (zero, zero):
+            require(weight/(1+p0) <= weight*(1+weight)/(1+s2), "Per-history dominance failed")
+    effects = [(F(1, 2), F(1, 2), F(1, 2), F(0)),
+               (F(1, 2), F(1, 2), F(-1, 2), F(0)),
+               (F(1), F(0), F(0), F(0)),
+               (F(3, 4), F(1, 4), F(1, 4), F(0)),
+               (F(1, 2), F(1, 2), F(0), F(1, 2))]
+    for a, b, c, d in effects:
+        require(a*b >= c*c+d*d and (1-a)*(1-b) >= c*c+d*d, "Invalid control effect")
+        alpha, beta = (a+b)/2, c
+        require(alpha*alpha-beta*beta == ((a-b)**2+4*(a*b-c*c))/4, "Positive-effect identity failed")
+        require(abs(beta) <= alpha, "Control collision coefficient exceeds original coefficient")
+        require(all(weight*(alpha+beta*weight) >= 0 for weight in p.values()), "Control effect not CP")
+    return {"status": "PASS", "scope": "one exact correlated two-time Pauli fixture including cancellation; ideal CP/coefficient and control-effect identities, no device claim",
+            "S2": str(s2), "original_Bell_bad": str(base_bad),
+            "VCP_plus_acceptance": str(pv), "PCS_plus_acceptance": str(po),
+            "VCP_plus_Bell_bad": str(bv), "PCS_plus_Bell_bad": str(bo),
+            "launched_good_gain": str(good_o-good_v),
+            "launched_bad_reduction": str(bad_v-bad_o),
+            "utility_dominance_all_lambda_nonnegative": True,
+            "random_check_settings": len(settings), "positive_control_effects": len(effects)}
+
+
 def main():
     from verify_cat_reservoir_parity import verify_cat_reservoir_parity
     from verify_cat_physical_interface import verify_cat_physical_interface
@@ -579,6 +650,7 @@ def main():
         "su11_complete_ports": verify_su11_full_ports(),
         "known_gaussian_control": verify_known_gaussian_control(),
         "conditional_noise_readout": verify_conditional_noise_readout(),
+        "multitime_purification_comparator": check_multitime_purification_comparator(),
         "scope": ("Finite exact d=2,4 algebra replay of known orthogonal-unitary process bases, "
                   "correlated Bell-label decoding, and the full coherent switched-output ordinary simulation. "
                   "Persistent-trajectory induction, matched physical fault laws, noiseless memory, allowed "
