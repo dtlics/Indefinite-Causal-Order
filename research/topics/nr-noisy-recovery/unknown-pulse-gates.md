@@ -14,6 +14,15 @@ This is a physical unknown-input gate target, not a tracked unknown frame.
 The same target has an exact ordinary three-pulse implementation with
 less interaction exposure than even the first native attempt.
 
+The [all-launch corollary](#nr-r21-all-launch-query-price) counts failed
+and training queries, giving native exact-success/query $4/9$ against
+the ordinary upper bound $20/47$ in the original interface. A separate
+[finite-penalty proof](methods/pulse-gate-robustness.md) gives an
+unquantified nonzero Bell-utility separation neighborhood. Neither
+supplies a certified numerical error tolerance. The
+[physical selector component](methods/pulse-selector-ports.md) retains
+stronger optical controls, phases, loss, calibration reuse and delivery.
+
 The [NR-R17 owner](braided-magic.md#nr-r17) already contains the
 quarter-braid gate mechanism, magic witness and protected-Ising router
 obstruction. The distinct result here concerns continuously unknown
@@ -378,6 +387,12 @@ port is neither implied by abstract order control nor an ordinary
 restriction one may impose on a device that genuinely supplies it.
 Selection among $I,A,B$ would be a still stronger LCU premise.
 
+The [selector-port component](methods/pulse-selector-ports.md) extends
+this same construction to general $\alpha$, retaining the complete
+flagged instrument and signed repair. It distinguishes named box
+opportunities from occupied traversals, installed-angle mismatch,
+occupied/bypass phase calibration, passive loss and output release.
+
 ## Causal comparison and its limits
 
 The exact Euler word, the restricted optimum (AP10), and the achievable
@@ -693,6 +708,120 @@ particular higher-dimensional encoding or known pair.
 The certificate bounds neither optimal approximate channels nor
 coherent angle/selector oracles, timing, noise or physical factory cost.
 
+<a id="nr-r21-all-launch-query-price"></a>
+
+## Exact accepted outputs per all-launched query cost
+
+The same scalar upstream dual used above gives a heralded production
+corollary for $U_g=U_{\pi/4,g}$. Retain the original continuously unknown
+qubit frame, repeatable throughout the protocol, exact physical target
+on every input/reference, classically chosen query names
+and angles, and standard measurable instruments. Charge every named
+oracle invocation in the single-payload protocol, including probes or
+training before the payload enters its processing register. Retain
+rejections, oracle-free termination and random stopping. Oracle-related
+advice is excluded unless its acquisition queries are charged here.
+This does not establish a per-payload amortized bound for a batch sharing
+learned frame information or a calibrated program. Coherent name/angle
+selection and supplied vacuum/bypass extensions change the interface;
+the [selector-port component](methods/pulse-selector-ports.md) treats them
+separately.
+
+Let the exact successful subchannel for frame $g$ be
+$p(g)\operatorname{Ad}_{U_g}$. Let $R$ be the input-qubit effect of ever
+invoking the first query. It is frame independent because no oracle has
+yet been accessed, but need not be proportional to identity. On a
+normalized maximally mixed qubit, equivalently half a normalized Bell
+pair, write $r=\operatorname{Tr}R/2$. Let $p_2(g)$ denote exact successful
+completion by query two. Zero- and one-query universal exact successes
+vanish by the existing support argument.
+
+Keep the upstream first-query normalization rather than replacing it
+by identity:
+
+$$
+\sum_j\operatorname{Tr}_{A_{\rm in}}C_{0,j}\le R^T.
+$$
+
+Both possible first-query names share this normalization. Applying the
+same positive $Y,Z,W$ from (AP24)--(AP26), with $W=(13/40)I$ in either
+order, gives
+
+$$
+p_2\le\operatorname{Tr}(W R^T)
+       =\frac{13}{20}r.
+$$
+
+This uses the actual scalar dual, rather than inferring homogeneity from
+the normalized $13/20$ number alone. Positive sums or integrals over
+adaptive records preserve the inequality. Input-dependent prefilters are
+included without treating their conditional inputs as a new universal
+promise.
+
+Let $Q$ count all queries until termination, on failures as well as
+successes. For a fixed frame put $p=p(g)$. Success requires at least two
+queries; successful mass $p-p_2$ requires at least three. Positive tail
+sums therefore imply
+
+$$
+\begin{aligned}
+\mathbb E_gQ
+&\ge\Pr(Q\ge1)+\Pr(Q\ge2)+\Pr(Q\ge3)\\
+&\ge r+p+(p-p_2)\\
+&\ge\frac7{20}r+2p
+ \ge\frac{47}{20}p,
+\end{aligned}
+$$
+
+where $r\ge p$ because success entails a first query. Infinite query
+expectation satisfies the bound trivially. No premise forces every
+started branch to reach its second query. For $p>0$ the all-launched
+cost per successful delivery is at least $47/20$; this is not
+$\mathbb E[Q\mid\mathrm{success}]$, which discards failed-attempt costs.
+The argument is framewise even if later success probabilities vary with
+the frame, and can be averaged over a declared prior while retaining
+universal exactness. A finite-prior fidelity task is different.
+
+The witness input matters. For a different $\rho$, the start probability
+is $\operatorname{Tr}(R\rho)$; the scalar trace certificate does not
+alone prove the corresponding input-weighted inequality unless
+$R=rI$. A universal architecture can nevertheless be tested on the
+maximally mixed/reference input. At almost-sure delivery $p=1$,
+$R=I$, recovering (AP27).
+
+At $\alpha=\pi/4$, the native first-plus instrument has $p=8/9$ and
+exactly two nominal queries per launch. An ordinary protocol with this
+same exact acceptance probability in the original model requires
+$\mathbb E Q\ge94/45>2$. Equivalently, native success per nominal query
+is $4/9$, while the certified ordinary upper bound is $20/47$; their
+ratio is $47/45$. This compares a construction with an upper bound,
+without asserting that the bound is attained. It concerns a terminal
+erasure or fresh-input factory endpoint: rejection does not restore an
+unknown payload for another independent launch.
+
+For a conditional resource conversion, suppose every named invocation
+has the same unavoidable charge $\tau>0$, independent of angle, with
+neither overlap nor amortization. Let all additional native charges per
+launch be $\tau_C\ge0$; ordinary additional charges are nonnegative.
+The ideal native rate exceeds the certified ordinary upper bound iff
+
+$$
+\frac{8/9}{2\tau+\tau_C}>\frac{20}{47\tau}
+\quad\Longleftrightarrow\quad
+\tau_C<\frac{4\tau}{45}.
+$$
+
+This is a conversion under the stated charge model. Actual elapsed-time
+rates require angle dependence, loss, scheduling, reuse and all helper,
+calibration, storage and release costs. The wider Euler comparison
+$d<2\tau/3$ in the physical component only beats one achievable
+ordinary circuit; it cannot replace this tighter certified condition.
+
+The separate [Bell-utility robustness component](methods/pulse-gate-robustness.md)
+proves a finite-penalty extension and an unquantified nonzero separation
+neighborhood for this original quarter-turn interface. It supplies no
+certified numerical error tolerance or hardware noise budget.
+
 ## Bounded NV physical screen and the next useful test
 
 [Taminiau et al., Nature Nanotechnology **9**, 171–176 (2014),
@@ -835,6 +964,9 @@ pivots, 46 exact polynomial coefficients, the necessary-support rank
 and 112 literal Pauli-link contractions, including the amplitude and
 probability normalizations. The frame-support, common-adaptive-dual,
 endpoint, stopping and encoded worst-case arguments are the proofs
-above. No solver, floating tolerance, angle grid, physical NV fit,
+above. The all-launch scalar-price proof, finite-penalty compactness and
+mean-utility proof, and selector phase/loss/clock components are analytic
+extensions of these ingredients; this replay adds no quantitative
+penalty or new guard for them. No solver, floating tolerance, angle grid, physical NV fit,
 coherent-router certificate or new Lean audit is involved. A certified
 upper bound is not an assertion that the causal optimum equals it.

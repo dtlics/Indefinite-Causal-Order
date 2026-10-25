@@ -132,8 +132,15 @@ singular angles, query-type choices and stopping, yielding its ideal exact
 expected-call comparison. Full data/reference Euler and flagged maps and
 random-order Choi ingredients are also replayed. Global diamond equality,
 continuous timing inequalities and the source-specific physical comparison
-remain analytic. No approximate ordinary optimum, measured router, hardware
-benefit, priority claim or new Lean audit follows.
+remain analytic. The [all-launch scalar-price corollary](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21-all-launch-query-price)
+and [finite-penalty existence/mean-utility proof](../research/topics/nr-noisy-recovery/methods/pulse-gate-robustness.md)
+use those exact ingredients analytically. The latter gives no certified
+numerical penalty or error tolerance. The
+[selector-port component](../research/topics/nr-noisy-recovery/methods/pulse-selector-ports.md)
+has analytic full-instrument, phase, passive-loss and resource arguments
+and a primary-source physical screen. These prose extensions add no
+executable guard. No approximate ordinary optimum, measured router,
+hardware benefit, priority claim or new Lean audit follows.
 The separate source-parameter pulse-activation ledger checks scalar
 angle/event, on-chip energy-proxy and conditional setup-clock conversions
 with standard-library floating point. It is a cost diagnostic, not an

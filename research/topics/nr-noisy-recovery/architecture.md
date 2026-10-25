@@ -22,9 +22,19 @@ source-specific NV screen also lacks the required unknown equal-rate
 orthogonal pair and irreducible activation cost. The
 [digital-pulse cost screen](unknown-pulse-gates.md#nr-r21-sfq-activation)
 counts elementary drive events and admitted phase controls; named Euler
-segments do not establish separate source activations. The next test must measure
-those premises and price every ordinary use of any supplied coherent
-selector; this ideal call gap is not an architecture benefit.
+segments do not establish separate source activations. The
+[all-launch bound](unknown-pulse-gates.md#nr-r21-all-launch-query-price)
+now includes training and rejects; its fixed-charge conversion permits
+only a narrow additional native cost. The
+[Bell-utility extension](methods/pulse-gate-robustness.md) proves some
+finite penalty exists, without a certified numerical tolerance. The
+[fixed-spatial optical screen](methods/pulse-selector-ports.md)
+distinguishes flight time from angle access and prices ordinary coherent
+selection, occupied/bypass phases, vacuum-buffer compilation, loss,
+calibration reuse and actual output release. Its inspected primary
+sources do not qualify the full unknown-frame workload and matched
+ordinary service. That physical comparison remains the next test;
+these ideal query results establish no architecture benefit.
 
 ## What is established
 
