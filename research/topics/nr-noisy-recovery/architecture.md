@@ -1527,7 +1527,13 @@ Its [recovery analysis](methods/tip-gate-screen.md#nr-r06-tip-recovery)
 allows non-Pauli recovery and arbitrary common helper-only rotations
 between fixed boundary tags. The conditional first-order gap assumes
 fixed white baths and a factorized helper-independent body; it does not
-cover retained coupling, conditional retagging or reset. The
+cover retained coupling, conditional retagging or reset. The separate
+[moving-encoding construction](methods/tip-gate-screen.md#nr-r06-tip-moving-encoding)
+beats the earlier feasible native-plus score in a stronger ideal control
+model, including rejected outcomes and no-jump loss. Its
+[required conditional exchanges](methods/tip-gate-screen.md#nr-r06-tip-moving-controls)
+are absent from the stated instantaneous common-pump controls; finite
+compilation and its full noise/clock cost remain open. The
 [prefix bound](methods/tip-gate-screen.md#nr-r06-tip-prefix) and
 [paid-control construction](methods/tip-gate-screen.md#nr-r06-tip-finite-body)
 keep intermediate-ready and final-only gate contracts distinct. The latter

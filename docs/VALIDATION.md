@@ -579,6 +579,15 @@ full-device speed limit or unavoidable all-flag idle penalty. Actual bath
 correlations, coupled-sector calibration, extra controls and complete
 recovery/readout/reset costs remain physical premises; no new Lean audit,
 source-fitted noise prediction or hardware advantage is certified.
+The [moving-encoding comparison](../research/topics/nr-noisy-recovery/methods/tip-gate-screen.md#nr-r06-tip-moving-encoding)
+adds exact finite helper/B fine operators, full-flag/no-jump rate ledgers
+and a rational margin over one feasible native rule in a stronger control
+model. The separate instantaneous control-span matrix does not exclude
+finite synthesis. General moving-frame/reference, continuity, conditional
+edge/derivative and robust-utility proofs remain analytic. The encoded
+body, its fixed driven-white baths and actual pulse/clock realization
+are supplied premises; neither a physical advantage nor an optimized
+native converse is certified.
 
 The separate encoded-Pauli replay checks full code-input and retained-record
 channels, mixed/reference states, the deferred coherent-record circuit and

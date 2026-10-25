@@ -200,6 +200,8 @@ def verify():
         assert ordinary_keep[0] + lam * ordinary_keep[1] - native_loss == (-2201 + 2999 * lam) / 8192
     echo_cases = echo_instrument_guard()
     from tip_common_rotation_guards import verify as verify_common_rotations
+    from tip_moving_encoding_guards import verify as verify_moving_encoding
+    from tip_encoding_control_guards import verify as verify_encoding_controls
     return {"status": "passed", "helper_T1_rational_moments": 7,
             "data_T1_and_private_dephasing_rational_moments": True,
             "finite_held_phase_echo_operator_cases": echo_cases,
@@ -207,7 +209,9 @@ def verify():
             "recovery_and_prefix_ingredients": recovery_and_prefix_guards(),
             "common_helper_rotation_ingredients": verify_common_rotations(),
             "retained_body_and_idle_ingredients": retained_body_and_idle_guards(),
-            "scope": "Exact moments, recovery/rotation fine-map and utility, matrix-unit echo, prefix-band, finite-body bound/clock and full-flag idle ingredients; continuous dynamics, speed and operator-norm proofs, CP reductions and physical bath/control premises analytic."}
+            "moving_encoding_ingredients": verify_moving_encoding(),
+            "moving_control_span_ingredients": verify_encoding_controls(),
+            "scope": "Exact moments, recovery/rotation fine-map and utility, matrix-unit echo, prefix-band, finite-body bound/clock, full-flag idle, moving-encoding fine-operator/rate and control-span ingredients; continuous dynamics, speed and operator-norm proofs, CP reductions and physical bath/control premises analytic."}
 
 
 if __name__ == "__main__":

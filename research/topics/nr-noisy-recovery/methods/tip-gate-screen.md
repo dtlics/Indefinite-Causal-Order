@@ -760,6 +760,425 @@ intermediate retagging, time-varying codeword overlap, measurement/reset, new er
 correcting ancillas, or a general dynamic-control converse. A physical
 common R(t) must be paid; it has not been compiled through retained chi.
 
+<a id="nr-r06-tip-moving-encoding"></a>
+
+### A stronger moving encoding changes the ideal comparison
+
+W1/W2 above remain valid for fixed boundary tags, common helper rotations
+and the D-independent body they specify. The following construction
+admits the stronger encoded-Hamiltonian service written explicitly below.
+Even a constant nontrivial encoding conjugates the physical exchange
+drives, so this is a different control resource. It beats the earlier
+feasible native-plus rule in that enlarged mathematical model; it neither
+beats every native decoder nor establishes an available physical protocol.
+
+This concerns a mathematically supplied encoded Hamiltonian, not a
+compiled physical TIP/helper port. Let H_0(t) be the full equal-T cold
+two-TIP body, V(t)=U_0(t,0), and F=U_0(2T,0). Let E inject the d=8
+logical A/B/C space into the couplers-ready space, Q=EE^dagger, and
+F E=E W. Occupied couplers remain retained outside Q.
+Take C(t)=P_B0 tensor I_D+P_B1 tensor X_D during selected intervals,
+and C(t)=I outside them, with C(0)=C(2T)=I. The admitted physical
+Hamiltonian is C(H_0 tensor I)C^dagger+i dot(C)C^dagger. In its moving
+frame the clean body is exactly H_0 and the fixed physical jumps become
+tilde(L)(t)=C(t)^dagger L C(t). The boundary steps below mean exact
+controlled-X kicks; smooth finite interpolations are discussed at the end.
+
+For any helper outcome f and measured final coupler flag z, the full
+leading one-jump operator, valid also on arbitrary input/reference, is
+
+```text
+K_(f,z,L)(t)=P_z F <f|V(t)^dagger tilde(L)(t)V(t)|0>_D E. (M1)
+```
+
+The reported p,q,bad and utility coefficients specifically use the
+d=8 maximally-entangled Choi/Bell input, not arbitrary input averages:
+p=Tr(K^dagger K)/8 and q=|Tr[(E W)^dagger K]|^2/64 for the kept
+ready/gg map, with bad=p-q. All other observed outcomes here are rejected.
+Project a final coupler flag only after forming the full operator. With A=sum L^dagger L,
+the no-jump interaction-picture operator is
+I-(1/2)integral V^dagger C^dagger A C V dt to first order. Exact finite-
+rate records instead require chronological no-jump propagators between
+every physical jump. Independent initially factorized system/helper baths
+are assumed; no hidden bath/time labels enter the decision rule.
+
+For each pulse at internal time u, the source-normalized closed two-level
+block has ready-hub population
+
+```text
+r(u)=1-(3/4)sin^2(pi u/T)=5/8+(3/8)cos(2pi u/T).
+```
+
+The exact ready compression is E^dagger V^dagger P_B1 V E=r P_B1,
+identifying the right-side P_B1 on the logical code. This remains
+true in pulse 2 because pulse 1 has completed its diagonal target gate.
+For a general conditional pair U_b(t), helper-ready amplitudes l_b give
+J_ready,gg=W[l_0 I+(l_1-l_0)r P_B1]. Consequently the mandatory bad
+density is r^2[gamma|Delta t|^2/4+Gamma(Delta p)^2/2], rather than the
+unweighted expression in the common-R proof. This observation alone
+does not neglect the rejected coupler outcomes; they are counted next.
+
+Start D in 0. In each pulse turn the moving CNOT encoding ON only for
+u/T in [1/3,2/3], and keep it OFF otherwise. Keep the actual ready/gg
+outcome with identity; reject all D=1 and every excited-coupler outcome.
+These are observed flags; there is no hidden-fault decoder. During ON,
+
+```text
+C^dagger sigma_D^- C=P_B0 tensor sigma_D^-+P_B1 tensor sigma_D^+,
+C^dagger P_D1 C=P_B0 tensor P_D1+P_B1 tensor P_D0,
+C^dagger sigma_B^- C=sigma_B^- tensor X_D.
+```
+
+Thus every physical helper-T1 jump and every B-T1 jump is flagged D=1.
+All A/C lowering and private-coupler P_f jumps commute with C and retain
+their bare-PED maps. With L_D1=sqrt(gamma)sigma_D^- and
+L_Dphi=sqrt(2 Gamma)P_D1, the ON helper outcomes are exactly:
+
+ * T1: total jump norm gamma*r/2, all D=1 and rejected. Its gg norm is
+   gamma*r^2/2; the rest is excited couplers and also rejected.
+ * phi: total jump norm Gamma*r. Ready/gg has operator
+   sqrt(2 Gamma) r W P_B1, p=Gamma*r^2, q=bad=Gamma*r^2/2. The remaining
+   Gamma*r(1-r) is excited couplers and rejected.
+ * helper no-jump good loss is S*r, S=gamma/2+Gamma, per unit clock.
+
+These full outcomes sum to total helper jump norm S*r; no-jump good loss
+is counted, so the resulting helper utility cost at lambda>=1 is
+
+```text
+S*r+(lambda-1)Gamma*r^2/2.                              (M2)
+```
+
+B-lowering jump norm is gamma_B*r/2, with zero target-good component.
+During ON it moves from the compulsory bare flag to D=1, improving
+utility by lambda*gamma_B*r/2. Outside ON helper 0 is dark to both helper
+jumps and all maps agree with bare PED. First-order contributions add
+under this single fixed flag rule. Therefore the exact net gain per T
+for the two central-third windows is
+
+```text
+G=2[A R_1-B R_2],
+A=lambda*gamma_B/2-S, B=(lambda-1)Gamma/2,
+R_1=5/24-3sqrt(3)/(16pi),
+R_2=59/384-111sqrt(3)/(512pi).                          (M3)
+```
+
+Use the same hypothetical Q1 white rates as W2 and lambda=5:
+gamma_B=1/80, gamma=50/3849, Gamma=20/1013-25/3849.
+Then A=1/32-20/1013, B=40/1013-50/3849 and G is approximately
+0.0006073820595 per us. The all-rational replay certifies bounds on
+sqrt(3)/pi that establish G greater than both the static W1 upper bound
+15/164224 and the known feasible native-plus excess
+373165517/1453311455232 over bare PED. Thus unweighted W1/W2 cannot be
+extended to these B-conditioned moving paths, even after paying every
+helper/coupler rejected outcome in the first-order utility. This does
+not establish dominance over all native decoders or actual hardware.
+
+A short exact certificate uses sqrt(3)>433/250 and pi<22/7, hence
+sqrt(3)/pi>3031/5500. The coefficient of sqrt(3)/pi in G is positive.
+It gives G>9975181247/16469532288000 and a strict excess over the known
+feasible native-plus witness of 2091658216283/5994909752832000, about
+0.0003489057 per us. The pi bound follows directly from the positive
+integral integral_0^1 x^4(1-x)^4/(1+x^2)dx=22/7-pi.
+
+The discontinuous limiting path can be replaced by finite smooth
+controlled-X transitions, still using the supplied exact encoded H.
+For example U_0=I, U_1(s)=exp[-i(pi s/2)(X-I)] interpolates I to X,
+with p=sin^2(pi s/2). Under the same fixed reject rule its exact net
+first-order density relative to bare is
+
+```text
+A*r*p-(lambda-1)r^2[gamma*p(1-p)/4+Gamma*p^2/2].
+```
+
+All rare helper/coupler jump operators still have original-reference
+B=e support; ready/gg helper q equals bad as displayed in this formula.
+The sum of affected squared jump-operator norms is bounded by
+M=gamma+2Gamma+gamma_B.
+For a completed fixed decoder the utility effect operator has norm at
+most lambda (lambda>=1), while ||D[L]||_(1->1)<=2||L||^2. Replacing the
+step path on total clock measure epsilon changes its first-order utility
+by at most 4 lambda M epsilon. The strict M3 margin therefore survives
+some positive epsilon, proving a smooth finite-H mathematical example.
+This continuity argument supplies no useful amplitude, bandwidth,
+calibration or fidelity budget; its narrow transitions may be physically
+infeasible. Transforming the TIP exchange into the encoded three-body
+coupling and producing the derivative controlled drive are charged new
+ports, not ordinary free helper rotations or the measured TIP pulse.
+Retained chi and frequency-resolved baths remain uncompiled. The result
+is a sharp conditional comparator counterexample and a physical-control
+hurdle, not an architecture advantage or a source device prediction.
+
+<a id="nr-r06-tip-moving-controls"></a>
+
+### Physical controls required by the moving encoding
+
+Algebra in the declared cold star, not a device no-go or a
+minimum-time theorem. The canonical result owner is unchanged.
+
+#### Exact transformation and orientation
+
+Use star-first tensor order and n_B=P_b, with P_0=I_star-P_b. The star
+states are b=|B1,u_g,v_g>, u=|B0,u_f,v_g> and
+v=|B0,u_g,v_f>; adding the dark B0 ready state changes none of the
+following identities. Let
+
+```text
+C(t)=P_0 tensor U_0(t)+P_b tensor U_1(t),
+h_b^C(t)=i dot(U_b)(t) U_b(t)^dagger.
+```
+
+For the helper-independent reference Hamiltonian
+
+```text
+H_ref=H_aux tensor I_D
+      +(1/2)sum_j[p_j |j><b|+p_j^* |b><j|] tensor I_D,
+```
+
+H_aux commutes with P_b; in the declared cold star it is the diagonal
+matrix diag(0,delta_a,delta_c). This hypothesis is needed below.
+
+the exact moving-encoding Hamiltonian is
+
+```text
+H_enc=C H_ref C^dagger+i dot(C) C^dagger
+     =H_aux tensor I_D
+      +(1/2)sum_j[
+           p_j |j><b| tensor U_0 U_1^dagger
+          +p_j^* |b><j| tensor U_1 U_0^dagger]
+      +P_0 tensor h_0^C+P_b tensor h_1^C.                 (MC1)
+```
+
+The lower-edge |j><b| orientation is U_0 U_1^dagger, not its adjoint.
+Both h_b^C are Hermitian.
+
+If instead the reference already includes the retained number-number
+term chi P_b tensor n_D, its transformed contribution is
+
+```text
+chi P_b tensor U_1 n_D U_1^dagger.                        (MC2)
+```
+
+A common helper term I_star tensor h_D in that reference transforms to
+sum_b P_b tensor U_b h_D U_b^dagger. These transformed diagonal terms
+do not generate or cancel the helper-changing b<->j edge.
+
+#### What the declared common-pump controls can supply immediately
+
+The admitted laboratory control family is
+
+```text
+H_lab=H_aux tensor I_D+chi P_b tensor n_D
+      +(1/2)sum_j[p'_j |j><b|+p'^*_j |b><j|] tensor I_D
+      +I_star tensor h_D(t),                             (MC3)
+```
+
+with any extra paid diagonal frames stated separately. Allowing an
+arbitrary common Hermitian h_D is already more generous than one fixed
+helper-drive quadrature.
+
+At any instant with p_j nonzero, exact equality of MC1 and MC3 requires
+
+```text
+p'_j I_D=p_j U_0 U_1^dagger.                              (MC4)
+```
+
+Hence U_0 U_1^dagger must be a scalar phase times I_D. The prepared
+helper codewords then differ only by phase and have zero
+distinguishability a=1-|<d_0|d_1>|^2. For a>0, the missing operator
+directions are genuine conditional transitions changing both the
+star state and D. The derivative term, fixed chi interaction and
+unconditional helper rotations are star-block-diagonal; no choice of
+their instantaneous coefficients repairs MC4.
+
+The diagonal matching requirement is separate. For the helper-free
+reference, and with no additional B-local scalar frame, it is
+
+```text
+h_0^C=h_D, h_1^C=h_D+chi n_D.                             (MC5)
+```
+
+An independently supplied B-local phase frame can relax the scalar
+part of this equation, but not its traceless conditional part.
+If the reference includes retained chi, MC2 must also be included
+before making that comparison. A prescribed pair of arbitrary U_b(t)
+therefore does not follow merely from a common helper drive.
+
+These are instantaneous linear-span statements. They do not exclude
+finite pulse compilation, average-Hamiltonian synthesis or other
+controls that supply the missing conditional edges. Nor do they
+provide a gate-time lower bound.
+
+#### Exact nontrivial fixture
+
+Take U_0=I and
+
+```text
+U_1=[[3/5,-4/5],[4/5,3/5]], a=16/25.
+```
+
+At unit lower pump p_u=1,
+
+```text
+<u,D1|H_enc|b,D0>=-2/5.                                  (MC6)
+```
+
+Every term in the complex linear span of common scalar u/v pumps,
+arbitrary common helper matrices, number-number interaction and even
+arbitrary scalar star diagonals has this entry zero. The included
+[control guard](../checks/architecture/tip_encoding_control_guards.py) directly conjugates the six-dimensional rational
+matrix and verifies MC1, MC2 and this separating matrix element. It
+checks 12 generous laboratory span generators; conditional derivative
+blocks also have zero separating entry. This is an exact matrix
+identity, not evidence about a measured transmon.
+
+#### Full number sectors and noisy compilation
+
+The equality n_B=P_b is a declared-star property. In a full Duffing
+model, physical n_B has eigenvalues 0,1,2,... . A moving code must be
+defined on every admitted number sector, including B-f, with
+C_full=sum_m P_m tensor U_m. An edge |n><m| then acquires
+U_n U_m^dagger; the derivative is sum_m P_m tensor i dot(U_m)U_m^dagger,
+and the retained interaction becomes
+chi sum_m m P_m tensor U_m n_D U_m^dagger. Granting only computational
+U_0/U_1 leaves a multilevel return path unspecified.
+
+Finite known control sequences can create effective directions absent
+from the instantaneous span. Their actual durations, pump caps,
+carrier phases, ramps, leakage and conditional B/f sectors must be
+included. The existing slow clean retained-chi body construction does
+not supply this arbitrary moving-encoding service.
+
+Finally, equality or a norm bound for a compiled clean propagator is
+insufficient for the moving-encoding noise calculation. The physical
+helper jump during every compiler segment and control pulse must be
+transported through the actual trajectory, with no-jump survival and
+all coupler/helper records retained. Fast conjugation or toggling can
+change the effective jump basis or bath spectrum. A clean C H Cdagger
+simulation alone does not preserve the desired fixed physical-white
+noise instrument.
+
+#### Consequence for the comparison
+
+A bound or candidate protocol based on current physical-B occupancy
+may use MC1 as an explicit control relaxation. It must not silently
+claim that common coupler pumps, retained chi and an unconditional
+helper drive realize it. The next physical deliverable is either a
+measured/specified conditional b<->u/v helper-matrix service or a
+finite noisy compiler with its full clock and off-sector completion.
+Both native and ordinary implementations should receive any such
+service once admitted.
+
+#### Central-third candidate: the exact missing service
+
+For the proposed on/off path U_0=I and U_1=X_D in each pulse's central
+third, MC1 requires the active b-to-j pump to carry X_D throughout that
+interval. The derivative vanishes inside each constant region but has
+ideal controlled-X boundary kicks. A smooth replacement
+U_1(s)=exp[-i pi s (X_D-I_D)/2] has the conditional derivative
+
+```text
+h_1^C=(pi dot(s)/2)(X_D-I_D), h_0^C=0.                   (MC7)
+```
+
+The smooth derivative, the helper-matrix pump and the retained-chi
+compensation are separate required terms. Specifying a CNOT endpoint
+alone supplies none of the complete noisy continuous service.
+
+A common global helper basis rotation leaves every scalar pump
+edge tensor I_D unchanged. It can rotate the number-number interaction
+and can help finite Lie/average-Hamiltonian synthesis, but cannot repair
+MC4 as an instantaneous laboratory operator identity. Conversely, a
+qualified D-resolved pump port could supply an edge proportional to Z_D
+by opposite physical drive phases in its two sectors; a paid global
+helper conjugation could turn that into X_D. All off-resonant responses,
+retained-chi terms, helper rotations and their noise still require a
+common model. Any native control port independently supplied in this way
+is also admitted to the ordinary comparator.
+
+The required service must hold on all reachable D and star sectors,
+including sectors reached immediately after a helper jump. A calibration
+on only the clean D=0 ready trajectory cannot establish this contract.
+
+#### Why an endpoint conjugation does not certify the noise path
+
+For a constant encoded interval, the clean target is
+C exp(-i H_ref tau) C^dagger. Its straightforward chronological
+implementation is C^dagger, an unencoded H_ref interval, then C.
+Applied to an initially encoded state, it removes the encoding throughout
+the bulk interval. It has the desired endpoint, but the fixed physical
+helper jumps occur along a different trajectory. The moving-code
+calculation instead requires the transported jump C^dagger L_D C
+during the encoded bulk interval. These two statements must not be
+identified by clean gate equivalence.
+
+An alternative noisy compiler may still improve the ordinary endpoint,
+but its own no-jump survival, coupler rejects, all helper flags and
+reference maps must be evaluated. A clean propagator error alone does not
+bound the difference in those physical instruments without an additional
+noise/dilation estimate. This is a limitation on inference, not a proof
+that the service cannot be built.
+
+#### Primary-source control and timing boundary
+
+[Shirai et al.](https://arxiv.org/html/2511.01260v2), Eqs. (1)-(3),
+describe a coupled-Duffing device and a classical linear coupler drive.
+The demonstrated TIP pulse uses shaped 20-ns edges and a 140-ns gate.
+It does not supply an added helper, the X_D-carrying transfer edge above
+or an unconditional helper-drive calibration. Its coupler-pump amplitude
+cannot be relabelled as a helper-control amplitude or a minimum switching
+time.
+
+[Long et al.](https://arxiv.org/html/2103.12305v1), Sec. III and IV,
+supply a separate dressed strong-ZZ device and composite unconditional
+single-qubit controls. The 9.29-MHz splitting and the free-evolution CZ
+clock do not specify the TIP-compatible multilevel port or the
+unreported local composite-pulse durations. Dressing, off-sector
+transitions and driven bath couplings need one common-device model.
+The existing finite clean star-body construction is an allowed building
+block, not a compiler for this arbitrary moving-code service.
+
+Thus the current physical deliverable is a finite pulse schedule or
+specified interaction implementing MC1 and the boundary/smooth controls,
+including its complete retained-chi and off-sector evolution. Count
+pump blanking, all auxiliary drift while blanked, ramps and settling,
+helper rotations, phase/frame corrections, readout/recovery and reset.
+Source pulse shapes alone supply no lower bound on the best such clock.
+
+#### A sufficient robust comparison, not a device error threshold
+
+Complete every accepted/rejected outcome into one normalized final
+flag/data/reference state. Let the utility observable have eigenvalues
+1 on Bell-good accepted output, -lambda on Bell-bad accepted output and
+0 on rejection. If the trace distance between an actual completed state
+and its ideal-model state is delta, then
+
+```text
+|U_actual-U_ideal| <= (lambda+1) delta.                  (MC8)
+```
+
+Indeed E=(G+lambda I)/(lambda+1) is an effect and the state difference has
+zero trace, so the trace-distance variational bound proves MC8.
+Two implementations with ideal advantage g retain a positive advantage
+under the sufficient budget
+
+```text
+(lambda+1)(delta_ordinary+delta_native)+e_rem < g,      (MC9)
+```
+
+where e_rem is a separately bounded adverse utility contribution from
+terms omitted by the declared first-order model. Actual added control
+clock and control noise must either be included in the completed
+physical states or charged explicitly without double counting.
+
+For scale only, g=5e-5 at lambda=5 would require a worst-case summed
+trace-distance budget below about 8.3e-6 if e_rem=0. This is neither a
+necessary physical error limit nor a claim about a measured gate;
+structured errors may affect the utility much less. Nor does beating
+one feasible native decoder establish dominance over optimized native
+decoding. The present moving-code witness remains a control relaxation
+until its own physical service and the matched native comparison are
+evaluated.
+
 <a id="nr-r06-tip-prefix"></a>
 
 ### A pulse-independent bound for the declared TIP prefix

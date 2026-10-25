@@ -2579,9 +2579,14 @@ rotations in the factorized white-noise model. The separate
 specified intermediate-ready common-pump contract under a declared cap,
 not a full-device minimum time. Paid phase corrections and the
 [finite ordinary body](methods/tip-gate-screen.md#nr-r06-tip-finite-body)
-retain their complete clocks and ready-column error bound. Conditional
-retagging, reset and the driven noisy coupled device remain separate
-comparisons. A reduced noisy-CZ fit supplies neither that instrument nor
+retain their complete clocks and ready-column error bound. A
+[central-third moving encoding](methods/tip-gate-screen.md#nr-r06-tip-moving-encoding)
+beats the earlier feasible native-plus score after all first-order
+helper/coupler rejects and no-jump loss, but assumes a stronger encoded
+body. The [control analysis](methods/tip-gate-screen.md#nr-r06-tip-moving-controls)
+identifies its missing helper-changing exchange and derivative terms;
+instantaneous span failure is not a finite-control no-go. Reset and the
+driven noisy coupled device remain separate comparisons. A reduced noisy-CZ fit supplies neither that instrument nor
 a practical advantage.
 
 <a id="nr-r06-required-state-preparation"></a>
