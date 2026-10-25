@@ -1537,6 +1537,19 @@ This gives $FE$ and $EF$ coherently. The argument requires the two $E$
 calls to be the same repeatable unitary. It is not valid for fresh
 unobserved Kraus labels or independently drifting first/last calls.
 
+The [physical-port and decision component](methods/commutator-apparatus.md#nr-r06-commutator-apparatus)
+extends this comparator to stationary passive single-photon contractions
+only for the complete successful control/target/reference output plus
+one coarse erasure symbol. It proves that restricted equality through
+the full routed isometry and complementary erasure effect, and gives
+explicit retained-loss-control counterexamples. Vacuum buffers, coherent
+swaps, closed temporal services, phases and real clocks remain paid
+premises. The same component derives retimed cross-history kernels and
+a launched-information criterion, then tests a named multimode reflector
+against ordinary stored-model field pilots. Its spectral-normality metric,
+missing physical adjoint and empirical bandwidth relationship do not
+supply a native advantage or a full noisy-channel compiler.
+
 ### Known Clifford layers admit cheaper ordinary parity checks
 
 Full clean synthesis and process-basis readout are not always needed. Let

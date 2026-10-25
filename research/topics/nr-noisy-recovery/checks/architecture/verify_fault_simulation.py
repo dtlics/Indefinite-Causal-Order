@@ -619,6 +619,8 @@ def check_multitime_purification_comparator():
 
 
 def main():
+    from passive_contraction_guards import verify as verify_passive_contraction
+    from field_model_pilot_guards import check as check_field_model_pilot
     from reflection_instrument_guards import verify as verify_reflection_instrument
     from reflection_sector_guards import check as check_reflection_sector
     from verify_cat_reservoir_parity import verify_cat_reservoir_parity
@@ -655,6 +657,8 @@ def main():
         "multitime_purification_comparator": check_multitime_purification_comparator(),
         "measured_reflection_instrument": verify_reflection_instrument(),
         "global_quench_reflection_sector": check_reflection_sector(),
+        "stationary_passive_coarse_erasure": verify_passive_contraction(),
+        "stored_model_field_pilot": check_field_model_pilot(),
         "scope": ("Finite exact d=2,4 algebra replay of known orthogonal-unitary process bases, "
                   "correlated Bell-label decoding, and the full coherent switched-output ordinary simulation. "
                   "Persistent-trajectory induction, matched physical fault laws, noiseless memory, allowed "

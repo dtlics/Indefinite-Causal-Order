@@ -514,6 +514,18 @@ remove arbitrary unknown preparation/readout errors. The conditional NR-R10
 network comparisons have full control/data parity identities and all-branch
 travelling-bus checks. Their physical controller ports, protected transport
 and source-loading resources remain explicit assumptions.
+The [repeatable commutator component](../research/topics/nr-noisy-recovery/methods/commutator-apparatus.md#nr-r06-commutator-apparatus)
+adds exact finite chronological passive routed-isometry and coarse-erasure
+effects, retained-loss-control counterexamples, a rectangular stored-model
+field-residual identity and independent proper-noise moment fixtures.
+General arbitrary-reference erasure equivalence, retimed clock/information
+and field-confidence arguments remain analytic. Closed stationary vacuum
+services, ideal paid routing, actual phase/power/readout bounds and
+frequency interpolation are explicit premises. The source's spectral
+normality is not a measured commutator, and its transpose port is not an
+executable quantum adjoint. No retained-loss-control simulation or measured
+native rate/advantage is certified.
+
 The required-projector component adds complete finite local/control
 instruments, exact word powers, repeated-contraction and isotropic-trace
 guards, and rejected-ground checks. Its all-rank decomposition and

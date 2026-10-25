@@ -962,6 +962,18 @@ does not forbid pilots: pilots measure the probe output. Learning the
 transport or delay modes may also supply the native pointer controls needed
 for the direct retention test.
 
+The [named multimode-reflector comparison](methods/commutator-apparatus.md#nr-r06-multimode-model-reuse)
+makes model reuse after compression a concrete production decision.
+Its reported spectral-normality metric is different from a measured
+commutator; transpose reciprocity does not provide a quantum adjoint
+port. The existing scanner and phase-referenced camera support a paid
+stored-model column-residual test, with average-RMS, frequency-grid and
+readout-noise scope stated explicitly. The
+[passive three-slot comparator](methods/commutator-apparatus.md#nr-r06-passive-erasure)
+also matches the complete successful output plus a single erasure under
+its specified service conditions; retained control after loss is a
+different endpoint. No measured native/ordinary rate separation follows.
+
 There is a narrower motivation for quantum-level verification after
 classical stabilization.
 [Stevens et al.](https://doi.org/10.1103/63wh-4x54) use simultaneous entangled
