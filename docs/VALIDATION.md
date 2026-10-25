@@ -496,6 +496,21 @@ remove arbitrary unknown preparation/readout errors. The conditional NR-R10
 network comparisons have full control/data parity identities and all-branch
 travelling-bus checks. Their physical controller ports, protected transport
 and source-loading resources remain explicit assumptions.
+The required-projector component adds complete finite local/control
+instruments, exact word powers, repeated-contraction and isotropic-trace
+guards, and rejected-ground checks. Its all-rank decomposition and
+convergence limits remain analytic. The source-derived three-site feedback
+component checks complete channels, ground pumping, a compiled third
+update, one-pass/nonstationary initialization, and conditional full
+control/reference clock-record and clean-ready-meter identities. Full
+spin-space local/layer covariance and record-permutation fixtures for
+finite even rings guard the analytic many-body translation compiler. These
+fixtures do not establish convergence speed or a physical order router.
+The required entangling-gate discussion is a primary-source assessment:
+measured erasure-selected benchmarks, simulation results, conditional
+diagonal-survivor arguments and full herald/reset costs stay distinct.
+No new measured instrument, ordinary optimum or native advantage follows.
+
 The separate encoded-Pauli replay checks full code-input and retained-record
 channels, mixed/reference states, the deferred coherent-record circuit and
 a non-phase helper-noise counterexample. Its proof assumes clean decoded

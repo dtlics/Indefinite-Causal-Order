@@ -1464,6 +1464,22 @@ contact action: an ordinary device can turn off purely harmful switchable
 contacts. The next physical test therefore needs that action, its complete
 retained output and the actual storage/control alternatives.
 
+The [required bosonic entangler comparison](architecture-baselines.md#nr-r06-required-bosonic-entanglers)
+includes ordinary error-detected gate constructions and the measured
+dual-rail swap–wait–swap CZ, separating gate duration from a complete
+herald/reset clock. Its diagonal-survivor model is closed by existing
+Kraus commutation; returned leakage and non-diagonal corrections need
+their actual retained/rejected instrument. The
+[required state-preparation comparison](architecture-baselines.md#nr-r06-required-state-preparation)
+instead separates all-good projector filtering from population-pumping
+feedback. The first has no repeated-contraction speedup in its stated
+model. The source feedback benchmark has paid ordinary meter/check
+and clock-record compilers, including whole-Hilbert even-ring layer
+compilation by spatial translation. One-pass preparation and stationary
+cooling stay distinct. Feedback outside these symmetry conditions needs
+the full instrument, strongest ordinary
+preparation methods and matched controller, storage and reset costs.
+
 The [required BCS-gate screen](architecture-baselines.md#nr-r06-required-bcs-gate)
 provides one such physical action: a Cooper-pair-mediated entangler needs
 both leads together. Its clean threshold has a divergent absolute

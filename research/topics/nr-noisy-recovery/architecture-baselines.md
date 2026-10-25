@@ -2250,6 +2250,350 @@ record and herald fixtures. The general isometry/norm proof, oscillator
 tails, noisy GRAPE performance and actual coherent ports remain analytic
 or physical premises, rather than consequences of that finite replay.
 
+<a id="nr-r06-required-bosonic-entanglers"></a>
+
+### Required bosonic entanglers already have ordinary error-detected controls
+
+A useful gate task must include the strongest native ordinary entangler,
+rather than only unprotected evolution or identity storage.
+[Tsunoda, Teoh et al., PRX Quantum **4**, 020354 (2023)](https://doi.org/10.1103/PRXQuantum.4.020354),
+Sections V–VII and Appendix I, construct logical $ZZ(\theta)$ and
+exponential-SWAP gates from a programmable beam splitter and a dispersively
+coupled three-level ancilla. Final ancilla flags detect dominant single
+ancilla faults; code syndromes detect photon loss. Their low-infidelity
+figures are simulations. A flagged decay can leave the data outside the
+code and require reset, so detection is not safe retry. The beam-splitter
+noise assumption, omitted intrinsic cavity dephasing, and pulse errors need
+their own budget. These are ordinary competitors when their actual
+qutrit and bosonic controls are admitted; those controls are not free.
+
+There is now an actual required-gate experiment:
+[*An entangling gate for dual-rail erasure qubits*, Nature **656**, 47–53 (2026)](https://doi.org/10.1038/s41586-026-10822-y).
+Its swap–wait–swap CZ temporarily transfers one cavity excitation to a
+coupler. The roughly $500$ ns is the gate duration, not a complete
+herald/readout/reset clock. Repeated-CZ tomography in Figure 2 extracts
+$0.53(2)\%$ erasure per gate;
+short-depth selected tomography and interleaved benchmarking give different
+residual-error estimates, $0.029(6)\%$ and $0.108(5)\%$. The benchmark uses
+end-of-line erasure detection, with ordinary echo pulses for repeated-gate
+tomography. Larger-depth nonlinear error is attributed provisionally to drift or coupler
+fluctuations. The Methods' delayed-check surface-code simulation assumes
+ideal checks and omits other gate, measurement and idle errors. These
+results establish a strong ordinary reference, not a uniform retained-output
+instrument or online erasure herald. The earlier
+[arXiv:2503.10935v2](https://arxiv.org/html/2503.10935v2)
+has separate appendix numbering and benchmark estimates; use the published
+version for the preceding numbers.
+
+**Conditional diagonal-survivor screen.** In a model preserving the idle
+outer-mode occupation labels, with no loss-and-return process, an accepted
+dual-rail basis state cannot change to a different accepted basis state.
+Its survivor isometry therefore has the form
+$V_{\rm surv}=\sum_z|z\rangle\langle z|\otimes|e_z\rangle$,
+with unnormalized environment vectors. Every accepted Kraus operator is
+diagonal, including phase noise and no-jump attenuation; the input need
+not be diagonal. For independent module environments and the standard
+module-paired SWITCH, two such admitted modules obey $B_jA_i=A_iB_j$.
+Their entire accepted helper/logical/reference output is thus the ordinary
+serial survivor tensored with $|+\rangle\langle+|$, and the accepted minus
+map is zero. This is the existing Kraus-commutation mechanism applied to
+the declared survivor model, not a new hardware theorem.
+
+Returned leakage, non-diagonal faults and a shared interacting reservoir
+are outside that statement. Measured rare bit-flip rates alone do not
+give a universal diamond bound for those corrections. Lost-code outputs
+and their induced partner phases must be retained if an outer code uses
+them. Helper readout does not certify occupied dual rails. The next matched
+test needs the actual non-diagonal accepted/rejected instrument, timed
+whole-payload routing and the same ordinary gate, echo and delayed-erasure
+decoder at a common accuracy and deadline. A diagonal residual-noise
+SWITCH scan cannot establish the missing benefit.
+
+<a id="nr-r06-required-state-preparation"></a>
+
+### Required projector filtering and feedback cooling need different comparisons
+
+Ground-state preparation is a required operation, so parking the input
+outside purely harmful contacts does not perform the task. Its metric is
+delivered ground-state quality and mass per full preparation time, including
+initial overlap, rejected trajectories, feedback, resets and controller
+storage. Two useful candidate models have different answers.
+
+**The all-good projector filter.** Let $P,Q$ be finite-dimensional
+orthogonal projectors onto locally accepted subspaces, and let $G$ project
+onto their intersection. Accept both good local outcomes and the SWITCH
+plus flag. The retained-data Kraus operator is
+
+$$
+C=\frac{PQ+QP}{2}.
+\tag{GP1}
+$$
+
+This symmetrized operator is already defined in
+[Feldmeier et al., PRL **137**, 160404 (2026), Supplemental II, Eq. (S27)](https://doi.org/10.1103/bpc2-zlx5)
+([primary preprint](https://arxiv.org/html/2603.10119v1)). Their low-energy
+comparison asymptotically requires $4/3$ as many symmetrized rounds as
+ordinary product rounds. The proposed SWITCH use does not introduce that operator or a new
+symmetrization mechanism.
+
+Here is the exact contraction and complete-attempt qualification. On a
+principal-angle plane of the two subspaces, put $0<c<1$, $s^2=1-c^2$ and
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad
+Q=\begin{pmatrix}c^2&cs\\cs&s^2\end{pmatrix},\quad
+\lambda_\pm=\frac{c(c\pm1)}2.
+\tag{GP2}
+$$
+
+The eigenvalues of $C$ are $\lambda_\pm$, while
+$(PQ)^k=c^{2k-2}PQ$. Hence on that plane
+
+$$
+\|C^k\|=\left[\frac{c(1+c)}2\right]^k,\qquad
+\|(PQ)^k\|=c^{2k-1}.
+\tag{GP3}
+$$
+
+At one round the symmetrized filter has smaller worst unwanted amplitude
+than that fixed ordinary word. For every $k\ge2$ the ordinary norm is
+no larger: their ratio at $k=2$ is $(1+c)^2/(4c)\ge1$, and each further
+native-to-ordinary ratio acquires $(1+c)/(2c)>1$. The ordinary three-call
+sandwich $PQP$ already has norm $c^2<c(1+c)/2$. Thus a one-pass quality
+point does not imply faster repeated preparation.
+
+The finite-dimensional principal-angle decomposition extends the
+worst-unwanted-subspace norm comparison to arbitrary ranks. Explicitly,
+diagonalize $PQP$ on $\operatorname{ran}P$. For a unit eigenvector $p$
+with eigenvalue $c^2\in(0,1)$, the vector
+$v=(Qp-c^2p)/(cs)$ is unit, orthogonal to $\operatorname{ran}P$, and
+$Qp=c^2p+csv$, $Qv=csp+s^2v$. These orthogonal invariant planes give
+(GP2); the remaining eigenspaces are the commuting sectors. Common
+directions belong to $G$; the orthogonal commuting sectors are annihilated.
+An infinite-dimensional uniform convergence claim additionally needs a
+nonzero angle gap. For a maximally mixed source, the bad mass on each
+plane after $k$ accepted rounds is proportional to
+$\lambda_+^{2k}+\lambda_-^{2k}$ natively and $c^{4k-2}$ ordinarily.
+For $k\ge2$, the former is at least the latter, since
+$\lambda_+^2\ge c^3$ and $3k\le4k-2$.
+This trace statement is not pointwise CP dominance for arbitrary inputs.
+
+Both accepted filters act as identity on $G$ and preserve its orthogonal
+complement, so their ground mass per launch remains exactly
+$r=\operatorname{Tr}(G\rho)$. Every other local/control record annihilates
+the ground subspace. If surviving bad mass is $b$, acceptance is $r+b$
+and accepted ground fraction is $r/(r+b)$. No initial-overlap cost is
+removed; ordinary local checks can also stop at the first failure.
+The norm comparison only concerns this all-good-plus protocol, not arbitrary
+feedback or retained-helper recovery.
+
+**Actual feedback pumps population.** For an error projector $\Pi_i$ and
+unitary correction $U_i$, the complete local channel has
+$J_{i,0}=I-\Pi_i$, $J_{i,1}=U_i\Pi_i$. If $G\Pi_i=0$, then
+
+$$
+\mathcal E_i^\dagger(G)
+ =G+\Pi_i U_i^\dagger G U_i\Pi_i\succeq G.
+\tag{GP4}
+$$
+
+Consequently feedback can increase ground mass, unlike (GP1).
+Feldmeier et al. analyze local measurement/feedback preparation of gapless
+frustration-free models, with exact single-particle results and numerical
+many-body evidence. Their paper does not demonstrate coherent ordering of
+the complete many-body register. Reset-free filtering does not settle those
+full channels. For any two such channels and independent input helper $+$,
+tracing the SWITCH helper gives exactly
+$(\mathcal E_B\mathcal E_A+\mathcal E_A\mathcal E_B)/2$. Its raw ground
+mass is therefore an ordinary classical order average. Any improvement
+must use retained helper information, acceptance or further feedback, with
+the same admitted ordinary controls and records.
+
+**A complete three-site benchmark.** In the one-excitation basis
+$|1\rangle,|2\rangle,|3\rangle$, let
+$|s_A\rangle=(|1\rangle-|2\rangle)/\sqrt2$,
+$|t_A\rangle=(|1\rangle+|2\rangle)/\sqrt2$ and define $s_B,t_B$ on sites
+$2,3$. The source's singlet measurement and physical $Z_i$ feedback give
+
+$$
+A_0=I-|s_A\rangle\langle s_A|,\quad
+A_1=-|t_A\rangle\langle s_A|,
+\qquad B_0=I-|s_B\rangle\langle s_B|,\quad
+B_1=-|t_B\rangle\langle s_B|.
+\tag{GP5}
+$$
+
+Every outcome counts and both channels are CPTP. For
+$|g\rangle=(|1\rangle+|2\rangle+|3\rangle)/\sqrt3$, (GP4) becomes
+$\mathcal E_i^\dagger(G)=G+(2/3)|s_i\rangle\langle s_i|$.
+These are source-derived ideal channels, not measured hardware maps.
+The known three-site $W$ target is not a hard preparation problem for a
+processor with calibrated excitation-splitting gates: two such rotations
+prepare it from a localized excitation. A reset or a supply of that pure
+input is a separate paid resource.
+
+One ordinary extra helper check has an exact resource interpretation.
+The spatial swap $R_{12}=I-2|s_A\rangle\langle s_A|$ fixes $g$.
+Prepare a clean helper in $+$, apply controlled $R_{12}$ and measure it in
+$X$. The two data Kraus operators are
+$(I+R_{12})/2=A_0$ and $(I-R_{12})/2=|s_A\rangle\langle s_A|$.
+Applying $Z_1$ on the latter realizes exactly $A_1$, up to its irrelevant
+record phase. This is the **third feedback update** after $AB$, not a
+free two-query decoder. For input $I_3/3$, ordinary $AB$ gives ground
+fraction $7/9$ and $ABA$ gives $8/9$, without rejecting an attempt.
+The actual extra check, readout/reset and latency must be compared with
+the native whole-register route and helper costs.
+
+There is a distinct one-pass source-dependent witness. A coarse read of
+$\{|1\rangle,|2\rangle\}$ versus $|3\rangle$, followed by $AB$ on the
+first record and $BA$ on the second, gives $5/6$ on $I_3/3$.
+It can use one clean helper controlled by $Z_3$ and read in $X$; retaining
+the preparation index suffices if this mixture was deliberately generated
+from randomized localized inputs. This channel takes ground input $G$ to
+ground fraction $5/6$ too, so it is not a stationary ground-preserving
+cooling step. A one-pass factory comparison and an iterative dark-state
+comparison must keep their different requirements explicit.
+
+**The physical clock extension matters.** Put $R=R_{13}$, the known swap
+of sites $1,3$. Directly from (GP5),
+$R A_i R=(-1)^iB_i$ and $R B_j R=(-1)^jA_j$.
+For two module-paired ready meters, fixed chronological $AB$ with $R$
+before and after on helper branch $1$ has complete branch amplitudes
+
+$$
+|0\rangle B_jA_i\otimes|i,j\rangle
+ +|1\rangle(-1)^{i+j}A_jB_i\otimes|i,j\rangle.
+\tag{GP6}
+$$
+
+The normalization is supplied by the incoming helper blocks; for helper
+$+$ each term carries $1/\sqrt2$. If the two coherent quantum meters are
+accessible, a branch-$1$ meter SWAP followed by its two pointer $Z$ phases
+turns (GP6) into the standard module-paired SWITCH isometry. The meters
+start in pure $|00\rangle$; this is an equality on that ready column for
+arbitrary signal/helper/reference states, not a full unitary identity on
+arbitrary nonblank baths. No inverse module is used, but controlled target
+swaps, quantum-meter permutations and pointer phases are real controls.
+
+For four independent **gated fresh clock meters**, only their common
+all-zero record interferes. A different ordinary completion suffices:
+after (GP6), dephase the helper whenever $(i,j)\ne(0,0)$ and retain its
+classical branch value there. Relabel those records as
+$(A_1,A_2,B_1,B_2)=(i,0,0,j)$ on branch $0$ and $(0,j,i,0)$ on branch $1$.
+The all-zero cross map stays
+$B_0A_0\rho_{01}(A_0B_0)^\dagger$; the diagonal maps are $AB$ and $BA$.
+Thus the complete accessible helper/signal/reference and relabelled
+classical pointer-record instrument equals that fresh-clock SWITCH. This does not
+identify coherent meter-output isometries or later bath processes.
+
+The two completions require different record access. Neither controlled
+quantum meter SWAPs nor a nondestructive zero-versus-jump read are inferred
+from the reduced channels alone. Additional unaltered or exported measurement/reset timestamps are extra
+outputs to match; this relabeling does not erase their records.
+For a nearest-neighbour chain, an endpoint $R_{13}$ can require three
+adjacent SWAPs per use; its controlled implementation is not a free
+relabeling. The symmetry compiler is conditional on these source-specific
+ports and does not extend to arbitrary frustration-free Hamiltonians.
+
+**Full many-body even rings have the same ordinary compiler.** For the periodic spin-$1/2$ ferromagnetic
+Heisenberg chain with even $N=2L\ge4$, use oriented bonds $(j,j+1\bmod N)$,
+$F_{j,0}=I-\Pi_j$ and $F_{j,1}=Z_j\Pi_j$, and define the even/odd layer
+Kraus operators $A_a=\prod_{r=0}^{L-1}F_{2r,a_r}$ and
+$B_b=\prod_{r=0}^{L-1}F_{2r+1,b_r}$. These are the source's singlet
+measurement and local $Z$ feedback
+([Feldmeier et al., Eq. (3), Supplemental Eq. (S15)](https://arxiv.org/html/2603.10119v1));
+its many-body example uses the half-filled Dicke sector. Let the known
+site translation be $T:j\mapsto j+1$ and
+$\operatorname{sh}(b)_r=b_{r-1\bmod L}$. Translation preserves bond orientation; relabeling the disjoint local
+factors therefore gives, on the full $2^N$-dimensional spin space,
+
+$$
+T A_aT^\dagger=B_a,\qquad
+T B_bT^\dagger=A_{\operatorname{sh}(b)}.
+\tag{GP7}
+$$
+
+Fixed chronological $AB$, with controlled $T^\dagger$ before and controlled
+$T$ after on helper branch $1$, therefore gives branch amplitudes
+$B_bA_a$ and $A_{\operatorname{sh}(b)}B_a$. A branch-$1$ permutation of
+the two clean quantum-meter banks,
+$(a,b)\mapsto(\operatorname{sh}(b),a)$, produces the standard
+module-paired SWITCH ready-column isometry for every incoming
+helper/signal/reference state; no jump phases or inverse layer are needed.
+For gated fresh clock banks, instead dephase the helper on every nonzero
+record and relabel the branch-$0$ record as $(a,0,0,b)$ and branch-$1$
+record as $(0,\operatorname{sh}(b),a,0)$, in bank order
+$(A_1,A_2,B_1,B_2)$. The all-zero branch retains the same cross map, so
+the complete accessible, relabelled classical pointer-record instrument
+also agrees. Additional authentic module/time logs remain extra outputs
+to match. The
+quantum-meter and classical-record completions have the distinct access
+conditions already stated in (GP6).
+
+The site-centered reflection $R:j\mapsto-j$ is a second valid construction:
+$R A_aR=(-1)^{|a|}B_{\operatorname{rev}(a)}$ and
+$R B_bR=(-1)^{|b|}A_{\operatorname{rev}(b)}$. It requires bank exchange,
+within-bank reversal and jump-parity pointer phases. The source already
+uses the corresponding layer-exchanging inversion for its all-good
+projectors (Supplemental II.3); the statement here is an ordinary
+covariance completion of the full feedback instrument. Price the controls:
+each translation can be routed with $N-1$ adjacent target SWAPs on a line;
+the two controlled uses, their helper coherence/distribution and meter
+permutation are not free. Reflection uses $L-1$ disjoint arbitrary-pair
+target SWAPs per use, but nearest-neighbour routing can cost $O(N)$ depth
+and $O(N^2)$ adjacent SWAPs, and a shared helper does not grant parallel
+controlled gates automatically. These are constructions, not optimal
+routing bounds. The common ground space is the full symmetric subspace
+of dimension $N+1$; only after fixing excitation number is the Dicke
+ground unique. All these identities hold across sectors and with a
+reference. Exclude the duplicated-bond $N=2$ ring, odd rings and the
+even open chain's unequal layers. The proof does not cover arbitrary
+frustration-free models. Spatially nonuniform measurement, feedback or
+idle errors require their full instrument to be compared; ideal
+Hamiltonian symmetry alone does not establish the channel conjugacy.
+Its standard completion requires pure ready,
+accessible quantum meters; its fresh-record completion does not cover
+extra exported timestamps or a coherent fresh-bath output isometry.
+
+**Stronger ordinary preparation remains part of the test.** With known
+reversible local syndrome coupling $V$, its inverse and a pointer phase
+implement $V^\dagger Z_{\rm pointer}V=I-2\Pi_i$ on a clean meter, at the
+cost of both couplings. Feedback controlled by that pointer commutes with
+its $Z$ phase, so including reversible feedback does not change this
+identity. An opaque irreversible measurement box grants no such inverse.
+[Fang et al., arXiv:2604.07214v1, Theorem 5](https://arxiv.org/html/2604.07214v1)
+use coherent local projector block encodings and QSVT for bounded-degree,
+constant-locality frustration-free Hamiltonians to obtain ground
+projection with inverse-square-root spectral-gap dependence and
+$O(\log M)$ ancillas for $M$ local terms. Initial overlap, amplification
+or annealing, gate errors and those coherent ports still cost resources;
+this is not automatic dominance over feedback pumping. For an AKLT
+endpoint, [Smith et al., PRX Quantum **4**, 020315 (2023)](https://arxiv.org/html/2210.17548v2)
+already give an ordinary deterministic fusion/symmetry-correction protocol
+and a quantum-processor demonstration. A general SWITCH preparation claim
+cannot use only repeated all-good projectors as its ordinary comparison.
+
+The remaining meaningful test is a source-matched full feedback instrument
+outside the known symmetry compilers, with actual controller/meter ports
+and a nontrivial many-body target, compared with adaptive records, resampling,
+direct compilation and coherent ordinary alternatives where supplied.
+Record ground mass and conditional quality separately, require target
+invariance when proposing stationary cooling, and compare full time,
+reset, storage, energy and preparation budgets. No architecture advantage
+or optimal ordinary frontier follows from this bounded benchmark.
+
+The [projector-filter replay](checks/architecture/required_projector_filters.py)
+checks complete finite ordinary/native local-and-control instruments,
+principal-angle powers, repeated norm/trace inequalities and rejected-ground
+records. The [feedback-control replay](checks/architecture/feedback_cooling_controls.py)
+checks the actual finite source channels, third-update instrument,
+ground-mass and one-pass/nonstationarity witnesses, conditional clock
+and ready-meter compilers, and full-Hilbert local/layer covariance and
+record permutations for finite even rings. Principal-angle completeness, all-rank and
+all-reference proofs, convergence, source-to-hardware mapping and physical
+control costs remain analytic; no finite fixture certifies a many-body
+preparation advantage or optimal receiver.
+
 ### Matched noisy copies admit an ordinary same-order path comparator
 
 An unknown many-body matrix is not enough to establish a self-switch
