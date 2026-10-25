@@ -382,6 +382,237 @@ Both control outcomes remain retained in the source's Eqs. (25)--(28).
 No full-network advantage, ordinary equivalence or Chernoff-error ordering
 follows from this target-only comparison.
 
+There is also an **ordinary fixed-background baseline**. The same displayed
+Eqs. (5)--(7) fix bath mean $N$. Let $\tau_n$ denote a thermal state of mean
+$n$, with number probabilities $t_n(k)=n^k/(1+n)^{k+1}$.
+An ordinary vacuum probe is unchanged by the pre-target erasure. Its
+target-absent/present pair is $\tau_N,\tau_{(1-\eta)N}$ for the physical
+thermal beam splitter, and $\tau_N,\eta|0\rangle\langle0|+(1-\eta)\tau_N$
+for the replacement target. These are different statistical tasks.
+Vacuum is admissible under an upper transmitted-energy budget; an exact
+source-state or lower-energy restriction requires a different comparison.
+
+Keep the final erasure $F_p(X)=pX+(1-p)|0\rangle\langle0|$ on normalized
+states; its linear extension multiplies the replacement term by
+$\operatorname{Tr}X$. For the replacement target, its complete ordinary
+output pair has nonvacuum probabilities
+
+$$
+r_0=\frac{pN}{1+N},\qquad r_1=(1-\eta)r_0.
+$$
+
+For $N,p>0$ and $0<\eta<1$, the conditional positive-count law is
+$g(k)=N^{k-1}/(1+N)^k$, $k\ge1$, whose sum is one. Thus the likelihood ratio
+depends only on vacuum versus nonvacuum. The states commute, and measuring
+photon number preserves their full classical likelihoods; recording just
+zero/nonzero is sufficient. For $M$ independent launched modes and equal
+priors, the exact optimal error for this specified vacuum-input route is
+
+$$
+P_{\rm err}(M)=\frac12\sum_{k=0}^{M}\binom Mk
+\min\{r_0^k(1-r_0)^{M-k},r_1^k(1-r_1)^{M-k}\}.
+$$
+
+Indeed, the common conditional tails cancel, and grouping the remaining
+binary likelihoods by their number $k$ of nonvacuum outcomes gives the
+displayed sum. Its Chernoff coefficient is exactly
+
+$$
+Q_{\rm eff}(s)=(1-r_0)^s(1-r_1)^{1-s}+r_0^sr_1^{1-s},
+\qquad C_{\rm eff}=-\log\min_{0\le s\le1}Q_{\rm eff}(s).
+$$
+
+For $N,p>0$ and $0<\eta<1$, the probabilities differ and $C_{\rm eff}>0$.
+At $N=0$, $p=0$ or $\eta=0$ the passive pair is identical. Use
+support-aware one-sided limits at other boundaries, rather than an
+unqualified $0^0$. Every zero and nonzero outcome counts.
+
+For the physical thermal target, the geometric series instead gives
+
+$$
+Q_{\rm th}(s;n_0,n_1)
+=\frac{1}{(1+n_0)^s(1+n_1)^{1-s}-n_0^sn_1^{1-s}}.
+$$
+
+Here $n_0=N$, $n_1=(1-\eta)N$ are positive in the interior. After the same
+final erasure, put $v_j=1-p+p/(1+n_j)$. Splitting the vacuum atom from
+the positive-count tail gives the complete coefficient
+
+$$
+Q_{\rm phys,F}(s)=v_0^sv_1^{1-s}
++p\left[Q_{\rm th}(s;n_0,n_1)
+ -(1+n_0)^{-s}(1+n_1)^{-(1-s)}\right].
+$$
+
+This follows because the positive-count probabilities are $p\,t_{n_j}(k)$,
+so their powered product has common factor $p$. Even zero/nonzero counting
+has gap $v_1-v_0=p\eta N/[(1+N)(1+(1-\eta)N)]>0$.
+Unlike the replacement pair, its positive-count distributions need not
+agree; do not transfer the sufficient-statistic claim between models.
+
+This ordinary background-counting baseline does not optimize over
+controlled-network inputs or ordinary probes. Other admitted
+probes, idlers, routes, controls and receivers still require optimization;
+an available route with greater post-target survival is admissible.
+All observation/reference modes, detector costs and background calibration
+count. Unknown or drifting $N$ requires a separately specified nuisance
+parameter task. A hypothesis-dependent compensated bath $N/(1-\eta)$ would
+remove the physical target's vacuum brightness difference and changes the
+displayed task; matching only the replacement target's mean does not
+automatically match its distribution. Both source control outcomes remain
+retained, and no generic quantum-illumination invalidity follows.
+
+The **full retained-control vacuum comparison** can also be computed.
+Use Eq. (22) with a general middle channel $T$, fixed calibrated survival
+$0\le p\le1$, $q=1-p$, $v=|0\rangle\langle0|$, and erasure Kraus operators
+$K_*=\sqrt p I$, $L_j=\sqrt q|0\rangle\langle j|$, including $L_0$.
+The probe is $v$, independent of a balanced control. A passive reference
+factors because the probe state is pure. Suppose $\tau=T(v)$ is diagonal
+in the Fock basis, with probabilities $t_n$.
+The computational-control blocks of the complete output are
+$\tfrac12\left[\begin{smallmatrix}R&\sigma\\\sigma&R\end{smallmatrix}\right]$,
+where $R=p\tau+qv$ and
+
+$$
+\sigma=\sum_{i,j}K_iT(K_jvK_i^\dagger)K_j^\dagger
+=p^2\tau+(1-p^2)t_0v.
+$$
+
+Indeed, only $(*,*),(*,L_0),(L_0,*),(L_0,L_0)$ survive inside $T$.
+They contribute $p^2\tau,pq\tau v,pqv\tau,q^2t_0v$, respectively;
+$\tau v=v\tau=t_0v$ gives the result. The X-control blocks are
+$(R\pm\sigma)/2$, so the complete state is diagonal in number/X and has
+
+$$
+\begin{aligned}
+P(n,+)&=p(1+p)t_n/2,&P(n,-)&=pq\,t_n/2 &&(n>0),\\
+P(0,+)&=[q+(1+p)t_0]/2,&P(0,-)&=q(1-t_0)/2.
+\end{aligned}
+$$
+
+These probabilities sum to one and retain both flags and every vacuum.
+Forgetting control gives $R$, exactly the ordinary fixed-order endpoint.
+At $p=0$ that field is always vacuum, while
+$P(-)=(1-t_0)/2$: the retained control still senses target-generated
+population. This requires the independent control and its cross-history
+coherence to survive the vacuum/loss events. It is no zero-total-energy
+or recovery-of-an-unknown-input claim.
+
+An ordinary direct-$T$ number measurement, **if accessible before final
+erasure**, statistically simulates the entire displayed native family.
+For input count zero output $(0,+)$; for count $n>0$, output
+$(n,+),(n,-),(0,+),(0,-)$ with respective probabilities
+$p(1+p)/2,pq/2,q/2,q/2$. Each row sums to one, and averaging over $t_n$
+gives the joint law above. This kernel is independent of the target
+hypothesis. Because the native states commute in the same basis, it
+also simulates every discrimination statistic of their tensor powers,
+for every prior and joint receiver. It is a statistical comparison for
+this vacuum-input family, not a global optimum over probes.
+
+Classical counting and record processing suffice for a decision endpoint.
+Reproducing the retained quantum state instead needs, for example, a
+nondestructive vacuum predicate, storage, conditional retain/dump and
+flag preparation, or destructive number measurement followed by Fock
+and helper re-preparation. For diagonal $\tau$, the vacuum predicate
+preserves the mode needed by the kernel. Preparation energy, storage,
+readout, timing and record transport count. This intermediate access
+does not follow from a final destructive detector; it may be unavailable.
+
+For the replacement target only, with fixed known $p$ and $N>0$, write
+$\tau_\eta=(1-r_\eta)v+r_\eta\nu$,
+$r_\eta=(1-\eta)N/(1+N)$, where $\nu$ is the normalized positive-number
+part of $\tau_N$. It is independent of $\eta$. Put $\kappa=(1+p)/2$.
+The event complementary to $(0,+)$ has native probability
+$\kappa r_\eta$. When that probability is positive, its conditional probabilities of
+$(0,-),(n,+),(n,-)$ are
+$q/(1+p),p\nu_n,pq\nu_n/(1+p)$, respectively; they sum to one and
+are independent of $\eta$. Thus the complete native family is
+statistically equivalent to Bernoulli success $\kappa r_\eta$.
+The ordinary fixed-order endpoint has success $pr_\eta$, and direct-$T$
+counting has success $r_\eta$. The earlier finite-binomial error and
+Chernoff formulas apply with these respective coefficients. In particular,
+for two reflectivity hypotheses with weights $r_0,r_1$ and equal priors,
+the exact one-mode errors are
+$[1-\kappa|r_0-r_1|]/2$, $[1-p|r_0-r_1|]/2$ and
+$[1-|r_0-r_1|]/2$, respectively.
+At $N=0$ all outputs are vacuum/plus and contain no target information.
+
+Hence a real native-versus-fixed-route distinction remains in this
+declared model, including $p=0$, while direct-$T$ access is the stronger
+ordinary benchmark whenever actually supplied. The physical thermal
+target has a different positive-count shape, so its complete output is
+covered by the general kernel, not by the replacement-only Bernoulli
+reduction. Unknown $p,N$, other probe inputs and inaccessible internal
+ports require their own comparisons. A hardware claim must locate the
+loss contacts, target, reference/read/store ports and surviving control,
+and price their common clock, calibration and physical implementation.
+If two physical target hypotheses instead have identical $T(v)$, as in
+the compensated-bath vacuum example above, $R,\sigma$ and the complete
+native vacuum outputs also coincide.
+
+Unknown background changes identifiability. Put $h=1-\eta$, with
+$N>0$, $0<p\le1$ and $0<\eta<1$. For ordinary target-only on/off data, the
+effective model's click probability
+$hpN/(1+N)$ equals the absent-target probability at
+$N'=hN/(1+\eta N)$. Thus a test of uniform size $\alpha$ over unrestricted
+null $N$ has power at most $\alpha$ at these aliased alternatives.
+For the physical target, even the full photon-count law aliases:
+$P_{\rm BS}(p,N)=P_0(p,hN)$, including final erasure.
+Effective-model full counts behave differently when $p$ is known:
+for $n\ge1$, the ratio $P(n+1)/P(n)=N/(1+N)$ identifies $N$, after which
+the positive-count mass distinguishes $p$ from $hp$. If $p$ is also
+unknown, $P_{\rm eff}(p,N)=P_0(hp,N)$ aliases again.
+
+A finite reference test requires an actual target-free mode/route with
+matched bath brightness, final survival and detector response, or a
+justified known-absent training interval with a common-clock stability
+law. One cannot freely set $\eta=0$ for an unknown target or infer matched
+$N,p$ from a neighboring mode. Assume $m$ independent pairs, each with
+independent reference and target clicks $R_i,T_i$, and matched nuisance
+parameters. Every pair costs two mode exposures. Their click probabilities
+under the alternative are
+
+$$
+a=\frac{pN}{1+N},\qquad
+b_{\rm eff}=ha,\qquad b_{\rm BS}=\frac{phN}{1+hN}.
+$$
+
+Write $b$ for the applicable alternative, and define
+
+$$
+u=a(1-b),\quad v=(1-a)b,\quad q=u+v,\quad
+\theta=\frac{u}{q}=\frac12+\frac{a-b}{2q}.
+$$
+
+Let $D$ count discordant pairs and $K$ count $(R,T)=(1,0)$. The pair
+outcome probabilities give
+$D\sim\operatorname{Bin}(m,q)$ and
+$K\mid D=d\sim\operatorname{Bin}(d,\theta)$.
+Under the null, $a=b$ and $\theta=1/2$ for every unknown common $N,p$.
+The one-sided exact conditional $p$-value is
+$\sum_{j=K}^{D}\binom Dj2^{-D}$, defined as one at $D=0$.
+Rejecting at a value at most $\alpha$ has conditional size at most
+$\alpha$ for each $D$, hence unconditional size at most $\alpha$.
+
+Let $k_\alpha(d)$ be the smallest $k\in\{0,\ldots,d\}$ whose null upper
+tail is at most $\alpha$, or $d+1$ if none exists. For constant nuisance
+values the exact finite-budget power is
+
+$$
+\pi_m=
+\sum_{d=0}^{m}\binom md q^d(1-q)^{m-d}
+\sum_{k=k_\alpha(d)}^{d}\binom dk\theta^k(1-\theta)^{d-k},
+$$
+
+with an empty inner sum equal to zero. This averages over tied pairs and
+$D=0$; all $2m$ reference/target exposures and their actual clock remain
+charged. Parallel references additionally require their physical modes
+and receivers. No uniform finite power follows over all $N>0$, since
+the contrast vanishes as $N\to0$. Unmatched loss or unconstrained
+reference/target drift can bias the null; the exact test requires its
+stated matching law. This is a conditional ordinary baseline, without a
+qualified reference instrument or hardware-benefit claim.
+
 A useful next experiment would hold $\tau$ fixed while changing the
 loss split, measure the complete accessible $T$, and test an independent
 control conditioned on probe vacuum. Any split-dependent signal at
