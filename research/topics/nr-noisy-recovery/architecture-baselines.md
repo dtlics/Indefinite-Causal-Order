@@ -1573,7 +1573,7 @@ The [exact cross-pair replay](checks/architecture/verify_pauli_cross_pair.py) ch
 
 ### Physical ports for the scalar Pauli test
 
-The one-clean-helper comparison requires physical channel slots on the declared mixed payload. A large logical Hilbert space and coherent routing alone do not establish these slots. The following two measured interfaces narrow the next test without supplying an arbitrary-noise implementation or a physical-resource lower bound.
+The one-clean-helper comparison requires physical channel slots on the declared mixed payload. A large logical Hilbert space and coherent routing alone do not establish these slots. The following measured interfaces narrow the next test without supplying an arbitrary-noise implementation or a physical-resource lower bound.
 
 [Wei et al., PRL 122, 120504 (2019), arXiv:1810.10238v2](https://arxiv.org/html/1810.10238), Fig. 2 and Appendices A–C, demonstrate direction-controlled order in a fiber Sagnac. One heralded photon carries the target in arrival-time bins, reaching dimension 8192. The apparatus uses selected positive fiber delays, programmed binary phase masks, 2-ns bins and a 7-km storage spool. Appendix A explicitly replaces tensor-bit XOR by cyclic addition; Fig. 5 adds active switches for genuine cyclic wrap. Table II reports 15.14±0.04-dB total loss at the largest size. Its demonstrated task starts the target in bin zero and charges repetition in a one-way communication game.
 
@@ -1592,6 +1592,21 @@ This uses 2D one-particle modes, not D²: the D²-dimensional reference–target
 [Li et al., PRApplied 21, 044030 (2024)](https://doi.org/10.1103/PhysRevApplied.21.044030), Fig. 1 and Appendices A–D, demonstrate one transmon-controlled two-sided cavity routing an itinerant photon into transmission/reflection. A separate source supplies 1-us pulses; the helper has T1=15.75 us and T2=4.19 us. Hybrid couplers split both outputs and interfere their other halves. Field tomography uses amplifier-noise calibration with vacuum inputs. The reported 98.06% process fidelity concerns a selected time-bin transmission channel, not the complete joint routing instrument. The [author-uploaded published text](https://www.researchgate.net/publication/379886137_Quantum_switch_for_itinerant_microwave_single_photons_with_superconducting_quantum_circuits) supplies the inspected appendices.
 
 That device provides coherent route selection, not both products BA and AB of two unknown channel slots. A proposed order network still needs return/recombination ports, delays, internal-loss and helper baths, and complete retained/rejected records. The existing microwave full-port analysis applies; a selected process fidelity cannot replace those records.
+
+[Zhao et al., arXiv:2604.21902v1](https://arxiv.org/html/2604.21902v1)
+demonstrate polarization-entanglement-preserving routing with paired MZIs
+and encoding converters. Their 1-MHz quantum test uses 400-ns gated
+tomography with a reported 81.5-ns settling time; the separate 1-GHz
+switching characterization uses photodiodes (Sections III.1–III.2,
+Appendices B–C). Table 1 lists polarization-dependent losses of 3.50/3.30 dB
+and insertion losses of 5.25/5.17 dB for the two outputs. Appendix D models
+loss, extinction and phase impairments. These are real resources for coherent quantum
+routing. For order-controlled recovery, coincidence tomography
+and this model still need a complete unknown-input/reference instrument,
+including timing-gate rejects, loss, unselected modes and the retained
+cross-history block of the actual same-target modules. Ordinary
+reference-assisted route qualification remains a comparator, with source,
+calibration reuse, detector, routing, storage, reset and release costs.
 
 The next finite physical test is therefore code closure **and** the all-record order cross term of an actual unknown noncommuting noise module. Its loss/controller/time records must preserve the required coherence. Known random-Pauli settings already reveal commutation labels; diagonal-only Pauli pairs have eta=1. Compare any surviving unknown-noise instrument against available controller records, ordinary local-overlap probes and realistically prepared references before claiming a memory advantage.
 

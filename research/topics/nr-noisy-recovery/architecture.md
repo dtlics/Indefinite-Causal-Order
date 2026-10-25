@@ -713,6 +713,26 @@ non-Markovian effects in ordinary emission spectra. Such a model does not by its
 coherence over nanosecond order routing. Pulse profiles and complete
 two-history overlaps remain necessary in either regime.
 
+[Selco et al., arXiv:2511.07785v1 (2025)](https://arxiv.org/html/2511.07785v1),
+Figs. 1–2, Eqs. (1)–(2) and Methods “Experiment Protocol,” provide a
+natural-disorder test: diamond nuclear spins interact with a fluctuating
+electron bath. After an initial transient, their measured collective polarization follows
+$M(T)=\exp[-\sqrt{R_pT}-R_dT]$, starting from an $I_x$ deviation with
+quasi-continuous inductive readout. Global Floquet angle/detuning and
+optical bath modulation tune the decay pathways. The model evolves site
+polarizations by $\dot p=(W+R)p$; its transport eigenmodes do not identify
+NR-R20's hidden rank-one quantum pointer basis. For the measured
+polarization-retention workload, those same ordinary controls and readout
+already supply the comparison, including preparation and calibration
+reuse. The source does not demonstrate the all-input pinching/replacement
+promise, independent complete storage visits or coherent whole-register
+order access. Unknown microscopic geometry establishes no ordinary-learning
+lower bound. The next test is a finite encoded unknown-input memory with
+actual write/read controls, a retained-reference accepted-plus-failure
+instrument and a measured two-visit law. That quantum service must be
+specified before applying NR-R20; the reported bulk decay alone does not
+supply it.
+
 ### A coherent mechanical memory and its ordinary control benchmark
 
 [Bozkurt et al.](https://doi.org/10.1038/s41567-025-02975-w)
@@ -2007,12 +2027,32 @@ whole-pair routing remain physical requirements; a separately available
 coherent controller is itself an ordinary gate resource.
 Neither proposal supplies the missing controlled-order interface.
 
-The next test is the full input-output model of one such actual device.
-Prespecify a useful detuning or spin-setting decision, or a delivered
-few-photon state/gate, and compare ordinary phase/correlation measurements,
-pulse optimization, spectral selection and coherent delayed paths. Retain
-all output ports, emitter and phonon records, and the valid-output herald.
-If a reversed route changes the local interaction, compare that physical
-process directly rather than importing the abstract channel-SWITCH bound.
-Charge source, routing, storage, reset, selection and every rejected launch.
-A significant advantage on this nonlinear platform remains unestablished.
+A concrete terminal source-setting decision is to maximize the probability
+$Y(\theta)$ of three forward detector clicks in a predeclared short
+time-region on one launched pulse. No click and all other patterns score
+zero. On [Hansen's apparatus, Sections S2.4 and S5.2](https://arxiv.org/html/2605.18525v1),
+one proposed comparison is nominal detuning pairs
+$\Delta/(2\pi)=(0,0)$ and $(-0.3,-0.3)\,\mathrm{GHz}$ at the same pulse
+and collection settings. The source reports different continuous/pulsed
+detuning optima and uses the $(-0.3,-0.3)$ offsets for its correlation run;
+it does not report $Y$ at both proposed settings. Its diffusion is slow
+relative to three consecutive pulses, rather than fresh independent noise
+on each pulse. Normalized $g^{(3)}$, a three-photon Fock probability,
+retained-state fidelity and this raw-click objective are different scores.
+Ordinary count comparisons, pulse optimization and setting reuse are
+therefore mandatory baselines. A sampling/time guarantee still needs
+detector response, tuning latency and the actual drift correlation law.
+
+For counterpropagation around one joint device with only independently
+available external input/output encoding, the existing
+[full joint-device comparison](communication.md#scope-of-the-device-mapping)
+already matches every retained and lost-output instrument at the same
+clock. The inspected two-emitter descriptions do not establish a distinct
+interpass coherent control, re-entry or retained-memory service needed
+to escape that premise. No new native optimizer is justified by merely
+renaming the two incidence directions. A delivered few-photon state/gate
+instead needs its complete quantum output, valid herald and release
+contract. Any different internal process must retain all emitter, phonon,
+loss and time records and admit the same ordinary controls. Charge source,
+routing, storage, reset, selection and every rejected launch. A significant
+advantage on this nonlinear platform remains unestablished.
