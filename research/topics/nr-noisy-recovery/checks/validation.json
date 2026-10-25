@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-25T22:37:33+00:00",
+  "generated_utc": "2026-10-25T22:54:44+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -149,7 +149,7 @@
     "research/topics/nr-noisy-recovery/checks/recovery/local_recovery.py": "38958045476b075a233a1ee1f71fcde934f26f44fbb7a42da4abb30c14a11afc",
     "research/topics/nr-noisy-recovery/checks/recovery/scalable_global.py": "b1762c233496f7a1225f056305a50b795329caab01cf5099abccbf7d116a328a",
     "research/topics/nr-noisy-recovery/checks/run_all.py": "295eba4e9302b16ca1355b8b3649edc3693f227f69af0328459fc6667c63cd5f",
-    "research/topics/nr-noisy-recovery/communication.md": "45513fe7e2f703c1f948b209216a49e1edd5fa5731b52f1c19cfc231b2a7ae48",
+    "research/topics/nr-noisy-recovery/communication.md": "c5356a9201fc5414f312f866262309c9b089317b20d49a93358279e9384f5ed6",
     "research/topics/nr-noisy-recovery/dispatch.md": "97982b8b9fc3733ca6ae9696b277d48dba80bab3626a727a2f6d2fa14e4232db",
     "research/topics/nr-noisy-recovery/geometric-calibration.md": "f202ef5c494e4aa9df0c1f9b38a2b0e532e65dbecee0fc2b80a9a07657164dba",
     "research/topics/nr-noisy-recovery/global-noise.md": "b65e344b96022b031ea1e7b6e51182cceb509d84a6a6515393198d88e898eea4",

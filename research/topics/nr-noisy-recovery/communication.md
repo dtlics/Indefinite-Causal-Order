@@ -354,6 +354,34 @@ $|1\rangle\langle0|$ to $\sqrt\eta|1\rangle\langle0|$, whereas a
 transmitted-or-vacuum-replaced interpolation scales it by $\eta$.
 Its illumination error bounds are not needed for the reductions above.
 
+There is a separate **target-channel qualification** in its Eqs. (4),(6).
+For $0<\eta<1$ and a centered independent thermal mode $E$ of mean $N$, the stated
+beam splitter has
+$a_A'=\sqrt\eta\,a_A-\sqrt{1-\eta}\,a_E$. Thus, with passive idler $B$
+and $c=\langle a_Aa_B\rangle$, its exact partial-trace channel gives
+$c'=\sqrt\eta\,c$. The replacement interpolation
+$\eta\rho_{AB}+(1-\eta)\tau_{A,N}\otimes\rho_B$ instead gives $c'=\eta c$.
+Both have signal mean $\eta\langle N_A\rangle+(1-\eta)N$.
+For a two-mode squeezed vacuum of signal mean $S$, the magnitude of their
+cross-moment difference is $(\sqrt\eta-\eta)\sqrt{S(S+1)}$, already of order $\sqrt S$
+at low brightness. This unbounded observable alone supplies no general
+trace-distance or detection-error bound.
+
+A bounded exact example uses $N=0$ and
+$|\psi_x\rangle=(|00\rangle+x|11\rangle)/\sqrt{1+x^2}$, $0<x<1$.
+In basis $(00,01,10,11)$ both outputs have diagonal
+$(1,(1-\eta)x^2,0,\eta x^2)/(1+x^2)$; only their $00$--$11$ coherence
+differs. Their difference is
+$\delta(|00\rangle\langle11|+|11\rangle\langle00|)$, where
+$\delta=(\sqrt\eta-\eta)x/(1+x^2)$, with eigenvalues $\delta,-\delta,0,0$.
+The output trace distance is therefore exactly $\delta$; at
+$\eta=1/4,x=1/10$ it is $5/202$ with signal mean $1/101$.
+These analytic examples distinguish the interpolation as an additional
+effective target model from the thermal beam-splitter identity.
+Both control outcomes remain retained in the source's Eqs. (25)--(28).
+No full-network advantage, ordinary equivalence or Chernoff-error ordering
+follows from this target-only comparison.
+
 A useful next experiment would hold $\tau$ fixed while changing the
 loss split, measure the complete accessible $T$, and test an independent
 control conditioned on probe vacuum. Any split-dependent signal at
