@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-25T00:39:13+00:00",
+  "generated_utc": "2026-10-25T01:08:22+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -14,8 +14,8 @@
   "input_hash_algorithm": "sha256",
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "0579328ad4e1ee6c97072f6591191b6eab8c1c4312167340c7128432650c2b46",
-    "research/topics/nr-noisy-recovery/architecture-baselines.md": "8676fe7e68add12b5160921ce15947bd0b5d46806ffd68b30aa6d897d23696e3",
-    "research/topics/nr-noisy-recovery/architecture.md": "8f1f993d96f14c12dd24f4ad5d8854a3f5661b23a132768832252bee6cb74d36",
+    "research/topics/nr-noisy-recovery/architecture-baselines.md": "831e11b057e9ce557ae88a1354c78c16da84effe9d4947007b5fadb31c336743",
+    "research/topics/nr-noisy-recovery/architecture.md": "48711b9c9506de483fc7d52e1ca5d52bbf9d83cd1376588be2cf1b3dc5fb8330",
     "research/topics/nr-noisy-recovery/backaction.md": "7fe7b08d5aa1f28aa4a8e73c7f94703fbc30cf4319deee6f288276da25b0ec20",
     "research/topics/nr-noisy-recovery/braided-magic.md": "5b34e071abc1448940783a5f7a8853fd4c3c7523e3725edd5d6540ea5d808b4c",
     "research/topics/nr-noisy-recovery/checks/acceptance/acceptance_correct_dual_sharp_certificate.json": "95d061e96dd7cdf31ca311b54ac9896995312dd5e2b6407d000bd0e2ff80acaf",

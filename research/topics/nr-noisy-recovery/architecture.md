@@ -1480,6 +1480,21 @@ cooling stay distinct. Feedback outside these symmetry conditions needs
 the full instrument, strongest ordinary
 preparation methods and matched controller, storage and reset costs.
 
+The [cold entangler source-model proof](architecture-baselines.md#nr-r06-required-bosonic-entanglers)
+includes coherent within-gate coupler excursions in the diagonal-survivor
+comparison; initially warm couplers, shared-memory routes and erased
+partner outputs still require their actual instrument.
+
+The [required charging comparison](architecture-baselines.md#nr-r06-charging-records)
+uses the same conditional work and meter-record service on both sides.
+For identical contacts with pure accessible chargers, ordinary serial
+charging plus a controlled charger permutation reproduces the full
+helper/battery/charger/reference ready-column output. A distinct calibrated
+battery-only unsharp meter matches the stated work/record service; an ideal
+entropy-reset score is bounded by the ordinary no-meter/sharp-meter
+envelope. Actual noisy instruments, mixed incoming chargers, measured load
+delivery and full-cycle energy/timing costs remain separate requirements.
+
 The [required BCS-gate screen](architecture-baselines.md#nr-r06-required-bcs-gate)
 provides one such physical action: a Cooper-pair-mediated entangler needs
 both leads together. Its clean threshold has a divergent absolute

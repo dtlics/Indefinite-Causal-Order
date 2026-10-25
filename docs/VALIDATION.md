@@ -511,6 +511,17 @@ measured erasure-selected benchmarks, simulation results, conditional
 diagonal-survivor arguments and full herald/reset costs stay distinct.
 No new measured instrument, ordinary optimum or native advantage follows.
 
+The required charging comparison is analytic: the full pure-charger
+ready-column compiler, fixed-excitation support, chosen-input diagonal
+meter instrument, fine-record extension and convex entropy-cost envelope
+have explicit proofs in the baseline owner. The replay fingerprints that
+note but does not certify a measured meter, actual reset work, equivalence
+of additional physical charger/environment outputs, arbitrary-input
+identities outside the ready-column scope or physical charging advantage.
+The cold entangler's conserved-number/outer-rail argument is also analytic
+within the published loss/dephasing surrogate; it is not a full measured
+accepted/erased instrument, online-herald or controlled-order certificate.
+
 The separate encoded-Pauli replay checks full code-input and retained-record
 channels, mixed/reference states, the deferred coherent-record circuit and
 a non-phase helper-noise counterexample. Its proof assumes clean decoded

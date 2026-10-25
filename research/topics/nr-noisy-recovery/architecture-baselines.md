@@ -2299,6 +2299,54 @@ serial survivor tensored with $|+\rangle\langle+|$, and the accepted minus
 map is zero. This is the existing Kraus-commutation mechanism applied to
 the declared survivor model, not a new hardware theorem.
 
+**The published cold five-mode surrogate satisfies that premise.**
+The [final Supplementary Information, Section XIV](https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41586-026-10822-y/MediaObjects/41586_2026_10822_MOESM1_ESM.pdf)
+uses the Section XIII square-pulse Hamiltonians, excitation loss and white
+number dephasing. For a ground-state coupler and one excitation in each
+input dual rail, define
+
+$$
+N_A=n_{a_1}+n_{a_2}+n_c,\qquad N_B=n_{b_1}+n_{b_2}.
+$$
+
+Here is a conservation proof, independent of a fitted gate-error rate.
+The driven $a_2$–$c$ exchange, its complex pump phase, and the dispersive
+$n_{b_1}n_c$ term commute with $N_A,N_B,n_{a_1},n_{b_2}$. Additional
+number-diagonal Kerr terms preserve the same relations. The no-jump
+generator and number-dephasing jumps preserve these labels, while every
+excitation-loss jump lowers $N_A$ or $N_B$. Both start at one. Projection
+onto both final dual-rail codes therefore excludes every loss trajectory
+and forces $n_c=0$. The unchanged outer-mode occupations identify the
+accepted logical basis state uniquely. Contracting any dephasing or
+discarded-environment record consequently gives a diagonal accepted Kraus
+operator. This statement holds for arbitrary coherent inputs and passive
+references by linearity; it does not assert preservation of coherence.
+Coherent transfer into $c$ and back during the gate is included; an
+excitation still in $c$ at the final projection is an erasure.
+
+For separately initialized private modules in the standard module-paired
+model, the next cold module cannot replace an excitation missing from
+the data. Thus final code acceptance also excludes an intermediate code
+exit left in the previous private coupler. The preceding serial-survivor equality therefore applies to the final
+accepted map, while rejecting any excitation left in the private coupler
+at block exit; it does not require discarding all within-gate excursions.
+Repeating blocks through one retained interacting coupler instead requires
+that shared-memory process, not independent module Kraus labels.
+
+Sections VIII–X distinguish residual control photons left in the coupler
+from a separately estimated initial thermal population near $0.1\%$.
+The latter is not a uniform confidence certificate for a two-module route
+or a bound on upward injection and control crosstalk. Neither those
+population estimates nor rare bit-flip rates furnish an aggregate hardware
+advantage ceiling. The final code projection above is a mathematical
+selected map, not an online herald: Section I.B's terminal measurement
+resolves individual rail occupation. Its current cavity-number mapping uses
+a 4 microsecond pulse and transmon readout takes 3 microseconds;
+projected shorter times require design changes. These terminal-SPAM
+numbers do not certify an online check or complete cycle. Erased outputs
+and their surviving partner phase remain a separate endpoint for an
+actual outer-code decoder.
+
 Returned leakage, non-diagonal faults and a shared interacting reservoir
 are outside that statement. Measured rare bit-flip rates alone do not
 give a universal diamond bound for those corrections. Lost-code outputs
@@ -2593,6 +2641,195 @@ record permutations for finite even rings. Principal-angle completeness, all-ran
 all-reference proofs, convergence, source-to-hardware mapping and physical
 control costs remain analytic; no finite fixture certifies a many-body
 preparation advantage or optimal receiver.
+
+<a id="nr-r06-charging-records"></a>
+
+### Required charging needs the same measured-record comparator
+
+Charging is a useful contact task, but the ordinary comparator must receive
+the same measurement-assisted work service. [Lai et al.,
+arXiv:2603.22761v1](https://arxiv.org/html/2603.22761v1), Eqs. (5)–(17),
+compare a cyclic-order protocol's average conditional, or daemonic,
+ergotropy with the unmonitored fixed-order battery marginal. Their model
+starts a qubit battery in $g$ and $N$ chargers in $e$, uses identical
+excitation-conserving XY contacts of duration $t/N$, and measures the order
+helper. Section III implements the two-charger circuit on gate-based
+processors using four controlled charging blocks. Its time parameter is
+mapped to a gate angle; reconstructed populations and ergotropy do not
+measure work delivered to a load after a complete controller/reset cycle.
+
+**Coherent access to the pure chargers gives a full ordinary compiler.**
+Let $W=U_N\cdots U_1$ be fixed serial charging and let $P_j$ cyclically
+permute the charger registers. Identical contact unitaries imply
+$W_j=P_jWP_j^\dagger$ for the corresponding cyclic charging order.
+The pure ready state $|E\rangle=|e\rangle^{\otimes N}$ obeys
+$P_j^\dagger|E\rangle=|E\rangle$. Hence for every battery/reference input,
+
+$$
+P_jW(|\psi\rangle_{QR}\otimes|E\rangle)
+ =W_j(|\psi\rangle_{QR}\otimes|E\rangle).
+\tag{BC0}
+$$
+
+After fixed serial charging, apply the helper-controlled charger
+permutation $\sum_j|j\rangle\langle j|_D\otimes P_j$. By linearity, (BC0)
+reproduces the native whole helper/battery/charger/reference ready-column
+isometry, even for initially correlated helper/battery/reference states.
+The common interaction angle need not be known to this compiler. For
+$N=2$ it is one post-charging controlled charger SWAP: its $X$ helper
+readout is a SWAP test with precisely the native two flag blocks. This
+specializes the existing [controlled bath-permutation mechanism, (TA13)](methods/thermal-attenuator.md#native-source-and-port-test)
+to the source's explicit pure charger registers; it is not a new query
+separation. Two serial contact blocks plus a controlled SWAP versus four
+controlled source blocks are abstract constructions, not an optimized
+entangling-gate count or hardware timing/error comparison.
+
+Charger control, connectivity, storage and coherent permutation gates
+must be supplied and priced. Identical mixed charger marginals alone do
+not justify dropping the initial controlled $P_j^\dagger$: invariance of
+a density matrix under conjugation is weaker than the pointwise pure
+ready-state identity used in (BC0). General incoming chargers need the
+pre- and post-permutations, or another justified joint implementation.
+Spatially unequal contact errors, inaccessible environments and extra
+clock/emission records require their complete instrument to be matched.
+Ideal Hamiltonian symmetry alone does not certify that hardware equality.
+
+**A battery-only unsharp meter matches the stated work service.** When
+coherent charger access is not supplied, there is a distinct comparator
+using a calibrated battery–helper coupling. Shift the
+battery ground energy to zero and write its gap as $\Delta$. Put
+$\theta=\omega\lambda t/N$, $\phi=\omega t/N$ and $c=\cos\theta$.
+For each cyclic order, fixed total excitation confines the output to
+
+$$
+|\psi_j\rangle=\alpha_0|g,h_0\rangle
+ +\sum_{\ell=1}^N a_{\ell-j}|e,h_\ell\rangle.
+\tag{BC1}
+$$
+
+Here $h_0$ has all chargers excited, $h_\ell$ has the single hole at
+charger $\ell$, and the coefficients are indexed cyclically. The common
+no-transfer amplitude obeys $|\alpha_0|^2=c^{2N}$; the remaining squared
+amplitudes sum to $q=1-c^{2N}$. The uniform helper outcome coherently sums
+the hole amplitudes, giving excited mass
+
+$$
+b=\frac1N\left|\sum_\ell a_\ell\right|^2
+ =\frac{\sin^2\theta}{N}
+   \left|\sum_{j=0}^{N-1}(c e^{i\phi})^j\right|^2,
+\qquad r=q-b.
+\tag{BC2}
+$$
+
+This expression follows from the contact amplitudes in the source's
+Appendix A, Eq. (21). Cauchy–Schwarz gives $0\le b\le q$, so
+$0\le r\le q\le1$. Every helper direction orthogonal to the uniform
+one has zero ground amplitude. Orthogonality of $h_0$ and the hole states
+also makes every retained battery block diagonal. Coarsen the record to
+$0=$ uniform outcome and $1=$ its complement. All outcomes in the
+complement already have the same pure battery state $e$, so this
+coarsening preserves the source's conditional work score. The complete
+unnormalized blocks are
+
+$$
+\sigma_0=\operatorname{diag}(1-q,q-r),\qquad
+\sigma_1=\operatorname{diag}(0,r).
+\tag{BC3}
+$$
+
+Ordinary serial charging gives the same marginal
+$\rho_{\rm ser}=\operatorname{diag}(1-q,q)$ and stored energy $E=\Delta q$.
+After those same contacts, apply the ordinary unsharp energy instrument
+
+$$
+M_0=\operatorname{diag}\!\left(1,\sqrt{1-r/q}\right),\qquad
+M_1=\operatorname{diag}\!\left(0,\sqrt{r/q}\right).
+\tag{BC4}
+$$
+
+For $q>0$, $\sum_k M_k^\dagger M_k=I$ and
+$M_k\rho_{\rm ser}M_k^\dagger=\sigma_k$ exactly. At $q=0$, necessarily
+$r=0$; use $M_0=I$, $M_1=0$. The case $q=1$ is already included.
+These Kraus operators define a valid instrument on the entire qubit, but
+equality with the native output is claimed only for the source's fixed
+input and the retained battery/classical-record service.
+
+One clean helper realizes (BC4): prepare it in $0$, apply
+$|g\rangle\langle g|\otimes I+|e\rangle\langle e|\otimes R_y(2\gamma)$
+with $\sin^2\gamma=r/q$, then read it in $Z$. No preliminary sharp energy
+measurement or discarded fine energy record is involved. The controlled
+rotation has a two-CNOT and one-qubit-rotation construction when the actual
+battery–helper coupling is supplied; the source's CZ/rotation circuit
+model provides such a synthesis route, with graph routing still charged.
+Neither a clean helper nor readout alone grants that port in an opaque
+contact device. Known parameters set $q,r$ and the meter angle; calibration,
+classical evaluation, angle precision, gate errors, helper survival,
+measurement and reset remain costs. Four controlled source blocks versus
+serial contacts plus this meter are constructions, not measured latency
+or noisy-gate dominance bounds.
+
+Equality of $\sum_k|k\rangle\langle k|\otimes\sigma_k$ implies equality
+under any same later processing of the battery and classical flag. In
+particular, all attempts count, and
+
+$$
+W=\Delta\,[r+\max(0,2q-r-1)]\le E.
+\tag{BC5}
+$$
+
+Both protocols have flag probabilities $(1-r,r)$ and binary Shannon
+entropy $H_2(r)$. Thus a reset bound based only on that distribution is
+matched. Equal entropy does not prove equal physical reset-channel work,
+helper Hamiltonians or gate-drive expenditure. A sharp energy readout
+would instead reach $W=E$, but can create a different record entropy
+$H_2(q)$; that stronger work score alone is not a net-cycle comparison.
+At $E=0$, both work scores vanish and $W/E$ is undefined.
+
+There is also a stronger comparison in the additional ideal model where
+the only record cost is $\tau H_2(r)$, $\tau\ge0$. For known $q$, the
+net score $F_q(r)=\Delta\max(r,2q-1)-\tau H_2(r)$ is convex on $[0,q]$:
+the work term is a maximum of affine functions and negative entropy is
+convex. Hence
+
+$$
+F_q(r)\le\max\{\Delta\max(0,2q-1),\ \Delta q-\tau H_2(q)\}.
+\tag{BC6}
+$$
+
+The endpoints are ordinary serial charging without a meter and with a
+sharp energy meter. Thus an intermediate native flag cannot exceed their
+pointwise envelope even in that entropy-cost comparison. The two circuits
+do not need $r$; choosing the endpoint still uses knowledge of $q$ and is
+not a single universal policy for unknown drifting contacts. This bound
+does not identify actual reset work for nondegenerate helpers, correlated
+chargers, finite-time reset or additional controller drives.
+
+If all $N$ fine native flags are retained, write their diagonal blocks as
+$\sigma_k=\operatorname{diag}(g_k,e_k)$, with sums $1-q,q$. For
+$0<q<1$, the diagonal ordinary Kraus operators
+$L_k=\operatorname{diag}(\sqrt{g_k/(1-q)},\sqrt{e_k/q})$ are complete and
+produce every $\sigma_k$. A clean helper of dimension $N$ and two known
+battery-controlled state-preparation unitaries realize the two normalized
+columns before a fine readout. The battery-control sectors are orthogonal,
+so the two helper columns need not be mutually orthogonal. At $q=0$ or
+$1$, choose any normalized column on the unoccupied battery sector.
+This extension matches the fine record distribution and helper dimension;
+its state-preparation, coupling and precision costs are not assumed equal
+to the native controls.
+
+The unsharp-meter proof is an analytic chosen-input measurement-assisted extraction
+comparison, not a new order-query mechanism or a finite hardware
+certificate. It does not match charger states/correlations, an unmeasured
+order helper, arbitrary battery/reference inputs or future charger reuse.
+The full charger-permutation compiler has the broader ideal ready-column
+scope in (BC0), including later processing of those retained chargers;
+it does not identify additional inaccessible bath or timing outputs.
+Processor errors that violate the declared instrument require the actual
+noisy model. A useful architecture claim must therefore supply delivered
+work, elapsed time, charger replenishment, meter/controller drives,
+readout/reset and every exported record at a common accuracy. The current
+ideal work curve and its flag entropy already have an ordinary comparator
+under the stated calibrated meter ports; full-cycle benefit remains open.
 
 ### Matched noisy copies admit an ordinary same-order path comparator
 
