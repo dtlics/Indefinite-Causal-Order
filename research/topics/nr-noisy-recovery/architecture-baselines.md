@@ -2026,6 +2026,189 @@ a mechanism-priority claim. Native helper faults, time/energy, actual
 coherent order routing and the complete environmental history determine
 the remaining hardware frontier.
 
+<a id="nr-r06-joint-vacuum-flag"></a>
+
+### A shared-probe order flag has an ordinary joint-vacuum comparator
+
+[de Graaf et al.](https://doi.org/10.1038/s41534-024-00944-4)
+demonstrate a nondemolition vacuum check on a dual-rail cavity qubit:
+simultaneous beamsplitter and Bob-transmon drives distinguish joint vacuum
+while returning logical states. Their repeated-check experiment includes
+six logical cardinal inputs, a cavity-SWAP echo and equal-duration idling.
+The calibrated selective pulse lasts $1.820\,\mu\mathrm s$; subsequent
+readout, record latency and recovery/reset are additional resources.
+The [final supplement](https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41534-024-00944-4/MediaObjects/41534_2024_944_MOESM1_ESM.pdf),
+F, H, I and K, supplies calibration, terminal validation and an ordinary
+joint-parity alternative. This device differs from the SWS entangler.
+
+**An exact all-input ideal comparison.** Put
+$P_0=|00\rangle\langle00|$ and
+$P_1=|10\rangle\langle10|+|01\rangle\langle01|$.
+Let $U_X$ be an ideal full calibrated selective $\pi$ check: on vacuum it
+acts as $-iX_B$, while its ready-$g_B$ column on the entire code is
+identity, up to known common phases. Changing the transmon drive phase
+gives $U_Y=R_{z,B}(\pi/2)U_XR_{z,B}(\pi/2)^\dagger$; the remaining
+Hamiltonian commutes with that rotation. On vacuum,
+
+$$
+U_YU_X=+iZ_B,\qquad U_XU_Y=-iZ_B.
+$$
+
+A hypothetical coherent order of these two pulses with an independent
+ready-$+$ helper $A$ therefore returns $B$ to $g_B$ and writes code to
+$|+\rangle_A$, vacuum to $|-\rangle_A$. Measuring $A$ in $X$ gives
+
+$$
+\mathcal I_+(\rho_{DR})=(P_1\otimes I_R)\rho_{DR}(P_1\otimes I_R),
+\qquad
+\mathcal I_-(\rho_{DR})=(P_0\otimes I_R)\rho_{DR}(P_0\otimes I_R).
+$$
+
+This is the complete measured instrument on vacuum plus code, preserving
+every unknown logical state and passive reference. The displayed unitary
+calculation uses the **same Bob probe** across both pulses without an
+intervening readout/reset. Independent probes or reduced measured modules
+do not supply these anticommuting products. A readout inserted without
+reset changes the physical protocol and requires its complete records and
+costs; an ideal intermediate $Z_B$ readout need not destroy this particular
+measured endpoint. Nor does full-pulse calibration provide a closed
+half-check primitive.
+
+One ordinary $U_X$ followed by Bob readout already gives this ideal
+data-plus-classical-flag service. If the flag must instead reside in
+Alice and Bob must return coherently to $g_B$, the ordinary chronological
+word
+
+$$
+U_X\ ;\ \mathrm{CZ}_{AB}\ ;\ U_X
+$$
+
+with $A$ initially $+$ does so: code leaves $A$ plus, while vacuum gives
+$-Z_A|+\rangle_A$ and returns Bob to $g_B$. Its measured instrument is
+exactly the displayed pair, including arbitrary references and all input
+vacuum--code coherences. Outcome phases differ from the order encoding;
+they do not affect the measured instrument. A specified unmeasured
+encoding must also price its phase convention. This comparator pays the
+two full pulses and the actual CZ. If native phase selection uses a
+controlled-$S_B$, $S_B=\operatorname{diag}(1,i)$, its square supplies that
+CZ at the corresponding cost;
+a different abstract order router does not automatically grant this port.
+
+**A chronological relaxation test.** Vacuum is a required input of this
+service. All cavity terms vanish there. Declare a resonant two-level
+extension with $H_X/\hbar=f(u)X_B$, $H_Y/\hbar=f(u)Y_B$,
+$\theta(u)=\int_0^u f(v)\,dv$ and $\theta(T)=\pi/2$ for each full
+pulse. In both coherent histories the same chronological Markov bath
+acts by $I_A\otimes L$, $L=\sqrt\gamma\,|g\rangle\langle e|_B$.
+Its emitted record labels physical jump time, not a permuted module
+label. Order/phase control and all measurements below are ideal. This is
+an explicit optimistic extension, not a bath model determined by the
+published reduced check channel.
+
+Write $s=\sin\theta(u)$, $c=\cos\theta(u)$,
+$I=\int_0^T s^2c^2\,du$ and $J=\int_0^T s^4\,du$.
+For one jump, omit its common $\sqrt{\gamma\,du}$ factor. In the two
+order branches, the final Bob vectors are
+
+$$
+\begin{array}{c|cc}
+&X\text{ then }Y&Y\text{ then }X\\ \hline
+\text{first pulse}&sc|g\rangle-is^2|e\rangle&-isc|g\rangle-is^2|e\rangle\\
+\text{second pulse}&-isc|g\rangle-ic^2|e\rangle&sc|g\rangle-ic^2|e\rangle
+\end{array}.
+$$
+
+Projecting their half-sum and half-difference gives the complete
+$(A+,Bg),(A+,Be),(A-,Bg),(A-,Be)$ jump-probability kernels
+
+$$
+\left(\tfrac12s^2c^2,s^4,\tfrac12s^2c^2,0\right),\qquad
+\left(\tfrac12s^2c^2,c^4,\tfrac12s^2c^2,0\right).
+\tag{VF1}
+$$
+
+They sum to $s^2$ and $c^2$, the actual excited-state populations.
+The Alice-only flag therefore misses vacuum with probability
+$\gamma(T-I)+O((\gamma T)^2)$. Reading Bob as well and calling only
+$A+,Bg$ no erasure improves this to $\gamma I+O((\gamma T)^2)$;
+it is still first order for a nontrivial continuous full pulse.
+
+An ordinary single X check has missed-vacuum probability
+$\gamma J+O((\gamma T)^2)$. The ordinary $U_X;\mathrm{CZ}_{AB};U_X$
+word above instead has the complete first-/second-pulse kernels
+
+$$
+\left(0,s^4,s^2c^2,0\right),\qquad
+\left(0,0,s^2c^2,c^4\right).
+\tag{VF2}
+$$
+
+The first pulse stores the flag before the second can relax. Its
+Alice-only miss is again $\gamma J+O((\gamma T)^2)$, whereas the
+joint $A+,Bg$ miss has zero first-order coefficient. No-jump amplitudes
+into these ideally forbidden outcomes are first order, so their
+probabilities contribute only at second order. Since
+$T-I-J=\int_0^T c^2du$, the native Alice-only miss exceeds the ordinary
+one at first order. For the **constant-amplitude surrogate**,
+$I=T/8$, $J=3T/8$: the coefficients are $7\gamma T/8$ versus
+$3\gamma T/8$. They are not predictions obtained by inserting the
+measured $1.820\,\mu\mathrm s$ duration: finite ramps, detunings and
+Stark shifts require the actual pulse model.
+
+For the measured predicate, a stronger ordinary comparison needs no
+coherent CZ: read Bob after one check, report erasure on $e$, and repeat
+on $g$. In this vacuum Markov model, an ideal $g$ readout leaves Bob
+exactly ready, so the missed-vacuum probability is $p_1^2$, where
+$p_1=\gamma J+O((\gamma T)^2)$. It uses at most two pulses/readouts
+and mean vacuum pulse count $1+p_1$. Intermediate readout latency,
+backaction, assignment errors and eventual reset after an erasure are
+paid. This does not preserve an unmeasured coherent Alice flag.
+
+These are vacuum-sector fault screens, not a full code-delivery ranking.
+Both final probes must be read on both sides for the joint-classifier
+comparison. Actual CZ/order control, helper faults, code-sector errors,
+readout and total elapsed time still decide practical performance.
+
+**Actual controls and fault boundary.** Alice already has a transmon and
+readout. Using it coherently adds $\chi_A n_a|e_A\rangle\langle e_A|$,
+changing the beamsplitter detuning and the published check calibration.
+Within the declared number-preserving check Hamiltonians and local
+ancilla drives, vacuum makes the cavity coupling terms vanish: ancilla
+evolution then factorizes. General ancilla CZ/controlled-$S$ consequently
+needs an additional implemented control, bus excitation or encoding;
+it is not free from that restricted set. This does not exclude the fixed
+vacuum endpoint $iZ_A\otimes Z_B$, which itself is a product, or controls
+outside the set.
+
+Known pulse-phase conjugacies and ordinary echoes do not establish
+equality of noisy order histories. In particular, system/channel
+conjugacy does not fix relative phases and assignments of emitted bath
+records. The shared probe, Alice's extra coupling, finite pulses,
+readout-induced backaction, memory and both ancilla resets must remain in
+the timed instrument. The six-state tests go beyond basis populations,
+but their selected logical tomography and averaged yields are not a
+supplied unnormalized all-outcome reuse instrument. The vacuum check
+also does not certify rejection of higher-photon heating states.
+
+A newer ordinary capability must remain visible without transferring
+devices: [Hung et al., arXiv:2604.16292v1](https://arxiv.org/html/2604.16292v1)
+use a symmetrically coupled common resonator on a **transmon** dual rail.
+Their $384\,\mathrm{ns}$ probe drive overlaps a $496\,\mathrm{ns}$
+integration window including ringdown; these are not additive durations
+or a full feedback/reset clock. Continuous $480\,\mathrm{ns}$ monitoring
+windows and alternate IQ acceptance already provide ordinary controls
+for flagging some returned or higher-level leakage. These are not cavity
+device timings or an identified coherent-return Hamiltonian.
+
+The ideal flag service is thus closed by ordinary controls. A concrete
+fault advantage remains **underdetermined by the published parameters**:
+it becomes testable only after specifying the active-Alice native pulse
+word, its physical timed bath extension, complete accepted/erased flag
+maps and reusable output/reset clock. Those must be compared with the
+demonstrated ordinary selective check, its allowed echoes and the same
+paid helper controls; a fitted reduced check channel alone cannot settle
+the comparison.
+
 <a id="nr-r06-active-gate-aqec"></a>
 
 ### Active bosonic gates and a code-fixing recovery have a paid ordinary comparator

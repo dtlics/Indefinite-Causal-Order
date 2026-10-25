@@ -1485,6 +1485,16 @@ includes coherent within-gate coupler excursions in the diagonal-survivor
 comparison; initially warm couplers, shared-memory routes and erased
 partner outputs still require their actual instrument.
 
+The [joint-vacuum flag comparison](architecture-baselines.md#nr-r06-joint-vacuum-flag)
+gives an exact shared-probe ideal instrument and ordinary one-check and
+same-output-helper comparators, plus a declared chronological relaxation
+screen. Active-helper calibration, coherent control
+ports, bath histories and the full readout/reset clock remain physical
+requirements. A separate transmon symmetric-readout benchmark strengthens
+the ordinary monitoring baseline without importing its timings into the
+cavity device. The next discriminating test is a specified noisy native
+pulse word against these matched ordinary controls.
+
 The [required charging comparison](architecture-baselines.md#nr-r06-charging-records)
 uses the same conditional work and meter-record service on both sides.
 For identical contacts with pure accessible chargers, ordinary serial

@@ -522,6 +522,16 @@ The cold entangler's conserved-number/outer-rail argument is also analytic
 within the published loss/dephasing surrogate; it is not a full measured
 accepted/erased instrument, online-herald or controlled-order certificate.
 
+The [joint-vacuum flag comparison](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06-joint-vacuum-flag)
+is an analytic ideal-instrument proof and primary-source assessment.
+The shared-probe construction, ordinary measured-flag equivalence,
+vacuum-sector one-jump kernels and restricted control argument are not new finite-replay or
+Lean endpoints. The current replay fingerprints their owning source;
+it does not establish a calibrated active-helper pulse, physical coherent
+order port, cross-history bath model, complete reuse clock or fault benefit.
+The separate transmon symmetric-readout source supplies an ordinary
+benchmark, with its integration and device scope kept explicit.
+
 The separate encoded-Pauli replay checks full code-input and retained-record
 channels, mixed/reference states, the deferred coherent-record circuit and
 a non-phase helper-noise counterexample. Its proof assumes clean decoded
