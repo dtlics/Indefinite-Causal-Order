@@ -1510,6 +1510,14 @@ includes coherent within-gate coupler excursions in the diagonal-survivor
 comparison; initially warm couplers, shared-memory routes and erased
 partner outputs still require their actual instrument.
 
+The [thermal-return/cadence component](methods/thermal-return-cadence.md#nr-r06-thermal-return-cadence)
+adds nonabsorbing storage, a deferred ordinary midpoint check, the complete
+abstract two-rail GAD SWITCH instrument and a sufficient cold-regime
+ordinary-dominance theorem. Warm single-marker counterexamples require
+comparison with stronger paid checking cadences. Applying these models requires calibrated thermal parameters,
+qualified parity-marker/order controls and a complete clock budget.
+The uniform-reset cadence and GAD models remain distinct declared baselines.
+
 The [joint-vacuum flag comparison](architecture-baselines.md#nr-r06-joint-vacuum-flag)
 gives an exact shared-probe ideal instrument and ordinary one-check and
 same-output-helper comparators, plus a declared chronological relaxation

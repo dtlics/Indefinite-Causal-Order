@@ -2559,6 +2559,23 @@ whole-payload routing and the same ordinary gate, echo and delayed-erasure
 decoder at a common accuracy and deadline. A diagonal residual-noise
 SWITCH scan cannot establish the missing benefit.
 
+### Thermal return requires a cadence and full-instrument comparison
+
+The [thermal-return proof component](methods/thermal-return-cadence.md#nr-r06-thermal-return-cadence)
+extends this comparison to nonabsorbing storage after a required nonlinear
+gate. It derives an ordinary checking-cadence baseline and the equivalence
+of two ideal code tests to one coherent midpoint marker plus a final test.
+A separate full two-rail GAD calculation retains every native control/parity
+and ordinary marker/parity output, proves the arbitrary joint terminal
+recovery optimum, and establishes ordinary midpoint dominance for
+u(1-u)<=1/8 at every error penalty lambda>=1. Warm examples can favor the
+balanced SWITCH over that single-marker comparator; an exact four-check
+example reverses one such comparison, with additional access and record costs.
+Testing this abstract native comparison requires measured u, qualified
+full parity markers and selectable module/order controls, with complete
+clocks. The service comparison prices terminal unknown-input rejection
+and the strongest paid ordinary cadence. No hardware advantage is established.
+
 ### Required TIP entanglers need shared-qubit and common-clock comparisons
 
 The [TIP gate proof component](methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)

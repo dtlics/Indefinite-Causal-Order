@@ -552,6 +552,17 @@ The cold entangler's conserved-number/outer-rail argument is also analytic
 within the published loss/dephasing surrogate; it is not a full measured
 accepted/erased instrument, online-herald or controlled-order certificate.
 
+The [thermal-return/cadence component](../research/topics/nr-noisy-recovery/methods/thermal-return-cadence.md#nr-r06-thermal-return-cadence)
+adds exact finite generator, reset, formal-composition and deferred-marker
+identities for a declared code/vacuum model; complete two-rail GAD flag maps
+and retained-control/parity cross blocks at a rational channel point; warm
+and stronger-cadence arithmetic; and cold-proof coefficient/envelope
+ingredients. Continuous-time semigroup, arbitrary joint terminal recovery
+and the all-lambda>=1 cold-regime dominance theorem remain analytic.
+The uniform-reset and GAD models are separate, unfitted baselines. A finite
+replay certifies neither physical thermal rates nor parity-marker/order
+interfaces, clocks or an all-ordinary advantage.
+
 The [joint-vacuum flag comparison](../research/topics/nr-noisy-recovery/architecture-baselines.md#nr-r06-joint-vacuum-flag)
 is an analytic ideal-instrument proof and primary-source assessment.
 The shared-probe construction, ordinary measured-flag equivalence,
