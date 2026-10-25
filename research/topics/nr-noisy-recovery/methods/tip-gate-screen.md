@@ -380,3 +380,184 @@ two-window operation need not implement literal active/inactive modules.
 Its complete phases, cross-history bath map and costs must be verified
 rather than inherited from a classical TIP calibration.
 
+
+## Physical helper relaxation changes the selected drive
+
+Retain the equal-T cold TIP model and set its other noise to zero for
+this calculation. Write $U_0$ for uv, $U_1$ for vu, and $V$ for the
+ground-coupler embedding. The helper D starts in $+$, controls those
+complete Hamiltonians in its physical 0/1 basis, and is read in X.
+Assume the common chronological white jump
+$L_D=\sqrt{\gamma_D}|0\rangle\langle1|_D\otimes I$.
+For actual emission time t and endpoint coupler record r,
+
+$$
+ K_{D,+,r}(t)=K_{D,-,r}(t)
+ =\frac{\sqrt{\gamma_D}e^{-\gamma_Dt/2}}2\langle r|
+ U_0(2T,t)U_1(t,0)V. \tag{TH1}
+$$
+
+The helper decay switches the active physical drive at t. This is the
+exact block reduction of the controlled 144-dimensional model, rather
+than a late classical record error. Initial-plus and final-X overlaps
+supply the two factors $1/\sqrt2$. Summed over both helper outcomes and
+all coupler flags, the jump weight is $\gamma_DT$ to first order. The
+no-jump plus operator is
+$[(1+e^{-\gamma_DT})/2]VW$, with first-order Bell-good loss
+$\gamma_DT$; the no-jump minus weight starts at second order.
+
+**First-order moment derivation.** The attenuation in (TH1) changes jump
+probabilities only at second order in $\gamma_DT$ in the following table.
+For fixed data controls a,c, only
+$b=|e_B,g_u,g_v\rangle$, $u=|g_B,f_u,g_v\rangle$ and
+$v=|g_B,g_u,f_v\rangle$ participate. The idle diagonal is
+$(0,\delta_a,\delta_c)$ and a selected drive couples b/u or b/v.
+For $x=\pi t/T$ and $\beta_q=(-1)^q/2$, put
+
+$$
+ a_q(t)=e^{-i\beta_qx}(\cos x+i\beta_q\sin x),\qquad
+ r(t)=|a_q(t)|^2=1-3\sin^2x/4.
+$$
+
+Before the helper factor 1/2, the first-window ground-return amplitude
+is $-i(-1)^c a_c(t)a_a(T-t)$; the second is its time reversal.
+Relative to W the first is $e=a_c(t)a_a(t)^*$. Averaging a,c gives
+$\mathbb E|e|^2=r^2$ and $\mathbb Ee=\eta$, since
+$\mathbb E_q a_q=\cos^3(x/2)$ and $\eta=\cos^6(x/2)$.
+Initial B-g is dark. For one helper sign the ground norm and target-good
+densities are $(1+r^2)/8$ and $(1+\eta)^2/16$.
+The elementary averages
+$\langle r^2\rangle=59/128$, $\langle\eta\rangle=5/16$ and
+$\langle\eta^2\rangle=231/1024$ therefore give, after both windows:
+
+| Single-jump quantity, for each helper sign | Weight per $\gamma_DT$ |
+| --- | ---: |
+| All coupler records | 1/2 |
+| Both couplers g | 187/512 |
+| Target Bell-good within gg | 1895/8192 |
+| Bell-bad within gg | 1097/8192 |
+| u-f only | 69/1024 |
+| v-f only | 69/1024 |
+
+All remaining flags vanish in this single-jump model. The two leakage
+entries follow from $\langle p_f(1+r)\rangle/8=69/1024$.
+Including the no-jump term, accepting only plus/gg gives
+
+$$
+ q_N=1-\frac{6297}{8192}\gamma_DT+O((\gamma_DT)^2),\quad
+ bad_N=\frac{1097}{8192}\gamma_DT+O((\gamma_DT)^2),\quad
+ reject_N=\frac{325}{512}\gamma_DT+O((\gamma_DT)^2).
+ \tag{TH2}
+$$
+
+**Ideally equivalent ordinary checks occupy different physical noise
+bases.** Prepare D in 0, apply CNOT B-to-D before and after the same
+D-independent two-gate evolution, and measure Z. A helper decay gives
+$K_{odd}=\sqrt{\gamma_D}WP_{B=e}$ and $K_{even}=0$ at every t.
+The integrated odd weights are $p=1$, $q=bad=1/2$, in units
+$\gamma_DT$. The no-jump even good loss is one. Rejecting odd gives
+$(good\ loss,bad,reject)=(1,0,1)$, whereas keeping it gives
+$(1/2,1/2,0)$ in these units.
+
+Alternatively prepare D in $+$, use direct $CZ_{DB}$ tags before and
+after, and measure X. The same physical decay gives
+$K_+=K_-=\sqrt{\gamma_D}WZ_B/2$. Each integrated flag has
+$p=bad=1/2$ and $q=0$. Correcting the observed minus flag by $Z_B$
+makes that isolated flag fully good; keeping both then gives
+$(good\ loss,bad,reject)=(1/2,1/2,0)$. Boundary tags, basis rotations
+and the correction remain paid controls.
+
+A physical $Z_D$ phase flip becomes a final helper X-flag flip with
+ideal data in the native and direct-CZ encodings; in the CNOT parity
+store it becomes data $Z_B$. More explicitly, for
+$L_{\phi D}=\sqrt{2\Gamma_D}P_{D=1}$, the native and direct-CZ refined
+operators are $K_\pm=\pm\sqrt{\Gamma_D/2}\,W$, while CNOT has
+$K_{even}=\sqrt{2\Gamma_D}WP_{B=e}$ and $K_{odd}=0$.
+Thus ordinary helper phase noise need not be an unlocated data error.
+
+These are isolated-bath identities. Different hidden faults can share
+the same observed helper/coupler flag. Sum their rate-weighted CP maps
+before choosing one flag-dependent decoder or acceptance rule; a
+helper-only correction is not an oracle for the hidden bath. The
+ordinary side may also omit D entirely and use the required gates with
+bare PED, incurring no helper noise. For $U_\lambda=q-\lambda bad$,
+(TH2)'s isolated-helper differences from CNOT parity reject and parity
+keep are respectively
+$(1895-1097\lambda)\gamma_DT/8192$ and
+$(-2201+2999\lambda)\gamma_DT/8192$. Neither orders the complete
+protocols. A full comparison must retain that helper-free alternative,
+all actual flags, common decoders and every noise contribution.
+
+## Ordinary helper echo preserves the whole measured check
+
+Let $Z=Z_B$ be a specified Hermitian unitary on the full retained
+space, and $C=P_{D=0}\otimes I+P_{D=1}\otimes Z$ the actual boundary
+tag. Prepare $+$, apply C, an arbitrary D-independent core, C again,
+and read X. Its refined outcome-s operator is
+$(K+sZKZ)/2$, $s=\pm1$, for each core Kraus record K.
+For held helper detuning $H_\delta=\delta Z_D/2$, insert one
+instantaneous $X_D$ between the core's two halves and apply Z to the
+output data. If the two noise exposures are $t_1,t_2$ and
+$\varphi=\delta(t_1-t_2)$, the corrected operator is
+
+$$
+ ZK_s^{echo}=\frac{s}{2}
+ [e^{-i\varphi/2}K+s e^{i\varphi/2}ZKZ]. \tag{TE1}
+$$
+
+Indeed, the detuning rotations commute with C and every D-independent
+core operator, $R(t_2)X_DR(t_1)=X_DR(t_1-t_2)$, and
+$CX_D=X_DZC$. The helper X measurement contributes only the scalar
+s. When $t_1=t_2$, both CP branches equal the original ideal check,
+including their probabilities and arbitrary input/reference correlations.
+No measured record is dropped or renormalized. Identical tag durations
+place the required noise midpoint at the core's center; equality of
+the actual exposures is the premise.
+
+Pay the original two helper basis-rotation pulses and two boundary
+tags, the additional midpoint pi pulse and the terminal data phase.
+Finite-pulse noise/duration, residual helper coupling, and calibration
+must be supplied. Leakage is included only if the tags and terminal
+correction implement the same chosen Z on those sectors: a logical
+$Z_B$ alone does not specify its physical f/h action. This arbitrary-K
+identity requires D isolated from the enclosed core apart from its
+detuning. It is not a free echo under the full TIP Hamiltonian.
+
+For a native schedule an X pulse swaps the helper's selected branches.
+Restoring the intended histories requires exchanging the complete
+after-midpoint conditional propagators. Relabeling pumps alone does
+not account for
+$X_D\chi n_Dn_BX_D=\chi n_B-\chi n_Dn_B$; its residual need not be
+an endpoint phase through noncommuting TIP dynamics. Frequency tracking,
+frames or redesigned waveforms could repair this, with joint calibration.
+This is a physical-control obligation, rather than an impossibility.
+
+White projector dephasing is different:
+$\mathcal D[I-P_{D=1}]=\mathcal D[P_{D=1}]$, so an ideal X echo does
+not cancel that Markov generator. The
+[short-time transmon study of O'Malley et al.](https://arxiv.org/html/1411.2613v3)
+directly resolves gate-scale phase noise that a long Ramsey fit misses,
+and compares echo implementations. It supports measuring the relevant
+short-time law, rather than transferring one fitted decay time.
+
+The separate [strong-ZZ constituent of Long et al., Appendix B/Table II](https://arxiv.org/html/2103.12305v1)
+reports $T_1=76.98/79.71\,\mu s$ and Ramsey
+$T_2^*=50.65/17.09\,\mu s$. This is not a measured TIP/helper system.
+Converting those Ramsey values to
+$\Gamma_D=1/T_2^*-1/(2T_1)$ is an additional exponential white-noise
+premise. A real $\chi_{DB}$ selector can make helper emission frequencies
+and matrix elements depend on the retained system. The tensor-I jump
+in (TH1) is therefore also a premise. A local white lowering operator
+with the conditional Hamiltonian retained can itself carry which-frequency
+information; frequency-resolved backaction must not be added twice.
+Neither a measured $T_1$ nor an ideal endpoint gate specifies the full
+joint instrument. Selector drift, all pulse and storage times, readout,
+reset and recovery latency remain part of the next physical comparison.
+
+The [exact finite guard](../checks/architecture/tip_helper_guards.py)
+checks rational moment ingredients for the data, coupler and helper
+ledgers, isolated-helper utility arithmetic, and finite matrix-unit echo
+operator identities. The propagator reduction, continuous-time integrals,
+general echo identity and physical bath/control premises remain analytic.
+It is not a numerical propagation of the full Hamiltonian or a new
+architecture advantage.

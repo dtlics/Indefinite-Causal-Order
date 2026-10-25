@@ -3212,6 +3212,7 @@ def main():
     from final_flag_completion import verify as verify_final_flag_completion
     from required_projector_filters import verify as verify_required_projectors
     from feedback_cooling_controls import verify as verify_feedback_cooling
+    from tip_helper_guards import verify as verify_tip_helpers
     print(json.dumps({
         "status": "passed", "arithmetic": "exact Gaussian and Eisenstein rational, standard library",
         "pcs_nonpauli_cases": pcs_cases, "read_oracle_cases": read_cases,
@@ -3237,6 +3238,7 @@ def main():
         "final_flag_completion": verify_final_flag_completion(),
         "required_projector_preparation": verify_required_projectors(),
         "feedback_cooling_controls": verify_feedback_cooling(),
+        "tip_helper_moments_and_echo": verify_tip_helpers(),
         "scope": "Finite projection/routing/noise/instrument replay, exact CAR and polynomial identities, and finite JC isometry/CP-weight/dummy guards; universal norms/dominance, infinite-Fock/asymptotic proofs, costs and physical hypotheses remain analytic.",
     }, sort_keys=True))
 

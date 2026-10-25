@@ -534,10 +534,14 @@ benchmark, with its integration and device scope kept explicit.
 
 The [TIP gate component](../research/topics/nr-noisy-recovery/methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)
 contains analytic shared-qubit, dressed-return, equal-window common-clock
-fault and rectangular-selector arguments. The current replay fingerprints
-this source; it does not numerically replay its timed pulse integration or
-perform a new Lean audit. Independent scratch calculations check its finite
-coefficients. The retained source-like rates include explicitly unmeasured
+fault, helper-relaxation, ordinary echo and rectangular-selector arguments.
+Its exact guard replays rational moment ingredients for the data, coupler
+and helper ledgers, isolated-helper utility arithmetic, and finite
+matrix-unit held-phase echo identities. It does not propagate the full
+timed Hamiltonian or perform a new Lean audit. The continuous propagator
+reductions, general instrument identities and physical bath/control
+premises remain analytic. Independent scratch calculations also check
+the finite coefficients. Source-like rates include explicitly unmeasured
 copied parameters; they are not a device prediction. No optimal recovery,
 ordinary pulse-control lower bound, calibrated selector, actual noise
 correlation instrument or practical hardware advantage is certified.

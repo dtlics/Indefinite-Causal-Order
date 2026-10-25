@@ -1502,6 +1502,8 @@ selector-pulse guard delimit the proposed benefit; source-like copied
 rates do not beat the tested ordinary check. Fast private-coupler noise
 and held offsets have different flags. Their actual temporal correlations,
 joint selector calibration and stronger ordinary controls remain required.
+The same component now retains mid-pulse helper decay, both physical
+ordinary helper encodings, and a complete measured-check echo baseline.
 
 The [required charging comparison](architecture-baselines.md#nr-r06-charging-records)
 uses the same conditional work and meter-record service on both sides.
