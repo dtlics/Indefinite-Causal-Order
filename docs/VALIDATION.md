@@ -41,6 +41,17 @@ replay does not implement that learner or determine its asymptotic
 constant. These checks do not establish hardware efficiency, source
 priority, a general memory-process model or an architecture advantage.
 
+The [known-reflection component](../research/topics/nr-noisy-recovery/methods/reflection-diagnostics.md)
+has finite exact measured-X/target/reference fixtures for joint
+sector-diagonal inputs, nonunital maps and degenerate sectors, with
+intersector/coherent-control boundary witnesses. A separate ideal
+reflection-symmetric chain guard checks generator symmetry, sector ranks
+and moment/target-bias ingredients. The arbitrary-channel instrument,
+state-dependent norm bound, all-size support and Haar-moment arguments
+remain analytic. These checks certify neither inexpensive Lueders ports,
+an actual four-point diagnostic, noisy-device sector preservation nor
+random-design quality.
+
 The [depolarizing-search component](../research/topics/nr-noisy-recovery/methods/noisy-search.md)
 adds an analytic full-channel ordinary compiler using known controlled
 unitaries, plus an every-flag timing proof and uniform counted-restart
@@ -542,17 +553,20 @@ benchmark, with its integration and device scope kept explicit.
 The [TIP gate component](../research/topics/nr-noisy-recovery/methods/tip-gate-screen.md#nr-r06-required-tip-entanglers)
 contains analytic shared-qubit, dressed-return, equal-window common-clock
 fault, helper-relaxation, ordinary echo and rectangular-selector arguments.
-Its exact guard replays rational data/coupler/helper moments, held-phase
-matrix-unit echo identities, flag-recovery quadratics, static weak-tag
-margin arithmetic, and common-pump sector/prefix-band ingredients.
-The one-flag CP optimization, general static-tag bound and continuous
-intermediate-ready prefix proof are analytic; the guard does not propagate
-the full timed Hamiltonian or perform a new Lean audit. These scoped
-bounds establish neither a global ordinary optimum nor a full-device
-speed limit. Source-like white-noise rates include unmeasured copied
-parameters. The actual correlation instrument, selector calibration,
-additional controls and full recovery/readout costs remain physical
-premises, not a device prediction or practical advantage certificate.
+Its exact guard replays rational moments, held-phase echo matrix units,
+flag-recovery and common-helper-rotation identities, utility margins,
+common-pump prefix ingredients, finite-body coefficient/padding/clock
+arithmetic and full-flag post-idle mixing fixtures. The common-rotation
+bound requires fixed physical white jumps and a factorized helper-independent
+body; conditional retagging, reset and real retained coupling are outside it.
+The one-flag CP reduction, continuous prefix/phase arguments and finite-pulse
+operator-error proof remain analytic. The slow closed-model body is not a
+competitive waveform or noisy-instrument certificate. Neither the finite
+fixtures nor the analytic bounds establish a global ordinary optimum,
+full-device speed limit or unavoidable all-flag idle penalty. Actual bath
+correlations, coupled-sector calibration, extra controls and complete
+recovery/readout/reset costs remain physical premises; no new Lean audit,
+source-fitted noise prediction or hardware advantage is certified.
 
 The separate encoded-Pauli replay checks full code-input and retained-record
 channels, mixed/reference states, the deferred coherent-record circuit and

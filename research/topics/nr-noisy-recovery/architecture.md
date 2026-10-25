@@ -1512,15 +1512,17 @@ The [required TIP gate component](methods/tip-gate-screen.md#nr-r06-required-tip
 retains spectator idle errors, mid-pulse helper decay and chronological
 records, with shared-qubit, equal-window and measured-check echo baselines.
 Its [recovery analysis](methods/tip-gate-screen.md#nr-r06-tip-recovery)
-shows why Pauli-only flag correction is too restrictive; a conditional
-first-order gap remains against the stated static weak-tag family at
-copied white-noise rates. The
-[prefix bound](methods/tip-gate-screen.md#nr-r06-tip-prefix) excludes short
-exact intermediate-ready windows in the declared common-pump star model;
-an ordinary clean serial word is faster at the stated cap. Neither result
-supplies a noisy full-device comparison. Actual temporal correlations,
-selector calibration, dynamic ordinary controls and full readout/recovery
-clocks remain required.
+allows non-Pauli recovery and arbitrary common helper-only rotations
+between fixed boundary tags. The conditional first-order gap assumes
+fixed white baths and a factorized helper-independent body; it does not
+cover retained coupling, conditional retagging or reset. The
+[prefix bound](methods/tip-gate-screen.md#nr-r06-tip-prefix) and
+[paid-control construction](methods/tip-gate-screen.md#nr-r06-tip-finite-body)
+keep intermediate-ready and final-only gate contracts distinct. The latter
+supplies a slow sufficient clean body, not a competitive noisy compiler.
+The next test needs unconditional helper control calibrated on the actual
+coupled sectors, its driven bath instrument and the full frame, recovery,
+readout and reset clock.
 
 The [required charging comparison](architecture-baselines.md#nr-r06-charging-records)
 uses the same conditional work and meter-record service on both sides.
@@ -1549,6 +1551,13 @@ promoting a known Clifford layer or a read-only classical-bit lookup merely
 because recompiling its full unitary is expensive. Cheap transported checks
 can use the same native calls. Helper gates, their noise and memory must be
 costed, rather than assumed free by either implementation.
+The [reflection-diagnostic screen](methods/reflection-diagnostics.md#nr-r06-forward-diagnostics)
+likewise distinguishes a two-point reflection fringe from a four-point
+spreading target. Qualify the actual evolution/reflection ports, spectral
+preparation and retained syndrome readout, then compare the chosen task
+with ordinary forward diagnostics at matched backaction, records, shots
+and deadline. The uniform-chain sector guard is an ideal-model test of
+randomization assumptions, not a finding about noisy apparatus data.
 
 Distinct commuting modules need not have identical ideal unitaries. When
 their common eigenbasis is known and accessible, an ordinary coherent

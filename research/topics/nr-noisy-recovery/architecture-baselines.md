@@ -32,6 +32,12 @@ gives a full ordinary controlled-unitary compiler, the complete
 measurement-timing identity and a counted-restart comparison.
 Its known-control, calibration and verification ports remain explicit.
 
+The [known-reflection diagnostic component](methods/reflection-diagnostics.md)
+gives an ordinary measured-flag/target/reference instrument on joint
+sector-diagonal inputs, with a final-only syndrome version for a known
+sector. It separates these spectral-access premises from actual forward
+many-body observables and ideal randomization-sector guards.
+
 The [final-flag completion component](methods/final-flag-completion.md)
 compares bare all-plus two-order simulation with realizable ordinary
 random order for an always-delivered target and a common payload decoder.
@@ -2554,13 +2560,16 @@ checks and simultaneous ordinary drives remain part of the physical test.
 The component also gives a scoped exact obstruction for one rectangular
 selector pulse. Its [flag-recovery analysis](methods/tip-gate-screen.md#nr-r06-tip-recovery)
 includes a non-Pauli optimum for one observed flag and a conditional
-first-order bound for a broader static weak-tag family. The separate
+first-order bound for fixed boundary tags with arbitrary common helper
+rotations in the factorized white-noise model. The separate
 [prefix proof](methods/tip-gate-screen.md#nr-r06-tip-prefix) concerns the
 specified intermediate-ready common-pump contract under a declared cap,
-not a full-device minimum time. Shaped, jointly designed or intermediate
-controls remain outside those bounds. A partial erasure fraction or
-reduced noisy-CZ fit supplies neither the selector's timed bath instrument
-nor a practical advantage.
+not a full-device minimum time. Paid phase corrections and the
+[finite ordinary body](methods/tip-gate-screen.md#nr-r06-tip-finite-body)
+retain their complete clocks and ready-column error bound. Conditional
+retagging, reset and the driven noisy coupled device remain separate
+comparisons. A reduced noisy-CZ fit supplies neither that instrument nor
+a practical advantage.
 
 <a id="nr-r06-required-state-preparation"></a>
 

@@ -131,6 +131,38 @@ def recovery_and_prefix_guards():
             "scope": "Exact rational recovery quadratic, finite sector differences and first-band arithmetic; symmetry/CP reductions and continuous speed/return bounds analytic. No full-device or arbitrary-control timing claim."}
 
 
+def retained_body_and_idle_guards():
+    # Model-only coefficient, padding and clock arithmetic; no propagation.
+    t0, chi_over_pi, delta_over_pi = F(1, 10), F(929, 50), F(10)
+    n = 22
+    coefficient = chi_over_pi * delta_over_pi * (4*delta_over_pi+chi_over_pi) * t0**3 / 128
+    assert coefficient == F(2721041, 32000000)
+    upper = coefficient * F(7, 4) * F(22, 7)**3 / n**2
+    assert upper == F(7243411142, 758912000000) < F(1, 100)
+    assert 3 / chi_over_pi == F(150, 929) < 2*t0
+    flips, pieces = 4*n, 12*n
+    clock = 2*t0 + flips*(2*t0)
+    assert (flips, pieces, clock) == (88, 264, F(89, 5))
+    # A decoupled post-W dephasing idle mixes both physical X records.
+    # Rational visibilities are fixtures, not fitted finite-time exponentials.
+    idle_cases = 0
+    for visibility in (F(0), F(3, 5), F(4, 5), F(1)):
+        q = (1-visibility)/2
+        assert 0 <= q <= F(1, 2)
+        for plus, minus in ((F(1), F(0)), (F(2, 5), F(1, 5)), (F(0), F(3, 7))):
+            out_plus = (1-q)*plus+q*minus
+            out_minus = (1-q)*minus+q*plus
+            assert out_plus+out_minus == plus+minus
+            assert out_plus-plus == q*(minus-plus)
+            idle_cases += 1
+    return {"finite_body_coefficient": str(coefficient)+"*sqrt(3)*pi^3/N^2",
+            "N22_operator_error_rational_upper": str(upper),
+            "positive_padding_duration_bound_us": str(3/chi_over_pi),
+            "finite_helper_flips": flips, "helper_drive_pieces": pieces,
+            "closed_model_clock_us": str(clock), "full_flag_idle_mixing_cases": idle_cases,
+            "scope": "Exact sufficient-bound/padding/clock and post-idle coefficient fixtures. Finite pulse, Strang defect, reference norm and full CP mixing identities are analytic; no competitive waveform, noise instrument or hardware certificate."}
+
+
 def verify():
     r = [F(1), F(-3), F(3)]
     pf = [F(0), F(3), F(-3)]
@@ -167,12 +199,15 @@ def verify():
         assert ordinary_reject[0] + lam * ordinary_reject[1] - native_loss == (1895 - 1097 * lam) / 8192
         assert ordinary_keep[0] + lam * ordinary_keep[1] - native_loss == (-2201 + 2999 * lam) / 8192
     echo_cases = echo_instrument_guard()
+    from tip_common_rotation_guards import verify as verify_common_rotations
     return {"status": "passed", "helper_T1_rational_moments": 7,
             "data_T1_and_private_dephasing_rational_moments": True,
             "finite_held_phase_echo_operator_cases": echo_cases,
             "complete_pointer_PED_probability_guard": True,
             "recovery_and_prefix_ingredients": recovery_and_prefix_guards(),
-            "scope": "Exact polynomial moments, helper/recovery utility arithmetic, finite matrix-unit echo and paired-sector/prefix-band ingredients; continuous propagation, speed bounds, CP/symmetry reductions and physical bath/control proofs analytic."}
+            "common_helper_rotation_ingredients": verify_common_rotations(),
+            "retained_body_and_idle_ingredients": retained_body_and_idle_guards(),
+            "scope": "Exact moments, recovery/rotation fine-map and utility, matrix-unit echo, prefix-band, finite-body bound/clock and full-flag idle ingredients; continuous dynamics, speed and operator-norm proofs, CP reductions and physical bath/control premises analytic."}
 
 
 if __name__ == "__main__":

@@ -619,6 +619,8 @@ def check_multitime_purification_comparator():
 
 
 def main():
+    from reflection_instrument_guards import verify as verify_reflection_instrument
+    from reflection_sector_guards import check as check_reflection_sector
     from verify_cat_reservoir_parity import verify_cat_reservoir_parity
     from verify_cat_physical_interface import verify_cat_physical_interface
     from verify_pauli_statistic_memory import verify_pauli_statistic_memory
@@ -651,6 +653,8 @@ def main():
         "known_gaussian_control": verify_known_gaussian_control(),
         "conditional_noise_readout": verify_conditional_noise_readout(),
         "multitime_purification_comparator": check_multitime_purification_comparator(),
+        "measured_reflection_instrument": verify_reflection_instrument(),
+        "global_quench_reflection_sector": check_reflection_sector(),
         "scope": ("Finite exact d=2,4 algebra replay of known orthogonal-unitary process bases, "
                   "correlated Bell-label decoding, and the full coherent switched-output ordinary simulation. "
                   "Persistent-trajectory induction, matched physical fault laws, noiseless memory, allowed "

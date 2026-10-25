@@ -652,82 +652,113 @@ for the stated observed flag and encoding, not a global ordinary control
 optimum. Different helper codewords, pulse schedules, additional checks
 and their physical costs remain part of the architecture comparison.
 
-### A full-interval weak-tag bound with arbitrary flag recovery
+### Weak boundary tags with arbitrary common helper rotations
 
-This is a fixed-lambda first-order statement in the declared cold TIP
-model. A single helper uses static conditional-unitary tags before and
-after the entire D-independent two-gate body of duration 2T. Conditional
-helper codewords d_0,d_1 may be any pure states, including nonorthogonal
-complex states. The noiseless ready flag preserves W and uses identity;
-every rare measured helper/coupler flag may use an arbitrary trace-
-nonincreasing CP recovery, completed by a retained reject outcome.
-Hidden bath labels and times are never decoder inputs. Intermediate
-retagging/echo, different pulse schedules and a real dispersive selector
-are not part of this family.
+This replaces the static-only scope of the weak-codeword bound. It is a
+fixed-lambda first-order statement in the same declared cold TIP model.
+A B-controlled helper tag C=sum_b P_b tensor U_b prepares arbitrary pure,
+possibly nonorthogonal complex codewords d_b=U_b|ready>. Its inverse is
+applied after the entire D-independent two-gate body of duration 2T.
+During that body permit any prescribed common helper-only unitary R(t),
+with R(0)=I, and undo R(2T) before untagging. An independently established
+equivalent terminal frame/readout convention is also sufficient. The
+noiseless ready/gg flag must preserve W and use identity. Every rare
+measured helper/coupler flag may use arbitrary trace-nonincreasing CP
+recovery, completed with a retained reject outcome. The recovery sees
+neither hidden bath labels nor jump times.
 
-Write d_b=sqrt(1-p_b)|0>+exp(i phi_b)sqrt(p_b)|1> and
-t_b=sqrt[p_b(1-p_b)]exp(i phi_b). Its distinguishability is
+The physical local-white helper jumps remain L_1=sqrt(gamma)|0><1| and
+L_phi=sqrt(2 Gamma)P_D1 in their fixed physical basis, including while R(t)
+is applied. The data/coupler Hamiltonian and baths are independent of D.
+Exact factorization also assumes initially independent data/coupler and
+helper environments with independent generators, or a supplied tensor-
+factorized joint dilation. This is material; no retained-chi isolation is supplied.
 
- a=1-|<d_0|d_1>|^2=|t_0-t_1|^2+(p_0-p_1)^2, 0<=a<=1.
+Here is the full fine-operator convention, retaining all data/coupler
+outputs and any untouched reference. Let K_h be any chronological fine
+operator of the D-independent body, and V_j any chronological helper
+fine operator including the physical R drive, all no-jump survival
+operators and that helper bath record. After the terminal inverse put
+Q_j=R(2T)^dagger V_j. The exact measured helper-f operator is
 
-For physical white helper jumps sqrt(gamma)|0><1| and
-sqrt(2 Gamma)P_D1, the mandatory ready-flag bad weight per T is
+ K_(f,h,j)=sum_(b',b) P_b' K_h P_b
+                <f|U_b'^dagger Q_j U_b|ready>.                 (D1)
 
- b_0=gamma |t_0-t_1|^2/2+Gamma(p_0-p_1)^2.
+This is a tensor-factorization identity, also valid before projecting a
+coupler flag. For example the exact helper record with jumps at t_1<...<t_m
+uses V_j=N(2T,t_m)L_m N(t_m,t_(m-1))L_(m-1)...
+N(t_2,t_1)L_1 N(t_1,0), with every intervening no-jump factor present, where
+N(t_2,t_1)=time-ordered exp integral[-i H_D(t)-sum_L L^dagger L/2]dt.
+Thus (D1) does not omit pre-jump survival or swap bath records by gate name.
 
-If Gamma>=gamma/2, then b_0>=gamma*a/2. With helper noise alone,
-every completed recovery instrument satisfies q+bad<=1; hence target-
-good loss is at least total accepted bad and at least b_0. Its utility
-cost for U_lambda=q-lambda*bad is therefore at least
-(lambda+1)gamma*a*T/2, whatever the rare-flag recovery.
+To first order a helper jump at t has Q_L(t)=R(t)^dagger L R(t), while
+Q_0=I-(1/2)integral R(t)^dagger sum_L L^dagger L R(t)dt. With no system
+fault, the clean completed W preserves B and returns both couplers, so
 
-Let O=5 gamma_B/8 be the total accepted B-lowering norm per T in this
-body. Weak tagging sends fraction a to the rare flag and leaves
-fraction 1-a in the mandatory flag. Every such lowering history has
-initial/reference B=e. A recovery on the output cannot change that
-reference support, and the target Bell vector has squared norm 1/2
-there: q<=p/2 for any CP recovery. For lambda>=1, the rare B-lowering
-contribution is nonpositive, so its maximum possible improvement over
-bare PED is lambda*O*a*T. Other accepted code-closed core faults
-preserve B and are unchanged by tag/uncompute. Excited-coupler flags
-also have reference B=e and nonpositive recoverable utility.
+ K_(f,L)(t)=W sum_b P_b
+       <f|U_b^dagger R(t)^dagger L R(t)U_b|ready>.              (D2)
 
-First-order noise contributions add for the same fixed measured-flag
-recovery. Combining the bounds and maximizing 0<=a<=1 gives
+All leading jump amplitudes in (D2) are to be squared and integrated in
+the same actual clock; exact finite-rate trajectories instead use (D1).
+No-jump good loss is retained. Rare no-jump amplitudes are first order
+but their probabilities are second order. With no helper fault, (D1)
+reduces exactly to sum P_b' K_h P_b <f|U_b'^dagger U_b|ready>, so every
+system-bath flag map is unchanged by any common R(t).
 
- U_weak-U_bare <= max[0, lambda O-(lambda+1)gamma/2] T.       (W1)
+Write R(t)d_b=c_b(t)|0>+s_b(t)|1>, p_b(t)=|s_b(t)|^2 and
+t_b(t)=c_b(t)^*s_b(t). Common unitaries preserve the distinguishability
 
-This bound can be loose: it does not assert that bare PED is optimal.
-It allows arbitrary codeword centers, polar/azimuthal angles, gauge
-phases, and general CP recovery throughout the stated tag family.
+ a=1-|<d_0|d_1>|^2=|t_0(t)-t_1(t)|^2+[p_0(t)-p_1(t)]^2.
 
-For the Q1 nominal-white illustration at lambda=5, use
-gamma_A=gamma_C=1/168, gamma_B=1/80,
-gamma_phi,u=gamma_phi,v=1/26-1/64,
-gamma=50/3849 and Gamma=20/1013-25/3849, all per us.
-Thus O=1/128, Gamma>=gamma/2, and (W1) is at most
-15*T/164224 per us, approximately 0.0000913386594*T/us.
+The mandatory ready-flag helper bad-weight density is exactly, to first
+order, gamma|t_0-t_1|^2/4+Gamma(p_0-p_1)^2/2. If Gamma>=gamma/2 it is at
+least gamma*a/4 at every time, hence at least gamma*a*T/2 over the full
+2T clock. For the helper-only instrument completed with the same chosen
+recovery, q+bad=p_accepted<=1; good loss is therefore at least accepted
+bad, which includes the mandatory ready component. Its utility cost is
+at least (lambda+1)gamma*a*T/2, whatever the rare-flag recovery.
 
-The already derived **feasible native plus/gg** rule, without using
-an SDP optimum, exceeds bare PED at these copied rates by
-373165517*T/1453311455232 per us. Therefore its first-order excess
-over every member of this weak-tag family is at least
+The system-fault comparison is unchanged. The accepted B-lowering norm
+is O*T, O=5 gamma_B/8. Boundary tags send fraction a to the rare helper
+flag and leave fraction 1-a mandatory. Each such history has original/
+reference B=e; output recovery cannot change that reference support, so
+q<=p/2 for any CP recovery. For lambda>=1 rare lowering utility is
+nonpositive and moving it out of the mandatory flag can improve utility
+by at most lambda*O*a*T. Accepted B-preserving faults are unchanged.
+Excited-coupler flags also have reference B=e and nonpositive recoverable
+utility. Apply these bounds to the same fixed recovery after summing
+hidden histories, then use first-order additivity and maximize 0<=a<=1:
 
- 240421997*T/1453311455232 per us
-   =0.0001654304699*T/us >0.                              (W2)
+ U_ordinary-U_bare <= max[0,lambda O-(lambda+1)gamma/2] T.       (W1)
 
-All fractions follow from the earlier exact equal-T moments. These
-are first-order utility coefficients at fixed lambda, not a finite-rate
-error bound. Multiplying (W2) by an illustrative T=0.14 us gives only
-2.32e-5 utility units before higher orders or any physical overhead;
-the source 140 ns waveform has not been transferred to this model.
-C/v rates are copied assumptions and the helper Gamma is an assumed
-exponential white subtraction from a separate constituent Ramsey
-T2*, not an identified TIP/helper bath. System-dependent helper
-emission under real chi_DB, selector activation, finite tag/control
-durations, readout/recovery latency and stronger ordinary schedules
-remain outside this bound. It establishes a conditional utility
-mechanism within a defined comparator family, not an architecture gain.
+Thus W1 covers all static pure weak boundary codewords, every common
+unconditional R(t)/echo trajectory, and arbitrary rare-flag TNI CP
+recovery within this full-interval D-independent body. It does not say
+bare PED is optimal. For the already audited Q1 nominal-white rates at
+lambda=5, the unchanged exact arithmetic is
+
+ gamma_A=gamma_C=1/168, gamma_B=1/80,
+ gamma_phi,u=gamma_phi,v=1/26-1/64,
+ gamma=50/3849, Gamma=20/1013-25/3849, all per us;
+ W1 <=15*T/164224 per us;
+ feasible native plus/gg minus bare
+     =373165517*T/1453311455232 per us;
+ feasible native minus every member of this enlarged family
+     >=240421997*T/1453311455232 per us
+      =0.0001654304699*T/us.                                 (W2)
+
+The last number would give only 2.32e-5 utility units at illustrative
+T=0.14 us before higher orders or overhead. It is not a finite-rate
+positive bound or an architecture gain. The source 140 ns waveform is
+not transferred; C/v rates are copied and Gamma is an assumed exponential
+white subtraction from a separate constituent Ramsey T2*, not a measured
+TIP/helper bath. Real retained chi, system-resolved helper emissions,
+selector activation, finite boundary-tag/terminal-frame/control costs,
+readout/recovery latency, and stronger ordinary schedules remain open.
+In particular this proof does not cover data- or record-conditional
+intermediate retagging, time-varying codeword overlap, measurement/reset, new error-
+correcting ancillas, or a general dynamic-control converse. A physical
+common R(t) must be paid; it has not been compiled through retained chi.
 
 <a id="nr-r06-tip-prefix"></a>
 
@@ -840,3 +871,310 @@ source Hamiltonian can change the premises; the 9 MHz cap is a model choice.
 No prototype, full-device minimum time, noisy dominance or SWITCH advantage
 follows. Carrier-only labels and final endpoint equality remain insufficient
 to certify the complete physical opposite-order instrument.
+
+<a id="nr-r06-tip-phase-cost"></a>
+
+### Paid phase corrections and a conditional idle sensitivity
+
+These statements use
+the declared closed retained-\(\chi\) star, not a calibrated TIP device.
+Use \(T_0=100\,\mathrm{ns}\), \(\Delta=2\pi/T_0\),
+\(\chi/(2\pi)=9.29\,\mathrm{MHz}\), \(\epsilon=\Delta-\chi>0\), and
+the model cap \(\Omega_{\max}/(2\pi)=9\,\mathrm{MHz}\).
+Define \(h_a=2\arccos(1-9\pi/40)/(9\pi)\,\mu\mathrm s
+\simeq90.066498581\,\mathrm{ns}\). The preceding exact ready-prefix proof
+gives a pulse-only duration \(h\ge h_a\) from its occupation bound and
+\(\operatorname{dist}(\Delta h+\pi,2\pi\mathbb Z)\le\epsilon h\)
+for the unrepaired common-\(B\)-frame prefix. All unknown input/reference
+columns and the actual dark-state phase references are retained.
+
+**A forward wait cannot evade the clock bound.** Let a pulse return the
+couplers but leave a conditional \(DB\) phase, then append
+\(G(\tau)=e^{-i\chi\tau n_Dn_B}\), \(\tau\ge0\), with pumps zero.
+To finish at the strict prefix its pre-wait paired-sector ratio must be
+\(-e^{i\chi\tau}\), so
+\[
+\operatorname{dist}(\Delta h+\pi+\chi\tau,2\pi\mathbb Z)\le\epsilon h.
+\]
+For total time \(L=h+\tau\), some integer \(n\) must satisfy
+\[
+\chi L+\pi\le2\pi n\le\chi L+2\epsilon h+\pi
+ \le(\chi+2\epsilon)L+\pi.
+\]
+The \(n=1\) possibility needs \(L\le\pi/\chi=50/929\,\mu\mathrm s
+\simeq53.821313240\,\mathrm{ns}\),
+contradicting \(L\ge h_a\); \(n\le0\) is impossible. Hence
+\(L\ge3\pi/(\chi+2\epsilon)=50/357\,\mu\mathrm s
+\simeq140.056022409\,\mathrm{ns}\).
+Equivalently, this zero-pump wait remains inside the original common-field
+Hamiltonian, so the original prefix bound applies to its complete clock.
+Time already inside a tested horizon is counted once; appended time is added.
+
+**Reversing the phase adds a control resource.** In the isolated number model,
+\[
+X_DG(\tau)X_D=e^{-i\chi\tau n_B}e^{+i\chi\tau n_Dn_B}.
+\]
+A common \(B\) correction therefore leaves the inverse \(DB\) phase.
+Restoring physical \(D\) labels uses two unconditional helper \(\pi\) pulses.
+One pulse can suffice with an accepted output \(X_D\) frame and verified
+retiming of all subsequent branch propagators. Alternatively, omit the
+**second** flip when it is adjacent to terminal ideal \(X_D\) readout:
+it changes each Kraus operator only by its outcome sign. The remaining
+physical flip is before the wait. Neither is an automatic mid-prefix omission.
+Alternatively the inverse phase uses a longer forward wait
+\(2\pi/\chi-\tau\), with no flips and its full clock counted.
+
+For the inverse correction the pulse-only condition becomes
+\(\operatorname{dist}(\Delta h+\pi-\chi\tau,2\pi\mathbb Z)\le\epsilon h\).
+Together with \(h\ge h_a\), these necessary conditions first allow
+\[
+h=h_a,\quad \tau=h_a-\pi/\chi\simeq36.245185341\,\mathrm{ns},\quad
+L=2h_a-\pi/\chi\simeq126.311683922\,\mathrm{ns}.
+\]
+Indeed, for \(h<3\pi/(\Delta+\epsilon)\), the integer cannot be \(n\ge2\);
+\(n\le1\) requires \(\tau\ge h-\pi/\chi\). Larger \(h\) already costs more.
+This is only a relaxation of two necessary scalar bounds, **not a waveform
+or an achievable gate**. Put \(C=50/357\,\mu\mathrm s-(2h_a-\pi/\chi)
+\simeq13.744338487\,\mathrm{ns}\). A literal concatenation leaves \(C\)
+before reaching the unrepaired lower clock: \(C/2\simeq6.872169243\) ns
+per two equal extra pulses, or \(C\) for an accepted one-pulse contract.
+These crossover numbers are not source pulse limits. The strong-\(ZZ\)
+primary does not report numerical unconditional TAG durations; \(\chi\)
+alone sets no helper-\(\pi\) speed limit. Finite pulses also evolve the full
+Hamiltonian. The same coupling, rotations and phase/check controls belong
+to ordinary implementations; no exclusive selector resource is obtained.
+
+**An extra clean idle has an exact full-flag description.** Assume, separately,
+that ideal \(W\) has finished, \(D=+\) is decoupled from payload/reference,
+and a genuinely additional idle has only
+\(L_\phi=\sqrt{2\Gamma}P_1\). Put \(q=(1-e^{-\Gamma\tau})/2\). Then
+\[
+\mathcal E_+=(1-q)\operatorname{Ad}_W,\qquad
+\mathcal E_-=q\operatorname{Ad}_W,
+\]
+including the identity on every reference. Both flags are target-good.
+Plus-only delivery loses \(q=\Gamma\tau/2+O(\tau^2)\); accepting both with
+one common valid decoder has no such loss. More generally, any pre-existing
+full flag maps obey
+\[
+\mathcal E'_+=(1-q)\mathcal E_++q\mathcal E_-,\qquad
+\mathcal E'_-=(1-q)\mathcal E_-+q\mathcal E_+.
+\]
+This follows from \(Z_D\Pi_sZ_D=\Pi_{-s}\); the sum is unchanged.
+With different flag decoders, each new branch applies its own decoder to
+both mixture terms. A fixed plus-decoder linear utility changes by
+\(q[J(\mathcal E_-)-J(\mathcal E_+)]\), not a universal rejection cost.
+
+As a conditional sensitivity only, take
+\(\Gamma=20/1013-25/3849=51655/3899037\,\mu\mathrm s^{-1}\) and the
+supplied restricted-envelope margin
+\(m(T)=240421997(T/\mu\mathrm s)/1453311455232\).
+At \(T=0.14\,\mu\mathrm s\), \(m\simeq2.3160265791\times10^{-5}\).
+The unit-good clean plus-only model loses this amount after
+\(-\log(1-2m)/\Gamma\simeq3.49646\,\mathrm{ns}\)
+(first order: \(2m/\Gamma\simeq3.49638\) ns).
+This neither reproves the restricted margin nor identifies a physical
+white floor. Ramsey \(T_2^*\) is insufficient, echoes can alter correlated
+noise, and an actual retained-\(\chi\) correction wait is **not** the
+factorized clean idle. Full-Hamiltonian calibration, all reject/reference
+maps, the best common/flag-dependent recovery, and matched ordinary controls
+are required before interpreting any of these clocks as an advantage.
+
+<a id="nr-r06-tip-finite-body"></a>
+
+### A finite ordinary body under the declared retained-χ model
+
+This is a sufficient closed-model construction, not a measured combined
+TIP/helper device, a competitive clock, or a compiler of the noisy
+instrument. It keeps all sixteen unknown logical DABC ready columns,
+both private couplers, and an arbitrary passive reference. No outcome is
+postselected. The control assumptions and all added clocks are explicit.
+
+For each fixed \(a,c\in\{0,1\}\), retain
+\(b=|B1,u_g,v_g\rangle\), \(u=|B0,u_f,v_g\rangle\),
+\(v=|B0,u_g,v_f\rangle\), and the dark state
+\(o=|B0,u_g,v_g\rangle\), each tensored with D. Let
+\(n_B=P_b\), \(Z_D=I-2n_D\),
+\(H_{aux}=(-1)^a\delta P_u+(-1)^c\delta P_v\),
+\(\delta=\pi/T_0\), and \(\Omega=\sqrt3\delta\). The global-frame
+Hamiltonian is
+\[
+ H=H_{aux}+\chi n_Dn_B+
+ \tfrac12\sum_{j=u,v}[p_j(t)|j\rangle\langle b|+h.c.]
+ +\tfrac12\Omega_D(t)X_D.
+\]
+The same classical fields apply in every sector. For the numerical clock
+example take the exact declared model values \(T_0=0.1\,\mu s\) and
+\(\chi/(2\pi)=9.29\,\mathrm{MHz}\); these are not a joint calibration.
+
+During a driven port j, use the lower-edge field
+\(p_j(t)=\Omega e^{+i\chi t/2}\), with one absolute-time phase accumulator,
+and set the other pump and helper drive to zero. In the continuous common
+B frame \(R(t)=e^{-i\chi t n_B/2}\), this gives
+\[
+ H_+=K_j+V,\quad K_j=H_{aux}+\tfrac\Omega2(|b\rangle\langle j|+h.c.),
+ \quad V=-\tfrac\chi2Z_Dn_B,\quad X_DH_+X_D=K_j-V.
+\]
+The active two-state block of \(K_j\) has return frequency
+\(\sqrt{\delta^2+\Omega^2}=2\delta\). Its hub return phase at \(T_0\)
+is \(-e^{-i(-1)^a\delta T_0/2}=i(-1)^a\) for port u, and
+\(i(-1)^c\) for v. Thus
+\(U_{ref}=e^{-iK_vT_0}e^{-iK_uT_0}\) returns every ready column and equals
+\(I_D\otimes Z_BW\) there, where \(W=CZ_{AB}CZ_{BC}\). On occupied
+auxiliaries, its reference action is this full product, not an inferred W
+extension. The dark states are included throughout.
+
+**An exact finite helper flip, including auxiliary drift.** With both TIP
+pumps off, drive D at its bare-helper frequency. Conditional on B=0 its
+Hamiltonian is \(\Omega_DX_D/2\); conditional on B=1 it is
+\(\chi n_D+\Omega_DX_D/2\). The commuting \(H_{aux}\) remains on.
+Define \(c_0=(\sqrt5-1)/2\), \(\phi=\arccos c_0\), and
+\[
+ \Omega_r=\chi\cot\phi,\quad t_r=\pi\sin\phi/\chi,\qquad
+ \Omega_q=\chi\cot2\phi,\quad t_q=\pi\sin2\phi/\chi.
+\]
+Apply the three finite square pieces r, q, r. The negative middle amplitude
+means the opposite X phase. Put \(\widetilde Z_D=2n_D-I\). In the B=1
+traceless block, the axes are
+\(n_r=(\cos\phi,0,\sin\phi)\) and
+\(n_q=(\cos2\phi,0,\sin2\phi)\), each with π rotation angle.
+The identity
+\((n_r\cdot\sigma)(n_q\cdot\sigma)(n_r\cdot\sigma)
+ =[2(n_r\cdot n_q)n_r-n_q]\cdot\sigma=X_D\)
+makes their product \(+iX_D\). In the B=0 block the total angle is
+\(\pi[2c_0+2c_0^2-1]=\pi\), since \(c_0^2=1-c_0\), giving
+\(-iX_D\). Retaining the B=1 trace and auxiliary phases, the complete
+global-frame primitive of duration \(t_p=2t_r+t_q\) is therefore
+\[
+ F_g=-i e^{-iH_{aux}t_p}e^{i(\pi-\chi t_p/2)n_B}X_D.
+\]
+In the continuous centered frame, this becomes
+\(F_c=-i e^{-iH_{aux}t_p}Z_BX_D\). These identities hold on every admitted
+star state, not merely on the ready columns.
+
+Choose \(L_\pi=2T_0\) and \(q=(L_\pi-t_p)/2\). This is nonnegative:
+\(t_p\le3\pi/\chi<2T_0\) at the declared model values. During equal
+padding waits before and after the pulse, the centered Hamiltonian is
+\(H_{aux}+V\). Because \(X_DVX_D=-V\) and \(H_{aux}\) commutes with
+V and X, their exact product is
+\[
+ e^{-iq(H_{aux}+V)}F_c e^{-iq(H_{aux}+V)}
+ =-i e^{-iH_{aux}L_\pi}Z_BX_D=-iZ_BX_D.
+\]
+The last equality uses \(e^{-2iT_0H_{aux}}=I\) simultaneously for all
+a,c. A common B phase correction leaves exactly \(-iX_D\) with a paid
+200 ns clock. If implemented as a tracked B frame, it must conjugate all
+subsequent pump quadratures; the absolute-time carrier continues through
+every drive and idle. If a physical phase gate is required instead, its
+clock and noise are additional. No conditional phase is silently discarded.
+
+**Finite symmetric decoupling and its error proof.** For each port split
+the free driven duration \(T_0\) into N cycles of length \(s=T_0/N\).
+Each cycle is H+ for s/4, the corrected finite flip, H+ for s/2, another
+finite flip, then H+ for s/4. Up to a cycle-global minus sign its centered
+propagator is
+\[
+ S(s)=e^{-i(K+V)s/4}e^{-i(K-V)s/2}e^{-i(K+V)s/4}.
+\]
+The sign from the two \(-iX_D\) flips cancels over the two ports' 2N cycles.
+
+Here is a direct norm proof, without an unlinked product-formula premise.
+Set \(A=-i(K+V)/2\), \(B=-i(K-V)/2\), \(C=[A,B]\),
+and \(\operatorname{Ad}_U Q=UQU^\dagger\). For
+\(S(t)=e^{tA/2}e^{tB}e^{tA/2}\), differentiate and subtract A+B to obtain
+\[
+ \begin{split}
+ D(t)&=S'(t)S(t)^\dagger-(A+B)\\
+ &=\operatorname{Ad}_{e^{tA/2}}\left[
+ \int_0^{t/2}(\operatorname{Ad}_{e^{-rA}}-I)C\,dr
+ -\tfrac12\int_0^t(\operatorname{Ad}_{e^{rB}}-I)C\,dr\right].
+ \end{split}
+\]
+Indeed the unsimplified derivative is
+\(\int_0^{t/2}\operatorname{Ad}_{e^{rA}}C\,dr
+ -\tfrac12\operatorname{Ad}_{e^{tA/2}}
+ \int_0^t\operatorname{Ad}_{e^{rB}}C\,dr\); factoring the first
+conjugation makes the two constant C integrals cancel. Unitary conjugation
+and its derivative give
+\(\|(\operatorname{Ad}_{e^{rX}}-I)C\|\le |r|\|[X,C]\|\).
+Consequently
+\(\|D(t)\|\le t^2\|[A,C]\|/8+t^2\|[B,C]\|/4\).
+Variation of constants,
+\[
+ S(s)-e^{s(A+B)}=
+ \int_0^s e^{(s-t)(A+B)}D(t)S(t)\,dt,
+\]
+has unitary factors and proves
+\[
+ \|S(s)-e^{-iKs}\|\le
+ s^3\bigl(\|[A,[A,B]]\|/24+\|[B,[A,B]]\|/12\bigr).
+\]
+
+The commutator constants are explicit. In the active block use Pauli
+\(Z=P_b-P_j\), \(X=|b\rangle\langle j|+h.c.\), and Y. Then
+\(K=\delta_a(I-Z)/2+\Omega X/2\), with \(\delta_a=\pm\delta\),
+and the D-dependent scalar factor in V has magnitude \(\chi/2\).
+Directly,
+\[
+ [K,P_b]=-i\Omega Y/2,\qquad
+ [K,[K,P_b]]=\tfrac\Omega2(\delta_aX+\Omega Z),\qquad
+ [P_b,[K,P_b]]=-\Omega X/2.
+\]
+Thus spectators do not enter, and
+\[
+ C_K:=\|[K,[K,V]]\|=\frac{\chi\Omega\sqrt{\delta^2+\Omega^2}}4,
+ \qquad C_V:=\|[V,[K,V]]\|=\frac{\chi^2\Omega}8.
+\]
+Since \([A,B]=[K,V]/2\), both nested norms in the defect bound are at
+most \((C_K+C_V)/4\). Telescoping N unitary cycles per port and the two
+ports proves the full admitted-star operator bound
+\[
+ \|U_N-U_{ref}\|\le E_N=
+ \frac{T_0^3(C_K+C_V)}{16N^2}
+ =\frac{\chi\Omega(4\delta+\chi)T_0^3}{128N^2}
+ =\frac{2721041\sqrt3\pi^3}{32000000N^2}.
+\]
+Here \(U_N\) denotes the centered, corrected sequence including the actual
+finite flips. The full physical frame additionally contains
+\(R(T_{clock})\); the specified final common B correction is
+\(Z_B e^{+i\chi T_{clock}n_B/2}\), with the flip-frame updates already
+tracked. The corrected ready isometry is within \(E_N\) of
+\(I_D\otimes W\). Tensoring any reference leaves the bound unchanged.
+All auxiliary amplitudes, including any final leakage, remain in this
+comparison; there is no success normalization or discarded output.
+
+For N=22, \(E_N<0.01\). In fact \(\sqrt3<7/4\), \(\pi<22/7\)
+give the exact rational upper bound
+\(E_{22}<7243411142/758912000000<1/100\).
+The construction uses 88 finite composite flips, hence 264 helper-drive
+pieces, and its clock is
+\(2T_0+4NL_\pi=17.8\,\mu s\), before physical frame pulses,
+ramps/buffers, preparation, readout, reset and noise. This is a slow
+sufficient construction, not a minimum or a useful-device witness.
+
+**Physical premise and next test.** The
+[strong-ZZ primary, Sec. III/Fig. 2](https://arxiv.org/html/2103.12305v1),
+supplies the three-piece unconditional-rotation geometry and a separate
+9.29 MHz constituent. It does not report the numerical duration of the
+derived pulse above or calibrate it in a TIP/helper assembly. The
+[TIP primary, Sec. IV](https://arxiv.org/html/2511.01260v2),
+uses shaped pump edges; the square, short segments in this construction
+do not establish feasibility within its 20 ns edge example. No measured
+helper peak/slew/bandwidth or higher-level leakage guarantee is supplied.
+For an implemented replacement waveform on a common clock, add
+\(\int\|H_{actual}-H_{specified}\|dt\) and any independently bounded
+primitive-calibration errors, or recalibrate the complete sequence.
+An added interval must retain its full Hamiltonian and clock.
+
+The decisive missing service is a calibrated unconditional helper flip,
+or concurrent decoupling waveform, with duration and uniform error over
+the actual B/auxiliary/f/h sectors. Its driven relaxation/dephasing
+instrument is also needed; Ramsey \(T_2^*\) does not determine a white
+Markov floor. The clean construction does not match the full chronological
+noisy bath/flag instrument to a helper-independent core. Native selector
+prefixes still need their own feasible physical control, while a final-only
+\(I_D\otimes W\) endpoint alone does not certify opposite-order histories.
+Bare ordinary fixed-D0 execution plus PED and simultaneous ordinary
+controls remain admitted. All records, rejects, storage, control and
+recovery must be compared at one deadline using the same supplied ports;
+no source-backed native or ordinary noise advantage follows here.
