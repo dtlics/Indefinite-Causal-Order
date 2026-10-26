@@ -222,6 +222,166 @@ ordinary policy, with its changed unknown-data map and acceptance charged.
 The rank argument only excludes calling that rejection ready-identity on the
 whole warm reference service.
 
+<a id="nr-r06-tip-readout-model"></a>
+
+### A finite dispersive readout retains records and data backaction
+
+Let $V$ be the bare-coordinate output columns of the complete gate, including
+all data and coupler leakage. A physical readout with retained record $y$ has
+fine operators $M_{y\alpha}$, where $\alpha$ labels inaccessible outcomes and
+$\sum_{y,\alpha}M_{y\alpha}^\dagger M_{y\alpha}=I$. Integrals replace sums for
+continuous records. Include any surviving cavity or helper among the quantum
+outputs. For a supplied subsequent decoder $U_y$ and a basis $z$ of only the
+auxiliaries actually discarded, the delivered operators are
+
+$$
+K_{y\alpha z}=(I_{\rm data}\otimes\langle z|)U_yM_{y\alpha}V.
+$$
+
+The delivered instrument retains $y$ and sums $K_{y\alpha z}\rho
+K_{y\alpha z}^\dagger$ over inaccessible $\alpha,z$. Its data output space
+still includes leakage; a desired-code overlap is a score, not a silent
+projection or acceptance. If an auxiliary is delivered, retain it instead of
+contracting its $z$ index. Additional fine indices cover a nonunitary decoder
+or feedback instrument. Every accepted and rejected output remains present.
+
+In particular, for the declared dressed-coordinate convention $D$, a bare
+occupation readout $P_m^{\rm bare}$ followed by the specified $D^\dagger$
+endpoint gives operators containing $D^\dagger P_m^{\rm bare}V$. An encoded
+label selection instead contains $P_m^{\rm enc}D^\dagger V$. A full-space
+identification of the two projector instruments requires
+$P_m^{\rm bare}=DP_m^{\rm enc}D^\dagger$. A coordinate transformation supplies
+no physical readout or decoder. Any use of $D^\dagger$ as an implemented
+decoder needs its actual control, time and noise; when it is only a coordinate
+convention, transform the physical instrument and target consistently. An
+assignment matrix for prepared basis states does not fix these operators on
+unknown data/reference superpositions.
+
+One conditional readout model adds a weak harmonic mode $r$ coupled only to
+$u$ through $H_{ur}/h=g(a_u^\dagger r+a_ur^\dagger)$. This coupling, its cavity
+frequency, all linewidths and the probe are declared inputs. Let $|s\rangle$
+be a nondegenerate eigenstate of the specified number-conserving $H_0/h$,
+with cycle-frequency energy $E_s$. Away from the relevant resonances,
+second-order perturbation theory gives
+
+$$
+\delta\nu_s=g^2\left[
+\sum_{k:N_k=N_s+1}\frac{|\langle k|a_u^\dagger|s\rangle|^2}
+ {\nu_r-(E_k-E_s)}
+-\sum_{k:N_k=N_s-1}\frac{|\langle k|a_u|s\rangle|^2}
+ {\nu_r-(E_s-E_k)}\right].
+$$
+
+For $n$ cavity photons the upward system transition has weight $n$ and
+the downward transition has weight $n+1$, with opposite denominator signs.
+Subtracting the second-order energies at $n+1$ and $n$ gives this shift.
+Every virtual state in the adjacent sectors belongs in these sums. All
+appreciably occupied final gate sectors, including warm and leaked sectors,
+need this response; a calculation only for cold input labels is insufficient.
+An actual high-level transmon model and perturbative remainder are separate
+from a finite Duffing calculation. Coupling-weighted detunings, probe photon
+occupation, secular and adiabatic conditions must justify the approximation.
+It can then produce an approximately energy-diagonal readout, rather than
+project virtual bare occupations. It does not establish a QND instrument:
+Purcell/Raman transitions, saturation, readout-induced leakage, active gate
+drives and their bath records require the complete physical evolution.
+
+In the additional diagonal coherent-pointer approximation, take an initially
+common coherent cavity state and vacuum output ports. Then
+
+$$
+\dot\alpha_s=-[\kappa_{\rm tot}/2+
+ i2\pi(\nu_r+\delta\nu_s-\nu_p)]\alpha_s+F(t),
+\qquad \kappa_{\rm tot}=\sum_j\kappa_j,
+$$
+
+where $\kappa_j$ are angular rates. After complete ringdown define
+$\mathcal D_{st}=\kappa_{\rm tot}\int|\alpha_s-\alpha_t|^2dt$.
+The output in vacuum port $j$ has coherent amplitude $\sqrt{\kappa_j}\alpha_s$;
+the product of coherent-state overlaps gives the following relations.
+Tracing all light multiplies the magnitude of an $s,t$ coherence by
+$e^{-\mathcal D_{st}/2}$; at finite release also add the squared residual
+cavity separation to $\mathcal D_{st}$ if that cavity is discarded. Actual
+accessible records remain available to feedback. Deterministic Stark phases
+and pointer-overlap phases also enter a gate score, so this magnitude is not
+an entanglement-fidelity certificate or a no-go for record-based correction.
+
+For an observed fraction
+$0<\eta_{\rm eff}=\eta\kappa_{\rm ex}/\kappa_{\rm tot}\le1$, the reference
+coupler g/e squared observed-field overlap is
+$e^{-\mathcal D_{ge}^{\rm obs}}$, where
+$\mathcal D_{ge}^{\rm obs}=\eta\kappa_{\rm ex}
+\int|\alpha_g-\alpha_e|^2dt$. Ideal equiprobable pure coherent pointers have
+
+$$
+P_{\rm err}^{\rm ideal}=
+\frac{1-\sqrt{1-e^{-\mathcal D_{ge}^{\rm obs}}}}2.
+$$
+
+Thus assignment error at most $0<\epsilon<1/2$ in this model requires
+$\mathcal D_{ge}^{\rm obs}\ge-\log[4\epsilon(1-\epsilon)]$. With
+$R_{st}=\int|\alpha_s-\alpha_t|^2dt/\int|\alpha_g-\alpha_e|^2dt$,
+the unread-data coherence magnitude is
+$\exp[-R_{st}\mathcal D_{ge}^{\rm obs}/(2\eta_{\rm eff})]$.
+This ratio removes probe amplitude for a fixed linear-response waveform, but
+not its detuning, linewidth, duration, collection loss or release condition.
+A scalar dispersive shift or assignment error does not supply the missing
+probe strength, efficiency, classifier or full readout instrument. This is a
+conditional model to test against the actual gate outputs, not a supplied
+ideal marker, physical order selector or performance claim.
+
+<a id="nr-r06-tip-calibration-bound"></a>
+
+### A fixed cold phase policy and an all-reference score bound
+
+A calibration must fix one policy before the hidden warm component is
+drawn. For three logical bits $b_i$, expand a chosen lift of the residual
+diagonal phase after removing the desired CZ signs as
+
+$$
+\varphi(b)=\varphi_0+\sum_i l_i b_i+
+             \sum_{i<j}\eta_{ij}b_ib_j+\eta_{ABC}b_Ab_Bb_C.
+$$
+
+The feasible phase correction $\exp[-i\sum_i\theta_i b_i]$ with
+$\theta_i=l_i+\tfrac12\sum_{j\ne i}\eta_{ij}+\eta_{ABC}/4$
+removes every single-$Z_i$ term, as follows by substituting $b_i=(1-Z_i)/2$.
+It need not maximize the target score with unequal magnitudes or
+off-diagonal errors. Its full logical implementation or valid tracked
+frame belongs to the task's physical control ledger; an encoded phase
+operation is not automatically a bare local oscillator phase. A
+record-dependent policy may depend on the available record but must remain
+the same across inaccessible warm labels.
+
+For the corrected accepted data-output marginal after the supplied decoder,
+choose a finite or countable Kraus representation $K_j$ of that CP map,
+after integrating any continuous record selection. A pointwise Kraus density
+at one continuous record is not a discrete component of positive measure.
+Include $\sqrt{w_a}$ for every hidden classical preparation component when
+using a component-refined representation. Retained quantum auxiliaries
+remain in the complete instrument; the marginal is the score's data endpoint.
+Let $W$ be the desired code isometry and choose any one component $K_0$.
+If, for a fixed phase $\phi$ and $m\ge0$,
+
+$$
+\operatorname{Re}(e^{-i\phi}W^\dagger K_0)\succeq mI,
+$$
+
+then every logical density matrix $\rho$ obeys
+$|\operatorname{Tr}(\rho W^\dagger K_0)|^2\ge m^2$.
+Indeed its real part after the same phase is at least $m$.
+For a purification of $\rho$, the unnormalized target good mass is
+$\sum_j|\operatorname{Tr}(\rho W^\dagger K_j)|^2$, so it is at least $m^2$.
+This covers arbitrary inaccessible input references. With acceptance
+effect $E=\sum_jK_j^\dagger K_j$ and $\lambda_{\min}(E)>0$, the conditional
+target fidelity is at least $m^2/\lambda_{\max}(E)$. Every accepted leaked
+data row contributes to $E$. A chosen code block contributes to the
+score proof without granting code postselection. A physical readout must
+already be included in $K_0$; a cleaner component from the no-readout
+channel cannot supply this bound for a different instrument. Numerical
+eigenvalues require outward matrix and propagation-error enclosures before
+these evaluated bounds become certificates.
+
 ### A reference-complete total-excitation cutoff
 
 For a declared full five-oscillator RWA model, write $H/\hbar=H_0+V$,
@@ -321,6 +481,84 @@ counterrotating drives, number-changing selectors and actual frequency-dependent
 baths need their own residuals or model, and cannot inherit this certificate
 unchanged. Complete common postprocessing contracts the resulting bound;
 rare accepted fidelities require a separate denominator estimate.
+
+<a id="nr-r06-tip-spectral-validation"></a>
+
+### A constant flat segment needs no exact eigenvector assumption
+
+A saved eigensolver output can specify an approximate continuous curve
+without granting an exact unitary diagonalizer. On a constant finite
+Hermitian Hamiltonian $h=H/\hbar$, let $Q,Z$ be fixed finite matrices,
+$\Omega=\operatorname{diag}(\omega_k)$ be real, and
+$S(t)=Qe^{-i\Omega t}Z$. If the true incoming logical columns $R$ and their
+saved approximation $\widetilde R$ satisfy
+$\|R-\widetilde R\|_{\rm F}\le\epsilon$, put
+
+$$
+e_0=\|\widetilde R-QZ\|_{\rm F},\qquad
+J=hQ-Q\Omega,\qquad
+r=\sum_k\|J_{:,k}\|_2\|Z_{k,:}\|_2.
+$$
+
+The residual is $\dot S+ihS=iJe^{-i\Omega t}Z$. Its Frobenius norm is at
+most $r$, by the triangle inequality for its column--row outer products.
+Unitary variation of constants therefore gives
+$\|e^{-iht}R-S(t)\|_{\rm F}\le\epsilon+e_0+tr$.
+This charges the initial reconstruction and every eigen-residual; $Q$ is
+not assumed orthogonal or square. Computation of $Z$ merely selects the
+curve: its resulting reconstruction error must still be bounded. A source
+or dressed-frame correction and the preceding rise's actual error belong
+to $\epsilon$, rather than following from a solver tolerance or Gram
+diagnostic.
+
+There is also a continuous boundary bound with no time grid. Set
+$b_k=(\Pi_KQ)_{:,k}$, $z_k=Z_{k,:}$ and
+$w_k=\|b_k\|_2\|z_k\|_2$. Expanding the squared Frobenius norm and bounding
+each outer-product inner product by $w_kw_l$ gives
+
+$$
+\int_0^T\|\Pi_K S(t)\|_{\rm F}^2dt\le I_T,
+\qquad
+I_T=\sum_{k,l}w_kw_l
+       \min\!\left\{T,\frac{2}{|\omega_k-\omega_l|}\right\}.
+$$
+
+The kernel is $T$ at a zero gap. For a nonzero gap it follows by integrating
+the phase and using
+$|\int_0^T e^{-i(\omega_k-\omega_l)t}dt|
+\le\min\{T,2/|\omega_k-\omega_l|\}$.
+All terms in $I_T$ are nonnegative, so its numerical enclosure need not
+resolve cancellation in a signed oscillatory sum. Cauchy--Schwarz gives
+$\int_0^T\|\Pi_KS(t)\|_{\rm F}dt\le\sqrt{TI_T}$.
+For constant $c_K=\sqrt{K+1}\|\xi\|_2$, this flat segment's contribution
+to the raw cutoff Duhamel integral is consequently at most
+
+$$
+\Delta_{{\rm flat},{\rm F}}
+\le c_K\left[\sqrt{TI_T}+T(\epsilon+e_0)
+                         +\frac{T^2r}{2}\right].
+$$
+
+These are Frobenius bounds on all supplied logical columns; operator bounds
+follow conservatively. Their normalized Hilbert--Schmidt counterparts for
+a Bell-state average divide a column-difference bound by $\sqrt d$.
+The raw operator/Frobenius integral must not be capped at one; that cap
+applies to the half-diamond distance between the completed exact channels.
+Rise, fall, buffer and the physical number-frame update still belong to the
+complete pulse word. In particular an isolated cold-rise artifact cannot
+stand in for the second gate's actual input after the first gate.
+
+To validate a numerical instance, enclose the actual Hamiltonian entries,
+phase conversions, sparse/dense products, gap denominators and positive
+reduction, including roundoff and underflow. Add the certified endpoint
+evaluation error to $\epsilon+e_0+Tr$. If a completed word from an isometric
+logical input has operator error at most $\eta$ to saved approximate
+columns, a safe raw accepted-event or Bell-good-weight error is
+$2\eta+\eta^2$; those columns need not themselves be trace preserving.
+The separate exact-channel cutoff error adds to this raw-weight margin.
+Conditional fidelities still require a positive acceptance bound. These
+rules validate the declared closed model; they provide no unreported
+physical rise, source, bath, readout or native-control port.
 
 The next calculation first calibrates the required cold $W$ in the joint
 device and fixes its bare or dressed preparation/readout frame, then forms

@@ -1635,10 +1635,16 @@ compilation and its full noise/clock cost remain open. The
 keep intermediate-ready and final-only gate contracts distinct. The latter
 supplies a slow sufficient clean body, not a competitive noisy compiler.
 The [warm joint-model component](methods/tip-gate-screen.md#nr-r06-tip-warm-model)
-fixes the preparation and full-output contract and gives a reference-complete
-total-excitation cutoff bound. The next test first calibrates the required
-cold gate in the joint device, then uses component-resolved warm maps and a
-qualified native selector. Unconditional helper controls, driven baths and
+fixes the preparation and full-output contract. Its
+[readout model](methods/tip-gate-screen.md#nr-r06-tip-readout-model)
+keeps physical measurement, encoded coordinates, accessible records and data
+backaction distinct. A
+[fixed-policy all-reference bound](methods/tip-gate-screen.md#nr-r06-tip-calibration-bound)
+and [continuous spectral certificate](methods/tip-gate-screen.md#nr-r06-tip-spectral-validation)
+support a joint-device calculation without granting exact eigensolver output
+or a validated incoming rise. The next test validates the complete cold word
+and component-resolved warm maps, then supplies the actual readout and native
+selector at a common physical release. Unconditional helper controls, driven baths and
 the full frame, recovery, readout and reset clock must be shared with the
 ordinary comparison at their actual costs.
 
