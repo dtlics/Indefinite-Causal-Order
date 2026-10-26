@@ -1,18 +1,25 @@
-# Application assessment and next experiment
+# Theoretical application assessment and implementation studies
 
 [Recovery theorem](theorem.md) · [Ordinary baselines](architecture-baselines.md) · [Literature context](references.md) · [Topic](README.md)
 
-The current results establish oracle advantages in fresh-frame recovery
-and hidden-basis memory qualification. They do **not** yet establish a useful advantage for calibrating or
-operating persistent hardware. The next investigations start from complete
-device instruments and available controls, then ask whether switched outputs
-improve a deployed decision. Current screens cover calibration transport,
-multimode optics, displacement calibration, measurement alignment, network
-entanglement, private key detection, braided magic and native computational
-layers. A quantum bath or a cheaper control readout is not
-enough: the comparison must include native reference encodings, ordinary
-echo and spectral checks, and every accepted and rejected outcome. No checked
-architecture currently meets all the required assumptions.
+The current research target is a **theoretical advantage for a quantum-computing task**: an algorithmic certification, QEC/QEM decision, noise-characterization output or useful conditional quantum operation. The application must specify what property is needed, why the SWITCH statistic or output determines it, and why a strong ordinary strategy cannot obtain the same answer at comparable theoretical cost. Query and sample bounds must include the access actually granted, arbitrary ordinary quantum memory and relevant accessible records. Hardware pulse timing, routing feasibility and practical crossover numbers are separate implementation questions; they are not prerequisites for an application theorem.
+
+The organizing scalar is the established Kraus-commutator statistic on a maximally mixed target. It measures Kraus-product interference, which differs from commutation of the averaged channel superoperators. Existing C5/C6 lower bounds concern this scalar; a lower bound for simulating the full SWITCH cannot automatically be transferred to a chosen diagnostic.
+
+## Current theoretical use cases
+
+| Quantum-computing task | Required decision | Canonical evidence and scope |
+| --- | --- | --- |
+| QEC resource qualification before a working code is supplied | Positive versus zero unassisted coding capacity under the hidden-pinching promise | [NR-R20](memory-qualification.md#nr-r20): constant switched testing versus an exponential ordinary-query bound. It is an existing theoretical application; a decoder construction is a different endpoint. |
+| Verify an opaque dissipative/Markov primitive | Rapid reference-complete forgetting versus a hidden invariant algebra | [C6-R08](../c6-hidden-dephasing/applications.md#c6-r08): nine self-SWITCH rounds (eighteen primitive channel invocations), with the ordinary lower bound inherited by an exact single-oracle reduction. The precise promise is essential. |
+| Certify a channel-program rewrite | Whether deleting an unread subroutine preserves the complete channel | [C6-R08](../c6-hidden-dephasing/applications.md#c6-r08): a sound and complete safe-deletion certificate. It is a certification advantage, not an automatic end-to-end execution speedup. |
+| Select an error model for repeated noise contacts | Persistent latent orientation versus independent rapid refresh, despite identical averaged single-use data | [NR-R22](noise-model-selection.md#nr-r22): a direct C5 adaptive-query reduction and a specified coherent two-invocation test. This is scoped model selection, not a generic Markovianity or QEM-overhead certificate. |
+
+The next theoretical work should improve the application promises, verify novelty against the closest algorithms and characterization methods, and seek consequences that matter for a computation. The scalar alone does not determine a general decoder, finite-code correctability, sampler gap or PEC overhead. Each proposed use needs its own implication and its own ordinary lower-bound reduction. Known unitary-only, Pauli, outcome-record and supplied-code shortcuts remain admitted where their interfaces apply.
+
+## Source-specific implementation studies
+
+The studies below preserve results about persistent hardware, calibration transport, optics, memory, pulse gates and conditional outputs. Their scoped device assumptions remain useful for implementation follow-ups. They do not impose an experimental-performance requirement on the theoretical use cases above.
 
 The [unknown timed-pulse gate result NR-R21](unknown-pulse-gates.md#nr-r21)
 gives a strict ideal expected-call gap for an exact physical gate under a

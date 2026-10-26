@@ -164,6 +164,7 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | C6-R05 | [Conditional keyed-family transfer](../proofs/lean/THEOREMS.txt) | Conditional keyed-family transfer |
 | C6-R06 | [Absolute coefficient-mass obstruction](../research/topics/c6-hidden-dephasing/README.md) | c6-r06 |
 | C6-R07 | [Limits of creation-only decoupling and early erasure](../research/topics/c6-hidden-dephasing/README.md) | c6-r07 |
+| C6-R08 | [Opaque-channel mixing and safe-rewrite certification](../research/topics/c6-hidden-dephasing/applications.md#c6-r08) |  |
 
 ## NR — Noisy physical recovery with expected-query bounds
 
@@ -190,3 +191,4 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R19 | [Unknown odd couplers: exact correction and expected-query fidelity limits](../research/topics/nr-noisy-recovery/backaction.md#nr-r19) |  |
 | NR-R20 | [Hidden-basis memory qualification and channel-entropy capacity certificates](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) |  |
 | NR-R21 | [Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21) |  |
+| NR-R22 | [One-session hidden-basis noise-model selection](../research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22) |  |

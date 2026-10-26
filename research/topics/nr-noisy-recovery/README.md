@@ -2,7 +2,7 @@
 
 [Research map](../../README.md) · [Result index](../../RESULTS.md) · [Validation scope](../../../docs/VALIDATION.md)
 
-This topic owns recovery and memory qualification through opaque related modules, with the
+This topic owns recovery, noise-model selection and memory qualification through opaque related modules, with the
 ordinary comparison charged for every invocation, including calibration
 and rejected histories. It is distinct from universal switch simulation
 and includes an operational capacity decision and a scalar entropy witness.
@@ -32,6 +32,7 @@ and includes an operational capacity decision and a scalar entropy witness.
 | NR-R19 | Unknown odd couplers: exact correction and expected-query fidelity limits | [Coupler benchmark](backaction.md#nr-r19) |
 | NR-R20 | Hidden-basis memory qualification and channel-entropy capacity certificates | [Memory qualification](memory-qualification.md#nr-r20) |
 | NR-R21 | Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines | [Pulse-gate comparison](unknown-pulse-gates.md#nr-r21) |
+| NR-R22 | One-session quasistatic versus rapidly refreshed hidden-basis noise | [Noise-model decision and C5 reduction](noise-model-selection.md#nr-r22) |
 
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
@@ -66,8 +67,7 @@ the specified scalar dephasing model. It supplies a physical output,
 without a deployed-runtime or communication-capacity claim.
 
 The [architecture assessment](architecture.md) owns the application
-requirements and next-test protocol. A significant architecture benefit
-has not been established. The [memory-qualification result](memory-qualification.md#nr-r20)
+requirements and next-test protocol. The current application target is a theoretical quantum-computing advantage under a justified access model. Native hardware feasibility is a separate follow-up. The [noise-model selection theorem](noise-model-selection.md#nr-r22) and [algorithm-certification corollaries](../c6-hidden-dephasing/applications.md#c6-r08) extend the application map. The [memory-qualification result](memory-qualification.md#nr-r20)
 connects C6 to an asymptotic storage-capability decision, with distinct
 proof components for the [general-channel entropy certificate](methods/unital-entropy-capacity.md),
 [orthogonal-unitary realization entropy](methods/pauli-entropy-capacity.md),

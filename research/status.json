@@ -55,7 +55,7 @@
       "slug": "c6-hidden-dephasing",
       "title": "SAME/MUB hidden dephasing and OTOCs",
       "status": "recorded-formal-endpoints",
-      "qualification": "Final supplied Lean package records shared-Haar physical, decision and OTOC endpoints; keyed transfer remains conditional.",
+      "qualification": "Final supplied Lean package records shared-Haar physical, decision and OTOC endpoints; new algorithm-certification corollaries are analytic, not new formal endpoints. Keyed transfer remains conditional.",
       "dossier": "topics/c6-hidden-dephasing/README.md"
     },
     {
@@ -63,7 +63,7 @@
       "slug": "nr-noisy-recovery",
       "title": "Noisy physical recovery with expected-query bounds",
       "status": "analytic-with-exact-certificates",
-      "qualification": "Physical-output recovery and hidden-basis capacity-qualification theorems, general-channel entropy certificates with a nonunitality correction, exact phase/alignment, expected-query coupler and unknown timed-pulse certificates, and scoped ordinary calibration/record/control baselines. Native architecture benefit remains open; new recovery/capacity/gate results are not Lean-formalized or externally peer reviewed.",
+      "qualification": "Analytic physical-output recovery, hidden-basis capacity qualification and one-session noise-model selection, general-channel entropy certificates, exact finite checks and scoped ordinary baselines. New NR results are not Lean-formalized or externally peer reviewed. Native hardware advantage remains a separate open implementation question.",
       "dossier": "topics/nr-noisy-recovery/README.md"
     }
   ]

@@ -11,8 +11,8 @@ The eight stable topics below organize current knowledge. Each topic links to it
 | P3 | [Exact universal quantum-switch simulation](topics/p3-exact-switch-simulation/README.md) | recorded-formal-endpoint: Final supplied Lean package records the physical finite-budget impossibility endpoint. |
 | C4 | [Approximate full-switch simulation](topics/c4-approximate-switch-simulation/README.md) | recorded-formal-endpoints: Final supplied Lean package records the full-output error tradeoff and lower bounds. |
 | C5 | [Constant-gap channel-interference testing](topics/c5-interference-testing/README.md) | recorded-formal-endpoints: Final supplied Lean package records ordinary-query lower bounds; distinct single-hidden-basis proof retained. |
-| C6 | [SAME/MUB hidden dephasing and OTOCs](topics/c6-hidden-dephasing/README.md) | recorded-formal-endpoints: Final supplied Lean package records shared-Haar physical, decision and OTOC endpoints; keyed transfer remains conditional. |
-| NR | [Noisy physical recovery with expected-query bounds](topics/nr-noisy-recovery/README.md) | analytic-with-exact-certificates: Physical-output recovery and hidden-basis capacity-qualification theorems, general-channel entropy certificates with a nonunitality correction, exact phase/alignment, expected-query coupler and unknown timed-pulse certificates, and scoped ordinary calibration/record/control baselines. Native architecture benefit remains open; new recovery/capacity/gate results are not Lean-formalized or externally peer reviewed. |
+| C6 | [SAME/MUB hidden dephasing and OTOCs](topics/c6-hidden-dephasing/README.md) | recorded-formal-endpoints: Final supplied Lean package records shared-Haar physical, decision and OTOC endpoints; new algorithm-certification corollaries are analytic, not new formal endpoints. Keyed transfer remains conditional. |
+| NR | [Noisy physical recovery with expected-query bounds](topics/nr-noisy-recovery/README.md) | analytic-with-exact-certificates: Analytic physical-output recovery, hidden-basis capacity qualification and one-session noise-model selection, general-channel entropy certificates, exact finite checks and scoped ordinary baselines. New NR results are not Lean-formalized or externally peer reviewed. Native hardware advantage remains a separate open implementation question. |
 <!-- END GENERATED RESEARCH STATUS -->
 
 ## How the parts fit
@@ -34,9 +34,13 @@ The [architecture assessment](topics/nr-noisy-recovery/architecture.md)
 connects C6 and NR to real calibration, noise and recovery workloads.
 Its [ordinary baselines](topics/nr-noisy-recovery/architecture-baselines.md)
 account for classical fault trajectories, reused finite frames,
-measurement records and syndrome-sector rank. These are scoped
-exclusions and resource comparisons; an architecture application with a
-substantial demonstrated benefit remains open.
+measurement records and syndrome-sector rank. The current application search
+targets theoretical quantum-computing advantages: [opaque-process algorithm
+certification](topics/c6-hidden-dephasing/applications.md#c6-r08),
+[noise-model selection](topics/nr-noisy-recovery/noise-model-selection.md#nr-r22)
+and the existing capacity qualification. These use the scalar C5/C6 hardness
+theorems under explicit access promises. Native hardware feasibility remains
+a separate implementation question.
 
 ## Maintain current knowledge
 
