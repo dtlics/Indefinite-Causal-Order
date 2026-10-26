@@ -5868,6 +5868,271 @@ instrument and the formal common-parity polynomial identity. It is an
 exact algebra replay, not a certification of the experimental code,
 finite-time kernel or herald instrument.
 
+<a id="nr-r11-transduction-herald"></a>
+
+### Microwave storage and optical release require different success flags
+
+Memory-assisted microwave-to-optical delivery offers a concrete use for an
+early flag: retain a successfully captured unknown qubit while another
+node retries, then release matched optical modes. The useful output is
+entanglement with a retained reference, with false flags and all launches
+charged. A flag obtained by consuming the released photon answers a
+different production question.
+
+[Tu et al., Nature Communications **17**, 9397 (2026)](https://www.nature.com/articles/s41467-026-75752-9) demonstrate free-space Rydberg storage of 37.5-GHz microwave pulses and timed optical retrieval. The retained excitation is a collective $46D_{5/2}$ spin wave; the optical path uses single-mode collection, filters and destructive counting. Main Figs. 2–4 report weak coherent inputs, intensity/HBT measurements, pump-noise suppression by delayed retrieval, roughly 90% area-normalized efficiency at 50 ns, and a fitted 0.9-microsecond storage coherence time. The experimental sequence repeats at 100 Hz. Supplementary Notes 2–3 specify waveform generators and clock-locked microwave fields; Note 7 instead reports $1.2\times10^{-6}$ horn-to-medium coupling and $4.3\times10^{-7}$ horn-to-detector efficiency. These are distinct denominators. Main Fig. 1 and Methods model remote-qubit entanglement and assume a 1-MHz source; they do not report measured retained-reference entanglement. The inspected setup supplies no demonstrated coherent-order selector, spin-wave QND success record, reverse optical-to-microwave port or independent helper. Photon-number-dependent dephasing is described by a mean-field fit (main Eq. 4; Supplementary Note 5), while Supplementary Note 1 explicitly neglects photon blockade in its weak-excitation model.
+
+The [primary supplement, Notes 1–3, 5 and 7](https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41467-026-75752-9/MediaObjects/41467_2026_75752_MOESM1_ESM.pdf)
+fixes the normalization and control scope of that comparison. In
+particular, an intensity-dependent efficiency fit does not define a
+nonlinear channel on unknown density operators: a fixed complete physical
+instrument is linear even for nonlinear field interactions. The ordinary
+baseline gets reusable capture, phase, mode-shaping, storage and timed
+retrieval controls that are independently available. It may separate
+pumps and release synchronized outputs before adding a new contact.
+
+[Meesala et al., PRX **14**, 031055 (2024)](https://journals.aps.org/prx/pdf/10.1103/PhysRevX.14.031055) experimentally verified optical time-bin/microwave dual-rail entanglement through complementary-basis correlations and microwave tomography, bounding Bell fidelity at $0.794^{+0.048}_{-0.071}$ after single-microwave-photon postselection. Weak-pump preparation uses SPDC scattering probability $p=10^{-4}$; Table III reports 20-microsecond repetition and $0.26\,s^{-1}$ optical heralds. Optical detection consumes the photon; transmon capture and remote networking are proposed extensions. Ordinary benchmarks also retain [Krastanov et al., PRL **127**, 040503 (2021)](https://arxiv.org/pdf/2012.13408v3)'s theoretical single-optical-click remote-microwave heralding/teleportation route, including reset/storage costs and its red-detuned variant's single-photon preparation. The experimental characterization does not demonstrate a retained two-node resource released online.
+
+An ordinary entanglement factory is therefore also a relevant comparator
+when its actual source, capture, communication memories, gates and herald
+ports are supplied. It is not a free retry channel for one unknown
+payload: any waiting data/reference, factory rejects and final transfer
+must be preserved and charged. These bounded comparisons establish no
+priority for an early flag.
+
+**Endpoint and cost.** For a declared reference-entangled input and each
+actual record $h$, let $\rho_h$ be the subnormalized retained-reference and
+released-output state, including vacuum and wrong-code outputs. For
+accepted records $\mathcal A$ and available record-dependent unitary
+corrections $U_h$ on the complete code/erasure output, use
+
+$$
+a=\sum_{h\in\mathcal A}\operatorname{Tr}\rho_h,\qquad
+G=\sum_{h\in\mathcal A}\langle\Phi|(I\otimes U_h)\rho_h
+(I\otimes U_h^\dagger)|\Phi\rangle,\qquad F=G/a.
+\tag{MT1}
+$$
+
+The Bell projector has support only on the optical code, and $F$ is
+defined for $a>0$. State a fidelity requirement $F_*>1/2$. Count every
+physical launched microwave mode, including both logical bins and both
+nodes; report $G/m$ for $m$ launched modes, energy separately, and delivery
+at a common release clock. A finite-mean renewal policy has rates
+$\mathbb E[G]/\mathbb E[m]$ and $\mathbb E[G]/\mathbb E[T]$, with its full
+cycle duration $T$. A two-node Bell measurement needs its joint instrument,
+not the square of a one-node count efficiency. Rejected matter and field
+states remain available only through actual retained ports.
+
+#### Complete flags in a declared passive mode model
+
+Use a declared passive model with microwave input M, memory S and optical
+output O, initially vacuum in S/O. This is an instrument calculation, not
+a fit to the cited transducer. For each of two orthogonal logical rails
+(or time bins), let
+
+$$
+A=e^{-i\theta(MS^\dagger+M^\dagger S)},\qquad
+B=e^{-i\phi(SO^\dagger+S^\dagger O)}.
+$$
+
+The same angles/phases act on both rails; the total input code contains
+one excitation. A single helper must control both rails without a
+rail-resolving record and be read only after the complete code interval.
+Let $V_M,V_S,V_O$ embed that unknown code into the indicated occupied mode,
+with every other mode vacuum. Put $a=\cos\theta$, $b=\sin\theta$,
+$c=\cos\phi$, $d=\sin\phi$. All equations tensor a passive reference.
+On the ready input code,
+
+$$
+BA V_M=aV_M-ibcV_S-bdV_O,\qquad
+AB V_M=aV_M-ibV_S.
+$$
+
+Thus the balanced native route has complete $X$-flag operators
+
+$$
+\begin{aligned}
+K_+&=aV_M-ib(1+c)V_S/2-bdV_O/2,\\
+K_-&=ib(1-c)V_S/2-bdV_O/2.
+\end{aligned}\tag{MT2}
+$$
+
+Before measuring the helper the isometry is
+$|+\rangle K_++|-\rangle K_-$; afterwards the maps are
+$K_\pm\rho K_\pm^\dagger$. This retains every M/S/O coherence and
+reference correlation. Vacuum extends by $K_+|\mathrm{vac}\rangle=
+|\mathrm{vac}\rangle$, $K_-|\mathrm{vac}\rangle=0$; the operator formula
+therefore also fixes coherent vacuum/code inputs, without postselection.
+For code-supported input,
+
+$$
+p_-=b^2(1-c)/2,\quad p_+=1-p_-,\qquad
+g_+=g_-=b^2d^2/4.                                    \tag{MT3}
+$$
+
+Here $p$ counts the helper outcome. At the first-read common finish,
+$g$ is the transferred-one-photon Bell-good weight of the released optical
+code, equal to $G$ with erasure-preserving logical/time-bin corrections
+and no erasure filling or added mode conversion. A broader decoder that
+re-prepares a photon, mixes vacuum into the code or retrieves retained S
+is a different paid protocol; $g$ is not an upper bound on that broader
+Bell score. For the displayed unreplenished optical output,
+tracing M/S gives, on each recorded branch, the optical erasure map
+$g_\pm\rho_{RO}+(p_\pm-g_\pm)|\mathrm{vac}\rangle
+\langle\mathrm{vac}|_O\otimes\rho_R$. Thus, when $p_->0$,
+$F_-^{O}=g_-/p_-=(1+c)/2$. The minus flag generally retains a coherent
+stored component; it is not an exact optical-occupation herald. That
+memory is still a useful retained output under a different endpoint.
+For example, a supplied additional $B(-\phi/2)$ maps MT2's minus output
+entirely to O with probability $p_-$; that extra retrieval/control is paid.
+If $p_-=0$, its conditional fidelity is undefined, not a unit-fidelity
+success. At $\theta=\phi=\pi/2$, each native flag has
+$p=1/2,g=1/4,F^O=1/2$.
+
+A stronger ordinary comparison uses the same helper, if a coherent
+phase selector is physically supplied: apply A first, then
+$\operatorname{SELECT}\{B(+\phi),B(-\phi)\}$. Its complete operators are
+
+$$
+L_+=aV_M-ibcV_S,\qquad L_-=-bdV_O.                    \tag{MT4}
+$$
+
+Minus is then an exact reference-preserving optical herald, with
+$p_-^{\rm ord}=G_-^{\rm ord}=b^2d^2$ and $F_-^{\rm ord}=1$ when nonzero.
+Plus retains the unknown payload in M/S and contains no optical excitation;
+reuse requires those remaining modes and the actual recovery/reset controls.
+For the unrepaired optical endpoint, its good weight is four times one
+native flag's and twice their summed optical weight. This compares the
+displayed instruments at that finish, not arbitrary later native decoding.
+Bare ordinary BA already has optical weight $b^2d^2$, but no separate
+online occupation record. If full swap angles and their matched modes
+are available, ordinary
+$A(\pi/2)$ then $B(\pi/2)$ delivers deterministically in this ideal model.
+Neither retuning nor its actual capture/noise performance is free.
+
+MT4 requires a coherent conditional read-pump phase, with the correct
+vacuum-relative phase and matched leakage, loss and time records. A
+classical phase knob or an order router does not automatically supply it.
+Conversely, granting that actual selector must allow its ordinary use;
+it is not a free copy of the native herald. Optical release before helper
+readout also needs the actual delay/buffer and common herald-transport clock.
+
+#### A stored excitation is a distinct useful endpoint
+
+At $\phi=\pi$, MT2 becomes
+
+$$
+K_+=aV_M,\qquad K_-=ibV_S.                            \tag{MT5}
+$$
+
+This is an exact capture flag with stored Bell-good weight $b^2$ and
+storage fidelity one when $b^2>0$. A later paid $B(\pi/2)$ retrieves that accepted
+state to O; actual waiting, decoherence and false heralds must be included.
+Failure leaves the payload in M in the ideal model. Retrying it requires
+that this remaining microwave mode is retained/returnable; a departing
+unknown input cannot simply be relaunched as a copy.
+
+There is a matching ordinary storage instrument if half-pulse phase
+selection is supplied: use A, a common $B(\pi/2)$, then
+$\operatorname{SELECT}\{B(\pi/2),B(-\pi/2)\}$. Its two histories on the
+ready M code are $B(\pi)A$ and A, exactly the native histories because
+$B(\pi)$ fixes the initial S/O vacuum. It matches the whole unmeasured
+helper/M/S/O/reference isometry, not just the capture probability.
+It has three scheduled coupler segments and the same integrated B angle
+$\pi$. A coherent phase flip during one continuous B activation might
+combine the two halves; its programming/controller and clock remain paid.
+A controlled $\{B(\pi),I\}$ post-check is another matching port if supplied.
+The native endpoint requires the used-column action $B|S\rangle=-|S\rangle$,
+$B|\mathrm{vac}\rangle=|\mathrm{vac}\rangle$, with common hidden records.
+The literal beam-splitter $B(\pi)$ realizes it through coherent transfer
+and return; doubling an irreversible retrieval pulse does not establish
+that action. Another supplied implementation of this stored phase needs
+its own ordinary phase-check comparison. The half-pulse construction
+likewise requires the actual coherent intermediate O mode and sign control.
+
+The passive full-Fock identities clarify the input restriction. With
+$P_O=(-1)^{N_O}$, $B(-\phi)=P_OB(\phi)P_O$. For ready optical vacuum,
+MT4 measures optical **parity**, not nonvacuum occupancy. Also
+$B(\pi)=(-1)^{N_S+N_O}$, so MT5 flags stored parity. Parity equals occupancy
+on the stated vacuum/one-excitation domain; even multiphoton inputs can
+pass the other flag. With two rails the helper must couple to their total
+parity, not reveal which rail. An intensity-dependent fitted efficiency
+does not replace a linear quantum instrument on these unknown inputs.
+
+#### Forward loss requires its actual record phase
+
+Without assuming a reversible retrieval, suppose the used columns instead satisfy
+
+$$
+B_\pm|S\rangle=z|S\rangle\pm u|O\rangle\pm v|L\rangle,
+\quad B_\pm|\mathrm{vac}\rangle=|\mathrm{vac}\rangle,
+\quad z\ge0,\quad z^2+|u|^2+|v|^2=1.                 \tag{MT6}
+$$
+
+L collects orthogonal inaccessible emitted/lost records, not an accessible
+herald. The same used-column isometries must hold uniformly on the logical
+rails; retained S/O amplitudes need common controller/no-emission records,
+while lost L can carry the lost logical label. Native
+minus is $ib(1-z)V_S/2-ibuV_O/2-ibvV_L/2$, so
+
+$$
+p_-^N=b^2(1-z)/2,\quad G_-^N=b^2|u|^2/4,\quad
+F_-^N=|u|^2/[2(1-z)].
+$$
+
+Ordinary phase selection after A gives minus $-ib(uV_O+vV_L)$:
+$p_-^{\rm ord}=b^2(1-z^2)$, $G_-^{\rm ord}=b^2|u|^2$ and
+$F_-^{\rm ord}=|u|^2/(1-z^2)$. It flags optical or lost emission, and
+is not called clean optical delivery. When defined and $u\ne0$, its
+fidelity ratio to native is $2/(1+z)\ge1$. If the actual phase change
+negates only O while the lost amplitude is unchanged, ordinary minus
+instead isolates O. Which loss records change sign is a physical joint-
+dilation fact, not a free Kraus rephasing. Different phases/noise require
+their actual cross-history model; MT6 is not a fit to the source.
+
+For a direct counterexample to inferring that record phase from separate
+channel tomography, hold $B_+$ fixed and instead take
+$B_-|S\rangle=z|S\rangle-u|O\rangle+\epsilon v|L\rangle$,
+$\epsilon=\pm1$. On the span of vacuum and the stored logical code, both
+choices give the same reduced $B_-$ channel after tracing L, including
+vacuum/code coherences: the lost one-excitation phase drops out. Yet
+their coherent minus columns are $uV_O+(1-\epsilon)vV_L/2$ before the
+write factor. One flags only O and the other flags O or loss. These are
+different joint control interfaces, not freely interchangeable Kraus
+descriptions of one controlled experiment.
+
+Thermal capture, pumped-vacuum emission, which-bin records or extra
+photons require additional input sectors and joint bath operators. An
+odd-parity record can then be a false signal herald. Neither (MT2) nor
+(MT6) infers those terms from a fitted mean efficiency or count rate.
+
+#### Physical qualification and the next comparison
+
+Include both logical time-bin slots, preparation, failed launches, helper
+coherence through the full code, readout/reset, routing, waiting, release,
+retrieval and any record transport or correction. Equal named contacts or
+integrated angles do not prove equal activation latency. No overall
+ordinary optimum or hardware advantage follows.
+
+The next physical test starts with the actual read operation on empty
+storage and a vacuum helper-Ramsey experiment through the complete
+selector/pump/uncomputation sequence. It then needs the same-mode,
+bin-blind full capture/read/helper instrument and its cross-history record
+phases on reference-entangled inputs. Two orthogonal code modes must
+survive storage; separate per-bin timestamps may reveal the unknown
+logical value. An early optical bin can require buffering until the late
+bin and common helper are processed. A pre-read stored-success flag and
+a post-read optical flag are distinct timed services. Compare the actual
+storage/retrieval or buffered optical-release protocol with optimized
+ordinary delayed retrieval, at the same fidelity and complete clock.
+
+These are analytic statements about the specified mode and record
+models. They do not fit a full channel to the experiment, establish a
+measured coherent selector, or provide a new Lean audit. A source's
+absence of an arbitrary reverse-injection port alone is not a no-go:
+the forward used columns can suffice for (MT6). The closed return cycle
+and negative-angle calls are requirements only of the constructions
+that actually use them.
+
 ### Two-photon survivor scattering in a common continuum basis
 
 Nonlinear scattering need not preserve each photon's frequency, so it

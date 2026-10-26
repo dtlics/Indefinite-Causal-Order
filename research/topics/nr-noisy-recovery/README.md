@@ -451,6 +451,11 @@ The [cat physical route](architecture-baselines.md#nr-r06-cat-physical-route),
 and [retained Rydberg exchange](communication.md#nr-r11-rydberg-exchange)
 state their full-record ordinary comparators and actual next
 instrument tests. A significant native advantage remains open.
+The [microwave storage and optical-release comparison](communication.md#nr-r11-transduction-herald)
+adds a source-qualified interconnect test: establish the common-mode,
+reference-preserving flag instrument and its actual storage or release
+clock before comparing a coherent-order proposal with ordinary timed
+retrieval and conditional phase control.
 
 The [literature comparison](references.md) credits the existing filtering
 and recovery mechanisms. The bounded primary-source check does not
