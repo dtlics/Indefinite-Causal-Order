@@ -750,7 +750,9 @@ capacity benefits and coherent witnesses of latent time correlations
 have earlier precedents~\cite{kristjansson2021}.  The application above
 is the combined capacity-qualification query theorem under its stated
 opaque-session and coherent-extension promises, not a new coding theorem
-or a new commutator estimator.
+or a new commutator estimator. A conditional version with polynomial-size
+hidden device circuits and exact expected-polynomial setup is given in
+Section~\ref{sec:keyed-capacity}.
 
 \section{Discussion}\label{sec:discussion}
 
@@ -1511,6 +1513,91 @@ simulation. Equation~\eqref{eq:pru} bounds polynomial-time learners; it makes
 no information-theoretic exponential claim for a finite keyed ensemble.
 The task tests device relations under both Haar and keyed orientation.
 
+\subsection{Keyed capacity qualification}\label{sec:keyed-capacity}
+
+The capacity promise also has a conditional version with efficiently
+evaluable hidden devices. Assume a strong forward/inverse pseudorandom
+unitary family $(V_k)$ as above. Independently choose a uniform projective
+$n$-qubit Clifford $C$ and put $W=CV_k$. Static noise reuses $(C,k)$;
+rapid noise independently redraws it at each labelled contact. Both use
+$\mathcal E_{3/4,W}$ and the coherent extension specified in
+Section~\ref{sec:capacity-qualification}. Keys, coins, meter records and
+private circuit descriptions remain unavailable to the learner.
+The learner uses the same uniformity and advice convention as the PRU
+assumption.
+
+\begin{corollary}[Conditional efficient-device qualification]
+\label{cor:keyed-capacity}
+For $n\ge4$, these keyed processes retain the positive-versus-zero
+unassisted-capacity alternatives of Corollary~\ref{cor:capacity-qualification}
+and its four-switch diagnostic. Every ordinary quantum polynomial-time
+diagnostic making polynomially many contacts has negligible distinguishing
+bias, under the stated strong-PRU assumption. Given a sampled key, the
+device has polynomial-size forward/inverse evaluation circuits. Exact key
+setup takes expected polynomial time; the security reduction below has
+strict polynomial time.
+\end{corollary}
+
+\begin{proof}
+The full Clifford group is an exact unitary $2$-design~\cite{zhu2017}.
+For each fixed $k$, its pure-state second moment gives
+\begin{equation}\label{eq:keyed-exact-average}
+ \E_C\sum_j\bigl(CV_k\proj jV_k^\dagger C^\dagger\bigr)^{\otimes2}
+ =\frac{I+F}{d+1},
+ \qquad \E_C\Delta_{CV_k}=\Lambda.
+\end{equation}
+Here $F$ swaps the two factors. The rapid channel is therefore exactly
+$\overline{\mathcal E}_{3/4}$, including in adaptive ordinary experiments.
+The common code is uniform over all bases and hence over this subfamily;
+the rapid symmetric extension is unchanged. Bilinearity of the specified
+switch in its independently sampled rapid slots gives the same minus
+probability as~\eqref{eq:capacity-switch-gap}. Static error is zero for
+every key; rapid error is averaged over the independently fresh keys.
+
+For exact setup, use the polynomial-time Clifford index map
+of~\cite{koenig2014}. If the group has size $N$, repeatedly draw
+$\lceil\log_2N\rceil$ fair bits and accept indices below $N$.
+Acceptance is at least $1/2$, and the accepted index is exactly uniform.
+For the security reduction only, stop after $n^2$ trials and use a fixed
+fallback; its failure probability is $\sigma_n\le2^{-n^2}$.
+
+With challenge oracle $O$, wrap forward access as $O$ then $C$ and inverse
+access as $C^\dagger$ then $O^\dagger$. The reduction knows its sampled $C$;
+the learner does not. Simulate each weak contact by $W^\dagger$, followed
+by a private choice of $\Delta_Z$ or identity, followed by $W$.
+The inverse/forward direction sequence is fixed, and an inactive pair
+cancels to identity. Thus $q$ contacts use $2q$ unitary queries, without
+controlled access to an unknown oracle. Stopping can be padded with
+inactive pairs.
+
+Let $b_{A,\mathrm{trunc}}(2q,n)$ be this strict-QPT simulator's strong-PRU
+probability bias, and let $g(r,d)$ be the full bound in
+\eqref{eq:c6-comparison}, rather than its constant corollary.
+One PRU hybrid, two sampling-tail couplings and the Haar comparison
+used in~\eqref{eq:capacity-c6-output-bound} give, for $q\ge1$, $8q\le d$,
+\begin{equation}\label{eq:keyed-capacity-bias}
+ \left|p_{\rm static}^{\rm key}-p_{\rm rapid}\right|
+ \le b_{A,\mathrm{trunc}}(2q,n)+2\sigma_n
+       +g(2q,d)+\frac{qt}{d+1},\qquad t=3/4.
+\end{equation}
+For polynomial $q(n)$, every term is negligible. The PRU assumption bounds
+efficient binary decisions; it does not bound the trace distance of keyed
+outputs against unbounded measurements. The actual devices keep exact
+uncapped setup, so the rapid capacity claim never relies on an approximate
+twirl.
+\end{proof}
+
+The positive-rate coding limit still fixes $n$ before blocklength tends
+to infinity. Any uniformly efficient, key-independent unassisted code
+family with polynomially many contacts and an efficient logical Bell test
+has static key-average unconditional fidelity at most $3/4+\mathrm{negl}(n)$
+for $K\ge2$. Its rapid fidelity is at most $3/4$; the Bell test and
+\eqref{eq:keyed-capacity-bias} give the assertion. Training contacts count
+toward the budget.
+This is a computational obstruction, not an information-theoretic
+exponential blocklength theorem for a finite key family. It asserts neither
+efficient universal decoding nor a non-oracle complexity-class separation.
+
 \section{Formal verification}\label{sec:formal-status}
 The Lean 4.30 development covers arbitrary mixed inputs, finite adaptive
 memory, classical box choice, early stopping, and total query budgets,
@@ -1521,7 +1608,8 @@ estimator, and earlier simulation results.
 The keyed probability bound retains its security assumptions;
 asymptotic efficiency and cryptographic constructions are not formalized.
 The capacity application in Section~\ref{sec:capacity-qualification}
-is analytic and has not been formalized in Lean.
+and its keyed specialization in Section~\ref{sec:keyed-capacity}
+are analytic and have not been formalized in Lean.
 All selected endpoints use only \texttt{propext}, \texttt{Classical.choice},
 and \texttt{Quot.sound}, with no admitted lemmas.
 The release supplies pinned libraries, checksums, theorem maps, axiom
@@ -1619,5 +1707,13 @@ Universal quantum channel coding.
 Witnessing latent time correlations with a single quantum particle.
 \emph{Physical Review Research} 3, 043147 (2021).
 \href{https://arxiv.org/abs/2004.06090v4}{arXiv:2004.06090v4}.
+\bibitem{zhu2017} H. Zhu.
+Multiqubit Clifford groups are unitary 3-designs.
+\emph{Physical Review A} 96, 062336 (2017).
+\href{https://arxiv.org/abs/1510.02619v2}{arXiv:1510.02619v2}.
+\bibitem{koenig2014} R. Koenig and J. A. Smolin.
+How to efficiently select an arbitrary Clifford group element.
+\emph{Journal of Mathematical Physics} 55, 122202 (2014).
+\href{https://arxiv.org/abs/1406.2170v1}{arXiv:1406.2170v1}.
 \end{thebibliography}
 \end{document}

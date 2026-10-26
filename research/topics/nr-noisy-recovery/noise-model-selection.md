@@ -264,6 +264,178 @@ Accordingly, the universal existence theorem and the exponential finite-block ob
 
 Dependencies are the one-session theorem and weak-noise hybrid above, the cited uninformed-user compound theorem, and the existing NR20 symmetric-extension code-verification proof. The rate witness, static-mixture transfer and finite-block C5 corollary are derived here, not attributed as claims of the compound-channel paper.
 
+<a id="nr-r22-keyed"></a>
+
+## Conditional efficient keyed capacity qualification
+
+This conditional corollary extends the [manuscript](../../../paper/main.tex)'s strong-PRU discussion to the capacity-qualification endpoint. It leaves the Haar query theorem intact and has the computational access and exact-sampling conventions below.
+
+### Assumptions and the promised access
+
+Use $n$ as security parameter, $d=2^n$, $n\ge4$, and $t=3/4$. Assume a uniformly efficiently evaluable unitary family $\{V_k\}$ on $n$ qubits, with polynomial key length, computationally indistinguishable from Haar to the stipulated quantum polynomial-time adversaries having **both forward and inverse** oracle queries. The key is hidden. Use the same uniform/nonuniform adversary convention as that security assumption; arbitrary nonuniform code advice is not included automatically.
+
+Let $C$ be independent and uniform in the full projective $n$-qubit Clifford group and put
+
+$$
+W_{C,k}=CV_k,\qquad
+\Delta_W(X)=\sum_j W|j\rangle\langle j|W^\dagger X
+                    W|j\rangle\langle j|W^\dagger,
+\qquad
+\mathcal E_{t,W}=(1-t)\operatorname{id}+t\Delta_W .
+$$
+
+The **static** session samples one hidden pair $(C,k)$ and reuses it through all training, diagnostics and the transmitted block. The **rapid** process resamples the entire hidden pair independently at every labelled invocation. Active/identity coins and dephasing meters are fresh; no basis key, coin, outcome, environment or restart service is exposed. Initial advice and inputs are independent of the hidden pair. Every ordinary contact counts, including adaptive calibration and rejected histories.
+
+The switch promise is exactly NR22's additional two-labelled-invocation extension: each invocation's sampled basis, coin and meter is paired across its two order histories, independently of arrival time. Static labels share the session pair; rapid labels have independent pairs. Efficient descriptions of the reduced channels do not themselves grant this coherent extension. The ordinary learner has the opaque channel contacts, not the private circuits or the forward/inverse unitary oracles used in the reduction.
+
+Setup uses the exact Las Vegas expected-polynomial-time Clifford sampler specified below, followed by polynomial-time circuit evaluation. The exact capacity statements use this exact distribution; they do not replace it with a truncated sampler.
+
+### Lemma: the outer Clifford makes the one-use average exact
+
+For **each fixed key $k$**, write $|v_j\rangle=V_k|j\rangle$. Exact Clifford second moments imply
+
+$$
+\mathbb E_C\sum_j
+  (C|v_j\rangle\langle v_j|C^\dagger)^{\otimes2}
+     =\frac{I+F}{d+1}.
+$$
+
+Indeed each summand averages to $(I+F)/(d(d+1))$, and there are $d$ summands. Contracting one factor with $X$ gives, on every matrix,
+
+$$
+\mathbb E_C\Delta_{CV_k}(X)
+ =\frac{X+\operatorname{Tr}(X)I}{d+1}
+ =:\Lambda(X)
+ =\frac{\operatorname{id}+d\Omega}{d+1}(X),
+\qquad \Omega(X)=\operatorname{Tr}(X)I/d .
+$$
+
+This is equality of channels, hence includes arbitrary reference entanglement. Equivalently, the Clifford conjugation twirl of the unital pinching $\Delta_{V_k}$ is depolarizing: its Liouville trace is $d$, fixing the traceless multiplier to $(d-1)/(d^2-1)=1/(d+1)$.
+
+The extra Clifford is doing an exact moment task, not replacing strong pseudorandomness by a second-design assumption. A general strong PRU alone need not have these exact low moments. Taking $V_k=I$ would retain the exact average but remove the hardness conclusion: hidden Clifford pinching is a channel in the known Pauli basis. The existing [NR06 Bell-sampling simulator](architecture-baselines.md#nr-r06) samples its actual Pauli labels and simulates the full SWITCH using two ordinary queries and polynomial known processing, without learning $C$. Exact low moments alone do not establish computational hardness.
+
+The static and rapid one-use averages are consequently identical:
+
+$$
+\mathbb E_{C,k}\mathcal E_{t,W}
+ =\overline{\mathcal E}_t=(1-t)\operatorname{id}+t\Lambda.
+$$
+
+More strongly, independence of the fresh pair from every earlier transcript implies that **every ordinary adaptive rapid experiment** is exactly the memoryless channel $\overline{\mathcal E}_t$ in each slot. Conditional on the previous complete state, its next key can be averaged immediately by linearity. This assertion is not inferred from snapshot equality alone.
+
+### The capacity endpoint transfers without a cryptographic assumption
+
+Every fixed $W$ belongs to the all-basis family already covered by NR22's common-code theorem. For fixed $n$, that theorem supplies one unassisted encoder/decoder sequence, independent of $W$, attaining any rate below
+
+$$
+n-H(p)\ \ge\ n/4-h_2(3/4)>0,\qquad
+p_0=1-t+t/d,\quad p_z=t/d\ (z\ne0).
+$$
+
+Uniform fidelity over all $W$ also holds over this keyed subfamily. Linearity transfers the same code to the static mixture
+$\mathbb E_{C,k}\mathcal E_{t,W}^{\otimes m}$.
+No key recovery, computational pseudorandomness, efficient decoder or polynomial blocklength is needed for that existence statement. The limit remains $m\to\infty$ at **fixed $n$**.
+
+The exact rapid map is
+
+$$
+\overline{\mathcal E}_{3/4}
+  =\alpha\operatorname{id}+(1-\alpha)\Omega,\qquad
+\alpha=\frac{d+4}{4(d+1)}\le\frac12.
+$$
+
+NR22's erasure postprocessing/symmetric-extension argument therefore applies unchanged: rapid unassisted capacity is zero, and every unassisted TP $m$-use code transmitting $K\ge2$ has
+$F_{\rm rapid}\le(K+1)/(2K)\le3/4$.
+Production still has no protected input-bearing bypass, preshared entanglement or feedback assistance. Diagnostic references and memory are a different resource.
+
+### A constant switch diagnostic survives exactly
+
+For a static pair, the Kraus operators $\sqrt{1-t}I,\sqrt tP_j^W$ commute, so the minus probability is zero **for every fixed hidden key**. For independent rapid invocations, bilinearity of the specified SWITCH in its two channel slots and the exact average above give
+
+$$
+p_{-,{\rm rapid}}=\frac{t^2(d-1)}{2(d+1)}
+\ge\frac{135}{544}\quad(d\ge16,\ t=3/4).
+$$
+
+Four independent two-invocation trials use eight contacts. The any-minus decision has zero static error and rapid error at most
+$(409/544)^4<1/3$.
+Rapid error is averaged over the independently fresh key pairs and measurement outcomes; this is **not** a pointwise guarantee for every rapid key sequence. The static key need not be redrawn between trials.
+
+### Strong security is retained under the outer Clifford
+
+To wrap a forward/inverse challenge oracle $O$ as $W=CO$, a reduction samples its own independent $C$ and uses
+
+$$
+W:\ O\text{ then }C,\qquad
+W^\dagger:\ C^\dagger\text{ then }O^\dagger .
+$$
+
+Each wrapped query uses one oracle query. For Haar $O$, $CO$ is Haar even conditional on the reduction's sampled $C$. To make the security reduction strictly polynomial time, cap the selected exact index-rejection sampler after $n^2$ trials and use a fixed fallback Clifford on failure. Its failure probability is $\sigma_n\le2^{-n^2}$. Coupling the exact and capped wrappers changes any output probability by at most $\sigma_n$ in each oracle world. Thus the exact wrapped-family bias is at most the underlying strict-QPT strong-PRU bias plus $2\sigma_n$. A Haar-world tail can be removed by invariance, but this symmetric bound suffices.
+
+The reduction knows $C$ in order to execute these wrappers. The channel learner is not given $C$ as a classical per-slot record. Revealing fresh $C$ or $k$, or another correlated program, changes the rapid channel/output contract and cannot inherit the exact unassisted-capacity conclusion by forgetting that side information for free.
+
+### One PRU hybrid plus the existing C6 comparison
+
+Fix any allowed polynomial-time ordinary diagnostic $A$ making at most $q=q(n)$ weak contacts and outputting one bit. Let $\beta_{A,\mathrm{trunc}}(2q,n)$ be the underlying strong-PRU probability bias of its strict-QPT simulator: use the capped Clifford sampler and the wrappers above around $O=V_k$ versus Haar $O$. The physical task still uses exact, uncapped setup.
+
+A weak contact can be simulated with **exactly two** unitary queries:
+apply $W^\dagger$, use a private Bernoulli-$t$ coin to choose the known middle map $\Delta_Z$ or identity, then apply $W$. The inactive branch cancels to identity. After an early stop, pad with pairs whose middle map is identity. Query directions are the fixed alternating sequence inverse/forward, so this fits the strong-oracle model without a controlled unknown unitary or an adaptive choice of oracle direction. All learner records are retained; the simulator's coins and meter records remain private.
+
+Write $p_{\rm st}^{\rm key}$, $p_{\rm st}^{\rm Haar}$ and $p_{\rm rap}$ for the diagnostic's output-one probabilities. The single cryptographic hybrid is
+
+$$
+|p_{\rm st}^{\rm key}-p_{\rm st}^{\rm Haar}|
+\le\beta_{A,\mathrm{trunc}}(2q,n)+2\sigma_n.
+$$
+
+Let $g(r,d)$ denote the **full decaying** shared-basis C6 bound in manuscript Lemma “Shared-basis indistinguishability,” equation (c6-comparison), at $r$ primitive dephasing calls. The existing NR22 proof supplies
+
+$$
+\operatorname{TD}(\rho_{\rm st}^{\rm Haar},\rho_{\rm rap})
+\le g(2q,d)+\frac{qt}{d+1},\qquad q\ge1,\quad8q\le d.
+$$
+
+To recall that step, replace each active weak contact by $A$ then $B$ in the C6 priors. Same-basis composition gives $\Delta_U$; mutually unbiased composition gives $\Omega$. This uses at most $2q$ primitive calls and preserves the entire adaptive ordinary output. Its comparison process is $\mathcal R_t=(1-t)\operatorname{id}+t\Omega$. Rapid differs from $\mathcal R_t$ by at most $t/(d+1)$ in half diamond norm per contact, so the adaptive channel hybrid adds $qt/(d+1)$. This C6 argument is a mathematical Haar comparison, **not** another keyed PRU simulation or an extra unitary-query charge.
+
+Combining these two facts for the final binary event proves
+
+$$
+\boxed{\ 
+|p_{\rm st}^{\rm key}-p_{\rm rap}|
+\le \beta_{A,\mathrm{trunc}}(2q,n)+2\sigma_n
+       +g(2q,d)+\frac{qt}{d+1}\ .}
+$$
+
+For polynomial $q(n)$ and $d=2^n$, the sampling tail, full $g(2q,d)$ and rapid term are negligible; the strict-QPT strong-PRU term is negligible by assumption. Do not replace $g$ by the coarse constant $215/10000$ when concluding negligibility. Balanced success is at most one half plus half the displayed probability bias.
+
+Only the Haar states in the imported middle step are bounded in trace distance. The keyed conclusion is a bound on efficient binary tests, equivalently computational indistinguishability in the assumed adversary class. It is not a negligible trace-distance claim for keyed complete outputs.
+
+This is the same strong-PRU mechanism as the manuscript's existing conditional keyed two-hybrid result. In the present capacity specialization the rapid marginal is exact, and the mutually-unbiased composition is the known channel $\Omega$ pointwise. No second PRU hybrid is needed. Forward-only PRU security cannot justify the $W^\dagger$ query.
+
+### Efficiency, exact sampling and what is not proved
+
+Known keys specify polynomial-size Clifford and $V_k,V_k^\dagger$ circuits; each bare channel uses those circuits, a known computational dephasing meter and a private coin. This is efficient **device synthesis/evaluation in the theoretical circuit model**, not a hardware runtime or clean-router cost comparison. Access to SWITCH remains the separately stipulated resource.
+
+For exact setup use the indexed projective Clifford group, of size
+
+$$
+N_n=2^{n^2+2n}\prod_{j=1}^n(4^j-1).
+$$
+
+[Koenig and Smolin, arXiv:1406.2170v1](https://arxiv.org/html/1406.2170), Eq. (1), §§I.1 and II.2–II.3, give polynomial-time indexing and factorization, with $O(n^3)$ operations for the index map; their discussion also gives polynomial Clifford circuit synthesis from the resulting description. Draw $b=\lceil\log_2N_n\rceil$ fair bits, accept the resulting integer if it is below $N_n$, and repeat otherwise. The accepted index is exactly uniform, each trial succeeds with probability at least $1/2$, and the expected number of trials is at most two. The integer and Clifford description have polynomial bit length. This fixes an **exact Las Vegas expected-polynomial setup** and polynomial evaluation convention, rather than leaving it open.
+
+For the strict-QPT security reduction only, stop after $n^2$ independent index trials; then $\sigma_n\le2^{-n^2}$. The displayed $2\sigma_n$ term pays for replacing exact setup by that capped simulator in the probability comparison. The actual static and rapid devices keep exact setup. Thus no approximate-rapid-channel capacity result is needed or claimed. Mere negligible distance from the ideal rapid channel would not by itself imply exactly zero capacity.
+
+There is no information-theoretic exponential query claim for this finite keyed family. Nor does strong PRU prove that every unbounded-time code has exponential blocklength. A valid weaker consequence is that a uniformly efficient, key-independent unassisted code using polynomially many contacts cannot achieve keyed-average unconditional fidelity $7/8$: its efficient Bell test would have event gap at least $1/8$ against the rapid $3/4$ ceiling, contradicting the boxed bound. Training calls and any generated advice must be included; nonuniform hardwired key-dependent code advice or inefficient decoding are different premises.
+
+The common positive-rate code and this computational obstruction coexist because common coding is a fixed-$n$ asymptotic existence result. The result qualifies a capacity/noise-memory promise; it constructs neither an efficient universal QEC implementation nor a standard non-oracle complexity-class separation.
+
+### Primary inputs and scope
+
+[Ma and Huang, arXiv:2410.10116v3](https://arxiv.org/html/2410.10116v3), Theorems 2 and 7 and Definition 7, supply strong forward/inverse PRUs under quantum-secure one-way functions. [Zhu, PRA 96, 062336 (2017)](https://arxiv.org/html/1510.02619v2), Theorem 1 and Corollary 1, supply the full Clifford design moments. The indexed Clifford map and polynomial circuit synthesis are from the Koenig–Smolin primary cited above. The channel-average, wrapper, sampler-tail, static-mixture, switch and hybrid reductions are derived here from those inputs and the existing C6/NR22 owners. No new coding theorem, estimator or lower-bound method is asserted.
+
+The exact Las Vegas setup, polynomial evaluation and separately stipulated coherent extension are part of this conditional model. Computational diagnosis uses strict-QPT reductions with the sampling tail paid explicitly. Exact capacity retains the exact device law throughout. These are analytic and primary-source arguments, not conclusions of the finite replay or a new Lean endpoint.
+
 ## Error-characterization consequence and limits
 
 The decision determines whether a model used to predict repeated noise contacts may multiply the one-use averaged channel, or must keep a persistent hidden-frame variable. For bare consecutive contacts and $a=1/(d+1)$, quasistatic idempotence gives the weak-noise ensemble attenuation

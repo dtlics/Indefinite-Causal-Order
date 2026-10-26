@@ -489,3 +489,5 @@ explicit analytic proofs and primary-source assumptions. No finite test
 is substituted for the continuum Weyl identities, all-decoder recovery
 bound, global-risk proof or infinite-mean stopping argument. All these
 canonical notes are included in the runner's input hashes.
+
+The [keyed capacity specialization](../noise-model-selection.md#nr-r22-keyed) is included in the input fingerprints. Its exact all-dimension Clifford twirl, strong-PRU hybrid, exact setup/truncated-reduction distinction and coding consequence are analytic with primary-source dependencies. No finite job establishes computational pseudorandomness, the common coding theorem, or a new Lean endpoint; no new executable guard is claimed.

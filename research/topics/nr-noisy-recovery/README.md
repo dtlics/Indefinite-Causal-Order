@@ -34,6 +34,8 @@ and includes an operational capacity decision and a scalar entropy witness.
 | NR-R21 | Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines | [Pulse-gate comparison](unknown-pulse-gates.md#nr-r21) |
 | NR-R22 | Hidden noise memory and universal quantum-capacity qualification | [Noise, capacity and finite-block C5 bounds](noise-model-selection.md#nr-r22) |
 
+The [conditional keyed specialization](noise-model-selection.md#nr-r22-keyed) records exact hidden-device sampling, strong-PRU assumptions and the computational scope of NR-R22.
+
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
 methods are the [local converse](methods/local-converse.md),
