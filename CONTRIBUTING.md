@@ -16,7 +16,7 @@ Find the result in [research/RESULTS.md](research/RESULTS.md), then edit its can
 2. Incorporate useful new restrictions, counterexamples, and proof corrections directly into that result or its method note. Avoid appending a second complete account of the same result.
 3. Update topic status only when it changes. Run `python scripts/render_research_index.py` and `python scripts/render_results.py` after editing their registries.
 4. Run relevant mathematical checks. Write temporary output to `_build/`. When the checked source changes, replace the corresponding current validation record only after the required verification succeeds; Git retains the old record.
-5. Run `python scripts/validate_repo.py`. Repackage the paper after manuscript edits with `python scripts/package_overleaf.py`, and commit source, indexes, and necessary evidence together.
+5. Run `python scripts/validate_repo.py`. After manuscript edits, run `python scripts/package_overleaf.py` and `python scripts/build_paper.py`. Commit the source, saved `dist/quantum-switch-paper.pdf`, indexes, and necessary evidence together.
 
 For Lean edits, `python proofs/lean/prepare_verification.py` computes the current import closure and endpoint list offline. The verification wrappers use it for the actual build and kernel/axiom audit. `verify_integrity.py` separately compares source with the currently recorded verification fingerprints; changing those fingerprints alone is not proof verification.
 

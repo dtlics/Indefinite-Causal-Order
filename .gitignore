@@ -1,5 +1,6 @@
 _build/
-dist/
+dist/*
+!dist/quantum-switch-paper.pdf
 __pycache__/
 *.pyc
 .lake/

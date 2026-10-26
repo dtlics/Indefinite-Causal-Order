@@ -5,6 +5,8 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | Read or change… | Canonical location |
 | --- | --- |
 | Paper and Overleaf export | [paper/](paper/README.md) |
+| Compiled paper PDF | [Read or download the PDF](dist/quantum-switch-paper.pdf) |
+| Visual explanation in simple technical English | [HTML guide](docs/guide.html) (download and open in a browser) |
 | Research directions and current status | [Research map](research/README.md) |
 | A particular result, obstruction, or conditional theorem | [Result index](research/RESULTS.md) |
 | Noisy physical recovery and its expected-query comparison | [Recovery topic](research/topics/nr-noisy-recovery/README.md) |
@@ -52,8 +54,11 @@ Python 3.10+ is sufficient for repository checks, packaging, and the standalone 
 python scripts/validate_repo.py
 python -S research/topics/nr-noisy-recovery/checks/run_all.py
 python scripts/package_overleaf.py
+python scripts/build_paper.py
 ```
 
-Upload generated `dist/overleaf.zip` to Overleaf and compile `main.tex` with pdfLaTeX. GitHub Actions also saves an `overleaf` download from each successful check run. Generated files stay under ignored `_build/` or `dist/`.
+Upload generated `dist/overleaf.zip` to Overleaf and compile `main.tex` with pdfLaTeX. GitHub Actions also saves an `overleaf` download from each successful check run. Temporary files stay under ignored `_build/` or `dist/`. The saved paper PDF is the only tracked generated export.
+
+The [saved paper PDF](dist/quantum-switch-paper.pdf) is compiled from the canonical manuscript. The PDF build requires pdfLaTeX. It updates `dist/quantum-switch-paper.pdf` and saves a source fingerprint in ignored `dist/paper-build.json`. In [Repository checks](https://github.com/dtlics/Indefinite-Causal-Order/actions/workflows/checks.yml), open a successful run and download its `paper-pdf` artifact. GitHub may require sign-in. Artifacts have a retention limit; the saved PDF remains in Git.
 
 The scientific statuses reflect the supplied research and its verification record. Repository checks do not constitute a new proof of every mathematical assertion. See [validation scope](docs/VALIDATION.md) and [rights and attribution](docs/RIGHTS.md).
