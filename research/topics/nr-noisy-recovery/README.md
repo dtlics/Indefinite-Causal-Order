@@ -369,7 +369,10 @@ an unknown-input gate.
 For unknown data, the [direct-parity failure analysis](methods/remote-spin-phase.md#nr-r11-parity-failure)
 includes a coherent-source model and an exact retry criterion. Successful
 parity sectors and rejected states have distinct preservation requirements;
-the next test needs the full measured spin/record process.
+its [retained-memory comparison](methods/remote-spin-phase.md#nr-r11-retained-memory-parity)
+keeps source columns, adaptive memory readout, unresolved loss and the
+delivered parity/rejected-state distinction explicit. The next test needs
+the full measured source/router/spin/record process with its causal finish.
 The [ordinary Bell-resource parity instrument](methods/remote-spin-phase.md#nr-r11-offline-parity)
 instead isolates failed preparations from data, with local gates,
 source records, storage and the delivery deadline explicitly charged.

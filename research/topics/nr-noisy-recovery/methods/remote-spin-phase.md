@@ -760,6 +760,73 @@ $q\le p$. Integrating over continuous emission records gives (RS22).
 This is a subnormalized all-input Choi bound, not a worst-input
 conditional-fidelity guarantee.
 
+The TP bound also permits a retained independent control and arbitrary
+accessible output records. More generally let the input space have
+dimension $d$, let $K_\mu:\mathsf H\to\mathsf K$ be the fine operators
+of the aggregate flag, and include that control and all accessible
+outputs in $\mathsf K$. For any target isometry $V$ and TP decoder
+with operators $L_\ell$, define
+$$
+p_J=\frac1d\sum_\mu\|K_\mu\|_F^2,\qquad
+w=\frac1d\sum_{\mu\in S}\|K_\mu\|_F^2,\qquad
+q_J=\frac1{d^2}\sum_{\ell,\mu}
+ |\operatorname{Tr}(V^\dagger L_\ell K_\mu)|^2.
+\tag{RS22a}
+$$
+If $\operatorname{rank}K_\mu\le r$ for $\mu\in S$, then
+$$
+q_J\le p_J-(1-r/d)w.
+\tag{RS22b}
+$$
+Indeed $|\operatorname{Tr}(V^\dagger M)|\le\|M\|_*
+\le\sqrt{\operatorname{rank}M}\|M\|_F$, since
+$\|V\|_\infty=1$. Postcomposition cannot increase rank, and TP gives
+$\sum_\ell\|L_\ell K_\mu\|_F^2=\|K_\mu\|_F^2$.
+Use rank $r$ for $S$ and rank at most $d$ for its complement.
+This proves (RS22b) for rectangular output/decoder operators, including
+continuous nonnegative Kraus integrals. Retaining rather than tracing
+the control in a fixed instrument does not change $p_J,w$; its access
+can improve a decoder, but cannot evade this bound.
+
+For full unknown $AB$, the common support
+$K_\mu=K_\mu P_{A,1}$ still gives rank at most two even with retained
+control, so (RS22) remains valid for arbitrary TP decoding of that
+larger output. For either computational parity sector
+$\mathsf H_t=\Pi_t\mathsf H_{AB}$, instead use its normalized
+maximally entangled state, $d=2$, the restricted columns
+$K_\mu\Pi_t$, and its ideal inclusion into the delivered $AB$ space.
+The same physical emission constituents satisfy
+$\operatorname{rank}(K_\mu\Pi_t)\le
+\operatorname{rank}(P_{A,1}\Pi_t)=1$. With sector weights
+$p_t=\frac12\sum_\mu\|K_\mu\Pi_t\|_F^2$ and
+$w_t=\frac12\sum_{\mu\in S}\|K_\mu\Pi_t\|_F^2$,
+their delivered logical Bell-good weight obeys
+$$
+q_t^{\rm good}\le p_t-w_t/2.
+\tag{RS22c}
+$$
+Thus nonzero $w_t$ excludes exact preservation of the unknown
+within-sector state with its full returned weight after deterministic
+decoding, even using the retained control. This tests the complete
+corrected failure instrument required by (PF10); it does not compare
+native and ordinary emission weights or rates.
+
+The support premise concerns the actual source/router and preceding
+controls. Photon-only wrappers and diagonal spin frames preserve it;
+coherent early/late amplitudes with that same support may be summed.
+Independent local radiation reservoirs permit separate $A$ and $B$
+emission constituents. If amplitudes with different bright-spin
+supports share one unobserved field record, sum them before testing
+rank. Encoding unknown data in another register, route-dependent spin
+bases, or a pre-rotation unmatched to the declared parity sectors
+requires a new restricted-rank calculation. No inaccessible record
+used in this mathematical refinement is granted to the decoder.
+
+The exact heralded obstruction (RS21) concerns square data-output
+operators. One rank-deficient constituent alone does not extend that
+aggregate TNI no-go to a larger retained-control output: a selected
+decoder may reject a distinguishable bad output sector. Its accepted
+weights must then be recomputed; (RS22b) above used TP decoding.
 The obstruction concerns restoring an unknown full-space data state
 following one unresolved flag. It does not exclude encoding into extra
 physical qubits, backup quantum memory, a smaller code space, or an
@@ -1240,6 +1307,205 @@ have zero column overlap and a nonzero operator cross term.
 The full physical clock, ports and inaccessible record overlaps must
 supply the native dilation before safe retry or a full-channel
 advantage is claimed. This grants no receiver access to those records.
+
+<a id="nr-r11-retained-memory-parity"></a>
+
+### A retained emitter memory also supplies an ordinary parity bus
+
+A source that keeps its matter qubit after emission is a useful
+additional interface, but does not automatically keep a coherent order
+syndrome after the photon is lost. Specify a memory $C$ independent of
+unknown $ABR$, a fresh one-photon path label $P$, and polarization $D$.
+The endpoint below returns the unknown data/reference and every
+classical readout record after measuring $C$. If the post-readout
+physical memory is also returned, paid known feedback or reset must
+prepare its same record-dependent pointer state in both programs;
+relabeling a classical bit alone does not change that qubit.
+Assume only the qualified fresh source columns
+$$
+G:|c\rangle_C|0\rangle_P\longmapsto|c\rangle_C|c\rangle_P,
+\qquad c=0,1.
+\tag{PF22}
+$$
+Here $|0\rangle_P$ is an occupied ready label, not optical vacuum.
+Preparing $C$ in $+$ supplies $\Phi^+_{CP}$; source vacuum, failed
+emission, other photon numbers and source records need their own
+instrument. As in the [fresh-column analysis](../backaction.md#nr-r19-private-programs),
+(PF22) supplies neither arbitrary occupied-photon gate inputs nor its
+inverse at a later time. No coherent capture port is assumed below.
+
+Consider the ideal spin-controlled photon contacts
+$$
+T_j=|0\rangle\!\langle0|_j\otimes X_D+
+    |1\rangle\!\langle1|_j\otimes Z_D,\qquad
+|y_s\rangle=(|0\rangle+i s|1\rangle)/\sqrt2,
+\quad s=\pm1.
+\tag{PF23}
+$$
+Their known local wrappers, errors and timing are actual ports/costs.
+These are different wrappers from the controlled-AND program (RS1).
+Let $J=Z_AZ_B$, $S=\operatorname{diag}(1,i)$ and
+$W=S_A^\dagger S_B$. With $D=y_+$, order $A$ then $B$ gives $W$ on
+the spins, and order $B$ then $A$ gives $WJ$; both return $D$ to $y_+$.
+For example $X|y_s\rangle=i s|y_{-s}\rangle$ and
+$Z|y_s\rangle=|y_{-s}\rangle$, so the first order has diagonal
+$(1,i,-i,1)$. The actual copied-source output is
+$$
+\frac{|00\rangle_{CP}W+|11\rangle_{CP}WJ}{\sqrt2}
+ |\psi\rangle_{ABR}\otimes|y_+\rangle_D.
+\tag{PF24}
+$$
+It is not a bare order qubit with $P$ already erased. Tracing lost
+$P$ removes the $C$ cross block. After the supplied local frame
+$W^\dagger$, measuring $P$ in $X$ with bit $p$ and $C$ in $X$ with
+bit $c$ gives the fine data operator $\Pi_{p\oplus c}/\sqrt2$.
+The path erasure result must be available; an unread output port does
+not implement it. Linearity extends this isometry and all following
+maps to arbitrary mixed $ABR$.
+
+There is an ordinary program using the same source columns and the
+same two contacts (PF23). A supplied coherent permutation of photon
+degrees $P,D$, followed by known basis rotations, prepares
+$(|0\rangle_C|y_+\rangle_D+|1\rangle_C|y_-\rangle_D)/\sqrt2$
+and a known fixed route. This demands actual mode conversion: an
+early/late source label is not automatically interchangeable with
+polarization by a waveplate. Choose one serial order $r$ classically,
+with first node $v$ and other node $w$. Put
+$W_0=W$ for $AB$ and $W_1=WJ$ for $BA$. After both contacts the state is
+$$
+\frac{|0\rangle_C|y_+\rangle_D W_r+
+      |1\rangle_C|y_-\rangle_D W_rJ}{\sqrt2}|\psi\rangle.
+\tag{PF25}
+$$
+The ratio follows from
+$(i s)^{1-a}(-i s)^{1-b}$ in order $AB$, and its exchanged expression
+in order $BA$. Photon $D$ readout in $Z$ has
+$\langle p|y_\pm\rangle=i^p(\pm1)^p/\sqrt2$.
+Together with $C$ readout in $X$ and frame $W_r^\dagger$, this gives
+the same fine operator, up to the global phase $i^p$.
+This comparison needs no spare matter qubits at $A,B$ and no reverse
+use of (PF22). It does price the photon mode conversion, fixed-route
+preparation, actual serial orders and local frames.
+
+For a state-independent erasure of the complete photon **only after
+both contacts**, let survival be $\eta$. The two programs have the
+same complete corrected endpoint instrument:
+$$
+\mathcal J^{\rm click}_{p,c}(\rho)
+ =\frac\eta2\Pi_{p\oplus c}\rho\Pi_{p\oplus c},\qquad
+\mathcal J^{\rm loss,corr}_h(\rho)=\frac{1-\eta}{2}\rho.
+\tag{PF26}
+$$
+On loss choose $C$ readout in $Z$, after the actual survivor/timeout
+flag. For the native program its two data operators before correction
+are $\sqrt{(1-\eta)/2}\,WJ^h$; use their known local inverses.
+For the ordinary program they are
+$\sqrt{(1-\eta)/2}\,W_rJ^h$. These corrections preserve every
+unknown input/reference. Reading $C$ in $X$ instead gives each loss
+record $(1-\eta)\sum_t\Pi_t\rho\Pi_t/2$ after the common frame;
+this destroys inter-parity coherence. Neither policy obtains a parity
+answer from the lost photon. The marginal of $C$ alone remains $I/2$
+before receiving an optical record or quantum return interaction;
+remote trace-preserving processing cannot signal the parity to it.
+
+The comparison can also retain unresolved loss **before, between and
+after** the contacts. The following is a declared ideal erasure model,
+not the spin-dependent cavity dilation (RS19). After the qualified
+one-photon source, let the three loss probabilities conditional on
+serial order $r$ be $q_{0r},q_{1r},q_{2r}\ge0$, with
+$q_{0r}+q_{1r}+q_{2r}=1-\eta$ for both orders. Require balanced
+complex survivor amplitudes between native histories, up to supplied
+known frames. Each loss transfers the complete photon state to an
+inaccessible field, distinguishable intervals add incoherently, and
+unreached contacts act trivially on vacuum. The native lost path
+distinguishes its order labels. None of these facts follows from an
+average click rate. In particular $q_{0r}$ is post-launch loss, not an
+unspecified source-vacuum branch.
+
+On a loss flag the native $C$-$Z$ bit identifies $r$. Its first-contact
+spin operator is $iS_v^\dagger$. Invert this known prefix, even though
+the actual loss interval is unobserved. For the ordinary program
+choose $r$ fairly at launch and retain it. Its $C$-$Z$ bit selects
+$s=\pm1$, with first prefix $i s S_v^{-s}$; invert that prefix.
+Conditional on these accessible bits the respective data maps are
+one half of $\mathcal E_r^+$ and one quarter of
+$\mathcal E_r^s$, where
+$$
+\mathcal E_r^s=q_{0r}\operatorname{Ad}_{S_v^s}
+             +q_{1r}\operatorname{id}
+             +q_{2r}\operatorname{Ad}_{S_w^s}.
+\tag{PF27}
+$$
+The factor $1/4$ includes the ordinary order coin. Appending one
+independent fair bit to the native record gives the same fine
+normalizations; keep rather than postselect every bit. The successful
+ordinary order coin likewise only splits each (PF26) map in half.
+This is one complete ordinary program, not a splice of a native
+success protocol with a failure-only simulation.
+
+Inside the even sector use basis $00,11$ on $v,w$; inside the odd
+sector use $01,10$. Diagonals of (PF27) have multiplier
+$q_r=1-\eta$, while their two off-diagonal multipliers are
+$$
+\chi_{e,r}^s=q_{1r}-i s(q_{0r}+q_{2r}),\qquad
+\chi_{o,r}^s=q_{1r}+i s(q_{2r}-q_{0r}).
+\tag{PF28}
+$$
+Use the known local feedback
+$U_{r,s}=\exp[i(\alpha_{r,s} Z_v+\beta_{r,s} Z_w)/2]$, choosing
+$\alpha_{r,s}+\beta_{r,s}=-\arg\chi_{e,r}^s$ and
+$\alpha_{r,s}-\beta_{r,s}=-\arg\chi_{o,r}^s$.
+A zero coherence can take any phase. Thus the corrected sector maps
+have the same real multipliers $|\chi_{e,r}^+|$ and
+$|\chi_{o,r}^+|$ for both signs. The native uses the $s=+$ correction.
+Writing the resulting fine maps with common endpoint record labels
+$f$, one obtains, for every $ABR$ input and $t=e,o$,
+$$
+\Pi_t\mathcal F^{N}_f(\rho)\Pi_t
+ =\Pi_t\mathcal F^{O}_f(\rho)\Pi_t.
+\tag{PF29}
+$$
+The independent bit and event-dependent record relabeling above are
+classical operations at the common finish. The ordinary order may
+be known earlier; this identity concerns the declared fixed endpoint
+policy, not equality of arbitrary interactive routing processes.
+
+All these failure maps preserve parity blocks. Hence (PF29) composes
+under repeats using the same parity goal and parity-preserving
+interventions: by induction each sector-compressed state conditioned
+on every failure history agrees, and the final successful $\Pi_t$
+removes all cross-sector blocks. Every delivered parity/count/fine
+record CP map agrees at a finite cap. No normalization by acceptance
+or deletion of rejected records is used. The full cap-rejected state
+need not agree: (PF29) alone does not fix inter-parity coherences.
+It also does not say that damaged within-sector coherences equal the
+input; $|\chi_{t,r}|$ may be smaller than $q_r$.
+
+There is a stronger whole-output identity when $q_{0r}=0$. In that
+case (PF27) acts only on $w$, with off-diagonal coefficient
+$q_{1r}-i s q_{2r}$. A known $Z_w$ rotation aligns it to
+$\sqrt{q_{1r}^2+q_{2r}^2}$ for both signs. The corrected full loss
+maps, including inter-parity coherences, then match. If also
+$q_{1r}=0$, this reduces to identity rejection (PF26). Mixing a
+positive $q_{0r}$ does not in general admit that full-output phase
+alignment, so it cannot be inferred from the delivered parity equality.
+
+This construction requires calibrated loss weights, the stated local
+phase controls and memory $C$ kept until the real photon flag selects
+its readout basis. Charge source initialization/emission and all source
+failures, mode conversion, routing, contacts, finite detection windows,
+timeout, return messages, $AB/C$ storage, local feedback and apparatus
+clearing through a common finish. A tracked frame is an actual record;
+it does not deliver a remote message sooner. An actual coherent uncopy
+would be a separate paid return port, also available to the comparator
+under its qualified columns. Nonorthogonal interval records, intrinsic
+spin-dependent emission, dark counts, noncommuting spin evolution,
+source errors and unequal uncorrected native survivor amplitudes
+require their full instruments. The measured cavity source above does
+not qualify the added independent memory/router. The next physical
+comparison must provide those maps; memory survival alone establishes
+no native parity benefit. The retained-control emission penalty
+(RS22a)--(RS22c) applies under its actual bright-support assumptions.
 
 ## Entanglement first: the ordinary baseline with spare matter qubits
 
