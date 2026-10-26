@@ -1152,7 +1152,7 @@
     {
       "id": "NR-R22",
       "topic": "NR",
-      "title": "One-session hidden-basis noise-model selection",
+      "title": "Hidden noise memory and universal quantum-capacity qualification",
       "canonical_path": "research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22",
       "relationships": [
         {

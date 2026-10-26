@@ -191,4 +191,4 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R19 | [Unknown odd couplers: exact correction and expected-query fidelity limits](../research/topics/nr-noisy-recovery/backaction.md#nr-r19) |  |
 | NR-R20 | [Hidden-basis memory qualification and channel-entropy capacity certificates](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) |  |
 | NR-R21 | [Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21) |  |
-| NR-R22 | [One-session hidden-basis noise-model selection](../research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22) |  |
+| NR-R22 | [Hidden noise memory and universal quantum-capacity qualification](../research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22) |  |

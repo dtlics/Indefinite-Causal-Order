@@ -32,7 +32,7 @@ SCOPE = "Finite exact replay, symbolic integer/rational identities and outward r
 
 JOBS = (
     ("architecture-theoretical-applications", "architecture/verify_theory_applications.py", (),
-     "Exact finite pinching/mixer powers, Kraus-order visibility, weak hidden-basis noise and diagnostic trial constants; all-dimension reference norms, C5/C6 reductions, Haar and coherent-session access arguments remain analytic. No new Lean kernel audit."),
+     "Exact finite pinching/mixer powers, weak noise, nonunital Choi testers, robust trial constants, rapid symmetric extensions, Bell ceilings and entropy witnesses; all-dimension norm/SDP, principal-angle, C5/C6, Haar/session and universal compound-coding arguments remain analytic. No new Lean kernel audit."),
     ("architecture-binary-fault-controller", "architecture/verify_binary_fault_controller.py", (),
      "Exact finite qutrit/cross-dual Pauli echoes, full fault-word isometries, weighted flags and read/reset instruments, including internal anticommutation and inverse-ordered banks; universal space, reversible-source, information, timing and uniform-cost bounds, unknown-law response and physical costs analytic."),
     ("architecture-controlled-unitary-correlator", "architecture/verify_controlled_unitary_correlator.py", (),

@@ -11,7 +11,7 @@
 | C6-R03 | Four-use switched promise test, specializing the known interference experiment | [Theorem map](../../../proofs/lean/THEOREMS.txt), “Four-use quantum-switch upper bound” |
 | C6-R04 | Clock-phase OTOC identities, channel commutation, estimation bounds | [Theorem map](../../../proofs/lean/THEOREMS.txt), “Phase-averaged OTOC and channel commutation”; [paper](../../../paper/main.tex), `sec:connections`, `cor:otoc` |
 | C6-R05 | Conditional finite keyed-family advantage transfer | [Theorem map](../../../proofs/lean/THEOREMS.txt), “Conditional keyed-family transfer”; [paper](../../../paper/main.tex), `eq:pru` |
-| C6-R08 | Opaque-channel mixing and safe-rewrite certification: analytic corollaries | [Full operational proofs](applications.md#c6-r08) |
+| C6-R08 | Exact and robust process certification, with general scalar boundaries | [Full operational proofs](applications.md#c6-r08) |
 
 The recorded formal statements, constants, range conditions and qualified theorem names have one owner in the theorem map. The analytic C6-R08 corollaries are owned by [their application proof](applications.md#c6-r08). The human recording/cache proof is [paper](../../../paper/main.tex), `sec:c6-recording`. C6-R02 is a proof component of C6-R01, not a second independent lower-bound claim.
 
@@ -58,7 +58,7 @@ These are limitations of tempting proof shortcuts. They are not unresolved premi
 
 ## Supplementary checks and open questions
 
-The [algorithm-certification corollaries](applications.md#c6-r08) use C6-R01 for reference-complete forgetting and sound, complete deletion certificates. They are analytic application theorems, not additional formal endpoints or independent lower-bound methods.
+The [algorithm-certification corollaries](applications.md#c6-r08) use C6-R01 for reference-complete forgetting and sound, complete deletion certificates. Their [robust extension](applications.md#c6-r08-robust) permits fixed CPTP perturbations, while the [arbitrary-basis analysis](applications.md#c6-r08-arbitrary-bases) gives sharp scalar limitations and near-minimum certificates. These are analytic application theorems, not additional formal endpoints or independent lower-bound methods.
 
 The [memory-capacity qualification corollary](../nr-noisy-recovery/memory-qualification.md#nr-r20)
 uses C6-R01 to distinguish positive-rate storage from a zero-capacity
