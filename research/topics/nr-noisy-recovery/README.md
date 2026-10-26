@@ -366,8 +366,10 @@ attains unit ideal Bell probability in the fixed-contact lossless
 fixture. Source preparation, four-port processing, the time eraser and
 corrections are supplied resources; this consumes the photon and is not
 an unknown-input gate.
-For unknown data, the [complete direct-parity failure maps](methods/remote-spin-phase.md#nr-r11-parity-failure)
-show why a perfect success flag need not permit harmless retries.
+For unknown data, the [direct-parity failure analysis](methods/remote-spin-phase.md#nr-r11-parity-failure)
+includes a coherent-source model and an exact retry criterion. Successful
+parity sectors and rejected states have distinct preservation requirements;
+the next test needs the full measured spin/record process.
 The [ordinary Bell-resource parity instrument](methods/remote-spin-phase.md#nr-r11-offline-parity)
 instead isolates failed preparations from data, with local gates,
 source records, storage and the delivery deadline explicitly charged.

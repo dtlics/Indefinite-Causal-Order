@@ -5208,12 +5208,8 @@ actual bath input. Equal classical mean phases do not erase a which-node
 bath record.
 
 **A measured ordinary shared-spatial-link bus has a different native gate.**
-[Daiss et al., Science **371**, 614–617 (2021)](https://doi.org/10.1126/science.abe3150)
-([full paper and supplement](https://arxiv.org/pdf/2103.13095))
-successively reflect a polarization ancilla from two Rb-cavity modules
-linked by 60 m of fibre, then herald by polarization detection and
-apply local feedforward. They approximate the photon with a weak
-coherent pulse. Its cycling conditional-phase gate differs from balanced
+See the [source ledger](methods/remote-spin-phase.md#nr-r11-measured-cavity-interface).
+The comparison uses a cycling conditional-phase gate rather than balanced
 SPRINT. In the ideal circuit a scalar phase on the shared spatial link
 multiplies the full polarization state and cancels from the heralded
 memory density matrix; this is an inference from the circuit, not a

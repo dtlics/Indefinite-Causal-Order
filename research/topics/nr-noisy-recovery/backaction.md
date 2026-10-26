@@ -2647,10 +2647,9 @@ is a flying photon's polarization, C its path and a,b stationary targets,
 a path router can order the carrier's contacts. This is a different
 phase-gate interface: assume full arbitrary-input spin/photon CZs, so
 $U_A=H_a\operatorname{CZ}_{Sa}H_a$ and
-$U_B=H_SH_b\operatorname{CZ}_{Sb}H_bH_S$. The
-[Daiss phase-gate predecessor](https://arxiv.org/html/2103.13095v1)
-supports that mechanism, but does not demonstrate the required four-mode
-carrier, coherent revisit and retained-resource apparatus. Wei's fresh
+$U_B=H_SH_b\operatorname{CZ}_{Sb}H_bH_S$. The full four-mode carrier, coherent revisit and retained-resource
+apparatus remain assumptions here; compare the
+[source ledger](methods/remote-spin-phase.md#nr-r11-measured-cavity-interface). Wei's fresh
 amplitude-copy columns do not grant these full gates.
 
 In this allocation the two ordinary controlled-H gates are known

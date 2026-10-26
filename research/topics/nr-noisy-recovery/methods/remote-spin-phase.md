@@ -46,14 +46,24 @@ The native ideal interaction is a spin–polarization controlled $Z$.
 Known photon rotations and known local spin rotations are additional
 controls, with their synthesis, duration and errors charged. This is a
 model motivated by cavity gates, rather than a claim that every cavity
-supplies the ideal interface. [Daiss et al., Science **371**, 614–617
-(2021)](https://doi.org/10.1126/science.abe3150) demonstrate a remote gate
-using sequential reflections from two atom–cavity modules connected by
-60 m of fiber, polarization detection and conditional atomic control.
-Their [primary manuscript and supplement](https://arxiv.org/pdf/2103.13095)
-describe the spin-dependent reflection phase and local Raman rotations.
-The experiment uses weak coherent pulses, has substantial loss, and
-does not implement the switch or the four-mode port assumed below.
+supplies the ideal interface.
+
+<a id="nr-r11-measured-cavity-interface"></a>
+
+[Daiss et al., Science **371**, 614–617 (2021), manuscript and
+supplement](https://arxiv.org/pdf/2103.13095v1) use one rubidium atom per cavity
+node, sequential spin-dependent reflections through a 60-m fiber link,
+polarization-detection heralding, atomic feedforward and local Raman rotations.
+Their weak coherent pulses have 1-microsecond FWHM and mean photon number
+$0.07\pm0.01$. The two $(g,\kappa,\kappa_r,\gamma)/(2\pi)$ tuples in MHz are
+$(7.6,2.5,2.3,3)$ and $(7.6,2.8,2.4,3)$. The reported 22-microsecond gate
+duration and 1-kHz protocol repetition are distinct clocks. Initial
+200-microsecond optical pumping prepares inputs, rather than recovering unknown
+data. Their detection-conditioned error simulation includes
+transmission/detection, dark counts and higher photon numbers. The inspected
+nine pages do not print spin-resolved spontaneous-emission jump operators or the
+complete subnormalized unknown-input no-click process. Detection consumes the
+photon; neither coherent order nor retained-photon readout is demonstrated.
 
 For the switched construction let $D$ denote photon polarization and
 $C$ its route/order qubit. Photon Hadamards around the $A$ interaction
@@ -667,18 +677,13 @@ $R$ polarization. This assumes a closed transition returning to the
 same qubit state; Raman leakage, motion and extra levels require more
 output channels.
 
-[Daiss et al., primary manuscript and supplement](https://arxiv.org/pdf/2103.13095)
-give $(g,\kappa,\kappa_r,\gamma)/(2\pi)$ in MHz as
-$(7.6,2.5,2.3,3)$ and $(7.6,2.8,2.4,3)$ for their two modules,
-and use an input–output simulation. Substitution into (RS19) at
-resonance gives dark/bright reflected amplitudes approximately
-$(-0.8400,0.7885)$ and $(-0.7143,0.7823)$. Thus even the minimal
+Substituting the [source parameters](#nr-r11-measured-cavity-interface) into
+(RS19) at resonance gives dark/bright reflected amplitudes approximately
+$(-0.8400,0.7885)$ and $(-0.7143,0.7823)$. Thus even this minimal
 mode-matched model has spin- and polarization-dependent survival.
-These derived amplitudes are an illustration from the reported
-parameters, not a fit of the experiment or a measured switch rate.
-The experiment's weak coherent source also allows multiple incident
-photons, including lost-photon records on a detected attempt; the
-one-photon model does not include those events.
+These derived amplitudes illustrate the declared model; they are not
+an apparatus fit or a measured switch rate. Its one-photon sector
+excludes multiple-photon lost/detected records.
 
 For a normalizable pulse $\int|f(\omega)|^2d\omega=1$, retain the
 frequency and emission modes in the dilation. A frequency-unresolved
@@ -892,16 +897,349 @@ spectral processing, spin flips, leakage and storage need their actual
 maps and clocks. An ideal no-interaction source-vacuum branch alone
 changes the launch count but does not remove the internal retry penalty.
 
-The commuting elastic survivor does not determine native no-click
-behavior. Orthogonal order-record loss subspaces imply an ordinary
-classical mixture of history failures, but photon loss or Markov baths
-alone do not imply that premise. For routed loss Kraus maps, column
-orthogonality constrains $\sum_\mu K_{0\mu}^\dagger K_{1\mu}=0$;
-it need not imply
-$\sum_\mu K_{0\mu}\rho K_{1\mu}^\dagger=0$.
-Physical clocks, ports and inaccessible record overlaps must complete
-the native dilation before a full-channel comparison or safe retry is
-claimed. This warning grants no receiver access to those records.
+**A coherent source needs a full no-click process.** A conditional extension of
+the one-photon model keeps all photon-number sectors without claiming an
+experimental fit. Assume that the complete spin input and output are the
+same $AB$ space, that the computational spin labels $z\in\{00,01,10,11\}$
+are preserved, and that conditioned optical propagation is a passive,
+number-preserving isometry. This excludes Raman changes, leakage,
+saturation and noncoherent fluorescence. Start with the normalized-mode
+coherent state $|\alpha f\rangle$, vacuum in other inputs and
+$n=|\alpha|^2$. Supply the full complex temporal, frequency,
+polarization and path response, including its spin phase $u_z$:
+$$
+ |z\rangle|\alpha f\rangle\longmapsto
+ u_z|z\rangle|d_z\rangle_D|e_z\rangle_E,\qquad
+ |u_z|=1,\qquad \|d_z\|^2+\|e_z\|^2=n.
+$$
+Here $D$ contains the monitored modes in the declared detection window;
+$E$ contains every unobserved field. Model each specified efficiency
+by a loss beam splitter before an ideal threshold counter, so missed
+photons remain in $E$. For an independent Poisson dark process with
+mean $d$ in that window, vacuum projection in $D$ and tracing $E$
+give the complete unresolved no-click map on the spin matrix units,
+with the passive reference untouched:
+$$
+ \mathcal J_0(|z\rangle\langle z'|)
+   =C^0_{zz'}|z\rangle\langle z'|,\qquad
+ C^0_{zz'}=
+ e^{-d}u_zu_{z'}^*
+ e^{-(\|d_z\|^2+\|d_{z'}\|^2)/2}
+ \langle e_{z'}|e_z\rangle
+ =e^{-d-n}u_zu_{z'}^*e^{\langle e_{z'},e_z\rangle}.
+ \tag{PF7}
+$$
+The bracket in the middle expression is a coherent-state overlap; the
+last exponent uses the one-particle mode inner product. Their equality
+follows from
+$\langle e'|e\rangle=
+\exp[-(\|e'\|^2+\|e\|^2)/2+\langle e',e\rangle]$.
+Thus
+$$
+ C^0_{zz}=e^{-d-\|d_z\|^2}.
+ \tag{PF8}
+$$
+These are possibly input-dependent failure probabilities. Complete
+positivity follows from the physical projection, or its scaled Gram
+form. Tracing both $D,E$ gives the unconditional spin channel, and
+subtracting $\mathcal J_0$ gives the CP coarse click map by the
+complementary detector event. A useful parity answer still requires its
+actual polarization, time and count-pattern instrument, including the
+rule for multiple clicks and every applied correction.
+
+The whole coherent input, including vacuum and all photon numbers,
+appears in (PF7); it is not a one-photon truncation. In particular
+$$
+ \frac{|C^0_{zz'}|}
+      {\sqrt{C^0_{zz}C^0_{z'z'}}}
+ =\exp[-\|e_z-e_{z'}\|^2/2].
+ \tag{PF9}
+$$
+Equal no-click probabilities therefore do not establish preserved
+within-parity coherence. Nonzero opposite coherent amplitudes are different
+field records, rather than the global sign of a fixed one-photon state.
+Threshold detection need not identify the photon-number-dependent
+frame; even resolved detected counts do not reveal lost counts.
+Corrections must follow the records and controls actually supplied.
+
+This kernel is exact only under the stated passive spin-preserving
+model. A spin-changing or saturable completion can have the same guided
+response and a different failed-data map. Average complete kernels for
+independent classical drift, rather than average field amplitudes;
+correlated drift needs joint histories. Residual cavity, propagation or
+detector memory at the finish must be retained or actually cleared
+before assuming independent retries. Source preparation, finite-window
+tails, clearing, waiting and detector readiness enter the same clock;
+clearing apparatus does not reset unknown $ABR$.
+
+An exact criterion separates preserving the eventual parity goal from
+preserving an arbitrary rejected data state. Let the complete
+finite-dimensional input and output data space be
+$\mathcal H=\mathcal H_e\oplus\mathcal H_o$, with nonzero projectors
+$\Pi_e+\Pi_o=I$. For two data qubits these are their even and odd
+parity sectors. No additional output leakage sector is omitted. Let
+$\mathcal F$ be a trace-nonincreasing CP failure map on this same
+space. Every map below retains an arbitrary passive reference $R$;
+projectors implicitly tensor $I_R$. For fixed $q_t\in[0,1]$,
+
+$$
+\Pi_t(\mathcal F\otimes\operatorname{id}_R)(\rho_{ABR})\Pi_t
+ =q_t\Pi_t\rho_{ABR}\Pi_t
+\quad\text{for all }\rho_{ABR},\quad t=e,o
+\tag{PF10}
+$$
+
+holds if and only if every Kraus operator, in any representation, obeys
+
+$$
+K_\alpha=a_{\alpha e}\Pi_e+a_{\alpha o}\Pi_o,
+\qquad \sum_\alpha|a_{\alpha t}|^2=q_t.
+\tag{PF11}
+$$
+
+For necessity, input a positive state supported entirely in the opposite
+sector $s\ne t$. The positive summands of the zero output block in
+(PF10) force $\Pi_tK_\alpha\Pi_s=0$ individually. Each Kraus
+operator is therefore block diagonal. On sector $t$, its channel is
+$q_t\operatorname{id}$, whose Choi operator is
+$q_t|I_t\rangle\!\rangle\langle\!\langle I_t|$. Its rank-one
+support forces each Kraus block to be $a_{\alpha t}I_t$; if
+$q_t=0$, all such blocks vanish. This applies to any Kraus
+representation. Substitution proves sufficiency, including the reference
+extension. If physical leakage enlarges the output space, (PF10) on only
+the two displayed blocks does not constrain the omitted Kraus rows and
+does not imply (PF11) or the completion below.
+
+Writing $\gamma=\sum_\alpha a_{\alpha e}a_{\alpha o}^*$, the full
+failed map and its effect are consequently
+
+$$
+\begin{aligned}
+\mathcal F(\rho)
+ &=q_e\Pi_e\rho\Pi_e+q_o\Pi_o\rho\Pi_o
+   +\gamma\Pi_e\rho\Pi_o+\gamma^*\Pi_o\rho\Pi_e,\\
+|\gamma|^2&\le q_eq_o,\qquad
+\mathcal F^*(I)=q_e\Pi_e+q_o\Pi_o.
+\end{aligned}
+\tag{PF12}
+$$
+
+Cauchy--Schwarz gives the inequality. The two successful parity
+operators
+
+$$
+S_t=\sqrt{1-q_t}\,\Pi_t
+\tag{PF13}
+$$
+
+complete a trace-preserving attempt together with $\mathcal F$.
+This specifies a corrected instrument; total loss probabilities or
+commuting survivor amplitudes do not establish its premise.
+
+Assume stationary independent attempts with fresh unobserved
+environments, the same corrected instrument each time, and no omitted
+waiting or control noise. Cap the protocol at $J\ge1$ attempts.
+For $n$ failures followed by successful parity $t$,
+$0\le n<J$, every hidden Kraus word gives
+
+$$
+H_{\boldsymbol\alpha,t}
+ =S_tK_{\alpha_n}\cdots K_{\alpha_1}
+ =\sqrt{1-q_t}\left(\prod_{k=1}^n a_{\alpha_k t}\right)\Pi_t.
+\tag{PF14}
+$$
+
+The empty product for $n=0$ is one. Summing only these unobserved
+labels gives the actual public attempt-count/parity map
+
+$$
+\Gamma_{n+1,t}(\rho)
+ =(1-q_t)q_t^n\Pi_t\rho\Pi_t.
+\tag{PF15}
+$$
+
+No hidden bath label is selected. Coarse graining just the successful
+count, while retaining the rejected output, gives the complete cap
+instrument
+
+$$
+\begin{aligned}
+\Gamma_t^J(\rho)&=(1-q_t^J)\Pi_t\rho\Pi_t,\\
+\Gamma_{\rm reject}^J(\rho)=\mathcal F^J(\rho)
+ &=q_e^J\Pi_e\rho\Pi_e+q_o^J\Pi_o\rho\Pi_o\\
+ &\quad+\gamma^J\Pi_e\rho\Pi_o+(\gamma^*)^J\Pi_o\rho\Pi_e.
+\end{aligned}
+\tag{PF16}
+$$
+
+Thus the actual reject state is returned, including its inter-sector
+coherence, rather than reset or normalized away. For normalized input
+and $w_t=\operatorname{Tr}(\Pi_t\rho)$,
+
+$$
+A_J(\rho)=\sum_t(1-q_t^J)w_t,\qquad
+\mathbb E\min(N,J)=\sum_tw_t\sum_{n=0}^{J-1}q_t^n.
+\tag{PF17}
+$$
+
+The geometric sum is $(1-q_t^J)/(1-q_t)$ for $q_t<1$, and
+$J$ for $q_t=1$. Physical attempt times include source,
+propagation, timeout, reset, feedback and storage. Shared baths,
+residual photons, nonstationary controls or noisy waiting require the
+actual joint CP histories instead of these powers.
+
+Unequal $q_e,q_o$ are allowed: acceptance and the count can reveal
+parity, the intended eventual observable, without resolving an unknown
+state within a parity sector. They do bias finite-cap successful parity
+frequencies. The successful part is one input-independent scalar times
+the ideal parity instrument only when $q_e=q_o$; otherwise uniform
+acceptance must not be claimed. If both $q_t<1$, eventual success
+after coarse graining the count is the ideal Lüders parity instrument,
+with mean attempts $\sum_tw_t/(1-q_t)$. Keeping the count retains
+its actual parity-dependent geometric law (PF15). A sector with
+$q_t=1$ is never successfully delivered.
+
+Within either sector the complete unknown state and reference are
+preserved up to their delivery weight. The rejected superposition of
+sectors need not be preserved. For a fixed cap, the nonzero reject map
+is $r\operatorname{id}$ on all data if and only if
+
+$$
+q_e^J=q_o^J=\gamma^J=r>0.
+\tag{PF18}
+$$
+
+For example,
+$\mathcal F(\rho)=q[\Pi_e\rho\Pi_e+\Pi_o\rho\Pi_o]$ has
+$\gamma=0$: losing the result of an already completed ideal parity
+measurement preserves a later parity goal but destroys rejected
+inter-parity coherence. Conversely,
+$\mathcal F=q\operatorname{Ad}_{\Pi_e-\Pi_o}$ has
+$\gamma=-q$. Every successful parity block is exact; odd-cap
+rejection has a known parity phase, while at an even cap that phase
+cancels. Identity rejection for every cap instead requires
+$q_e=q_o=\gamma$. A supplied known correction changes the framed
+map to which this condition applies. Zero-probability rejection has no
+conditional state.
+
+Commuting with parity is insufficient. Local $Z_A$ acts
+nontrivially within both two-dimensional parity sectors and violates
+(PF11); a single spin flip transfers sectors, while $X_AX_B$
+stays within sectors but swaps their logical states. The unresolved
+internal-loss maps (PF1)--(PF4) contain the forbidden local logical
+dephasing. An unread ideal parity result instead has Kraus operators
+proportional to $\Pi_e,\Pi_o$.
+
+This contrast requires the actual output frame. A missed physical
+readout with operators $W_t\Pi_t$ is not automatically an unread
+ideal parity measurement: the implemented, known corrections must make
+its full failed Kraus operators scalar within each sector. An
+identified unitary fault may be inverted by paid feedback; a coarse
+no-click record does not identify the appropriate correction for every
+hidden branch. The framed accepted map (PF2) and the external-loss map
+(PF6) cannot be substituted for one another without their actual branch
+identification and correction ports.
+
+For an accessible failure record $f$ and supplied unitary feedback
+$C_f$, test (PF10) on the corrected map
+$\sum_f\operatorname{Ad}_{C_f}\circ\mathcal F_f$. A more general
+controller requires its complete CP instrument, including all outcomes.
+Keep every public $f$ and count record. If the criterion holds, every
+CP refinement after correction has Kraus operators in the same
+two-projector span, so its record probabilities are sector-dependent
+only. Feedback requiring an unobserved missed outcome or inaccessible
+reservoir record is not supplied by this algebra.
+
+For a diagonal no-click map with the full Schur kernel of (PF7),
+$\mathcal F(\rho)_{zz'}=C_{zz'}\rho_{zz'}$, the criterion requires,
+after an actually supplied known frame, $C_{zz'}=q_t$ for every
+pair in sector $t$, not merely equal diagonal probabilities.
+Equivalently its environment/record amplitude vectors coincide within
+each sector; positivity then forces every cross-sector entry to the
+same $\gamma$. No-click probabilities alone cannot certify these
+coherences. The offline isolation baseline (PB1)--(PB7) remains a
+distinct ordinary option with its extra matter qubits, local operations
+and complete waiting ledger paid. Neither the criterion nor a coarse
+no-click flag supplies those interfaces or a native advantage.
+
+These geometric ledgers describe an achievable stop-on-click policy, not an optimum. All actual count, timing and rejection records remain available to ordinary adaptive control and syndrome estimation.
+
+For clarity, if the order control is an independent physical qubit that
+survives photon loss, keep it in the failure output. Prepare it in
+$|+\rangle$ independently of $ABR$ and stipulate a routing dilation
+that preserves the computational control labels. Let $K_{h\mu}:AB\to\mathsf O$ be the
+complete failure operators of the actual routed chronology $h=0,1$ in
+one common dilation, where $\mathsf O$ includes the retained spins and every
+accessible failure record, while $\mu$ indexes only unobserved fields
+and their purifications. Zero-pad the two expansions in that same
+environment basis, writing $V_h^{\rm fail}=\sum_\mu K_{h\mu}\otimes|\mu\rangle$. Define the complex-linear maps
+
+$$
+\mathcal F_h(\rho)=\sum_\mu K_{h\mu}\rho K_{h\mu}^\dagger,
+\qquad
+\mathcal H_{hh'}(\rho)=\sum_\mu
+ K_{h\mu}\rho K_{h'\mu}^\dagger.\tag{PF19}
+$$
+
+The complete subnormalized failure state is therefore
+
+$$
+\mathcal J_{\rm fail}(\rho)=\frac12
+\begin{pmatrix}
+\mathcal F_0(\rho)&\mathcal H_{01}(\rho)\\
+\mathcal H_{10}(\rho)&\mathcal F_1(\rho)
+\end{pmatrix}_C .\tag{PF20}
+$$
+
+The reference identity is implicit. For Hermitian $\rho$ the two cross
+blocks are adjoints; $\mathcal H_{10}$ is not notation for a
+superoperator adjoint. If $\mathcal H_{01}$ vanishes on every input
+matrix unit, so does $\mathcal H_{10}$, and this entire $C,\mathsf O,R$ failure
+instrument equals an ordinary fair coin choosing the two actual serial
+chronologies, with its choice retained as the computational-basis state
+of $C$. The ordinary implementation uses the same per-word photon
+program, hardware, source, accessible records and common finish. Any
+subsequent failure decoder or within-parity recovery then receives
+exactly the same quantum state; the retained qubit supplies no extra
+coherent failure syndrome in this case. This proves equality only on
+the failure branch. It neither compiles the coherent click branches
+nor permits splicing native clicks and ordinary failures into a claimed
+ordinary full protocol.
+
+A sufficient physical premise is orthogonal support of the two lost
+histories in the **unobserved environment alone**, excluding the kept
+control and data: if $Q_0Q_1=0$ and
+$(I_{\mathsf O}\otimes Q_h)V_h^{\rm fail}=V_h^{\rm fail}$, partial trace gives
+$\mathcal H_{01}=0$ on all inputs and passive references. Guaranteed
+nonvacuum emissions into disjoint node-and-time reservoir modes provide
+one declared realization. Disjoint mode labels alone do not remove a
+common vacuum component, and node labels alone do not distinguish two
+chronologies that can emit at the same node. Test the complete failure
+support, including any source-vacuum or coherent no-click sectors.
+Early/late wavepackets require their actual overlap, as in (RS20);
+nominal propagation delay or pulse width does not prove orthogonality.
+Nor does a global column-orthogonality relation alone imply the cross-map
+identity. A vanishing trace
+or one control fringe is likewise weaker than a zero operator-valued
+cross map. These are tests of a specified full instrument, not choices
+of favorable Kraus pairing. If the order label is carried only by the
+lost photon, it is not an available post-loss qubit; this fact alone
+still does not determine the remaining spin cross map without that
+router/environment dilation.
+
+The column condition $\sum_\mu K_{0\mu}^\dagger K_{1\mu}=0$
+contracts different indices from the cross map in (PF19). For example,
+on a two-dimensional subspace the TNI operators
+$$
+ K_0=|0\rangle\langle0|,\qquad K_1=|1\rangle\langle0|,
+ \qquad K_0^\dagger K_1=0,\qquad
+ K_0\rho K_1^\dagger=\rho_{00}|0\rangle\langle1|
+ \tag{PF21}
+$$
+have zero column overlap and a nonzero operator cross term.
+The full physical clock, ports and inaccessible record overlaps must
+supply the native dilation before safe retry or a full-channel
+advantage is claimed. This grants no receiver access to those records.
 
 ## Entanglement first: the ordinary baseline with spare matter qubits
 
@@ -1048,9 +1386,8 @@ exact filtering at a monochromatic, nonnormalizable limit is not an
 exact finite-pulse factory claim.
 
 This architecture adds **two** independently addressable matter
-qubits and local data–communication entangling gates. The Daiss
-experiment has one qubit atom per cavity; it does not supply this
-spare-register architecture automatically. If entanglement is prepared
+qubits and local data–communication entangling gates; those are extra
+ports, not free consequences of the [source ledger](#nr-r11-measured-cavity-interface). If entanglement is prepared
 before data arrival, factory waiting can be moved offline, while Bell
 storage remains a cost. With data already present, their coherence
 must last through the waiting and online feedback time. Thus this is a
@@ -2995,10 +3332,9 @@ late receiver postselection as exclusive access.
 One ideal cavity CZ and known local phases implement each $\pi/4$
 Ising rotation; a photon Hadamard changes its $Z_F$ axis to $X_F$.
 Those phases, rotations and coherent routes are supplied controls with
-their own cost. [Daiss et al.](https://doi.org/10.1126/science.abe3150)
-demonstrate sequential cavity reflections, photon detection and atomic
-feedback for retained **spin** data. That experiment supplies neither
-this coherent order interface nor its retained-photon branch readout.
+their own cost. The [source ledger](#nr-r11-measured-cavity-interface) separates the
+measured spin-output endpoint from the retained-photon interface
+assumed here.
 The product-unitary switch mechanism also has the antecedents cited
 above, including [Simonov et al.](https://arxiv.org/html/2311.13654v4).
 
