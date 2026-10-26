@@ -36,6 +36,8 @@ and includes an operational capacity decision and a scalar entropy witness.
 
 The [conditional keyed specialization](noise-model-selection.md#nr-r22-keyed) records exact hidden-device sampling, strong-PRU assumptions and the computational scope of NR-R22.
 
+The [measured Trotter-depth certificate](methods/workload-commutators.md#nr-r06-average-case-trotter) is the direct scalar-meter simulation component of NR-R06. The [atomic magic-source result](braided-magic.md#nr-r17-noisy-factory) is the separate retained-output component of NR-R17. Their owning proofs state the resource comparisons and limits.
+
 The main result has a fixed-Bell-test formulation and a secret-state
 variant. They share one frontier and one result identity. Its analytic
 methods are the [local converse](methods/local-converse.md),

@@ -1,6 +1,6 @@
 # Workload commutators: useful certificates and ordinary baselines
 
-Proof component of [NR-R06](../architecture-baselines.md#nr-r06). The results below identify quantities needed by named workloads and delimit the proposed SWITCH benefit. They establish no practitioner-relevant SWITCH separation. All statements are analytic; finite certificate replay does not prove them.
+Proof component of [NR-R06](../architecture-baselines.md#nr-r06). The results below identify quantities needed by named workloads and delimit the proposed SWITCH benefit. They establish useful common-workload certificates and bounded comparisons, without an optimal separation from every ordinary or classical method. All statements are analytic; finite certificate replay does not prove them.
 
 ## Observable-aware mitigation has a real commutator demand
 
@@ -178,6 +178,141 @@ K_+=c^2I-ics(X+Z),\qquad p_+=1-s^4,
 
 for sufficiently small $h$. Since $\theta(h)=\sqrt2h-(\sqrt2/3)h^3+O(h^5)$, the half-diamond error relative to $e^{-ih(X+Z)}$ is $|\sin(\theta(h)-\sqrt2h)|=(\sqrt2/3)|h|^3+O(|h|^5)$. The random-order channel differs by at most $s^4=O(h^4)$, so the nonzero leading cubic error remains for both in this witness. This excludes the basic two-order plus-filter argument, not every retained-control simulation algorithm or error model.
 
+<a id="nr-r06-average-case-trotter"></a>
+
+## A measured step-count certificate for average-case Hamiltonian simulation
+
+The literal maximally mixed SWITCH scalar gives a finite-shot certificate for a common simulation workload. It can reduce the number of certified first-order product-formula steps relative to a stated conservative policy, and saves one forward call per calibration trial against the explicit three-query ordinary reproduction of the same meter. The production-step reduction is shared with that ordinary method; explicit Pauli algebra and local Hamiltonian learning remain admitted competitors. No optimal advantage over every ordinary or classical method is claimed.
+
+### Established simulation demand
+
+[Zhao, Zhou, Shaw, Li and Childs, Hamiltonian simulation with random inputs, PRL 129, 270502 (2022)](https://arxiv.org/pdf/2111.04773), Theorem 1 Eq. (4) and Theorem 3 Eq. (10), establish average-case product-formula error in the normalized Frobenius metric. A uniform computational-basis ensemble already suffices; Haar states are unnecessary. Their applications include spin dynamics and infinite-temperature OTOC simulation. For two Hamiltonian fragments their first-order triangle bound is
+
+\[
+R\le\frac{t^2}{2r\sqrt d}\|[H_1,H_2]\|_F.
+\]
+
+A concrete two-fragment workload is [Arrazola et al., Digital-Analog Quantum Simulation of Spin Models in Trapped Ions, Scientific Reports 6, 30534 (2016)](https://arxiv.org/pdf/1602.06248), Eqs. (1)–(4): Heisenberg simulation with \(H=H_{XY}+H_{ZZ}\), implementing each Trotter step using two analog evolution blocks and single-qubit basis rotations. The source identifies fragment noncommutation as a truncation-error source. Its published numerical demonstration uses fixed initial states; applying the certificate here concerns the established random-input simulation variant, not a guarantee for those fixed states.
+
+Opaque implemented evolution is also an established characterization setting: [Pastori, Olsacher, Kokail and Zoller, PRX Quantum 3, 030324 (2022)](https://arxiv.org/pdf/2203.15846), Secs. II B and IV B, treat experimental Trotter blocks as black boxes, including unknown deviations of analog resource Hamiltonians. The same paper supplies an important ordinary competitor: Hamiltonian/Floquet learning with polynomial measurement scaling for a polynomial local ansatz. These sources supply workload demand; neither supplies a free native SWITCH interface or proves the extra spectral bounds assumed below.
+
+### Exact scalar-to-error theorem
+
+Let fixed Hermitian generators \(H_1,H_2\) have available forward evolutions \(A_s=e^{-isH_1}\), \(B_s=e^{-isH_2}\). Let \(s>0\) be a calibration time independent of the eventual Trotter time slice. Assume supplied centers \(a_1,a_2\) and bounds
+
+\[
+\|s(H_1-a_1I)\|_\infty\le\alpha<\pi,
+\qquad
+\|s(H_2-a_2I)\|_\infty\le\beta<\pi.
+\]
+
+Put \(c(x)=x/\sin x\), continuously setting \(c(0)=1\), and measure
+
+\[
+p_s=\frac{\|[A_s,B_s]\|_F^2}{4d}.
+\]
+
+Then, with \(C_F=\|[H_1,H_2]\|_F/\sqrt d\),
+
+\[
+\frac{2\sqrt{p_s}}{s^2}\le C_F
+\le\frac{2c(\alpha)c(\beta)\sqrt{p_s}}{s^2}. \tag{WC8}
+\]
+
+**Proof of the useful upper bound.** For Hermitian \(X\) with eigenvalues in \([-\alpha,\alpha]\),
+
+\[
+|x_j-x_k|\le c(\alpha)|e^{-ix_j}-e^{-ix_k}|.
+\]
+
+Multiply squared inequalities by \(|Z_{jk}|^2\) and sum: \(\|[X,Z]\|_F\le c(\alpha)\|[e^{-iX},Z]\|_F\) for every matrix \(Z\). Apply this with \(X=s(H_1-a_1I),Z=s(H_2-a_2I)\), and again in the second generator's eigenbasis. Scalar shifts only change irrelevant phases. The lower bound follows from the double Duhamel integral for the exponential commutator.
+
+For \(P_r(t)=(e^{-itH_1/r}e^{-itH_2/r})^r\), variation of constants and a unitary telescope give
+
+\[
+\frac{\|P_r(t)-e^{-it(H_1+H_2)}\|_F}{\sqrt d}
+\le\frac{t^2C_F}{2r}
+\le\frac{t^2c(\alpha)c(\beta)\sqrt{p_s}}{rs^2}. \tag{WC9}
+\]
+
+For a pure-input ensemble \(\mathcal E\) whose mean is \(I/d\), the left side is exactly the RMS vector error, because \(\mathbb E_{\psi\sim\mathcal E}\|D\psi\|_2^2=\operatorname{Tr}(D^\dagger D)/d\). It also bounds mean vector error and mean output trace distance. Mean absolute error for an observable of operator norm at most one is at most twice (WC9). This concerns labeled random pure inputs or a reference-sensitive task: evolving an unlabelled \(I/d\) state alone is trivial for every unitary.
+
+Without the spectral bound, (WC8) is false: \(H_1=\pi X/s,H_2=\pi Z/s\) give \(A_s=B_s=-I\) and \(p_s=0\), although \(e^{-is(H_1+H_2)}\) differs from the product. Small finite-time commutation alone cannot validate a Trotter step.
+
+### Complete finite-shot decision and resource action
+
+Fix \(s\), confidence failure probability \(\eta\), calibration shot count \(N\), simulation time \(t\), and allowed mean trace error \(\epsilon\). Prepare \(I/d\) by uniformly sampling computational-basis inputs. Run independent standard SWITCH trials and count minus outcomes \(K\). Any valid one-sided Bernoulli upper bound \(p_U(K,N,\eta)\) suffices. A fully explicit choice valid for every count is
+
+\[
+p_U=\min\!\left\{1,\frac KN+\sqrt{\frac{\log(1/\eta)}{2N}}\right\}.
+\]
+
+An exact binomial upper bound is sharper, especially for rare minus events: at \(K=0\), use \(p_U=1-\eta^{1/N}\). The confidence statement is \(\Pr[p_s\le p_U]\ge1-\eta\), over the calibration outcomes. Suppose a supplied conservative bound satisfies \(C_0\ge C_F\), with baseline \(r_0=\max\{1,\lceil t^2C_0/(2\epsilon)\rceil\}\). Define the capped certificate
+
+\[
+C_{\rm cert}=\min\left\{C_0,\frac{2c(\alpha)c(\beta)\sqrt{p_U}}{s^2}\right\}.
+\]
+
+The minimum certified step count used below is
+
+\[
+r=\max\!\left\{1,\left\lceil
+\frac{t^2C_{\rm cert}}{2\epsilon}
+\right\rceil\right\}. \tag{WC10}
+\]
+
+On the coverage event \(p_s\le p_U\), this \(r\le r_0\) has mean trace error at most \(\epsilon\). Thus the probability that this data-dependent certificate is invalid is at most \(\eta\). If several probe times or stopping points are examined, allocate confidence failure probabilities across all tests or use a valid confidence sequence; a fixed-time interval does not justify arbitrary adaptive stopping.
+
+Calibration can reduce the certified Trotter count from \(r_0\) to \(r\), saving \(2(r_0-r)\) analog evolution blocks per production execution. The minimum-count variant uses \(2N+2Mr\) native forward calls on its realized calibration history, versus \(2Mr_0\) for the conservative policy. The following fixed-target policy makes both acceptance and rejection costs explicit.
+
+Here is a directly reviewable acceptance condition. Preselect an integer \(1\le r_*<r_0\). If the observed upper bound satisfies
+
+\[
+p_U\le q_*:=\left(\frac{\epsilon s^2r_*}{t^2c(\alpha)c(\beta)}\right)^2,
+\qquad N<M(r_0-r_*), \tag{WC11}
+\]
+
+then \(r\le r_*\). Define acceptance by the displayed \(p_U\) threshold. Upon acceptance run the preselected \(r_*\) steps; upon rejection use \(r_0\). The second inequality in (WC11) proves strict total forward-call savings on an accepted history. It is not an expected-policy guarantee. More precisely,
+
+\[
+\Pr[\mathrm{accept}\ \text{and the }r_*\text{-step mean-error certificate is invalid}]
+\le\Pr[p_s>p_U]\le\eta. \tag{WC12}
+\]
+
+This is a frequentist false-acceptance statement, not posterior confidence \(1-\eta\) conditional on acceptance. Writing \(a=\Pr[\mathrm{accept}]\), the latter conditional failure probability is bounded only by \(\min\{1,\eta/a\}\) when \(a>0\).
+
+The complete forward-call ledger for this fixed-target native policy is
+
+\[
+Q_{\rm accept}=2N+2Mr_*,\qquad
+Q_{\rm reject}=2N+2Mr_0,
+\]
+
+\[
+\mathbb E Q=2N+2M\bigl[r_0-a(r_0-r_*)\bigr]. \tag{WC13}
+\]
+
+Consequently \(N<Ma(r_0-r_*)\) is sufficient for expected net savings over \(2Mr_0\). If an accepted run instead uses the smaller capped count \(r\), (WC13) becomes an upper bound and the same condition remains sufficient. The acceptance rate \(a\) is an additional quantity; one accepted calibration does not establish it. The weaker observed condition (WC11) establishes only savings on that accepted history.
+
+Use the best applicable prior \(C_0\), such as a locality-aware spectral commutator bound; taking a needlessly loose \(2\|H_1\|\|H_2\|\) bound would inflate the advertised saving. The shared step reduction is a comparison within first-order product-formula simulation, not against every higher-order, randomized, or signal-processing simulator.
+
+Every calibration trial also consumes one target preparation, control preparation and control readout, plus its native coherent-order resource. The ordinary simulator adds a dummy-register preparation and controlled routing operations. Every production execution consumes its input preparation, final measurement, and digital basis rotations; the cited DAQS decomposition has two global basis rotations per step. These are extra charged resources, not free queries. The explicit saving in (WC11) concerns forward evolution-block calls; it is not a claim about total gates, elapsed time, or integrated Hamiltonian evolution time. Production measurements used to estimate observables have their own statistical precision requirement, separate from calibration confidence \(\eta\).
+
+Small \(p_s\) is not free to estimate. With a sharp binomial or multiplicative interval, constant-relative estimation needs \(O(p_s^{-1}\log(1/\eta))\) independent shots. For extensive local fragments, safe \(s=\Theta(1/n)\) with \(C_F=\Theta(\sqrt n)\) can give \(p_s=\Theta(n^{-3})\), hence cubic shot cost with those sharper intervals. The displayed additive Hoeffding interval alone would instead need sixth-order shot scaling for that precision. Calibration amortization and the actual probe costs must count.
+
+### Strong ordinary comparators and exact claim boundary
+
+* **Opaque unitary modules:** the definite-order unitary SWITCH simulator uses two calls to one arm and one to the other, one extra \(d\)-dimensional dummy register, and controlled swaps. It reproduces every control outcome exactly using only forward calls; no inverse or controlled unknown arm is needed. The minimum-count variant costs \(3N+2Mr\); the fixed-target policy costs \(3N+2Mr_*\) on acceptance and \(3N+2Mr_0\) on rejection. Its acceptance distribution and error guarantee are identical to the native protocol, and it can duplicate the cheaper arm if costs differ. See [Bavaresco et al., Nature Communications 16, 10216 (2025)](https://pmc.ncbi.nlm.nih.gov/articles/PMC12635086/), Eqs. (4)–(5), with Theorem 1 giving a stronger extension. The native protocol saves exactly \(N\) forward calls against this specific tester on every history, a factor of \(3/2\) for calibration calls. This proves no lower bound on the useful threshold decision (WC10).
+* **Known controlled arm/circuits:** the ordinary before/after controlled-arm construction reproduces the meter; count its known-gate implementation costs. Ideal circuit knowledge does not grant the actual noisy dilation. Conversely, hiding a gate description that the workload already provides would fabricate an advantage.
+* **Explicit Pauli fragments:** collect equal strings in \([H_1,H_2]=\sum_R\gamma_RR\); then \(C_F^2=\sum_R|\gamma_R|^2\). Pair enumeration is polynomial in the supplied term-list lengths and often sparse. This computes the actual quantity needed by (WC9), bypassing both finite-time exponentials and rare-event meter shots. It is the decisive classical shortcut for standard specified spin models.
+* **Opaque local Hamiltonians:** the ordinary Hamiltonian-learning workflow cited above estimates actual coefficients and target mismatch. No superiority over that learner is proved. A four-call controlled group-commutator trace test with inverses is therefore an unnecessarily weak sole baseline.
+
+The certificate bounds splitting error relative to the sum of the actual generators. It does not establish agreement with the intended generator. If a separate bound \(\|H_1+H_2-H_{\rm target}\|_F/\sqrt d\le\Delta\) is supplied, Duhamel adds \(t\Delta\) to (WC9). Without such information, commuting but wrong generators can have \(p_s=0\) and large target error. Nonunitary modules, drift, shared environments and uncontrolled temporal memory require further theorems.
+
+Thermal inputs do not automatically inherit (WC9). For any input ensemble with mean \(\rho\le\kappa I/d\), its RMS error is at most \(\sqrt\kappa\) times the normalized-Frobenius error; this can be weak for Gibbs states. A single thermal-weighted \(p_s(\rho)\) does not supply the unitary invariance used in the global telescope. The clean result here is random-input/infinite-temperature metric certification.
+
+There is a useful sector version: if a supplied projector \(\Pi\) commutes with both actual generators, restrict the entire proof to \(\Pi\mathcal H\), replace \(d\) by \(d_\Pi\), and probe \(\Pi/d_\Pi\). Random computational-basis states with a fixed excitation number then suffice when the blocks conserve that number. In the ideal Heisenberg decomposition above, \(H_{XY}\) and \(H_{ZZ}\) both conserve total magnetization, so this includes infinite-temperature dynamics within a fixed magnetization sector. Conservation by the intended generators alone does not justify the restriction if actual opaque blocks break it. [Chen and Brandão, Average-Case Speedup for Product Formulas, CMP 405, 32 (2024)](https://link.springer.com/article/10.1007/s00220-023-04912-5) independently establishes the relevance of fixed-particle-number input subspaces in average-case product-formula analysis; the finite-step sector certificate follows here simply by restriction.
+
 ## Current disposition
 
-Lightcone shading supplies real demand and (WC1) supplies an exact operational link. Equations (WC2)–(WC4) and the fixed-arm compiler prevent calling this a SWITCH separation. Equation (WC5) is a candidate bridge to serial compilation, not an established workload advantage. The broader practitioner objective remains open.
+Lightcone shading supplies real demand and (WC1) supplies an exact operational link. Equations (WC2)–(WC4) and the fixed-arm compiler prevent calling that a SWITCH separation. Equation (WC5) is a candidate bridge to serial compilation. Equations (WC8)–(WC13) establish a direct measured-scalar application: certified average-case Trotter depth, including accepted/rejected calibration and bounded ordinary-query comparisons. They do not prove an optimal simulator or an advantage over explicit Pauli calculation and local Hamiltonian learning. The search for a stronger common-workload separation remains open.
