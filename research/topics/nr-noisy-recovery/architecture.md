@@ -281,6 +281,26 @@ environment across queries, unlike the independent fresh noise of
 NR-R01/02. [Secure software leasing](https://arxiv.org/pdf/2005.05289v2),
 Definition 34 and Proposition 35, permits reuse before verified return.
 These inspected interfaces therefore do not justify the proposed cap.
+
+[Roehsner et al. (2018)](https://www.nature.com/articles/s41467-018-07591-2)
+experimentally encode secret classical truth tables in nonorthogonal photon program
+states. Bob chooses inputs through measurement bases and receives classical outcomes;
+circuit wiring is public, while the sender's randomized encoding label remains private.
+Detection consumes photons. The apparatus reports 60-ms timing padding and a mean 1.4
+seconds per photon, distinct from its 46-ns opening. [Gupte et al., v3
+(2025)](https://arxiv.org/html/2411.01876v3) theoretically define sampling programs with
+a quantum program state, classical input and classical output. Their construction
+supplies subspace states and a coherently queryable classical oracle. SEQ security
+permits repeated and uncomputed queries. Signature/proof-token applications use
+classical verification. Neither source establishes a measured coherent-order private
+arbitrary-data quantum service or a matched loss/latency advantage.
+
+The useful client endpoint must remain the authorized answer, signature or proof. A
+commutation bit needs an explicit relation to that endpoint. Ordinary processing retains
+the same issued states, accessible records and permitted joint measurements; coherent
+evaluation and inversion are admitted where the actual API supplies them, without
+granting hidden keys, extra copies or an arbitrary controlled-oracle port.
+
 A private-program application must specify its full consumption/clock
 dilation: orthogonal irreversible invocation timestamps erase order
 interference, whereas a common final spent bit need not. Actual program
