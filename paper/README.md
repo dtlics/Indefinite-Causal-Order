@@ -1,6 +1,6 @@
 # Paper
 
-[main.tex](main.tex) is the only editable manuscript: **An exponential quantum-switch advantage for commuting channels**. It contains its bibliography and TikZ figures. The selected source is the 5 October 2026 revision, with seven main pages and nineteen pages in total.
+[main.tex](main.tex) is the only editable manuscript: **An exponential quantum-switch advantage for commuting channels**. It contains its bibliography and TikZ figures. The 26 October 2026 revision adds a theoretical noise-characterization application: capacity qualification for a persistent hidden noise basis versus independent refresh. The application and finite-block obstruction represent [NR-R22](../research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22), using the manuscript's existing C6 comparison lemma with a conservative constant. Compilation and review scope are recorded in [validation](../docs/VALIDATION.md).
 
 ## Overleaf
 

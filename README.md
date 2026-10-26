@@ -9,6 +9,7 @@ The current research on quantum-switch advantages, causal structure, and the lim
 | A particular result, obstruction, or conditional theorem | [Result index](research/RESULTS.md) |
 | Noisy physical recovery and its expected-query comparison | [Recovery topic](research/topics/nr-noisy-recovery/README.md) |
 | Architecture applications, strongest ordinary baselines, and next tests | [Application assessment](research/topics/nr-noisy-recovery/architecture.md) |
+| Persistent versus refreshed noise, universal capacity and finite-block obstruction | [Temporal-noise qualification](research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22) |
 | Memory-capacity qualification, hidden-basis query separation and channel-entropy certificates | [Memory qualification](research/topics/nr-noisy-recovery/memory-qualification.md) |
 | Communication cuts, optical loss and control-resource bounds | [Communication results](research/topics/nr-noisy-recovery/communication.md) |
 | Coherent dispatch, ordinary recovery and microscopic temporal models | [Dispatch result](research/topics/nr-noisy-recovery/dispatch.md) |
@@ -37,6 +38,8 @@ scripts/        Consistency checks and generated indexes/exports
 ```
 
 Each result has one canonical owner. The result index and topic READMEs provide navigation; they do not maintain alternate theorem statements. Stronger results incorporate superseded checkpoints where their assumptions permit it. Distinct restrictions, counterexamples, conditional criteria, and unresolved gaps remain explicit. The same result's manuscript exposition, formal implementation, and certificate are linked as representations of that result.
+
+The manuscript also connects its query lower bound to theoretical noise characterization and QEC: a constant-query switch diagnostic distinguishes positive from zero unassisted quantum capacity in an explicit hidden-memory promise. The positive-capacity model has a basis-independent code sequence; the same lower bound forces a long code block. The canonical application is [NR-R22](research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22).
 
 The recovery topic contains an analytic physical-output theorem, its exact replay dependencies, and scoped obstructions. It is separate from the manuscript's existing simulation and decision results and has not been formalized in Lean.
 

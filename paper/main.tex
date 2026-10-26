@@ -44,7 +44,7 @@
 \hypersetup{pdftitle={An exponential quantum-switch advantage for commuting channels},pdfauthor={Dantong Li}}
 \title{An exponential quantum-switch advantage\\ for commuting channels}
 \author{Dantong Li\\\small Department of Computer Science, Yale University}
-\date{5 October 2026}
+\date{26 October 2026}
 \begin{document}
 \maketitle
 
@@ -63,7 +63,11 @@ trace-preserving label cache. Common-unitary invariance limits the information
 revealed by dephasing a retrieved label. We also prove an
 $\Omega_\epsilon(2^{n/4})$ lower bound for full-switch simulation at every fixed
 half-diamond error $\epsilon<1/2$, and exclude exact universal simulation with
-any finite budget.
+any finite budget. The learning bound also yields a theoretical
+noise-characterization application: four switches distinguish two processes
+with identical single-use averaged channels but positive versus zero
+unassisted quantum capacity, while ordinary diagnosis needs exponentially
+many contacts.
 \end{abstract}
 
 \section{Introduction}
@@ -205,6 +209,16 @@ Approximate simulation has a finite-query upper bound, recalled in
 Section~\ref{sec:simulation}. The two simulation results address the stronger
 full-output task and use separate arguments. A robust interference-testing
 extension follows in Section~\ref{sec:robust}.
+
+\paragraph{Qualifying quantum-coding capability.}
+Section~\ref{sec:capacity-qualification} applies the learning obstruction
+to temporal noise. A hidden dephasing basis persists throughout one
+session or refreshes independently at every contact. The single-use
+averaged maps coincide, but the first process supports a common
+basis-independent quantum code and the second has zero unassisted
+capacity. Four switches distinguish them; every ordinary adaptive
+diagnostic needs $\Omega(2^{n/16})$ contacts. A companion bound shows
+why common-code existence does not imply a short code block.
 
 \subsection{Related work and scope}
 
@@ -522,6 +536,221 @@ Neither exponent is claimed optimal. Sharper shared-unitary recording
 estimates may improve the testing bound; stronger causal coherence or
 collision arguments may improve simulation.
 
+
+\section{Application: qualifying quantum-coding capability}
+\label{sec:capacity-qualification}
+
+The same hidden-basis obstruction can qualify a channel's ability to
+transmit quantum information.  The property here belongs to an entire
+session, not to its single-use averaged channel.  Fix $d=2^n$ and put
+\begin{equation}\label{eq:capacity-weak-contact}
+ \mathcal E_{t,U}=(1-t)\id+t\Delta_U,
+ \qquad 0<t\le1,
+\end{equation}
+where $\Delta_U$ dephases in the basis $\{U\ket j\}_j$.
+In the \emph{quasistatic} model one Haar-random $U$ is held throughout
+the session, including every calibration and diagnostic contact.
+In the \emph{rapid} model each contact uses an independent Haar basis.
+The environments, basis choices, and active/identity coins are not
+accessible.  Their single-use averaged maps agree exactly:
+\begin{equation}\label{eq:capacity-same-average}
+ \E_U\mathcal E_{t,U}=\overline{\mathcal E}_t
+ =(1-t)\id+t\Lambda,
+ \qquad \Lambda=\frac{\id+d\Omega}{d+1}.
+\end{equation}
+Nevertheless the $L$-contact channels are respectively
+$\mathcal M^{\rm qs}_L=\int\mathcal E_{t,U}^{\otimes L}\,dU$
+and $\overline{\mathcal E}_t^{\otimes L}$.
+Replacing the former by a tensor power of its one-use average would
+change the problem.
+
+Diagnostic ordinary access is the full model of Section~\ref{sec:model}:
+arbitrary finite quantum memory, entangled references, known coherent
+instruments, adaptive reuse, and collective measurements are allowed.
+The budget is the maximum number of contacts on any branch, with all
+outcomes included.  There is no initial advice correlated with $U$.
+For switch access we additionally specify the cross-history extension:
+each labelled invocation has the same latent basis, coin, and meter
+record in its two order histories.  The two invocations use the same
+session basis in the quasistatic model and independent bases in the
+rapid model.  This extension is part of the oracle promise; it is not
+implied by~\eqref{eq:capacity-same-average}.
+
+\begin{corollary}[Capacity qualification from a temporal-noise scalar]
+\label{cor:capacity-qualification}
+Let $t=3/4$ and $n\ge4$.  The quasistatic process admits a single
+$U$-independent unassisted entanglement-transmission code sequence of
+rate at least
+\begin{equation}\label{eq:capacity-positive-rate}
+ \frac n4-h_2(3/4)>0
+\end{equation}
+qubits per contact, whereas the rapid process has zero unassisted
+quantum capacity.  Here $h_2$ is binary entropy in bits.
+Qualifying these two promised alternatives with success at least $2/3$
+requires more than $d^{1/16}/200$ ordinary contacts, even for
+Haar-average quasistatic success.  Four switches, using eight weak
+contacts in total, suffice.
+\end{corollary}
+
+\begin{proof}
+We give the three ingredients separately.
+
+\paragraph{The inherited ordinary lower bound.}
+Given an ordinary $q$-contact diagnostic, simulate each contact using
+a fresh private Bernoulli-$t$ coin.  On the identity outcome do nothing;
+on the other outcome apply $A$ and then $B$.  This is an ordinary
+at-most-$2q$-call circuit; the diagnostic is not given an intermediate
+port between these calls.  On the two C6 priors~\eqref{eq:c6-priors},
+its effective contacts are respectively
+$\mathcal E_{t,U}$ and
+$\mathcal R_t=(1-t)\id+t\Omega$, since
+$B\circ A=\Delta_U$ under \textsc{Same} and $B\circ A=\Omega$
+under \textsc{Mub}.  These are equalities on every joint input with
+the diagnostic's memory.  Substitution therefore preserves the entire
+adaptive output process, not merely unreferenced probe statistics.
+
+If $1\le q\le d^{1/16}/200$, Lemma~\ref{lem:c6-comparison}, applied
+at the uniform primitive-call budget $2q$, gives distance at most
+$215/10000$ between these two final states.  The lemma's dimension
+conditions follow from the same small-budget hypothesis.  Early stopping
+and the private coins cannot increase the maximum budget.
+Moreover
+\begin{equation}\label{eq:capacity-rapid-hybrid}
+ \frac12\norm{\overline{\mathcal E}_t-\mathcal R_t}_\diamond
+ =\frac{t}{d+1}\frac12\norm{\id-\Omega}_\diamond
+ \le\frac{t}{d+1}.
+\end{equation}
+The usual adaptive channel hybrid, retaining every reference and
+classical record, consequently gives
+\begin{equation}\label{eq:capacity-c6-output-bound}
+ \TD(\rho_{\rm qs},\rho_{\rm rapid})
+ \le\frac{215}{10000}+\frac{qt}{d+1}
+ \le\frac{215}{10000}+\frac{t}{200}
+ =\frac{101}{4000}\quad(t=3/4).
+\end{equation}
+The last inequality uses $d^{1/16}\le d+1$.
+The best equal-prior success probability is thus at most
+$4101/8000<2/3$.  Zero queries give no information.  This proves the
+claimed lower bound using only Lemma~\ref{lem:c6-comparison}.
+
+\paragraph{The switch diagnostic.}
+For fixed bases $U,V$, use Kraus families consisting of
+$\sqrt{1-t}\I$ and the projectors $\sqrt t P_j^U$ or
+$\sqrt t P_k^V$.  On control $\ket+$ and target $\I/d$, the standard
+noncommutativity measurement~\cite{gao2023} gives
+\begin{equation}\label{eq:capacity-switch-probability}
+ p_-(U,V)=\frac{t^2}{2}
+ \left(1-\frac1d\sum_{j,k}|\langle Uj,Vk\rangle|^4\right).
+\end{equation}
+All Kraus operators commute when $U=V$, so $p_{-,\rm qs}=0$.
+For independent Haar bases,
+\[
+ \E\sum_{j,k}|\langle Uj,Vk\rangle|^4=2d/(d+1),
+\]
+whence
+\begin{equation}\label{eq:capacity-switch-gap}
+ p_{-,\rm rapid}=\frac{t^2(d-1)}{2(d+1)}.
+\end{equation}
+At $t=3/4$ and $d\ge16$ this is at least $135/544$.
+Declare rapid noise if any of four independent trials has outcome minus.
+The quasistatic error is zero; the rapid error is at most
+$(409/544)^4<1/3$.  The ordinary simulation above does not supply this
+coherent extension; it is used only for the lower-bound reduction.
+
+\paragraph{One common code, rather than basis-dependent codes.}
+Let $\mathfrak I_t=\{\mathcal E_{t,U}:U\in U(d)\}$.
+For arbitrary channel sets on fixed finite-dimensional spaces, the
+uninformed-user compound-channel coding theorem supplies one encoder
+and one decoder, neither depending on the channel, with entanglement
+fidelity tending to one uniformly over the set~\cite{bjelakovic2009}.
+In particular its rate formula is
+\begin{equation}\label{eq:capacity-compound-formula}
+ Q_{\rm comp}(\mathfrak I_t)
+ =\lim_{L\to\infty}\frac1L\max_\rho\inf_U
+ I_c(\rho,\mathcal E_{t,U}^{\otimes L}).
+\end{equation}
+For the common input $\tau=\I/d$, every output is $\tau$.
+The orthogonal phase-error representation has probabilities
+$p_0=1-t+t/d$ and $p_j=t/d$ for $1\le j<d$.
+Thus, uniformly over $U$,
+\begin{equation}\label{eq:capacity-common-input}
+ I_c(\tau,\mathcal E_{t,U})
+ =n-H(\boldsymbol p)
+ \ge (1-t)n-h_2(t).
+\end{equation}
+Product inputs in~\eqref{eq:capacity-compound-formula} give
+\eqref{eq:capacity-positive-rate}, which is positive because
+$h_2(3/4)<1$ and $n\ge4$.  This fixes $n$ first and then
+takes $L\to\infty$.  Linearity of entanglement fidelity in the channel
+transfers the same code to $\mathcal M^{\rm qs}_L$; its average fidelity
+is at least its worst-$U$ fidelity.  Pointwise existence of a different
+code for each $U$ would not justify this step.
+
+In contrast, put
+\begin{equation}\label{eq:capacity-rapid-alpha}
+ \overline{\mathcal E}_{3/4}=\alpha\id+(1-\alpha)\Omega,
+ \qquad \alpha=\frac{d+4}{4(d+1)}\le\frac12.
+\end{equation}
+This is a receiver postprocessing of an erasure channel that passes
+the input with probability $\alpha$.  Explicitly, it has the symmetric
+two-output extension
+\begin{equation}\label{eq:capacity-broadcast-extension}
+ \mathcal J_\alpha(\rho)=
+ \alpha\rho\otimes\tau+\alpha\tau\otimes\rho
+ +(1-2\alpha)\Tr(\rho)\tau\otimes\tau.
+\end{equation}
+Both marginals equal~\eqref{eq:capacity-rapid-alpha}.  If an unassisted
+$L$-use code transmitted a $K$-dimensional logical system, tensor this
+extension across the block and apply its decoder to each output bank.
+The two logical Bell projectors have product of operator norm $1/K$
+and sum of operator norm $1+1/K$.
+Their identical marginal fidelities must therefore obey
+\begin{equation}\label{eq:capacity-rapid-finite-code}
+ F_{\rm rapid}\le\frac{K+1}{2K}\le\frac34
+ \qquad(K\ge2).
+\end{equation}
+This rules out positive unassisted entanglement-transmission capacity.
+\end{proof}
+
+\paragraph{Diagnostic access versus production access.}
+The capacity endpoint is an encoder, a channel block, and a decoder,
+with no input-bearing noiseless bypass, preshared entanglement, or
+two-way assistance.  This does not restrict the diagnostic learner's
+references or quantum memory.  The switch qualifies which capacity
+alternative is supplied; the proof does not claim that it improves
+the production channel or constructs a new code.  Uniform common-code
+existence also asserts neither efficient decoding nor a blocklength
+polynomial in $n$.
+
+\begin{corollary}[Finite-block obstruction]\label{cor:capacity-blocklength}
+In this oracle model, a fixed $U$-independent unassisted code transmitting
+$K\ge2$ with quasistatic Haar-average entanglement fidelity at least
+$7/8$ must have blocklength $L>d^{1/16}/200$.
+\end{corollary}
+\begin{proof}
+Prepare a known logical Bell pair, run the encoder, its $L$ contacts,
+and the decoder, then test the logical Bell projector.
+This is an admissible ordinary diagnostic.  If
+$1\le L\le d^{1/16}/200$, contractivity of the complete output
+bound~\eqref{eq:capacity-c6-output-bound} and
+\eqref{eq:capacity-rapid-finite-code} imply
+\begin{equation}\label{eq:capacity-block-bell-gap}
+ F_{\rm qs}-\frac{K+1}{2K}\le\frac{101}{4000}.
+\end{equation}
+But $F_{\rm qs}\ge7/8$ would make the left side at least $1/8$.
+No amplification or independent redrawing of the session is needed.
+\end{proof}
+
+The blocklength obstruction is consistent with the coding theorem's
+fixed-$n$ asymptotic limit.  A code learned using the session has
+$U$-correlated advice; those training contacts must count in any
+diagnostic shortcut.  Conditional fidelity with uncounted rejects is
+not the unconditional coding guarantee used here.  Correlated-noise
+capacity benefits and coherent witnesses of latent time correlations
+have earlier precedents~\cite{kristjansson2021}.  The application above
+is the combined capacity-qualification query theorem under its stated
+opaque-session and coherent-extension promises, not a new coding theorem
+or a new commutator estimator.
 
 \section{Discussion}\label{sec:discussion}
 
@@ -1291,6 +1520,8 @@ recording-to-cache comparison, and checks the switch test, OTOC identities,
 estimator, and earlier simulation results.
 The keyed probability bound retains its security assumptions;
 asymptotic efficiency and cryptographic constructions are not formalized.
+The capacity application in Section~\ref{sec:capacity-qualification}
+is analytic and has not been formalized in Lean.
 All selected endpoints use only \texttt{propext}, \texttt{Classical.choice},
 and \texttt{Quot.sound}, with no admitted lemmas.
 The release supplies pinned libraries, checksums, theorem maps, axiom
@@ -1379,5 +1610,14 @@ and H.-Y. Huang. Strong random unitaries and fast scrambling.
 \bibitem{jiliusong2018} Z. Ji, Y.-K. Liu, and F. Song.
 Pseudorandom States, Non-Cloning Theorems and Quantum Money.
 \href{https://arxiv.org/abs/1711.00385v1}{arXiv:1711.00385v1} (2017).
+\bibitem{bjelakovic2009} I. Bjelakovi\'c, H. Boche, and J. N\"otzel.
+Entanglement transmission and generation under channel uncertainty:
+Universal quantum channel coding.
+\emph{Communications in Mathematical Physics} 292, 55--97 (2009).
+\href{https://arxiv.org/abs/0811.4588v3}{arXiv:0811.4588v3}.
+\bibitem{kristjansson2021} H. Kristj\'ansson, W. Mao, and G. Chiribella.
+Witnessing latent time correlations with a single quantum particle.
+\emph{Physical Review Research} 3, 043147 (2021).
+\href{https://arxiv.org/abs/2004.06090v4}{arXiv:2004.06090v4}.
 \end{thebibliography}
 \end{document}
