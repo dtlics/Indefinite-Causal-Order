@@ -63,7 +63,7 @@
       "slug": "nr-noisy-recovery",
       "title": "Noisy physical recovery with expected-query bounds",
       "status": "analytic-with-exact-certificates",
-      "qualification": "Analytic recovery, hidden-basis capacity qualification and one-session noise-memory classification, including universal common-code capacity and finite-block limits, exact finite checks and scoped ordinary baselines. New NR results are not Lean-formalized or externally peer reviewed. Hardware feasibility is a separate implementation question.",
+      "qualification": "Analytic recovery, promised capacity/noise-memory results and exact finite certificates remain preserved. A significant practitioner workload advantage is open; workload-first QEM/compiler certificates and matched ordinary/classical baselines guide the active search. New NR results are not Lean-formalized or externally peer reviewed; hardware crossover is not the theoretical success gate.",
       "dossier": "topics/nr-noisy-recovery/README.md"
     }
   ]

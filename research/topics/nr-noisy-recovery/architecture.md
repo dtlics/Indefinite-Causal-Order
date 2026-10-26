@@ -2,11 +2,11 @@
 
 [Recovery theorem](theorem.md) · [Ordinary baselines](architecture-baselines.md) · [Literature context](references.md) · [Topic](README.md)
 
-The current research target is a **theoretical advantage for a quantum-computing task**: an algorithmic certification, QEC/QEM decision, noise-characterization output or useful conditional quantum operation. The application must specify what property is needed, why the SWITCH statistic or output determines it, and why a strong ordinary strategy cannot obtain the same answer at comparable theoretical cost. Query and sample bounds must include the access actually granted, arbitrary ordinary quantum memory and relevant accessible records. Hardware pulse timing, routing feasibility and practical crossover numbers are separate implementation questions; they are not prerequisites for an application theorem.
+The current research target is a **theoretical advantage within a common practitioner quantum-computing workload**: an algorithm, finite-code task, QEM pipeline, compiler pass or error-characterization decision. Such workloads motivate future quantum advantage; a new quantum-over-classical complexity separation is not a requirement here. A nontrivial property on a constructed oracle promise is insufficient by itself. The measured quantity or retained output must change an identified action and improve a task-error or computational-resource bound against relevant existing methods. Available ordinary quantum and classical tools belong in an honest comparison. Hardware pulse timing, routing feasibility and practical crossover numbers remain separate questions; a theoretical workload benefit is sufficient.
 
 The organizing scalar is the established Kraus-commutator statistic on a maximally mixed target. It measures Kraus-product interference, which differs from commutation of the averaged channel superoperators. Existing C5/C6 lower bounds concern this scalar; a lower bound for simulating the full SWITCH cannot automatically be transferred to a chosen diagnostic.
 
-## Current theoretical use cases
+## Proved promised tasks and their remaining workload gap
 
 | Quantum-computing task | Required decision | Canonical evidence and scope |
 | --- | --- | --- |
@@ -18,7 +18,32 @@ The organizing scalar is the established Kraus-commutator statistic on a maximal
 
 The [robust finite-horizon extension](../c6-hidden-dephasing/applications.md#c6-r08-robust) preserves a constant-query separation for CPTP perturbations of radius $1/24$. The separate [arbitrary-basis theorem](../c6-hidden-dephasing/applications.md#c6-r08-arbitrary-bases) explains why a small scalar alone is not a general mixing certificate. In NR-R22 the universal-code theorem concerns the limit of growing coding blocks at fixed physical dimension; it does not promise polynomial-block QEC. These distinctions keep the useful certification outputs separate from efficient execution claims.
 
-The next theoretical work should improve the application promises, verify novelty against the closest algorithms and characterization methods, and seek consequences that matter for a computation. The scalar alone does not determine a general decoder, finite-code correctability, sampler gap or PEC overhead. Each proposed use needs its own implication and its own ordinary lower-bound reduction. Known unitary-only, Pauli, outcome-record and supplied-code shortcuts remain admitted where their interfaces apply.
+These statements remain mathematical contributions under their stated promises. They do not yet establish the practitioner target: a common asymptotic code or efficiently generated hidden device does not supply a finite computational workload, an executable correction or a demonstrated algorithmic payoff. The significant practitioner application remains **open**.
+
+## Practitioner workload screen
+
+The [workload-commutator proof component](methods/workload-commutators.md) records the current useful implications and matched ordinary boundaries under NR-R06.
+
+| Existing task | Quantity and useful implication | Current disposition |
+| --- | --- | --- |
+| Observable-aware PEC allocation ([lightcone shading](https://arxiv.org/html/2409.04401v1)) | State-sensitive minus probability bounds observable bias by $2\sqrt{p_-}$ | Genuine demand; the maximally mixed invariant has a sharp worst-case norm mismatch, and a known check has an exact ordinary compiler. No SWITCH advantage established. |
+| RCS/XEB characterization | Pinching visibility is ideal self-collision | A public reference basis admits a one-call return estimator. Ideal self-collision is not experimental-versus-ideal fidelity or a certificate of classical hardness; the rescaled independent-sign estimator also pays dimension-dependent precision. |
+| Short-step Hamiltonian simulation | Plus-branch filtering changes random order by at most its minus probability | The ordinary randomized product formula is the matched comparator. An exact $X+Z$ witness retains nonzero cubic local error; the elementary filter is not a universal higher-order upgrade. |
+| Finite-workload serial compilation | $\operatorname{TD}(BA\psi,AB\psi)\le2\sqrt{p_-(1-p_-)}$ for the actual target marginal and any reference | A valid sufficient error certificate. A swap alone saves no calls or depth: the missing step is a larger useful rewrite, its actual physical ports, resource gain and matched ordinary/classical comparison. Serial ports do not characterize simultaneous crosstalk. |
+| Magic resources for universal algorithms | The retained H/S output relates to a controlled-$S$ resource | [NR-R17](braided-magic.md#nr-r17) already has matched ordinary controlled-$S$ comparisons. [Controlled-$S$ universality and virtual catalysts](https://arxiv.org/html/2404.09915v1) are prior work. A new useful noise or resource advantage is still required. |
+
+A candidate must pass all of the following before this objective is achieved:
+
+1. A primary source establishes the existing workload, bottleneck and required output.
+2. A proof connects the exact accessible scalar or quantum map to that output at the needed precision.
+3. The answer changes a specified action and improves a task-error or resource bound on useful instances.
+4. Opaque ports, available controls/inverses/dilations and records are justified by the workload.
+5. Ordinary direct tests, known-arm compilers, Pauli/Bell methods, shadows, calibration and reuse are admitted where applicable.
+6. The workload is one used by the quantum-computing community, and available classical estimates or simulators are compared where relevant. No new quantum-over-classical complexity separation is required; an oracle bound must still not be described as such a separation.
+7. All state/prefix preparations, contacts, failures, control work, samples and classical processing are counted theoretically. Free noiseless known gates must not already execute the ideal workload being claimed.
+8. Proof or computational evidence has an independent baseline review and a bounded closest-literature comparison. Integrity checks alone do not establish workload significance.
+
+The next work should start with one named workload transformation and its payoff, before a long proof for another synthetic family. The scalar alone does not determine a decoder, finite-code correctability, sampler gap or PEC overhead. Each useful decision needs its own implication and ordinary/classical comparison. Known unitary-only, Pauli, outcome-record and supplied-code shortcuts remain admitted.
 
 ## Source-specific implementation studies
 

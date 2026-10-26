@@ -13,6 +13,8 @@ and noise model before making that comparison.
 
 ## NR-R06 — Native checks, calibrated faults and ordinary path baselines
 
+The [workload-commutator component](methods/workload-commutators.md) gives state-sensitive QEM and serial-reordering certificates, sharp scalar/norm boundaries, and matched ordinary baselines for known checks, RCS collision statistics and elementary Trotter filtering. It leaves the practitioner application objective open.
+
 The [Pauli support-span calibration method](methods/pauli-subspace-calibration.md)
 is a proof component of this result. It covers arbitrary weighted laws of
 binary support rank at most the number of counted probe/reference qubits,

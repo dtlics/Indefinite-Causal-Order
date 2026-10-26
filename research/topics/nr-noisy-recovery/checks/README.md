@@ -491,3 +491,5 @@ bound, global-risk proof or infinite-mean stopping argument. All these
 canonical notes are included in the runner's input hashes.
 
 The [keyed capacity specialization](../noise-model-selection.md#nr-r22-keyed) is included in the input fingerprints. Its exact all-dimension Clifford twirl, strong-PRU hybrid, exact setup/truncated-reduction distinction and coding consequence are analytic with primary-source dependencies. No finite job establishes computational pseudorandomness, the common coding theorem, or a new Lean endpoint; no new executable guard is claimed.
+
+The [workload-commutator component](../methods/workload-commutators.md) is fingerprinted as an analytic proof note. State-sensitive bias/reorder inequalities, the sharp norm mismatch, known-arm compilation, prefix-policy qualifications and algorithmic ordinary comparators are independently reviewed analytic arguments, not new finite guards or computational-advantage certificates. The practitioner application remains open.
