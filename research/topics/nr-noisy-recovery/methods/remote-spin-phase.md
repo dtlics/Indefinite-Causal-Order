@@ -1507,6 +1507,275 @@ comparison must provide those maps; memory survival alone establishes
 no native parity benefit. The retained-control emission penalty
 (RS22a)--(RS22c) applies under its actual bright-support assumptions.
 
+<a id="nr-r11-raw-memory-parity"></a>
+
+### Raw cavity loss and an ordinary spatial parity program
+
+The ideal-erasure completion above cannot be substituted for intrinsic
+spin-dependent loss. Use the actual one-photon, closed-cycling columns
+(RS19), independent local intrinsic and spontaneous reservoirs, and
+no additional unmodelled source, link or detector fault. Remove paid
+common known spin frames at the finish. Write
+$$
+R_j=r_{0j}P_{j0}+r_{1j}P_{j1},\qquad
+L_j=\ell_{0j}P_{j0}+\ell_{1j}P_{j1},\qquad
+E_j=e_{1j}P_{j1},\qquad
+R_j^\dagger R_j+L_j^\dagger L_j+E_j^\dagger E_j=I.
+\tag{PF30}
+$$
+Choose a known photon unitary $Q$ taking bare polarizations $0,1$ to
+$y_+,y_-$ and apply $Q^\dagger$ before each cavity and $XQ$ after a
+reflected photon. An incident $y_+$ addresses only the dark column,
+with scalar $r_{0j},\ell_{0j}$ and no emission. A surviving reflection
+toggles it to $y_-$, up to a known scalar phase. Incident $y_-$ instead
+addresses the spin-dependent column (PF30) and toggles back. These
+literal loss columns occur before any postwrapper; they are not a
+perfect gate followed by erasure. At the balanced carrier
+$r_{1j}=-r_{0j}$, known local spin phases give the ideal surviving
+selector (PF23), but do not remove its intrinsic loss.
+
+The native copied-source program therefore visits dark $A$ then bright
+$B$ for $P=0$, and dark $B$ then bright $A$ for $P=1$. At a scalar
+carrier its full survivor and six failed columns, including the
+source weight, are
+$$
+V_{\rm surv}=\frac{|00\rangle_{CP}r_{0A}R_B+
+                       |11\rangle_{CP}r_{0B}R_A}{\sqrt2}
+                   \otimes|y_+\rangle_D,
+\qquad
+\begin{array}{lll}
+K_{d0}=\ell_{0A}|0\rangle_C I/\sqrt2,&
+K_{L0}=r_{0A}|0\rangle_C L_B/\sqrt2,&
+K_{E0}=r_{0A}|0\rangle_C E_B/\sqrt2,\\
+K_{d1}=\ell_{0B}|1\rangle_C I/\sqrt2,&
+K_{L1}=r_{0B}|1\rangle_C L_A/\sqrt2,&
+K_{E1}=r_{0B}|1\rangle_C E_A/\sqrt2.
+\end{array}
+\tag{PF31}
+$$
+The identity on $ABR$ is implicit. Here the failure $C$ cross map is
+zero without a time-orthogonality assumption: at either node the
+dark and bright intrinsic losses have orthogonal bare polarizations;
+spontaneous $A$ loss occurs only in $C=1$ and spontaneous $B$ loss
+only in $C=0$, in independent reservoirs. Normalization in (PF30) and
+$|r_{0j}|^2+|\ell_{0j}|^2=1$ makes (PF31) a complete instrument.
+Changed polarization records, Raman channels, shared emission modes,
+source vacuum or multiple photons need their own Gram matrices.
+
+This structure factors into a data-independent dark-prefix instrument
+and a coherent choice of one bright node. An ordinary spatial program
+with the same supplied $C/P$ source sends $P=0$ through bright $B$
+while bypassing $A$, and $P=1$ through bright $A$ while bypassing $B$.
+Under its actual one-photon/vacuum ports and independent ready baths,
+these two conditional encounters have disjoint occupied rails and
+commute on the used input sector. They can be scheduled in a fixed
+order or a common spatial window. This needs an actual coherent
+bypass network and its vacuum extension; describing the unchanged
+two-window SWITCH with new names does not supply that interface.
+
+A concrete data-independent prefix is available within the same
+declared optical model. Put an empty passive resonator in each source
+rail, with $\kappa_j=\kappa_{rj}+\kappa_{\ell j}$ and
+$D_j(\omega)=\kappa_j+i(\omega_{cj}-\omega)$. Its two-port matrix is
+$$
+S_j(\omega)=I_2-\frac{2v_jv_j^\dagger}{D_j(\omega)},\qquad
+v_j=(\sqrt{\kappa_{rj}},\sqrt{\kappa_{\ell j}})^T,
+\qquad S_j(\omega)|0\rangle=
+\begin{pmatrix}r_{0j}(\omega)\\\ell_{0j}(\omega)\end{pmatrix}.
+\tag{PF32}
+$$
+For real frequency $S_j$ is unitary: $v_j^\dagger v_j=\kappa_j$
+and $D_j+D_j^*=2\kappa_j$ cancel its quadratic terms. Thus its first
+column is exactly the $g=0$ dark response of (RS19), with vacuum at
+the other input. Use filter $A$ before bright $B$ in rail zero, and
+filter $B$ before bright $A$ in rail one. Its independent unobserved
+dump ports reproduce (PF31), including the zero control cross map.
+
+For a normalized source spectrum $f(\omega)$, keep the survivor
+coefficients $f r_{0A}R_B$ and $f r_{0B}R_A$ coherently in frequency.
+The six loss families have respectively $f\ell_{0j}I$,
+$f r_{0j}L_k$ and $f r_{0j}E_k$. Trace their actual orthogonal field
+records only after forming those amplitudes. The full reduced
+data/control/surviving-photon instrument then agrees, so every common
+readout, including a click-time refinement, and later supplied decoder
+agrees on arbitrary $ABR$. Equality concerns these output maps and
+their record Gram matrices; it does not require radiation at the same
+unobserved physical location. Any monitored dump adds a real record
+and must remain available to the ordinary controller.
+
+At a scalar carrier even the extra resonators can be replaced by
+source control. Sample an active/skip coin with
+$$
+t=\frac{|r_{0A}|^2+|r_{0B}|^2}{2},\qquad
+|c_{\rm act}\rangle=
+\frac{r_{0A}|0\rangle+r_{0B}|1\rangle}{\sqrt{2t}},\qquad
+\Pr(h\mid\mathrm{skip})=
+\frac{|\ell_{0j_h}|^2}{2(1-t)},\quad j_0=A,\ j_1=B.
+\tag{PF33}
+$$
+On active prepare the known memory state $c_{\rm act}$, use the same
+fresh column (PF22), prepare $D=y_-$, and run the bright spatial
+program. Multiplying its amplitudes by $\sqrt t$ gives exactly the
+survivor and four bright-loss columns in (PF31). On skip sample $h$,
+return unchanged $ABR$ and the known pointer $C=h$. Its two weighted
+maps are precisely the dark losses. Omit zero-weight branches when
+$t=0$ or $1$. This uses actual known memory preparation, rather than
+a full inverse of the emission port. A skip may omit emission or use
+a paid emitted/dumped photon if the service fixes that resource.
+
+The ordinary active/skip bit is an additional accessible flag. Its
+retained instrument **refines** the native common endpoint: summing
+that extra bit yields every native map, including physical $C$,
+surviving photon, all native readout records and the full rejected
+data. The native is not given a hidden dark/bright-loss flag. The
+ordinary can use or ignore its extra record. With actual same-endpoint
+storage and resets, it can therefore emulate every native decoder and
+finite-cap retry policy; this is a full launched program, not a splice
+of successful and rejected branches from different protocols.
+
+For identical full-band dark responses the exact source version
+instead needs $t=\int|r_0f|^2d\omega$ and a normalized complex source
+wavepacket $f'=r_0f/\sqrt t$. That wavepacket must be a supplied paid
+control; it is not implied by (PF22). Unequal spectral ratios
+$r_{0A}/r_{0B}$ generally require control/path-correlated pulse
+preparation or the real filters (PF32). A fixed rotation of $C$ alone
+does not provide them.
+
+The symmetric balanced carrier gives an explicit resource comparison.
+Set $s=|r_0|^2$, $q=1-s$, and real $k=\ell_0\ell_1^*\ge0$.
+The bright failure channel preserves populations with factor $q$
+and coherence with factor $k$, since only intrinsic loss supplies its
+off-diagonal coefficient. On either computational parity qubit the
+unthinned spatial program and native program consequently have
+success/failure-population/failure-coherence triples
+$$
+(p,Q,K)_O=(s,q,k),\qquad
+(p,Q,K)_N=(s^2,1-s^2,q+s k).
+\tag{PF34}
+$$
+For example bright survivors have $R_j=-rZ_j$ with
+$r=\sqrt s$, so the two eraser signs yield
+$-r(Z_B\pm Z_A)/2=-rZ_B\Pi_{e/o}$ before the known local correction.
+Keeping $C$ readout merely splits these maps into redundant fine
+records. Native adds the common dark-survival factor $s$ and the
+data-identity dark rejects. These statements preserve unknown logical
+states and references; a successful parity projector does not repair
+damage accumulated on previous failed attempts.
+
+For stationary independent attempts capped at $J$, retain all counts
+and accessible fine records. For either triple in (PF34), the
+accepted population, accepted unnormalized logical coherence and
+logical Bell-good weight are
+$$
+A_J=1-Q^J,\qquad
+C_J=p\sum_{m=0}^{J-1}K^m,\qquad
+G_J=(A_J+C_J)/2.
+\tag{PF35}
+$$
+Indeed a resolved word of $m$ failures multiplies its sector
+populations and coherences by the corresponding fine factors; the
+terminal projector removes cross-sector input blocks. Summing every
+fine word gives $pQ^m$ and $pK^m$, respectively. The sector reject
+has population $Q^J$ and coherence $K^J$; its full state is the actual
+product of the failed maps, not a discarded output. Ordinary thinning
+as in (PF33) matches that full native product too. The finite sums
+define the degenerate cases without dividing by zero acceptance.
+
+For this symmetric carrier's delivered parity task, the ordinary
+program can also omit the extra matter memory $C$ and source column
+$G$. Prepare a single photon in a balanced path superposition, send
+each arm through its one bright node, and erase the path at detection.
+Its two survivor operators are $-r(Z_B\pm Z_A)/2=-rZ_B\Pi_{e/o}$,
+and its failed map is $(\mathcal F_A+\mathcal F_B)/2$, where
+$\mathcal F_j=[(q+k)/2]\operatorname{id}
++[(q-k)/2]\operatorname{Ad}_{Z_j}$. On either parity sector
+$\operatorname{Ad}_{Z_A}=\operatorname{Ad}_{Z_B}$, so the two
+restricted failed maps coincide, including arbitrary references.
+Denote this common restricted map in sector $\tau$ by $\mathcal F_\tau$.
+On such sector inputs, native $C$ after failure is a uniform classical
+pointer in product with the logical/reference state. After choosing
+active probability $s$, appending a
+fair classical $h$ gives each native failure-sector map
+$[q\operatorname{id}+s\mathcal F_\tau]/2$. On success append a fair
+$p$ and set $c=p\oplus\tau$, for reported parity bit $\tau$, to match
+its redundant fine records.
+The same sector-history induction as (PF29) matches every delivered
+parity/count map under repeats and supplied parity-preserving maps on
+$AB$ with classical record feedback. Any additional quantum-ancilla
+decoder still incurs its real implementation resources.
+Retained $C$ supplies no additional within-sector state information in
+this case. This stronger source/memory saving does not match full
+inter-parity cap-reject coherences or an additionally returned quantum
+$C$. Actual photon preparation, spatial phase, bypass, pulse, readout
+and common-finish ports remain paid requirements.
+
+For $0<s\le1$ in the nondegenerate model,
+$1-(q+s k)=s(1-k)$. Both eventual successful parity instruments have
+logical coherence $s/(1-k)$ and sector Bell fidelity
+$[1+s/(1-k)]/2$, whereas mean emitted-photon launches are $1/s$ and
+$1/s^2$. Mean occupied cavity encounters are $1/s$ for unthinned
+bright and $(1+s)/s^2$ for native: each native launch reaches its
+first dark encounter and reaches the second with probability $s$.
+At the existing carrier fixture $s=k=1/4$, both eventual fidelities
+are $2/3$, with mean launches $4$ versus $16$. These are contact and
+source counts, not measured wall-clock rates. At the same nominal
+launch cap the unthinned program need not dominate every conditional
+fidelity; the ordinary family can instead choose $t=s$ to reproduce
+the entire native point while retaining its extra coin record.
+
+There is also a controlled finite-band approximation using the
+original source pulse. From (PF32),
+$\|S_j'(\omega)\|\le2/\kappa_j$. If the fixed pulse has RMS angular
+bandwidth $\sigma$ about $\omega_0$, replacing each filter by its
+constant matrix $S_j(\omega_0)$ changes the fixed-source dilation in
+operator norm by at most $\epsilon=2\sigma/\kappa_{\min}$.
+To see this, integrate
+$\|(S_j(\omega)-S_j(\omega_0))f(\omega)\|^2
+\le4|\omega-\omega_0|^2|f(\omega)|^2/\kappa_j^2$;
+orthogonal rails take the maximum bound. The carrier coin
+construction refines this constant-filter common endpoint. Its extra
+record remains available to the ordinary controller and is forgotten
+only for this common-output distance comparison.
+Contraction under the common complete bright interaction and readout
+gives half diamond distance at most $\epsilon$ for their common
+unnormalized endpoint instruments on arbitrary $ABR$. This is a
+fixed-source bound, not an energy-unconstrained claim on unknown
+optical inputs. A cap of $J$ matched attempts gives at most
+$\min(1,J\epsilon)$ by a telescoping channel replacement, provided
+the same fresh-attempt and waiting hypotheses hold and the matched
+emulation policy does not use the surplus coin to change its actions.
+Other coin-adaptive ordinary policies remain allowed competitors;
+this particular bound does not compare their unmatched extra outputs.
+No division by rare acceptance is made.
+
+For a declared example the normalized envelope
+$\sqrt{2/T}\sin(\pi t/T)$ on $[0,T]$ has RMS detuning $\pi/T$ by
+Parseval. Taking $T=1000\pi/\kappa_{\min}$ gives
+$\epsilon\le0.002$. This bounds the full instrument replacement,
+not a measured pulse rate or conditional fidelity. Finite shutters,
+late modes, residual cavity state, detector windows and clearing must
+be included in the common downstream process. An asymptotic transfer
+matrix does not certify an exact finite-time reset.
+
+<a id="nr-r11-spatial-parity-prior"></a>
+
+[Ohm and Hassler, NJP **19**, 053018 (2017), v2](https://arxiv.org/abs/1508.05104v2) propose a microwave single-photon Mach–Zehnder interferometer with two 50:50 couplers and one dispersive transmon–resonator per arm. Reflection phases differing by $\pi$ at matched sweet spots require $2\chi\geq\kappa$; an adjustable interarm phase and photon counters implement parity detection. Their prepared $|++\rangle$ produces either Bell outcome. They analyze Lorentzian pulses from controlled resonator decay and cavity mismatch; finite-pulse conditional amplitudes depend on click time. Their loss claim concerns detection-conditioned entanglement: propagation loss and detector inefficiency reduce successful events; dark counts remain harmful. Appendix A assumes unit-modulus reflection with no other output channel. The paper gives no complete unknown-input no-click instrument or operational attempt clock. It proposes spatial parity measurement, without a SWITCH or experimental demonstration.
+
+That prior credits the spatial primitive; (PF30)--(PF35) are the
+separate full-loss, source-refinement and resource comparison for the
+declared columns. Neither supplies a measured retained-memory source,
+ordinary bypass nor native router. Price the real filter resonators
+or source rotations/shaping, complex path phase and its calibration
+reuse, source failures, scheduled opportunities, occupied encounters,
+vacuum ports, feedforward, all $AB/C$ storage, detector/reset tails and
+one causal release deadline. In particular an independent filter adds
+optical hardware; using the existing nodes for a prior dark layer still
+requires their actual two-window access and cannot be renamed a
+fixed-order interface. The next native comparison must change a
+justified physical port, noise or clock relative to this admitted
+ordinary family. The narrower mandatory-serial failure difference
+does not establish a native parity advantage.
+
 ## Entanglement first: the ordinary baseline with spare matter qubits
 
 If the architecture supplies a separate communication qubit $a,b$ at

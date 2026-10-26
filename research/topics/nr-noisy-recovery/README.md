@@ -373,6 +373,9 @@ its [retained-memory comparison](methods/remote-spin-phase.md#nr-r11-retained-me
 keeps source columns, adaptive memory readout, unresolved loss and the
 delivered parity/rejected-state distinction explicit. The next test needs
 the full measured source/router/spin/record process with its causal finish.
+The [raw cavity comparison](methods/remote-spin-phase.md#nr-r11-raw-memory-parity)
+keeps spatial bypass, actual filter/source preparation and the full
+rejected-state/refined-record comparison explicit.
 The [ordinary Bell-resource parity instrument](methods/remote-spin-phase.md#nr-r11-offline-parity)
 instead isolates failed preparations from data, with local gates,
 source records, storage and the delivery deadline explicitly charged.

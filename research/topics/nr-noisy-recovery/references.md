@@ -88,6 +88,7 @@ advantage against all ordinary instruments and memories.
 
 | Primary work | Input used | Scope to preserve |
 | --- | --- | --- |
+| [Spatial parity prior](methods/remote-spin-phase.md#nr-r11-spatial-parity-prior) | Internal source navigation. | Primitive prior; raw loss, source/filter controls and total-resource claims remain separately qualified. |
 | [Daiss source](methods/remote-spin-phase.md#nr-r11-measured-cavity-interface) | Internal source navigation. | A selected quantum output can avoid readout for either architecture; it supplies no online classical occupancy herald. |
 | [Niemietz et al., *Nondestructive detection of photonic qubits*, arXiv:2103.14677v1](https://arxiv.org/html/2103.14677v1), main text, Methods and supplement | A polarization-preserving one-rail photon-presence detector. | Conditional detection given survival, survival probability and conditional mean polarization fidelity are different quantities. They do not specify a full path-flag, vacuum and reference-complete gate instrument. |
 | [Kono et al., *Quantum non-demolition detection of an itinerant microwave photon*, arXiv:1711.05479v1](https://arxiv.org/html/1711.05479v1), Figs. 1–4, Methods and supplement | Dispersive reflection, weak-coherent-input detection slope, mean-number survival and no-input flips. | These statistics do not specify the joint survival/flag instrument or a dual-rail/time-bin unknown-qubit-preserving extension. The stationary reflection diagnostic does not supply an adjustable Hamiltonian dwell gate or a coherent return loop. |
