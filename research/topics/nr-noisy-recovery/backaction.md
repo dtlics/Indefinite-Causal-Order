@@ -419,16 +419,36 @@ F_e(L,\theta)=\frac{1+\operatorname{Re}(e^{-i\theta}L)}2,
 \tag{DQ4}
 $$
 
+<a id="nr-r14-dephasing-recovery"></a>
+
 The best phase is $\arg L$ when $L\ne0$, with any phase at zero. This
-score is optimal over deterministic CPTP recovery for each declared code
-without an additional noise record: after phase alignment the channel is
-$p\operatorname{id}+(1-p)\operatorname{Ad}_Z$,
-$p=(1+|L|)/2\ge1/2$. For recovery Kraus operators $A_j$ put
-$f_P=\sum_j|\operatorname{Tr}(A_jP)|^2/4$. Pauli Parseval and trace
-preservation give $\sum_{P\in\{I,X,Y,Z\}}f_P=1$, and the recovered Bell
-fidelity is $pf_I+(1-p)f_Z\le p$. An arbitrary physical decoder restricted
-to the preserved code is such a logical recovery. This does not optimize
-over all encodings or extra records and protected helpers.
+score is also optimal over arbitrary accepted trace-nonincreasing local
+recovery for each declared code without an additional noise record.
+After phase alignment the channel is
+$\mathcal N=p\operatorname{id}+(1-p)\operatorname{Ad}_Z$,
+$p=(1+|L|)/2\ge1/2$. Combine all accepted recovery leaves and their
+corrections into $\mathcal R$. Its normalized-convention Choi operator
+$J_{\mathcal R}=({\rm id}\otimes\mathcal R)(\Phi_2)$ is positive.
+On a Bell input the accepted mass is
+$a=\operatorname{Tr}J_{\mathcal R}$ since $\mathcal N$ is unital.
+The two orthogonal Bell projectors $\Phi_I,\Phi_Z$ give
+
+$$
+G=p\operatorname{Tr}(\Phi_IJ_{\mathcal R})
+ +(1-p)\operatorname{Tr}(\Phi_ZJ_{\mathcal R})
+ \le p\operatorname{Tr}J_{\mathcal R}=pa.
+\tag{DQ4a}
+$$
+
+Indeed composing $\mathcal R$ with the input $Z$ conjugates its Choi
+operator by $Z^T$ on the reference, exchanging the tested Bell vector;
+positivity bounds the two populations by their total trace. Thus $G/a\le p$
+whenever $a>0$, and identity recovery after phase correction attains $p$.
+The proof permits input-dependent postselection, extra uncorrelated
+ancillas and outputs containing an erasure sector. An arbitrary physical
+decoder restricted to the preserved code is included. Encodings before
+exposure, multiple noisy copies, extra noise records and protected
+correlated helpers are different resources; they are not optimized here.
 
 **Finite data and ordinary single-site alternatives.** Take $n$
 independent launches for each of the four settings, with the same channel

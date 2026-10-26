@@ -428,6 +428,7 @@ are open questions, not consequences of the present theorem.
 Further physical tests now have explicit owning proofs: the
 [mechanical record and clock interface](architecture-baselines.md#nr-r08-mechanical-record-strength),
 [non-Gaussian cat parity baseline](architecture-baselines.md#nr-r06-cat-reservoir-parity),
+[cat-ancilla control and returned heating](architecture-baselines.md#nr-r06-cat-control-ancilla),
 [higher-order bath transfer test](backaction.md#nr-r14-high-order-transfer),
 [native holonomic controls](backaction.md#nr-r19-holonomic-controls) and
 [stored Rydberg-memory instrument](communication.md#nr-r11-rydberg-memory).

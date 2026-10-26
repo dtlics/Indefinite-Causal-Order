@@ -4122,6 +4122,122 @@ trace-class symmetry proof, trajectory convergence, finite-time
 remainders, actual coherent access and experimental utility are analytic
 or measured inputs, not consequences of a finite replay.
 
+<a id="nr-r06-cat-control-ancilla"></a>
+
+**Heating during a required ancilla-mediated operation.** The production
+task can require a particular joint operation $W$ on an ancilla $a$ and
+unknown cavity data $b$, with a passive reference R. Its ideal output must
+retain $a$ when $W$ entangles it with $b$. A specified later syndrome
+measurement is a different complete instrument. Undoing $W$ to recover
+idle storage does not implement the required operation.
+
+[Ding et al., Nature Communications **16**, 5279 (2025)](https://www.nature.com/articles/s41467-025-60352-w) experimentally couple a separate Kerr-cat SNAIL ancilla $a$, storage cavity $b$ and lossy readout mode $r$. With $\chi_{ab}/2\pi=2.91\pm0.03$ kHz, their joint Hamiltonian retains $H_{\rm cat}-\hbar\chi_{ab}n_an_b+\hbar(g_{\rm BS}a^\dagger b+\mathrm{h.c.})$. A driven ancilla-conditioned displacement lasts 348 ns, with $g_{\rm CD}/2\pi=6.18\pm0.06$ MHz; squeezing preparation takes 2 microseconds and cat-qubit readout drives 600 ns and integrates 2.5 microseconds. At $\alpha^2=4$, measured coherent-state and equatorial-cat lifetimes are $147\pm4$ and $2.32\pm0.04$ microseconds. Readout measures logical $Z$; its central pointer blob correlates with excited-manifold population. Ancilla heating causes storage dephasing. Frequency-selective dissipation hybridizes that excited manifold with readout, using a measured 12.5-MHz gap, and suppresses excess idle dephasing within measurement precision. Cooling calibration drives 5 microseconds, then waits 400 ns. Supplement XII.D models added ancilla photon loss from FSD. The demonstrated characteristic-function/Fock-qubit controls precede the proposed fault-tolerant-code application; neither a leakage-only preserved-reference herald nor coherent order of two noisy modules is demonstrated.
+
+This is one joint noisy $a,b$ service. A SWITCH of two operations on that
+service needs a separate logical order control. Such a control could be a
+qualified tensor factor inside existing hardware rather than another
+oscillator, but its embedding and controlled action cannot be inferred
+from a population histogram. The quantum coherence of $a$ used by $W$
+cannot also be counted as an independent clean controller without that
+construction.
+
+The displayed Hamiltonian has an immediate ordinary symmetry test:
+$P=\Pi_a\Pi_b$ commutes with $H_{\rm cat}$ and $n_an_b$, while
+$P(a^\dagger b)P=(-a^\dagger)(-b)=a^\dagger b$. Local loss or heating
+jumps $a,a^\dagger,b,b^\dagger$ have definite odd joint parity. Thus the
+declared exchange model falls under (CAT3) when its controlled-joint-parity
+port is actually supplied. This counts a joint jump syndrome, not solely
+ancilla leakage. A full readout mode, additional drives, selected cooling
+transitions and their fields need their own complete symmetry and record
+check. Projecting onto the cold cat code removes the heating to be
+diagnosed; within that projection, known conditional displacements have
+the [central Weyl phase](geometric-calibration.md#nr-r16), rather than a
+new heating flag.
+
+**Coarse logical readout is not a coherent code check.** In a declared
+resolved-pointer limit let $P_0,P_1$ project onto orthogonal logical-well
+states and $P_C=P_0+P_1$. If the emitted records distinguish the wells,
+reporting only their combined label gives
+
+$$
+\mathcal M_C(\rho)=P_0\rho P_0+P_1\rho P_1,
+\qquad \mathcal Q_C(\rho)=P_C\rho P_C.                 \tag{CA1}
+$$
+
+These maps have the same success effect $P_C$, but different cross-well
+coherences. On an ancilla/reference Bell input their conditional Bell
+overlaps are $1/2$ and $1$, respectively. With finite pure pointer states
+$|E_0\rangle,|E_1\rangle$, the discarded cross term is instead multiplied
+by $\langle E_1|E_0\rangle$. Forgetting the classical label does not change
+that overlap. Actual erasure, record-conditioned correction or a different
+measurement needs its physical instrument. Every ordinary well outcome
+remains available for useful feedback. Known-well preparation and an
+intended logical syndrome readout do not require preserving an arbitrary
+ancilla superposition; (CA1) concerns a proposed coherent leakage-only
+check on that superposition or its joint quantum output.
+
+**A returned excursion can defeat even a perfect terminal code flag.**
+Consider a separate, deliberately benign model in which the ancilla ends
+in exactly the same state after no heating and after a heating/cooling
+excursion. Remove the known ground-state Stark frame. The latter history
+imparts $R_\phi=e^{i\phi n_b}$, with
+$\phi=\delta\omega\tau$ for its excited-state dwell time. Suppose their
+probabilities are $1-w,w$, their distinguishing fields are inaccessible,
+and the terminal code label is the same. On the cavity Fock qubit
+$\operatorname{span}\{|0\rangle,|1\rangle\}$ the coefficient of
+$|1\rangle\langle0|$ is multiplied by $\lambda=1-w+we^{i\phi}$.
+A known phase correction makes the channel
+
+$$
+\mathcal N(\rho)=p\rho+(1-p)Z\rho Z,\qquad
+p=\frac{1+|1-w+we^{i\phi}|}{2}.                       \tag{CA2}
+$$
+
+The [logical dephasing recovery bound](backaction.md#nr-r14-dephasing-recovery)
+now gives optimal conditional Bell fidelity exactly $p$, even with
+arbitrary accepted trace-nonincreasing local recovery and uncorrelated
+ancillas after this channel. Identity recovery after the phase correction
+attains it. Additional history information, encoding before exposure and
+multiple noisy copies are different resources. For $0<w<1$ and
+$\phi\notin2\pi\mathbb Z$, $p<1$ although every terminal code flag succeeds.
+This is a counterexample to certifying preservation from that flag, not a
+fitted device error model or a bound for every monitoring policy.
+
+During a required displacement, an occupation-dependent error is richer:
+on logical branch $z=\pm1$,
+
+$$
+D(z\beta/2)^\dagger n_bD(z\beta/2)
+=n_b+\frac z2(\beta b^\dagger+\beta^*b)+|\beta|^2/4.    \tag{CA3}
+$$
+
+Consequently its time within the pulse matters; (CA2) is not a replacement
+for the driven gate's full noise instrument.
+
+**Comparison that can decide the application.** Allow actual selective
+cooling, phase compensation, rotations, cavity controls, all accessible
+readout records and calibration reuse. A cooling schedule during $W$
+requires its joint gate calibration. An echo must preserve $W$ and act on
+the excited-manifold interaction and fields. Neither a projected logical
+echo nor an idle lifetime proves that property. A logical observable can
+be rotated to a population basis before readout, so its whole integration
+time is not automatically an equatorial-cat coherence exposure.
+
+For each actual record $h$, retain the subnormalized $R,a,b$ output
+$J_h$, target leakage and false flags, and score it against the same
+ideal $W$ output: $p_h=\operatorname{Tr}J_h$ and
+$q_h=\langle\Psi_W|J_h|\Psi_W\rangle$. Report summed good weight,
+acceptance and $q_A/p_A$ at a common finish, including preparation,
+cooling-induced errors, ringdown/reset, all rejected attempts, retained
+data waiting and release. Calibration sequence durations are not assumed
+to be minimum service clocks. The next test is the full-manifold,
+one-required-pulse and readout/cooling instrument under the strongest
+ordinary schedule. An early marker must preserve the required joint
+output and have its actual record available before the action it controls.
+A native comparison additionally needs its specified order-control
+dilation. These analytic qualifications establish no hardware benefit or
+new unrestricted noisy-gate optimum.
+
 <a id="nr-r06-cat-physical-route"></a>
 
 **A physical whole-mode route and its ordinary opportunity ledger.**
