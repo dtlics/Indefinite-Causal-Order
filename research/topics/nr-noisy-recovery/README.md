@@ -184,7 +184,9 @@ included.
 The [two-input force-bus component](geometric-calibration.md#nr-r16-two-input-bus)
 of NR-R16 compares full retained-control memory recovery with paid ordinary
 partial storage, and distinguishes that task from a required entangling
-gate on the actual collective-force platform.
+gate on the actual collective-force platform. Its
+[adjacent-gate extension](geometric-calibration.md#nr-r16-adjacent-collective-forces)
+retains the closed-loop baseline and the open-loop rank test.
 The [microwave readout comparisons](architecture-baselines.md#nr-r06-readout-noise-floor)
 and [full conditional port model](architecture-baselines.md#nr-r06-conditional-microwave-readout)
 require fixed cavity loading, measured signal/idler/bath correlations and
@@ -217,7 +219,8 @@ full calibrated bosonic noise compilers.
 The [warm adjacent-gate model](methods/tip-gate-screen.md#nr-r06-tip-warm-model)
 keeps preparation, retained couplers and rejected unknown data in one
 instrument, with a [physical readout model](methods/tip-gate-screen.md#nr-r06-tip-readout-model),
-[all-reference score bound](methods/tip-gate-screen.md#nr-r06-tip-calibration-bound)
+[finite homodyne instrument](methods/tip-gate-screen.md#nr-r06-tip-homodyne-instrument),
+[tight all-reference test](methods/tip-gate-screen.md#nr-r06-tip-worst-reference)
 and [continuous spectral validation method](methods/tip-gate-screen.md#nr-r06-tip-spectral-validation).
 Its next calculation needs a complete validated joint-device word, the actual
 readout and the same paid ordinary controls.

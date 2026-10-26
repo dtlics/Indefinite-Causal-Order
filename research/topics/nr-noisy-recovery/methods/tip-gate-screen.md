@@ -330,6 +330,76 @@ probe strength, efficiency, classifier or full readout instrument. This is a
 conditional model to test against the actual gate outputs, not a supplied
 ideal marker, physical order selector or performance claim.
 
+<a id="nr-r06-tip-homodyne-instrument"></a>
+
+#### A finite homodyne event has a complete quantum instrument
+
+The preceding pointer model also specifies a conditional instrument. Use
+the fixed zero-probe energies $E_s$ with
+$H_s/\hbar=2\pi E_s+\Delta_s r^\dagger r+i(F r^\dagger-F^*r)$.
+This convention absorbs or counterterm-subtracts the cavity's vacuum energy
+correction, rather than adding it again to the specified $H_0$. For a common
+initial coherent cavity and vacuum ports, its conditional isometry is
+
+$$
+|s\rangle\longmapsto e^{i\theta_s}|s\rangle
+|\alpha_s(T)\rangle_r\bigotimes_j|\beta_{j,s}\rangle,
+\qquad \beta_{j,s}(t)=\sqrt{\kappa_j}\alpha_s(t),
+$$
+
+$$
+\theta_s=-2\pi E_sT+
+\int_0^T\operatorname{Im}[F(t)\alpha_s(t)^*]dt.
+$$
+
+Substitution of the coherent-state ansatz into the forced-oscillator
+equation gives this phase. Include only the added readout interval; prior
+gate evolution is already present in $V$.
+
+Choose a normalized observed temporal mode $f$, including the specified
+local-oscillator phase schedule, and set
+$q_s=\langle f,\sqrt{\eta\kappa_{\rm ex}}\alpha_s\rangle$.
+For $X=(b_f+b_f^\dagger)/\sqrt2$, vacuum variance is $1/2$, and
+
+$$
+\psi_{q_s}(x)=\pi^{-1/4}
+ e^{-x^2/2+\sqrt2q_sx-q_s^2/2-|q_s|^2/2}.
+$$
+
+Write $O_{st}=\langle\Xi_t|\Xi_s\rangle$ for the overlap of the complete
+pointers, including observed
+and uncollected fields and the cavity if discarded. With
+$\mu_{st}=(q_s+q_t^*)/\sqrt2$, the coarse event $L\le X\le U$ multiplies
+$\rho_{st}$ by
+
+$$
+G_{st}^{[L,U]}=e^{i(\theta_s-\theta_t)}O_{st}
+\frac{\operatorname{erf}(U-\mu_{st})-
+      \operatorname{erf}(L-\mu_{st})}{2}.
+$$
+
+Indeed, $\psi_{q_s}(x)\psi_{q_t}(x)^*=
+\langle q_t|q_s\rangle\pi^{-1/2}e^{-(x-\mu_{st})^2}$.
+Its integral over the bin is a positive Gram matrix. The Hadamard product
+with the remaining pointer Grams, followed by the diagonal phase
+conjugation, is therefore positive and defines a CP Schur map for arbitrary
+references. $O_{st}$ already includes the measured mode's overlap; it must
+not be multiplied twice. Complementary bins sum to
+$e^{i(\theta_s-\theta_t)}O_{st}$, the exact unread channel. The complex
+off-diagonal kernel cannot be replaced by geometric means of assignment
+probabilities.
+
+This bin marginal explicitly integrates other observed records. Their fine
+homodyne amplitudes can instead be retained, and available raw records
+remain accessible to both controllers. If the cavity is delivered, remove
+its overlap from $O_{st}$ and append
+$|\alpha_s(T)\rangle\langle\alpha_t(T)|$ to the quantum output. That
+coefficient alone is not a reduced-data kernel or a cavity reset.
+These formulas complete the declared diagonal coherent-pointer model;
+the preceding occupied-sector, transition, bath, preparation and control
+qualifications still apply. They supply neither a physical QND marker nor
+an order selector.
+
 <a id="nr-r06-tip-calibration-bound"></a>
 
 ### A fixed cold phase policy and an all-reference score bound
@@ -381,6 +451,48 @@ already be included in $K_0$; a cleaner component from the no-readout
 channel cannot supply this bound for a different instrument. Numerical
 eigenvalues require outward matrix and propagation-error enclosures before
 these evaluated bounds become certificates.
+
+<a id="nr-r06-tip-worst-reference"></a>
+
+#### A tight matrix witness tests the fixed instrument on every reference
+
+The same fixed accepted marginal also admits a stronger all-reference test.
+Put $M_j=W^\dagger K_j$ and, for any Hermitian $X$, define
+
+$$
+q(X)=\sum_j|\operatorname{Tr}(XM_j)|^2,
+\qquad p(\rho)=\operatorname{Tr}(\rho E).
+$$
+
+For a logical density matrix, $q(\rho)$ is the target good mass on its
+purification. It is a convex quadratic, while $p$ is affine. The $K_j$ must
+describe the actual corrected accepted data marginal after continuous-record
+selection has been integrated, including $\sqrt{w_a}$ for hidden preparation
+components. All accepted leakage remains in $E$; applying $W^\dagger$ in a
+score grants no code-selection event or new decoder.
+
+For any Hermitian witness $R$, let $c_j=\operatorname{Tr}(RM_j)$ and
+$G_R=\sum_j(c_j^*M_j+c_jM_j^\dagger)$. Direct expansion gives
+
+$$
+q(\rho)-f p(\rho)
+=q(\rho-R)+\operatorname{Tr}[\rho(G_R-fE)]-q(R).
+$$
+
+Since $q(\rho-R)\ge0$, the matrix inequality
+$G_R-fE\succeq q(R)I$ certifies conditional target fidelity at least $f$
+for every input and passive reference, provided $E\succ0$.
+
+This witness family is tight for the fixed finite map. If
+$f\le\min_{\rho\succeq0,\operatorname{Tr}\rho=1}q(\rho)/p(\rho)$, choose a
+minimizer $R$ of the convex function $q-fp$. Its first-order condition gives
+$G_R-fE\succeq[2q(R)-fp(R)]I\succeq q(R)I$. Conversely the displayed
+certificate implies the claimed uniform ratio bound. Thus convex
+minimization of $q-fp$, with scalar bisection or a fractional iteration, can
+search this family without optimizing the receiver. An evaluated certificate
+still needs outward enclosures of the actual marginal, matrix inequality,
+propagation and acceptance floor; a solver status or Bell-average value
+does not supply them.
 
 ### A reference-complete total-excitation cutoff
 

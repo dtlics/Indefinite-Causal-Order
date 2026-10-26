@@ -549,7 +549,10 @@ The [two-input quantum-bus comparison](geometric-calibration.md#nr-r16-two-input
 adds complete retained-control output and a conditional ordinary
 partial-storage baseline for centered Gaussian force buses. It separates
 identity storage from the required ion entangling gate, whose demonstrated
-ordinary closed loop already returns the shared motion. Independent force
+ordinary closed loop already returns the shared motion. The
+[adjacent collective-force extension](geometric-calibration.md#nr-r16-adjacent-collective-forces)
+keeps the required pair of entanglers and the open-loop rank obstruction
+within this same comparison. Independent force
 ports, helper transfers and their timed errors remain explicit premises.
 
 The next finite test is the complete single-photon optical echo, including
@@ -1638,10 +1641,15 @@ The [warm joint-model component](methods/tip-gate-screen.md#nr-r06-tip-warm-mode
 fixes the preparation and full-output contract. Its
 [readout model](methods/tip-gate-screen.md#nr-r06-tip-readout-model)
 keeps physical measurement, encoded coordinates, accessible records and data
-backaction distinct. A
+backaction distinct. Its
+[finite homodyne instrument](methods/tip-gate-screen.md#nr-r06-tip-homodyne-instrument)
+retains the complex event kernel and the residual cavity output. A
 [fixed-policy all-reference bound](methods/tip-gate-screen.md#nr-r06-tip-calibration-bound)
 and [continuous spectral certificate](methods/tip-gate-screen.md#nr-r06-tip-spectral-validation)
-support a joint-device calculation without granting exact eigensolver output
+support a joint-device calculation. The
+[tight fixed-map witness](methods/tip-gate-screen.md#nr-r06-tip-worst-reference)
+tests arbitrary input references without changing the receiver. These methods
+make no grant of exact eigensolver output
 or a validated incoming rise. The next test validates the complete cold word
 and component-resolved warm maps, then supplies the actual readout and native
 selector at a common physical release. Unconditional helper controls, driven baths and

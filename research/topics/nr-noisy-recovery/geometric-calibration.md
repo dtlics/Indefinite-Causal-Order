@@ -328,6 +328,61 @@ also be omitted for memory. None of these storage strategies implements
 an indispensable entangling gate while an input is absent; the source's
 ordinary closed loop is the relevant gate comparator.
 
+<a id="nr-r16-adjacent-collective-forces"></a>
+
+**Adjacent required gates retain an ordinary closed-loop comparator.**
+In a fixed common motional interaction frame, let $S=Z_A+Z_B$ and
+$T=Z_B+Z_C$. A harmonic linear-force loop has
+propagator $D(\alpha S)e^{i\Phi S^2}$: its Magnus commutator is bus-scalar
+and commutes with the force, so higher terms vanish. When every motional
+displacement closes, adjacent loops give
+
+$$
+U_{AB}=e^{i\Phi S^2}\otimes I_E,\qquad
+U_{BC}=e^{i\Psi T^2}\otimes I_E.
+$$
+
+They commute and return an arbitrary warm bus and its reference in that
+frame. The laboratory-frame free bus evolution must also match.
+Since $S^2=2I+2Z_AZ_B$ and $T^2=2I+2Z_BZ_C$, suitable phases and paid
+local corrections implement the required adjacent CZ gates. Ordinary order
+uses the same loops; their coherent-order minus branch is zero. This remains
+true for correlated hidden classical angles $\Phi_\lambda,\Psi_\lambda$
+when each realized loop closes and the same realization is paired across
+both orders. It does not identify different timed bath histories.
+
+Open quadrature segments instead have $A=e^{-iaSx}$, $B=e^{-ibTp}$,
+$[x,p]=i$, $\theta=ab/2$ and $V=e^{-i(aSx+bTp)}$. Central BCH gives
+
+$$
+BA=e^{i\theta ST}V,\quad AB=e^{-i\theta ST}V,\qquad
+K_+=\cos(\theta ST)V,\quad K_-=i\sin(\theta ST)V.
+$$
+
+Here $ST=4P_{\rm equal}$, where
+$P_{\rm equal}=(I+Z_AZ_B)(I+Z_BZ_C)/4$ projects onto the two all-aligned
+spin strings. Thus
+
+$$
+K_+^\dagger K_+=(I-P_{\rm equal})+\cos^2(4\theta)P_{\rm equal},
+\qquad K_-^\dagger K_-=\sin^2(4\theta)P_{\rm equal}.
+$$
+
+Minus vanishes on a six-dimensional spin subspace. A nonzero plus branch proportional
+to a full-input unitary requires $|\cos(4\theta)|=1$; then $K_-=0$ and
+$AB=BA$, so ordinary order already matches the complete output. Moreover
+$V$ is spin-conditioned displacement, not a common returned-bus factor;
+equality for every oscillator input requires $a=b=0$. These necessary tests
+for raw clean-gate branches do not bound approximate gates, paid recovery,
+imperfect closure, heating records, nonlinear motion or noncommuting axes.
+
+[Bowers et al.](https://arxiv.org/html/2511.14364v3) demonstrate ordinary
+amplitude/frequency-ramped collective-force gates; their occupation tests
+are not an arbitrary-input thermal-process certificate or a coherent-order
+port. [Webb et al.](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.121.180501)
+demonstrate ordinary gates resilient to motional heating and slow
+motional-frequency errors, supplying another pulse-design comparator.
+
 **Classically fluctuating forces on a centered Gaussian bus.**
 Unknown launch-dependent amplitudes can correlate $C$ and its flags with
 a classical force program. There is then no single calibrated
