@@ -13,7 +13,7 @@ and noise model before making that comparison.
 
 ## NR-R06 — Native checks, calibrated faults and ordinary path baselines
 
-The [workload-commutator component](methods/workload-commutators.md) gives state-sensitive QEM and serial-reordering certificates, sharp scalar/norm boundaries, and matched ordinary baselines for known checks, RCS collision statistics and elementary Trotter filtering. Its average-case simulation theorem turns the measured scalar into a certified Trotter-depth decision, with complete calibration/fallback costs and a bounded two-versus-three forward-call comparison. Stronger ordinary/classical superiority remains open.
+The [workload-commutator component](methods/workload-commutators.md) gives state-sensitive QEM and serial-reordering certificates, sharp scalar/norm boundaries, and matched ordinary baselines for known checks, RCS collision statistics and elementary Trotter filtering. Its average-case simulation theorem turns the measured scalar into a certified Trotter-depth decision, with complete calibration/fallback costs and a bounded two-versus-three forward-call comparison. The complete one-step accuracy decision additionally has a two-versus-three exact-contact separation on a declared signed-reflection promise; generic ordinary/classical superiority remains open.
 
 The [Pauli support-span calibration method](methods/pauli-subspace-calibration.md)
 is a proof component of this result. It covers arbitrary weighted laws of

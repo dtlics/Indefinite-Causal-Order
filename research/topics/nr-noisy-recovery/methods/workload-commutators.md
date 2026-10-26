@@ -313,6 +313,104 @@ Thermal inputs do not automatically inherit (WC9). For any input ensemble with m
 
 There is a useful sector version: if a supplied projector \(\Pi\) commutes with both actual generators, restrict the entire proof to \(\Pi\mathcal H\), replace \(d\) by \(d_\Pi\), and probe \(\Pi/d_\Pi\). Random computational-basis states with a fixed excitation number then suffice when the blocks conserve that number. In the ideal Heisenberg decomposition above, \(H_{XY}\) and \(H_{ZZ}\) both conserve total magnetization, so this includes infinite-temperature dynamics within a fixed magnetization sector. Conservation by the intended generators alone does not justify the restriction if actual opaque blocks break it. [Chen and Brandão, Average-Case Speedup for Product Formulas, CMP 405, 32 (2024)](https://link.springer.com/article/10.1007/s00220-023-04912-5) independently establishes the relevance of fixed-particle-number input subspaces in average-case product-formula analysis; the finite-step sector certificate follows here simply by restriction.
 
+<a id="nr-r06-trotter-query-advantage"></a>
+
+## A query advantage for the actual one-step accuracy decision
+
+The preceding theorem gives a common simulation application and an explicit ordinary comparator. The following restricted certification benchmark also transfers a known query obstruction to the **useful accuracy decision**, rather than merely to exact estimation of its sufficient scalar. It is a promised opaque-generator subproblem of adaptive Trotter certification, not an advantage theorem for every Heisenberg implementation or explicit Hamiltonian description.
+
+### Task, input metric and access
+
+Fix $s>0$, $h=\pi/(2s)$, and an accuracy threshold $0<\epsilon<2/3$. The actual stationary generators are
+
+$$
+H_1=\sigma hP,\qquad H_2=\tau hQ,
+\qquad P=P^\dagger,\ Q=Q^\dagger,\ P^2=Q^2=I,
+\tag{WC14}
+$$
+
+where the unknown fixed signs $\sigma,\tau$ may independently be $\pm1$. Promise either $[P,Q]=0$ or $\{P,Q\}=0$. The hard qubit subfamily includes identity; excluding identity and allowing only two traceless qubit reflections changes the problem. Anticommuting invertible involutions exist only in even dimension. The lower bound below already holds for $d=2$ and extends to qubit registers by tensoring with spectators.
+
+The scientific task is to decide **accept one Trotter step** or **refine** at simulation time $t=s$, with respect to mean output trace distance on a supplied global projective two-design of pure inputs. Global Clifford-state ensembles give efficient such preparation on qubit registers; arbitrary one-designs do not suffice for this lower-bound statement. A one-step acceptance service must accept every promised zero-error instance and reject every promised instance whose actual one-step mean error exceeds $\epsilon$. A policy that always refines is sound but does not solve this complete decision task.
+
+The Hamiltonians are separate opaque forward-evolution interfaces. Calibration may use arbitrary states, references, known processing and adaptive times. A single known clock-controlled call $\exp[-iT\otimes H_j/h]$, for known Hermitian angle register $T$, is also admitted. Each invocation queries one specified Hamiltonian. There is no additional coherently indexed $\operatorname{SELECT}(H_1,H_2)$ interface, no hidden sequence of repeated contacts inside one counted call, and no supplied matrix, gate description or canonical controlled-reflection gate. Clock control includes the actual unknown sign in (WC14). This is a contact-count model, not a total-evolution-time or hardware-clock comparison.
+
+### The labels force different actual simulation decisions
+
+At $t=s$, the implemented one-step product is
+
+$$
+V=e^{-isH_1}e^{-isH_2}=-\sigma\tau PQ.
+$$
+
+If $P,Q$ commute, this equals $U=e^{-is(H_1+H_2)}$ exactly. If they anticommute, put $c=\cos(\pi/\sqrt2)$ and $z=\sin(\pi/\sqrt2)$. Then
+
+$$
+U=cI-\frac{iz}{\sqrt2}(\sigma P+\tau Q),\qquad
+V^\dagger U=\sigma\tau cPQ-\frac{iz}{\sqrt2}(\sigma P-\tau Q).
+$$
+
+Conjugation by the other involution shows $\operatorname{Tr}P=\operatorname{Tr}Q=0$, and cyclicity shows $\operatorname{Tr}PQ=0$. Thus $W=V^\dagger U$ is a traceless unitary. The global two-design second-moment identity gives
+
+$$
+\mathbb E_\psi |\langle\psi|W|\psi\rangle|^2
+=\frac{\operatorname{Tr}WW^\dagger+|\operatorname{Tr}W|^2}{d(d+1)}
+=\frac1{d+1}.
+$$
+
+Since pure-state trace distance satisfies $D_\psi^2=1-|\langle\psi|W|\psi\rangle|^2$ and $0\le D_\psi\le1$,
+
+$$
+\mathbb E_\psi D_\psi\ \ge\ \mathbb E_\psi D_\psi^2
+=\frac d{d+1}\ge\frac23.
+\tag{WC15}
+$$
+
+Consequently the commuting and anticommuting labels require opposite answers to the stated **actual-error** decision. This would fail for an arbitrary one-design: an eigenbasis of $W$ has zero output-state trace distance despite being a one-design. The two-design assumption is therefore material, while the earlier upper certificate (WC9) still needs only a one-design.
+
+At the calibration time $s$, the two supplied channels are $\operatorname{Ad}_P,\operatorname{Ad}_Q$. A single native SWITCH gives $p_-=0$ in the commuting case and $p_-=1$ in the anticommuting case, on every calibration input. One control measurement decides the promised accuracy question perfectly using one call to each Hamiltonian. The common bounds $\alpha=\beta=\pi/2<\pi$, with centers zero, satisfy (WC8). For a safe fallback one may use
+
+$$
+r_{\rm safe}=\left\lceil\frac{\pi^2}{4\epsilon}\right\rceil,
+$$
+
+because $C_F\le2h^2$ gives (WC9) at most $\pi^2/(4r)$. This fallback and one-step acceptance concern the sum of the actual generators; intended-target mismatch remains a separate budget.
+
+### Analytic ordinary obstruction and variable-time access
+
+[Chiribella, PRA 86, 040301(R) (2012)](https://arxiv.org/html/1109.5154v2), Eqs. (7)–(8) and Appendices A–B, proves that two averaged no-signalling qubit channels cannot be perfectly discriminated by any one-call-per-side sequential tester, in either order. The zero-overlap condition contradicts tester normalization. For the present reduction, write $R_U=UZU^\dagger$ and
+
+$$
+\mathcal M_U=\tfrac12(\mathrm{id}+\operatorname{Ad}_{R_U}),\quad
+\mathcal C_0=\int dU\,\mathcal M_U\otimes\mathcal M_U,\quad
+\mathcal C_1=\int dU\,\operatorname{Ad}_{UXU^\dagger}\otimes\operatorname{Ad}_{UYU^\dagger}.
+$$
+
+The first is an average of commuting pairs $(I,I),(I,R_U),(R_U,I),(R_U,R_U)$; the second averages anticommuting pairs. A universal exact classifier for these involutions with one bare call per port would distinguish these channels, contradicting the analytic theorem. This imports the published discrimination obstruction; it is not a new proof of causal nonseparability or an asymptotic separation.
+
+Bare-reflection access alone would not justify a Hamiltonian lower bound, because fractional evolution can be stronger. The independent signs in (WC14) supply an exact reduction. For any known clock $T$, averaging one call over its unknown sign gives
+
+$$
+\frac12\sum_{\sigma=\pm1}\operatorname{Ad}_{e^{-i\sigma T\otimes P}}
+=\mathcal K_0+\mathcal K_1,\qquad
+K_0=\cos T\otimes I,\quad K_1=-i\sin T\otimes P.
+\tag{WC16}
+$$
+
+Implement the known signed Kraus instrument $\{\cos T,-i\sin T\}$ on the clock, then query bare $P$ on the target only for outcome 1; a discarded dummy query may pad outcome 0. This reproduces the whole sign-averaged call, including references, with at most one bare-$P$ contact. Using only positive square-root effects without the known signs/phases would not give the same instrument. Independent sign averages compose for one invocation of each Hamiltonian, including classical adaptive durations and the displayed coherent clocks. The signs are fixed unknown instance parameters, not fresh physical noise per production run.
+
+Thus any universal one-call-per-Hamiltonian perfect accuracy classifier would produce the forbidden ordinary tester. The reduction also yields a bounded-error statement without assigning a numerical constant: normalized finite-dimensional two-slot testers, both orders and their convex mixtures form a compact set; their success on the fixed $\mathcal C_0/\mathcal C_1$ prior is continuous. The analytic absence of a perfect tester implies an attained maximum $1-\delta_0<1$. Therefore some fixed $\delta_0>0$ lower-bounds prior error, and hence worst-case error, for every ordinary **one-per-Hamiltonian** classifier in this model. Native error is zero. No value of $\delta_0$ or generic repeated-port bounded-error lower bound is asserted.
+
+### Exact two-versus-three contacts and computational payoff
+
+For exact decisions, two total ordinary calls with classical port allocation also cannot evade the obstruction by querying the same port twice. After a first query to a nontrivial qubit $P$, a branch spending its last query on $P$ has no $Q$ information; that same $P$ admits both $Q=I$ and an anticommuting $Q$. Exact correctness forces such a branch to have zero probability. A positive-probability repeated-port branch can therefore occur only on the scalar-identity subfamily, whose answer is already accept. Replace that branch by accept and pad the unused other port on a discarded dummy. This converts any perfect two-total-call policy into a one-per-port tester. The same argument applies when the other Hamiltonian is queried first. It is an exact classical-port-allocation argument, not an extension of $\delta_0$ to arbitrary two-total-call bounded-error policies.
+
+Three ordinary fixed-duration unitary contacts suffice using the exact two-$P$, one-$Q$ controlled-routing construction; it returns the same control statistic. Hence the worst-case exact calibration cost for this complete promised decision is **two native contacts versus three ordinary contacts** under the stated interfaces. An efficient circuit description, canonical controlled-reflection access, coherent SELECT across the two ports, or a weaker safety-only task changes that comparison.
+
+For $M$ subsequent simulations, the native exact policy spends $2+2M$ evolution-block calls on a commuting instance, or $2+2Mr_{\rm safe}$ on an anticommuting one. The ordinary three-contact implementation spends one extra calibration contact with the same production policy. Relative to always using $r_{\rm safe}$, native acceptance saves $2M(r_{\rm safe}-1)-2$ contacts when positive. All preparations, global two-design production sampling, native routing and controller cycles, ordinary dummy/routing operations, digital basis rotations, storage and readout remain additional resource-vector components. This is neither a claim about expected stopping-query optima nor a total gate/runtime advantage.
+
+The common workload is simulation-depth certification; the lower-bound instance is a restricted ideal reflection promise. It demonstrates a theoretical query advantage for a useful certification decision, with no claim of a growing system-size separation, noisy-processor threshold, generic DAQS superiority, first priority, or new quantum-versus-classical algorithm theorem.
+
 ## Current disposition
 
-Lightcone shading supplies real demand and (WC1) supplies an exact operational link. Equations (WC2)–(WC4) and the fixed-arm compiler prevent calling that a SWITCH separation. Equation (WC5) is a candidate bridge to serial compilation. Equations (WC8)–(WC13) establish a direct measured-scalar application: certified average-case Trotter depth, including accepted/rejected calibration and bounded ordinary-query comparisons. They do not prove an optimal simulator or an advantage over explicit Pauli calculation and local Hamiltonian learning. The search for a stronger common-workload separation remains open.
+Lightcone shading supplies real demand and (WC1) supplies an exact operational link. Equations (WC2)–(WC4) and the fixed-arm compiler prevent calling that a SWITCH separation. Equation (WC5) is a candidate bridge to serial compilation. Equations (WC8)–(WC13) establish a direct measured-scalar application: certified average-case Trotter depth, including accepted/rejected calibration and bounded ordinary-query comparisons. Equations (WC14)–(WC16) additionally give an exact two-versus-three contact advantage for the complete one-step accuracy decision on the stated signed-reflection promise, with an existential bounded-error gap for the one-per-port class. Neither result proves an optimal general simulator or an advantage on explicit Pauli lists, structured local learning or additional SELECT interfaces. Generic noisy-device and larger workload separations remain open.
