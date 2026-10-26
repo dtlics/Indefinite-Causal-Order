@@ -6,7 +6,7 @@
 
 ## NR-R17 — An ideal non-Clifford branch does not supply its native router
 
-Coherent order of two Ising exchanges can herald a non-Clifford gate on an unknown logical input. The complete router required for that construction is outside protected Ising braiding and fusion operations. A native hybrid trajectory interface may provide such an additional resource, but it can also provide ordinary magic factories. The results below identify those comparisons without asserting a native advantage, a measured hardware fidelity, or a reduction in fault-tolerant factory cost. They are analytic identities and scoped obstructions, complemented by a finite exact replay; they have not been formalized in Lean.
+Coherent order of two Ising exchanges can herald a non-Clifford gate on an unknown logical input. The complete router required for that construction is outside protected Ising braiding and fusion operations. A native hybrid trajectory interface may provide such an additional resource, but it can also provide ordinary magic factories. The physical-trajectory results below identify those comparisons without asserting a native device advantage, a measured hardware fidelity, or a reduction in fault-tolerant factory cost. A separate [charged atomic-source model](#nr-r17-noisy-factory) proves a useful distillation-entry advantage against a specified noisy-T supply, with an exact matched ordinary noisy-CS boundary. They are analytic identities and scoped obstructions, complemented by a finite exact replay; they have not been formalized in Lean.
 
 Magic generation by switching stabilizer-preserving operations is already
 established by [Mo et al., PRA **109**, 062428 (2024), Theorem 1](https://arxiv.org/html/2311.15494v2).
@@ -19,6 +19,240 @@ The separate [photonic program-resource comparison](backaction.md#nr-r19-private
 keeps its CCZ construction and ordinary controlled-H factory in their
 own physical access model. Neither comparison is a priority claim for
 magic from coherent order.
+
+<a id="nr-r17-noisy-factory"></a>
+
+### A charged noisy H/S source for standard magic distillation
+
+#### Result and exact scope
+
+There is a nonempty, explicit noise interval in which a native H/S SWITCH supplies **distillable magic for the ordinary T-injection workflow**, while an ordinary memoryless noisy-T supply cannot generate magic using any adaptive stabilizer factory. The comparison uses the **same independent Z-dephasing visibility on each supplied native data slot, on its router control, and on each ordinary T primitive**. Ideal stabilizer processing is the common fault-tolerant processor resource.
+
+This is a common quantum-computing workload: [Haah and Hastings, Quantum 2, 71 (2018), introduction](https://arxiv.org/html/1709.02832), identify magic-resource preparation as a major cost of implementing universal algorithms and study T, CS and CCZ factory endpoints. The supplied state below can enter established H-state distillation and then standard T-gate injection.
+
+The successful native protocol uses a joint Pauli readout. Restricting the readout to the controller alone misses the advantage. With visibility nu, its entry condition is
+
+\[
+\nu+\nu^2>1,
+\]
+
+while the ordinary noisy T channel is an exact convex mixture of Clifford channels for \(\nu\le1/\sqrt2\). Thus the proved advantage window is
+
+\[
+\boxed{\frac{\sqrt5-1}{2}<\nu\le\frac1{\sqrt2}}.
+\]
+
+This is a **raw resource distillation-entry advantage under a declared compositional noise model**. It is not a threshold for noisy stabilizer processing, a physical runtime or qubit saving, a theorem that the native router is cheap, or a new general universality principle. The charged native routing resource is what supplies magic. No quantum-over-classical algorithm theorem is required for this workload comparison.
+
+This is a resource-generation use case using the retained quantum output, rather than a workload requesting the scalar commutator meter alone. The physical Ising and trajectory comparisons elsewhere in NR-R17 keep their separate interface assumptions.
+
+An ordinary supplied noisy controlled-$S$ resource can reproduce the complete source state, as shown below; the separation is against the declared noisy-$T$ supply, not every coherent-control interface.
+
+#### Common resource and noise model
+
+Free operations in both architectures are clean Clifford gates, stabilizer-state preparation, Pauli measurement, classical randomness and feedforward. These represent the common ideal stabilizer processor used in standard magic-state distillation analyses. Clean CS, controlled-H/S, Fredkin, magic catalysts and routing are not granted as free operations.
+
+Define
+
+\[
+\mathcal Z_v(\rho)=\frac{1+v}{2}\rho+\frac{1-v}{2}Z\rho Z.
+\]
+
+The supplied native call has two slots
+
+\[
+A_\alpha=\mathcal Z_\alpha\circ\operatorname{Ad}_H,\qquad
+B_\beta=\mathcal Z_\beta\circ\operatorname{Ad}_S,
+\]
+
+uses their standard quantum SWITCH with control first, and additionally applies \(\mathcal Z_\gamma\) to the router control. Every slot is used once. The physical errors are unflagged; the environments are not supplied as usable records. The comparison specializes to **alpha=beta=gamma=nu**.
+
+Each invocation costs one native routing resource R, one noisy H-slot call and one noisy S-slot call. All discarded attempts remain charged. Clean stabilizer processing outside this atomic native invocation does not include replacing or repairing its internal error events. It also does not grant a generic clean coherently controlled slot interface.
+
+The ordinary architecture has clean stabilizer processing, any number of the same noisy Clifford channels, and an ordinary T or T-dagger supply with the same parameter:
+
+\[
+\mathcal E_\nu=\mathcal Z_\nu\circ\operatorname{Ad}_T,
+\quad T=\operatorname{diag}(1,e^{i\pi/4}).
+\]
+
+It has no native R or other uncharged nonstabilizer primitive. Independent fresh calls and environments are assumed in both architectures. An error record revealing the random Z would be a different and stronger resource.
+
+#### Native factory: preparation, parity readout and decoding
+
+Prepare \(|+\rangle_c|+\rangle_t\), apply the native call, and measure
+
+\[
+M=X_cY_t.
+\]
+
+Accept outcome -1. On that two-dimensional eigenspace use logical Pauli operators
+
+\[
+X_L=X_cI_t,\qquad Z_L=Z_cZ_t,\qquad Y_L=Y_cZ_t.
+\]
+
+They commute with M and obey the usual Pauli relations. The parity measurement and decoder require only stabilizer operations. An explicit decoder is
+
+\[
+D=H_c\operatorname{CNOT}_{c\to t}S_t^\dagger.
+\]
+
+It conjugates M to \(Z_c\), \(X_L\) to \(Z_cX_t\), \(Z_L\) to \(Z_t\), and \(Y_L\) to \(Z_cY_t\). Apply D, measure the control in Z, accept -1, then apply \(Z_t\). The surviving target has the positive logical X,Y,Z moments stated below. Per attempt this decoder uses one clean S-dagger, one clean CNOT, one clean H, one Z measurement and at most one Pauli correction. These are charged to the common stabilizer-processing ledger, rather than silently counting as native routing.
+
+#### Exact conditional output
+
+Let e,f be the independent Z-error bits after the H and S slots. Their parity means are alpha and beta. With control first the switched pure-history output on the prepared input is
+
+\[
+|\psi_{ef}\rangle=\frac{|0\rangle_c|0\rangle_t+|1\rangle_c|d_{ef}\rangle_t}{\sqrt2},
+\]
+
+where
+
+\[
+|d_{ef}\rangle=\frac{(1+i(-1)^f)|0\rangle+(-1)^e(1-i(-1)^f)|1\rangle}{2}.
+\]
+
+Average over e,f and multiply the controller off-diagonal block by gamma. The needed joint Pauli expectations are
+
+\[
+\begin{array}{c|c}
+\text{Pauli}&\text{expectation}\\\hline
+XY&-\gamma\alpha\beta/2\\
+XI&\gamma/2\\
+IY&-\alpha\beta/2\\
+ZZ&1/2\\
+YX&-\gamma\alpha\beta/2\\
+YZ&\gamma\beta/2\\
+ZX&0
+\end{array}
+\]
+
+For \(\Pi_-=(I-M)/2\), the success probability and unnormalized logical moments are consequently
+
+\[
+\boxed{
+P_- =\frac{2+\gamma\alpha\beta}{4},\quad
+(N_X,N_Y,N_Z)=\frac{(\gamma+\alpha\beta,\gamma\beta,1+\gamma\alpha\beta)}4.
+}
+\]
+
+For example, \(N_X=\operatorname{Tr}(X_L\Pi_-\rho)=[\langle XI\rangle-\langle IY\rangle]/2\). The other entries follow from \(Z_LM=YX\) and \(Y_LM=-ZX\). The normalized target Bloch vector is N/P.
+
+The [exact source ingredient](checks/architecture/uniform_noise_magic.py), included in the existing NR-R17 replay, reconstructs all 128 joint Pauli moments and 32 physical decoded-branch moments at the eight visibility-cube vertices. Both the Kraus construction and the formulas are separately affine in each visibility, so vertex agreement proves these polynomial identities throughout the cube. The analytic derivation above establishes the meaning of those moments. No optimality over input states, readouts or native protocols is claimed.
+
+#### Distillation, yield and usable algorithm resource
+
+Randomly apply identity or logical Hadamard to erase Y and average X,Z. The target becomes
+
+\[
+\rho_H(x)=\tfrac12[I+x(X+Z)],\qquad
+x=\frac{(1+\gamma)(1+\alpha\beta)}{2(2+\gamma\alpha\beta)}.
+\]
+
+[Reichardt, QIP 4, 251–264 (2005), Theorem 1 and §II](https://arxiv.org/html/quant-ph/0411036#S2), proves distillability with ideal stabilizer operations whenever x>1/2. His Steane-code recurrence is
+
+\[
+f(x)=\frac{x^3(7+8x^4)}{1+14x^4},\qquad
+A(x)=\frac{1+14x^4}{64}.
+\]
+
+After this specified twirl, the H-axis state is distillable if and only if
+
+\[
+\boxed{\gamma+\alpha\beta>1.}
+\]
+
+The clean Clifford $H S^\dagger H$ sends Bloch coordinates $(x,0,x)$ to $(x,x,0)$; after distillation this is the standard $T$-injection state. This directly feeds the common workflow of preparing reliable T resources for algorithms. No supplied T state or nonstabilizer seed is consumed by the native preparation or the distillation circuit.
+
+With fresh independent attempts, one accepted raw state costs mean \(1/P_-=4/(2+\gamma\alpha\beta)\) R calls and twice as many noisy slot calls. Failures are discarded only after their whole cost is charged. Accepted states from independent attempts are identically and independently distributed, as required by this recurrence.
+
+The threshold excess is
+
+\[
+d=x-\tfrac12=\frac{\gamma+\alpha\beta-1}{2(2+\gamma\alpha\beta)}.
+\]
+
+For x between 1/2 and 3/5 the exact bound
+
+\[
+f(x)-x\ge\frac{224}{1759}(x-1/2),\qquad A(x)\ge15/512
+\]
+
+implies at most \(k=\max\{0,\lceil\log[(1/10)/d]/\log(1983/1759)\rceil\}\) successful bootstrap levels to reach x>=3/5. Expected R consumption is at most
+
+\[
+\frac{4}{2+\gamma\alpha\beta}\left(\frac{3584}{15}\right)^k.
+\]
+
+This deliberately loose, rigorous bound is polynomial in the inverse threshold gap. Fixed parameters strictly inside the entry region give finite fixed bootstrap cost. For subsequent fifteen-to-one rounds, put $e=(1-\sqrt2 x)/2$ and $r=1-2e$. The standard acceptance and error recurrence are
+
+$$
+p_{15}(e)=\frac{1+15r^8}{16},\qquad
+F_{15}(e)=\frac{1-15r^7+15r^8-r^{15}}{2(1+15r^8)}.
+$$
+
+At $x\ge3/5$, $e<13/100$, inside this routine's convergence region. One exact check of the latter statement sets $u=r^2$ and $w=u+u^{-1}$: the sign of $F_{15}(e)-e$ is the sign of $w^3+w^2-2w-16$. For $0<e\le13/100$, this polynomial increases on the relevant interval $2\le w\le1369/2500+2500/1369$, and its value at the upper endpoint is negative. Thus the error decreases to zero, with the usual cubic suppression near zero. For either $n$-to-one routine, independent fresh batches and restart on rejection give the exact renewal ledger $C_{\mathrm{next}}=nC_{\mathrm{current}}/p_{\mathrm{accept}}$. It includes every rejected batch; the fixed stabilizer circuit, syndrome measurements, memory and classical processing are additional common processor resources. For an algorithm with $m$ injections, preparing each state to error $\delta$ bounds the final operational trace-distance error, and the half-diamond channel distance, by $m\delta$ through the usual hybrid argument. This supplies a finite-accuracy computational endpoint. No positive perfect-state asymptotic yield or optimized factory overhead is asserted from this bound.
+
+#### Ordinary baseline: an exact no-activation interval
+
+For \(0\le\nu\le1/\sqrt2\), direct action on the Pauli basis proves
+
+\[
+\boxed{
+\mathcal E_\nu
+=\tfrac12\operatorname{Ad}_I
++\frac\nu{\sqrt2}\operatorname{Ad}_S
++\left(\tfrac12-\frac\nu{\sqrt2}\right)\operatorname{Ad}_Z.
+}
+\]
+
+The coefficients are nonnegative and sum to one. The T-dagger version has S-dagger in place of S. Thus each supplied noisy T primitive is literally a random Clifford channel, even on inputs entangled with arbitrary ancillas. Its output on |+> is the usual noisy T state with Bloch coordinates \((\nu/\sqrt2,\nu/\sqrt2,0)\), inside the stabilizer octahedron in the same interval.
+
+Every ordinary adaptive composition, including arbitrary stabilizer ancillas, feedforward and postselection, therefore remains a stabilizer instrument. Conditioning can change mixture weights but cannot create a nonstabilizer state in any nonzero visible branch. Unlimited unflagged copies, collective distillation, ordinary three-T CS synthesis, and T-state cultivation built only from the stated supply and free processor cannot circumvent this exact convex decomposition. This is stronger than testing a particular conventional factory.
+
+Combining that obstruction with the native entry condition gives the stated nonempty uniform-noise window. Equivalently, with unflagged phase-flip probability \(p=(1-\nu)/2\) on each supplied primitive, the interval is
+
+\[
+\frac{1-1/\sqrt2}{2}\le p<\frac{3-\sqrt5}{4}.
+\]
+
+These are **raw resource-entry values** under an ideal stabilizer processor. Calling them a hardware fault-tolerance threshold would be incorrect.
+
+A concrete interior witness is \(\nu=2/3\), or phase-flip probability 1/6 at each supplied primitive. The native acceptance probability is 31/54 and the corrected Bloch vector is \((15/31,6/31,35/62)\). Its H-twirled coordinate is \(x=65/124>1/2\), so it is distillable. The ordinary noisy T state instead has coordinates \((\sqrt2/3,\sqrt2/3,0)\), whose l1 norm is below one, and its entire channel has the exact Clifford decomposition above. Native raw preparation costs mean 54/31 R calls per accepted state at this algebraic point; this is a checkable example, not an optimized hardware setting.
+
+This interior example can already enter the familiar 15-to-1 H/T-injection-state routine directly. Its H-eigenstate error is $e=(1-65\sqrt2/124)/2<13/100$, in the exact convergence interval above; numerically it is about 0.129, below the familiar approximately 0.141 entry threshold. [Bravyi and Kitaev, PRA 71, 022316 (2005), §VI, Eqs. (35)–(38)](https://arxiv.org/html/quant-ph/0403025#S6), give the acceptance probability, exact error recurrence and cubic high-fidelity suppression. The sharp Reichardt threshold is needed to establish the full open interval, rather than to make this concrete example operational.
+
+#### What is being improved, and the matched-resource boundary
+
+The demonstrated benefit is the existence of a distillable T resource in a common primitive-noise regime where ordinary noisy-T injection cannot supply one at any copy count. The native method spends R and three noise locations per attempt rather than declaring the router free. No scalar price for R versus a T injection was needed to prove that source-quality benefit.
+
+The result does not imply a universally cheaper native factory. A clean ordinary CS source, or an ordinary source implementing the same full noisy two-qubit map as the native router, can reproduce the output and shares its distillation entry condition. Such a source is itself a nonstabilizer resource and is not available from the stipulated CSP noisy-T supply in the separation interval. Granting it would change the resource comparison. Likewise, different error axes, inter-call correlations, errors in the clean processor, loss, leakage, or a router error that reveals which order occurred require new analysis.
+
+For the strongest supplied-state comparison, write $e,f,g$ for the H-slot, S-slot and controller Z-error bits. Put $|CS\rangle=CS|++\rangle$ and $U_{efg}=Z_c^g\operatorname{CNOT}_{c\to t}^{e}\operatorname{CZ}_{ct}^{f}$. Directly using $HZ^eH=X^e$ gives
+
+$$
+(Z_c^g\otimes H_t)|\psi_{ef}\rangle
+=\frac{|0\rangle|+\rangle+(-1)^g|1\rangle X^e Z^f S|+\rangle}{\sqrt2}
+=U_{efg}|CS\rangle.
+$$
+
+Consequently, with $q_v(b)=[1+(-1)^b v]/2$,
+
+$$
+(I\otimes H)\rho_{\rm native}(I\otimes H)
+=\sum_{e,f,g}q_\alpha(e)q_\beta(f)q_\gamma(g)
+ U_{efg}|CS\rangle\langle CS|U_{efg}^{\dagger}.
+$$
+
+Every $U_{efg}$ is Clifford. A supplied ordinary CS state followed by this random Clifford channel therefore reproduces the full pre-readout source and every later branch, not just an accepted-state fidelity. This is a fixed-input source identity, not equality of arbitrary-input channels. The exact ingredient checks all eight history identities. An ordinary interface supplying that noisy CS resource shares the claimed benefit. In particular, [Simonov et al., Section II](https://arxiv.org/html/2311.13654v4#S2) discuss controlled/vacuum-extended operations in implementations of coherent order; such apparatus access cannot be excluded by calling it routing. No equal-device or total-cost separation follows from restricting the comparator to noisy T.
+
+#### Prior work and novelty boundary
+
+[Mo et al., PRA 109, 062428 (2024), §III–IV](https://arxiv.org/html/2311.15494v2) already establish SWITCH magic creation from completely stabilizer-preserving channels and noise-assisted retention in depolarizing examples. [Simonov et al., PRResearch 8, 013239 (2026), §III–IV](https://arxiv.org/html/2311.13654v4) already establish universality constructions from superposed single-qubit orders. These broad phenomena are not new claims here.
+
+The presently derived addition is the explicit **joint-parity magic-factory protocol**, its full three-visibility conditional state, the common-noise sufficient threshold \(\gamma+\alpha\beta>1\), and its uniform-noise comparison with an exact random-Clifford ordinary T supply. It upgrades a magic witness to an established distillation endpoint with a counted resource ledger. A bounded check of those closest papers found depolarizing/noise-capacity and universality results rather than this specific dephasing/joint-readout threshold. The algebra, distillation endpoint and baseline have independent bounded reviews. Search absence does not establish priority; no first-priority claim is made.
 
 ### Ideal logical gate and complete branch accounting
 
@@ -270,6 +504,6 @@ A positive device result would specify a full anyon model including its charge s
 
 ### Executable verification and limits
 
-[verify_braided_magic.py](checks/architecture/verify_braided_magic.py) uses only Gaussian rational fractions, rejects optimized Python execution and writes JSON to standard output. It checks (3)'s gate probabilities, (5)'s extremal stabilizer overlaps, both flagged states in (16) for five rational visibilities, their probabilities and (17), the physical-$S$ half-exchange yield/exposure arithmetic, and all sixteen one-qubit Pauli pairs in (6). It needs no data file or third-party dependency. Run it with `python -S -B research/topics/nr-noisy-recovery/checks/architecture/verify_braided_magic.py`.
+[verify_braided_magic.py](checks/architecture/verify_braided_magic.py) uses only Gaussian rational fractions, rejects optimized Python execution and writes JSON to standard output. It checks (3)'s gate probabilities, (5)'s extremal stabilizer overlaps, both flagged states in (16) for five rational visibilities, their probabilities and (17), the physical-$S$ half-exchange yield/exposure arithmetic, and all sixteen one-qubit Pauli pairs in (6). It also runs [uniform_noise_magic.py](checks/architecture/uniform_noise_magic.py), checking the full H/S source, joint parity/decoder moments, all eight matched-CS histories, the ordinary Clifford-mixture Pauli action and exact distillation-entry arithmetic. It needs no data file or third-party dependency. Run it with `python -S -B research/topics/nr-noisy-recovery/checks/architecture/verify_braided_magic.py`.
 
 The protected-resource closure, native trajectory assumptions, physical Abelian phases, collision/loss completion, continuous-charge model and fault-tolerant cost comparison remain analytic arguments and interface conditions. Finite matrix replay is not a hardware realization, an optimized factory converse or a Lean proof.

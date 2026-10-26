@@ -5,6 +5,7 @@ physical phases and factory costs are proved/scoped in braided-magic.md.
 """
 from fractions import Fraction as F
 import json
+from uniform_noise_magic import verify as verify_uniform_noise_magic
 
 if not __debug__:
     raise RuntimeError("Exact checks reject -O execution.")
@@ -142,5 +143,6 @@ print(json.dumps({
     "physical_S_two_impurity_magic_yield":"3/8",
     "matching_mean_slot_exchange_exposure":"8/3",
     "pauli_full_loop_order_closures":loop_cases,
-    "scope":"Finite exact operator and raw-state identities. Native routers, full physical Abelian phases, noise models, fault tolerance and hardware cost remain analytic assumptions; no architecture advantage certificate."
+    "atomic_noisy_HS_source":verify_uniform_noise_magic(),
+    "scope":"Finite exact operator, source-state and decoder identities, matched ordinary CS and source-entry arithmetic. General distillation and stabilizer closure remain analytic; atomic source, ideal processor, native routing, physical phases and noise are declared premises. No hardware threshold, optimized cost or priority certificate."
 },indent=2))

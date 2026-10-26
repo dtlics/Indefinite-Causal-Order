@@ -63,7 +63,7 @@
       "slug": "nr-noisy-recovery",
       "title": "Noisy physical recovery with expected-query bounds",
       "status": "analytic-with-exact-certificates",
-      "qualification": "Analytic recovery, promised capacity/noise-memory results and exact finite certificates remain preserved. A significant practitioner workload advantage is open; workload-first QEM/compiler certificates and matched ordinary/classical baselines guide the active search. New NR results are not Lean-formalized or externally peer reviewed; hardware crossover is not the theoretical success gate.",
+      "qualification": "Analytic recovery, promised capacity/noise-memory results and exact finite certificates remain preserved. A charged noisy H/S source has a proved magic-distillation entry benefit against a specified noisy-T supply, with a matched ordinary noisy-CS boundary. Common-workload scalar-meter advantages remain open. New NR results are not Lean-formalized or externally peer reviewed; hardware crossover is not the theoretical success gate.",
       "dossier": "topics/nr-noisy-recovery/README.md"
     }
   ]

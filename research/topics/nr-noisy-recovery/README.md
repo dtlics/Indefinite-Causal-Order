@@ -439,11 +439,9 @@ identifies a more concrete optical comparison: measure the complete
 ordinary conditional-displacement echo and switched instrument at the
 same setting, including every loss, parity helper, repeat pass and phase
 calibration. Component transmissions alone do not establish that comparison.
-The [braided-magic screen](braided-magic.md) requires a complete physical
-phase and trajectory model, with ordinary loop/interferometer factories
-included. The [rewinding analysis](obstructions.md#nr-r05) distinguishes
+The [magic-resource result](braided-magic.md#nr-r17-noisy-factory) includes a charged atomic-source distillation-entry theorem and its exact ordinary noisy-CS boundary. Its separate physical Ising screen still requires a complete phase and trajectory model, with ordinary loop/interferometer factories included. The [rewinding analysis](obstructions.md#nr-r05) distinguishes
 almost-sure completion from finite mean cost and delivered success under
-loss. None of these screens establishes a native architecture benefit.
+loss. These physical interface screens do not establish a native device advantage; the separate atomic-source result has its own resource-model scope.
 Other open directions include noise throughout compiled gates, protected
 encodings at fixed site error rates, and sharper query frontiers. These
 are open questions, not consequences of the present theorem.
