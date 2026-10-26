@@ -1,7 +1,7 @@
 {
   "schema": "noisy-recovery-validation-v1",
   "outcome": "passed",
-  "generated_utc": "2026-10-26T00:37:09+00:00",
+  "generated_utc": "2026-10-26T00:58:00+00:00",
   "command": "python -S research/topics/nr-noisy-recovery/checks/run_all.py --record",
   "environment": {
     "python": "3.12.14",
@@ -14,7 +14,7 @@
   "input_hash_algorithm": "sha256",
   "input_hashes": {
     "research/topics/nr-noisy-recovery/alignment.md": "c06e21fc3a70e7b1e59343cae0f9d5b419c85f350b7c2e26226d269202b0e2a9",
-    "research/topics/nr-noisy-recovery/architecture-baselines.md": "a02bbcb31dea8b5fde5f24ed4347ece90ff576531c51588004a7c0a5ef4b064e",
+    "research/topics/nr-noisy-recovery/architecture-baselines.md": "450067bdedde805c53f3204443560c0bea753dd12e7e291d1989fb631ad949a0",
     "research/topics/nr-noisy-recovery/architecture.md": "b1717e17b78e2b498d3880be3b9b49ec39d86790bfa99098adbd87753cdbf3a5",
     "research/topics/nr-noisy-recovery/backaction.md": "ba0c51c1bbdf928814708b4ceed84744a0b36df8780067999e1de7a9dc6bc7f6",
     "research/topics/nr-noisy-recovery/braided-magic.md": "5b34e071abc1448940783a5f7a8853fd4c3c7523e3725edd5d6540ea5d808b4c",
@@ -162,7 +162,7 @@
     "research/topics/nr-noisy-recovery/methods/commutator-apparatus.md": "30ca3cf648b35bddcd3d8daf89a43566e5c7b5126f359d43850fb1a39d9245db",
     "research/topics/nr-noisy-recovery/methods/design-transfer.md": "55f2d438cb20bb017db3abaa860304c5b21aaabdb5ffb72d77b8f94376d1c206",
     "research/topics/nr-noisy-recovery/methods/final-flag-completion.md": "6b8163d28f3014f30bfea74a1d06ce250545dce71620c38c86ead1c119e2a569",
-    "research/topics/nr-noisy-recovery/methods/heat-gkp-certification.md": "3be1dab09d02a98697bca408762c3b7caae0a181cce22f35a7147aeaea871d45",
+    "research/topics/nr-noisy-recovery/methods/heat-gkp-certification.md": "30442cdbd758d36c93bf51707805e3781f2c8cb50a86d09f2916989fb192ab5b",
     "research/topics/nr-noisy-recovery/methods/local-converse.md": "bde4df3c50776a07ba104231939b1ca2b7ce0c32d1191cc80780de3e4b9dc2c0",
     "research/topics/nr-noisy-recovery/methods/memory-code-bootstrap.md": "aea800fb45f686e3da947750c42f3d6fb35d15f0c879bc4f674329b75120f0dc",
     "research/topics/nr-noisy-recovery/methods/memory-code-verification.md": "9ee1db2b7908a0323f6d9f4a4dfc8fa030e7dc54172c358b852aa0e70b3501da",
@@ -194,7 +194,7 @@
     "research/topics/nr-noisy-recovery/numerics/moving_caps_record.json": "ebbe523bab42065cd5d7d4b92ab94c9a906e89206d9038552d53caa13e98e7de",
     "research/topics/nr-noisy-recovery/numerics/moving_caps_running.py": "b3b449c89e3fc7ffa2c7b854812e4805e1efe5cf2dfa1e458cb380e81f7642e5",
     "research/topics/nr-noisy-recovery/obstructions.md": "86ac3f4b00fd7b156250486162a6067d4b0524ac26421206a9ae8c30338fe8a9",
-    "research/topics/nr-noisy-recovery/README.md": "851e7f1ea2c665a1299b9f085caf7e49de28ba90eec4ef917496e30f8c82885b",
+    "research/topics/nr-noisy-recovery/README.md": "e2c6c1d6018ad6360482d2c13941244954abccc43d3ab23b7caa383b0ab65569",
     "research/topics/nr-noisy-recovery/references.md": "97a709cdec6f25a67da4a797eb6dbade275d8d9f767dc31ac9c641e9c95d6e27",
     "research/topics/nr-noisy-recovery/theorem.md": "f55ba54175170100b2f62423583ee72e92efff3fd3cb569f5c190a857de06944",
     "research/topics/nr-noisy-recovery/unknown-pulse-gates.md": "b4c171882e759dcf87439fa85ff8ed48d01c1fe9c59a71fdaf36d747dbe98e6f"

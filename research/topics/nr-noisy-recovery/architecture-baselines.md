@@ -5419,9 +5419,13 @@ An exact finite-code ordinary recovery exceeds a universal upper bound
 for one raw switch at the declared noise point. The latter allows any
 target-only encoder and full final control/target recovery, with no energy
 limit. A Gaussian broadcasting channel and a trace-distance comparison
-give the bound. Known intermediate framing and repeated switched blocks
-are different protocols; the full heralded frontier and finite-cost
-physical encoder/decoder remain unresolved.
+give the bound. A [smooth packet-code receiver](methods/heat-gkp-certification.md#nr-r06-smooth-packet-recovery)
+also closes a matched high-acceptance comparison when ordinary encoders
+may be reoptimized under the common channel-stage energy cap. Its finite
+receiver energy is a separate ledger, with nonlinear control and timing
+costs still unqualified. Fixed-code recovery, other acceptances, known
+intermediate framing and repeated switched blocks remain separate
+comparisons.
 
 <a id="nr-r06-terminal-noise"></a>
 

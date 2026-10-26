@@ -243,7 +243,10 @@ adds exact Gram normalization, certified photon tails and a supplied
 finite-code ordinary recovery. At the declared noise point it exceeds
 a code-independent upper bound for one raw Weyl switch, even with full
 control/target decoding. Intermediate framing, repeated switched blocks,
-the heralded frontier and physical decoder costs remain separate tests.
+the full heralded frontier and physical decoder costs remain separate tests.
+Its [smooth packet-code comparison](methods/heat-gkp-certification.md#nr-r06-smooth-packet-recovery)
+closes one matched high-acceptance raw-switch task under the common
+channel-stage energy cap, with a separate finite receiver ledger.
 The full-reset ordinary simulation in NR-R10 and the excitation-exchange
 decision counterexample in NR-R14 sharpen the remaining state-preparation
 and memory-calibration targets without claiming a native advantage.

@@ -9,6 +9,8 @@ logical reference and retained switch control. It supplies neither an
 optimal recovery nor a physical coherent-order implementation, and it
 does not replace the compact-syndrome code in the
 [bosonic logical-frontier comparison](bosonic-logical-frontier.md).
+It also owns the raw-switch converse and the separately reoptimized
+packet-code comparison at matched high acceptance below.
 
 The heat envelope and Mehler/theta normalizations are established in
 [Matsuura, Yamasaki and Koashi, PRA **102**, 032408 (2020),
@@ -476,6 +478,21 @@ $$
 \tag{HG19}
 $$
 
+The deterministic ceiling also bounds every accepted final recovery.
+Let $A$ be its Bell-input acceptance and $W$ its subnormalized Bell-good
+weight. Complete it to a trace-preserving receiver by discarding each
+failure payload and preparing $I_L/2$. If the failure-reference marginal
+is $\rho_R^{\rm fail}$, its replacement output contributes exactly
+$\operatorname{Tr}\rho_R^{\rm fail}/4=(1-A)/4$ to Bell overlap.
+This holds for input-dependent acceptance effects too. The completed
+receiver is in the class of (HG19), so
+
+$$
+W+\frac{1-A}{4}\le\frac34+\frac1{2\pi},\qquad
+W\le\frac A4+\frac12+\frac1{2\pi}.
+\tag{HG19a}
+$$
+
 More generally, for independent anisotropic kicks with
 $v=\sqrt{ab}\ge1/2$, a known symplectic squeeze conjugates
 $\mathcal N_{\operatorname{diag}(a,b)}$ to $\mathcal N_{vI}$.
@@ -494,10 +511,10 @@ Known input controls can be included in the target encoder and known
 final controls in recovery. Controls between the two slots change
 the channel and are outside this raw-switch converse. In particular,
 the ordinary alignment below is such a different circuit.
-The score is deterministic, all-attempt logical entanglement fidelity.
-This does not determine a heralded acceptance/conditional-fidelity
-frontier or establish ordinary dominance after matching an arbitrary
-native acceptance probability.
+Equation (HG19) bounds deterministic, all-attempt logical entanglement
+fidelity; (HG19a) is a universal accepted-weight upper bound for the same
+raw channel. Neither determines its exact heralded frontier or proves
+ordinary dominance at every matched acceptance.
 
 ## A finite ordinary code and an exact feasible recovery
 
@@ -668,6 +685,146 @@ checks the selected source, finite channel and feasible witness;
 the continuous Gaussian integral, broadcast extension and diamond
 bound are the analytic arguments above.
 
+<a id="nr-r06-smooth-packet-recovery"></a>
+
+## Reoptimized packets and a smooth full-output receiver
+
+The same raw-switch point admits a stronger ordinary comparison when
+both processors may choose their target encoder under the common
+channel-stage ensemble-mean cap $284/25$. Keep $a=b=1/2$, use each
+mandatory hidden-noise call once, and allow the known Fourier framing.
+Set $g=1$ in (BL7), so no squeezing is needed:
+$F^\dagger Z(y)FX(x)=X(s)$ with $s=x+y\sim N(0,1)$.
+Neither hidden draw is learned. The native class remains exactly the one
+raw switch in (HG19), with arbitrary target-only encoding and full final
+control/oscillator recovery, but no input-bearing protected bypass,
+intermediate slot controllers or repeated switched block.
+
+Define the real packet and encoding by
+
+$$
+h(u)=\cos(\pi u/2)\,\mathbf1_{[-1,1]}(u),\qquad
+(E|0\rangle)(q)=h(q+4),\quad (E|1\rangle)(q)=h(q-4).
+\tag{HG26}
+$$
+
+The packets are normalized with disjoint supports, hence $E^\dagger E=I$.
+They preserve arbitrary logical superpositions and references. The packet
+is continuous, vanishes at its endpoints and is in $H^1$, with finite
+number quadratic form. Direct integration gives
+$\int u^2|h|^2du=1/3-2/\pi^2$ and
+$\int|h'|^2du=\pi^2/4$. Both position and derivative cross forms vanish
+between the translated supports. Thus, as a number-form compression,
+
+$$
+E^\dagger NE=E_0I,\qquad
+E_0=\frac{16+1/3-2/\pi^2+\pi^2/4-1}{2}<\frac{107}{12}.
+\tag{HG27}
+$$
+
+The rational upper uses $\pi^2<10$ and discards the negative term. This
+is an all-logical-input bound, not just a maximally mixed average. A
+centered quadrature kick of variance $v$ adds $v/2$ to ensemble mean
+number, and Fourier rotations preserve number. The two calls therefore
+give channel-stage peak $N<113/12<284/25$. No hard photon cutoff,
+exponential moment, per-noise-realization cap or preparation-cost bound
+is inferred from this finite mean.
+
+**A complete smooth decoder.** Initialize a receiver-local output qubit
+in $|0\rangle$ after the noisy calls. It carries no protected input data
+during exposure. Take $\varepsilon=1/10$ and a Lipschitz angle
+$\vartheta(q)=0$ for $q\le-\varepsilon$,
+$\vartheta(q)=\pi(q+\varepsilon)/(4\varepsilon)$ for
+$|q|<\varepsilon$, and $\vartheta(q)=\pi/2$ for
+$q\ge\varepsilon$. Apply $e^{-i\vartheta(Q)Y_L}$, then translate the
+oscillator by $+4$ on qubit zero and $-4$ on qubit one. On the initialized
+qubit column this is the isometry $T:L^2(\mathbb R)\to
+\mathbb C^2\otimes L^2(\mathbb R)$ with
+
+$$
+(T\psi)_0(u)=\cos\vartheta(u-4)\,\psi(u-4),\qquad
+(T\psi)_1(u)=\sin\vartheta(u+4)\,\psi(u+4).
+\tag{HG28}
+$$
+
+Changing variables gives $\|T\psi\|^2=\int(\cos^2\vartheta+
+\sin^2\vartheta)|\psi|^2dq=\|\psi\|^2$. Therefore
+$\mathcal D(\rho)=\operatorname{Tr}_u(T\rho T^\dagger)$ is normal CPTP
+on the entire oscillator output, including every Gaussian tail. This is
+coherent transfer into a qubit, not a destructive position-sign
+measurement with its record forgotten.
+
+For $|s|\le29/10$, the shifted left packet lies entirely at
+$q\le-\varepsilon$ and the right packet at $q\ge\varepsilon$. Hence
+$TX(s)E|j\rangle=|j\rangle\otimes|h_s\rangle$, where
+$h_s(u)=h(u-s)$, for both logical basis vectors. This proves exact
+identity on all logical/reference matrix units throughout that interval.
+Outside it the receiver still gives a complete positive output. Since
+$\mathbb E s^4=3$, Markov's inequality and nonnegative tail Bell overlap
+give the all-attempt bound
+
+$$
+F_e(\mathcal D\circ\mathcal N_{\text{one-axis},1}\circ E)
+\ge\Pr(|s|\le29/10)\ge
+f:=1-\frac{30000}{707281}=\frac{677281}{707281}.
+\tag{HG29}
+$$
+
+**Finite, separately priced receiver energy.** The bounded Lipschitz
+weights preserve $H^1$ and position second moments. For pure, possibly
+reference-vector-valued $\psi$, differentiating the two weights gives
+$\|(\cos\vartheta\,\psi)'\|^2+
+\|(\sin\vartheta\,\psi)'\|^2
+=\|\psi'\|^2+\int\vartheta'^2\|\psi\|^2dq$; the cross terms cancel.
+Thus the rotation preserves $Q^2$ and increases $P^2$ by at most
+$K^2$, $K=\pi/(4\varepsilon)=5\pi/2$. Translations preserve $P^2$ and
+give $Q^2_{\rm out}=Q^2_{\rm in}+16+
+8\langle Q\cos(2\vartheta(Q))\rangle\le Q^2_{\rm in}+16$.
+The last sign follows from $q\cos(2\vartheta(q))\le0$; inside the
+transition, $\cos(2\vartheta(q))=-\sin(\pi q/(2\varepsilon))$.
+Linearity extends these form bounds to mixed inputs.
+
+During $e^{-it\vartheta(Q)Y_L}$ the kinetic increment is at most
+$t^2K^2$. After that rotation, translations $+4t/-4t$ give position
+increment at most $16t^2$, for $0\le t\le1$. The sequential mathematical
+receiver interpolation therefore has uniformly finite oscillator mean
+$N<113/12+8+125/4=146/3$. This is a second receiver ledger, larger than
+the channel-stage cap. It does not bound the total apparatus or establish
+native access to the nonlinear position-dependent qubit rotation. Its
+duration, Hamiltonian implementation, work, faults and output transfer
+remain actual costs.
+
+**Matched acceptance.** Let $\Lambda$ denote the complete ordinary logical
+channel above. An independent coin with $A=19/20$ gives maps
+$A\Lambda$ and $(1-A)\Lambda$, retaining both flags. Acceptance is exactly
+$AI$ on every logical input; all failed launches remain charged. By
+(HG29) and the raw-native completion ceiling (HG19a),
+
+$$
+W_{\rm ord}\ge\frac{12868339}{14145620},\qquad
+W_{\rm raw}\le\frac{59}{80}+\frac1{2\pi}<\frac{217}{240},\qquad
+W_{\rm ord}-W_{\rm raw}>
+\frac{940091}{169747440}>0.                           \tag{HG30}
+$$
+
+The strict rational comparison needs only $\pi>3$. Equal acceptance
+also gives a strict conditional-fidelity advantage for this ordinary
+protocol. The native ceiling permits arbitrary input-dependent accepted
+recovery on the full coherent output and every target encoder, without
+an energy limit. No measured syndrome or fixed gauge trace restricts it.
+
+This closes the stated high-acceptance raw-switch comparison under the
+common channel-stage cap and reoptimized encoders. It does not close a
+fixed heat-code recovery problem, the whole heralded frontier, framed or
+repeated native blocks, or a finite-clock hardware task. The packet's
+initial energy is greater than the particular $117/50$ heat-code bound.
+A different initial-energy constraint must specify its physical boundary:
+a bound before arbitrary permitted preprocessing is not automatically a
+bound at the first noisy input. Neither code-family restrictions nor a
+different allocation of encoder/controller costs can be introduced as a
+physical advantage without that interface. Both processors still need
+their actual encoder, coherent receiver, control/reset and release costs.
+
 The controller assumptions are public calibrated Gaussian calls
 and the explicitly supplied known rotations/squeeze.
 Their finite duration, gate faults, pump work, storage/capture,
@@ -679,6 +836,7 @@ tails are certified. All actual ancillary transfer or bypass
 controls supplied to either processor remain admissible for the
 ordinary comparison. No global ordinary-dominance, capacity or
 native coherent-order claim follows from the tail certificate.
-The additional raw-switch comparison has precisely the scope of
-(HG17)--(HG25), while the full physical controller and heralded
-frontiers remain open.
+The additional comparisons have precisely the raw-channel and controller
+scope of (HG17)--(HG30). Other acceptances, fixed-code recovery, framed
+or repeated native blocks and full physical controller costs remain
+separate frontiers.
