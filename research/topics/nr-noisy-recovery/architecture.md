@@ -220,8 +220,10 @@ native mode controls changes the inference problem.
 
 ### Fresh private frames and delegated computation
 
-Privacy can explain why a recovery provider lacks a frame key, but it does
-not by itself establish NR-R01's complete interface. The natural Clifford
+Program or recovery-frame-key privacy can explain why a recovery provider
+lacks a frame key; data confidentiality alone does not require a secret
+recovery frame. Neither requirement by itself establishes NR-R01's complete
+interface. The natural Clifford
 variant is already covered by [NR-R06](architecture-baselines.md#nr-r06):
 Clifford-conjugated Pauli axes with physical Pauli noise are channels in
 the public Pauli basis. Ordinary Bell queries sample their actual error
@@ -229,6 +231,30 @@ labels and simulate the full switch without learning or revealing the key.
 Frame freshness does not remove that simulation. NR-R01 instead requires
 its much stronger approximate sixth-design condition; Clifford frames alone
 do not satisfy the theorem's premise.
+
+A different architecture can keep a quantum output confidential while
+leaving its recovery circuit public. Put $D=2^n$ and
+$C_U=UZ_1U^\dagger$. For arbitrary input $\rho_{QR}$, the trusted source
+chooses a fresh uniform Pauli pad $P_s$, retains its $2n$-bit key for the
+recipient, and issues
+$$
+\omega_s=(C_UP_s\otimes I_R)\rho_{QR}
+                 (P_s^\dagger C_U\otimes I_R),\qquad
+D^{-2}\sum_s\omega_s=I_Q/D\otimes\rho_R.
+$$
+An ordinary executor applies the public $C_U$; the recipient later applies
+$P_s^\dagger$, restoring the physical input and its reference correlations
+without an online client message during recovery. The twirl identity,
+conditional on public $U$ and independent setup metadata, makes every
+executor instrument and retained transcript data independent before key
+release. This proves data confidentiality only, not function privacy,
+authentication or malicious-server correctness. The source's actual pad
+and circuit capabilities, all noise, failed preparations, storage, links
+and recipient correction remain paid; none is granted to a
+measurement-only client. This is an alternative architecture, not a
+compiler through NR-R01's two opaque modules or a change to its fixed
+verification test. If $C_U$ is only an optional encryption layer, it can
+instead be omitted while retaining the pad.
 
 Ordinary blind computation also need not conceal every error record.
 [Baranes et al.](https://arxiv.org/html/2505.21621v1) let the server extract
@@ -240,13 +266,21 @@ ban on checks or feedforward. The
 uses photon measurements and client records for blind matter-qubit gates;
 it does not supply NR-R01's two coherent opaque module ports.
 
-A surviving delegated-computation proposal must justify why the source is
-offline after issuing the scrambled challenge, why no useful frame-correlated
-program or native check can be provided, and how the efficient sixth-design
-module circuit retains the stated post-module noise model. It must then
-compare a useful confidential computation or recovery task with ordinary
-blind error correction, including communication and client latency. The
-existing privacy protocols do not currently provide that application.
+A proposal that also hides $U$ or its program must specify that stronger
+functionality, actors and permitted leakage. If an authorized keyholder
+knows an $L$-gate circuit for $U$ and can use its adjoints, the ideal
+$C_U=UZ_1U^\dagger$ compiles in $2L+1$ gates, without access to future
+data. Whether it can be privately issued or executed is a separate port.
+Compare any actually authorized private decoder, transported check or
+delegated evaluation with the native construction, charging program
+creation, consumed copies, corrections, all failures, noise, memory and
+communication. This grants neither a generic private evaluator from two
+opaque modules nor one post-module noise layer for an entire compiled
+circuit. Offline status alone does not exclude setup programs or the
+keyholder's authorized computation. The original no-advice theorem is
+unchanged; a surviving application still needs the stated sixth-design
+module noise, actual coherent-order ports and a useful quantum-output
+comparison at their complete costs.
 
 The [explicit two-program construction](backaction.md#nr-r19-private-programs)
 goes beyond an access mismatch: it retains every correction key and
@@ -1600,9 +1634,13 @@ compilation and its full noise/clock cost remain open. The
 [paid-control construction](methods/tip-gate-screen.md#nr-r06-tip-finite-body)
 keep intermediate-ready and final-only gate contracts distinct. The latter
 supplies a slow sufficient clean body, not a competitive noisy compiler.
-The next test needs unconditional helper control calibrated on the actual
-coupled sectors, its driven bath instrument and the full frame, recovery,
-readout and reset clock.
+The [warm joint-model component](methods/tip-gate-screen.md#nr-r06-tip-warm-model)
+fixes the preparation and full-output contract and gives a reference-complete
+total-excitation cutoff bound. The next test first calibrates the required
+cold gate in the joint device, then uses component-resolved warm maps and a
+qualified native selector. Unconditional helper controls, driven baths and
+the full frame, recovery, readout and reset clock must be shared with the
+ordinary comparison at their actual costs.
 
 The [required charging comparison](architecture-baselines.md#nr-r06-charging-records)
 uses the same conditional work and meter-record service on both sides.

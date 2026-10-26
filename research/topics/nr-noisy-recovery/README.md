@@ -214,6 +214,10 @@ local-output bound also permits arbitrary globally interacting preprocessing
 when both terminal noise layers have independent replacement components;
 global decoding before discard remains distinct. The same owner gives
 full calibrated bosonic noise compilers.
+The [warm adjacent-gate model](methods/tip-gate-screen.md#nr-r06-tip-warm-model)
+keeps preparation, retained couplers and rejected unknown data in one
+instrument. Its next calculation needs a calibrated joint-device gate,
+controlled numerical tails and the same paid ordinary controls.
 The [active-gate/AQEC comparison](architecture-baselines.md#nr-r06-active-gate-aqec)
 uses the actual optimized EsT gate followed by recovery as its ordinary
 baseline. Its full-system dummy construction includes the shared transmon,

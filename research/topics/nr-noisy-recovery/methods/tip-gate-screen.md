@@ -148,6 +148,191 @@ must remain in the leaked-output ledger until an actual data check.
 More general driven, retained-coupler histories still need their own
 complete maps. Loss of a surrogate charge label alone proves no benefit.
 
+<a id="nr-r06-tip-warm-model"></a>
+
+## Warm inputs require a joint gate and preparation model
+
+The required service remains $W=\mathrm{CZ}_{AB}\mathrm{CZ}_{BC}$ on every
+unknown logical $ABC/R$ input, with logical dimension eight. Both private
+couplers, idle exchange, data leakage, helper states and every rejected
+output remain in the common release instrument. [The same primary,
+Table III](https://arxiv.org/html/2511.01260v2), reports
+$P_e+P_f=0.13(1)$ for its single coupler; separate $e,f,h$ populations and
+joint $u,v$ initialization are unspecified. A product warm distribution,
+copied second-coupler temperature or zero higher-level weight is therefore
+an additional model assumption. An infinite Gibbs state of a negative
+quartic Duffing oscillator is invalid: its spectrum is unbounded below.
+Use physical transmon levels or a declared low-occupation source with an
+explicit omitted-mass and dynamical-boundary account.
+
+Preparation is a channel. If unknown data are already resident, its
+always-on coupling, measurement/cooling backaction and exposure clock belong
+inside the launch map. A clean ready boundary instead needs an actual
+operation preserving every unknown $ABC/R$ state while preparing a specified,
+data-independent auxiliary/preparation-bath state. A calibrated joint dressed
+embedding is another possible contract; independent maximum-overlap
+eigenvector labels do not automatically define an isometry. Permit ordinary
+preparation before data arrival, off the critical path or amortized across
+reuse whenever the real ingress and ready ports support it, charging its
+actual cost. No preparation schedule is forced merely to disadvantage that
+baseline.
+
+**Hidden warm components cannot cancel accepted logical errors.** Suppose
+the initial joint coupler state $\tau=\sum_a w_a|a\rangle\langle a|$ is
+independent of $ABC/R$, with any purifier permanently inaccessible and
+nonreinteracting. The couplers themselves remain dynamical outputs.
+For a fixed physical controller, all actual records, acceptance policy and
+decoder, let $J_a$ be the accepted corrected data-output marginal Choi matrix,
+normalized using $|\Phi_8\rangle$, with accepted leakage/erasure retained as
+orthogonal output and $W$ embedded in the physical code. The decoder first uses every supplied
+coupler/helper output; those outputs are traced only for this necessary test.
+Linearity and positivity give
+
+$$
+J=\sum_a w_aJ_a,\qquad
+p=\sum_a w_ap_a,\quad q=\sum_a w_aq_a,\quad
+p-q=\sum_a w_a(p_a-q_a)\ge0,
+\qquad
+p_a=\operatorname{Tr}J_a,\quad
+q_a=\langle\Phi_W|J_a|\Phi_W\rangle.
+$$
+
+If $J=p|\Phi_W\rangle\langle\Phi_W|$, every positive-weight accepted
+constituent has that same one-dimensional support: its expectation on every
+vector orthogonal to $\Phi_W$ is nonnegative and their sum is zero.
+Equivalently every accepted fine Kraus row is proportional to $W$ or zero.
+Order amplitudes may interfere within each initial component, but not
+between different hidden mixture labels. A retained or reinteracting source
+purifier requires the complete joint input instead of dephasing its reduced
+warm state. A joint logical/auxiliary output Choi matrix can have higher rank
+while its logical marginal is unitary. These observations are necessary
+cleanliness tests, not native-versus-ordinary optimality bounds.
+
+The same distinction limits a claimed ready-identity midpoint marker. In a
+closed prefix with no extra entropy recipient, a $d$-dimensional logical code
+and rank-$r$ warm support have a $dr$-dimensional unitary image. A projector
+that accepts that entire image with certainty must contain it; a rank-$d$
+cold projector cannot do so when $r>1$. On maximally mixed logical input its
+mean cold-projector acceptance is at most $\|\tau\|_\infty$, since the
+initial state is bounded by $\|\tau\|_\infty I/d$. Count every helper and
+entropy recipient in this rank statement. Real cooling or measurement/reset
+escapes its closed-unitary premise and retains its preparation cost.
+Warm occupation may itself be the fault to detect: rejecting it is a valid
+ordinary policy, with its changed unknown-data map and acceptance charged.
+The rank argument only excludes calling that rejection ready-identity on the
+whole warm reference service.
+
+### A reference-complete total-excitation cutoff
+
+For a declared full five-oscillator RWA model, write $H/\hbar=H_0+V$,
+$N=\sum_j a_j^\dagger a_j$, $[H_0,N]=0$, and
+$V(t)=\sum_j[\xi_j(t)a_j^\dagger+\xi_j(t)^*a_j]$ in angular-frequency
+units. All Duffing drift and physical exchange edges stay in $H_0$.
+Let $P_K=1_{N\le K}$, $\Pi_K=1_{N=K}$ and $Q_K=I-P_K$.
+The finite basis has $\binom{K+5}{5}$ states. Unlike a rectangular per-mode
+qutrit cube, this cut has no exchange boundary: only the linear drive raises
+total number across it.
+
+Optionally include specified vacuum Markov loss operators $L_\mu$ lowering
+total number with $[L_\mu^\dagger L_\mu,N]=0$. Bare oscillator loss is one
+declared example, not a bath law inferred from the measured lifetimes.
+Compare the full model with the full-space Hamiltonian
+$H_0+V-A_K-A_K^\dagger$, keeping the same loss operators, where
+
+$$
+A_K=Q_KVP_K=\Bigl(\sum_j\xi_j a_j^\dagger\Bigr)\Pi_K,
+\qquad
+A_K^\dagger A_K\le (K+1)\|\xi\|_2^2\Pi_K.
+$$
+
+The inequality follows by rotating the driven combination into one normalized
+collective mode $b$, with $b^\dagger b\le N$. Starting inside $P_K$, the
+comparison evolution stays there, and its restriction is exactly the finite
+Lindblad evolution with $P_KHP_K$ and $P_KL_\mu P_K$. In particular
+$L_\mu P_K=P_KL_\mu P_K$, so its finite anticommutator has no omitted upward
+loss term. For its state $\sigma_K$, the generator residual has half trace
+norm
+$\|A_K\sigma_K\|_1\le\sqrt{\operatorname{Tr}(A_K^\dagger A_K\sigma_K)}$.
+Duhamel and contraction therefore bound the endpoint system/reference error
+by the integral of this square root.
+
+For any fixed preparation/code channel $\mathcal E$ from the
+eight-dimensional logical input with output supported in $P_K$, let $\mathcal T_K(t)$ be that finite
+evolution. Its positive logical effect
+$B_K(t)=\mathcal E^\dagger\mathcal T_K(t)^\dagger(A_K^\dagger A_K)$
+gives the following half-diamond bound on the induced logical-input channels:
+
+$$
+\delta_K\le\min\left\{1,\int_0^T
+       \sqrt{\lambda_{\max}(B_K(t))}\,dt\right\}
+\le\min\left\{1,\int_0^T\sqrt{8(K+1)}\|\xi(t)\|_2
+                   \sqrt{\bar p_K(t)}\,dt\right\},
+$$
+
+where $\bar p_K(t)$ is the boundary population evolved from
+$\mathcal E(I_8/8)$. The second inequality uses positivity and
+$\lambda_{\max}(\mathcal E^\dagger\mathcal T_K^\dagger\Pi_K)
+\le\operatorname{Tr}(\mathcal E^\dagger\mathcal T_K^\dagger\Pi_K)
+=8\bar p_K$. An arbitrary passive reference does not change these
+physical-only expectations. Maximizing separately at each time is a safe
+bound, without assuming one input maximizes every time.
+
+Retained emitted-field records require a further specified common dilation,
+not just equality of reduced dissipators. For identical input vacuum fields,
+$L_\mu$, field scattering and controller inputs, their common unitary Markov
+dilations differ only by $A_K+A_K^\dagger$. Joint-vector Duhamel on any
+purification gives
+$\|\Psi(T)-\Psi_K(T)\|\le\int\sqrt{\operatorname{Tr}
+(A_K^\dagger A_K\sigma_K)}dt$: the equal field terms cancel and
+$\Psi_K\in P_K\otimes I_{\rm field}$. Half trace distance is at most that
+vector distance. Thus the same bound covers the specified common system/field
+output and subsequent record measurements. A reduced endpoint-state proof
+alone cannot certify a refined bath-record instrument.
+
+One can first work in a larger finite total-number space. With initial
+support $N\le n_0$, $K\ge n_0$, drive area $\Lambda=\int\|\xi(t)\|_2dt$ and
+$m=K-n_0+1$, the drift/loss propagator never raises that support. A drive
+commutator on support $N\le n$ has trace norm at most
+$4\|\xi\|_2\sqrt{n+1}$ times the input trace norm. The two Dyson expansions
+agree through order $m-1$, giving the uniform reduced-channel consistency
+bound
+
+$$
+\delta_K\le\min\left\{1,\sum_{k\ge m}
+ \frac{(4\Lambda)^k}{k!}\sqrt{\frac{(n_0+k)!}{n_0!}}\right\}.
+$$
+
+Its successive ratio $4\Lambda\sqrt{n_0+k+1}/(k+1)$ eventually decreases
+below one, so the series converges and supplies the cutoff limit on finite
+number inputs. Drive area alone is often much too loose for a useful cutoff;
+the actual boundary integral keeps detuning and pulse selectivity. This
+mathematical oscillator-model limit is not a physical high-level transmon
+completion.
+
+If the full initial source is a data-independent classical mixture with
+omitted auxiliary-sector weight $\epsilon$, its complete-channel error is
+at most $\epsilon+(1-\epsilon)\delta_K$. A coherently retained source
+purifier instead generally needs a $\sqrt\epsilon$ projection bound; it
+cannot be dephased for free. Neither initial tail is a receiver herald.
+A sampled boundary curve, ordinary solver tolerance or agreement at two
+cutoffs is diagnostic only. A validated continuous residual or propagator
+bound must control the time integral and finite-solver error. Heating,
+counterrotating drives, number-changing selectors and actual frequency-dependent
+baths need their own residuals or model, and cannot inherit this certificate
+unchanged. Complete common postprocessing contracts the resulting bound;
+rare accepted fidelities require a separate denominator estimate.
+
+The next calculation first calibrates the required cold $W$ in the joint
+device and fixes its bare or dressed preparation/readout frame, then forms
+component-resolved warm maps under the same physical clock. Both ordinary
+pulse orders, supplied local frames, pulse shaping, paid shared-$B$ checks,
+midpoint markers, preparation/cooling and accessible records remain admitted.
+A missing native selector is not supplied by classical pumping, nor is an
+uncalibrated pulse or small-cutoff calculation evidence of an error-filtering
+advantage. Rejected unknown inputs remain retained; time per accepted launch
+describes throughput across independently supplied jobs, not free retries of
+the same input.
+
 ## Finite TIP pulses preserve an idle-error signal, but not a source-like benefit
 
 This is a declared cold effective-model screen, not a full-Duffing device
