@@ -1,5 +1,9 @@
 # Theoretical application assessment and implementation studies
 
+## Application-search synchronization
+
+The [current application-search handoff](application-search/README.md) records the additional derivations and ordinary baselines from the conversation. Recovery and order-geometry findings are retained as secondary results, not a completed practitioner application. Their evidence and limitations are separated from the existing results below.
+
 [Recovery theorem](theorem.md) · [Ordinary baselines](architecture-baselines.md) · [Literature context](references.md) · [Topic](README.md)
 
 The current research target is a **theoretical advantage within a common practitioner quantum-computing workload**: an algorithm, finite-code task, QEM pipeline, compiler pass or error-characterization decision. Such workloads motivate future quantum advantage; a new quantum-over-classical complexity separation is not a requirement here. A nontrivial property on a constructed oracle promise is insufficient by itself. The measured quantity or retained output must change an identified action and improve a task-error or computational-resource bound against relevant existing methods. Available ordinary quantum and classical tools belong in an honest comparison. Hardware pulse timing, routing feasibility and practical crossover numbers remain separate questions; a theoretical workload benefit is sufficient.

@@ -1,5 +1,9 @@
 # Verification scope
 
+## Application-search checks
+
+The [application-search check suite](../research/topics/nr-noisy-recovery/application-search/checks/README.md) has a single [current record](../research/topics/nr-noisy-recovery/application-search/checks/validation.json). It distinguishes exact rational certificates, restricted symbolic searches and seeded numerical tests. It does not independently audit C4/C5/C6/P3, establish publication priority, verify a physical switch interface or perform a Lean rebuild. Sources and source-attachment hashes are retained without importing duplicate generated archives.
+
 Repository organization preserves the distinction between mathematical claims, exact finite checks, computational diagnostics, and a formal proof audit.
 
 | Component | Current evidence and reproducibility |

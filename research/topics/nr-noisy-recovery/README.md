@@ -1,5 +1,9 @@
 # NR — Noisy physical state recovery
 
+## Current application-search handoff
+
+[Investigation entry and scope](application-search/README.md) owns the navigation for NR-R23 through NR-R30. It preserves the model-validation and OTOC derivations, finite-family/product-local ordinary baselines, finite-query certificates and secondary communication/algebra/order-geometry findings. The latest direction is to return to naturally occurring black boxes in quantum computing/QEC; the later detours do not replace that objective. The manuscript and Lean tree are unchanged by this integration.
+
 [Research map](../../README.md) · [Result index](../../RESULTS.md) · [Validation scope](../../../docs/VALIDATION.md)
 
 This topic owns recovery, noise-model selection and memory qualification through opaque related modules, with the

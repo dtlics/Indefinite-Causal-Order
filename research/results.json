@@ -1160,6 +1160,118 @@
           "target": "C5-R02"
         }
       ]
+    },
+    {
+      "id": "NR-R23",
+      "topic": "NR",
+      "title": "Matched-fidelity noise-model validation and conditional weak-noise scaling",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/model-validation.md#nr-r23",
+      "relationships": [
+        {
+          "type": "uses",
+          "target": "C5-R02"
+        },
+        {
+          "type": "qualified-by",
+          "target": "NR-R25"
+        }
+      ]
+    },
+    {
+      "id": "NR-R24",
+      "topic": "NR",
+      "title": "Exact finite two-call matched-fidelity discrimination certificate",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/finite-query.md#nr-r24",
+      "relationships": [
+        {
+          "type": "finite-case-of",
+          "target": "NR-R23"
+        }
+      ]
+    },
+    {
+      "id": "NR-R25",
+      "topic": "NR",
+      "title": "Finite-family and product-local ordinary model-validation baselines",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/ordinary-baselines.md#nr-r25",
+      "relationships": [
+        {
+          "type": "qualifies",
+          "target": "NR-R23"
+        },
+        {
+          "type": "qualifies",
+          "target": "C6-R05"
+        }
+      ]
+    },
+    {
+      "id": "NR-R26",
+      "topic": "NR",
+      "title": "Eigenbasis susceptibility identity and ordinary OTOC compilation boundaries",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/spectral-sensitivity.md#nr-r26",
+      "relationships": [
+        {
+          "type": "related-to",
+          "target": "C6-R04"
+        },
+        {
+          "type": "qualified-by",
+          "target": "NR-R06"
+        }
+      ]
+    },
+    {
+      "id": "NR-R27",
+      "topic": "NR",
+      "title": "Finite Bell-pair delivery under a declared standard-network cut",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/network-service.md#nr-r27",
+      "relationships": [
+        {
+          "type": "related-to",
+          "target": "NR-R10"
+        }
+      ]
+    },
+    {
+      "id": "NR-R28",
+      "topic": "NR",
+      "title": "Qubit central-polynomial recovery and scoped ordinary-code counterexamples",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/algebraic-recovery.md#nr-r28",
+      "relationships": [
+        {
+          "type": "related-to",
+          "target": "NR-R06"
+        }
+      ]
+    },
+    {
+      "id": "NR-R29",
+      "topic": "NR",
+      "title": "Bare order-geometry closure, finite activation certificates and modular ledgers",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/order-geometry.md#nr-r29",
+      "relationships": [
+        {
+          "type": "uses",
+          "target": "NR-R28"
+        }
+      ]
+    },
+    {
+      "id": "NR-R30",
+      "topic": "NR",
+      "title": "Finite verification games derived from existing query bounds",
+      "canonical_path": "research/topics/nr-noisy-recovery/application-search/finite-games.md#nr-r30",
+      "relationships": [
+        {
+          "type": "numerical-corollary-of",
+          "target": "C5-R02"
+        },
+        {
+          "type": "game-corollary-of",
+          "target": "C4-R01"
+        }
+      ]
     }
   ]
 }
