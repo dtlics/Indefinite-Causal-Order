@@ -192,3 +192,11 @@ Each entry identifies one canonical mathematical result or scoped finding. Follo
 | NR-R20 | [Hidden-basis memory qualification and channel-entropy capacity certificates](../research/topics/nr-noisy-recovery/memory-qualification.md#nr-r20) |  |
 | NR-R21 | [Unknown anticommuting pulse gates: exact-call gap and ordinary timing baselines](../research/topics/nr-noisy-recovery/unknown-pulse-gates.md#nr-r21) |  |
 | NR-R22 | [Hidden noise memory and universal quantum-capacity qualification](../research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22) |  |
+| NR-R23 | [Matched-fidelity noise-model validation and conditional weak-noise scaling](../research/topics/nr-noisy-recovery/application-search/model-validation.md#nr-r23) |  |
+| NR-R24 | [Exact finite two-call matched-fidelity discrimination certificate](../research/topics/nr-noisy-recovery/application-search/finite-query.md#nr-r24) |  |
+| NR-R25 | [Finite-family and product-local ordinary model-validation baselines](../research/topics/nr-noisy-recovery/application-search/ordinary-baselines.md#nr-r25) |  |
+| NR-R26 | [Eigenbasis susceptibility identity and ordinary OTOC compilation boundaries](../research/topics/nr-noisy-recovery/application-search/spectral-sensitivity.md#nr-r26) |  |
+| NR-R27 | [Finite Bell-pair delivery under a declared standard-network cut](../research/topics/nr-noisy-recovery/application-search/network-service.md#nr-r27) |  |
+| NR-R28 | [Qubit central-polynomial recovery and scoped ordinary-code counterexamples](../research/topics/nr-noisy-recovery/application-search/algebraic-recovery.md#nr-r28) |  |
+| NR-R29 | [Bare order-geometry closure, finite activation certificates and modular ledgers](../research/topics/nr-noisy-recovery/application-search/order-geometry.md#nr-r29) |  |
+| NR-R30 | [Finite verification games derived from existing query bounds](../research/topics/nr-noisy-recovery/application-search/finite-games.md#nr-r30) |  |
