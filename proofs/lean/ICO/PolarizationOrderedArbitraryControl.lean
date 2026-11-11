@@ -1,36 +1,41 @@
 import ICO.BoundedSwitchObstruction
 import ICO.BudgetPreparation
 import ICO.CircuitPolarization
+import ICO.ReducedCircuit
 import ICO.TwoQueryDilation
 import ICO.FirstQueryInstrument
 import ICO.OrderedCombSemantics
 import Mathlib.GroupTheory.Perm.Fin
 
 /-! Theorem 1 (`thm:exact-simulation`) for an arbitrary control input,
-Lemma 5 (`lem:ordered`) as a single statement in dimension `d`, and
-Lemma 6 (`lem:polarization`) in the paper's full symmetrized form:
+Lemma 5 (`lem:ordered`) for strategies calling each box once or at most once in
+dimension `d`, and Lemma 6 (`lem:polarization`) in both the paper's diluted-switch
+form and its full slot-symmetrized generalization:
 1. Arbitrary-control exact switch impossibility (`no_bounded_full_switch_circuit`
    and `no_labelled_full_switch_circuit`): any finite-query adaptive circuit
    matching the full control-and-target switch on `Fin 2 × Fin d` also matches
    the fixed-`|+⟩` switch after precomposing with `plusControlChannel d`, and is
    therefore impossible for `d ≥ 2` by `ICO.BoundedSwitchObstruction.no_bounded_circuit`.
 2. Ordered components (`tree_ordered_components`, `tree_ordered_components_dim_d`,
-   and `ordered_components_decomposition`): a single combined statement in general
-   dimension starting directly from `tree : ICO.TwoQueryTree.QueryTree (A × M) F P`,
+   `atMostOnce_ordered_components`, `atMostOnce_ordered_components_dim_d`,
+   and `ordered_components_decomposition`): combined statements in general
+   dimension starting from a two-call tree `QueryTree` or from an at-most-once
+   strategy `AtMostLabelledQueryTree.Tree (Fin 1 ⊕ Fin 1)` under any padding,
    packaging its `A ≺ B` and `B ≺ A` comb matrices (`treeCombAB`, `treeCombBA`),
    box-independent first-query probabilities `orderStateProb` summing to `1` and
    matching the marginal reduced comb traces, positive semidefiniteness
    `C_{A≺B}, C_{B≺A} ≥ 0`, homogeneous partial-trace comb constraints (`eq:ordered-comb`),
-   and the Choi / comb-link realization identity for all complete Kraus pairs.
-3. Full multilinear polarization (`symmetrized_polarization` and the explicit
-   quantum-switch specializations `symmetrized_switch_polarization_choi`,
+   and the Choi contraction (`J_A ⊗ J_B`) / Kraus `combLink` realization identities.
+3. One-call-each dilution and full multilinear polarization
+   (`one_call_each_diluted_switch_plus`, `one_call_each_diluted_switch_full`,
+   `symmetrized_polarization`, `symmetrized_switch_polarization_choi`,
    `symmetrized_switch_polarization`, and `symmetrized_switch_polarization_kraus`):
    if an ordinary circuit calling `M` slots of type `A` and `N` slots of type `B`
-   matches a bilinear target `S` (and specifically the full-control quantum switch
-   `SW`) on identical CPTP channels, then its slot-symmetrized realization on
-   arbitrary `A^{(1)}, ..., A^{(M)}` and `B^{(1)}, ..., B^{(N)}` equals
-   `(1 / (M * N)) ∑_{k, l} S[A^{(k)}, B^{(l)}]` (`eq:polarization`), and its
-   two-call selected subcircuits realize the diluted target (`eq:dilution`). -/
+   matches `SW_+` or `SW` on all channels, keeping one uniformly random call to each
+   box and replacing all other calls by the identity channel implements the diluted
+   switch `T_{1/M, 1/N}` (`lem:polarization`, `eq:dilution`), and more generally its
+   slot-symmetrized realization on arbitrary `A^{(1)}, ..., A^{(M)}` and
+   `B^{(1)}, ..., B^{(N)}` equals `(1 / (M * N)) ∑_{k, l} S[A^{(k)}, B^{(l)}]`. -/
 
 namespace ICO.PolarizationOrderedArbitraryControl
 open Matrix QIT
@@ -90,7 +95,7 @@ def plusControlChannel (d : Nat) : Channel (Fin d) (Fin 2 × Fin d) :=
   ICO.ClassicalDilation.isometryChannel (plusControlMatrix d) (plusControl_isometry d)
 
 /-- The controlled-order quantum switch Kraus operator on `Fin 2 × Fin d`
-(`|0⟩⟨0| ⊗ (V * U) + |1⟩⟨1| ⊗ (U * V)`, Eq. `eq:switch-kraus`). -/
+(`|0⟩⟨0| ⊗ (V * U) + |1⟩⟨1| ⊗ (U * V)`, Eq. `eq:switch`). -/
 def fullControlOrderedPair {d : Nat} (U V : CMatrix (Fin d)) : CMatrix (Fin 2 × Fin d) :=
   fun o p => if o.1 = p.1 then (if o.1 = 0 then (V * U) o.2 p.2 else (U * V) o.2 p.2) else 0
 
@@ -918,6 +923,502 @@ theorem tree_ordered_components_dim_d (d : Nat)
        orderStateProb tree ρ .secondThenFirst) :=
   tree_ordered_components tree ρ U V hU hV
 
+theorem partialTrace_smul {I J : Type*} [Fintype I] [Fintype J]
+    (c : ℂ) (C : Matrix (I × J) (I × J) ℂ) :
+    partialTrace (c • C) = c • partialTrace C := by
+  ext i j
+  simp [partialTrace, Finset.mul_sum]
+
+theorem partialTrace_kronecker_one {I : Type*} [Fintype I]
+    (M : Matrix I I ℂ) :
+    partialTrace (Matrix.kronecker M (1 : Matrix A A ℂ)) =
+      (Fintype.card A : ℂ) • M := by
+  ext i j
+  simp [partialTrace, Matrix.kronecker, Matrix.kroneckerMap_apply, mul_comm]
+
+omit [Fintype A] in
+theorem kronecker_smul_left {I : Type*} (c : ℂ) (M : Matrix I I ℂ) :
+    Matrix.kronecker (c • M) (1 : Matrix A A ℂ) =
+      c • Matrix.kronecker M (1 : Matrix A A ℂ) := by
+  ext ⟨i, a⟩ ⟨j, b⟩
+  simp [Matrix.kronecker, Matrix.kroneckerMap_apply, mul_assoc]
+
+omit [DecidableEq P] [DecidableEq F] in
+/-- Any six-wire operator `C` admitting reduced witnesses `C₂, C₁` with
+`partialTrace C = C₂ ⊗ I` and `partialTrace C₂ = C₁ ⊗ I` satisfies the
+eliminated homogeneous comb partial-trace equations (`eq:ordered-comb`). -/
+theorem eliminated_comb_traces
+    {C : Matrix (SixWires P A F) (SixWires P A F) ℂ}
+    {C₂ : Matrix (FourWires P A) (FourWires P A) ℂ}
+    {C₁ : Matrix (P × A) (P × A) ℂ}
+    (h₁ : partialTrace C = Matrix.kronecker C₂ (1 : Matrix A A ℂ))
+    (h₂ : partialTrace C₂ = Matrix.kronecker C₁ (1 : Matrix A A ℂ)) :
+    (Fintype.card A : ℂ) • partialTrace C =
+      Matrix.kronecker (partialTrace (partialTrace C)) (1 : Matrix A A ℂ) ∧
+    (Fintype.card A : ℂ) • partialTrace (partialTrace (partialTrace C)) =
+      Matrix.kronecker
+        (partialTrace (partialTrace (partialTrace (partialTrace C))))
+        (1 : Matrix A A ℂ) := by
+  have hp2 : partialTrace (partialTrace C) = (Fintype.card A : ℂ) • C₂ := by
+    rw [h₁, partialTrace_kronecker_one]
+  have hp3 : partialTrace (partialTrace (partialTrace C)) =
+      (Fintype.card A : ℂ) • Matrix.kronecker C₁ (1 : Matrix A A ℂ) := by
+    rw [hp2, partialTrace_smul, h₂]
+  have hp4 : partialTrace (partialTrace (partialTrace (partialTrace C))) =
+      (Fintype.card A : ℂ) • ((Fintype.card A : ℂ) • C₁) := by
+    rw [hp3, partialTrace_smul, partialTrace_kronecker_one]
+  refine ⟨?_, ?_⟩
+  · rw [hp2, kronecker_smul_left, h₁]
+  · rw [hp4, hp3, kronecker_smul_left, kronecker_smul_left]
+
+theorem treeCombAB_eliminated_trace {M : Type} [Fintype M] [DecidableEq M]
+    (tree : QueryTree (A × M) F P) :
+    (Fintype.card A : ℂ) • partialTrace (treeCombAB tree) =
+      Matrix.kronecker (partialTrace (partialTrace (treeCombAB tree))) (1 : Matrix A A ℂ) ∧
+    (Fintype.card A : ℂ) • partialTrace (partialTrace (partialTrace (treeCombAB tree))) =
+      Matrix.kronecker
+        (partialTrace (partialTrace (partialTrace (partialTrace (treeCombAB tree)))))
+        (1 : Matrix A A ℂ) :=
+  eliminated_comb_traces
+    (familyCombAB_trace (normalABBranch tree.normalForm))
+    (familyComb₂AB_trace (normalABBranch tree.normalForm))
+
+theorem treeCombBA_eliminated_trace {M : Type} [Fintype M] [DecidableEq M]
+    (tree : QueryTree (A × M) F P) :
+    let Cswap : Matrix (SixWires P A F) (SixWires P A F) ℂ :=
+      fun x y => treeCombBA tree (swapSixWires x) (swapSixWires y)
+    (Fintype.card A : ℂ) • partialTrace Cswap =
+      Matrix.kronecker (partialTrace (partialTrace Cswap)) (1 : Matrix A A ℂ) ∧
+    (Fintype.card A : ℂ) • partialTrace (partialTrace (partialTrace Cswap)) =
+      Matrix.kronecker
+        (partialTrace (partialTrace (partialTrace (partialTrace Cswap))))
+        (1 : Matrix A A ℂ) :=
+  eliminated_comb_traces
+    (familyCombBA_swapped_trace (normalBABranch tree.normalForm))
+    (familyComb₂BA_trace (normalBABranch tree.normalForm))
+
+/-- Contraction of a six-wire comb operator `C` with the tensor product `JA ⊗ JB`
+(`Matrix.kronecker JA JB`) of the two slot Choi operators over the four slot wires
+`(A_I, A_O, B_I, B_O)` (Section `sec:ordered`, `lem:ordered`). -/
+def combContractChoi (C : Matrix (SixWires P A F) (SixWires P A F) ℂ)
+    (JA JB : Matrix (A × A) (A × A) ℂ) : Matrix (P × F) (P × F) ℂ :=
+  fun pf pf' =>
+    ∑ ab : (A × A) × (A × A), ∑ ab' : (A × A) × (A × A),
+      C (((((pf.1, ab.1.1), ab.1.2), ab.2.1), ab.2.2), pf.2)
+        (((((pf'.1, ab'.1.1), ab'.1.2), ab'.2.1), ab'.2.2), pf'.2) *
+        Matrix.kronecker JA JB ab ab'
+
+omit [Fintype P] [Fintype F] [DecidableEq P] [DecidableEq F] in
+theorem choi_ofKraus_entry_gen {I : Type*} [Fintype I]
+    (U : I → CMatrix A) (pa qb : A × A) :
+    MatrixMap.choi (MatrixMap.ofKraus U) pa qb =
+      ∑ i : I, U i pa.2 pa.1 * star (U i qb.2 qb.1) := by
+  rcases pa with ⟨p, a⟩
+  rcases qb with ⟨q, b⟩
+  simp only [MatrixMap.choi, MatrixMap.ofKraus, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.single]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [Finset.sum_eq_single q]
+  · rw [Finset.sum_eq_single p]
+    · simp
+    · intro r _ hr
+      simp [hr.symm]
+    · intro hp
+      exact absurd (Finset.mem_univ p) hp
+  · intro r _ hr
+    simp [hr.symm]
+  · intro hq
+    exact absurd (Finset.mem_univ q) hq
+
+omit [Fintype P] [Fintype F] [DecidableEq P] [DecidableEq A] [DecidableEq F] in
+theorem sum_four_slots {R : Type*} [AddCommMonoid R] (g : (A × A) × (A × A) → R) :
+    (∑ ai : A, ∑ ao : A, ∑ bi : A, ∑ bo : A, g ((ai, ao), (bi, bo))) =
+      ∑ ab : (A × A) × (A × A), g ab := by
+  simp [Fintype.sum_prod_type]
+
+omit [DecidableEq A] in
+theorem combLink_sandwich_entry (C : Matrix (SixWires P A F) (SixWires P A F) ℂ)
+    (u v : CMatrix A) (pf pf' : P × F) :
+    ((combLink (P := P) (F := F) u v * C * (combLink (P := P) (F := F) u v)ᴴ) :
+      Matrix (P × F) (P × F) ℂ) pf pf' =
+      ∑ ab : (A × A) × (A × A), ∑ ab' : (A × A) × (A × A),
+        C (((((pf.1, ab.1.1), ab.1.2), ab.2.1), ab.2.2), pf.2)
+          (((((pf'.1, ab'.1.1), ab'.1.2), ab'.2.1), ab'.2.2), pf'.2) *
+          (u ab.1.2 ab.1.1 * star (u ab'.1.2 ab'.1.1)) *
+          (v ab.2.2 ab.2.1 * star (v ab'.2.2 ab'.2.1)) := by
+  rcases pf with ⟨p, f⟩
+  rcases pf' with ⟨p', f'⟩
+  have hmul (y : SixWires P A F) :
+      ((combLink (P := P) (F := F) u v * C) : Matrix (P × F) (SixWires P A F) ℂ) (p, f) y =
+        ∑ ab : (A × A) × (A × A),
+          (u ab.1.2 ab.1.1 * v ab.2.2 ab.2.1) *
+            C (((((p, ab.1.1), ab.1.2), ab.2.1), ab.2.2), f) y := by
+    rw [Matrix.mul_apply, Fintype.sum_prod_type, Fintype.sum_prod_type,
+      Fintype.sum_prod_type, Fintype.sum_prod_type, Fintype.sum_prod_type]
+    rw [Finset.sum_eq_single p]
+    · conv_lhs =>
+        arg 2; ext ai; arg 2; ext ao; arg 2; ext bi; arg 2; ext bo
+        rw [Finset.sum_eq_single f (fun f₁ _ hf₁ => by simp [combLink, hf₁.symm])
+          (fun hf => absurd (Finset.mem_univ f) hf)]
+      simp only [combLink, and_self, ite_true]
+      exact sum_four_slots (fun ab =>
+        (u ab.1.2 ab.1.1 * v ab.2.2 ab.2.1) *
+          C (((((p, ab.1.1), ab.1.2), ab.2.1), ab.2.2), f) y)
+    · intro p₁ _ hp₁
+      simp [combLink, hp₁.symm]
+    · intro hp
+      exact absurd (Finset.mem_univ p) hp
+  rw [Matrix.mul_apply, Fintype.sum_prod_type, Fintype.sum_prod_type,
+    Fintype.sum_prod_type, Fintype.sum_prod_type, Fintype.sum_prod_type]
+  rw [Finset.sum_eq_single p']
+  · conv_lhs =>
+      arg 2; ext ai'; arg 2; ext ao'; arg 2; ext bi'; arg 2; ext bo'
+      rw [Finset.sum_eq_single f' (fun f₂ _ hf₂ => by
+        simp [Matrix.conjTranspose_apply, combLink, hf₂.symm])
+        (fun hf' => absurd (Finset.mem_univ f') hf')]
+    simp only [Matrix.conjTranspose_apply, combLink, and_self, ite_true, star_mul', hmul,
+      Finset.sum_mul]
+    rw [sum_four_slots (fun ab' =>
+      ∑ ab : (A × A) × (A × A),
+        (u ab.1.2 ab.1.1 * v ab.2.2 ab.2.1) *
+          C (((((p, ab.1.1), ab.1.2), ab.2.1), ab.2.2), f)
+            (((((p', ab'.1.1), ab'.1.2), ab'.2.1), ab'.2.2), f') *
+          (star (u ab'.1.2 ab'.1.1) * star (v ab'.2.2 ab'.2.1)))]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl; intro ab _
+    apply Finset.sum_congr rfl; intro ab' _
+    ring
+  · intro p₂ _ hp₂
+    simp [Matrix.conjTranspose_apply, combLink, hp₂.symm]
+  · intro hp'
+    exact absurd (Finset.mem_univ p') hp'
+
+/-- Summing `combLink (U i) (V j) * C * (combLink (U i) (V j))ᴴ` over Kraus families
+`U` and `V` equals contracting `C` with `J_A ⊗ J_B` (`combContractChoi`). -/
+theorem sum_combLink_eq_combContractChoi
+    {I T : Type*} [Fintype I] [Fintype T]
+    (C : Matrix (SixWires P A F) (SixWires P A F) ℂ)
+    (U : I → CMatrix A) (V : T → CMatrix A) :
+    (∑ i : I, ∑ j : T, combLink (U i) (V j) * C * (combLink (U i) (V j))ᴴ) =
+      combContractChoi C
+        (MatrixMap.choi (MatrixMap.ofKraus U))
+        (MatrixMap.choi (MatrixMap.ofKraus V)) := by
+  ext pf pf'
+  simp only [Matrix.sum_apply, combLink_sandwich_entry, combContractChoi,
+    Matrix.kronecker, Matrix.kroneckerMap_apply, choi_ofKraus_entry_gen]
+  conv_lhs =>
+    arg 2; ext i
+    rw [Finset.sum_comm]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl; intro ab _
+  conv_lhs =>
+    arg 2; ext i
+    rw [Finset.sum_comm]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl; intro ab' _
+  simp only [Finset.sum_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl; intro j _
+  apply Finset.sum_congr rfl; intro i _
+  ring
+
+omit [Fintype P] [Fintype F] [DecidableEq P] [DecidableEq F] in
+theorem exists_complete_kraus_of_channel (Φ : Channel A A) :
+    ∃ K : (A × A) → CMatrix A,
+      Φ.map = MatrixMap.ofKraus K ∧ (∑ i : A × A, (K i)ᴴ * K i) = 1 := by
+  obtain ⟨K, hK⟩ := MatrixMap.exists_kraus_of_choi_psd Φ.map Φ.completelyPositive
+  have htpK : MatrixMap.IsTracePreserving (MatrixMap.ofKraus K) := hK ▸ Φ.tracePreserving
+  have hadj := MatrixMap.krausAdjoint_one_of_tracePreserving K htpK
+  exact ⟨K, hK, by simpa [MatrixMap.krausAdjoint] using hadj⟩
+
+omit [Fintype P] [Fintype F] [DecidableEq P] [DecidableEq F] in
+theorem kron_idChannel_eq_liftMap_gen {M : Type} [Fintype M] [DecidableEq M]
+    (f : MatrixMap A A) :
+    MatrixMap.kron f (Channel.idChannel M).map = ICO.OracleLift.liftMap (M := M) f := by
+  apply MatrixMap.choi_inj
+  ext ⟨⟨a, m⟩, ⟨a', m'⟩⟩ ⟨⟨b, n⟩, ⟨b', n'⟩⟩
+  simp only [MatrixMap.choi]
+  have hsp : Matrix.single (a, m) (b, n) (1 : ℂ) =
+      Matrix.kronecker (Matrix.single a b (1 : ℂ)) (Matrix.single m n (1 : ℂ)) := by
+    ext ⟨x, u⟩ ⟨y, v⟩
+    simp only [Matrix.single, Matrix.of_apply, Matrix.kronecker, Matrix.kroneckerMap_apply,
+      Prod.mk.injEq]
+    split_ifs <;> simp_all
+  have hid : (Channel.idChannel M).map (Matrix.single m n (1 : ℂ)) m' n' =
+      (if m = m' ∧ n = n' then (1 : ℂ) else 0) := by
+    simp [Channel.idChannel, MatrixMap.ofKraus, Matrix.single]
+  conv_lhs =>
+    rw [hsp, MatrixMap.kron_apply_kronecker]
+    simp only [Matrix.kronecker, Matrix.kroneckerMap_apply, hid]
+  simp only [ICO.OracleLift.liftMap, LinearMap.coe_mk, AddHom.coe_mk]
+  by_cases hmn : m = m' ∧ n = n'
+  · rcases hmn with ⟨rfl, rfl⟩
+    have hmat :
+        (fun x y : A => Matrix.single (a, m) (b, n) (1 : ℂ) (x, m) (y, n)) =
+          Matrix.single a b (1 : ℂ) := by
+      ext x y
+      simp [Matrix.single]
+    rw [hmat]
+    simp
+  · have hmat :
+        (fun x y : A => Matrix.single (a, m) (b, n) (1 : ℂ) (x, m') (y, n')) =
+          (0 : CMatrix A) := by
+      ext x y
+      simp only [Matrix.single, Matrix.of_apply, Matrix.zero_apply, Prod.mk.injEq]
+      split_ifs with h
+      · exact absurd ⟨h.1.2, h.2.2⟩ hmn
+      · rfl
+    rw [hmat, map_zero]
+    simp [hmn]
+
+omit [Fintype P] [Fintype F] [DecidableEq P] [DecidableEq F] in
+theorem oracleMap_sum_elim_left {M I T : Type} [Fintype M] [DecidableEq M]
+    [Fintype I] [Fintype T] (U : I → CMatrix A) :
+    ICO.AllChannelDilation.oracleMap (M := M) (Sum.elim U (fun _ : T => (0 : CMatrix A))) =
+      ICO.AllChannelDilation.oracleMap (M := M) U := by
+  ext X am bn
+  simp [ICO.AllChannelDilation.oracleMap, MatrixMap.ofKraus, Fintype.sum_sum_type]
+
+omit [Fintype P] [Fintype F] [DecidableEq P] [DecidableEq F] in
+theorem oracleMap_sum_elim_right {M I T : Type} [Fintype M] [DecidableEq M]
+    [Fintype I] [Fintype T] (V : T → CMatrix A) :
+    ICO.AllChannelDilation.oracleMap (M := M) (Sum.elim (fun _ : I => (0 : CMatrix A)) V) =
+      ICO.AllChannelDilation.oracleMap (M := M) V := by
+  ext X am bn
+  simp [ICO.AllChannelDilation.oracleMap, MatrixMap.ofKraus, Fintype.sum_sum_type]
+
+/-- Pad any adaptive strategy `tree` that calls box `A` at most once and box `B`
+at most once on every run (`Tree (Fin 1 ⊕ Fin 1) (A × M) F Finset.univ P`) into an
+ordinary two-call adaptive tree `QueryTree (A × (M ⊕ F)) F P`, using arbitrary
+dummy register elements `(a₀, m₀, f₀)` (`lem:ordered`). -/
+def padAtMostOnce {M : Type} [Fintype M] [DecidableEq M]
+    (a₀ : A) (m₀ : M) (f₀ : F)
+    (tree : ICO.AtMostLabelledQueryTree.Tree (Fin 1 ⊕ Fin 1) (A × M) F Finset.univ P) :
+    QueryTree (A × (M ⊕ F)) F P :=
+  ICO.CircuitPolarization.selected (ICO.PadLabelledCircuit.compile a₀ m₀ f₀ tree) 0 0
+
+/-- For any padding `(a₀, m₀, f₀)` and any complete Kraus families `(U, hU)` and `(V, hV)`,
+the padded two-call strategy `padAtMostOnce a₀ m₀ f₀ tree` implements the exact same
+superoperator as `tree`. -/
+theorem padAtMostOnce_channel_map
+    {M I T : Type} [Fintype M] [DecidableEq M] [Fintype I] [DecidableEq I]
+    [Fintype T] [DecidableEq T]
+    (a₀ : A) (m₀ : M) (f₀ : F)
+    (tree : ICO.AtMostLabelledQueryTree.Tree (Fin 1 ⊕ Fin 1) (A × M) F Finset.univ P)
+    (U : I → CMatrix A) (V : T → CMatrix A)
+    (hU : ∑ i, (U i)ᴴ * U i = 1) (hV : ∑ j, (V j)ᴴ * V j = 1) :
+    ((padAtMostOnce a₀ m₀ f₀ tree).channel
+        (oracleChannel (M := M ⊕ F) U hU) (oracleChannel (M := M ⊕ F) V hV)).map =
+      (tree.channel (Sum.elim (fun _ => oracleChannel (M := M) U hU)
+        (fun _ => oracleChannel (M := M) V hV))).map := by
+  unfold padAtMostOnce ICO.CircuitPolarization.selected
+  rw [ICO.SelectedQueryTree.twoSelect_map, ICO.AtMostLabelledQueryTree.Tree.channel_map]
+  let UV : Fin 1 ⊕ Fin 1 → I ⊕ T → CMatrix A :=
+    Sum.elim (fun _ => Sum.elim U (fun _ => 0)) (fun _ => Sum.elim (fun _ => 0) V)
+  have hUV : ∀ l : Fin 1 ⊕ Fin 1, ∑ k : I ⊕ T, (UV l k)ᴴ * UV l k = 1 := by
+    intro l
+    cases l with
+    | inl _ => simp [UV, Fintype.sum_sum_type, hU]
+    | inr _ => simp [UV, Fintype.sum_sum_type, hV]
+  have hpad :
+      (ICO.PadLabelledCircuit.compile a₀ m₀ f₀ tree).map
+          (ICO.SelectedQueryTree.twoAssignment (Sum.inl 0) (Sum.inr 0)
+            (oracleChannel (M := M ⊕ F) U hU).map (oracleChannel (M := M ⊕ F) V hV).map) =
+        (ICO.PadLabelledCircuit.compile a₀ m₀ f₀ tree).map
+          (fun l => ICO.AllChannelDilation.oracleMap (M := M ⊕ F) (UV l)) := by
+    apply ICO.LabelledQueryTree.Tree.map_congr
+    intro l _
+    cases l with
+    | inl i =>
+      rw [Fin.eq_zero i]
+      simpa [UV, ICO.SelectedQueryTree.twoAssignment, oracleChannel] using
+        (oracleMap_sum_elim_left (M := M ⊕ F) (T := T) U).symm
+    | inr j =>
+      rw [Fin.eq_zero j]
+      simpa [UV, ICO.SelectedQueryTree.twoAssignment, oracleChannel] using
+        (oracleMap_sum_elim_right (M := M ⊕ F) (I := I) V).symm
+  rw [hpad, ICO.PadLabelledCircuit.compile_map a₀ m₀ f₀ tree UV hUV]
+  apply ICO.AtMostLabelledQueryTree.Tree.map_congr
+  intro l _
+  cases l with
+  | inl _ =>
+    simpa [UV, oracleChannel] using oracleMap_sum_elim_left (M := M) (T := T) U
+  | inr _ =>
+    simpa [UV, oracleChannel] using oracleMap_sum_elim_right (M := M) (I := I) V
+
+/-- On any pair of CPTP channels `Φ, Ψ : Channel A A` (acting as `Φ ⊗ id_M` and
+`Ψ ⊗ id_M` on wire-plus-memory `A × M`), the output Choi operator of an at-most-once
+strategy `tree` equals the contraction of `treeTotalComb (padAtMostOnce a₀ m₀ f₀ tree)`
+with `J_Φ ⊗ J_Ψ`. -/
+theorem padAtMostOnce_lifted_channel_choi
+    {M : Type} [Fintype M] [DecidableEq M]
+    (a₀ : A) (m₀ : M) (f₀ : F)
+    (tree : ICO.AtMostLabelledQueryTree.Tree (Fin 1 ⊕ Fin 1) (A × M) F Finset.univ P)
+    (Φ Ψ : Channel A A) :
+    MatrixMap.choi ((tree.channel
+        (Sum.elim (fun _ => Φ.prod (Channel.idChannel M))
+          (fun _ => Ψ.prod (Channel.idChannel M)))).map) =
+      combContractChoi (treeTotalComb (padAtMostOnce a₀ m₀ f₀ tree))
+        (MatrixMap.choi Φ.map) (MatrixMap.choi Ψ.map) := by
+  obtain ⟨U, hU_map, hU_comp⟩ := exists_complete_kraus_of_channel Φ
+  obtain ⟨V, hV_map, hV_comp⟩ := exists_complete_kraus_of_channel Ψ
+  have horacles :
+      (tree.channel
+        (Sum.elim (fun _ => Φ.prod (Channel.idChannel M))
+          (fun _ => Ψ.prod (Channel.idChannel M)))).map =
+      (tree.channel
+        (Sum.elim (fun _ => oracleChannel (M := M) U hU_comp)
+          (fun _ => oracleChannel (M := M) V hV_comp))).map := by
+    rw [ICO.AtMostLabelledQueryTree.Tree.channel_map,
+      ICO.AtMostLabelledQueryTree.Tree.channel_map]
+    apply ICO.AtMostLabelledQueryTree.Tree.map_congr
+    intro l _
+    cases l with
+    | inl _ =>
+      change MatrixMap.kron Φ.map (Channel.idChannel M).map = _
+      rw [kron_idChannel_eq_liftMap_gen, hU_map]
+      exact (ICO.OracleLift.oracleMap_lift (M := M) U).symm
+    | inr _ =>
+      change MatrixMap.kron Ψ.map (Channel.idChannel M).map = _
+      rw [kron_idChannel_eq_liftMap_gen, hV_map]
+      exact (ICO.OracleLift.oracleMap_lift (M := M) V).symm
+  rw [horacles, ← padAtMostOnce_channel_map a₀ m₀ f₀ tree U V hU_comp hV_comp,
+    treeComb_choi_link, sum_combLink_eq_combContractChoi, ← hU_map, ← hV_map]
+
+/-- Lemma 5 (`lem:ordered`) in full generality for an adaptive strategy `tree` that
+calls box `A` at most once and box `B` at most once on every run, under any padding
+`(a₀, m₀, f₀)`:
+1. Its Choi operator `C = treeTotalComb (padAtMostOnce a₀ m₀ f₀ tree)` decomposes as
+   `C = C_{A≺B} + C_{B≺A}` with `C_{A≺B} ≥ 0` and `C_{B≺A} ≥ 0`.
+2. `C_{A≺B}` obeys the homogeneous `A ≺ B` comb equations (`eq:ordered-comb`) in both
+   eliminated form (`|A| • Tr_F C = Tr_{B_O F} C ⊗ I`, `|A| • Tr_{B_I B_O F} C = ...`)
+   and reduced-witness form, and `C_{B≺A}` obeys the swapped `B ≺ A` comb equations.
+3. On any CPTP boxes `Φ, Ψ : Channel A A` (and any complete Kraus families `(U, hU)`,
+   `(V, hV)`), the output Choi operator of `tree` is the contraction of `C` with
+   `J_A ⊗ J_B` (`combContractChoi`) and with `combLink`.
+4. For any fixed input state `ρ : State P`, the box-independent first-call probabilities
+   `p_{A≺B}` and `p_{B≺A}` of the padded strategy are nonnegative, sum to `1`, and
+   match the input-state marginals of the reduced comb operators. -/
+theorem atMostOnce_ordered_components
+    {M I T : Type} [Fintype M] [DecidableEq M] [Fintype I] [DecidableEq I]
+    [Fintype T] [DecidableEq T]
+    (a₀ : A) (m₀ : M) (f₀ : F)
+    (tree : ICO.AtMostLabelledQueryTree.Tree (Fin 1 ⊕ Fin 1) (A × M) F Finset.univ P)
+    (ρ : State P)
+    (Φ Ψ : Channel A A)
+    (U : I → CMatrix A) (V : T → CMatrix A)
+    (hU : ∑ i, (U i)ᴴ * U i = 1) (hV : ∑ j, (V j)ᴴ * V j = 1) :
+    let padded := padAtMostOnce a₀ m₀ f₀ tree
+    let Cswap : Matrix (SixWires P A F) (SixWires P A F) ℂ :=
+      fun x y => treeCombBA padded (swapSixWires x) (swapSixWires y)
+    (treeTotalComb padded = treeCombAB padded + treeCombBA padded) ∧
+    (treeCombAB padded).PosSemidef ∧
+    (treeCombBA padded).PosSemidef ∧
+    (((Fintype.card A : ℂ) • partialTrace (treeCombAB padded) =
+        Matrix.kronecker (partialTrace (partialTrace (treeCombAB padded))) (1 : Matrix A A ℂ) ∧
+      (Fintype.card A : ℂ) • partialTrace (partialTrace (partialTrace (treeCombAB padded))) =
+        Matrix.kronecker
+          (partialTrace (partialTrace (partialTrace (partialTrace (treeCombAB padded)))))
+          (1 : Matrix A A ℂ)) ∧
+     (partialTrace (treeCombAB padded) =
+        Matrix.kronecker (treeComb₂AB padded) (1 : Matrix A A ℂ) ∧
+      partialTrace (treeComb₂AB padded) =
+        Matrix.kronecker (treeComb₁AB padded) (1 : Matrix A A ℂ))) ∧
+    (((Fintype.card A : ℂ) • partialTrace Cswap =
+        Matrix.kronecker (partialTrace (partialTrace Cswap)) (1 : Matrix A A ℂ) ∧
+      (Fintype.card A : ℂ) • partialTrace (partialTrace (partialTrace Cswap)) =
+        Matrix.kronecker
+          (partialTrace (partialTrace (partialTrace (partialTrace Cswap))))
+          (1 : Matrix A A ℂ)) ∧
+     (partialTrace Cswap =
+        Matrix.kronecker (treeComb₂BA padded) (1 : Matrix A A ℂ) ∧
+      partialTrace (treeComb₂BA padded) =
+        Matrix.kronecker (treeComb₁BA padded) (1 : Matrix A A ℂ))) ∧
+    (MatrixMap.choi ((tree.channel
+        (Sum.elim (fun _ => Φ.prod (Channel.idChannel M))
+          (fun _ => Ψ.prod (Channel.idChannel M)))).map) =
+        combContractChoi (treeTotalComb padded)
+          (MatrixMap.choi Φ.map) (MatrixMap.choi Ψ.map) ∧
+     MatrixMap.choi ((tree.channel
+        (Sum.elim (fun _ => oracleChannel (M := M) U hU)
+          (fun _ => oracleChannel (M := M) V hV))).map) =
+        ∑ i, ∑ j, combLink (U i) (V j) * treeTotalComb padded * (combLink (U i) (V j))ᴴ) ∧
+    (0 ≤ orderStateProb padded ρ .firstThenSecond ∧
+     0 ≤ orderStateProb padded ρ .secondThenFirst ∧
+     orderStateProb padded ρ .firstThenSecond + orderStateProb padded ρ .secondThenFirst = 1 ∧
+     ((partialTrace (treeComb₁AB padded)).transpose * ρ.matrix).trace.re =
+       orderStateProb padded ρ .firstThenSecond ∧
+     ((partialTrace (treeComb₁BA padded)).transpose * ρ.matrix).trace.re =
+       orderStateProb padded ρ .secondThenFirst) := by
+  dsimp only
+  have hbase := tree_ordered_components (padAtMostOnce a₀ m₀ f₀ tree) ρ U V hU hV
+  refine ⟨hbase.1, hbase.2.1, hbase.2.2.1,
+    ⟨treeCombAB_eliminated_trace (padAtMostOnce a₀ m₀ f₀ tree), hbase.2.2.2.1⟩,
+    ⟨treeCombBA_eliminated_trace (padAtMostOnce a₀ m₀ f₀ tree), hbase.2.2.2.2.1⟩,
+    ⟨padAtMostOnce_lifted_channel_choi a₀ m₀ f₀ tree Φ Ψ, ?_⟩,
+    hbase.2.2.2.2.2.2⟩
+  rw [← padAtMostOnce_channel_map a₀ m₀ f₀ tree U V hU hV]
+  exact hbase.2.2.2.2.2.1
+
+/-- Specialization of `atMostOnce_ordered_components` to oracle dimension `Fin d`
+(matching Lemma 5, `lem:ordered`, and `eq:ordered-comb` with explicit factor `(d : ℂ)`). -/
+theorem atMostOnce_ordered_components_dim_d (d : Nat)
+    {M I T : Type} [Fintype M] [DecidableEq M] [Fintype I] [DecidableEq I]
+    [Fintype T] [DecidableEq T]
+    (a₀ : Fin d) (m₀ : M) (f₀ : F)
+    (tree : ICO.AtMostLabelledQueryTree.Tree (Fin 1 ⊕ Fin 1) (Fin d × M) F Finset.univ P)
+    (ρ : State P)
+    (Φ Ψ : Channel (Fin d) (Fin d))
+    (U : I → CMatrix (Fin d)) (V : T → CMatrix (Fin d))
+    (hU : ∑ i, (U i)ᴴ * U i = 1) (hV : ∑ j, (V j)ᴴ * V j = 1) :
+    let padded := padAtMostOnce a₀ m₀ f₀ tree
+    let Cswap : Matrix (SixWires P (Fin d) F) (SixWires P (Fin d) F) ℂ :=
+      fun x y => treeCombBA padded (swapSixWires x) (swapSixWires y)
+    (treeTotalComb padded = treeCombAB padded + treeCombBA padded) ∧
+    (treeCombAB padded).PosSemidef ∧
+    (treeCombBA padded).PosSemidef ∧
+    (((d : ℂ) • partialTrace (treeCombAB padded) =
+        Matrix.kronecker (partialTrace (partialTrace (treeCombAB padded)))
+          (1 : Matrix (Fin d) (Fin d) ℂ) ∧
+      (d : ℂ) • partialTrace (partialTrace (partialTrace (treeCombAB padded))) =
+        Matrix.kronecker
+          (partialTrace (partialTrace (partialTrace (partialTrace (treeCombAB padded)))))
+          (1 : Matrix (Fin d) (Fin d) ℂ)) ∧
+     (partialTrace (treeCombAB padded) =
+        Matrix.kronecker (treeComb₂AB padded) (1 : Matrix (Fin d) (Fin d) ℂ) ∧
+      partialTrace (treeComb₂AB padded) =
+        Matrix.kronecker (treeComb₁AB padded) (1 : Matrix (Fin d) (Fin d) ℂ))) ∧
+    (((d : ℂ) • partialTrace Cswap =
+        Matrix.kronecker (partialTrace (partialTrace Cswap))
+          (1 : Matrix (Fin d) (Fin d) ℂ) ∧
+      (d : ℂ) • partialTrace (partialTrace (partialTrace Cswap)) =
+        Matrix.kronecker
+          (partialTrace (partialTrace (partialTrace (partialTrace Cswap))))
+          (1 : Matrix (Fin d) (Fin d) ℂ)) ∧
+     (partialTrace Cswap =
+        Matrix.kronecker (treeComb₂BA padded) (1 : Matrix (Fin d) (Fin d) ℂ) ∧
+      partialTrace (treeComb₂BA padded) =
+        Matrix.kronecker (treeComb₁BA padded) (1 : Matrix (Fin d) (Fin d) ℂ))) ∧
+    (MatrixMap.choi ((tree.channel
+        (Sum.elim (fun _ => Φ.prod (Channel.idChannel M))
+          (fun _ => Ψ.prod (Channel.idChannel M)))).map) =
+        combContractChoi (treeTotalComb padded)
+          (MatrixMap.choi Φ.map) (MatrixMap.choi Ψ.map) ∧
+     MatrixMap.choi ((tree.channel
+        (Sum.elim (fun _ => oracleChannel (M := M) U hU)
+          (fun _ => oracleChannel (M := M) V hV))).map) =
+        ∑ i, ∑ j, combLink (U i) (V j) * treeTotalComb padded * (combLink (U i) (V j))ᴴ) ∧
+    (0 ≤ orderStateProb padded ρ .firstThenSecond ∧
+     0 ≤ orderStateProb padded ρ .secondThenFirst ∧
+     orderStateProb padded ρ .firstThenSecond + orderStateProb padded ρ .secondThenFirst = 1 ∧
+     ((partialTrace (treeComb₁AB padded)).transpose * ρ.matrix).trace.re =
+       orderStateProb padded ρ .firstThenSecond ∧
+     ((partialTrace (treeComb₁BA padded)).transpose * ρ.matrix).trace.re =
+       orderStateProb padded ρ .secondThenFirst) := by
+  simpa only [Fintype.card_fin] using
+    atMostOnce_ordered_components a₀ m₀ f₀ tree ρ Φ Ψ U V hU hV
+
 end OrderedComponents
 
 section FullPolarization
@@ -1200,11 +1701,12 @@ theorem average_perm_two_slot {CA CB : Set E}
   rw [hm_fac, hn_fac, Nat.cast_mul]
   field_simp [hm0, hn0, hmf0, hnf0]
 
-/-- Lemma 6 (`lem:polarization`, Eq. `eq:polarization`) for any labelled adaptive
-circuit `tree : Tree (Fin m ⊕ Fin n) H O Finset.univ A`: if `tree` matches a
-segment-biaffine Choi map `S` on identical channels in segment-closed sets
-`CA, CB`, then the slot-symmetrized circuit on `a : Fin m → MatrixMap H H` and
-`b : Fin n → MatrixMap H H` equals `(1 / (m * n)) ∑_{i, j} S (choi (a i)) (choi (b j))`. -/
+/-- Full slot-symmetrized polarization generalizing Lemma 6 (`lem:polarization`)
+for any labelled adaptive circuit `tree : Tree (Fin m ⊕ Fin n) H O Finset.univ A`:
+if `tree` matches a segment-biaffine Choi map `S` on identical channels in
+segment-closed sets `CA, CB`, then the slot-symmetrized circuit on
+`a : Fin m → MatrixMap H H` and `b : Fin n → MatrixMap H H` equals
+`(1 / (m * n)) ∑_{i, j} S (choi (a i)) (choi (b j))`. -/
 theorem symmetrized_polarization
     {H O A : Type} [Fintype H] [Fintype O] [Fintype A]
     [DecidableEq H] [DecidableEq O] [DecidableEq A]
@@ -1614,11 +2116,12 @@ theorem liftChoiCLM_choi {d : Nat} (f : MatrixMap (Fin d) (Fin d)) :
     (MatrixMap.ofChoiMatrix (MatrixMap.choi f))) = _
   rw [ICO.CircuitPolarization.ofChoi_choi]
 
-/-- Lemma 6 (`lem:polarization`, Eq. `eq:polarization`, Choi form) specialized
-explicitly to the full-control quantum switch on `Fin 2 × Fin d`: if a labelled
-`(m, n)`-query adaptive circuit `tree` satisfies `RealizesLabelledFullControlSwitch tree`,
-then for any `m` CPTP channels `A_slot` and `n` CPTP channels `B_slot` on `Fin d`,
-uniformly symmetrizing the slot labels equals `(1 / (m * n)) ∑_{i, j} SW[A_i, B_j]`. -/
+/-- Full slot-symmetrized polarization generalizing Lemma 6 (`lem:polarization`,
+Choi form), specialized explicitly to the full-control quantum switch on `Fin 2 × Fin d`:
+if a labelled `(m, n)`-query adaptive circuit `tree` satisfies
+`RealizesLabelledFullControlSwitch tree`, then for any `m` CPTP channels `A_slot`
+and `n` CPTP channels `B_slot` on `Fin d`, uniformly symmetrizing the slot labels
+equals `(1 / (m * n)) ∑_{i, j} SW[A_i, B_j]`. -/
 theorem symmetrized_switch_polarization_choi {d m n : Nat} (hm : 0 < m) (hn : 0 < n)
     (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M)
       (Fin 2 × Fin d) Finset.univ (Fin 2 × Fin d))
@@ -1719,11 +2222,12 @@ theorem choi_real_smul_sum2 {A O α β : Type} [Fintype A] [DecidableEq A]
   simp only [map_smul, map_sum]
   rfl
 
-/-- Lemma 6 (`lem:polarization`, Eq. `eq:polarization`, superoperator form)
-specialized explicitly to the full-control quantum switch on `Fin 2 × Fin d`:
-if `tree` realizes the full-control switch on identical CPTP channels, then its
-slot-symmetrized superoperator on arbitrary CPTP channels `A_slot` and `B_slot`
-equals `(1 / (m * n)) ∑_{i, j} fullSwitchChannelMap (A_slot i).map (B_slot j).map`. -/
+/-- Full slot-symmetrized polarization generalizing Lemma 6 (`lem:polarization`,
+superoperator form), specialized explicitly to the full-control quantum switch on
+`Fin 2 × Fin d`: if `tree` realizes the full-control switch on identical CPTP
+channels, then its slot-symmetrized superoperator on arbitrary CPTP channels
+`A_slot` and `B_slot` equals
+`(1 / (m * n)) ∑_{i, j} fullSwitchChannelMap (A_slot i).map (B_slot j).map`. -/
 theorem symmetrized_switch_polarization {d m n : Nat} (hm : 0 < m) (hn : 0 < n)
     (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M)
       (Fin 2 × Fin d) Finset.univ (Fin 2 × Fin d))
@@ -1752,11 +2256,11 @@ def targetKrausChannel {d : Nat} {I : Type} [Fintype I]
     (by simpa [MatrixMap.krausAdjoint] using hU)
   mapsPositive := MatrixMap.ofKraus_mapsPositive U
 
-/-- Lemma 6 (`lem:polarization`, Eq. `eq:polarization`, Kraus-oracle form)
-specialized explicitly to `oracleChannel` and `fullControlSwitchMap`: if `tree`
-satisfies `RealizesLabelledFullControlSwitch tree`, then symmetrizing `m` complete
-Kraus oracles `(U i, hU i)` and `n` complete Kraus oracles `(V j, hV j)` gives
-`(1 / (m * n)) ∑_{i, j} fullControlSwitchMap (U i) (V j)`. -/
+/-- Full slot-symmetrized polarization generalizing Lemma 6 (`lem:polarization`,
+Kraus-oracle form), specialized explicitly to `oracleChannel` and `fullControlSwitchMap`:
+if `tree` satisfies `RealizesLabelledFullControlSwitch tree`, then symmetrizing `m`
+complete Kraus oracles `(U i, hU i)` and `n` complete Kraus oracles `(V j, hV j)`
+gives `(1 / (m * n)) ∑_{i, j} fullControlSwitchMap (U i) (V j)`. -/
 theorem symmetrized_switch_polarization_kraus {d m n : Nat} (hm : 0 < m) (hn : 0 < n)
     (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M)
       (Fin 2 × Fin d) Finset.univ (Fin 2 × Fin d))
@@ -1801,22 +2305,480 @@ theorem symmetrized_switch_polarization_kraus {d m n : Nat} (hm : 0 < m) (hn : 0
   rw [hpol]
   simp only [targetKrausChannel, fullSwitchChannelMap_ofKraus]
 
-end SwitchPolarization
+/-- Exact simulation of the fixed-`|+⟩`-control quantum switch `SW_+` (`eq:switch-plus`)
+by a labelled `(m, n)`-query adaptive circuit on `Fin d`. -/
+abbrev RealizesLabelledSwitch {d m n : Nat}
+    (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M)
+      (Fin 2 × Fin d) Finset.univ (Fin d)) : Prop :=
+  ICO.DimensionCircuitReduction.RealizesSwitch tree
 
-#print axioms no_bounded_full_switch_circuit
-#print axioms no_bounded_circuit_arbitrary_control
-#print axioms no_labelled_full_switch_circuit
-#print axioms ordered_components_decomposition
-#print axioms ordered_components_decomposition_dim_d
-#print axioms tree_ordered_components
-#print axioms tree_ordered_components_dim_d
-#print axioms sum_perm_one_slot
-#print axioms sum_perm_two_slot
-#print axioms average_perm_two_slot
-#print axioms symmetrized_polarization
-#print axioms symmetrized_switch_polarization_choi
-#print axioms symmetrized_switch_polarization
-#print axioms symmetrized_switch_polarization_kraus
+/-- Intrinsic `|+⟩`-control quantum switch superoperator `SW_+[JA, JB]` from `Fin d`
+to `Fin 2 × Fin d`, expressed directly as a bilinear function of the slot Choi matrices. -/
+def plusSwitchFromChoi {d : Nat} (JA JB : CMatrix (Fin d × Fin d)) :
+    MatrixMap (Fin d) (Fin 2 × Fin d) :=
+  (fullSwitchFromChoi JA JB).comp (plusControlChannel d).map
+
+/-- Intrinsic `|+⟩`-control quantum switch superoperator `SW_+[Φ, Ψ]` for arbitrary
+linear superoperators `Φ, Ψ : MatrixMap (Fin d) (Fin d)`. -/
+def plusSwitchChannelMap {d : Nat} (Φ Ψ : MatrixMap (Fin d) (Fin d)) :
+    MatrixMap (Fin d) (Fin 2 × Fin d) :=
+  plusSwitchFromChoi (MatrixMap.choi Φ) (MatrixMap.choi Ψ)
+
+theorem plusSwitchChannelMap_ofKraus {d : Nat} {I J : Type} [Fintype I] [Fintype J]
+    (U : I → CMatrix (Fin d)) (V : J → CMatrix (Fin d)) :
+    plusSwitchChannelMap (MatrixMap.ofKraus U) (MatrixMap.ofKraus V) = switchMap U V := by
+  unfold plusSwitchChannelMap plusSwitchFromChoi
+  change (fullSwitchChannelMap (MatrixMap.ofKraus U) (MatrixMap.ofKraus V)).comp
+    (plusControlChannel d).map = _
+  rw [fullSwitchChannelMap_ofKraus, fullControlSwitchMap_comp_plus]
+
+theorem fullSwitchFromChoi_add_left {d : Nat}
+    (JA₁ JA₂ JB : CMatrix (Fin d × Fin d)) :
+    fullSwitchFromChoi (JA₁ + JA₂) JB =
+      fullSwitchFromChoi JA₁ JB + fullSwitchFromChoi JA₂ JB := by
+  ext X cr c's
+  simp only [fullSwitchFromChoi, LinearMap.add_apply, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.add_apply, ← Finset.sum_add_distrib]
+  repeat' apply Finset.sum_congr rfl <;> intro _ _
+  ring
+
+theorem fullSwitchFromChoi_add_right {d : Nat}
+    (JA JB₁ JB₂ : CMatrix (Fin d × Fin d)) :
+    fullSwitchFromChoi JA (JB₁ + JB₂) =
+      fullSwitchFromChoi JA JB₁ + fullSwitchFromChoi JA JB₂ := by
+  ext X cr c's
+  simp only [fullSwitchFromChoi, LinearMap.add_apply, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.add_apply, ← Finset.sum_add_distrib]
+  repeat' apply Finset.sum_congr rfl <;> intro _ _
+  ring
+
+theorem fullSwitchFromChoi_real_smul_left {d : Nat}
+    (r : ℝ) (JA JB : CMatrix (Fin d × Fin d)) :
+    fullSwitchFromChoi (r • JA) JB = r • fullSwitchFromChoi JA JB := by
+  ext X cr c's
+  simp only [fullSwitchFromChoi, LinearMap.smul_apply, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.smul_apply, Complex.real_smul, Finset.mul_sum]
+  repeat' apply Finset.sum_congr rfl <;> intro _ _
+  ring
+
+theorem fullSwitchFromChoi_real_smul_right {d : Nat}
+    (r : ℝ) (JA JB : CMatrix (Fin d × Fin d)) :
+    fullSwitchFromChoi JA (r • JB) = r • fullSwitchFromChoi JA JB := by
+  ext X cr c's
+  simp only [fullSwitchFromChoi, LinearMap.smul_apply, LinearMap.coe_mk, AddHom.coe_mk,
+    Matrix.smul_apply, Complex.real_smul, Finset.mul_sum]
+  repeat' apply Finset.sum_congr rfl <;> intro _ _
+  ring
+
+theorem plusSwitchFromChoi_add_left {d : Nat}
+    (JA₁ JA₂ JB : CMatrix (Fin d × Fin d)) :
+    plusSwitchFromChoi (JA₁ + JA₂) JB =
+      plusSwitchFromChoi JA₁ JB + plusSwitchFromChoi JA₂ JB := by
+  unfold plusSwitchFromChoi
+  rw [fullSwitchFromChoi_add_left, LinearMap.add_comp]
+
+theorem plusSwitchFromChoi_add_right {d : Nat}
+    (JA JB₁ JB₂ : CMatrix (Fin d × Fin d)) :
+    plusSwitchFromChoi JA (JB₁ + JB₂) =
+      plusSwitchFromChoi JA JB₁ + plusSwitchFromChoi JA JB₂ := by
+  unfold plusSwitchFromChoi
+  rw [fullSwitchFromChoi_add_right, LinearMap.add_comp]
+
+theorem plusSwitchFromChoi_real_smul_left {d : Nat}
+    (r : ℝ) (JA JB : CMatrix (Fin d × Fin d)) :
+    plusSwitchFromChoi (r • JA) JB = r • plusSwitchFromChoi JA JB := by
+  unfold plusSwitchFromChoi
+  rw [fullSwitchFromChoi_real_smul_left]
+  ext X cr c's
+  simp [Complex.real_smul]
+
+theorem plusSwitchFromChoi_real_smul_right {d : Nat}
+    (r : ℝ) (JA JB : CMatrix (Fin d × Fin d)) :
+    plusSwitchFromChoi JA (r • JB) = r • plusSwitchFromChoi JA JB := by
+  unfold plusSwitchFromChoi
+  rw [fullSwitchFromChoi_real_smul_right]
+  ext X cr c's
+  simp [Complex.real_smul]
+
+/-- The diluted `|+⟩`-control quantum switch `T_{λ, μ}[Φ, Ψ] = SW_+[λ Φ + (1 - λ) id, μ Ψ + (1 - μ) id]`
+(`eq:dilution` in Section `sec:exact`). -/
+def dilutedPlusSwitchMap {d : Nat} (lam mu : ℝ)
+    (Φ Ψ : MatrixMap (Fin d) (Fin d)) : MatrixMap (Fin d) (Fin 2 × Fin d) :=
+  plusSwitchChannelMap
+    (lam • Φ + (1 - lam) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+    (mu • Ψ + (1 - mu) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+
+/-- The diluted full-control quantum switch `SW[λ Φ + (1 - λ) id, μ Ψ + (1 - μ) id]`
+on `Fin 2 × Fin d`. -/
+def dilutedFullSwitchMap {d : Nat} (lam mu : ℝ)
+    (Φ Ψ : MatrixMap (Fin d) (Fin d)) : MatrixMap (Fin 2 × Fin d) (Fin 2 × Fin d) :=
+  fullSwitchChannelMap
+    (lam • Φ + (1 - lam) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+    (mu • Ψ + (1 - mu) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+
+theorem choi_linear_comb {A O : Type} [Fintype A] [DecidableEq A] [Fintype O] [DecidableEq O]
+    (a b : ℝ) (f g : MatrixMap A O) :
+    MatrixMap.choi (a • f + b • g) = a • MatrixMap.choi f + b • MatrixMap.choi g := by
+  let cR := (choiLinear (A := A) (O := O)).restrictScalars ℝ
+  change cR (a • f + b • g) = _
+  rw [map_add, map_smul, map_smul]
+  rfl
+
+/-- Four-term bilinear expansion of the diluted `|+⟩`-control switch `T_{λ, μ}[Φ, Ψ]`
+(`eq:dilution`). -/
+theorem dilutedPlusSwitchMap_eq_four_terms {d : Nat} (lam mu : ℝ)
+    (Φ Ψ : MatrixMap (Fin d) (Fin d)) :
+    dilutedPlusSwitchMap lam mu Φ Ψ =
+      (lam * mu) • plusSwitchChannelMap Φ Ψ +
+      (lam * (1 - mu)) • plusSwitchChannelMap Φ LinearMap.id +
+      ((1 - lam) * mu) • plusSwitchChannelMap LinearMap.id Ψ +
+      ((1 - lam) * (1 - mu)) • plusSwitchChannelMap LinearMap.id LinearMap.id := by
+  unfold dilutedPlusSwitchMap plusSwitchChannelMap
+  rw [choi_linear_comb, choi_linear_comb, plusSwitchFromChoi_add_left,
+    plusSwitchFromChoi_real_smul_left, plusSwitchFromChoi_real_smul_left,
+    plusSwitchFromChoi_add_right, plusSwitchFromChoi_add_right,
+    plusSwitchFromChoi_real_smul_right, plusSwitchFromChoi_real_smul_right,
+    plusSwitchFromChoi_real_smul_right, plusSwitchFromChoi_real_smul_right]
+  simp only [smul_add, smul_smul]
+  abel
+
+/-- Four-term bilinear expansion of the diluted full-control switch on `Fin 2 × Fin d`. -/
+theorem dilutedFullSwitchMap_eq_four_terms {d : Nat} (lam mu : ℝ)
+    (Φ Ψ : MatrixMap (Fin d) (Fin d)) :
+    dilutedFullSwitchMap lam mu Φ Ψ =
+      (lam * mu) • fullSwitchChannelMap Φ Ψ +
+      (lam * (1 - mu)) • fullSwitchChannelMap Φ LinearMap.id +
+      ((1 - lam) * mu) • fullSwitchChannelMap LinearMap.id Ψ +
+      ((1 - lam) * (1 - mu)) • fullSwitchChannelMap LinearMap.id LinearMap.id := by
+  unfold dilutedFullSwitchMap fullSwitchChannelMap
+  rw [choi_linear_comb, choi_linear_comb, fullSwitchFromChoi_add_left,
+    fullSwitchFromChoi_real_smul_left, fullSwitchFromChoi_real_smul_left,
+    fullSwitchFromChoi_add_right, fullSwitchFromChoi_add_right,
+    fullSwitchFromChoi_real_smul_right, fullSwitchFromChoi_real_smul_right,
+    fullSwitchFromChoi_real_smul_right, fullSwitchFromChoi_real_smul_right]
+  simp only [smul_add, smul_smul]
+  abel
+
+theorem liftSlotChannel_id_map (d : Nat) :
+    (liftSlotChannel (M := M) (Channel.idChannel (Fin d))).map = LinearMap.id := by
+  rw [liftSlotChannel_map, ICO.SelectedQueryTree.idChannel_map]
+  ext X ⟨a, m⟩ ⟨b, n⟩
+  rfl
+
+theorem selected_eq_update_idChannel {d m n : Nat}
+    {P O : Type} [Fintype P] [DecidableEq P] [Fintype O] [DecidableEq O]
+    (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M) O Finset.univ P)
+    (k : Fin m) (l : Fin n)
+    (A_ch B_ch : Channel (Fin d) (Fin d)) :
+    (((ICO.CircuitPolarization.selected tree k l).channel
+        (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map) =
+      (tree.channel (Sum.elim
+        (Function.update (fun _ : Fin m => liftSlotChannel (M := M) (Channel.idChannel (Fin d)))
+          k (liftSlotChannel (M := M) A_ch))
+        (Function.update (fun _ : Fin n => liftSlotChannel (M := M) (Channel.idChannel (Fin d)))
+          l (liftSlotChannel (M := M) B_ch)))).map := by
+  unfold ICO.CircuitPolarization.selected
+  rw [ICO.SelectedQueryTree.twoSelect_map, ICO.LabelledQueryTree.Tree.channel_map]
+  apply ICO.LabelledQueryTree.Tree.map_congr
+  intro s _
+  cases s with
+  | inl i =>
+    by_cases hi : i = k <;>
+      simp [ICO.SelectedQueryTree.twoAssignment, hi, liftSlotChannel_id_map]
+  | inr j =>
+    by_cases hj : j = l <;>
+      simp [ICO.SelectedQueryTree.twoAssignment, hj, liftSlotChannel_id_map]
+
+theorem liftMap_affine_eq_oracleMap {d : Nat}
+    (Φ : Channel (Fin d) (Fin d)) {t : ℝ} (ht : t ∈ Set.Icc 0 1) :
+    ∃ Ut : (Fin d × Fin d) → CMatrix (Fin d),
+      ∃ hUt_comp : (∑ i : Fin d × Fin d, (Ut i)ᴴ * Ut i) = 1,
+        LinearMap.id + t • ((liftSlotChannel (M := M) Φ).map - LinearMap.id) =
+          (oracleChannel (M := M) Ut hUt_comp).map ∧
+        MatrixMap.choi (MatrixMap.ofKraus Ut) =
+          MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d)) +
+            t • (MatrixMap.choi Φ.map -
+              MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d))) := by
+  let J0 := MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d))
+  have hJ0 : J0 ∈ IsCPTPChoi d := by
+    simpa [J0, ICO.SelectedQueryTree.idChannel_map] using
+      channel_choi_mem_isCPTPChoi (Channel.idChannel (Fin d))
+  have hJt : J0 + t • (MatrixMap.choi Φ.map - J0) ∈ IsCPTPChoi d :=
+    isCPTPChoi_segment hJ0 (channel_choi_mem_isCPTPChoi Φ) ht
+  obtain ⟨Ut, hUt_map, hUt_comp⟩ := exists_complete_kraus_of_isCPTPChoi hJt
+  refine ⟨Ut, hUt_comp, ?_, ?_⟩
+  · have hbase :
+        LinearMap.id + t • (Φ.map - LinearMap.id) = MatrixMap.ofKraus Ut := by
+      rw [← hUt_map]
+      apply MatrixMap.choi_inj
+      rw [MatrixMap.choi_ofChoiMatrix]
+      rfl
+    have hlift :
+        LinearMap.id + t • ((liftSlotChannel (M := M) Φ).map - LinearMap.id) =
+          ICO.OracleLift.liftMap (M := M) (LinearMap.id + t • (Φ.map - LinearMap.id)) := by
+      rw [liftSlotChannel_map]
+      ext X ⟨a, m⟩ ⟨b, n⟩
+      simp [ICO.OracleLift.liftMap, Complex.real_smul]
+    rw [hlift, hbase]
+    exact (ICO.OracleLift.oracleMap_lift (M := M) Ut).symm
+  · rw [← hUt_map, MatrixMap.choi_ofChoiMatrix]
+
+theorem choi_sum_four {A O : Type} [Fintype A] [DecidableEq A] [Fintype O] [DecidableEq O]
+    (a₁ a₂ a₃ a₄ : ℝ) (f₁ f₂ f₃ f₄ : MatrixMap A O) :
+    MatrixMap.choi (a₁ • f₁ + a₂ • f₂ + a₃ • f₃ + a₄ • f₄) =
+      a₁ • MatrixMap.choi f₁ + a₂ • MatrixMap.choi f₂ +
+      a₃ • MatrixMap.choi f₃ + a₄ • MatrixMap.choi f₄ := by
+  let cR := (choiLinear (A := A) (O := O)).restrictScalars ℝ
+  change cR (a₁ • f₁ + a₂ • f₂ + a₃ • f₃ + a₄ • f₄) = _
+  simp only [map_add, map_smul]
+  rfl
+
+theorem choi_smul_sum2_map {A O α β : Type} [Fintype A] [DecidableEq A]
+    [Fintype O] [DecidableEq O] [Fintype α] [Fintype β]
+    (r : ℝ) (g : α → β → MatrixMap A O) :
+    MatrixMap.choi (r • ∑ a : α, ∑ b : β, g a b) =
+      r • ∑ a : α, ∑ b : β, MatrixMap.choi (g a b) :=
+  choi_real_smul_sum2 r g
+
+/-- Lemma 6 (`lem:polarization`) in the paper's exact diluted-switch form for the
+fixed-`|+⟩`-control quantum switch `SW_+` (`RealizesLabelledSwitch`):
+if an adaptive strategy `tree` with `m > 0` calls to `A` and `n > 0` calls to `B`
+implements `SW_+[A, B]` for all channels on `Fin d`, then keeping one uniformly random
+call to `A` and one uniformly random call to `B` and replacing all other calls by the
+identity channel (both as the single one-call-each tree `ICO.ReducedCircuit.reduce hm hn tree`,
+as the average over `selected tree k l`, and via explicit `Function.update` with
+`Channel.idChannel (Fin d)`) implements `T_{1/m, 1/n}[A, B]` for all CPTP channels
+`A_ch, B_ch : Channel (Fin d) (Fin d)`. -/
+theorem one_call_each_diluted_switch_plus {d m n : Nat} (hm : 0 < m) (hn : 0 < n)
+    (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M)
+      (Fin 2 × Fin d) Finset.univ (Fin d))
+    (htree : RealizesLabelledSwitch tree)
+    (A_ch B_ch : Channel (Fin d) (Fin d)) :
+    (((ICO.ReducedCircuit.reduce hm hn tree).channel
+        (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map =
+      dilutedPlusSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map) ∧
+    (((1 : ℝ) / ((m : ℝ) * (n : ℝ))) •
+        (∑ k : Fin m, ∑ l : Fin n,
+          ((ICO.CircuitPolarization.selected tree k l).channel
+            (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map) =
+      dilutedPlusSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map) ∧
+    (((1 : ℝ) / ((m : ℝ) * (n : ℝ))) •
+        (∑ k : Fin m, ∑ l : Fin n,
+          (tree.channel (Sum.elim
+            (Function.update
+              (fun _ : Fin m => liftSlotChannel (M := M) (Channel.idChannel (Fin d)))
+              k (liftSlotChannel (M := M) A_ch))
+            (Function.update
+              (fun _ : Fin n => liftSlotChannel (M := M) (Channel.idChannel (Fin d)))
+              l (liftSlotChannel (M := M) B_ch)))).map) =
+      plusSwitchChannelMap
+        ((1 / (m : ℝ)) • A_ch.map +
+          (1 - 1 / (m : ℝ)) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+        ((1 / (n : ℝ)) • B_ch.map +
+          (1 - 1 / (n : ℝ)) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))) := by
+  let u00 := MatrixMap.choi (plusSwitchChannelMap
+    (LinearMap.id : MatrixMap (Fin d) (Fin d)) (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+  let u10 := MatrixMap.choi (plusSwitchChannelMap
+    A_ch.map (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+  let u01 := MatrixMap.choi (plusSwitchChannelMap
+    (LinearMap.id : MatrixMap (Fin d) (Fin d)) B_ch.map)
+  let u11 := MatrixMap.choi (plusSwitchChannelMap A_ch.map B_ch.map)
+  have hbilin : ∀ t s : ℝ, t ∈ Set.Icc 0 1 → s ∈ Set.Icc 0 1 →
+      MatrixMap.choi (tree.map (Sum.elim
+        (fun _ => LinearMap.id + t • ((liftSlotChannel (M := M) A_ch).map - LinearMap.id))
+        (fun _ => LinearMap.id + s • ((liftSlotChannel (M := M) B_ch).map - LinearMap.id)))) =
+      (u00 + s • (u01 - u00)) + t • ((u10 + s • (u11 - u10)) - (u00 + s • (u01 - u00))) := by
+    intro t s ht hs
+    obtain ⟨Ut, hUt_comp, hUt_lift, hUt_choi⟩ := liftMap_affine_eq_oracleMap (M := M) A_ch ht
+    obtain ⟨Vs, hVs_comp, hVs_lift, hVs_choi⟩ := liftMap_affine_eq_oracleMap (M := M) B_ch hs
+    have hmap :
+        tree.map (Sum.elim
+          (fun _ => LinearMap.id + t • ((liftSlotChannel (M := M) A_ch).map - LinearMap.id))
+          (fun _ => LinearMap.id + s • ((liftSlotChannel (M := M) B_ch).map - LinearMap.id))) =
+        (tree.channel (Sum.elim (fun _ => oracleChannel (M := M) Ut hUt_comp)
+          (fun _ => oracleChannel (M := M) Vs hVs_comp))).map := by
+      rw [ICO.LabelledQueryTree.Tree.channel_map]
+      apply ICO.LabelledQueryTree.Tree.map_congr
+      intro l _
+      cases l with
+      | inl _ => exact hUt_lift
+      | inr _ => exact hVs_lift
+    rw [hmap, htree (Fin d × Fin d) (Fin d × Fin d) Ut Vs hUt_comp hVs_comp,
+      ← plusSwitchChannelMap_ofKraus]
+    unfold plusSwitchChannelMap plusSwitchFromChoi
+    rw [hUt_choi, hVs_choi]
+    have hJAt :
+        MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d)) +
+          t • (MatrixMap.choi A_ch.map -
+            MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d))) =
+        t • MatrixMap.choi A_ch.map +
+          (1 - t) • MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d)) := by
+      ext p q; simp [Complex.real_smul]; ring
+    have hJBs :
+        MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d)) +
+          s • (MatrixMap.choi B_ch.map -
+            MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d))) =
+        s • MatrixMap.choi B_ch.map +
+          (1 - s) • MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d)) := by
+      ext p q; simp [Complex.real_smul]; ring
+    change MatrixMap.choi (plusSwitchFromChoi _ _) = _
+    rw [hJAt, hJBs, plusSwitchFromChoi_add_left, plusSwitchFromChoi_real_smul_left,
+      plusSwitchFromChoi_real_smul_left, plusSwitchFromChoi_add_right,
+      plusSwitchFromChoi_add_right, plusSwitchFromChoi_real_smul_right,
+      plusSwitchFromChoi_real_smul_right, plusSwitchFromChoi_real_smul_right,
+      plusSwitchFromChoi_real_smul_right]
+    simp only [smul_add, smul_smul]
+    have hc := choi_sum_four (t * s) (t * (1 - s)) ((1 - t) * s) ((1 - t) * (1 - s))
+      (plusSwitchChannelMap A_ch.map B_ch.map)
+      (plusSwitchChannelMap A_ch.map LinearMap.id)
+      (plusSwitchChannelMap LinearMap.id B_ch.map)
+      (plusSwitchChannelMap LinearMap.id LinearMap.id)
+    have hsum :
+        (t * s) • plusSwitchFromChoi (MatrixMap.choi A_ch.map) (MatrixMap.choi B_ch.map) +
+          (t * (1 - s)) • plusSwitchFromChoi (MatrixMap.choi A_ch.map)
+            (MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d))) +
+          (((1 - t) * s) • plusSwitchFromChoi
+            (MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d))) (MatrixMap.choi B_ch.map) +
+          ((1 - t) * (1 - s)) • plusSwitchFromChoi
+            (MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+            (MatrixMap.choi (LinearMap.id : MatrixMap (Fin d) (Fin d)))) =
+        (t * s) • plusSwitchChannelMap A_ch.map B_ch.map +
+          (t * (1 - s)) • plusSwitchChannelMap A_ch.map LinearMap.id +
+          ((1 - t) * s) • plusSwitchChannelMap LinearMap.id B_ch.map +
+          ((1 - t) * (1 - s)) • plusSwitchChannelMap LinearMap.id LinearMap.id := by
+      unfold plusSwitchChannelMap
+      abel
+    rw [hsum, hc]
+    dsimp only [u00, u10, u01, u11]
+    module
+  have hrhs_choi :
+      ((1 / (m : ℝ)) * (1 / (n : ℝ))) • u11 +
+      ((1 / (m : ℝ)) * (1 - 1 / (n : ℝ))) • u10 +
+      ((1 - 1 / (m : ℝ)) * (1 / (n : ℝ))) • u01 +
+      ((1 - 1 / (m : ℝ)) * (1 - 1 / (n : ℝ))) • u00 =
+        MatrixMap.choi (dilutedPlusSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map) := by
+    rw [dilutedPlusSwitchMap_eq_four_terms, choi_sum_four]
+  have h1 :
+      (((ICO.ReducedCircuit.reduce hm hn tree).channel
+          (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map) =
+        dilutedPlusSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map := by
+    apply MatrixMap.choi_inj
+    rw [ICO.ReducedCircuit.reduce_bilinear hm hn tree
+      (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch) u00 u10 u01 u11 hbilin,
+      hrhs_choi]
+  have h2 :
+      ((1 : ℝ) / ((m : ℝ) * (n : ℝ))) •
+        (∑ k : Fin m, ∑ l : Fin n,
+          ((ICO.CircuitPolarization.selected tree k l).channel
+            (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map) =
+        dilutedPlusSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map := by
+    apply MatrixMap.choi_inj
+    rw [choi_smul_sum2_map,
+      ICO.CircuitPolarization.average_selected hm hn tree
+        (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch) u00 u10 u01 u11 hbilin,
+      hrhs_choi]
+  refine ⟨h1, h2, ?_⟩
+  simp_rw [← selected_eq_update_idChannel tree _ _ A_ch B_ch]
+  exact h2
+
+/-- Lemma 6 (`lem:polarization`) in the diluted-switch form for the full-control
+quantum switch `SW` (`RealizesLabelledFullControlSwitch`) on `Fin 2 × Fin d`:
+if `tree` with `m > 0` calls to `A` and `n > 0` calls to `B` implements `SW[A, B]`
+for all channels on `Fin d`, then keeping one uniformly random call to each box
+and replacing all other calls by the identity channel implements the diluted
+full-control switch `dilutedFullSwitchMap (1/m) (1/n) A B` for all CPTP channels
+`A_ch, B_ch : Channel (Fin d) (Fin d)`. -/
+theorem one_call_each_diluted_switch_full {d m n : Nat} (hm : 0 < m) (hn : 0 < n)
+    (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M)
+      (Fin 2 × Fin d) Finset.univ (Fin 2 × Fin d))
+    (htree : RealizesLabelledFullControlSwitch tree)
+    (A_ch B_ch : Channel (Fin d) (Fin d)) :
+    (((ICO.ReducedCircuit.reduce hm hn tree).channel
+        (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map =
+      dilutedFullSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map) ∧
+    (((1 : ℝ) / ((m : ℝ) * (n : ℝ))) •
+        (∑ k : Fin m, ∑ l : Fin n,
+          ((ICO.CircuitPolarization.selected tree k l).channel
+            (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map) =
+      dilutedFullSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map) ∧
+    (((1 : ℝ) / ((m : ℝ) * (n : ℝ))) •
+        (∑ k : Fin m, ∑ l : Fin n,
+          (tree.channel (Sum.elim
+            (Function.update
+              (fun _ : Fin m => liftSlotChannel (M := M) (Channel.idChannel (Fin d)))
+              k (liftSlotChannel (M := M) A_ch))
+            (Function.update
+              (fun _ : Fin n => liftSlotChannel (M := M) (Channel.idChannel (Fin d)))
+              l (liftSlotChannel (M := M) B_ch)))).map) =
+      fullSwitchChannelMap
+        ((1 / (m : ℝ)) • A_ch.map +
+          (1 - 1 / (m : ℝ)) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+        ((1 / (n : ℝ)) • B_ch.map +
+          (1 - 1 / (n : ℝ)) • (LinearMap.id : MatrixMap (Fin d) (Fin d)))) := by
+  let u00 := MatrixMap.choi (fullSwitchChannelMap
+    (LinearMap.id : MatrixMap (Fin d) (Fin d)) (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+  let u10 := MatrixMap.choi (fullSwitchChannelMap
+    A_ch.map (LinearMap.id : MatrixMap (Fin d) (Fin d)))
+  let u01 := MatrixMap.choi (fullSwitchChannelMap
+    (LinearMap.id : MatrixMap (Fin d) (Fin d)) B_ch.map)
+  let u11 := MatrixMap.choi (fullSwitchChannelMap A_ch.map B_ch.map)
+  have hbilin : ∀ t s : ℝ, t ∈ Set.Icc 0 1 → s ∈ Set.Icc 0 1 →
+      MatrixMap.choi (tree.map (Sum.elim
+        (fun _ => LinearMap.id + t • ((liftSlotChannel (M := M) A_ch).map - LinearMap.id))
+        (fun _ => LinearMap.id + s • ((liftSlotChannel (M := M) B_ch).map - LinearMap.id)))) =
+      (u00 + s • (u01 - u00)) + t • ((u10 + s • (u11 - u10)) - (u00 + s • (u01 - u00))) := by
+    intro t s ht hs
+    obtain ⟨Ut, hUt_comp, hUt_lift, hUt_choi⟩ := liftMap_affine_eq_oracleMap (M := M) A_ch ht
+    obtain ⟨Vs, hVs_comp, hVs_lift, hVs_choi⟩ := liftMap_affine_eq_oracleMap (M := M) B_ch hs
+    have hmap :
+        tree.map (Sum.elim
+          (fun _ => LinearMap.id + t • ((liftSlotChannel (M := M) A_ch).map - LinearMap.id))
+          (fun _ => LinearMap.id + s • ((liftSlotChannel (M := M) B_ch).map - LinearMap.id))) =
+        (tree.channel (Sum.elim (fun _ => oracleChannel (M := M) Ut hUt_comp)
+          (fun _ => oracleChannel (M := M) Vs hVs_comp))).map := by
+      rw [ICO.LabelledQueryTree.Tree.channel_map]
+      apply ICO.LabelledQueryTree.Tree.map_congr
+      intro l _
+      cases l with
+      | inl _ => exact hUt_lift
+      | inr _ => exact hVs_lift
+    rw [hmap, htree (Fin d × Fin d) (Fin d × Fin d) Ut Vs hUt_comp hVs_comp,
+      fullControlSwitchMap_eq_fullSwitchFromChoi, hUt_choi, hVs_choi]
+    change switchChoiBilinear d _ _ = _
+    rw [switchChoiBilinear_affine_left, switchChoiBilinear_affine_right,
+      switchChoiBilinear_affine_right]
+    dsimp only [switchChoiBilinear, fullSwitchChannelMap, u00, u10, u01, u11]
+  have hrhs_choi :
+      ((1 / (m : ℝ)) * (1 / (n : ℝ))) • u11 +
+      ((1 / (m : ℝ)) * (1 - 1 / (n : ℝ))) • u10 +
+      ((1 - 1 / (m : ℝ)) * (1 / (n : ℝ))) • u01 +
+      ((1 - 1 / (m : ℝ)) * (1 - 1 / (n : ℝ))) • u00 =
+        MatrixMap.choi (dilutedFullSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map) := by
+    rw [dilutedFullSwitchMap_eq_four_terms, choi_sum_four]
+  have h1 :
+      (((ICO.ReducedCircuit.reduce hm hn tree).channel
+          (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map) =
+        dilutedFullSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map := by
+    apply MatrixMap.choi_inj
+    rw [ICO.ReducedCircuit.reduce_bilinear hm hn tree
+      (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch) u00 u10 u01 u11 hbilin,
+      hrhs_choi]
+  have h2 :
+      ((1 : ℝ) / ((m : ℝ) * (n : ℝ))) •
+        (∑ k : Fin m, ∑ l : Fin n,
+          ((ICO.CircuitPolarization.selected tree k l).channel
+            (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch)).map) =
+        dilutedFullSwitchMap (1 / (m : ℝ)) (1 / (n : ℝ)) A_ch.map B_ch.map := by
+    apply MatrixMap.choi_inj
+    rw [choi_smul_sum2_map,
+      ICO.CircuitPolarization.average_selected hm hn tree
+        (liftSlotChannel (M := M) A_ch) (liftSlotChannel (M := M) B_ch) u00 u10 u01 u11 hbilin,
+      hrhs_choi]
+  refine ⟨h1, h2, ?_⟩
+  simp_rw [← selected_eq_update_idChannel tree _ _ A_ch B_ch]
+  exact h2
+
+end SwitchPolarization
 
 end
 end ICO.PolarizationOrderedArbitraryControl

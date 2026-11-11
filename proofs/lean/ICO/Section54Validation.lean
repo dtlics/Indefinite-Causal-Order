@@ -6,21 +6,39 @@ import ICO.DiamondPreprocessing
 import QIT.States.Purification.Canonical
 
 /-!
-# Section 5.4: Validating a physical dephasing-noise model (`\label{sec:validation}`)
+# Theorem 3 (`\label{thm:c6}`): Validating dephasing vs. depolarizing noise (`\label{sec:switch-test}`, `\label{sec:validation}`)
 
-This module formalizes the new statements in Section 5.4 of the paper:
-- **Proposition `prop:mismatch`** (`model_mismatch_diamond_bound`, `model_mismatch_bound`)
-  together with the slotwise one-call Stinespring/Kraus dilations and unconditional
-  diamond-norm contractivity of the quantum switch (`switch_slot_left_diamond_le_diamond`,
-  `switch_slot_right_diamond_le_diamond`).
-- **Identities `eq:validation-visibility`** (`dephasing_noise_self_visibility` and
-  `depolarizing_model_self_visibility`): exact switch self-visibilities
-  `v(\mathcal{E}_{p,U}) = 1` and `v(\mathcal{M}_p) = 1 - p^2 (d - 1) / (d + 1)`.
-- **Corollary `cor:validation` (a) and (b)** (`validation_ordinary_query_lower_bound`,
-  `validation_ordinary_balanced_query_lower_bound`, `validation_ordinary_lower_bound`,
-  and `validation_switch_upper_bound`): exponential-in-`d` ordinary query lower
-  bound `Q > d^{1/16} / (1400 p)` versus dimension-independent `14 ⌈3 / (2p)⌉`-call
-  switch validation protocol.
+This module formalizes the weak-noise decision separation of Theorem 3
+("One bit: dephasing or depolarizing", `\label{thm:c6}`), the seven-use block switch test
+of Section 5.1 (`\label{sec:switch-test}`), the weak-to-strong noise reduction of
+Section 5.3 (`\label{sec:validation}`), the trivial `1 / (3p)` query bound of
+Remark `rem:crossover`, and audited supplementary switch-contractivity results:
+- **Audited supplementary switch-contractivity and model-mismatch bounds**
+  (retained outside the current manuscript): slotwise one-call Stinespring/Kraus
+  dilations and unconditional diamond-norm contractivity of the quantum switch
+  (`ancillaTraceDistanceBound_diamond`, `switch_slot_left_diamond_le`,
+  `switch_slot_left_diamond_le_diamond`, `switch_slot_right_diamond_le`,
+  `switch_slot_right_diamond_le_diamond`), together with the resulting visibility
+  continuity bounds (`model_mismatch_bound`, `model_mismatch_diamond_bound`).
+- **Identities `eq:validation-visibility`** (`\label{sec:switch-test}`,
+  `dephasing_noise_self_visibility` and `depolarizing_model_self_visibility`): exact
+  switch self-visibilities `v(\mathcal{E}_{p,U}) = 1` and
+  `v(\mathcal{M}_p) = 1 - p^2 (d - 1) / (d + 1)`.
+- **Theorem 3 (`\label{thm:c6}`), ordinary query lower bound (`\label{sec:validation}`)**
+  (`validation_ordinary_query_lower_bound`, `validation_ordinary_balanced_query_lower_bound`,
+  and `validation_ordinary_lower_bound`): exponential-in-qubit ordinary query lower bound
+  `Q > d^{1/16} / (1400 p)`.
+- **Theorem 3 (`\label{thm:c6}`), seven-use block switch upper bound (`\label{sec:switch-test}`)**
+  (`channelPow`, `dephasingNoiseChannel_pow`, `depolarizingModelChannel_pow`,
+  `validation_switch_block_power_upper_bound`, and `validation_switch_upper_bound`):
+  exact `m`-fold channel-power identities `\mathcal{E}_{p,U}^m = \mathcal{E}_{1-(1-p)^m, U}`
+  and `\mathcal{M}_p^m = α^m id + (1 - α^m) Ω` and the `14 m`-call (`m ≥ 3 / (2p)`)
+  quantum-switch validation test.
+- **Remark `rem:crossover`, trivial `1 / (3p)` query lower bound**
+  (`dephasing_depolarizing_diamond_le_p`, `dephasing_depolarizing_withMemory_diamond_le_p`,
+  `validation_trivial_query_lower_bound`, `validation_trivial_balanced_query_lower_bound`,
+  and `validation_trivial_single_unitary_query_lower_bound`): diamond trace distance at most
+  `p` and universal `1 / (3p) ≤ Q` lower bound.
 -/
 
 namespace ICO.Section54Validation
@@ -38,7 +56,7 @@ set_option Elab.async false
 
 variable {A : Type} [Fintype A] [DecidableEq A]
 
-/-! ## 1. Kraus channels and the one-call slotwise dilation of the quantum switch -/
+/-! ## 1. Kraus channels and slotwise diamond-norm contractivity (audited supplementary results) -/
 
 /-- CPTP channel associated to a complete Kraus family `K : ι → Matrix B A ℂ`. -/
 def krausChannel {B ι : Type} [Fintype B] [DecidableEq B] [Fintype ι]
@@ -221,8 +239,8 @@ theorem kronecker_one_mul_slotLeftPre {ι κ : Type} [Fintype κ] [DecidableEq �
     | inl a => simp [slotLeftPre]
     | inr a => simp [slotLeftPre, Matrix.mul_apply]
 
-/-- Key Kraus factorization `K_j (E_i ⊗ I_M) W_pre = S_{i,j}` from the proof of
-Proposition `prop:mismatch`. -/
+/-- Key Kraus factorization `K_j (E_i ⊗ I_M) W_pre = S_{i,j}` for the slotwise
+one-call dilation of the quantum switch. -/
 theorem slotLeft_kraus_factorization {ι κ : Type} [Fintype κ] [DecidableEq κ]
     (E : ι → CMatrix A) (F : κ → CMatrix A) (i : ι) (j : κ) :
     slotLeftPostKraus F j *
@@ -601,7 +619,7 @@ theorem control_plus_gap_le_traceDistance (ρ σ : State (A ⊕ A)) :
     ρ.normalizedTraceDistance σ at h2
   exact abs_le.mpr ⟨by linarith, h1⟩
 
-/-- **Proposition `prop:mismatch` (Model mismatch)**:
+/-- **Model mismatch bound (audited supplementary result outside the current manuscript)**:
 For any channels `E : ι → CMatrix A` and `M : κ → CMatrix A` with single-call diamond
 distance bound `ε` on the switch dilation memories,
 `(1 / 2) |p_+(E) - p_+(M)| = (1 / 4) |v(E) - v(M)| ≤ ε`. -/
@@ -771,7 +789,8 @@ theorem switch_slot_right_diamond_le_diamond [Nonempty A] {ι κ κ' : Type}
   exact switch_slot_right_diamond_le F E E' hF hE hE'
     (ancillaTraceDistanceBound_diamond (krausChannel E hE) (krausChannel E' hE'))
 
-/-- **Proposition `prop:mismatch` (Model mismatch, unconditional diamond-norm form)**:
+/-- **Model mismatch bound, unconditional diamond-norm form (audited supplementary result
+outside the current manuscript)**:
 For any channels `E : ι → CMatrix A` and `M : κ → CMatrix A`,
 `(1 / 2) |p_+(E) - p_+(M)| = (1 / 4) |v(E) - v(M)| ≤ D_◇(E, M)`. -/
 theorem model_mismatch_diamond_bound [Nonempty A] {ι κ : Type}
@@ -791,7 +810,7 @@ theorem model_mismatch_diamond_bound [Nonempty A] {ι κ : Type}
     (ancillaTraceDistanceBound_diamond (krausChannel E hE) (krausChannel M hM))
     (ancillaTraceDistanceBound_diamond (krausChannel E hE) (krausChannel M hM))
 
-/-! ## 2. Self-visibility identities `eq:validation-visibility` -/
+/-! ## 2. Self-visibility identities `eq:validation-visibility` (`\label{sec:switch-test}`) -/
 
 /-- Any complete Kraus family of Hermitian, pairwise commuting Kraus operators has
 switch self-visibility `1`. -/
@@ -1091,9 +1110,9 @@ theorem depolarizing_model_self_visibility [Nonempty A] {p : ℝ} (hp0 : 0 ≤ p
   field_simp
   ring
 
-/-! ## 3. Corollary `cor:validation` (a) and (b) -/
+/-! ## 3. Theorem 3 (`\label{thm:c6}`): ordinary lower bound (`\label{sec:validation}`) and switch upper bound (`\label{sec:switch-test}`) -/
 
-/-- **Corollary `cor:validation` (a) (Ordinary query lower bound)**:
+/-- **Theorem 3 (`\label{thm:c6}`) / Section 5.3 (`\label{sec:validation}`), numeric reduction for the ordinary query lower bound**:
 For any `2L`-call ordinary adaptive tree representing an `L`-effective-call strategy
 with `1 ≤ L ≤ d^{1/16} / 200` and `d^{1/16} / 200 < L + 1` (`L = ⌊d^{1/16} / 200⌋`):
 1. The Haar-averaged trace distance between `sameDensity` (`Δ_U`) and `mubDensity` (`Ω`)
@@ -1185,7 +1204,7 @@ theorem validation_ordinary_lower_bound [Nonempty A] {M O B : Type}
     linarith
   exact ⟨hdist, htotal, hstrong, hQ⟩
 
-/-! ### End-to-end operational proof of Corollary `cor:validation` (a) -/
+/-! ### End-to-end operational proof of the ordinary query lower bound in Theorem 3 (`\label{thm:c6}`, `\label{sec:validation}`) -/
 
 /-- Weak dephasing-noise channel `\mathcal{E}_{p,U} = (1 - p) id + p Δ_U` acting on `A`
 while preserving arbitrary finite side memory `M`. -/
@@ -1864,7 +1883,7 @@ theorem depolarizing_hybrid_accept_gap [Nonempty A] {M O B : Type}
       push_cast
       ring
 
-/-- Strong-device `L`-call acceptance-gap bound from the proof of Corollary `cor:validation` (a):
+/-- Strong-device `L`-call acceptance-gap bound from Section 5.3 (`\label{sec:validation}`):
 for any `L ≤ d^{1/16} / 200` and `L`-budget adaptive tree, the Haar-averaged acceptance on
 `Δ_U` exceeds the acceptance on `Λ` by at most `53 / 2000`. -/
 theorem validation_strong_device_accept_gap [Nonempty A] {M O B : Type}
@@ -1975,7 +1994,8 @@ theorem validation_strong_device_accept_gap [Nonempty A] {M O B : Type}
       linarith
     linarith
 
-/-- **Corollary `cor:validation` (a) (Balanced-prior operational query lower bound)**:
+/-- **Theorem 3 (`\label{thm:c6}`), balanced-prior operational ordinary query lower bound
+(`\label{sec:validation}`)**:
 For `d = Fintype.card A = 2^n`, `0 < p ≤ 1`, and any `Q`-budget ordinary adaptive strategy
 `(tree, ρ, T)` querying a single unknown device, if `T` achieves balanced Haar-prior
 success probability at least `2 / 3` between `\mathcal{E}_{p,U}` and `\mathcal{M}_p`,
@@ -2157,7 +2177,8 @@ theorem validation_ordinary_balanced_query_lower_bound [Nonempty A] {M O B : Typ
   rw [div_lt_iff₀ (by positivity : (0 : ℝ) < 1400 * p)]
   linarith
 
-/-- **Corollary `cor:validation` (a) (Unconditional operational ordinary query lower bound)**:
+/-- **Theorem 3 (`\label{thm:c6}`), unconditional operational ordinary query lower bound
+(`\label{sec:validation}`)**:
 Let `d = Fintype.card A = 2^n` and `0 < p ≤ 1`. Every ordinary adaptive strategy with
 query budget `Q`, arbitrary finite quantum memory `M`, mixed initial state `ρ : State B`,
 and binary final measurement `T : BinaryHypothesisTest O` that decides between the
@@ -2219,7 +2240,8 @@ theorem validation_ordinary_query_lower_bound [Nonempty A] {M O B : Type}
     (dephasingNoiseWithMemory M hp0_le hp1 U) ∂unitaryHaarMeasure (a := A) at hmean
   linarith
 
-/-- **Corollary `cor:validation` (b) (Switch validation upper bound)**:
+/-- **Theorem 3 (`\label{thm:c6}`), switch validation upper bound in closed block-parameter
+form (`\label{sec:switch-test}`)**:
 For any dimension `d = Fintype.card A ≥ 2`, noise rate `0 < p ≤ 1`, and block length
 `k : ℕ` with `3 / (2 p) ≤ k` (such as `k = ⌈3 / (2 p)⌉`):
 1. The `k`-fold composition `\mathcal{E}_{p,U}^k = \mathcal{E}_{1-(1-p)^k, U}` has
@@ -2229,7 +2251,9 @@ For any dimension `d = Fintype.card A ≥ 2`, noise rate `0 < p ≤ 1`, and bloc
    `α = 1 - p d / (d + 1)` satisfies `α^k ≤ exp(-1) ≤ (20 / 21)^20`, single-use
    minus probability `p_{-,k} ≥ (3 / 8) (1 - exp(-1))^2 > 1455 / 10000`, and `7`-repetition
    all-plus probability `< 1 / 3`.
-3. Total device calls used by the `7` switch runs is `7 * (2 * k) = 14 * k`. -/
+3. Total device calls used by the `7` switch runs is `7 * (2 * k) = 14 * k`.
+See `validation_switch_block_power_upper_bound` below for the channel-power formulation
+directly feeding `channelPow` into the quantum switch. -/
 theorem validation_switch_upper_bound [Nonempty A] (hd : 2 ≤ Fintype.card A)
     (U : Matrix.unitaryGroup A ℂ) {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1)
     {k : ℕ} (hk : 3 / (2 * p) ≤ (k : ℝ)) :
@@ -2352,19 +2376,782 @@ theorem validation_switch_upper_bound [Nonempty A] (hd : 2 ≤ Fintype.card A)
     exact lt_of_le_of_lt hpow hnum
   exact ⟨haccE, hαk_exp, haccM_lt, by ring⟩
 
-#print axioms ancillaTraceDistanceBound_diamond
-#print axioms switch_slot_left_diamond_le
-#print axioms switch_slot_left_diamond_le_diamond
-#print axioms switch_slot_right_diamond_le
-#print axioms switch_slot_right_diamond_le_diamond
-#print axioms model_mismatch_bound
-#print axioms model_mismatch_diamond_bound
-#print axioms dephasing_noise_self_visibility
-#print axioms depolarizing_model_self_visibility
-#print axioms validation_ordinary_lower_bound
-#print axioms validation_ordinary_balanced_query_lower_bound
-#print axioms validation_ordinary_query_lower_bound
-#print axioms validation_switch_upper_bound
+/-! ## 4. Channel powers and the `m`-fold block switch test (`\label{sec:switch-test}`, Theorem 3) -/
+
+/-- `m`-fold sequential channel power `Φ^m` of an endomorphism channel `Φ : Channel H H`,
+modeling a block of `m` consecutive uses of the device `Φ`
+(Section 5.1, `\label{sec:switch-test}`). -/
+def channelPow {H : Type} [Fintype H] [DecidableEq H] (Φ : Channel H H) : ℕ → Channel H H
+  | 0 => Channel.idChannel H
+  | m + 1 => Φ.comp (channelPow Φ m)
+
+@[simp]
+theorem channelPow_zero {H : Type} [Fintype H] [DecidableEq H] (Φ : Channel H H) :
+    channelPow Φ 0 = Channel.idChannel H := rfl
+
+@[simp]
+theorem channelPow_succ {H : Type} [Fintype H] [DecidableEq H] (Φ : Channel H H) (m : ℕ) :
+    channelPow Φ (m + 1) = Φ.comp (channelPow Φ m) := rfl
+
+/-- The linear map underlying `channelPow Φ m` is the `m`-fold iterate `(Φ.map)^[m]`. -/
+theorem channelPow_map {H : Type} [Fintype H] [DecidableEq H] (Φ : Channel H H) (m : ℕ) :
+    ((channelPow Φ m).map : CMatrix H → CMatrix H) = (Φ.map : CMatrix H → CMatrix H)^[m] := by
+  induction m with
+  | zero =>
+    funext X
+    simp [channelPow, ICO.DiamondPreprocessing.identity_map]
+  | succ m ih =>
+    funext X
+    change Φ.map ((channelPow Φ m).map X) = (Φ.map : CMatrix H → CMatrix H)^[m + 1] X
+    rw [Function.iterate_succ_apply']
+    exact congrArg Φ.map (congrFun ih X)
+
+theorem channelPow_map_apply {H : Type} [Fintype H] [DecidableEq H]
+    (Φ : Channel H H) (m : ℕ) (X : CMatrix H) :
+    (channelPow Φ m).map X = (Φ.map : CMatrix H → CMatrix H)^[m] X :=
+  congrFun (channelPow_map Φ m) X
+
+/-- General power law for a convex combination `α id + (1 - α) Δ` with an idempotent
+linear map `Δ` (`Δ ∘ Δ = Δ`): its `m`-fold channel power has map `α^m id + (1 - α^m) Δ`. -/
+theorem channelPow_affine_idempotent_map {H : Type} [Fintype H] [DecidableEq H]
+    (Φ : Channel H H) (Δ : MatrixMap H H) (α : ℝ)
+    (hΦ : ∀ X : CMatrix H, Φ.map X = (α : ℂ) • X + ((1 - α : ℝ) : ℂ) • Δ X)
+    (hΔ : ∀ X : CMatrix H, Δ (Δ X) = Δ X)
+    (m : ℕ) (X : CMatrix H) :
+    (channelPow Φ m).map X =
+      ((α ^ m : ℝ) : ℂ) • X + ((1 - α ^ m : ℝ) : ℂ) • Δ X := by
+  induction m with
+  | zero =>
+    change (Channel.idChannel H).map X = _
+    rw [ICO.DiamondPreprocessing.identity_map]
+    simp
+  | succ m ih =>
+    have hfix : Φ.map (Δ X) = Δ X := by
+      rw [hΦ (Δ X), hΔ X, ← add_smul]
+      have hs : (α : ℂ) + ((1 - α : ℝ) : ℂ) = 1 := by push_cast; ring
+      rw [hs, one_smul]
+    change Φ.map ((channelPow Φ m).map X) = _
+    rw [ih, map_add, map_smul, map_smul, hΦ X, hfix]
+    simp only [smul_add, smul_smul]
+    rw [add_assoc, ← add_smul]
+    have hc1 : ((α ^ m : ℝ) : ℂ) * (α : ℂ) = ((α ^ (m + 1) : ℝ) : ℂ) := by
+      push_cast; ring
+    have hc2 :
+        ((α ^ m : ℝ) : ℂ) * ((1 - α : ℝ) : ℂ) + ((1 - α ^ m : ℝ) : ℂ) =
+          ((1 - α ^ (m + 1) : ℝ) : ℂ) := by
+      push_cast; ring
+    rw [hc1, hc2]
+
+/-- Standalone weak dephasing-noise channel `\mathcal{E}_{p,U} = (1 - p) id + p Δ_U` on `A`. -/
+def dephasingNoiseChannel {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
+    (U : Matrix.unitaryGroup A ℂ) : Channel A A :=
+  krausChannel (dephasingNoiseKraus p U) (dephasingNoiseKraus_complete hp0 hp1 U)
+
+theorem dephasingNoiseChannel_map {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
+    (U : Matrix.unitaryGroup A ℂ) (X : CMatrix A) :
+    (dephasingNoiseChannel hp0 hp1 U).map X =
+      ((1 - p : ℝ) : ℂ) • X +
+        (p : ℂ) • MatrixMap.ofKraus (basisProjection (U : CMatrix A)) X := by
+  have h1 : star (Real.sqrt (1 - p) : ℂ) * (Real.sqrt (1 - p) : ℂ) = ((1 - p : ℝ) : ℂ) := by
+    simp only [Complex.star_def, Complex.conj_ofReal]
+    exact_mod_cast Real.mul_self_sqrt (by linarith)
+  have h2 : star (Real.sqrt p : ℂ) * (Real.sqrt p : ℂ) = (p : ℂ) := by
+    simp only [Complex.star_def, Complex.conj_ofReal]
+    exact_mod_cast Real.mul_self_sqrt hp0
+  change (∑ k : Option A, dephasingNoiseKraus p U k * X *
+      (dephasingNoiseKraus p U k).conjTranspose) = _
+  rw [Fintype.sum_option]
+  simp only [dephasingNoiseKraus, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+    smul_smul, Matrix.one_mul, Matrix.conjTranspose_one, Matrix.mul_one]
+  rw [h1]
+  simp_rw [h2, ← Finset.smul_sum]
+  rfl
+
+theorem basisProjection_ofKraus_idem (U : Matrix.unitaryGroup A ℂ) (X : CMatrix A) :
+    MatrixMap.ofKraus (basisProjection (U : CMatrix A))
+      (MatrixMap.ofKraus (basisProjection (U : CMatrix A)) X) =
+      MatrixMap.ofKraus (basisProjection (U : CMatrix A)) X := by
+  by_cases hne : Nonempty A
+  · haveI : Nonempty A := hne
+    rw [ICO.C6OTOCChannelBoundary.dephasing_expansion (U : CMatrix A) X, map_sum]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [map_smul]
+    congr 1
+    change (∑ j : A, basisProjection (U : CMatrix A) j * basisProjection (U : CMatrix A) i *
+        (basisProjection (U : CMatrix A) j).conjTranspose) = basisProjection (U : CMatrix A) i
+    rw [Finset.sum_eq_single i]
+    · rw [basisProjection_hermitian, basisProjection_mul _ U.property.1, if_pos rfl,
+        basisProjection_mul _ U.property.1, if_pos rfl]
+    · intro j _ hj
+      rw [basisProjection_hermitian, basisProjection_mul _ U.property.1, if_neg hj,
+        Matrix.zero_mul]
+    · simp
+  · haveI : IsEmpty A := not_nonempty_iff.mp hne
+    ext i
+    exact isEmptyElim i
+
+theorem blockDephasingRate_nonneg {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (m : ℕ) :
+    0 ≤ 1 - (1 - p) ^ m := by
+  have hpow : (1 - p) ^ m ≤ 1 := pow_le_one₀ (by linarith) (by linarith)
+  linarith
+
+theorem blockDephasingRate_le_one {p : ℝ} (_hp0 : 0 ≤ p) (hp1 : p ≤ 1) (m : ℕ) :
+    1 - (1 - p) ^ m ≤ 1 := by
+  have hpow : 0 ≤ (1 - p) ^ m := pow_nonneg (by linarith) m
+  linarith
+
+/-- **Section 5.1 (`\label{sec:switch-test}`), `m`-fold block power of dephasing noise**:
+For `0 ≤ p ≤ 1`, every unitary `U : Matrix.unitaryGroup A ℂ`, and every block length `m : ℕ`,
+the `m`-fold channel power `\mathcal{E}_{p,U}^m` equals dephasing noise of strength
+`1 - (1 - p)^m`. -/
+theorem dephasingNoiseChannel_pow {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
+    (U : Matrix.unitaryGroup A ℂ) (m : ℕ) :
+    channelPow (dephasingNoiseChannel hp0 hp1 U) m =
+      dephasingNoiseChannel
+        (blockDephasingRate_nonneg hp0 hp1 m)
+        (blockDephasingRate_le_one hp0 hp1 m) U := by
+  apply ICO.BudgetHaarBound.channel_eq_of_map_eq
+  apply LinearMap.ext
+  intro X
+  have haff : ∀ Y : CMatrix A,
+      (dephasingNoiseChannel hp0 hp1 U).map Y =
+        ((1 - p : ℝ) : ℂ) • Y +
+          ((1 - (1 - p) : ℝ) : ℂ) • MatrixMap.ofKraus (basisProjection (U : CMatrix A)) Y := by
+    intro Y
+    rw [dephasingNoiseChannel_map hp0 hp1 U Y]
+    have hsub : (1 - (1 - p) : ℝ) = p := by ring
+    rw [hsub]
+  rw [channelPow_affine_idempotent_map
+    (dephasingNoiseChannel hp0 hp1 U)
+    (MatrixMap.ofKraus (basisProjection (U : CMatrix A)))
+    (1 - p) haff (basisProjection_ofKraus_idem U) m X,
+    dephasingNoiseChannel_map
+      (blockDephasingRate_nonneg hp0 hp1 m)
+      (blockDephasingRate_le_one hp0 hp1 m) U X]
+  have hsub : (1 - (1 - (1 - p) ^ m) : ℝ) = (1 - p) ^ m := by ring
+  rw [hsub]
+
+/-- Standalone depolarizing channel `\mathcal{M}_α = α id + (1 - α) Ω` on `A` with
+identity weight `α ∈ [0, 1]`. -/
+def depolarizingAlphaChannel [Nonempty A] {α : ℝ} (hα0 : 0 ≤ α) (hα1 : α ≤ 1) :
+    Channel A A :=
+  krausChannel (depolarizingModelKraus (A := A) α) (depolarizingModelKraus_complete hα0 hα1)
+
+theorem depolarizingAlphaChannel_map [Nonempty A] {α : ℝ} (hα0 : 0 ≤ α) (hα1 : α ≤ 1)
+    (X : CMatrix A) :
+    (depolarizingAlphaChannel (A := A) hα0 hα1).map X =
+      (α : ℂ) • X +
+        ((1 - α : ℝ) : ℂ) • (ICO.RecordingDepolarizing.depolarizing (α := A)).map X := by
+  have h1 : star (Real.sqrt α : ℂ) * (Real.sqrt α : ℂ) = (α : ℂ) := by
+    simp only [Complex.star_def, Complex.conj_ofReal]
+    exact_mod_cast Real.mul_self_sqrt hα0
+  have h2 : star (Real.sqrt (1 - α) : ℂ) * (Real.sqrt (1 - α) : ℂ) = ((1 - α : ℝ) : ℂ) := by
+    simp only [Complex.star_def, Complex.conj_ofReal]
+    exact_mod_cast Real.mul_self_sqrt (by linarith)
+  have hdep : MatrixMap.ofKraus (depolarizingKraus (n := A)) X =
+      (ICO.RecordingDepolarizing.depolarizing (α := A)).map X := by
+    ext i j
+    change (∑ p : A × A, depolarizingKraus (n := A) p * X *
+        (depolarizingKraus (n := A) p).conjTranspose) i j =
+      (ICO.RecordingDepolarizing.depolarizing (α := A)).map X i j
+    rw [depolarizing_channel X, ICO.RecordingDepolarizing.depolarizing_entry]
+    by_cases hij : i = j <;> simp [hij, div_eq_mul_inv, mul_comm]
+  rw [← hdep]
+  change (∑ k : Option (A × A), depolarizingModelKraus (A := A) α k * X *
+      (depolarizingModelKraus (A := A) α k).conjTranspose) = _
+  rw [Fintype.sum_option]
+  simp only [depolarizingModelKraus, Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+    smul_smul, Matrix.one_mul, Matrix.conjTranspose_one, Matrix.mul_one]
+  rw [h1]
+  simp_rw [h2, ← Finset.smul_sum]
+  rfl
+
+/-- Standalone depolarizing noise model `\mathcal{M}_p = (1 - p) id + p Λ = α id + (1 - α) Ω`
+on `A`, where `α = 1 - p d / (d + 1)`. -/
+def depolarizingModelChannel [Nonempty A] {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+    Channel A A :=
+  depolarizingAlphaChannel (A := A)
+    (depolarizingModelAlpha_nonneg (A := A) hp0 hp1)
+    (depolarizingModelAlpha_le_one (A := A) hp0)
+
+theorem depolarizing_map_idem [Nonempty A] (X : CMatrix A) :
+    (ICO.RecordingDepolarizing.depolarizing (α := A)).map
+      ((ICO.RecordingDepolarizing.depolarizing (α := A)).map X) =
+      (ICO.RecordingDepolarizing.depolarizing (α := A)).map X := by
+  ext i j
+  rw [ICO.RecordingDepolarizing.depolarizing_entry,
+    ICO.RecordingDepolarizing.depolarizing_entry,
+    (ICO.RecordingDepolarizing.depolarizing (α := A)).tracePreserving X]
+
+theorem depolarizingAlphaChannel_pow [Nonempty A] {α : ℝ}
+    (hα0 : 0 ≤ α) (hα1 : α ≤ 1) (m : ℕ) :
+    channelPow (depolarizingAlphaChannel (A := A) hα0 hα1) m =
+      depolarizingAlphaChannel (A := A) (pow_nonneg hα0 m) (pow_le_one₀ hα0 hα1) := by
+  apply ICO.BudgetHaarBound.channel_eq_of_map_eq
+  apply LinearMap.ext
+  intro X
+  rw [channelPow_affine_idempotent_map
+    (depolarizingAlphaChannel (A := A) hα0 hα1)
+    (ICO.RecordingDepolarizing.depolarizing (α := A)).map α
+    (depolarizingAlphaChannel_map hα0 hα1) depolarizing_map_idem m X,
+    depolarizingAlphaChannel_map (pow_nonneg hα0 m) (pow_le_one₀ hα0 hα1) X]
+
+/-- **Section 5.1 (`\label{sec:switch-test}`), `m`-fold block power of the depolarizing model**:
+For `0 ≤ p ≤ 1` and every block length `m : ℕ`, the `m`-fold channel power `\mathcal{M}_p^m`
+of `\mathcal{M}_p = α id + (1 - α) Ω` (`α = 1 - p d / (d + 1)`) equals
+`α^m id + (1 - α^m) Ω` (`depolarizingAlphaChannel` of parameter `α^m`). -/
+theorem depolarizingModelChannel_pow [Nonempty A] {p : ℝ}
+    (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (m : ℕ) :
+    channelPow (depolarizingModelChannel (A := A) hp0 hp1) m =
+      depolarizingAlphaChannel (A := A)
+        (pow_nonneg (depolarizingModelAlpha_nonneg (A := A) hp0 hp1) m)
+        (pow_le_one₀ (depolarizingModelAlpha_nonneg (A := A) hp0 hp1)
+          (depolarizingModelAlpha_le_one (A := A) hp0)) :=
+  depolarizingAlphaChannel_pow
+    (depolarizingModelAlpha_nonneg (A := A) hp0 hp1)
+    (depolarizingModelAlpha_le_one (A := A) hp0) m
+
+theorem depolarizingModelChannel_pow_map [Nonempty A] {p : ℝ}
+    (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (m : ℕ) (X : CMatrix A) :
+    (channelPow (depolarizingModelChannel (A := A) hp0 hp1) m).map X =
+      ((depolarizingModelAlpha A p ^ m : ℝ) : ℂ) • X +
+        ((1 - depolarizingModelAlpha A p ^ m : ℝ) : ℂ) •
+          (ICO.RecordingDepolarizing.depolarizing (α := A)).map X := by
+  rw [depolarizingModelChannel_pow hp0 hp1 m, depolarizingAlphaChannel_map]
+
+/-- Completeness of the canonical Choi-extracted Kraus family `channelKraus Φ` of a CPTP
+channel `Φ : Channel A A`. -/
+theorem channelKraus_complete (Φ : Channel A A) :
+    (∑ i : A × A, (channelKraus Φ i).conjTranspose * channelKraus Φ i) = 1 := by
+  have hTP : MatrixMap.IsTracePreserving (MatrixMap.ofKraus (channelKraus Φ)) := by
+    rw [← channelKraus_map Φ]
+    exact Φ.tracePreserving
+  simpa [MatrixMap.krausAdjoint] using
+    MatrixMap.krausAdjoint_one_of_tracePreserving (channelKraus Φ) hTP
+
+theorem krausChannel_channelKraus (Φ : Channel A A) :
+    krausChannel (channelKraus Φ) (channelKraus_complete Φ) = Φ := by
+  apply ICO.BudgetHaarBound.channel_eq_of_map_eq
+  exact (channelKraus_map Φ).symm
+
+/-- Kraus-representation independence of `switchChannel`: any two complete Kraus families
+representing the same slot channels define the exact same switch channel on `A ⊕ A`. -/
+theorem switchChannel_congr {ι ι' κ κ' : Type}
+    [Fintype ι] [Fintype ι'] [Fintype κ] [Fintype κ']
+    (E : ι → CMatrix A) (E' : ι' → CMatrix A)
+    (F : κ → CMatrix A) (F' : κ' → CMatrix A)
+    (hE : (∑ i, (E i).conjTranspose * E i) = 1)
+    (hE' : (∑ i, (E' i).conjTranspose * E' i) = 1)
+    (hF : (∑ j, (F j).conjTranspose * F j) = 1)
+    (hF' : (∑ j, (F' j).conjTranspose * F' j) = 1)
+    (hEE' : krausChannel E hE = krausChannel E' hE')
+    (hFF' : krausChannel F hF = krausChannel F' hF') :
+    switchChannel E F hE hF = switchChannel E' F' hE' hF' := by
+  letI := Classical.decEq κ
+  letI := Classical.decEq ι'
+  have hleft : switchChannel E F hE hF = switchChannel E' F hE' hF := by
+    rw [switchChannel_eq_slotLeft_comp E F hE hF,
+      switchChannel_eq_slotLeft_comp E' F hE' hF, hEE']
+  have hright : switchChannel E' F hE' hF = switchChannel E' F' hE' hF' := by
+    rw [switchChannel_eq_sumComm_conj F E' hF hE',
+      switchChannel_eq_sumComm_conj F' E' hF' hE',
+      switchChannel_eq_slotLeft_comp F E' hF hE',
+      switchChannel_eq_slotLeft_comp F' E' hF' hE', hFF']
+  exact hleft.trans hright
+
+theorem switchedState_congr {ι ι' κ κ' : Type}
+    [Fintype ι] [Fintype ι'] [Fintype κ] [Fintype κ']
+    (E : ι → CMatrix A) (E' : ι' → CMatrix A)
+    (F : κ → CMatrix A) (F' : κ' → CMatrix A)
+    (hE : (∑ i, (E i).conjTranspose * E i) = 1)
+    (hE' : (∑ i, (E' i).conjTranspose * E' i) = 1)
+    (hF : (∑ j, (F j).conjTranspose * F j) = 1)
+    (hF' : (∑ j, (F' j).conjTranspose * F' j) = 1)
+    (hEE' : krausChannel E hE = krausChannel E' hE')
+    (hFF' : krausChannel F hF = krausChannel F' hF')
+    (ρ : State A) :
+    switchedState E F hE hF ρ = switchedState E' F' hE' hF' ρ := by
+  rw [switchedState_eq_applyState, switchedState_eq_applyState,
+    switchChannel_congr E E' F F' hE hE' hF hF' hEE' hFF']
+
+/-- Canonical quantum switch channel `SW[Φ, Ψ]` on `A ⊕ A` defined directly on two CPTP
+channels `Φ Ψ : Channel A A`. -/
+def switchOfChannels (Φ Ψ : Channel A A) : Channel (A ⊕ A) (A ⊕ A) :=
+  switchChannel (channelKraus Φ) (channelKraus Ψ)
+    (channelKraus_complete Φ) (channelKraus_complete Ψ)
+
+/-- Output state of `SW[Φ, Ψ]` on control `|+⟩` and target `ρ : State A`, defined directly on
+two CPTP channels `Φ Ψ : Channel A A`. -/
+def switchedStateOfChannels (Φ Ψ : Channel A A) (ρ : State A) : State (A ⊕ A) :=
+  switchedState (channelKraus Φ) (channelKraus Ψ)
+    (channelKraus_complete Φ) (channelKraus_complete Ψ) ρ
+
+theorem switchedStateOfChannels_eq_applyState (Φ Ψ : Channel A A) (ρ : State A) :
+    switchedStateOfChannels Φ Ψ ρ = (switchOfChannels Φ Ψ).applyState (plusState ρ) :=
+  switchedState_eq_applyState _ _ _ _ ρ
+
+theorem switchOfChannels_krausChannel {ι κ : Type} [Fintype ι] [Fintype κ]
+    (E : ι → CMatrix A) (F : κ → CMatrix A)
+    (hE : (∑ i, (E i).conjTranspose * E i) = 1)
+    (hF : (∑ j, (F j).conjTranspose * F j) = 1) :
+    switchOfChannels (krausChannel E hE) (krausChannel F hF) = switchChannel E F hE hF :=
+  switchChannel_congr _ E _ F _ hE _ hF
+    (krausChannel_channelKraus _) (krausChannel_channelKraus _)
+
+theorem switchedStateOfChannels_krausChannel {ι κ : Type} [Fintype ι] [Fintype κ]
+    (E : ι → CMatrix A) (F : κ → CMatrix A)
+    (hE : (∑ i, (E i).conjTranspose * E i) = 1)
+    (hF : (∑ j, (F j).conjTranspose * F j) = 1) (ρ : State A) :
+    switchedStateOfChannels (krausChannel E hE) (krausChannel F hF) ρ =
+      switchedState E F hE hF ρ :=
+  switchedState_congr _ E _ F _ hE _ hF
+    (krausChannel_channelKraus _) (krausChannel_channelKraus _) ρ
+
+/-- **Theorem 3 (`\label{thm:c6}`) / Section 5.1 (`\label{sec:switch-test}`), seven-use switch
+upper bound directly on `m`-fold channel powers**:
+For `2 ≤ Fintype.card A`, `0 < p ≤ 1`, and any block length `m : ℕ` with `3 / (2 p) ≤ m`
+(such as `m = ⌈3 / (2 p)⌉`), feeding the `m`-fold channel powers
+`channelPow (dephasingNoiseChannel ... U) m` and `channelPow (depolarizingModelChannel ...) m`
+directly into both slots of the quantum switch on control `|+⟩` and target `mixedState` yields:
+1. All `7` independent switch runs output `+` with probability `1` on `\mathcal{E}_{p,U}`
+   (zero error on dephasing noise).
+2. All `7` independent switch runs output `+` with probability `< 1 / 3` on `\mathcal{M}_p`.
+3. Total device uses across the `7` switch runs is `7 * (2 * m) = 14 * m`. -/
+theorem validation_switch_block_power_upper_bound [Nonempty A] (hd : 2 ≤ Fintype.card A)
+    (U : Matrix.unitaryGroup A ℂ) {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1)
+    {m : ℕ} (hm : 3 / (2 * p) ≤ (m : ℝ)) :
+    let blockE : Channel A A :=
+      channelPow (dephasingNoiseChannel (le_of_lt hp0) hp1 U) m
+    let blockM : Channel A A :=
+      channelPow (depolarizingModelChannel (A := A) (le_of_lt hp0) hp1) m
+    let stateE : State (A ⊕ A) :=
+      switchedStateOfChannels blockE blockE mixedState
+    let stateM : State (A ⊕ A) :=
+      switchedStateOfChannels blockM blockM mixedState
+    (repetitions 7 (controlMeasurement.prob stateE true)
+      (QIT.POVM.prob_le_one _ _ _)).real {ω | ∀ i, ω i = true} = 1 ∧
+    (repetitions 7 (controlMeasurement.prob stateM true)
+      (QIT.POVM.prob_le_one _ _ _)).real {ω | ∀ i, ω i = true} < 1 / 3 ∧
+    7 * (2 * m) = 14 * m := by
+  intro blockE blockM stateE stateM
+  obtain ⟨hpm0, hpm1, hαm0, hαm1, haccE, _hαm_exp, haccM, hcalls⟩ :=
+    validation_switch_upper_bound hd U hp0 hp1 hm
+  have hstE :
+      stateE = switchedState (dephasingNoiseKraus (1 - (1 - p) ^ m) U)
+        (dephasingNoiseKraus (1 - (1 - p) ^ m) U)
+        (dephasingNoiseKraus_complete hpm0 hpm1 U)
+        (dephasingNoiseKraus_complete hpm0 hpm1 U) mixedState := by
+    change switchedStateOfChannels
+        (channelPow (dephasingNoiseChannel (le_of_lt hp0) hp1 U) m)
+        (channelPow (dephasingNoiseChannel (le_of_lt hp0) hp1 U) m) mixedState = _
+    rw [dephasingNoiseChannel_pow (le_of_lt hp0) hp1 U m]
+    exact switchedStateOfChannels_krausChannel _ _ _ _ mixedState
+  have hstM :
+      stateM = switchedState (depolarizingModelKraus (A := A) (depolarizingModelAlpha A p ^ m))
+        (depolarizingModelKraus (A := A) (depolarizingModelAlpha A p ^ m))
+        (depolarizingModelKraus_complete hαm0 hαm1)
+        (depolarizingModelKraus_complete hαm0 hαm1) mixedState := by
+    change switchedStateOfChannels
+        (channelPow (depolarizingModelChannel (A := A) (le_of_lt hp0) hp1) m)
+        (channelPow (depolarizingModelChannel (A := A) (le_of_lt hp0) hp1) m) mixedState = _
+    rw [depolarizingModelChannel_pow (le_of_lt hp0) hp1 m]
+    exact switchedStateOfChannels_krausChannel _ _ _ _ mixedState
+  refine ⟨?_, ?_, hcalls⟩
+  · simpa only [hstE] using haccE
+  · simpa only [hstM] using haccM
+
+/-! ## 5. Remark `rem:crossover`: diamond distance `≤ p` and trivial `1 / (3p) ≤ Q` bound -/
+
+/-- For every ancilla type `R`, noise rate `0 ≤ p ≤ 1`, and unitary `U`, the weak dephasing
+channel `\mathcal{E}_{p,U}` and depolarizing model `\mathcal{M}_p` have ancilla-assisted
+normalized trace distance at most `p`. -/
+theorem dephasing_depolarizing_ancilla_le_p [Nonempty A] {R : Type} [Fintype R] [DecidableEq R]
+    {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (U : Matrix.unitaryGroup A ℂ) :
+    Channel.AncillaTraceDistanceBound (a := A) (b := A) (r := R)
+      (dephasingNoiseChannel hp0 hp1 U)
+      (depolarizingModelChannel (A := A) hp0 hp1) p := by
+  intro ω
+  change ((dephasingNoiseWithMemory R hp0 hp1 U).applyState ω).normalizedTraceDistance
+    ((depolarizingModelWithMemory (A := A) R hp0 hp1).applyState ω) ≤ p
+  let σ₁ : State (A × R) := (ICO.BudgetContinuity.hidden (M := R) U).applyState ω
+  let σ₂ : State (A × R) := (haarDepolarizingWithMemory (A := A) R).applyState ω
+  have hdiff :
+      ((dephasingNoiseWithMemory R hp0 hp1 U).applyState ω).matrix -
+        ((depolarizingModelWithMemory (A := A) R hp0 hp1).applyState ω).matrix =
+      (p : ℂ) • (σ₁.matrix - σ₂.matrix) := by
+    change (dephasingNoiseWithMemory R hp0 hp1 U).map ω.matrix -
+        (depolarizingModelWithMemory (A := A) R hp0 hp1).map ω.matrix =
+      (p : ℂ) • ((ICO.BudgetContinuity.hidden (M := R) U).map ω.matrix -
+        (haarDepolarizingWithMemory (A := A) R).map ω.matrix)
+    rw [dephasingNoiseWithMemory_map hp0 hp1 U ω.matrix,
+      depolarizingModelWithMemory_map hp0 hp1 ω.matrix, smul_sub]
+    abel
+  change (1 / 2 : ℝ) * traceNorm
+      (((dephasingNoiseWithMemory R hp0 hp1 U).applyState ω).matrix -
+        ((depolarizingModelWithMemory (A := A) R hp0 hp1).applyState ω).matrix) ≤ p
+  rw [hdiff, traceNorm_real_smul_eq hp0]
+  have hle1 : σ₁.normalizedTraceDistance σ₂ ≤ 1 :=
+    ICO.ChoiWitnessState.state_distance_le_one σ₁ σ₂
+  change (1 / 2 : ℝ) * traceNorm (σ₁.matrix - σ₂.matrix) ≤ 1 at hle1
+  nlinarith
+
+/-- **Remark `rem:crossover`, diamond trace distance bound `(1/2) ‖E_{p,U} - M_p‖_⋄ ≤ p`**:
+For every `0 ≤ p ≤ 1` and unitary `U : Matrix.unitaryGroup A ℂ`,
+`(dephasingNoiseChannel hp0 hp1 U).diamondTraceDistance (depolarizingModelChannel hp0 hp1) ≤ p`. -/
+theorem dephasing_depolarizing_diamond_le_p [Nonempty A] {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
+    (U : Matrix.unitaryGroup A ℂ) :
+    (dephasingNoiseChannel hp0 hp1 U).diamondTraceDistance
+      (depolarizingModelChannel (A := A) hp0 hp1) ≤ p :=
+  Channel.diamondTraceDistance_le_of_ancillaBound
+    (dephasing_depolarizing_ancilla_le_p hp0 hp1 U)
+
+/-- Lifted side-memory diamond trace distance bound: for every finite nonempty side memory `M`,
+`(dephasingNoiseWithMemory M hp0 hp1 U).diamondTraceDistance (depolarizingModelWithMemory M hp0 hp1) ≤ p`. -/
+theorem dephasing_depolarizing_withMemory_diamond_le_p [Nonempty A]
+    (M : Type) [Fintype M] [DecidableEq M] [Nonempty M]
+    {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (U : Matrix.unitaryGroup A ℂ) :
+    (dephasingNoiseWithMemory M hp0 hp1 U).diamondTraceDistance
+      (depolarizingModelWithMemory (A := A) M hp0 hp1) ≤ p := by
+  apply Channel.diamondTraceDistance_le_of_inputReferenceBound
+  intro ω
+  rw [show (dephasingNoiseWithMemory M hp0 hp1 U) =
+        (dephasingNoiseChannel hp0 hp1 U).prod (Channel.idChannel M) from rfl,
+      show (depolarizingModelWithMemory (A := A) M hp0 hp1) =
+        (depolarizingModelChannel (A := A) hp0 hp1).prod (Channel.idChannel M) from rfl,
+      prod_id_prod_id_applyState_eq_reindex (dephasingNoiseChannel hp0 hp1 U) ω,
+      prod_id_prod_id_applyState_eq_reindex (depolarizingModelChannel (A := A) hp0 hp1) ω]
+  exact (Channel.normalizedTraceDistance_applyState_le
+    (Channel.reindex (Equiv.prodAssoc A M (A × M)).symm) _ _).trans
+    (dephasing_depolarizing_ancilla_le_p hp0 hp1 U _)
+
+/-- Homogeneous PSD trace-norm bound for a single channel step: if `Ξ` and `Ξ'` differ by at
+most `ε ≥ 0` in normalized trace distance on every state `σ : State H`, then for every
+positive semidefinite matrix `X : CMatrix H`,
+`(1 / 2) * traceNorm (Ξ.map X - Ξ'.map X) ≤ ε * X.trace.re`. -/
+theorem channel_posSemidef_traceNorm_sub_le {H : Type} [Fintype H] [DecidableEq H]
+    (Ξ Ξ' : Channel H H) {ε : ℝ} (_hε : 0 ≤ ε)
+    (hΞ : ∀ σ : State H, (Ξ.applyState σ).normalizedTraceDistance (Ξ'.applyState σ) ≤ ε)
+    (X : CMatrix H) (hX : X.PosSemidef) :
+    (1 / 2 : ℝ) * traceNorm (Ξ.map X - Ξ'.map X) ≤ ε * X.trace.re := by
+  by_cases ht : 0 < X.trace.re
+  · let t : ℝ := X.trace.re
+    have ht_pos : 0 < t := ht
+    have htr_nonneg : 0 ≤ X.trace := Matrix.PosSemidef.trace_nonneg hX
+    have htr_im : X.trace.im = 0 := (Complex.nonneg_iff.mp htr_nonneg).2.symm
+    have htr_coe : X.trace = (t : ℂ) := Complex.ext rfl (by simp [htr_im])
+    let r : ℝ := Real.sqrt (t⁻¹)
+    have hr_sq : ((r : ℂ) * (r : ℂ)) = ((t⁻¹ : ℝ) : ℂ) := by
+      exact_mod_cast Real.mul_self_sqrt (inv_nonneg.mpr (le_of_lt ht_pos))
+    have hpos : (((t⁻¹ : ℝ) : ℂ) • X).PosSemidef := by
+      have hconj := hX.conjTranspose_mul_mul_same ((r : ℂ) • (1 : CMatrix H))
+      simpa only [Matrix.conjTranspose_smul, Complex.star_def, Complex.conj_ofReal,
+        Matrix.conjTranspose_one, Matrix.smul_mul, Matrix.mul_smul,
+        Matrix.one_mul, Matrix.mul_one, smul_smul, hr_sq] using hconj
+    let σ : State H :=
+      { matrix := ((t⁻¹ : ℝ) : ℂ) • X
+        pos := hpos
+        trace_eq_one := by
+          rw [Matrix.trace_smul, htr_coe, smul_eq_mul]
+          exact_mod_cast inv_mul_cancel₀ (ne_of_gt ht_pos) }
+    have hmul : (t : ℂ) * ((t⁻¹ : ℝ) : ℂ) = 1 := by
+      exact_mod_cast mul_inv_cancel₀ (ne_of_gt ht_pos)
+    have hmap_sub :
+        Ξ.map X - Ξ'.map X = (t : ℂ) • ((Ξ.applyState σ).matrix - (Ξ'.applyState σ).matrix) := by
+      symm
+      change (t : ℂ) • (Ξ.map (((t⁻¹ : ℝ) : ℂ) • X) - Ξ'.map (((t⁻¹ : ℝ) : ℂ) • X)) =
+        Ξ.map X - Ξ'.map X
+      rw [map_smul, map_smul, ← smul_sub, smul_smul, hmul, one_smul]
+    rw [hmap_sub, traceNorm_real_smul_eq (le_of_lt ht_pos)]
+    have hdist := hΞ σ
+    change (1 / 2 : ℝ) * traceNorm ((Ξ.applyState σ).matrix - (Ξ'.applyState σ).matrix) ≤ ε at hdist
+    nlinarith
+  · have htr_le : X.trace.re ≤ 0 := le_of_not_gt ht
+    have htr_ge : 0 ≤ X.trace.re := by
+      rw [← traceNorm_posSemidef_eq_trace_re X hX]
+      exact traceNorm_nonneg X
+    have htr_zero : X.trace.re = 0 := le_antisymm htr_le htr_ge
+    have hn1 : traceNorm (Ξ.map X) = 0 := by
+      rw [traceNorm_posSemidef_eq_trace_re _ (Ξ.mapsPositive X hX),
+        Ξ.tracePreserving X, htr_zero]
+    have hn2 : traceNorm (Ξ'.map X) = 0 := by
+      rw [traceNorm_posSemidef_eq_trace_re _ (Ξ'.mapsPositive X hX),
+        Ξ'.tracePreserving X, htr_zero]
+    have htri : traceNorm (Ξ.map X - Ξ'.map X) ≤ 0 := by
+      have h := traceNorm_add_le (Ξ.map X) (-(Ξ'.map X))
+      rw [← sub_eq_add_neg, traceNorm_neg, hn1, hn2, add_zero] at h
+      exact h
+    rw [htr_zero, mul_zero]
+    linarith
+
+/-- Homogeneous `q`-query trace-norm stability bound for arbitrary adaptive trees
+`tree : ICO.BudgetQueryTree.Tree H O q B` on positive semidefinite inputs `X : CMatrix B`. -/
+theorem tree_posSemidef_traceNorm_sub_le {H O B : Type}
+    [Fintype H] [DecidableEq H] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B]
+    {q : ℕ} (tree : ICO.BudgetQueryTree.Tree H O q B)
+    (Φ₁ Φ₂ Ψ₁ Ψ₂ : Channel H H) {ε : ℝ} (hε : 0 ≤ ε)
+    (h₁ : ∀ σ : State H, (Φ₁.applyState σ).normalizedTraceDistance (Ψ₁.applyState σ) ≤ ε)
+    (h₂ : ∀ σ : State H, (Φ₂.applyState σ).normalizedTraceDistance (Ψ₂.applyState σ) ≤ ε)
+    (X : CMatrix B) (hX : X.PosSemidef) :
+    (1 / 2 : ℝ) * traceNorm ((tree.channel Φ₁ Φ₂).map X - (tree.channel Ψ₁ Ψ₂).map X) ≤
+      (q : ℝ) * ε * X.trace.re := by
+  induction tree with
+  | @stop q_stop B_stop _ _ after =>
+    change (1 / 2 : ℝ) * traceNorm (after.map X - after.map X) ≤
+      (q_stop : ℝ) * ε * X.trace.re
+    rw [sub_self, traceNorm_zero, mul_zero]
+    have htr_ge : 0 ≤ X.trace.re := by
+      rw [← traceNorm_posSemidef_eq_trace_re X hX]
+      exact traceNorm_nonneg X
+    exact mul_nonneg (mul_nonneg (Nat.cast_nonneg _) hε) htr_ge
+  | @query q_prev b after ih =>
+    let Ξ : Channel H H := if b then Φ₂ else Φ₁
+    let Ξ' : Channel H H := if b then Ψ₂ else Ψ₁
+    have hΞ : ∀ σ : State H, (Ξ.applyState σ).normalizedTraceDistance (Ξ'.applyState σ) ≤ ε := by
+      cases b
+      · exact h₁
+      · exact h₂
+    change (1 / 2 : ℝ) * traceNorm
+        ((after.channel Φ₁ Φ₂).map (Ξ.map X) - (after.channel Ψ₁ Ψ₂).map (Ξ'.map X)) ≤
+      ((q_prev + 1 : ℕ) : ℝ) * ε * X.trace.re
+    have hsplit :
+        (after.channel Φ₁ Φ₂).map (Ξ.map X) - (after.channel Ψ₁ Ψ₂).map (Ξ'.map X) =
+          ((after.channel Φ₁ Φ₂).map (Ξ.map X) - (after.channel Ψ₁ Ψ₂).map (Ξ.map X)) +
+            (after.channel Ψ₁ Ψ₂).map (Ξ.map X - Ξ'.map X) := by
+      rw [map_sub]
+      abel
+    have htri := traceNorm_add_le
+      ((after.channel Φ₁ Φ₂).map (Ξ.map X) - (after.channel Ψ₁ Ψ₂).map (Ξ.map X))
+      ((after.channel Ψ₁ Ψ₂).map (Ξ.map X - Ξ'.map X))
+    rw [← hsplit] at htri
+    have hterm1 :
+        (1 / 2 : ℝ) *
+            traceNorm ((after.channel Φ₁ Φ₂).map (Ξ.map X) - (after.channel Ψ₁ Ψ₂).map (Ξ.map X)) ≤
+          (q_prev : ℝ) * ε * X.trace.re := by
+      have hih := ih (Ξ.map X) (Ξ.mapsPositive X hX)
+      rwa [Ξ.tracePreserving X] at hih
+    have hΔ_herm : (Ξ.map X - Ξ'.map X).IsHermitian :=
+      (Ξ.mapsPositive X hX).isHermitian.sub (Ξ'.mapsPositive X hX).isHermitian
+    have hΔ_tr : (Ξ.map X - Ξ'.map X).trace = 0 := by
+      rw [Matrix.trace_sub, Ξ.tracePreserving X, Ξ'.tracePreserving X, sub_self]
+    have hcontract :
+        traceNorm ((after.channel Ψ₁ Ψ₂).map (Ξ.map X - Ξ'.map X)) ≤
+          traceNorm (Ξ.map X - Ξ'.map X) :=
+      MatrixMap.traceNorm_apply_le_of_traceNonincreasingCP
+        (Channel.traceNonincreasingCP_map (after.channel Ψ₁ Ψ₂)) hΔ_herm hΔ_tr
+    have hstep := channel_posSemidef_traceNorm_sub_le Ξ Ξ' hε hΞ X hX
+    have hterm2 :
+        (1 / 2 : ℝ) * traceNorm ((after.channel Ψ₁ Ψ₂).map (Ξ.map X - Ξ'.map X)) ≤
+          ε * X.trace.re := by
+      linarith
+    push_cast
+    linarith
+  | @node q_node B_node C L _ _ _ _ _ _ I next ih =>
+    change (1 / 2 : ℝ) * traceNorm
+        (ICO.InstrumentCompression.adaptiveMap I (fun l => (next l).channel Φ₁ Φ₂) X -
+          ICO.InstrumentCompression.adaptiveMap I (fun l => (next l).channel Ψ₁ Ψ₂) X) ≤
+      (q_node : ℝ) * ε * X.trace.re
+    rw [ICO.InstrumentCompression.adaptiveMap_apply,
+      ICO.InstrumentCompression.adaptiveMap_apply, ← Finset.sum_sub_distrib]
+    have hsum_tri := traceNorm_sum_le_sum_traceNorm Finset.univ (fun l : L =>
+      ((next l).channel Φ₁ Φ₂).map (I.op l * X * (I.op l).conjTranspose) -
+        ((next l).channel Ψ₁ Ψ₂).map (I.op l * X * (I.op l).conjTranspose))
+    have hbranch (l : L) :
+        (1 / 2 : ℝ) * traceNorm
+            (((next l).channel Φ₁ Φ₂).map (I.op l * X * (I.op l).conjTranspose) -
+              ((next l).channel Ψ₁ Ψ₂).map (I.op l * X * (I.op l).conjTranspose)) ≤
+          (q_node : ℝ) * ε * (I.op l * X * (I.op l).conjTranspose).trace.re :=
+      ih l (I.op l * X * (I.op l).conjTranspose) (hX.mul_mul_conjTranspose_same (I.op l))
+    have hsum_le :
+        (∑ l : L, (1 / 2 : ℝ) * traceNorm
+            (((next l).channel Φ₁ Φ₂).map (I.op l * X * (I.op l).conjTranspose) -
+              ((next l).channel Ψ₁ Ψ₂).map (I.op l * X * (I.op l).conjTranspose))) ≤
+          (q_node : ℝ) * ε * X.trace.re := by
+      calc
+        (∑ l : L, (1 / 2 : ℝ) * traceNorm
+            (((next l).channel Φ₁ Φ₂).map (I.op l * X * (I.op l).conjTranspose) -
+              ((next l).channel Ψ₁ Ψ₂).map (I.op l * X * (I.op l).conjTranspose))) ≤
+          ∑ l : L, (q_node : ℝ) * ε * (I.op l * X * (I.op l).conjTranspose).trace.re :=
+            Finset.sum_le_sum fun l _ => hbranch l
+        _ = (q_node : ℝ) * ε * (∑ l : L, (I.op l * X * (I.op l).conjTranspose).trace.re) := by
+          rw [← Finset.mul_sum]
+        _ = (q_node : ℝ) * ε * X.trace.re := by
+          have hI : MatrixMap.krausAdjoint I.op (1 : CMatrix C) = 1 := by
+            simpa [MatrixMap.krausAdjoint] using I.complete
+          have htp := MatrixMap.ofKraus_isTracePreserving_of_krausAdjoint_one I.op hI X
+          have htr_sum :
+              (∑ l : L, (I.op l * X * (I.op l).conjTranspose).trace.re) = X.trace.re := by
+            rw [← Complex.re_sum, ← Matrix.trace_sum]
+            exact congrArg Complex.re htp
+          rw [htr_sum]
+    have hhalf :
+        (1 / 2 : ℝ) * traceNorm
+            (∑ l : L, (((next l).channel Φ₁ Φ₂).map (I.op l * X * (I.op l).conjTranspose) -
+              ((next l).channel Ψ₁ Ψ₂).map (I.op l * X * (I.op l).conjTranspose))) ≤
+          ∑ l : L, (1 / 2 : ℝ) * traceNorm
+            (((next l).channel Φ₁ Φ₂).map (I.op l * X * (I.op l).conjTranspose) -
+              ((next l).channel Ψ₁ Ψ₂).map (I.op l * X * (I.op l).conjTranspose)) := by
+      rw [← Finset.mul_sum]
+      exact mul_le_mul_of_nonneg_left hsum_tri (by norm_num)
+    exact hhalf.trans hsum_le
+
+/-- `Q`-query state-distance subadditivity for any adaptive query tree `tree` on initial state `ρ`. -/
+theorem tree_applyState_distance_le {H O B : Type}
+    [Fintype H] [DecidableEq H] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B]
+    {Q : ℕ} (tree : ICO.BudgetQueryTree.Tree H O Q B) (ρ : State B)
+    (Φ₁ Φ₂ Ψ₁ Ψ₂ : Channel H H) {ε : ℝ} (hε : 0 ≤ ε)
+    (h₁ : ∀ σ : State H, (Φ₁.applyState σ).normalizedTraceDistance (Ψ₁.applyState σ) ≤ ε)
+    (h₂ : ∀ σ : State H, (Φ₂.applyState σ).normalizedTraceDistance (Ψ₂.applyState σ) ≤ ε) :
+    ((tree.channel Φ₁ Φ₂).applyState ρ).normalizedTraceDistance
+      ((tree.channel Ψ₁ Ψ₂).applyState ρ) ≤ (Q : ℝ) * ε := by
+  have h := tree_posSemidef_traceNorm_sub_le tree Φ₁ Φ₂ Ψ₁ Ψ₂ hε h₁ h₂ ρ.matrix ρ.pos
+  rw [ρ.trace_eq_one, Complex.one_re, mul_one] at h
+  exact h
+
+/-- `Q`-query acceptance-gap bound between `\mathcal{E}_{p,U}` and `\mathcal{M}_p`: each of the
+`Q` queries changes the state in normalized trace distance by at most `p`, so the acceptance
+probabilities differ by at most `Q * p`. -/
+theorem dephasing_depolarizing_tree_accept_gap_le [Nonempty A] {M O B : Type}
+    [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B]
+    {Q : ℕ} {p : ℝ} (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
+    (U : Matrix.unitaryGroup A ℂ)
+    (T : BinaryHypothesisTest O)
+    (tree : ICO.BudgetQueryTree.Tree (A × M) O Q B) (ρ : State B) :
+    ICO.BudgetTesting.acceptance T tree ρ
+        (dephasingNoiseWithMemory M hp0 hp1 U)
+        (dephasingNoiseWithMemory M hp0 hp1 U) -
+      ICO.BudgetTesting.acceptance T tree ρ
+        (depolarizingModelWithMemory (A := A) M hp0 hp1)
+        (depolarizingModelWithMemory (A := A) M hp0 hp1) ≤
+      (Q : ℝ) * p := by
+  rw [ICO.BudgetTesting.acceptance_eq, ICO.BudgetTesting.acceptance_eq]
+  have hstep : ∀ σ : State (A × M),
+      ((dephasingNoiseWithMemory M hp0 hp1 U).applyState σ).normalizedTraceDistance
+        ((depolarizingModelWithMemory (A := A) M hp0 hp1).applyState σ) ≤ p :=
+    dephasing_depolarizing_ancilla_le_p (R := M) hp0 hp1 U
+  exact (accept_gap_le_traceDistance T _ _).trans
+    (tree_applyState_distance_le tree ρ _ _ _ _ hp0 hstep hstep)
+
+/-- **Remark `rem:crossover`, trivial `1 / (3p) ≤ Q` query lower bound (fixed-unitary form)**:
+Even for a single fixed unitary `U`, any `Q`-query strategy `(tree, ρ, T)` whose acceptance on
+`\mathcal{E}_{p,U}` exceeds its acceptance on `\mathcal{M}_p` by at least `1 / 3` (in particular,
+accepting `\mathcal{E}_{p,U}` with probability `≥ 2 / 3` and `\mathcal{M}_p` with probability
+`≤ 1 / 3`) satisfies `1 / (3 p) ≤ Q`. -/
+theorem validation_trivial_single_unitary_query_lower_bound [Nonempty A] {M O B : Type}
+    [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B]
+    {Q : ℕ} {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1)
+    (U : Matrix.unitaryGroup A ℂ)
+    (T : BinaryHypothesisTest O)
+    (tree : ICO.BudgetQueryTree.Tree (A × M) O Q B) (ρ : State B)
+    (hhigh : (2 / 3 : ℝ) ≤ ICO.BudgetTesting.acceptance T tree ρ
+      (dephasingNoiseWithMemory M (le_of_lt hp0) hp1 U)
+      (dephasingNoiseWithMemory M (le_of_lt hp0) hp1 U))
+    (hlow : ICO.BudgetTesting.acceptance T tree ρ
+      (depolarizingModelWithMemory (A := A) M (le_of_lt hp0) hp1)
+      (depolarizingModelWithMemory (A := A) M (le_of_lt hp0) hp1) ≤ 1 / 3) :
+    (1 : ℝ) / (3 * p) ≤ (Q : ℝ) := by
+  have hgap := dephasing_depolarizing_tree_accept_gap_le (le_of_lt hp0) hp1 U T tree ρ
+  rw [div_le_iff₀ (by positivity : (0 : ℝ) < 3 * p)]
+  linarith
+
+/-- **Remark `rem:crossover`, trivial `1 / (3p) ≤ Q` query lower bound (worst-case form)**:
+For every `0 < p ≤ 1` and arbitrary dimension `d = Fintype.card A ≥ 1`, any `Q`-query adaptive
+strategy `(tree, ρ, T)` succeeding with probability at least `2 / 3` on `\mathcal{M}_p` and on
+every `\mathcal{E}_{p,U}` satisfies `1 / (3 p) ≤ Q`. -/
+theorem validation_trivial_query_lower_bound [Nonempty A] {M O B : Type}
+    [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B]
+    {Q : ℕ} {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1)
+    (T : BinaryHypothesisTest O)
+    (tree : ICO.BudgetQueryTree.Tree (A × M) O Q B) (ρ : State B)
+    (hhigh : ∀ U : Matrix.unitaryGroup A ℂ,
+      (2 / 3 : ℝ) ≤ ICO.BudgetTesting.acceptance T tree ρ
+        (dephasingNoiseWithMemory M (le_of_lt hp0) hp1 U)
+        (dephasingNoiseWithMemory M (le_of_lt hp0) hp1 U))
+    (hlow : ICO.BudgetTesting.acceptance T tree ρ
+      (depolarizingModelWithMemory (A := A) M (le_of_lt hp0) hp1)
+      (depolarizingModelWithMemory (A := A) M (le_of_lt hp0) hp1) ≤ 1 / 3) :
+    (1 : ℝ) / (3 * p) ≤ (Q : ℝ) :=
+  validation_trivial_single_unitary_query_lower_bound hp0 hp1 1 T tree ρ (hhigh 1) hlow
+
+/-- **Remark `rem:crossover`, trivial `1 / (3p) ≤ Q` query lower bound (balanced Haar-prior form)**:
+For every `0 < p ≤ 1` and arbitrary dimension `d = Fintype.card A ≥ 1`, any `Q`-query adaptive
+strategy `(tree, ρ, T)` achieving balanced Haar-prior success probability at least `2 / 3`
+between `\mathcal{E}_{p,U}` and `\mathcal{M}_p` satisfies `1 / (3 p) ≤ Q`. -/
+theorem validation_trivial_balanced_query_lower_bound [Nonempty A] {M O B : Type}
+    [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B]
+    {Q : ℕ} {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1)
+    (T : BinaryHypothesisTest O)
+    (tree : ICO.BudgetQueryTree.Tree (A × M) O Q B) (ρ : State B)
+    (hsucc : (2 / 3 : ℝ) ≤
+      (1 / 2 : ℝ) *
+        ((∫ U, ICO.BudgetTesting.acceptance T tree ρ
+            (dephasingNoiseWithMemory M (le_of_lt hp0) hp1 U)
+            (dephasingNoiseWithMemory M (le_of_lt hp0) hp1 U) ∂unitaryHaarMeasure (a := A)) +
+          (1 - ICO.BudgetTesting.acceptance T tree ρ
+            (depolarizingModelWithMemory (A := A) M (le_of_lt hp0) hp1)
+            (depolarizingModelWithMemory (A := A) M (le_of_lt hp0) hp1)))) :
+    (1 : ℝ) / (3 * p) ≤ (Q : ℝ) := by
+  let hp0_le : 0 ≤ p := le_of_lt hp0
+  let μ := unitaryHaarMeasure (a := A)
+  have hdeph_cont :
+      Continuous (fun ux : Matrix.unitaryGroup A ℂ × CMatrix (A × M) =>
+        (dephasingNoiseWithMemory M hp0_le hp1 ux.1).map ux.2) := by
+    have hfun :
+        (fun ux : Matrix.unitaryGroup A ℂ × CMatrix (A × M) =>
+          (dephasingNoiseWithMemory M hp0_le hp1 ux.1).map ux.2) =
+        (fun ux : Matrix.unitaryGroup A ℂ × CMatrix (A × M) =>
+          ((1 - p : ℝ) : ℂ) • ux.2 +
+            (p : ℂ) • (ICO.BudgetContinuity.hidden (M := M) ux.1).map ux.2) := by
+      ext ⟨U, X⟩ i j
+      have hm := dephasingNoiseWithMemory_map hp0_le hp1 U X
+      rw [ICO.DiamondPreprocessing.identity_map] at hm
+      exact congrFun (congrFun hm i) j
+    rw [hfun]
+    exact (continuous_const.smul continuous_snd).add
+      (continuous_const.smul ICO.BudgetContinuity.hidden_continuous)
+  have hout_cont :
+      Continuous (fun U : Matrix.unitaryGroup A ℂ =>
+        ICO.BudgetTesting.acceptance T tree ρ
+          (dephasingNoiseWithMemory M hp0_le hp1 U)
+          (dephasingNoiseWithMemory M hp0_le hp1 U)) :=
+    (ICO.BornAverage.acceptCLM T).continuous.comp
+      (ICO.BudgetContinuity.output_continuous tree
+        (dephasingNoiseWithMemory M hp0_le hp1)
+        (dephasingNoiseWithMemory M hp0_le hp1)
+        hdeph_cont hdeph_cont (fun _ => ρ.matrix) continuous_const)
+  have hint :
+      Integrable (fun U : Matrix.unitaryGroup A ℂ =>
+        ICO.BudgetTesting.acceptance T tree ρ
+          (dephasingNoiseWithMemory M hp0_le hp1 U)
+          (dephasingNoiseWithMemory M hp0_le hp1 U)) μ :=
+    hout_cont.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
+  let accM : ℝ := ICO.BudgetTesting.acceptance T tree ρ
+    (depolarizingModelWithMemory (A := A) M hp0_le hp1)
+    (depolarizingModelWithMemory (A := A) M hp0_le hp1)
+  have hpt : ∀ U : Matrix.unitaryGroup A ℂ,
+      ICO.BudgetTesting.acceptance T tree ρ
+          (dephasingNoiseWithMemory M hp0_le hp1 U)
+          (dephasingNoiseWithMemory M hp0_le hp1 U) ≤
+        accM + (Q : ℝ) * p := by
+    intro U
+    have hgap := dephasing_depolarizing_tree_accept_gap_le hp0_le hp1 U T tree ρ
+    dsimp [accM]
+    linarith
+  have hint_le :
+      (∫ U, ICO.BudgetTesting.acceptance T tree ρ
+          (dephasingNoiseWithMemory M hp0_le hp1 U)
+          (dephasingNoiseWithMemory M hp0_le hp1 U) ∂μ) ≤
+        accM + (Q : ℝ) * p := by
+    have hmono := integral_mono hint (integrable_const (accM + (Q : ℝ) * p)) hpt
+    simpa [integral_const, probReal_univ] using hmono
+  have hgap_lb :
+      (1 / 3 : ℝ) ≤
+        (∫ U, ICO.BudgetTesting.acceptance T tree ρ
+            (dephasingNoiseWithMemory M hp0_le hp1 U)
+            (dephasingNoiseWithMemory M hp0_le hp1 U) ∂μ) - accM := by
+    dsimp [accM, μ, hp0_le]
+    linarith
+  rw [div_le_iff₀ (by positivity : (0 : ℝ) < 3 * p)]
+  linarith
 
 end
 
