@@ -428,9 +428,8 @@ the switch, and also any access to the inside of the device: the
 outcome of the hidden measurement, its environment, and the unitary
 that rotates to the hidden basis. The separation is asymptotic;
 Remark~\ref{rem:crossover} gives the sizes at which it sets in.
-The three theorems have been formalized in the Lean proof assistant;
-Appendix~\ref{sec:formal-status} states what the formalization covers
-and what it does not.
+The three theorems have been formalized in the Lean proof assistant
+(Appendix~\ref{sec:formal-status}).
 
 \subsection{Technical overview}\label{sec:overview}
 
@@ -2568,9 +2567,9 @@ dimension: for two copies of the same qubit channel, a four-call
 circuit that reproduces the control output of the switch on a fixed
 input was found numerically in~\cite{bavaresco2025}.
 \end{remark}
-\section{Discussion and open problems}\label{sec:discussion}
+\section{Discussion}\label{sec:discussion}
 
-\subsection{An example in quantum computing, and an invitation}\label{sec:where}
+\subsection{An example in quantum computing, and an invitation}\label{sec:where}\label{sec:open}
 
 The three theorems put a price on the quantum switch: exponentially
 many calls of an ordinary quantum computer, or infinitely many.
@@ -2583,101 +2582,56 @@ scenario of Theorem~\ref{thm:c6}, where the alternative to the model is
 a dephasing in an unknown basis, the switch decides at fixed strength
 $p$ with a number of uses that does not grow with the number of qubits,
 whereas every ordinary strategy needs exponentially many
-(Remark~\ref{rem:crossover}).
+(Remark~\ref{rem:crossover}). We invite work that extends this
+advantage to practical tasks of quantum computing.
 
-Two steps separate this example from a practical advantage. First, the hidden basis of Theorem~\ref{thm:c6}
-is generic, whereas slowly varying noise in present hardware is usually
-low-dimensional or has Pauli structure and can be learned efficiently.
-Second, the coherent action of the switch on the noise of a device
-remains to be derived from a physical model of that device. More
-broadly, we invite the search for practical tasks of quantum computing
-to which the advantage extends. The proofs and the known
-counterexamples indicate five properties that the black boxes of such a
-task should have.
-\begin{enumerate}
-\item \emph{Irreversible, both of them.} If one of the two black boxes
-is known to be unitary, three calls simulate the switch
-(Remark~\ref{rem:unitary}).
-\item \emph{Record unavailable.} If the device of Theorem~\ref{thm:c6}
-reported the outcomes of the measurements that its noise performs, a
-short ordinary experiment would reproduce the statistics of the
-switch, as noted in~\cite{gao2023}.
-\item \emph{Generic.} The lower bound uses a Haar-random basis in
-dimension $2^n$, and structure makes the task easy. If the strategy can prepare copies of even one vector of the hidden
-basis, the device leaves that vector unchanged exactly when its noise is
-dephasing, and swap tests decide with a number of uses of order $1/p$.
-If the basis is known to be a stabilizer basis, the noise is a mixture
-of Pauli operators, and uses on halves of maximally entangled states
-reveal it with a number of uses polynomial in $n$ and $1/p$.
-\item \emph{Persistent.} The same unknown channel is met at every call.
-\item \emph{Switchable.} The two orders act on the same instance of the
-box, including its environment, so that they share the internal record
-of each call. We expect this to be the hardest requirement to meet in a physical
-device.
-\end{enumerate}
+Our results say two things about the black boxes of such a task. First,
+both must be irreversible: if one of them is known to be unitary, three
+calls simulate the switch (Remark~\ref{rem:unitary}). Second, it
+matters whether the record of an irreversible operation is available,
+and it matters differently for the switch and for a number extracted
+from it. Suppose that each box announces which of its Kraus operators
+it applied, while the operators stay unknown. The switch remains expensive to
+approximate: the proof of Theorem~\ref{thm:simulation-summary} uses
+only that the strategy cannot choose the index of a call, not that the
+index is hidden, and Claims~\ref{clm:fresh} and~\ref{clm:pair} hold
+word for word if every call announces its index, because an index helps
+only when it recurs. A number can nevertheless become easy. If $A$ is a projective
+measurement that announces its outcome and $B$ is any channel, the
+visibility $v(A,B)$ is the probability that the sequence $A$, $B$, $A$,
+applied to a maximally mixed state, gives the same outcome of $A$
+twice, so ordinary experiments with three calls each estimate it
+without any knowledge of the basis, as noted in~\cite{gao2023} for two
+projective measurements. Likewise, if the device of
+Theorem~\ref{thm:c6} announced the outcomes of the measurements that
+its noise performs, consecutive uses on one system would show that the
+outcome of a dephasing in a fixed basis never changes, and of order
+$1/p$ uses would decide the bit. The hardness of this bit thus rests on
+the outcomes of the hidden measurement staying in the environment, as
+they do for noise; the lower bound of
+Theorem~\ref{thm:simulation-summary} does not rest on hidden indices.
 
-Noise has the first two properties plainly, which is why the example is
-about noise. Dissipative primitives and resets, error correction
-without measurement, and the steps of product formulas
-each have some of the five. The challenge is to combine persistence
-with genericity: the natural families that we know are either
-structured enough to be learned with polynomially many calls, or not
-persistent. We therefore ask:
-
-\begin{quote}
-\emph{Is there a practical task of quantum computing whose black boxes
-have these five properties, so that the exponential query separation
-proved here becomes a saving for that task?}
-\end{quote}
-
-
-\subsection{Further open problems}\label{sec:open}
-
-\paragraph{Optimal exponents.}
-For approximate simulation at fixed error our bounds place the number
-of ordinary calls between $d^{1/4}$ and $d^2$; concurrent work raises
-the lower exponent to $1/3$ (Section~\ref{sec:concurrent}). For the
-task of Theorem~\ref{thm:c6} at fixed strength it lies between
-$d^{1/16}$ and $d^2$. Our proof of
-Theorem~\ref{thm:simulation-summary} cannot give more than $d^{1/4}$,
-because the coherence penalty already limits the number of hidden
-unitaries to about $\sqrt d$. The exponent $1/16$ is tied to the error
-of the recording theorem with inverse queries. We do not know the true
-exponents.
-
-\paragraph{Other tasks.}
-The same interference of the control underlies many other uses of the
-switch (Section~\ref{sec:results}). Which of them are hard for ordinary
-strategies is open.
-
-\paragraph{Between unitaries and channels.}
-If one of the two boxes is known to be unitary the switch costs three
-calls, and
-if both are mixtures of about $\sqrt d$ unitaries it costs
-$\Omega(d^{1/4})$. It would be
-natural to determine how the cost of simulation depends on a measure of
-irreversibility, such as the Kraus rank, and in particular what it is
-for weakly noisy unitary gates.
-
-\paragraph{Expected cost and postselection.}
-Our theorems count calls on the worst run and require success without
-conditioning; by Theorem~\ref{thm:exact-simulation} the worst-case query
-complexity of exact simulation is infinite. Two questions are open. Does
-a strategy without a finite budget, which Definition~\ref{def:ordinary}
-does not cover, simulate the switch exactly and stop with probability
-one, perhaps with a finite \emph{expected} number of calls? And
-how does the
-best success probability of a heralded exact simulation depend on the
-budget?
-Probabilistic simulation was studied in~\cite{bavaresco2025}.
-
-\paragraph{Other processes and other access.}
-The switch is the simplest process with indefinite causal order. It
-would be interesting to know whether the one-bit separation grows for
-switches of more than two channels, and whether more general processes
-do better than the switch on a learning task. A related axis is access
-to a dilation of a channel, which is at least as strong as access to the
-switch and has recently been separated from channel
+Several questions remain open. The optimal exponents are not known. For
+approximate simulation at fixed error the number of ordinary calls lies
+between $d^{1/4}$ and $d^2$, and concurrent work raises the lower
+exponent to $1/3$ (Section~\ref{sec:concurrent}); for the bit of
+Theorem~\ref{thm:c6} at fixed strength it lies between $d^{1/16}$ and
+$d^2$, where $1/16$ comes from the error of the recording theorem with
+inverse queries~\cite{mahuang2025}. Between one unitary box, for which
+three calls suffice, and mixtures of about $\sqrt d$ unitaries, for
+which $\Omega(d^{1/4})$ are needed, we do not know how the cost depends
+on the Kraus rank, in particular for weakly noisy gates. Our theorems
+count calls on the worst run and require success without conditioning.
+A strategy without a finite budget, which
+Definition~\ref{def:ordinary} does not cover, might still simulate the
+switch exactly and stop with probability one, perhaps with a finite
+expected number of calls; and the best success probability of a
+heralded exact simulation, studied in~\cite{bavaresco2025}, is not
+known as a function of the budget. Finally, it would be interesting to
+know whether the one-bit separation grows for switches of more than two
+channels~\cite{araujo2014,colnaghi2012}, and how the switch compares
+with access to a dilation of a channel, which is at least as strong and
+has recently been separated from channel
 access~\cite{goldin2026,arihara2026}.
 
 
@@ -3825,7 +3779,7 @@ checked in the Lean formalization (Appendix~\ref{sec:formal-status}).
 
 \section{Formal verification}\label{sec:formal-status}
 
-\paragraph{What is covered.}
+\paragraph{The formal statements.}
 Theorems~\ref{thm:exact-simulation}, \ref{thm:simulation-summary}
 and~\ref{thm:c6} have been formalized in Lean~4, reusing
 Lean-QIT~\cite{leanqit2026}. The formal statements quantify over the
@@ -3846,7 +3800,7 @@ Lemmas~\ref{lem:ordered},
 \ref{lem:reverse}, \ref{lem:c6-comparison}
 and~\ref{lem:invariant-label}, the two-call strategy of
 Section~\ref{sec:simulation}, the three-call circuit of
-Remark~\ref{rem:unitary} for pairs of unitaries, and the thresholds of
+Remark~\ref{rem:unitary}, and the thresholds of
 Remark~\ref{rem:approx-content}. Lemma~\ref{lem:c6-comparison} is
 derived for the actual boxes: the recording estimate
 of~\cite{mahuang2025} and the Haar moment formulas are proved, not
@@ -3854,28 +3808,6 @@ assumed, and so are the four structural claims of
 Appendix~\ref{sec:c6-recording}
 (Claims~\ref{appA:support}, \ref{appA:record}, \ref{appA:images}
 and~\ref{appA:histories}).
-
-\paragraph{What is not covered.}
-The upper bound of Section~\ref{sec:simulation} that rests on
-port-based teleportation is taken from~\cite{pirandola2019} and is not
-formalized, and neither are the numerical thresholds of
-Remark~\ref{rem:crossover}. Four statements are formalized in the form
-in which the proofs use them. Lemma~\ref{lem:ordered} is proved for
-strategies that call each box exactly once, and padding is a separate
-step. Corollary~\ref{cor:coherence} is proved for one ordered component
-at a time. The three-call circuit is formalized for two unitary boxes;
-its extension to one unitary box and an arbitrary channel
-(Remark~\ref{rem:unitary}) is not. Of~\eqref{eq:basis-visibility}, the cases of equal and of
-mutually unbiased bases are proved. In the switch test, the channels
-that fill the two slots are specified as the mixtures computed in
-Section~\ref{sec:switch-test}; that they are the $m$th powers of the
-device is not part of the formal statement. The formal proof of
-Proposition~\ref{prop:cache} orders two of its steps differently from
-Appendix~\ref{sec:c6-recording}. It establishes the permanent record of
-the births (Claim~\ref{appA:record}) while the births are still made by
-the isometries $F^R$, with an explicit flag register, and passes to the
-operators $E^R$ afterwards; the appendix passes to $E^R$ first and
-needs no flag register.
 
 \paragraph{The verification record.}
 The formalization uses Lean~4.30.0 with a fixed version of Mathlib. Its
