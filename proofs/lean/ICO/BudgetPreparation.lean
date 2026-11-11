@@ -42,6 +42,22 @@ theorem precompose_map {q : ℕ} (tree : Tree H O q B) (Φ : Channel C B)
   rw [←map_sum,←kraus_map Φ]
   rfl
 
+theorem channel_eq_of_map_eq {Φ Ψ : Channel C O} (h : Φ.map = Ψ.map) : Φ = Ψ := by
+  cases Φ
+  cases Ψ
+  cases h
+  rfl
+
+def _root_.ICO.BudgetQueryTree.Tree.prepare {q : ℕ} (tree : Tree H O q B)
+    (W : Matrix B C ℂ) (hW : W.conjTranspose * W = 1) : Tree H O q C :=
+  precompose tree (ICO.ClassicalDilation.isometryChannel W hW)
+
+theorem _root_.ICO.BudgetQueryTree.Tree.prepare_channel {q : ℕ} (tree : Tree H O q B)
+    (W : Matrix B C ℂ) (hW : W.conjTranspose * W = 1) (first second : Channel H H) :
+    (tree.prepare W hW).channel first second =
+      (tree.channel first second).comp (ICO.ClassicalDilation.isometryChannel W hW) :=
+  channel_eq_of_map_eq (precompose_map tree (ICO.ClassicalDilation.isometryChannel W hW) first second)
+
 def prepare {q : ℕ} (tree : Tree H O q B) (ρ : State B) : Tree H O q PUnit :=
   precompose tree (Channel.prepare (fun _ : PUnit => ρ))
 

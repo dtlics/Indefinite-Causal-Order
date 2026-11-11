@@ -1,4 +1,5 @@
 import ICO.BudgetKnownOracle
+import ICO.SamplingOrdinary
 import Mathlib.Topology.Instances.Matrix
 
 /-! Continuity of the literal adaptive output, including both independently
@@ -31,6 +32,49 @@ theorem output_continuous {q : ℕ} (tree : Tree H O q B)
     intro j hj
     apply ih
     exact (continuous_const.matrix_mul hX).matrix_mul continuous_const
+
+theorem map_continuous_of_choi_continuous (Φ : Ω → Channel H H)
+    (hΦ : Continuous (fun ω => MatrixMap.choi (Φ ω).map)) :
+    Continuous (fun p : Ω × CMatrix H => (Φ p.1).map p.2) := by
+  apply continuous_matrix
+  intro j j'
+  have he (p : Ω × CMatrix H) : (Φ p.1).map p.2 j j' =
+      ∑ i : H, ∑ i' : H, p.2 i i' * MatrixMap.choi (Φ p.1).map (i, j) (i', j') := by
+    rw [MatrixMap.map_eq_sum_single (Φ p.1).map p.2]
+    simp [MatrixMap.choi, Matrix.sum_apply, Matrix.smul_apply]
+  simp_rw [he]
+  apply continuous_finset_sum
+  intro i _
+  apply continuous_finset_sum
+  intro i' _
+  exact (continuous_snd.matrix_elem i i').mul
+    ((hΦ.comp continuous_fst).matrix_elem (i, j) (i', j'))
+
+theorem _root_.ICO.BudgetQueryTree.Tree.channel_choi_continuous {q : ℕ} (tree : Tree H O q B)
+    (first second : Ω → Channel H H)
+    (hfirst : Continuous (fun ω => MatrixMap.choi (first ω).map))
+    (hsecond : Continuous (fun ω => MatrixMap.choi (second ω).map)) :
+    Continuous (fun ω => MatrixMap.choi (tree.channel (first ω) (second ω)).map) := by
+  apply continuous_matrix
+  intro ij kl
+  have h := output_continuous tree first second
+    (map_continuous_of_choi_continuous first hfirst)
+    (map_continuous_of_choi_continuous second hsecond)
+    (fun _ => Matrix.single ij.1 kl.1 (1 : ℂ)) continuous_const
+  exact h.matrix_elem ij.2 kl.2
+
+theorem _root_.ICO.BudgetQueryTree.uniformChannel_choi_continuous {r : ℕ} [NeZero r]
+    (oracles : Ω → Fin r → Channel H H)
+    (horacles : ∀ i, Continuous (fun ω => MatrixMap.choi (oracles ω i).map)) :
+    Continuous (fun ω => MatrixMap.choi (ICO.SamplingOrdinary.uniformChannel (oracles ω)).map) := by
+  apply continuous_matrix
+  intro ij kl
+  have he (ω : Ω) : MatrixMap.choi (ICO.SamplingOrdinary.uniformChannel (oracles ω)).map ij kl =
+      (r : ℂ)⁻¹ * ∑ i : Fin r, MatrixMap.choi (oracles ω i).map ij kl := by
+    simp [MatrixMap.choi, ICO.SamplingOrdinary.uniformChannel_map,
+      LinearMap.smul_apply, LinearMap.sum_apply, Matrix.smul_apply, Matrix.sum_apply]
+  simp_rw [he]
+  exact continuous_const.mul (continuous_finset_sum _ (fun i _ => (horacles i).matrix_elem ij kl))
 
 variable {A M : Type} [Fintype A] [DecidableEq A] [Nonempty A]
   [Fintype M] [DecidableEq M]

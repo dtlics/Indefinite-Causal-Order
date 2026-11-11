@@ -21,7 +21,7 @@ def prepared {q : ℕ} (tree : Tree (A × M) (A × Bool) q (A × Bool)) :
 
 theorem fullSwitch_prepared {r : ℕ} (UV : Sample A r) :
     (fullSwitch UV).comp plusChannel = switchChannel UV :=
-  channel_eq_of_map_eq (full_plus_map _ _ UV.1 UV.2)
+  ICO.BudgetHaarBound.channel_eq_of_map_eq _ _ (full_plus_map _ _ UV.1 UV.2)
 
 theorem fullCircuit_prepared {q r : ℕ} (tree : Tree (A × M) (A × Bool) q (A × Bool))
     (UV : Sample A r) :
