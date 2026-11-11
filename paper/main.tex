@@ -24,7 +24,6 @@
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{claim}[theorem]{Claim}
 \theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
-\newtheorem{remark}[theorem]{Remark}
 \usepackage{etoolbox}
 \AtBeginEnvironment{theorem}{\samepage}
 \AtBeginEnvironment{lemma}{\samepage}
@@ -89,45 +88,37 @@
 
 \begin{abstract}
 The quantum switch applies two operations in a coherent superposition
-of their two orders. No quantum circuit that uses each operation once
-in a definite order can do this, yet the switch is physically
-realizable, as photonic experiments have demonstrated. We ask how many
-calls to two black-box operations a quantum computer needs to
-do what the switch does with one call to each. In all our results the
-computer is an adaptive circuit with classical feed-forward and
-unlimited ancillary quantum memory. If one of the black boxes is known
-to be unitary, three calls suffice. For general quantum channels we
-prove three results. First, no finite number of calls reproduces the
-switch exactly on all pairs of black-box channels, in any dimension
-$d\ge2$: exact simulation is infinite or indefinite. Second, any fixed diamond-norm error below
-$1/2$ requires $\Omega(d^{1/4})$ calls, exponentially many in the
-number of qubits. Third, even a single bit extracted from a few uses of
-the switch can already be hard to obtain otherwise. The switch measures
-the incompatibility of quantum measurements, and dephasing is an unread
-measurement. Consider a device whose noise dephases in an unknown basis
-and is modelled as depolarizing. Model and noise are hard to tell apart
-because they share many characteristics, including the channel
-fidelity. The quantum switch tells them apart with a number of uses
-independent of the dimension, whereas the computer needs
-$\Omega(d^{1/16})$ calls. Error correction, and hence quantum computing,
-relies on channel characterization, so this is an example of a provable
-query advantage of the quantum switch in quantum computing. We invite
-future work that extends such advantages to practical tasks.
+of their causal orders, and it is a representative of the broader
+family of processes with indefinite causal order. No quantum circuit
+that uses each operation once in a definite order can describe it, yet
+the switch is physically realizable, as photonic experiments have
+demonstrated. We ask how many calls to the black-box operations a
+quantum computer in the circuit model needs to do what the switch does.
+If one of the black boxes is known to be unitary, three calls suffice.
+For general quantum channels we prove three results. In all of them the
+circuit may be adaptive, with classical feed-forward and unlimited
+ancillary quantum memory. First, exact simulation of the quantum switch
+cannot be achieved with any finite number of calls to the black-box
+operations in the worst case. Second, approximate simulation is hard as well:
+for operations on $n$ qubits, of dimension $d=2^n$, any fixed
+diamond-norm error below $1/2$ requires $\Omega(d^{1/4})$ calls, which
+is exponential in $n$. Third, even a single bit extracted from a few
+uses of the switch can already be hard, and can require exponentially
+many calls to obtain otherwise. We consider an application in which the
+actual noise of a device is a dephasing channel in an unknown basis,
+and we ask whether modelling it in theory as a depolarizing channel is
+sound, that is, we want to distinguish the actual noise from its
+theoretical model. The two are hard to distinguish because they share
+many properties, including the channel fidelity. The quantum switch tells
+them apart with a number of uses independent of the dimension, whereas
+the circuit model needs $\Omega(d^{1/16})$ calls. Error correction, and
+hence quantum computing, relies on channel characterization, so this is
+an example of a provable query advantage of the quantum switch in
+quantum computing. We invite future work that extends such advantages
+to more practical computing tasks.
 \end{abstract}
 
 \section{Introduction}
-
-In a quantum circuit, operations are applied one after another. Quantum
-theory also allows processes in which the order of two operations is
-itself a quantum degree of freedom. The simplest is the \emph{quantum
-switch}~\cite{chiribella2013}. It takes two operations $A$ and
-$B$ and a control qubit. If the control is in the state $\ket0$, a
-target system undergoes $A$ and then $B$. If the control is in the state
-$\ket1$, the target undergoes $B$ and then $A$. If the control is in a
-superposition, so is the order (\reffig{fig:switch}(a)). Each operation is used exactly once: the output depends only on the two operations and is linear in each of them. No quantum circuit that uses each operation once in a definite order does this~\cite{chiribella2013,araujo2015}. The switch is nevertheless physically realizable: photonic experiments in several laboratories have demonstrated it~\cite{procopio2015,rozema2024}. It has been reported to help in
-discriminating channels~\cite{chiribella2012}, in promise problems on
-unknown gates~\cite{araujo2014}, in communication~\cite{guerin2016,ebler2018}, in
-metrology~\cite{zhao2020}, and in measuring the incompatibility of quantum measurements~\cite{gao2023}. Some of these advantages have since been reassessed against other resources, such as coherent control of the channels~\cite{abbott2020} and more general strategies with a definite order~\cite{mothe2024}.
 
 \begin{figure}[t]
 \centering
@@ -192,42 +183,67 @@ $A,B,\dots,A$ is one possible run.}
 \label{fig:switch}
 \end{figure}
 
-How much is an indefinite order worth as a resource? One way to put a
-price on it is to ask what an ordinary quantum computer must pay to do
-without it. We give the computer two \emph{black boxes}, devices that
-apply unknown operations $A$ and $B$ when they are called. An
-\emph{ordinary strategy} is an adaptive quantum circuit that calls the
-black boxes one at a time (\reffig{fig:switch}(b)). It has unlimited
-ancillary quantum memory and may apply any known operations between
-calls. It has classical feed-forward: it decides which box to call
-next from what it has measured so far. The order of its calls is
-therefore definite on every run, although it may differ from run to
-run. All our results hold against such strategies. We ask:\nopagebreak
+In a quantum circuit, operations are applied one after another. Quantum
+theory also allows processes in which the causal order of the
+operations is itself a quantum degree of freedom. This family is known
+as indefinite causal order, and its representative example is the
+\emph{quantum switch}~\cite{chiribella2013}. The switch takes two
+operations $A$ and $B$ and a control qubit. If the control is in the
+state $\ket0$, a target system undergoes $A$ and then $B$. If the
+control is in the state $\ket1$, the target undergoes $B$ and then $A$.
+If the control is in a superposition, so is the order, as shown in
+\reffig{fig:switch}(a). Each operation is used exactly once. No quantum
+circuit that uses each operation once in a definite order can describe
+the switch~\cite{chiribella2013,araujo2015}. The switch is nevertheless
+physically realizable, and photonic experiments in several laboratories
+have demonstrated it~\cite{procopio2015,rozema2024}. It has been
+reported to help in discriminating channels~\cite{chiribella2012}, in
+promise problems on unknown gates~\cite{araujo2014}, in
+communication~\cite{guerin2016,ebler2018}, in
+metrology~\cite{zhao2020}, and in measuring the incompatibility of
+quantum measurements~\cite{gao2023}. Some of these advantages have
+since been reassessed against other resources, such as coherent control
+of the channels~\cite{abbott2020} and more general strategies with a
+definite order~\cite{mothe2024}.
+
+
+How much is an indefinite causal order worth as a resource? One way to
+put a price on it is to ask what a quantum computer in the circuit
+model must pay to do without it. We give the computer two \emph{black
+boxes}, devices that apply unknown operations $A$ and $B$ when they are
+called. The computer runs an \emph{ordinary strategy}, an adaptive
+quantum circuit that calls the black boxes one at a time, as in
+\reffig{fig:switch}(b). It has unlimited ancillary quantum memory and
+may apply any known operations between calls. It has classical
+feed-forward: it decides which box to call next from what it has
+measured so far. The order of its calls is therefore definite on every
+run, although it may differ from run to run. All our results hold
+against such strategies. We ask:\nopagebreak
 \begin{quote}
 \emph{How many calls to the black boxes $A$ and $B$ does an ordinary
 strategy need in order to reproduce what the quantum switch does with
 one call to each?}
 \end{quote}
 
-If one of the two black boxes is known to be unitary the answer is
-three: it suffices to call that box twice (Remark~\ref{rem:unitary}; for two
-unitary gates this is the simulation of~\cite{chiribella2013}). The
-black boxes met in practice are rarely unitary, however. A noisy gate, a measurement
-whose outcome is not read, and any process coupled to an environment are
-quantum \emph{channels}, and for channels the question is much harder.
-Bavaresco et al.~\cite{bavaresco2025} proved that no quantum circuit
-simulates the switch on two $n$-qubit channels with one call to one of
-them and fewer than $2^n$ calls to the other. They conjectured that
-simulation remains impossible when both channels may be called about $2^n$ times, and asked whether any finite number of calls
-is sufficient at all.
+If one of the two black boxes is known to be unitary, the answer is
+three. Bavaresco et al.~\cite[Theorem~1]{bavaresco2025} give an
+ordinary strategy that calls the unitary box twice and the other box
+once, which extends the simulation of~\cite{chiribella2013} for two
+unitary gates. The black boxes met in practice are rarely unitary,
+however. A noisy gate, a measurement whose outcome is not read, and any
+process coupled to an environment are quantum \emph{channels}, and for
+such general channels the question is much harder. Bavaresco et
+al.~\cite{bavaresco2025} proved that no quantum circuit simulates the
+switch on two $n$-qubit channels with one call to one of them and fewer
+than $2^n$ calls to the other.
 
 This paper answers our question at three levels of demand: reproducing
 the switch exactly, reproducing it approximately, and obtaining a
 single bit that the switch extracts. For the first, no finite number of
-calls suffices. The other two cost a number of calls that is
-exponential in the number of qubits. The third is at the same time an
-example of a provable query advantage of the quantum switch in a task
-of quantum computing, the validation of a noise model.
+calls suffices in the worst case. The other two cost a number of calls
+that is exponential in the number of qubits. The third is at the same
+time an example of a provable query advantage of the quantum switch in
+a task of quantum computing, namely noise-model characterization.
 
 \begin{figure}[t]
 \centering
@@ -260,7 +276,7 @@ of quantum computing, the validation of a noise model.
 % row labels
 \node[rowlab] at (\xa-.25,\ya) {Exact simulation\\[-1pt]{\scriptsize on all pairs of black-box channels}};
 \node[rowlab] at (\xa-.25,\yb) {Approximate simulation\\[-1pt]{\scriptsize diamond-norm error $\epsilon<1/2$}};
-\node[rowlab] at (\xa-.25,\yc) {One bit\\[-1pt]{\scriptsize dephasing noise versus its model}};
+\node[rowlab] at (\xa-.25,\yc) {One bit\\[-1pt]{\scriptsize actual noise versus its model}};
 % axis
 \draw[figwire,->] (\xa,-.85) -- (\xe+.25,-.85);
 \foreach \x/\l in {\xa/{$O(1)$},\xb/{$d^{1/16}$},\xc/{$d^{1/4}$},\xd/{$d^{2}$}}
@@ -278,22 +294,23 @@ performs with a constant number of uses, and the axis is the number of
 calls made by an ordinary strategy on boxes of dimension $d=2^n$. Red
 regions are excluded by Theorems~\ref{thm:exact-simulation},
 \ref{thm:simulation-summary} and~\ref{thm:c6}. Green regions are
-achievable (Section~\ref{sec:simulation} and
-Remark~\ref{rem:crossover}). Dashed regions are the gaps that our
-bounds leave undetermined. Exact simulation is only
-approached as the number of calls grows. Constants are omitted:
-Remarks~\ref{rem:approx-content} and~\ref{rem:crossover} give the sizes
-at which the bounds exceed the cost of the switch.}
+achievable for every pair of operations, as shown in
+Sections~\ref{sec:simulation} and~\ref{sec:invariant}. Dashed regions
+are the gaps that our bounds leave undetermined.}
 \label{fig:landscape}
 \end{figure}
 
 \subsection{Our results}\label{sec:results}
 
-Throughout, the black boxes $A$ and $B$ are unknown channels on a $d$-dimensional system, and $\SW[A,B]$ is the switch, a channel on the control and the target. Theorems~\ref{thm:exact-simulation} and~\ref{thm:simulation-summary} hold for every $d\ge2$; Theorem~\ref{thm:c6} is stated for $n$ qubits, $d=2^n$. An ordinary strategy has
-\emph{budget} $q$ if it makes at most $q$ calls in total on every run.
-The least budget with which a task can be performed is the worst-case
-query complexity of the task; it is infinite if no budget suffices.
-Section~\ref{sec:framework} gives the definitions, and
+Throughout, the black boxes $A$ and $B$ are unknown channels on a
+$d$-dimensional system, and $\SW[A,B]$ is the switch, a channel on the
+control and the target. Theorems~\ref{thm:exact-simulation}
+and~\ref{thm:simulation-summary} hold for every $d\ge2$, and
+Theorem~\ref{thm:c6} is stated for $n$ qubits, $d=2^n$. An ordinary
+strategy has \emph{budget} $q$ if it makes at most $q$ calls in total
+on every run. The least budget with which a task can be performed is
+the worst-case query complexity of the task; it is infinite if no
+budget suffices. Section~\ref{sec:framework} gives the definitions, and
 \reffig{fig:landscape} summarizes the three results.
 
 
@@ -307,27 +324,28 @@ target input is arbitrary, and the output consists of the control and
 the target.
 \end{theorem}
 
-The theorem proves Conjecture~1 of~\cite{bavaresco2025} and answers
-the question asked there in the negative: the worst-case
-query complexity of exact simulation is infinite in every dimension.
-Three
-features of the statement matter. The strategy is fixed first and must
-then work for all pairs of black-box channels; this is what a
-simulation of the switch as a device means. The strategy is the
-adaptive circuit described above, so the statement covers every circuit
-with classical control of causal order~\cite{wechs2021} and, by a
-recent result~\cite{wechs2026}, every causally separable process. And the boxes range over all
-channels; our proof uses mixtures of channels in an essential way.
-
-The theorem concerns exact, deterministic simulation and counts calls
-on the worst run. Approximate simulation is the subject of
-Theorem~\ref{thm:simulation-summary}; heralded simulation and the
-expected number of calls are discussed in Section~\ref{sec:open}.
+Bavaresco et al.~\cite{bavaresco2025} conjectured that simulation
+remains impossible when both channels may be called about $2^n$ times,
+and asked whether any finite number of calls suffices. The theorem
+proves their Conjecture~1 and answers the question in the negative. The
+worst-case query complexity of exact simulation is infinite in every
+dimension. Three
+clarifications are in order. First, the strategy is fixed first and
+must then work for all pairs of black-box channels; this is what a
+simulation of the switch as a device means. Second, the strategy is the
+adaptive circuit described above and shown in \reffig{fig:switch}(b),
+so the statement covers every circuit with classical control of causal
+order~\cite{wechs2021} and, by a recent result~\cite{wechs2026}, every
+causally separable process. Third, the statement concerns the worst
+case over all pairs of channels. It does not say that every class of
+pairs is hard: for some classes finitely many calls suffice, for
+instance three calls when one box is known to be unitary. Exact simulation is a strong demand, so we next ask what
+approximate simulation costs.
 
 \paragraph{Approximate simulation is expensive.}
 The error $\operatorname{err}(\QC;d)$ of a strategy $\QC$ is its
-largest distance to the switch over all pairs of boxes, in half the
-diamond norm~\eqref{eq:simulation-error}.
+largest distance to the switch over all pairs of boxes, measured in
+half the diamond norm as in~\eqref{eq:simulation-error}.
 
 \begin{theorem}[Approximate simulation]\label{thm:simulation-summary}
 For $d\ge2$, an ordinary strategy $\QC$ with budget $q$ obeys, for every
@@ -346,65 +364,48 @@ mixtures of $r$ unitary channels.
 The integer $r$ is a free parameter. It is the number of unitaries
 mixed in each hard box of the proof, and the choice $r\approx\sqrt d$
 balances the two negative terms and gives the bound $\Omega(d^{1/4})$.
-The value $1/48$ in the example is a convenient choice and not a
-threshold. The threshold $1/2$ is the natural one, since a strategy that
-measures the control and then calls the boxes in the corresponding order
-has error at most $1/2$ with two calls. In the other direction, about $4d^2/\epsilon$
-calls suffice for error $\epsilon$ (Section~\ref{sec:simulation}). At
-fixed error the cost of approximate simulation therefore lies between
-$d^{1/4}$ and $d^2$, and is exponential in the number of qubits. The
-optimal exponent is open (Section~\ref{sec:open}).
+The threshold $1/2$ is the natural one, since a strategy that measures
+the control and then calls the boxes in the corresponding order has
+error at most $1/2$ with two calls. In the other direction,
+Section~\ref{sec:simulation} shows that about $4d^2/\epsilon$ calls
+suffice for error $\epsilon$. At fixed error the cost of approximate
+simulation therefore lies between $d^{1/4}$ and $d^2$, and is
+exponential in the number of qubits. The optimal exponent is open.
 
 \paragraph{A single bit from the switch can already be hard.}
 Simulation asks for the whole output of the switch on every input. A
 common use of the switch asks for much less, a single number. Gao et
 al.~\cite{gao2023} showed that the switch measures the incompatibility
-of quantum measurements. Prepare the control in $\ket+$ and the target
-in the maximally mixed state, apply the switch, and measure the control
-in the basis $\ket\pm$. The outcome $-$ occurs with probability
-$(1-v)/2$, where the \emph{visibility} $v(A,B)$ measures how far the
-Kraus operators of $A$ commute with those of $B$
-(Section~\ref{sec:visibility}); for two projective measurements, $1-v$
-quantifies their incompatibility. The switch estimates it with
-a number of uses that does not depend on the dimension. The same
-interference of the control tells commuting from anticommuting
-gates~\cite{procopio2015,chiribella2012}, gives Bargmann
-invariants~\cite{azado2025}, and underlies protocols for
-metrology~\cite{zhao2020}, communication~\cite{ebler2018} and
-refrigeration~\cite{felce2020}.
+of quantum measurements. With the control prepared in $\ket+$, the
+target in the maximally mixed state, and the control measured in the
+basis $\ket\pm$, the outcome $-$ occurs with probability $(1-v)/2$, where the \emph{visibility} $v(A,B)$ of
+Section~\ref{sec:visibility} equals $1$ exactly when the Kraus
+operators of $A$ commute with those of $B$. Our third result shows that
+even a single bit extracted in this way can be exponentially expensive
+to obtain without the switch.
 
-Our third result shows that even a single bit extracted in this way can
-be exponentially expensive to obtain without the switch. The setting is
-the validation of a noise model. A noisy device
-applies the same unknown channel $\mathcal E$ at every use; a use is a
-call to the black box $\mathcal E$. Suppose that the noise of the
-device is a dephasing of strength $0<p\le1$ in a basis that the
-experimenter does not know, and that in theory one models it by
-depolarizing noise of the same fidelity:
+The application is noise-model characterization. A noisy device applies
+the same unknown channel $\mathcal E$ at every use. Suppose that its
+actual noise is a dephasing of strength $0<p\le1$ in a basis that the
+experimenter does not know, and that in theory one models it as
+depolarizing noise of the same fidelity, as is common in the analysis
+of error correction and error
+mitigation~\cite{fowler2012,cai2023}:
 \[
- \text{noise}\quad\mathcal E_{p,U}=(1-p)\id+p\,\Delta_U ,
- \qquad\qquad
- \text{model}\quad\mathcal M_p=(1-p)\id+p\,\Lambda,
- \quad \Lambda=\E_U\Delta_U .
+ \text{actual noise}\quad\mathcal E_{p,U}=(1-p)\id+p\,\Delta_U ,
+ \qquad
+ \text{theoretical model}\quad\mathcal M_p=(1-p)\id+p\,\Lambda,
+ \ \ \Lambda=\E_U\Delta_U .
 \]
-Here $\Delta_U$ is a dephasing channel: it measures in the orthonormal
-basis formed by the columns of a unitary $U$ and discards the outcome.
-The basis is the same at every use. The channel $\Lambda$, the average
-of $\Delta_U$ over all bases, is a depolarizing channel, and so is
-$\mathcal M_p$: the model is the twirl of the noise. It shares many
-characteristics with the actual noise. Both are unital, they have the same entanglement fidelity and
-the same average gate fidelity, the figure that randomized
-benchmarking~\cite{magesan2011} reports, and an experiment that uses
-the device once sees no difference between them on average over $U$.
-This is why the usual figures of merit do not reveal whether the
-depolarizing model describes the device, and for a generic unknown
-basis no ordinary strategy does so efficiently
-(Theorem~\ref{thm:c6}). The quantum switch finds out. With the device in
-both of its slots, the switch never gives the outcome $-$
-exactly when the Kraus operators of $\mathcal E$ commute with one
-another. They do for dephasing noise, which has a preferred basis, and
-they do not for the depolarizing model, which has none: $v(\mathcal E,\mathcal E)$
-is $1$ for $\mathcal E_{p,U}$ and $1-p^2(d-1)/(d+1)$ for $\mathcal M_p$.
+Here $\Delta_U$ measures in the orthonormal basis formed by the columns
+of a unitary $U$ and discards the outcome, and $\Lambda$, the average
+of $\Delta_U$ over all bases, is a depolarizing channel. The actual noise and its model are hard to tell apart because
+they share many properties, including the entanglement fidelity and the
+average gate fidelity that randomized
+benchmarking~\cite{magesan2011} reports. The quantum switch tells them
+apart. With the device in both of its slots, the outcome $-$ never
+occurs for the actual noise, whose Kraus operators commute, and it
+occurs with probability of order $p^2$ for the model.
 
 \begin{theorem}[One bit: does the depolarizing model describe the noise?]\label{thm:c6}
 Let $d=2^n$, $n\ge1$, and $0<p\le1$. A device applies the same channel
@@ -420,98 +421,116 @@ with $m=\lceil3/(2p)\rceil$ consecutive uses of the device in each
 slot, decide the question with one-sided error less than $1/3$.
 \end{theorem}
 
-In particular, what the switch measures is itself out of reach of
-ordinary strategies: an estimate of the visibility to an accuracy
-better than $p^2/6$ decides the question, and so requires as many
-calls. What the ordinary strategy lacks is
-the switch, and also any access to the inside of the device: the
-outcome of the hidden measurement, its environment, and the unitary
-that rotates to the hidden basis. The separation is asymptotic;
-Remark~\ref{rem:crossover} gives the sizes at which it sets in.
-The three theorems have been formalized in the Lean proof assistant
-(Appendix~\ref{sec:formal-status}).
+The three theorems have been formalized in the Lean proof assistant, as
+described in Appendix~\ref{sec:formal-status}.
 
 \subsection{Technical overview}\label{sec:overview}
 
-The three theorems have independent proofs. The first two share one
-elementary fact: an ordinary
-strategy that calls each box at most once uses the boxes in a definite
-order on each run. The positive operator that represents such a
-strategy (its Choi operator, Section~\ref{sec:ordered}) is therefore a
-sum of two positive operators, one for each order
-(Lemma~\ref{lem:ordered}).
+The three theorems have independent proofs. The proofs of the first two
+share one idea. An ordinary strategy that calls each box at most once
+uses the two boxes in a definite order on each run.
+Lemma~\ref{lem:ordered} turns this into a concrete constraint: the Choi
+operator of such a strategy, defined in Section~\ref{sec:ordered}, is a
+sum of two positive operators, one for each order. A strategy with many
+calls is not of this kind. Each of the two proofs therefore first
+reduces to this case and then applies the constraint. In the exact
+proof the reduced strategy calls each box once. In the approximate
+proof each box is a mixture of many unitaries, and the strategy meets
+each unitary at most once.
 
 \paragraph{Exact simulation.}
-The switch applies the same Kraus operator of $A$ on both of its
-branches, whereas every call made by an ordinary strategy draws a
-fresh one. Mixing each box with the identity turns this difference into
-algebra. From an exact strategy with $q$ calls we obtain a strategy
-with one call to each box that outputs a \emph{diluted switch}, a
-mixture in which the switch has weight $1/q^2$
-(Lemma~\ref{lem:polarization}). For qubits, no strategy with one call
-to each box outputs a diluted switch of any positive weight
-(Proposition~\ref{prop:no-diluted}). The proof uses positivity once, to
-confine the Kraus vectors (Section~\ref{sec:ordered}) of the two
-ordered operators to an explicit
-$25$-dimensional space, and then a linear functional, verified in exact
+The proof is by contradiction. Suppose that an ordinary strategy with
+$q$ calls simulates the switch exactly on all channels. The switch
+applies the same Kraus operator of $A$ on both of its branches, whereas
+each call made by the strategy draws a fresh one, and the reduction
+exploits this difference. We replace each box by its mixture with the
+identity, so that every call applies the box only with some
+probability. The switch tosses one coin for each box, and the strategy
+tosses one for each call. The output of the strategy is then a polynomial in these
+probabilities, and so is the output of the switch. Because the
+simulation is exact, the two polynomials agree, and the terms in which
+each box is applied exactly once define a strategy with one call to
+each box. Lemma~\ref{lem:polarization} shows that this strategy outputs
+a \emph{diluted switch}, a mixture in which the switch has weight
+$1/q^2$. The assumption about many calls has thus become a
+statement about one call to each box, to which the constraint of
+Lemma~\ref{lem:ordered} applies. Proposition~\ref{prop:no-diluted}
+shows that for qubits no strategy with one call to each box outputs a
+diluted switch of any positive weight. Its proof uses positivity to
+confine the vectors that make up the two positive operators to an
+explicit $25$-dimensional space, and then exhibits a linear functional, verified in exact
 arithmetic, that vanishes on both operators but not on the diluted
-switch (Section~\ref{sec:exact}, \reffig{fig:exact}).
+switch. This is the contradiction for qubits, and
+Section~\ref{sec:embedding} reduces every dimension to qubits.
+\reffig{fig:exact} shows the steps.
 
 \paragraph{Approximate simulation.}
-A box that applies the same unitary at every call is not hard,
-because a strategy can call it twice. The hard boxes are uniform mixtures of $r$ Haar-random
-unitaries, so that each call applies one of them with a hidden index,
-and with $q^2\ll r$ no index repeats. With respect to each pair of
-unitaries the strategy then calls each at most once, in a definite
-order. The technical core is that a circuit that calls $U$ before $V$
-has average fidelity at most about $4/d^2$ with the reversed product
-$UV$ (Lemma~\ref{lem:reverse}). It can therefore build only a coherence
-of order $1/d$ between the two orders, whereas the switch has full
-coherence, and a single measurement detects the difference when
-$r^2\ll d$ (Section~\ref{sec:approximation}, \reffig{fig:approx}).
+If one of the boxes is known to be unitary, Bavaresco et
+al.~\cite[Theorem~1]{bavaresco2025} give an ordinary strategy that
+calls it twice and simulates the switch exactly. A hard box should therefore
+almost never apply the same unitary twice. We construct the hard instance
+accordingly: each box is a uniform mixture of $r$ Haar-random
+unitaries, so that each call applies one of them with an index that the
+strategy cannot choose, and with $q^2\ll r$ no index repeats. With
+respect to each pair of unitaries $U$ and $V$ the strategy then calls
+each at most once, in a definite order, and the constraint of
+Lemma~\ref{lem:ordered} applies. The technical core is
+Lemma~\ref{lem:reverse}: a circuit that calls $U$ before $V$ has
+average fidelity at most about $4/d^2$ with the reversed product $UV$.
+Such a circuit can therefore build only a coherence of order $1/d$
+between the two orders, whereas the switch has full coherence, and a
+single measurement detects the difference when $r^2\ll d$.
+\reffig{fig:approx} shows the steps.
 
 \paragraph{One bit.}
-At full strength, dephasing in the hidden basis is a measurement in a
-known basis placed between $U^\dagger$ and $U$, where the columns of
-$U$ are the hidden basis, and complete depolarization is two such
-measurements in mutually unbiased bases. The unknown therefore enters
-only through one Haar-random unitary $U$, which each of these
-measurements queries once backwards and once forwards. The path-recording theorem of Ma and
-Huang~\cite{mahuang2025} replaces $U$ by a table of the queries made so
-far. The main technical work reduces this table to a
-\emph{label cache} (Proposition~\ref{prop:cache}): at each call the
-cache either retrieves a stored register, called a label, dephases it,
-and stores it again, or it creates a fresh, maximally mixed label. The
-noise and its model differ only in the basis in which a retrieved label
-is dephased. If every dephasing is replaced by a depolarization, the
-cache does not change when all stored labels are rotated together, and
-dephasing one of $k$ labels with this symmetry is nearly the same as
-depolarizing it (Lemma~\ref{lem:invariant-label};
-Section~\ref{sec:c6-proof}, Figures~\ref{fig:geometry}
-and~\ref{fig:cache}).
+The proof must show that an ordinary strategy cannot sense the hidden
+basis cheaply. A single use of the device reveals nothing: on average
+over the unknown basis, the actual noise acts exactly as the
+theoretical model. For several uses on systems that the device has not
+met before, this holds up to corrections that vanish as the dimension
+grows. The strategy can therefore sense the basis essentially only by
+returning to the device a system on which the device has already
+acted, so that the same basis is met twice. We make this precise with
+the path-recording theorem of Ma and Huang~\cite{mahuang2025}, which
+replaces the Haar-random basis by a record of the calls made so far. In
+this picture the device keeps a table of labels, the \emph{label
+cache}, with one label for each system that it has measured, and at each call it either creates a fresh label
+or measures a stored one again. The actual noise and the model differ
+only in the basis of this second measurement. If every such second
+measurement is replaced by a depolarization, the stored labels are
+symmetric under a common rotation of the basis, and
+Lemma~\ref{lem:invariant-label} shows that measuring one of $k$ such
+labels differs from depolarizing it by only about $k/d$. Over $q$ calls
+the total difference is of order $q^2/d$, which is small unless $q$
+grows with the dimension. The exponent $1/16$ comes from the error of
+the path-recording step. Figures~\ref{fig:geometry}
+and~\ref{fig:cache} illustrate the task and the table.
 
 \subsection{Related work}\label{sec:related}
 
 \paragraph{Simulating the switch.}
-That a circuit with a fixed order needs one extra call to simulate the
-switch of two unitaries goes back to~\cite{chiribella2013}; three calls
-still suffice if only one of the two boxes is known to be unitary
-(Remark~\ref{rem:unitary}). For the switch
-of $N$ unitary gates, ordinary circuits with a number of calls of order
-$N^2$ are known~\cite{colnaghi2012,facchini2015}, so for unitary boxes
-the cost of ordinary simulation is polynomial. For channels,
-besides the bound quoted in the Introduction, Bavaresco et al.~\cite{bavaresco2025}
-excluded several small budgets for qubits by computer-assisted proofs
-and studied probabilistic and approximate simulation numerically.
-Theorem~\ref{thm:exact-simulation} removes the restrictions on the
-budget, and Theorem~\ref{thm:simulation-summary} gives a
-dimension-dependent bound for approximation in the diamond norm.
-Results of the same kind are known for other transformations of unknown
-operations: adding control to an unknown unitary is impossible with any
-finite number of calls~\cite{gavorova2024}, whereas inverting it takes
-about $d^2$ calls~\cite{odake2025}. Theorem~\ref{thm:exact-simulation}
-places the switch on channels in the first category. Two concurrent and independent works~\cite{cheng2026,goldin2026} are
-discussed in Section~\ref{sec:concurrent}.
+Chiribella et al.~\cite{chiribella2013} introduced the quantum switch
+and showed that a circuit with a fixed order simulates the switch of
+two unitaries with one extra call. Bavaresco et
+al.~\cite{bavaresco2025} showed that three calls still suffice if only
+one of the two boxes is known to be unitary. For the switch of $N$
+unitary gates, ordinary circuits with a number of calls of order $N^2$
+are known~\cite{colnaghi2012,facchini2015}, so the cost of ordinary
+simulation is polynomial for unitary boxes. For general channels,
+Bavaresco et al.~\cite{bavaresco2025} proved that one call to one
+channel and fewer than $2^n$ calls to the other do not suffice. They
+also excluded several small budgets for qubits by computer-assisted
+proofs and studied probabilistic and approximate simulation
+numerically. Theorem~\ref{thm:exact-simulation} removes the
+restrictions on the budget, and Theorem~\ref{thm:simulation-summary}
+gives a dimension-dependent bound for approximation in the diamond
+norm. Results of the same kind are known for other transformations of
+unknown operations. Adding control to an unknown unitary is impossible
+with any finite number of calls~\cite{gavorova2024}, whereas inverting
+it takes about $d^2$ calls~\cite{odake2025}.
+Theorem~\ref{thm:exact-simulation} places the switch on general
+channels in the first category. Section~\ref{sec:concurrent} discusses
+two concurrent and independent works~\cite{cheng2026,goldin2026}.
 
 \paragraph{Advantages of indefinite causal order.}
 Query advantages of the switch were first found for promise problems on
@@ -533,13 +552,12 @@ exponent as strategies with definite order~\cite{zhuwang2026}.
 \paragraph{Measuring incompatibility, and the recording method.}
 Gao et al.~\cite{gao2023} noted that what the switch measures can also
 be estimated by ordinary means if the outcomes of the measurements are
-available. We
-prove that without the outcomes the number of ordinary calls must grow
-with the dimension. The proof builds on the path-recording framework
-for Haar-random unitaries with forward and inverse
-queries~\cite{mahuang2025}. Our results are query lower bounds in the
-black-box model, and the hard instances are built from Haar-random
-unitaries.
+available. We prove that without the outcomes the number of ordinary
+calls must grow with the dimension. The proof builds on the
+path-recording framework of Ma and Huang~\cite{mahuang2025} for
+Haar-random unitaries with forward and inverse queries. Our results are
+query lower bounds in the black-box model, and the hard instances are
+built from Haar-random unitaries.
 
 \section{Framework}\label{sec:framework}
 
@@ -555,8 +573,7 @@ anything else. The device has no memory, so different calls act
 independently. Only this input--output action is available. If
 $A(\rho)=\sum_iA_i\rho A_i^\dagger$ for Kraus operators $(A_i)$, then
 the index $i$, the environment in any dilation of $A$, and any classical
-outcome produced inside the device stay hidden. When $A$ describes a
-measurement, the outcome is not reported.
+outcome produced inside the device stay hidden.
 
 \subsection{The quantum switch}
 
@@ -570,17 +587,19 @@ operators
 The channel $\SW[A,B](\omega)=\sum_{i,j}K_{ij}\,\omega K_{ij}^\dagger$
 does not depend on the Kraus operators chosen to represent $A$ and
 $B$~\cite{chiribella2013}. The switch is thus a function of the two
-channels alone, so it can be applied to black boxes, and it is linear
-in $A$ and in $B$ separately. A superposition of the two
+channels alone, so it can be applied to black-box operations. It is
+linear in $A$ and in $B$ separately. A superposition of the two
 control states leaves the control and the target in a state that
 carries interference between the ordered products $B_jA_i$ and
 $A_iB_j$.
 
 \subsection{Ordinary strategies}\label{sec:model}
 
-We now make precise the adaptive circuit of the introduction. In the
-terminology of~\cite{wechs2021} it is a quantum circuit with classical
-control of causal order, in which a box may fill several slots.
+The competitor of the switch is a quantum computer in the circuit
+model, defined here as an adaptive circuit with classical
+feed-forward and unlimited ancillary quantum memory. In the terminology
+of~\cite{wechs2021}, it is a quantum circuit with classical
+control of causal order in which a box may fill several slots.
 
 \begin{definition}[Ordinary strategy]\label{def:ordinary}
 An \emph{ordinary strategy} with \emph{budget} $q$ consists of an input
@@ -599,38 +618,37 @@ same definition applies to any finite set of boxes.
 \end{definition}
 
 \reffig{fig:switch}(b) shows one run. The memory is the ancillary
-system; it is unlimited in that no bound is placed on its dimension.
+system, unlimited because its dimension is arbitrary.
 Classical feed-forward is the dependence of $W_t$, and of the choice of
-the next box, on the earlier outcomes. Circuits with a fixed order of calls, also called quantum
+the next box, on the earlier outcomes. Each instrument may itself
+contain measurements and classically controlled operations. Circuits with a fixed order of calls, also called quantum
 combs, are the special case in which the choice of the next box does not
 depend on the outcomes.
-Known operations may be controlled coherently. What the strategy cannot
-do is put the choice of the unknown box into superposition. The budget
-counts calls to $A$ and to $B$ together, on the worst run.
+Known operations may be controlled coherently. The strategy cannot
+put the choice of the unknown box into superposition. The budget
+counts calls to $A$ and to $B$ together.
 
-For simulation, the input and the output are a control qubit and a
-target. For the task of Theorem~\ref{thm:c6} the input is trivial and
-the output is a classical guess. A circuit with $k_A$ slots for $A$ and
+For the noise-model characterization of Theorem~\ref{thm:c6}, the
+input is trivial and the output is a classical guess. A circuit with $k_A$ slots for $A$ and
 $k_B$ slots for $B$, as in~\cite{bavaresco2025}, is an ordinary strategy
 with budget $k_A+k_B$. A call made on a discarded dummy system does not
 change the channel that a strategy implements. Appending such calls is
-called \emph{padding}; it is used in Sections~\ref{sec:ordered}
-and~\ref{sec:exact}. An ordinary strategy with budget $q$ can be padded so
-that every run makes exactly $q$ calls to each box; the order of the
+called \emph{padding}. An ordinary strategy with budget $q$ can be padded so
+that every run makes exactly $q$ calls to each box. The order of the
 calls remains adaptive.
 
 \subsection{Simulating the switch}
 
 An ordinary strategy with a control qubit and a target as input and as
 output \emph{simulates the switch exactly} if $\QC[A,B]=\SW[A,B]$ for
-every pair of channels $A,B$ on $\C^d$. Its \emph{error} is the largest
-distance to the switch over all pairs of boxes,
+every pair of channels $A,B$ on $\C^d$. Its \emph{error} is its distance to the
+switch in the worst case over all pairs of boxes,
 \begin{equation}\label{eq:simulation-error}
  \operatorname{err}(\QC;d)=
  \sup_{A,B\ \mathrm{CPTP}}\frac12\norm{\QC[A,B]-\SW[A,B]}_\diamond .
 \end{equation}
-The diamond norm allows the input to be entangled with a reference, so
-that $\operatorname{err}(\QC;d)$ is the largest difference, over all
+The diamond norm allows the input to be entangled with a reference.
+Hence $\operatorname{err}(\QC;d)$ is the largest difference, over all
 pairs of boxes and all tests, between the probabilities with which a
 single test accepts the strategy and accepts the switch.
 Both notions ask for the full output, control and target together, on
@@ -653,11 +671,16 @@ $1-v=\operatorname{NCOM}_{I/d}^2$ in their notation. It equals $1$ when
 every $A_i$ commutes with every $B_j$, and in general
 $1-v=\frac1{2d}\sum_{i,j}\norm{[A_i,B_j]}_{\rm HS}^2$. For projective
 measurements $1-v$ vanishes exactly when the two measurements are
-compatible; for general instruments it quantifies the noncommutativity
-of the Kraus operators.
+compatible. For general instruments it quantifies the noncommutativity
+of the Kraus operators. The same quantum-switch interference of the control tells
+commuting from anticommuting
+gates~\cite{procopio2015,chiribella2012}, gives Bargmann
+invariants~\cite{azado2025}, and underlies protocols for
+metrology~\cite{zhao2020}, communication~\cite{ebler2018} and
+refrigeration~\cite{felce2020}.
 
-The noise in our third theorem is built from measurements with unread
-outcomes.
+The actual noise and the theoretical model of Theorem~\ref{thm:c6} are
+built from measurements with unread outcomes.
 For a unitary $U$ on $\C^d$, the \emph{dephasing channel} $\Delta_U$
 measures in the basis $(U\ket j)_{j}$ and discards the outcome:
 \begin{equation}\label{eq:conjugation}
@@ -687,10 +710,11 @@ $v(\mathcal E)=v(\mathcal E,\mathcal E)$ and call it the
 
 The switch uses each of its two operations once. An ordinary strategy
 that calls each black box at most once must call them in one order or
-the other on each run. The following standard fact~\cite{wechs2021} makes this precise and
-is used in the proofs of Theorems~\ref{thm:exact-simulation}
-and~\ref{thm:simulation-summary}. It is stated for Choi operators, which
-we now define.
+the other on each run. The proofs of Theorems~\ref{thm:exact-simulation}
+and~\ref{thm:simulation-summary} reduce strategies with many calls to
+this case. Lemma~\ref{lem:ordered} makes the definite order
+precise. It is a standard fact~\cite{wechs2021}, stated for Choi
+operators, which we now define.
 
 Consider a strategy with input system $P$ and output system $F$ that
 calls each box exactly once, after padding. Let the two calls have input
@@ -699,8 +723,8 @@ outcomes and Kraus indices of the instruments. The corresponding product
 of Kraus operators is one run of the circuit with the two boxes
 removed. Its matrix elements form a tensor $v_\alpha$ on
 $P\otimes A_I\otimes A_O\otimes B_I\otimes B_O\otimes F$, with one leg
-for the input, one for the output, and one for each wire that was cut;
-the legs are named after the box, not after the time of the call. When
+for the input, one for the output, and one for each wire that was cut.
+The legs are named after the box, not after the time of the call. When
 the boxes have Kraus operators $(A_i)$ and $(B_j)$, the strategy has
 Kraus operators $\mathcal L(A_i,B_j)v_\alpha$, where the \emph{link}
 $\mathcal L$ reconnects the wires through the two boxes:
@@ -721,7 +745,7 @@ $\QC[A,B]$ for all $A,B$, linearly in $A$ and in $B$. The same
 definitions apply to any process whose Kraus operators are bilinear in
 the Kraus operators of the two boxes, such as the switch.
 
-Lemma~\ref{lem:ordered} below writes the Choi operator of such a
+Lemma~\ref{lem:ordered} writes the Choi operator of such a
 strategy as a sum over the two orders. Each term obeys two \emph{comb equations}. For the order
 $A$ before $B$ they say that once the output $F$ is discarded, nothing
 depends on what the last box $B$ returns, and that once $B$ is removed
@@ -754,7 +778,7 @@ depend on the boxes.
 Pad the strategy so that every run calls both boxes. Group the runs by
 the box that is called first. Everything that happens before the first
 call is known processing, so this grouping is the outcome of an
-instrument that does not depend on the boxes; for a fixed input state
+instrument that does not depend on the boxes. For a fixed input state
 its two outcomes have probabilities $p_{A\before B}+p_{B\before A}=1$.
 Given the outcome, the remaining circuit calls the two boxes in a fixed
 order, with arbitrary memory in between. Summing its Kraus vectors over
@@ -767,9 +791,11 @@ normalized on its own.
 
 \section{Exact simulation: no finite number of calls suffices}\label{sec:exact}
 
-We prove Theorem~\ref{thm:exact-simulation}. Throughout this section the
-control input is fixed to $\ket+$; a strategy that is exact for this
-input only is all that the theorem assumes. We write $\SW_+[A,B]$ for
+We prove Theorem~\ref{thm:exact-simulation}. The proof is by
+contradiction: we assume that an ordinary strategy with a finite budget
+simulates the switch exactly. Throughout this section the
+control input is fixed to $\ket+$. The theorem assumes no more than a
+strategy that is exact for this input. We write $\SW_+[A,B]$ for
 the resulting channel from the target to the control and the target. Its Kraus
 operators are
 \begin{equation}\label{eq:switch-plus}
@@ -789,10 +815,10 @@ operators are
 \node[flowtab] at (.55,.6) {5};
 \node[flowname] at (1.05,.6) {Contradiction};
 %% arrows between rows, with the proof step that they stand for
-\foreach \y/\t in {8.0/{keep one random call to each box \textup{(Lemma~\ref{lem:polarization})}},
-                   6.0/{split by the order of the two calls \textup{(Lemma~\ref{lem:ordered})}},
-                   4.0/{insert unitary boxes and use positivity \textup{(Lemma~\ref{lem:support})}},
-                   2.0/{apply a linear functional $f$ \textup{(Lemma~\ref{lem:exact-obstruction})}}}{
+\foreach \y/\t in {8.0/{\textup{Lemma~\ref{lem:polarization}:} keep one random call to each box},
+                   6.0/{\textup{Lemma~\ref{lem:ordered}:} split by the order of the two calls},
+                   4.0/{\textup{Lemma~\ref{lem:support}:} insert unitary boxes and use positivity},
+                   2.0/{\textup{Lemma~\ref{lem:exact-obstruction}:} apply a linear functional $f$}}{
  \draw[flowdown] (7.3,\y-.08) -- (7.3,\y-.74);
  \node[flowstep] at (7.75,\y-.4) {\t};}
 %% row 1: a strategy with many calls
@@ -817,12 +843,13 @@ operators are
 \node[fsI,text=navy,font=\small,draw=navy,fill=mist,minimum width=.72cm] at (8.9,2.76) {$\SW_+$};
 \foreach \x/\n in {5.0/16,6.3/4,7.6/4,8.9/1} \node[font=\scriptsize\sffamily,text=navy] at (\x,2.24) {$\n$};
 \foreach \x in {5.65,6.95,8.25} \node[font=\scriptsize,text=navy] at (\x,2.24) {$+$};
-\node[flownote] at (10.25,2.6) {every Kraus vector lies in $\mathcal V$, $\dim\mathcal V=25$};
+\node[flownote] at (10.25,2.6) {Kraus vectors lie in $\mathcal V$, $\dim\mathcal V=25$};
 %% row 5: the two evaluations of f
 \node[font=\small,text=navy] at (7.3,.6) {$f(X_T)=\lambda\mu/2>0$};
 \node[flownote] at (10.25,.6) {yet $f=0$ on both parts and on gauge};
 \end{tikzpicture}
-\caption{The proof of Theorem~\ref{thm:exact-simulation} for qubits;
+\caption{The proof of Theorem~\ref{thm:exact-simulation} for qubits,
+by contradiction. Row~1 is the assumed exact simulator, and
 each arrow is one step. Row~2: all calls but one to each box, chosen at
 random, are replaced by the identity, and the switch is left with
 weight $\lambda\mu=1/(MN)$. Row~3: $C_T$ is a Choi operator of the
@@ -833,17 +860,29 @@ these vectors.}
 \label{fig:exact}
 \end{figure}
 
-\paragraph{Why more calls do not help.}
+\paragraph{Why general channels are hard.}
 In~\eqref{eq:switch-plus} the same Kraus operator $A_i$ appears on both
 branches. A circuit that calls $A$ twice, once for each branch, gets
 two operators $A_i$ and $A_{i'}$ with independent indices. If $A$
-is unitary there is only one index, and a strategy that knows this
-needs only three calls, whatever $B$ is (Remark~\ref{rem:unitary}). For a general channel the theorem says that
-no finite number of independent draws can be made to act as one.
+is known to be unitary there is only one index, and three calls
+suffice~\cite[Theorem~1]{bavaresco2025}. For general channels the theorem
+says that no finite number of calls with independent indices
+reproduces the switch.
 
-\paragraph{The two statements that carry the proof.}
-Both concern a weakened target. For $0<\lambda,\mu\le1$, the
-\emph{diluted switch} is the switch applied to diluted boxes,
+\paragraph{Outline of the proof.}
+An \emph{exact simulator} is an
+ordinary strategy $\QC$ with $\QC[A,B]=\SW_+[A,B]$ for all channels.
+The assumed exact simulator may make any finite number of calls. The
+proof has two parts, shown in \reffig{fig:exact}. The
+first turns it into a strategy with one call to each
+box whose output is a diluted switch. The second shows that no
+strategy with one call to each box has this output.
+
+\paragraph{Part 1: from many calls to one call to each box.}
+An exact simulator is exact on all pairs of channels, in particular
+on boxes that are mixed with the identity channel. For
+$0<\lambda,\mu\le1$, the
+\emph{diluted switch} is the switch applied to such diluted boxes,
 \begin{equation}\label{eq:dilution}
 \begin{split}
  T_{\lambda,\mu}[A,B]
@@ -856,20 +895,32 @@ Both concern a weakened target. For $0<\lambda,\mu\le1$, the
 \end{equation}
 where the second line uses that the switch is linear in each of its
 two channels. The
-switch itself appears with weight $\lambda\mu$. Dilution exposes the
-fresh draws: a diluted box applies $A$ at each call with an independent
-coin, and the switch tosses one coin for each box where an ordinary
-strategy tosses one for each call. The first statement uses this to
-trade a finite budget for a small weight. An \emph{exact simulator} is an
-ordinary strategy $\QC$ with $\QC[A,B]=\SW_+[A,B]$ for all channels. If,
-after padding, it makes exactly $M$ calls to $A$ and exactly $N$ calls
-to $B$ on every run, then keeping one random call to each box and
-replacing the others by the identity yields an ordinary strategy with
-\emph{one} call to each box that implements $T_{1/M,1/N}$
-(Lemma~\ref{lem:polarization}). The second says that the trade is
-worthless: for qubits, no ordinary strategy with one call to each box
-implements a diluted switch, however small the weight
-(Proposition~\ref{prop:no-diluted}). The reason is that the Kraus vectors of
+switch itself appears with weight $\lambda\mu$. A diluted box applies
+$A$ or the identity at each call, decided by an independent
+coin. The switch tosses one coin for each box, and the simulator
+tosses one for each call. The output of the simulator on
+diluted boxes is therefore a polynomial in the two dilution parameters,
+with one term for each choice of the calls at which the coins apply
+the boxes. Exactness makes this polynomial equal
+to~\eqref{eq:dilution} for all values of the two parameters, so the
+coefficients of the two polynomials agree.
+The terms in which each box is applied at exactly one call form, after
+normalization, a strategy with one call to each box: it keeps one
+random call to each box and replaces the others by the identity. If the simulator,
+after padding, makes exactly $M$ calls to $A$ and exactly $N$ calls
+to $B$ on every run, Lemma~\ref{lem:polarization} shows that this
+strategy implements $T_{1/M,1/N}$.
+
+\paragraph{Part 2: one call to each box cannot make a diluted switch.}
+By
+Lemma~\ref{lem:ordered}, a strategy of this kind calls the two boxes in
+a definite order on each run, so its Choi operator is a sum of two
+positive operators, one for each order.
+Proposition~\ref{prop:no-diluted} shows that, for qubits, no such
+strategy
+implements a diluted switch, however small the weight. Qubits suffice
+by Section~\ref{sec:embedding}. The reason for the proposition is
+that the Kraus vectors of
 such a strategy are confined to a space of dimension $25$. One
 direction in this space is the switch, and a process with a definite
 order can give weight to it only together with coherences that a
@@ -879,7 +930,7 @@ diluted switch does not have.
 Suppose that an ordinary strategy with budget $q$ on $\C^d$ is exact
 for the control input $\ket+$. Preparing $\ket+$ itself, it becomes a
 strategy with the target as its only input and
-$\QC[A,B]=\SW_+[A,B]$ for all channels $A,B$; we may assume $q\ge1$. By
+$\QC[A,B]=\SW_+[A,B]$ for all channels $A,B$. We may assume $q\ge1$. By
 Section~\ref{sec:embedding} there is such a strategy for qubits, with
 the same budget. Pad it so that every run makes exactly $q$ calls to
 each box. By Lemma~\ref{lem:polarization} there is an ordinary strategy
@@ -889,11 +940,10 @@ simulates the switch exactly on every control input does so in
 particular on $\ket+$, and is excluded as well.
 \end{proof}
 
-\reffig{fig:exact} shows the argument for qubits.
 Sections~\ref{sec:embedding}, \ref{sec:polarization}
 and~\ref{sec:qubit-certificate} supply the three ingredients in the
 order in which the proof uses them. Two finite facts of linear algebra
-are verified by exact computation (Appendix~\ref{sec:certificate}).
+are verified by exact computation in Appendix~\ref{sec:certificate}.
 
 
 \subsection{It suffices to treat qubits}\label{sec:embedding}
@@ -928,13 +978,11 @@ for qubits.
 
 \subsection{From many calls to one call each}\label{sec:polarization}
 
-Let $\QC$ be an ordinary strategy that makes exactly $M$ calls to $A$
-and exactly $N$ calls to $B$ on every run. From it we build a strategy
-that calls each box once: it keeps one call to $A$ and one call to $B$,
-chosen at random, and replaces every other call by the identity. If
-$\QC$ is an exact simulator, this strategy implements the diluted
-switch~\eqref{eq:dilution} with $\lambda=1/M$ and $\mu=1/N$
-(Lemma~\ref{lem:polarization}). The dimension plays no role in this
+This subsection carries out the first part of the proof. It defines
+the strategy that keeps one random call to each box and proves that it
+implements a diluted switch. Let $\QC$ be an ordinary strategy that makes exactly $M$ calls to $A$
+and exactly $N$ calls to $B$ on every run.
+The dimension plays no role in this
 subsection. On each run, number the calls to $A$ in the
 order in which they are made, and likewise the calls to $B$.
 
@@ -1014,8 +1062,9 @@ of qubit channels $A,B$.
 
 For $\lambda=\mu=1$ this is the statement that the switch has no
 definite order~\cite{chiribella2013,araujo2015}. The content of the proposition is
-that the conclusion survives every dilution. For the rest of this
-subsection we fix $0<\lambda,\mu\le1$ and suppose, for contradiction,
+that the conclusion survives every dilution. The proof is by
+contradiction. For the rest of this
+subsection we fix $0<\lambda,\mu\le1$ and suppose
 that an ordinary strategy with one call to each box implements
 $T_{\lambda,\mu}$ on all pairs of qubit channels. The proof has four
 steps.
@@ -1024,8 +1073,8 @@ steps.
 The input $P$ of the strategy is the target, and its output
 $F=F_c\otimes F_t$ consists of the control and the target. With the
 four slot systems $A_I,A_O,B_I,B_O$ these are seven qubits, so the
-Kraus vectors of Section~\ref{sec:ordered} are vectors in $\C^{128}$,
-with components $v_{p,a_i,a_o,b_i,b_o,c,t}$; all indices take the
+Kraus vectors of the strategy, defined in Section~\ref{sec:ordered}, are vectors in $\C^{128}$,
+with components $v_{p,a_i,a_o,b_i,b_o,c,t}$. All indices take the
 values $0,1$. By Lemma~\ref{lem:ordered}
 the Choi operator of the strategy is
 \[
@@ -1063,9 +1112,9 @@ operators that lie in $\mathcal W$ on $A_I\otimes A_O$ and are
 arbitrary on the other systems. The same holds for $\Lambda_B$. Since the
 output is the contraction of the Choi operator with $J_A\otimes J_B$,
 two Choi operators act identically on all pairs of channels exactly
-when their difference lies in the kernel of $\Lambda_A\Lambda_B$
-(Appendix~\ref{sec:gauge-proof}). We call this kernel the \emph{gauge}.
-The hypothesis on the strategy is the single linear equation
+when their difference lies in the kernel of $\Lambda_A\Lambda_B$,
+as proved in Appendix~\ref{sec:gauge-proof}. We call this kernel the \emph{gauge}.
+The hypothesis that the strategy implements the diluted switch is the single linear equation
 \begin{equation}\label{eq:gauge-equation}
  \Lambda_A\Lambda_B\bigl(C_{A\before B}+C_{B\before A}-C_T\bigr)=0 .
 \end{equation}
@@ -1076,9 +1125,9 @@ not suffice. Both comb equations involve $C$ only through $\Tr_FC$, and
 discarding the control output of the diluted switch leaves an equal
 mixture of two processes with fixed orders. Hence $C_T$ is itself the
 sum of an operator that obeys the $A$-before-$B$ equations and one that
-obeys the $B$-before-$A$ equations: take for the first any operator
+obeys the $B$-before-$A$ equations. For the first, take any operator
 whose partial trace over the control output $F_c$ is the first half of
-the mixture, and for the second the remainder. The two operators are not both positive.
+the mixture. The second is the remainder. The two operators are not both positive.
 Positivity is usually brought in through a causal witness, found by
 semidefinite programming for one fixed
 target~\cite{araujo2015,bavaresco2025}. Here the weight $\lambda\mu$ of
@@ -1142,7 +1191,7 @@ projected onto a basis state.
 
 \begin{proof}
 (a) Fix unitaries $U,V$. The output of the strategy on $(U,V)$ is the
-channel $T_{\lambda,\mu}[U,V]$; this is an equality of channels, with
+channel $T_{\lambda,\mu}[U,V]$. This is an equality of channels, with
 no gauge. The strategy has Kraus operators
 $\mathcal L(U,V)v_\alpha$, where $\alpha$ runs over the Kraus vectors
 of both ordered components. Two sets of Kraus operators $(K_k)$ of the
@@ -1160,11 +1209,11 @@ $U,V$.
 columns gives, up to the factor $\sqrt2$, the four operators
 of~\eqref{eq:four-kraus} multiplied by $U_{a_o,a_i}V_{b_o,b_i}$, by
 $V_{b_o,b_i}$, by $U_{a_o,a_i}$ and by $1$. Hence every column of $E$
-lies in $\mathcal V$. That the columns are independent and that
-$\mathcal V$ contains nothing else is a rank computation: $103$ linear
+lies in $\mathcal V$. The columns are independent and
+$\mathcal V$ contains nothing else. This is a rank computation,
+given in Appendix~\ref{sec:support-proof}: $103$ linear
 equations that every vector of $\mathcal V$ must satisfy, obtained from
-$40$ explicit pairs $(U,V)$, have rank $103=128-25$
-(Appendix~\ref{sec:support-proof}).
+$40$ explicit pairs $(U,V)$, have rank $103=128-25$.
 \end{proof}
 
 \paragraph{Step 4: a linear functional.}
@@ -1183,7 +1232,7 @@ symmetric.
 The functional that we use is the weight of the switch vector, column
 $24$ of $E$, corrected by coherences between columns:
 $f(X)=X_{24,24}+g(X)$, where $g$ is a combination of nine off-diagonal
-entries of $X$ (Appendix~\ref{sec:functional-proof}). An ordered
+entries of $X$ given in Appendix~\ref{sec:functional-proof}. An ordered
 component can carry switch weight only together with such coherences,
 and $f$ vanishes on it. The reason lies in the comb equations, by which
 nothing may depend on what the last box returns once the output is
@@ -1230,20 +1279,17 @@ The weight $X_{24,24}$ cannot be changed by a gauge term. On unitary
 boxes for which the four operators of~\eqref{eq:four-kraus} are
 linearly independent, such as $U=\sigma_x$ and $V=\sigma_z$, the fourth
 operator appears in the output with coefficient $2X_{24,24}$, and a
-gauge term has zero output (Appendix~\ref{sec:diluted-coordinates}). The two components together must therefore
+gauge term has zero output, as shown in Appendix~\ref{sec:diluted-coordinates}. The two components together must therefore
 carry the switch weight $\lambda\mu/2$ of $X_T$. By parts (a) and (b)
 of Lemma~\ref{lem:exact-obstruction} each can do so only with
 coherences, $X_{24,24}=-g(X)$. Since neither
 $f$ nor $X_{24,24}$ changes under the gauge, neither does $g$, and
 $g(X_T)=0$ because $X_T$ is diagonal. So the two ordered components
-would have to carry total switch weight zero. The functional $f$ is not
-unique: the functionals with properties (a)--(c) of the lemma form a space of
-dimension $199$ (Appendix~\ref{sec:functional-proof}), and we chose one
-with few small integer coefficients.
+would have to carry total switch weight zero.
 
-\subsection{Where channels were used}\label{sec:where-channels}
+\subsection{Where general channels were used}\label{sec:where-channels}\label{rem:unitary}
 
-Channels that are not unitary entered in three places. For $d>2$ the
+The proof used general channels, not only unitary ones, in three places. For $d>2$ the
 reduction to qubits evaluates the simulator on the channels
 $A^\uparrow$, which are not unitary even when $A$ is.
 Lemma~\ref{lem:polarization} evaluates the simulator on the diluted
@@ -1251,55 +1297,12 @@ boxes $xA+(1-x)\id$, and the gauge equation~\eqref{eq:gauge-equation}
 uses its conclusion on all pairs of channels.
 Lemma~\ref{lem:support} needs unitary boxes only.
 
-\begin{remark}[One unitary box is easy]\label{rem:unitary}
-The diluted box $xA+(1-x)\id$ is not unitary, and the set of unitary
-channels is not convex, so the proof above does not apply to a box that
-is known to be unitary. Indeed, if one of the two boxes is known to be
-unitary, three calls simulate the switch exactly. Let $A$ be that box;
-\reffig{fig:unitary} shows the circuit. If the control is $\ket1$, swap the target
-with a dummy system prepared in a fixed pure state, call $A$, and undo
-the swap. Call $B$ on the target. If the control is $\ket0$, swap the
-target with the dummy, call $A$ a second time, and undo the swap. On
-either branch the target undergoes the two boxes in the right order and
-the dummy undergoes $A$ once. When $A$ is unitary the dummy ends in the
-same pure state on both branches and factors out, whatever channel $B$
-is, so three calls reproduce the switch exactly; for two unitary gates
-this is the simulation of~\cite{chiribella2013}. When $A$ is not
-unitary, its two calls act with independent Kraus operators. The dummy
-becomes correlated with the control, and the coherence of the control
-is reduced. The circuit depends on which box is unitary: if it is $B$,
-the roles of $A$ and $B$ are exchanged.
-\end{remark}
-
-\begin{figure}[!ht]
-\centering
-\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,
- ctl/.style={circle,fill=navy,inner sep=0pt,minimum size=4.6pt},
- octl/.style={circle,draw=navy,fill=white,line width=.7pt,inner sep=0pt,minimum size=4.8pt}]
-\def\swapx#1#2{\draw[figwire] (#1-.1,#2-.1) -- (#1+.1,#2+.1) (#1-.1,#2+.1) -- (#1+.1,#2-.1);}
-\draw[figwire,->] (0,1.7) -- (9.3,1.7);
-\draw[figwire,->] (0,.85) -- (9.3,.85);
-\draw[figwire] (0,0) -- (8.75,0);
-\draw[figwire] (8.75,-.16) -- (8.75,.16);
-\node[figlab,anchor=east] at (-.1,1.7) {control};
-\node[figlab,anchor=east] at (-.1,.85) {target};
-\node[figlab,anchor=east] at (-.1,0) {dummy};
-\node[figtiny,anchor=west] at (8.85,0) {discarded};
-\foreach \x in {1.0,2.9} {\draw[figwire] (\x,1.7) -- (\x,0); \node[ctl] at (\x,1.7) {}; \swapx{\x}{.85} \swapx{\x}{0}}
-\foreach \x in {5.9,7.8} {\draw[figwire] (\x,1.7) -- (\x,0); \node[octl] at (\x,1.7) {}; \swapx{\x}{.85} \swapx{\x}{0}}
-\node[gateA] at (1.95,.85) {$A$};
-\node[gateB] at (4.4,.85) {$B$};
-\node[gateA] at (6.85,.85) {$A$};
-\draw[draw=navy!45,line width=.5pt] (.8,-.38) -- (.8,-.48) -- (3.1,-.48) -- (3.1,-.38);
-\draw[draw=navy!45,line width=.5pt] (5.7,-.38) -- (5.7,-.48) -- (8.0,-.48) -- (8.0,-.38);
-\node[figtiny,anchor=north] at (1.95,-.52) {if the control is $\ket1$,\\$A$ acts on the dummy};
-\node[figtiny,anchor=north] at (4.4,-.52) {$B$ acts on\\the target};
-\node[figtiny,anchor=north] at (6.85,-.52) {if the control is $\ket0$,\\$A$ acts on the dummy};
-\end{tikzpicture}
-\caption{Three calls simulate the switch when $A$ is known to be
-unitary, whatever channel $B$ is (Remark~\ref{rem:unitary}).}
-\label{fig:unitary}
-\end{figure}
+If one of the boxes is known to be unitary, exact simulation is
+possible. Bavaresco et al.~\cite[Theorem~1]{bavaresco2025} give an
+ordinary strategy that calls the unitary box twice and the other box
+once. The proof of this section does not apply to that case, because
+the diluted box $xA+(1-x)\id$ is not unitary and the set of unitary
+channels is not convex.
 
 The contradiction in Proposition~\ref{prop:no-diluted} is the value
 $f(X_T)=\lambda\mu/2$, which is $1/(2q^2)$ in the proof of
@@ -1312,11 +1315,15 @@ budget. That is the subject of the next section.
 
 We prove Theorem~\ref{thm:simulation-summary}, that is, the
 trade-off~\eqref{eq:tradeoff-intro} for every integer $r\ge1$, on boxes
-that are uniform mixtures of $r$ unitary channels.
+that are uniform mixtures of $r$ unitary channels. The proof constructs
+random hard boxes and one test, a measurement that accepts the output
+of the switch with probability close to one and the output of a
+strategy with few calls with probability close to $1/2$.
 
 \paragraph{What must be detected.}
 Give the switch the control state $\ket+$ and half of a maximally
-entangled state of the target and a reference. For unitary boxes $U$
+entangled state of the target and a reference. We call this input the
+probe. For unitary boxes $U$
 and $V$ it returns
 \[
  \tfrac1{\sqrt2}\bigl(\ket0\ket{VU}+\ket1\ket{UV}\bigr),
@@ -1324,17 +1331,19 @@ and $V$ it returns
 where $\ket W$ is the maximally entangled state with the unitary $W$
 applied to the target. A strategy that measures the control and then
 calls the boxes in the corresponding order returns the same two terms
-without the coherence between them, and has error at most $1/2$ with
-two calls (Section~\ref{sec:simulation}). To do better, a strategy must hold
-$VU$ for one control value and $UV$ for the other \emph{coherently}.
-This is what the proof exploits.
+without the coherence between them. Section~\ref{sec:simulation} shows
+that it has error at most $1/2$ with two calls. To do better, a
+strategy must hold $VU$ for one control value and $UV$ for the other
+\emph{coherently}.
 
 \paragraph{Why the hard boxes are mixtures.}
-A box that applies the same unitary at every call is easy
-(Remark~\ref{rem:unitary}), so a hard box should almost never hand out
-the same unitary twice. We therefore take uniform mixtures of
-$r$ Haar-random unitaries (Section~\ref{sec:witness}): each call
-applies one of them, with an index that stays hidden. The boxes are
+If one of the boxes is known to be unitary, Bavaresco et
+al.~\cite[Theorem~1]{bavaresco2025} give an ordinary strategy that
+calls it twice and simulates the switch exactly. A hard box should
+therefore almost never hand out the same unitary twice. We construct
+the hard instance as uniform mixtures of $r$ Haar-random unitaries,
+defined in Section~\ref{sec:witness}. Each call
+applies one of them, with an index that the strategy cannot choose. The boxes are
 random, and the theorem follows by averaging.
 
 \begin{figure}[t]
@@ -1348,9 +1357,9 @@ random, and the theorem follows by averaging.
 \draw[flowend] (0,0) rectangle (\W,\H);
 \node[flowtab] at (.55,.6) {5};
 \node[flowname] at (1.05,.6) {Trade-off};
-\foreach \y/\t in {8.0/{an index repeats with probability $\le q(q-1)/(2r)$ \textup{(Claim~\ref{clm:fresh})}},
-                   6.0/{fix one pair $(U_i,V_j)$: each is called at most once \textup{(Claim~\ref{clm:pair})}},
-                   4.0/{coherence $\le\sqrt{\text{weight}\cdot\text{weight}}$ \textup{(Corollary~\ref{cor:coherence})}; sum over pairs},
+\foreach \y/\t in {8.0/{\textup{Claim~\ref{clm:fresh}:} an index repeats with probability $\le q(q-1)/(2r)$},
+                   6.0/{\textup{Claim~\ref{clm:pair}:} for one pair $(U_i,V_j)$, each is called at most once},
+                   4.0/{\textup{Corollary~\ref{cor:coherence}:} coherence $\le\sqrt{\text{weight}\cdot\text{weight}}$ per pair},
                    2.0/{compare with the switch, whose shaded blocks carry $\tfrac12$}}{
  \draw[flowdown] (7.3,\y-.08) -- (7.3,\y-.74);
  \node[flowstep] at (7.75,\y-.4) {\t};}
@@ -1368,7 +1377,7 @@ random, and the theorem follows by averaging.
 \draw[figwire,-{Latex[length=5pt,width=5pt]}] (5.4,4.6) -- (9.0,4.6);
 \node[fsA,minimum width=.62cm] at (6.6,4.6) {$U$}; \node[fsB,minimum width=.62cm] at (7.6,4.6) {$V$};
 \node[font=\small,text=navy,anchor=west,inner sep=1pt] at (9.02,4.6) {$VU$};
-\node[flownote] at (10.25,4.6) {weight on $UV$ about $4/d^2$ \textup{(Lemma~\ref{lem:reverse})}};
+\node[flownote] at (10.25,4.6) {\textup{Lemma~\ref{lem:reverse}:} weight on $UV$ about $4/d^2$};
 %% row 4: the block between the two control states
 \begin{scope}[shift={(6.42,2.12)}]
  \draw[draw=navy!45,fill=white,line width=.5pt] (0,0) rectangle (1.76,.96);
@@ -1383,17 +1392,15 @@ random, and the theorem follows by averaging.
 \node[flownote] at (10.25,.6) {hence $q=\Omega(d^{1/4})$, at $r\approx\sqrt d$};
 \end{tikzpicture}
 \caption{The proof of Theorem~\ref{thm:simulation-summary}, in the
-order of the inequalities~\eqref{eq:R1}--\eqref{eq:R3};
-Section~\ref{sec:reverse} proves row~3 before Section~\ref{sec:hidden}
-uses rows~2 and~4. Each hard box is a uniform mixture of $r$
-Haar-random unitaries. The four error terms are $r^2/d$ (row~1),
-$q(q-1)/(2r)$ (below row~1), and the two terms of row~4, where the
+order of the inequalities~\eqref{eq:R1}--\eqref{eq:R3}. Each hard box is a uniform mixture of $r$
+Haar-random unitaries. The four error terms are $r^2/d$ in row~1,
+$q(q-1)/(2r)$ below row~1, and the two terms of row~4, where the
 shaded blocks of the output are those between the two control values.}
 \label{fig:approx}
 \end{figure}
 
 \paragraph{The three inequalities.}
-Fix the input above, which we call the probe. Write
+Write
 $\rho_{\mathrm{sw}}$ for the output of the switch on the probe,
 $\rho_{\mathrm{act}}$ for the output of the strategy, and
 $\rho_{\mathrm{fresh}}$ for its output in an auxiliary process in which
@@ -1401,8 +1408,8 @@ no index is ever repeated. On the probe the switch
 outputs a uniform mixture of $r^2$ pure states. Let $S$ be the matrix
 with these states as columns, so that
 $\rho_{\mathrm{sw}}=SS^\dagger/r^2$. The test is the measurement effect
-$\Theta=SS^\dagger/L$ with a normalization $L\ge1$
-(Section~\ref{sec:witness}), so that $\Theta\preceq SS^\dagger$. With $\eta=q(q-1)/(2r)$, we prove
+$\Theta=SS^\dagger/L$ with a normalization $L\ge1$ defined in
+Section~\ref{sec:witness}, so that $\Theta\preceq SS^\dagger$. With $\eta=q(q-1)/(2r)$, we prove
 \begin{align}
  \E\Tr(\Theta\rho_{\mathrm{sw}})&\ \ge\ 1-\frac{r^2}d
  &&\text{the switch passes the test,}\label{eq:R1}\\
@@ -1411,18 +1418,20 @@ $\Theta=SS^\dagger/L$ with a normalization $L\ge1$
  \E\Tr(SS^\dagger\rho_{\mathrm{fresh}})&\ \le\ \frac12+\frac{r^2}d+\frac{7r^2}{3d}
  &&\text{no coherence without a repeated unitary.}\label{eq:R3}
 \end{align}
-The expectations are over the boxes; \eqref{eq:R2} holds for every
-choice of the unitaries. The difference between the probabilities with
+The expectations are over the boxes. Inequality~\eqref{eq:R2} holds
+for every choice of the unitaries. The difference between the probabilities with
 which $\Theta$ accepts the switch and the strategy is a lower bound on
-the error, and $1+1+\frac73=\frac{13}3$.
+the error. The three multiples of $r^2/d$ add up to the constant of
+the theorem, $1+1+\frac73=\frac{13}3$.
 Inequalities~\eqref{eq:R1} and~\eqref{eq:R2} and the first two terms
 of~\eqref{eq:R3} are elementary. The last term of~\eqref{eq:R3} is the
 heart of the proof. It counts $r^2$ pairs $(U_i,V_j)$, each with a
 coherence of about $2/d$. The reason is that a circuit sends the input
-of $U$ before the output of $V$ exists, so it can place a weight of
-only about $4/d^2$ on the reversed product $UV$
-(Lemma~\ref{lem:reverse}). A weight $w$ on one side of a positive block
-allows a coherence of at most $\sqrt w$. \reffig{fig:approx} shows the argument.
+of $U$ before the output of $V$ exists. By Lemma~\ref{lem:reverse}, it
+can therefore place a weight of only about $4/d^2$ on the reversed
+product $UV$. In a positive operator the coherence between two
+blocks is at most the geometric mean of their weights, so a weight $w$
+on the reversed product allows a coherence of at most $\sqrt w$. \reffig{fig:approx} shows the argument.
 
 
 \subsection{Hard boxes and the test}\label{sec:witness}
@@ -1433,7 +1442,8 @@ $U_1,\ldots,U_r$ and $V_1,\ldots,V_r$ on $\C^d$ once, and set
 \[
  A=\frac1r\sum_{i=1}^{r}\Ad(U_i),\qquad B=\frac1r\sum_{j=1}^{r}\Ad(V_j).
 \]
-These are fixed, memoryless channels.
+These are fixed, memoryless channels, almost surely not unitary for
+$r\ge2$.
 
 \paragraph{The probe.}
 The probe is the input state with the control in $\ket+$ and the target
@@ -1484,8 +1494,8 @@ $\rho_{00},\rho_{01},\rho_{11}$ with respect to the control,
 For the switch each part is about $1/2$ when $r^2\ll d$.
 
 The next lemma makes ``nearly orthonormal'' quantitative. It is used
-for the switch (Claim~\ref{clm:switch-passes}) and for the diagonal
-part (proof of Theorem~\ref{thm:simulation-summary}).
+in Claim~\ref{clm:switch-passes} for the switch and in the proof of
+Theorem~\ref{thm:simulation-summary} for the diagonal part.
 
 \begin{lemma}[Near-orthonormality]\label{lem:gram}
 For $K=S_0$, $S_1$ and $S$,
@@ -1533,13 +1543,13 @@ next subsection.
 \subsection{An ordered circuit cannot reverse a product}\label{sec:reverse}
 
 Consider a circuit that calls $U$ once and then $V$ once, with
-arbitrary processing and memory. It can output $VU$. Can it output
-$UV$? The product $UV$ needs what $V$ returns to be what $U$ receives,
+arbitrary processing and memory. It can output $VU$ but
+essentially not $UV$. The product $UV$ needs what $V$ returns to be what $U$ receives,
 but in this circuit the input of $U$ is sent before the output of $V$
 exists. Two benchmarks set the scale. A fixed state has fidelity
 $d^{-2}$ with $\ket{UV}$ on average over Haar unitaries, so $d^{-2}$ is
-the value of a blind guess. And an ordered circuit can reach $d^{-2}$
-in a more interesting way. Keep one half of a maximally entangled pair
+the value of a blind guess. An ordered circuit can also reach $d^{-2}$
+by teleportation. Keep one half of a maximally entangled pair
 and send the other half through $U$. Apply $V$ to the target. A Bell
 measurement on the output of $V$ and the kept half teleports the state
 into the wire that left $U$. On one of the $d^2$ outcomes no correction
@@ -1560,11 +1570,12 @@ the input and the second the output. Let $\ket\Phi=\vket I/\sqrt d$ and
 $\Pi=\proj\Phi$, with subscripts naming the two factors on which $\Pi$
 acts. We consider an
 ordered component as in Lemma~\ref{lem:ordered} and name its six wires,
-all of dimension $d$: $P$ (target input), $a,b$ (input and output of
-$U$), $c,e$ (input and output of $V$) and $f$ (target output). In the
-notation of Section~\ref{sec:ordered} these are $P,A_I,A_O,B_I,B_O$ and
-the target part of $F$; the control output is discarded or fixed before
-the lemma is applied (\reffig{fig:wiring}).
+all of dimension $d$ and shown in \reffig{fig:wiring}: the target input
+$P$, the input and output $a,b$ of $U$, the input and output $c,e$ of
+$V$, and the target output $f$. In the notation of
+Section~\ref{sec:ordered} these are $P,A_I,A_O,B_I,B_O$ and the target
+part of $F$. The control output is discarded or fixed before the lemma
+is applied.
 
 \begin{figure}[t]
 \centering
@@ -1589,8 +1600,8 @@ the lemma is applied (\reffig{fig:wiring}).
  \node[figtiny,text=rust] at (5.7,-1.68) {$\Pi_{ae}$: what $V$ returns enters $U$, against the order of the calls};
 \end{tikzpicture}
 \caption{The wiring of the reversed product $UV$, drawn on a circuit
-that calls $U$ before $V$ (the memory between the operations $W_t$ is
-not drawn). The leading term of the averaged test~\eqref{eq:envelope}
+that calls $U$ before $V$. The memory between the operations $W_t$ is
+not drawn. The leading term of the averaged test~\eqref{eq:envelope}
 asks for a maximally entangled state on each of the pairs of wires
 $(P,c)$, $(a,e)$ and $(b,f)$. The pair $(a,e)$ is the obstacle: $a$ is
 sent before $e$ exists.}
@@ -1616,8 +1627,8 @@ two equations~\eqref{eq:ordered-comb} in turn and that the boxes
 preserve the trace. An operator $C'$ arises when the circuit records a
 later outcome, such as the lucky outcome of the~example.
 
-For large $d$, $b_d$ is close to $4/d^2$, four times the blind guess;
-the constant is not optimized. For $d=2$ the lemma is vacuous, since
+For large $d$, $b_d$ is close to $4/d^2$, four times the blind guess.
+For $d=2$ the lemma is vacuous, since
 $b_2>1$.
 
 \begin{proof}
@@ -1678,17 +1689,17 @@ $\Pi_{ex'}$ alone into $I/d$, and turns the identity into $d$. Hence
  \Gamma\preceq d^{-3}\bigl(\Pi_{Pc}\Pi_{ae}\Pi_{bf}
  +\beta\,\Pi_{bf}+\beta\,\Pi_{Pc}+d^2\beta^2 I\bigr).
 \end{equation}
-The first term is the wiring diagram of $UV$
-(\reffig{fig:wiring}): the input goes to $V$, what $V$ returns goes to
+The first term is the wiring diagram of $UV$ shown in
+\reffig{fig:wiring}: the input goes to $V$, what $V$ returns goes to
 $U$, and what $U$ returns is the output. The
 other three terms are tests that ignore $V$, or $U$, or both.
 
 \emph{Step 3: causality defeats the wiring diagram.} The bound on
 $\Tr(C\Gamma)$ uses the order of the calls only through the first comb
 equation of~\eqref{eq:ordered-comb}, which reads
-$\Tr_fC=C_2\otimes I_e$ with $C_2=\Tr_{ef}C/d$. As explained before
-Lemma~\ref{lem:ordered}, once the final output is discarded, nothing
-depends on what $V$ returns. The wire $e$ is then maximally mixed and
+$\Tr_fC=C_2\otimes I_e$ with $C_2=\Tr_{ef}C/d$. This equation says
+that, once the final output is discarded, nothing depends on what $V$
+returns. The wire $e$ is then maximally mixed and
 independent of everything sent earlier, in particular of the wire $a$
 sent to $U$. A test for a maximally entangled state on $(a,e)$
 then succeeds with probability $d^{-2}$:
@@ -1708,7 +1719,8 @@ $\Tr C=pd^3$. Altogether
 \]
 \end{proof}
 
-A weight bounds a coherence. In the output of the switch the block
+A small weight forces a small coherence. In the output of
+the switch the block
 between the control values $0$ and $1$ connects $\ket{VU}$ to
 $\ket{UV}$ with amplitude $1/2$, the largest possible value. An
 ordinary strategy that calls each unitary once has almost nothing
@@ -1750,13 +1762,14 @@ and the lemma is used with $U$ and $V$ exchanged. Each component thus
 contributes at most $p_k\sqrt{b_d}$, and $p_1+p_2=1$.
 \end{proof}
 
-The corollary has content for $d\ge5$, where $\sqrt{b_d}<1/2$: for
+The corollary is informative for $d\ge5$, where $\sqrt{b_d}<1/2$: for
 every state the left side of~\eqref{eq:coherence} is at most $1/2$.
 
-\subsection{Hidden indices and the proof of Theorem~\ref{thm:simulation-summary}}\label{sec:hidden}
+\subsection{Hidden indices and the proof of Theorem~\ref{thm:simulation-summary}}\label{sec:hidden}\label{rem:approx-content}
 
-It remains to bring a strategy that calls the mixtures $A$ and $B$ into
-the situation of Corollary~\ref{cor:coherence}. Recall
+It remains to reduce a strategy that calls the mixtures $A$ and $B$ to
+one that calls each of two unitaries at most once, as
+Corollary~\ref{cor:coherence} requires. Recall
 $\eta=q(q-1)/(2r)$. If $q>r$ then $\eta\ge1$ and the theorem is
 trivial, so assume $q\le r$.
 
@@ -1765,7 +1778,7 @@ Each call to $A$ applies $U_i$ for an independent uniform index $i$,
 and likewise for $B$. In the \emph{fresh} process the indices of each
 box are instead drawn without replacement. Equivalently, draw in
 advance two independent, uniformly random sequences of $q$ distinct
-indices, one for each box; the $k$th call to $A$ applies the $k$th
+indices, one for each box. The $k$th call to $A$ applies the $k$th
 unitary of the first sequence, and likewise for $B$. No unitary is ever
 applied twice. The fresh process has memory and is used only in the
 analysis.
@@ -1810,7 +1823,7 @@ on all unitaries other than $U_i$ and $V_j$. These data are independent
 of $U_i$ and $V_j$, which remain independent and Haar. If $i$ is the
 $k$th entry of the first sequence, the $k$th call that the strategy
 makes to $A$ applies $U_i$, and every other call to $A$ applies a known
-unitary; if $i$ does not occur, no call applies $U_i$. The same holds
+unitary. If $i$ does not occur, no call applies $U_i$. The same holds
 for $V_j$. Which step of the strategy is its $k$th call to $A$ depends
 on its earlier outcomes, as Definition~\ref{def:ordinary} allows. The
 strategy has therefore become an ordinary strategy that calls each of
@@ -1852,31 +1865,27 @@ uniform mixtures of $r$ unitary channels.
 
 \paragraph{Explicit consequences.}
 Call $13r^2/(3d)$ the dimension term and $q(q-1)/(2r)$ the collision
-term. Suppose the error is at most $1/48$ and $d\ge64$. We claim
-$q>d^{1/4}/8$. Suppose instead that $q\le d^{1/4}/8$, that is,
+term. Suppose the error is at most $1/48$ and $d\ge64$. We show
+$q>d^{1/4}/8$ by contradiction. Suppose that $q\le d^{1/4}/8$, that is,
 $d\ge4096q^4$. If $q\ge1$, choose $r=8q^2$. The dimension term is at
 most $13/192$ and the collision term is less than $1/16$,
 so~\eqref{eq:tradeoff-intro} gives error at least $71/192>1/48$. If
-$q=0$, choose $r=1$; the error is then at least $1/2-13/(3d)>1/48$
+$q=0$, choose $r=1$. The error is then at least $1/2-13/(3d)>1/48$
 because $d\ge64$. For a general error $\epsilon<1/2$, put
 $\delta=1/2-\epsilon$ and $r=\lfloor\sqrt{3\delta d/26}\rfloor$, which
 is at least $1$ when $d\ge26/(3\delta)$. The dimension term is then at
 most $\delta/2$, and the collision term is below $\delta/2$ whenever
 $q^2\le\delta r$. Hence error at most $\epsilon$ forces
 $q>\sqrt{\delta r}$, which is $\Omega(\delta^{3/4}d^{1/4})$.
-
-\begin{remark}[Where the bound has content]\label{rem:approx-content}
-The trade-off \eqref{eq:tradeoff-intro} holds for every $d$ but has
-content only for large $d$. Optimized over $r$, its right side is
-positive for $q=2$, the number of calls the switch itself makes, only
-when $d\ge235$, and the explicit consequence $q>d^{1/4}/8$ forces
-$q\ge3$ only when $d\ge65536$. The hard boxes are mixtures of unitaries
-and are almost surely not unitary when $r\ge2$.
-\end{remark}
+The trade-off~\eqref{eq:tradeoff-intro} holds for every $d$ but is
+informative only for large $d$. Optimized over $r$, its right side is
+positive for $q=2$, the number of calls the switch itself makes,
+only when $d\ge235$, and $q>d^{1/4}/8$ forces $q\ge3$ only when
+$d\ge65536$.
 
 \subsection{What ordinary strategies can achieve}\label{sec:simulation}
 
-Two simple constructions show that the threshold $1/2$ in
+Two constructions show that the threshold $1/2$ in
 Theorem~\ref{thm:simulation-summary} cannot be raised and that every
 error is attainable with finitely many calls.
 
@@ -1907,34 +1916,42 @@ diamond norm in each slot. Replacing $A$ by $\tilde A$ and then $B$ by
 $\tilde B$ gives error at most $2d(d-1)/M$, with $2M$ calls.
 Hence, for every $0<\epsilon<1$, an ordinary strategy with
 $2\lceil2d(d-1)/\epsilon\rceil$ calls has error at most $\epsilon$.
-This construction makes no claim of efficient processing; it bounds the
-number of calls only.
+This construction bounds the number of calls only and makes no claim of
+efficient processing.
 
 \section{A single bit from the switch can already be hard}\label{sec:c6-proof}
 
 
-We prove Theorem~\ref{thm:c6}; \reffig{fig:geometry} shows the task.
-The upper bound is a short calculation: the Kraus operators of
-the dephasing noise commute, and those of its depolarizing model do not
-(Section~\ref{sec:switch-test}). The lower bound consists of three
-reductions and one idea. The reductions split each use of the device
-into two measurements that share a hidden unitary
-(Section~\ref{sec:pair}), remove the strength $p$
-(Section~\ref{sec:validation}), and replace the hidden unitary by a
-table that the device fills in as it is used, the \emph{label cache}
-(Section~\ref{sec:cache}). The registers of this table on which the
-noise acts are called labels. A system that the device has not issued
-before receives a fresh, maximally mixed label, on which dephasing and
-depolarizing act alike. The noise and its model then differ only
-when the strategy returns to the device a system that the device
-issued, and only in how one label is measured. If that measurement is
-replaced by a complete depolarization, the table no longer refers to
-any basis, and its labels are invariant under a common rotation.
-Measuring one of $k$ labels with this symmetry is nearly the same as
-depolarizing it: its value is uniformly random, and it can be
+We prove Theorem~\ref{thm:c6}. \reffig{fig:geometry} shows the task.
+That the switch decides the question is a short calculation in
+Section~\ref{sec:switch-test}: the Kraus operators of the actual noise
+commute, and those of the theoretical model do not.
+
+The rest of the section proves the lower bound. It must show that an
+ordinary strategy cannot sense the hidden basis cheaply. A single use
+of the device reveals nothing, because the theoretical model is the
+average of the actual noise over the unknown basis. For several uses
+on systems that the device has not acted on before, this holds up to
+corrections that the reductions below bound. The strategy can
+therefore sense the basis essentially only by returning to the device
+a system that the device has already measured. The device has in effect
+stored the result of that measurement in a register, called a label,
+and the two alternatives differ only in how this label is measured
+again. If that measurement is replaced by a complete depolarization,
+the stored labels refer to no basis and are invariant under a common
+rotation. Measuring one of $k$ labels with this symmetry is nearly the
+same as depolarizing it. Its value is uniformly random, and it can be
 correlated with anything else only through a coincidence with one of
-the other $k-1$ labels, which has probability about $1/d$
-(Section~\ref{sec:invariant}).
+the other $k-1$ labels, which has probability about $1/d$.
+
+The proof occupies four subsections. Section~\ref{sec:pair} splits each
+use of the device into two measurements that share a hidden unitary,
+and Section~\ref{sec:validation} removes the strength $p$.
+Section~\ref{sec:cache} replaces the hidden unitary by a table, using
+the path-recording theorem of Ma and Huang~\cite{mahuang2025}, and
+reduces the table to the label cache.
+Section~\ref{sec:invariant} proves the symmetry and derives the bound
+from it.
 
 
 \begin{figure}[ht]
@@ -1945,13 +1962,13 @@ the other $k-1$ labels, which has probability about $1/d$
 %% (a) the two promises
 \node[figtitle] at (-.1,3.55) {(a)\; Strength one: two measurements};
 \draw[figpanel] (0,0) rectangle (3.55,3.05);
-\node[figstep,anchor=north] at (1.775,2.98) {the noise, $\Delta_U$};
+\node[figstep,anchor=north] at (1.775,2.98) {actual noise, $\Delta_U$};
 \draw[axA] (1.2,1.25) -- (2.45,1.25); \draw[axA] (1.2,1.25) -- (1.2,2.35);
 \draw[axB] (1.28,1.33) -- (2.53,1.33); \draw[axB] (1.28,1.33) -- (1.28,2.43);
 \node[figlab] at (1.775,.72) {$\Delta_U\circ\Delta_U=\Delta_U$};
 \node[figlab] at (1.775,.27) {same basis twice};
 \draw[figpanel] (3.85,0) rectangle (7.4,3.05);
-\node[figstep,anchor=north] at (5.625,2.98) {the model, $\Lambda\approx\Omega$};
+\node[figstep,anchor=north] at (5.625,2.98) {model, $\Lambda\approx\Omega$};
 \draw[axA] (5.1,1.3) -- (6.35,1.3); \draw[axA] (5.1,1.3) -- (5.1,2.4);
 \draw[axB] (5.1,1.3) -- (5.98,2.18); \draw[axB] (5.1,1.3) -- (4.22,2.18);
 \node[figlab] at (5.625,.72) {$\Delta_{UH}\circ\Delta_U=\Omega$};
@@ -1974,14 +1991,14 @@ the other $k-1$ labels, which has probability about $1/d$
 \draw[figwire] (4.75,1.25) -- (4.75,1.02); \draw[figwire] (4.55,1.02) -- (4.95,1.02);
 \draw[figwire] (4.62,.93) -- (4.88,.93); \draw[figwire] (4.69,.84) -- (4.81,.84);
 \node[figlab,anchor=west] at (5.45,1.25) {$\Pr[-]=\dfrac{1-v}{2}$};
-\node[figtiny,anchor=north west,align=left] at (-.05,.55) {Dephasing noise never gives the outcome $-$.\\Ordinary strategies need more than $d^{1/16}/(1400p)$ uses.};
+\node[figtiny,anchor=north west,align=left] at (-.05,.55) {The actual noise never gives the outcome $-$.\\Ordinary strategies need more than $d^{1/16}/(1400p)$ uses.};
 \end{scope}
 \end{tikzpicture}
-\caption{The task of Theorem~\ref{thm:c6}. (a)~The noise of the device
-dephases in a hidden basis, and its model depolarizes. In the proof, at
-strength one and with $\Lambda$ replaced by $\Omega$
-(Section~\ref{sec:pair}), dephasing is two measurements in the same
-basis (solid and dashed axes coincide), and depolarizing is two
+\caption{The task of Theorem~\ref{thm:c6}. (a)~The actual noise
+dephases in a hidden basis, and the theoretical model depolarizes. At
+strength one and with $\Lambda$ replaced by $\Omega$, as in
+Section~\ref{sec:pair}, the actual noise is two measurements in the
+same basis, drawn as coinciding axes, and the theoretical model is two
 measurements in mutually unbiased bases. (b)~The switch, with the device
 $\mathcal E$ in both slots, control $\ket+$ and a maximally mixed
 target, turns the question into a bias of the control.}
@@ -1990,8 +2007,8 @@ target, turns the question into a bias of the control.}
 
 \subsection{The switch reads the bit}\label{sec:switch-test}
 
-For a strength $0<p\le1$ and a hidden unitary $U$, the dephasing noise
-and its depolarizing model are
+For a strength $0<p\le1$ and a hidden unitary $U$, the actual noise
+and the theoretical model are
 \begin{equation}\label{eq:validation-pair}
  \mathcal E_{p,U}=(1-p)\id+p\,\Delta_U,
  \qquad
@@ -2036,13 +2053,17 @@ least $\frac38(1-e^{-1})^2>0.149$. Accept the depolarizing model if any of
 seven independent uses of the switch gives the outcome $-$. The error is zero for
 $\mathcal E_{p,U}$ and at most $0.851^7<1/3$ for $\mathcal M_p$. This
 proves the second part of Theorem~\ref{thm:c6}. The experiment is that
-of Gao et al.~\cite{gao2023}, with the device in both slots.
+of Gao et al.~\cite{gao2023}, with the device in both slots. The lower
+bound of Theorem~\ref{thm:c6} also applies to the visibility itself: an
+estimate of $v(\mathcal E)$ to an accuracy better than $p^2/6$ decides
+the question, and so requires as many calls.
 
 \subsection{Two measurements that share a hidden unitary}\label{sec:pair}
 
-We now turn to ordinary strategies, with $d=2^n$ throughout; the
-rotation $H$ below and the recording theorem that we cite are stated
-for such $d$. The case
+We now turn to ordinary strategies. This subsection writes both
+alternatives as two successive measurements whose bases depend on one
+hidden unitary. Throughout, $d=2^n$, because the rotation $H$ below
+and the path-recording theorem are stated for such $d$. The case
 $p=1$ contains the difficulty, and Section~\ref{sec:validation} reduces the general case
 to it. For $p=1$ the device applies $\Delta_U$ or $\Lambda$. Since
 $\Lambda-\Omega=(\id-\Omega)/(d+1)$, we have
@@ -2088,23 +2109,19 @@ $q^2d^{-1/2}$. In particular, if $1\le q\le d^{1/16}/100$, the right
 side is at most $212/10000$.
 \end{lemma}
 
-The three terms come from the three parts of the proof. The term
-$\varepsilon_{\mathrm{rec}}$ is the cost of the cited recording
-theorem, $\varepsilon_{\mathrm{cache}}$ that of simplifying the record
-to the cache (Proposition~\ref{prop:cache}), and
-$\varepsilon_{\mathrm{inv}}$ that of the symmetry argument
-(Section~\ref{sec:invariant}). For $q\le d^{1/16}/100$ only the first
-term is of appreciable size, and it is the origin of the exponent
-$1/16$. We first derive the theorem from the lemma.
+The three terms are the costs of the three parts of the proof:
+$\varepsilon_{\mathrm{rec}}$ of the path-recording theorem,
+$\varepsilon_{\mathrm{cache}}$ of simplifying the record to the cache
+in Proposition~\ref{prop:cache}, and $\varepsilon_{\mathrm{inv}}$ of
+the symmetry argument in Section~\ref{sec:invariant}. We first derive
+the theorem from the lemma.
 
 \subsection{Weak noise: Theorem~\ref{thm:c6} from Lemma~\ref{lem:c6-comparison}}\label{sec:validation}
 
-A strategy with $q$ uses of a device of strength $p$ makes about $pq$
-uses of a device of strength one, and to these the lemma applies.
-
-
-
-
+A device of strength less than one acts only at a random fraction of
+its uses. A strategy with $q$ uses of a device of strength $p$
+therefore makes about $pq$ uses of a device of strength one, and to
+these Lemma~\ref{lem:c6-comparison} applies.
 
 \begin{proof}[Proof of the lower bound in Theorem~\ref{thm:c6}]
 Let $L=\lfloor d^{1/16}/200\rfloor$.
@@ -2116,7 +2133,7 @@ alternatives are equally likely, the strategy guesses the right one
 with probability at most $2053/4000$. For $L=0$ this is trivial. For
 $L\ge1$, and for a device that applies $\Delta_U$ or $\Omega$, it is an
 ordinary strategy with budget $2L$ for the boxes $(A,B)$
-of~\eqref{eq:c6-priors}, as noted in Section~\ref{sec:pair}.
+of~\eqref{eq:c6-priors}, one that calls the two boxes in alternation.
 Lemma~\ref{lem:c6-comparison} with budget $2L\le d^{1/16}/100$ bounds
 the distance between its final states for $\Delta_U$, averaged over
 $U$, and for $\Omega$ by $212/10000$. Replacing $\Omega$ by $\Lambda$
@@ -2127,8 +2144,8 @@ most $\frac12+\frac12\cdot\frac{53}{2000}$.
 
 \emph{Weak noise.} Now let an ordinary strategy with budget $q$ succeed
 with probability at least $2/3$ on $\mathcal M_p$ and on every
-$\mathcal E_{p,U}$, hence also when $U$ is Haar-random and the noise and
-the model are equally likely. Run it on the strong device as follows: at
+$\mathcal E_{p,U}$, hence also when $U$ is Haar-random and the actual noise and
+the theoretical model are equally likely. Run it on the strong device as follows: at
 each use toss a private coin, and with probability $p$ use the strong
 device, otherwise do nothing. This reproduces $\mathcal E_{p,U}$ and
 $\mathcal M_p$ exactly. The number of strong uses has mean at most
@@ -2148,6 +2165,9 @@ By the claim,
 It remains to prove Lemma~\ref{lem:c6-comparison}.
 
 \subsection{The label cache}\label{sec:cache}
+
+This subsection replaces the hidden unitary by a table of what the
+device has measured.
 
 \begin{figure}[!b]
 \centering
@@ -2189,13 +2209,13 @@ It remains to prove Lemma~\ref{lem:c6-comparison}.
 \end{scope}
 \end{tikzpicture}
 \caption{The mechanism behind the lower bound of Theorem~\ref{thm:c6}.
-(a)~One call to the label cache (Definition~\ref{def:cache}): a
-retrieval if the query is recognized as an image that was issued
-earlier (effect $P_\nu$), and a birth otherwise. Either way the
+(a)~One call to the label cache of Definition~\ref{def:cache}. The
+call is a retrieval, with effect $P_\nu$, if the query is recognized as
+an image that was issued earlier, and a birth otherwise. Either way the
 strategy receives a new image. (b)~The setting of
-Lemma~\ref{lem:invariant-label}: the stored labels of the reference
-cache, where $\Delta$ is replaced by $\Omega$, are invariant under a
-common rotation $T$ (Lemma~\ref{lem:reference-invariant}).}
+Lemma~\ref{lem:invariant-label}. By Lemma~\ref{lem:reference-invariant},
+the stored labels of the reference cache, where $\Delta$ is replaced by
+$\Omega$, are invariant under a common rotation $T$.}
 \label{fig:cache}
 \end{figure}
 
@@ -2276,8 +2296,8 @@ corrected. Accordingly, $P_\nu$ projects onto the states in which the
 query holds the image of a stored pair. A retrieval undoes the
 insertion of that pair, which returns its label to the query, dephases
 the label, and inserts it again. A birth discards a query that is not
-such an image and inserts a maximally mixed label
-(\reffig{fig:cache}(a)). The space $\mathcal H_\nu$ is symmetric
+such an image and inserts a maximally mixed label, as
+\reffig{fig:cache}(a) shows. The space $\mathcal H_\nu$ is symmetric
 because the table has no order.
 
 Two examples show the mechanism. The first call finds $\nu=0$ and $P_0=0$
@@ -2333,9 +2353,10 @@ $\TD(\rho,\rho^{\mathrm{cache}})\le
 \end{proposition}
 
 
-The proof is a chain of five replacements; step $k$ costs
-$\varepsilon_k$, with $\varepsilon_1=\varepsilon_{\mathrm{rec}}$
-(Table~\ref{tab:hybrids}). The first is the theorem of Ma and Huang,
+The proof is a chain of five replacements, listed in
+Table~\ref{tab:hybrids}. Step $k$ costs
+$\varepsilon_k$, with $\varepsilon_1=\varepsilon_{\mathrm{rec}}$.
+The first is the theorem of Ma and Huang,
 whose record consists of two lists of pairs, one filled by forward
 queries and one by inverse queries. The other four are carried out in
 Appendix~\ref{sec:c6-recording}, and each costs at most of order
@@ -2354,7 +2375,7 @@ Step & Replacement & Why & Cost\\
 2 & a forward query always adds a pair
   & the query was just measured, so it is not entangled with the table and rarely removes a pair
   & $\varepsilon_2$\\\addlinespace
-3 & the operators that add a pair $\to$ exactly covariant isometries ($F_\nu$ for forward queries)
+3 & the operators that add a pair $\to$ exactly covariant isometries, which are $F_\nu$ for forward queries
     & Lemma~\ref{lem:reference-invariant} rests on the exact covariance~\eqref{eq:covariance}
   & $\varepsilon_3$\\\addlinespace
 4 & inverse query $\to$ retrieval, or birth of a label orthogonal to the earlier outcomes
@@ -2365,27 +2386,28 @@ Step & Replacement & Why & Cost\\
   & $\varepsilon_5$\\
 \bottomrule
 \end{tabular}
-\caption{The five replacements that lead from the boxes to the label
-cache (Proposition~\ref{prop:cache}). Costs are in trace distance, for
+\caption{The five replacements of Proposition~\ref{prop:cache}, which
+lead from the boxes to the label cache. Costs are in trace distance, for
 each of the two cases.}
 \label{tab:hybrids}
 \end{table}
 
-\subsection{Invariant labels}\label{sec:invariant}
+\subsection{Invariant labels}\label{sec:invariant}\label{rem:crossover}
 
-It remains to compare the caches of the two cases. We compare each with
+It remains to compare the caches of the two cases, which differ only in
+the basis in which a retrieval dephases a label. We compare each with
 a third device, the \emph{reference cache}: the label cache with
 $\Delta$ in every retrieval replaced by the completely depolarizing
 channel $\Omega$. It refers to no basis, so it is the same for both
-cases. The proof has three steps. The stored labels of the reference
-cache are invariant under a common rotation
-(Lemma~\ref{lem:reference-invariant}). Dephasing one of $k$ labels with
-this invariance is nearly the same as depolarizing it
-(Lemma~\ref{lem:invariant-label}). Replacing $\Omega$ by $\Delta$ in
-one call at a time then costs $3(q-1)/d$ per call. The labels of the
-cache itself are not invariant, because its retrievals dephase in a
-fixed basis; this is why the comparison goes through the reference
-cache.
+cases, and its stored labels are invariant under a common rotation. The
+comparison goes through the reference cache because the labels of the
+cache itself are not invariant: its retrievals dephase in a fixed
+basis. The proof has three steps.
+Lemma~\ref{lem:reference-invariant} proves the invariance.
+Lemma~\ref{lem:invariant-label} shows that dephasing one of $k$ labels
+with this invariance is nearly the same as depolarizing it. Replacing
+$\Omega$ by $\Delta$ in one call at a time then costs $3(q-1)/d$ per
+call.
 
 \begin{lemma}[The reference cache is invariant]\label{lem:reference-invariant}
 Run an ordinary strategy with budget at most $d$ against the reference
@@ -2401,7 +2423,7 @@ there is nothing to rotate. An operation of the strategy acts on the
 query and the memory only. For a call, let $X$ be the state before the
 call for the value $\nu$ of the counter. In a retrieval, the state
 $X'=F_{\nu-1}^\dagger XF_{\nu-1}$ is invariant under
-$T\otimes T^{\otimes(\nu-1)}$ by~\eqref{eq:covariance}; here the first
+$T\otimes T^{\otimes(\nu-1)}$ by~\eqref{eq:covariance}. Here the first
 factor rotates the query, which now holds the label that was taken out.
 Depolarizing the query preserves this invariance, and applying
 $F_{\nu-1}$ returns a state that is invariant under $T^{\otimes\nu}$,
@@ -2412,9 +2434,7 @@ $T^{\otimes(\nu+1)}$.
 \end{proof}
 
 For one label the bound of the next lemma is zero: an invariant label is maximally mixed and uncorrelated
-with everything else. For several labels, the value of one of them can
-be correlated with the rest only through coincidences with the other
-labels.
+with everything else.
 
 \begin{lemma}[Dephasing invariant labels]\label{lem:invariant-label}
 Let $X\succeq0$ have trace $s$ on $k\ge1$ labels of dimension $d\ge2$
@@ -2428,7 +2448,7 @@ channel $\Delta=\Delta_V$ on the first label,
 \end{lemma}
 
 \begin{proof}
-Take $s=1$ and let $\Delta$ dephase in the computational basis; the
+Take $s=1$ and let $\Delta$ dephase in the computational basis. The
 invariance of $X$ under $V^{\otimes k}$ then gives the bound for
 $\Delta_V$, and homogeneity restores $s$. The first label has marginal
 $I/d$, by invariance. Let $\sigma_j=d\bra jX\ket j$ be the state of the
@@ -2542,96 +2562,89 @@ and $\varepsilon_5\le q^2/D^2$. Altogether
 \end{proof}
 
 \paragraph{What the proof shows.}
-An ordinary strategy can probe the hidden basis only by returning to
-the device a system that the device issued, and each return lets the
-device measure one stored label. The symmetry argument alone,
+The symmetry argument alone, with cost
 $\varepsilon_{\mathrm{inv}}=6q(q-1)/d$, would allow about $\sqrt d$
-calls; the exponent $1/16$ is the price of replacing a Haar-random
-unitary with inverse queries by its record. The switch avoids all of
+calls. The exponent $1/16$ is the price of replacing a Haar-random
+unitary with inverse queries by its record. The switch needs none of
 this, because it compares the two orders of the device without learning
 anything about the~basis.
 
-\begin{remark}[The separation is asymptotic]\label{rem:crossover}
+\paragraph{Constants.}
 Every strategy, with or without the switch, needs at least $1/(3p)$
-uses of the device, because each use changes its output by at most
+uses of the device, because one use changes the output by at most
 $\frac12\norm{\mathcal E_{p,U}-\mathcal M_p}_\diamond\le p$ in trace
-distance. The lower bound of Theorem~\ref{thm:c6} exceeds this trivial
-bound only for $n\ge142$, and it exceeds $21/p$, a lower bound on the
-$14\lceil3/(2p)\rceil$ uses of the device in the switch test, only for
-$n\ge238$. For smaller $n$ the theorem is true
-but does not separate the two kinds of access. In the other direction,
-an ordinary strategy can simulate each use of the switch in the test
-with the processor of Section~\ref{sec:simulation}, so a number of
-calls of order $d^2/p$ suffices. The hardness is an effect of large
-dimension: for two copies of the same qubit channel, a four-call
-circuit that reproduces the control output of the switch on a fixed
-input was found numerically in~\cite{bavaresco2025}.
-\end{remark}
+distance. With the constants of our proof, which are not optimized, the
+lower bound of Theorem~\ref{thm:c6} exceeds this trivial bound only for
+$n\ge142$, and it exceeds $21/p$, a lower bound on the
+$14\lceil3/(2p)\rceil$ uses of the device in our switch test, only for
+$n\ge238$. An ordinary strategy can do the task with a number of calls
+of order $d^2/p$ by simulating each use of the switch as in
+Section~\ref{sec:simulation}. The hardness is an effect of large
+dimension: for two copies of the same qubit channel, a four-call circuit that reproduces the control output
+of the switch on a fixed input was found numerically
+in~\cite{bavaresco2025}.
 \section{Discussion}\label{sec:discussion}
 
 \subsection{An example in quantum computing, and an invitation}\label{sec:where}\label{sec:open}
 
 The three theorems put a price on the quantum switch: exponentially
-many calls of an ordinary quantum computer, or infinitely many.
-Theorem~\ref{thm:c6} is in addition an example of a provable query
-advantage of the quantum switch in a task of quantum computing. A
-quantum computer needs error correction, and error correction is
-designed and analysed for a model of the noise. Deciding whether a
-model describes a device is a task of channel characterization. In the
-scenario of Theorem~\ref{thm:c6}, where the alternative to the model is
-a dephasing in an unknown basis, the switch decides at fixed strength
-$p$ with a number of uses that does not grow with the number of qubits,
-whereas every ordinary strategy needs exponentially many
-(Remark~\ref{rem:crossover}). We invite work that extends this
-advantage to practical tasks of quantum computing.
+many calls of a quantum computer in the circuit model, or infinitely
+many. Theorem~\ref{thm:c6} is also an example of a provable query
+advantage of the quantum switch in a task of quantum computing,
+noise-model characterization. A quantum computer needs error
+correction, and error correction is designed and analysed for a model
+of the noise. Deciding whether a
+model describes a device is a task of channel characterization. In
+Theorem~\ref{thm:c6} the theoretical model is depolarizing and the
+actual noise dephases in an unknown basis. At fixed strength $p$ the
+switch decides with a number of uses that is independent of the number
+of qubits, whereas every ordinary strategy needs exponentially many.
+We invite future work that extends such advantages to more practical
+computing tasks.
 
 Our results say two things about the black boxes of such a task. First,
-both must be irreversible: if one of them is known to be unitary, three
-calls simulate the switch (Remark~\ref{rem:unitary}). Second, it
-matters whether the record of an irreversible operation is available,
-and it matters differently for the switch and for a number extracted
-from it. Suppose that each box announces which of its Kraus operators
-it applied, while the operators stay unknown. The switch remains expensive to
-approximate: the proof of Theorem~\ref{thm:simulation-summary} uses
+neither of them may be known to be unitary. If one of them is, three calls
+suffice~\cite[Theorem~1]{bavaresco2025}. Second, it matters whether a box announces which of its
+Kraus operators it applied, and it matters differently for the switch
+and for a number extracted from it. Suppose that each box does, while
+the operators stay unknown. The switch remains expensive to
+approximate. The proof of Theorem~\ref{thm:simulation-summary} uses
 only that the strategy cannot choose the index of a call, not that the
-index is hidden, and Claims~\ref{clm:fresh} and~\ref{clm:pair} hold
-word for word if every call announces its index, because an index helps
-only when it recurs. A number can nevertheless become easy. If $A$ is a projective
-measurement that announces its outcome and $B$ is any channel, the
-visibility $v(A,B)$ is the probability that the sequence $A$, $B$, $A$,
-applied to a maximally mixed state, gives the same outcome of $A$
-twice, so ordinary experiments with three calls each estimate it
-without any knowledge of the basis, as noted in~\cite{gao2023} for two
-projective measurements. Likewise, if the device of
-Theorem~\ref{thm:c6} announced the outcomes of the measurements that
-its noise performs, consecutive uses on one system would show that the
-outcome of a dephasing in a fixed basis never changes, and of order
-$1/p$ uses would decide the bit. The hardness of this bit thus rests on
-the outcomes of the hidden measurement staying in the environment, as
-they do for noise; the lower bound of
-Theorem~\ref{thm:simulation-summary} does not rest on hidden indices.
+index is hidden. Claims~\ref{clm:fresh} and~\ref{clm:pair} hold
+unchanged if every call announces its index, because an index helps
+only when it recurs. A number can nevertheless become easy. Let $A$ be
+a projective measurement that announces its outcome and $B$ any
+channel. The visibility $v(A,B)$ is the probability that the sequence
+$A$, $B$, $A$, applied to a maximally mixed state, gives the same
+outcome of $A$ twice. Ordinary experiments with three calls each
+therefore estimate it without knowledge of the basis, as noted
+in~\cite{gao2023} for two projective measurements. Likewise, suppose
+that the device of Theorem~\ref{thm:c6} announced the outcomes of the
+measurements that its noise performs. Consecutive uses on one system
+would show that the outcome of a dephasing in a fixed basis never
+changes, and of order $1/p$ uses would decide the bit. The hardness of
+this bit thus rests on the outcomes of the hidden measurement staying
+in the environment, as they do for noise.
 
 Several questions remain open. The optimal exponents are not known. For
 approximate simulation at fixed error the number of ordinary calls lies
-between $d^{1/4}$ and $d^2$, and concurrent work raises the lower
-exponent to $1/3$ (Section~\ref{sec:concurrent}); for the bit of
-Theorem~\ref{thm:c6} at fixed strength it lies between $d^{1/16}$ and
-$d^2$, where $1/16$ comes from the error of the recording theorem with
-inverse queries~\cite{mahuang2025}. Between one unitary box, for which
-three calls suffice, and mixtures of about $\sqrt d$ unitaries, for
-which $\Omega(d^{1/4})$ are needed, we do not know how the cost depends
+between $d^{1/4}$ and $d^2$, and the concurrent work of
+Section~\ref{sec:concurrent} raises the lower exponent to $1/3$. For
+the bit of Theorem~\ref{thm:c6} at fixed strength it lies between $d^{1/16}$ and $d^2$. Three calls suffice if one box is known to be unitary,
+and $\Omega(d^{1/4})$ are needed for mixtures of about $\sqrt d$
+unitaries. Between these cases we do not know how the cost depends
 on the Kraus rank, in particular for weakly noisy gates. Our theorems
 count calls on the worst run and require success without conditioning.
-A strategy without a finite budget, which
-Definition~\ref{def:ordinary} does not cover, might still simulate the
-switch exactly and stop with probability one, perhaps with a finite
-expected number of calls; and the best success probability of a
-heralded exact simulation, studied in~\cite{bavaresco2025}, is not
-known as a function of the budget. Finally, it would be interesting to
-know whether the one-bit separation grows for switches of more than two
-channels~\cite{araujo2014,colnaghi2012}, and how the switch compares
-with access to a dilation of a channel, which is at least as strong and
-has recently been separated from channel
+Definition~\ref{def:ordinary} does not cover a strategy without a
+finite budget. Such a strategy might still simulate the switch exactly
+and stop with probability one, perhaps with a finite expected number of
+calls. The best success probability of a heralded exact simulation,
+studied in~\cite{bavaresco2025}, is not known as a function of the
+budget. Finally, we do not know whether the one-bit separation grows
+for switches of more than two
+channels~\cite{araujo2014,colnaghi2012}, or how the switch compares
+with access to a dilation of a channel, which is at least as strong as
+access to the switch and has recently been separated from channel
 access~\cite{goldin2026,arihara2026}.
 
 
@@ -2640,28 +2653,29 @@ access~\cite{goldin2026,arihara2026}.
 The results of this paper were obtained in September 2026. The proofs,
 the Lean formalization and the certificates are kept in a
 repository~\cite{repo}. Its first commit, of 11 October 2026, already
-contains the three results with their proofs and the formalization; the
-third appears there for noise of full strength, and the reduction from
-weak noise (Section~\ref{sec:validation}) was added later.
+contains the three results with their proofs and the formalization. The
+third appears there for noise of full strength. The reduction from
+weak noise in Section~\ref{sec:validation} was added later.
 While preparing the manuscript we learned of two preprints, by
 Cheng~\cite{cheng2026} and by Goldin~\cite{goldin2026}. Our work is \mbox{independent of both.}
 
 Cheng~\cite{cheng2026} proves that no finite number of calls gives an
 exact simulation of the switch, and treats switches of more than two
-channels. Goldin~\cite{goldin2026}, in a study of dilations of
-channels, proves that approximate simulation to any fixed error below
-$1/2$ needs $\Omega(d^{1/3})$ calls, a larger exponent than ours, and
-gives a one-bit task that one use of the switch decides.
+channels. In a study of dilations of channels,
+Goldin~\cite{goldin2026} proves that approximate simulation to any
+fixed error below $1/2$ needs $\Omega(d^{1/3})$ calls, a larger
+exponent than ours. Goldin also gives a one-bit task that one use of the
+switch decides.
 
 The proofs have steps in common with ours and are not the same. For
 exact simulation, both arguments use mixtures of channels to reduce to
-one call to each box, and then treat qubits; ours ends in the exact
+one call to each box, and then treat qubits. Ours ends in the exact
 certificate of Lemma~\ref{lem:exact-obstruction}, holds for a fixed
 control input, and is formalized in Lean. For approximate simulation,
-both arguments hide an index that few calls do not repeat; ours bounds
-the coherence between the two orders (Corollary~\ref{cor:coherence})
-and gives an explicit trade-off, for boxes that are mixtures of unitary
-channels.
+both arguments hide an index that few calls do not repeat. Ours bounds
+the coherence between the two orders in
+Corollary~\ref{cor:coherence} and gives an explicit trade-off, for
+boxes that are mixtures of unitary channels.
 
 The third result is not covered by either preprint. Neither considers
 the measurement of incompatibility by the switch~\cite{gao2023}, or
@@ -2678,8 +2692,8 @@ the two results implies the other.
 
 \subsection*{Setting and ground rules}\label{appA:setting}
 
-The proof replaces the two boxes by the label cache in five steps, the
-rows of Table~\ref{tab:hybrids}. No step conditions on an event or
+The proof replaces the two black boxes by the label cache in the five
+steps of Table~\ref{tab:hybrids}. No step conditions on an event or
 renormalizes a state: every comparison is a bound in operator norm
 between two purified experiments, or a comparison of completely
 positive, trace-nonincreasing maps. The reason is that the labels are
@@ -2688,23 +2702,24 @@ labels coincide'' does not single out classical configurations that
 could be discarded.
 
 \paragraph{Scope.}
-Step~1 is cited: it is Theorem~8 of Ma and
+Step~1 is cited. It is Theorem~8 of Ma and
 Huang~\cite{mahuang2025}, their equation~(9.5), stated for dimensions
-$d=2^n$ (the formalization of Appendix~\ref{sec:formal-status} proves
-it). The operators $V^L$, $V^R$, $V$, $E^L$, $E^R$
-are taken from the same paper. So are the fact that $V^L$, $V^R$ and
-$V$ are partial isometries (their Claims~14 and~15) and one estimate
-(their Claim~22). Everything else is proved here.
+$d=2^n$. The operators $V^L$, $V^R$, $V$, $E^L$, $E^R$
+are taken from the same paper. We also use their Claims~14 and~15, by
+which $V^L$, $V^R$ and $V$ are partial isometries, and the estimate of
+their Claim~22. Everything else is proved here.
 Appendix~\ref{sec:formal-status} describes a formalization of the chain
-in Lean; the proofs below do not depend on it.
+in Lean, which also proves the cited theorem. The proofs below do not
+depend on it.
 
 \paragraph{The purified experiment.}
-Fix one of the two cases~\eqref{eq:c6-priors} and an ordinary strategy
-with budget $q$ (Definition~\ref{def:ordinary}). Three moves bring it
+Fix one of the two cases~\eqref{eq:c6-priors}, same-basis or unbiased,
+and an ordinary strategy with budget $q$ as in
+Definition~\ref{def:ordinary}. Three moves bring it
 to a standard form without changing its final state. First, each
 instrument $W_i$ becomes a Stinespring isometry on the query and the
 memory, for which we keep the letter $W_i$. It writes its outcome into
-a record and is controlled by the record of the earlier outcomes; its
+a record and is controlled by the record of the earlier outcomes. Its
 environment, which holds a copy of the outcome, is counted as part of
 the memory. An input state of the strategy is prepared by $W_0$.
 
@@ -2721,7 +2736,7 @@ $\Delta_U=\Ad(U)\circ\Delta_I\circ\Ad(U^\dagger)$ and
 $\Delta_{UH}=\Ad(U)\circ\Delta_H\circ\Ad(U^\dagger)$. Let
 $\psi^c_1,\dots,\psi^c_d$ be the known basis of box $c$: the
 computational basis for $c=A$, and for $c=B$ the computational basis
-(same-basis case) or the columns of $H$ (unbiased case). The known
+in the same-basis case and the columns of $H$ in the unbiased case. The known
 dephasing of the $i$th call is dilated by an isometry that copies the
 box and the outcome into a fresh hidden register $O_i$,
 \[
@@ -2736,7 +2751,7 @@ For a fixed $U$ the experiment is therefore the vector
  \rho=\E_U\Tr_{O}\proj{\Psi_U},
 \end{equation}
 where $O=O_1\cdots O_q$. In this appendix $\rho$ thus lives on the
-query and the whole memory after $W_q$; the final state of the strategy
+query and the whole memory after $W_q$. The final state of the strategy
 in Proposition~\ref{prop:cache} is a partial trace of it. We write
 $\rho^{\mathrm{cache}}$ for the corresponding state when the cache
 answers the calls. Partial traces do not increase the trace distance,
@@ -2754,14 +2769,14 @@ $\operatorname{Sym}^\nu(\C^d\otimes\C^d)$, and the multisets of $\nu$
 pairs index an orthonormal basis. A
 \emph{history} of length $i$ is a sequence
 $\eta=(c_1,j_1,\dots,c_i,j_i)$ of boxes and hidden outcomes, that is, a
-basis vector $\ket\eta$ of $O_1\cdots O_i$; its outcome vectors are
+basis vector $\ket\eta$ of $O_1\cdots O_i$. Its outcome vectors are
 $\psi_s=\psi^{c_s}_{j_s}$. The \emph{span} after $s$ calls is
 $\mathcal K_s=\operatorname{span}\{\psi_1,\dots,\psi_s\}$, with
 $\mathcal K_0=\{0\}$. For a subspace $\mathcal K\subseteq\C^d$,
 $\Pi_{\mathcal K}$ is its projector, and $\overline{\mathcal K}$,
 $\overline\Pi_{\mathcal K}$ are the complex conjugates in the
 computational basis. They appear because an inverse query stores the
-conjugate of the label that it issues, see~\eqref{appA:action}. We
+conjugate of the label that it issues, as~\eqref{appA:action} shows. We
 write $\Pi_{\le t}$ for the projector onto the lists with at most $t$
 pairs in total.
 
@@ -2810,14 +2825,15 @@ where both lists start empty and the call operators are
  G^{(5)}_i=F^L\widehat\Delta_i\widehat J^{\mathrm{raw}}_i .
 \]
 Each operator is defined where it enters. Step~1 relates $\rho$ to
-$\Psi_1$, and step~$k$ relates $\Psi_{k-1}$ to $\Psi_k$; step~5 also
+$\Psi_1$, and step~$k$ relates $\Psi_{k-1}$ to $\Psi_k$. Step~5 also
 relates $\Psi_5$ to the cache.
 
 \subsection{Steps 1 and 2: the record of \texorpdfstring{$U$}{U}, and forward queries that only create}\label{sec:c6-A1}
 
 \paragraph{Step 1: the Haar unitary is replaced by its record.}
-The recording process of~\cite{mahuang2025} acts on the query and the
-two lists. For lists $L,R$ with fewer than $d$ pairs in total, the
+Step~1 replaces the Haar-random unitary by the recording process
+of~\cite{mahuang2025}, which acts on the query and the two lists. For
+lists $L,R$ with fewer than $d$ pairs in total, the
 insertion operators are
 \begin{equation}\label{eq:c6-source-creators}
 \begin{aligned}
@@ -2831,14 +2847,13 @@ insertion operators are
     {\sqrt{d-|\Dom(L\cup R)|}},
 \end{aligned}
 \end{equation}
-where $\Dom$ and $\Img$ denote the sets of labels and of images; on
+where $\Dom$ and $\Img$ denote the sets of labels and of images. On
 longer lists both operators vanish. The path-recording
 operator is
 \begin{equation}\label{eq:c6-recording-V}
  V=V^L\bigl(I-V^RV^{R\dagger}\bigr)
    +\bigl(I-V^LV^{L\dagger}\bigr)V^{R\dagger}.
 \end{equation}
-
 
 Theorem~8 of~\cite{mahuang2025} concerns an adversary that makes $t$
 queries to $U$, forward or inverse in a fixed pattern, with arbitrary
@@ -2847,11 +2862,11 @@ the final state of the same adversary with $V$ in place of $U$, the
 lists traced out, by at most $9t(t+1)d^{-1/8}$ in trace distance. The
 vector~\eqref{appA:experiment} has this form with $t=2q$ queries in the
 pattern inverse, forward, inverse, forward, and so on. The operators
-between the queries are $W_0,\widehat\Delta_1,W_1,\dots$; none depends
+between the queries are $W_0,\widehat\Delta_1,W_1,\dots$. None depends
 on $U$, and each is an isometry that becomes a unitary once its fresh
 register is counted as workspace of the adversary in a fixed initial
 state. The last operator $W_q$ acts after the last query on both states
-that the theorem compares and does not change their distance; neither
+that the theorem compares and does not change their distance. Neither
 does the partial trace over $O$. Hence
 \[
  \TD\bigl(\rho,\Tr_{OLR}\proj{\Psi_1}\bigr)\le
@@ -2859,8 +2874,8 @@ does the partial trace over $O$. Hence
 \]
 
 \paragraph{Step 2: forward queries only create.}
-The forward query $V$ in each call is replaced by $V^L$. The term that
-is dropped lets a forward
+The forward query $V$ in each call is replaced by $V^L$. The dropped term
+lets a forward
 query remove a pair from the right list. It is small because the query
 has just been dephased. Given the hidden outcome $j$, the query is in
 the fixed state $\psi_j$ and is not correlated with the lists, and a
@@ -2931,9 +2946,9 @@ Line~\eqref{appA:fw3} is Lemma~\ref{appA:compression}.
 
 \paragraph{Cost of step 2.}
 Apply Lemma~\ref{appA:hybrid} to the operators of $\Psi_1$ and of
-$\Psi_2$; all are contractions, and only the $q$ forward queries
-differ. Just before the $i$th forward query the intermediate vector of
-$\Psi_2$ (the vector $v_{i-1}$ of the lemma) is
+$\Psi_2$. All are contractions, and only the $q$ forward queries
+differ. Before the $i$th forward query the intermediate vector of
+$\Psi_2$, which is the vector $v_{i-1}$ of the lemma, is
 $\sum_{c,j}\ket{c,j}_{O_i}\otimes\ket{\psi^c_j}\otimes\xi'_{c,j}$, and
 at most $2i-1$ queries have been made, so each $\xi'_{c,j}$ holds at
 most $2i-1$ pairs. Lemma~\ref{appA:forward} applies to each term, and
@@ -2957,7 +2972,7 @@ Let $a^\dagger_{xy}$ create the pair $(x,y)$ in the left list, as in
 Definition~\ref{def:cache}, and let $b^\dagger_{xy}$ do the same in
 the right list. For $u\in\C^d$ put
 $a^\dagger(u,y)=\sum_xu_xa^\dagger_{xy}$ and
-$b^\dagger(u,y)=\sum_xu_xb^\dagger_{xy}$; these create a pair with
+$b^\dagger(u,y)=\sum_xu_xb^\dagger_{xy}$. These create a pair with
 label $u$ and image $y$. Definition~37 of~\cite{mahuang2025} reads
 \begin{equation}\label{eq:c6-raw-creators}
  E^L=\frac1{\sqrt d}\sum_{x,y}\ket y\bra x\otimes a_{xy}^\dagger,
@@ -3120,14 +3135,14 @@ an issued image is exchanged for its label. The second is a
 the right list, and a new label is issued, now orthogonal to
 $\mathcal K$.
 
-The reason for this step is that the cache treats retrieval and birth
+This step is needed because the cache treats retrieval and birth
 as alternatives, whereas in $\widetilde V^\dagger$ they are two terms
 of one operator, which a strategy with entangled memory could make
 interfere at a later call. Once births are orthogonal to the earlier
 outcomes, each of them leaves in the right list a record that no later
-step alters (Claim~\ref{appA:record}, proved in
+step alters. This is Claim~\ref{appA:record}, proved in
 Section~\ref{sec:c6-A4} after $F^R$ has been replaced by $E^R$ in the
-births).
+births.
 
 \paragraph{The fresh step.}
 For a subspace $\mathcal K$ let $\Theta_{\mathcal K}$ be the projector
@@ -3142,10 +3157,10 @@ history $\eta$ of the first $i-1$ calls:
  \widehat J_i=\sum_{\eta}\proj\eta_{O_1\cdots O_{i-1}}\otimes
    J_{\mathcal K_{i-1}(\eta)}\,\Theta_{\mathcal K_{i-1}(\eta)} .
 \end{equation}
-The projector $\Theta$ makes $\widehat J_i$ a contraction on all
-states (Lemma~\ref{appA:follow}) and acts as the identity on the
-states that occur (Claim~\ref{appA:support}). Both facts rest on one
-identity.
+Lemma~\ref{appA:follow} shows that the projector $\Theta$ makes
+$\widehat J_i$ a contraction on all states. Claim~\ref{appA:support}
+shows that it acts as the identity on the states that occur. Both
+facts rest on one identity.
 
 \begin{lemma}[Labels follow the query]\label{appA:follow}
 For every projector $\Pi$ on $\C^d$ and every $\nu<d$, on lists with
@@ -3173,7 +3188,8 @@ $E^{L\dagger}E^L(\Pi\otimes\Pi^{\otimes\nu})
 =E^{L\dagger}\Pi^{\otimes(\nu+1)}E^L
 =(\Pi\otimes\Pi^{\otimes\nu})E^{L\dagger}E^L$. The inverse square root
 of $E^{L\dagger}E^L$ commutes with $\Pi\otimes\Pi^{\otimes\nu}$ as
-well, and the identity passes to $F^L$. This is~\eqref{eq:covariance} with a
+well, and the identity passes to $F^L$. This is the
+covariance~\eqref{eq:covariance} with a
 projector in place of the rotation. The first identity
 of~\eqref{appA:follow-eq} follows because $F^L$ does not act on the
 right list, the second is its adjoint, and the third is their product.
@@ -3203,7 +3219,7 @@ By the definition of $\widehat\Delta_s$
 and~\eqref{appA:fresh-step}, the component of $\Psi_4$ along
 $\ket\eta$ after $i$ calls is $\sum_\beta\phi_i(\eta,\beta)$. The
 same definitions with $E^R$ in place of $F^R$ give the branches of
-$\Psi_5$ (Section~\ref{sec:c6-A4}).
+$\Psi_5$.
 
 \begin{claim}[Support of the stored labels]\label{appA:support}
 For every history $\eta$ of length $i$ and every $\beta\in\{0,1\}^i$,
@@ -3214,7 +3230,7 @@ the identity.
 \end{claim}
 
 \begin{proof}
-Induction on $i$. For $i=0$ the lists are empty. Assume
+The proof is by induction on $i$. For $i=0$ the lists are empty. Assume
 $\Theta_{\mathcal K}\phi_{i-1}=\phi_{i-1}$ with
 $\mathcal K=\mathcal K_{i-1}$, and let
 $\mathcal K'=\mathcal K_i\supseteq\mathcal K$, which contains
@@ -3222,12 +3238,13 @@ $\psi_i$. The operators $W_{i-1}$ and $\pi^{c_i}_i$ do not act on the
 lists, so $\phi=\pi^{c_i}_iW_{i-1}\phi_{i-1}$ is again fixed by
 $\Theta_{\mathcal K}$.
 
-Retrieval ($\beta_i=0$). By the second identity
+Consider first a retrieval, $\beta_i=0$. By the second identity
 of~\eqref{appA:follow-eq}, $F^{L\dagger}\phi$ is fixed by
 $I\otimes\Theta_{\mathcal K}$, hence by
 $I\otimes\Theta_{\mathcal K'}$.
 
-Birth ($\beta_i=1$). By the third identity, $(I-P^L)\phi$ is fixed by
+Consider now a birth, $\beta_i=1$. By the third identity, $(I-P^L)\phi$ is
+fixed by
 $\Theta_{\mathcal K}$. The factor $(E^{R\dagger}E^R)^{-1/2}$ of $F^R$
 acts on the query and on right images only, by~\eqref{eq:c6-grams},
 and preserves this property. Put $u=(I-\Pi_{\mathcal K})\psi_i$. By
@@ -3294,12 +3311,13 @@ increase with $r'$.
 \paragraph{Cost of step 4.}
 Apply Lemma~\ref{appA:hybrid} to the operators of $\Psi_3$ and of
 $\Psi_4$. All are contractions, $\widehat J_i$ by
-Lemma~\ref{appA:follow}, and only the inverse steps differ. Before the inverse step of the $i$th
-call, the component of
-$\Psi_4$ along each history is fixed by $\Theta_{\mathcal K_{i-1}}$
-(Claim~\ref{appA:support}), the span has dimension $\kappa\le i-1$,
+Lemma~\ref{appA:follow}, and only the inverse steps differ. By
+Claim~\ref{appA:support}, before the inverse step of the $i$th
+call the component of
+$\Psi_4$ along each history is fixed by $\Theta_{\mathcal K_{i-1}}$.
+At that point the span has dimension $\kappa\le i-1$,
 and at most $r\le i-1$ births have occurred. The bound of
-Lemma~\ref{appA:fresh-cost} increases with $\kappa$ and $r$; its
+Lemma~\ref{appA:fresh-cost} increases with $\kappa$ and $r$. Its
 value at $\kappa=r=i-1$ bounds the $i$th term, which vanishes for
 $i=1$:
 \begin{equation}\label{eq:c6-B}
@@ -3370,7 +3388,8 @@ if $u_s=(I-\Pi_{\mathcal K_{s-1}})\psi_s\ne0$. For such $s$ put
 $w_s=\norm{u_s}^2$ and $v_s=\overline{u_s}/\norm{u_s}$. The vectors
 $v_s$ are orthonormal. Let
 $N_s=\sum_yb^\dagger(v_s,y)\,b(v_s,y)$, where $b(v,y)$ is the adjoint
-of $b^\dagger(v,y)$; it counts the right pairs with label $v_s$. By the second identity of~\eqref{appA:action},
+of $b^\dagger(v,y)$. The sum counts the right pairs with label
+$v_s$. By the second identity of~\eqref{appA:action},
 \begin{equation}\label{appA:birth-amplitude}
  \bigl(\bra{\psi_s}(I-\Pi_{\mathcal K_{s-1}})\otimes I\bigr)E^R
  =\sqrt{\frac{w_s}{d}}\;\sum_y\bra y\otimes b^\dagger(v_s,y),
@@ -3396,7 +3415,8 @@ the right list is traced out:
 \end{claim}
 
 \begin{proof}
-Induction on $i$; for $i=0$ the right list is empty. In the step from
+The proof is by induction on $i$. For $i=0$ the right list is empty. In
+the step from
 $i-1$ to $i$, the operators $W_{i-1}$, $\pi^{c_i}_i$, $F^L$,
 $F^{L\dagger}$, $P^L$ and $\proj{\psi_i}$ do not act on the right
 list, and $\Theta$ acts as the identity by Claim~\ref{appA:support}.
@@ -3449,6 +3469,8 @@ For every history $\eta$ of length $i$ and every $\beta\in\{0,1\}^i$,
 \end{claim}
 
 \begin{proof}
+We move the images created by the births into auxiliary registers and
+trace over these registers instead of the right list.
 If $\beta_s=1$ for a call $s$ that opens no direction, the left side
 is zero by Claim~\ref{appA:record} and the right side is zero because
 $w_s=0$. Otherwise, by Claim~\ref{appA:support} the projectors $\Theta$
@@ -3463,8 +3485,8 @@ Define
 \end{equation}
 This map is an isometry. Indeed, the commutation relations give
 $b(v,y')b^\dagger(v',y)=\langle v|v'\rangle\delta_{yy'}
-+b^\dagger(v',y)b(v,y')$, and the $v_s$ are orthonormal; moving each
-annihilator to the right shows that the inner products of the images
++b^\dagger(v',y)b(v,y')$, and the $v_s$ are orthonormal. Moving each
+annihilator to the right then shows that the inner products of the images
 are $\prod_a\delta_{y_ay_a'}$.
 
 We prove by induction on $i$ that
@@ -3538,7 +3560,7 @@ $\bigl\|\sum_{\eta,\beta}\bigl(X_q(\eta,\beta)-X^{w}_q(\eta,\beta)\bigr)
 \begin{proof}
 (i) The retrieval maps coincide and are conjugations. The map
 $\mathcal C^{w}_{s,1}$ is a composition of a conjugation, a partial trace, a
-preparation and a conjugation, multiplied by $w_s/d\ge0$; the
+preparation and a conjugation, multiplied by $w_s/d\ge0$. The
 difference $\mathcal C_{s,1}-\mathcal C^{w}_{s,1}$ is the same map with the
 factor $(1-w_s)/d\ge0$.
 
@@ -3551,7 +3573,7 @@ vectors $\psi_s=\psi^{c_s}_j$ is $\dim\mathcal K_{s-1}\le s-1$, and the
 remaining sum over $c_s$ is at most $\Tr X$.
 
 (iii) On $\nu$ left pairs $P^L=P_\nu$ and
-$F^{L\dagger}=F_{\nu-1}^\dagger$; the outer $F^L$ is $F_{\nu-1}$ in a
+$F^{L\dagger}=F_{\nu-1}^\dagger$. The outer $F^L$ is $F_{\nu-1}$ in a
 retrieval and $F_\nu$ in a birth. The sum over $j_s$ of the
 retrievals is $\mathcal R_{\Delta^c,\nu}$, because
 $\sum_j\proj{\psi^c_j}\,\cdot\,\proj{\psi^c_j}=\Delta^c$. The sum of the
@@ -3578,12 +3600,12 @@ Summing over $s$ gives $q(q-1)/(2d)$.
 
 \paragraph{Cost of step 5.}
 The number of left pairs of $X_s(\eta,\beta)$ is
-$\nu=\beta_1+\dots+\beta_s$; this is the hidden counter of
+$\nu=\beta_1+\dots+\beta_s$. This is the hidden counter of
 Definition~\ref{def:cache}, and it starts at zero. By part~(iii) of
 Claim~\ref{appA:histories}, with $\Delta_I$ for box $A$ and with
 $\Delta_I$ or $\Delta_H$ for box $B$, we therefore have
 $\sum_{\eta,\beta}\Tr_L(W_qX_q(\eta,\beta)W_q^\dagger)
-=\rho^{\mathrm{cache}}$. The consequence of
+=\rho^{\mathrm{cache}}$. The trace-norm bound of
 Claim~\ref{appA:histories} and~\eqref{appA:weighted-state} give
 $\TD(\Tr_{OLR}\proj{\Psi_5},\rho^{\mathrm{cache}})\le q(q-1)/(4d)$.
 Together with the raw births, step~5 costs at most
@@ -3601,13 +3623,13 @@ $\rho,\Psi_1,\dots,\Psi_5,\rho^{\mathrm{cache}}$,
 
 \section{The exact certificate for qubits}\label{sec:certificate}
 
-This appendix proves the three facts that Section~\ref{sec:qubit-certificate}
-used without proof: the characterization of the gauge, the reverse
+Section~\ref{sec:qubit-certificate} used three facts without proof.
+This appendix proves them in the notation of that section: the
+characterization of the gauge, the reverse
 inclusion in Lemma~\ref{lem:support}(b), and
-Lemma~\ref{lem:exact-obstruction}. Notation is that of
-Section~\ref{sec:qubit-certificate}. Rows of $E$ are indexed by
+Lemma~\ref{lem:exact-obstruction}. Rows of $E$ are indexed by
 $\iota=(p,a_i,a_o,b_i,b_o,c,t)\in\{0,1\}^7$ and columns by
-$0,\dots,24$, as in the table of Lemma~\ref{lem:support}; $E_k$ is
+$0,\dots,24$, as in the table of Lemma~\ref{lem:support}, and $E_k$ is
 column $k$.
 
 \subsection{The gauge}\label{sec:gauge-proof}
@@ -3631,13 +3653,15 @@ $\mathcal W\otimes{}$\textup{(}all operators on the other
 systems\textup{)}.} A Pauli product $\sigma\otimes\tau$ on
 $A_I\otimes A_O$ lies in $\mathcal W$ unless $\tau=I$ and
 $\sigma\neq I$, and these products are orthogonal in the
-Hilbert--Schmidt inner product. From its definition, $\Lambda_A$
-multiplies a Pauli product by $1-1+0=0$ if $\tau=I\neq\sigma$, by
+Hilbert--Schmidt inner product. The three terms of $\Lambda_A$,
+defined in Section~\ref{sec:qubit-certificate},
+multiply a Pauli product by $1-1+0=0$ if $\tau=I\neq\sigma$, by
 $1-1+1=1$ if $\tau=\sigma=I$, and by $1$ if $\tau\neq I$.
 
-\emph{The kernel of $\Lambda_A\Lambda_B$ is the gauge.} The output of
+\emph{The kernel of $\Lambda_A\Lambda_B$ is the gauge.} By
+Section~\ref{sec:ordered}, the output of
 a process with Choi operator $C$ on boxes $A,B$ is the contraction of
-$C$ with $J_A\otimes J_B$ (Section~\ref{sec:ordered}). An operator $D$
+$C$ with $J_A\otimes J_B$. An operator $D$
 therefore gives zero output on all pairs of channels exactly when its
 contraction with every element of $\mathcal W\otimes\mathcal W$
 vanishes. The contraction is bilinear, and $\mathcal W$ is closed under
@@ -3668,7 +3692,7 @@ matrices of the form
  \begin{pmatrix}g_0+\mathrm ig_3&g_2+\mathrm ig_1\\-g_2+\mathrm ig_1&g_0-\mathrm ig_3\end{pmatrix},
  \qquad g_0,\dots,g_3\in\{-1,0,1\}\text{ not all zero},
 \]
-which are unitary up to the factor $(g_0^2+\dots+g_3^2)^{1/2}$; the
+which are unitary up to the factor $(g_0^2+\dots+g_3^2)^{1/2}$. The
 factor does not affect the equation. From $40$ such pairs we select
 $103$ equations whose coefficients, after scaling, are Gaussian
 integers. Let $R\in\mathbb Z[\mathrm i]^{103\times128}$ be their
@@ -3718,15 +3742,16 @@ of (c). The coefficients are in the supplementary material. They are
 not needed to check the claims: any exact linear-algebra routine
 decides whether $f$ lies in the row space of each system. The same
 computation shows that the solutions of the three systems together
-span a space of dimension $126$, so that the functionals with
+span a space of dimension $126$, so the functionals with
 properties (a)--(c) form a space of dimension $325-126=199$. The
 problem is symmetric under the exchange of the two boxes together with
 the two control values, but the chosen $f$ is not: it involves none of
-the columns $20$ to $23$. This is a feature of the choice.
+the columns $20$ to $23$.
 
 \subsection{The diluted switch in coordinates}\label{sec:diluted-coordinates}
 
-We prove part (d). Let $X_T$ be the diagonal matrix with entries
+We prove part (d) of Lemma~\ref{lem:exact-obstruction}. Let $X_T$ be
+the diagonal matrix with entries
 \[
  (X_T)_{kk}=\begin{cases}
  (1-\lambda)(1-\mu)/8,&0\le k\le15,\\
@@ -3753,8 +3778,8 @@ to $23$ give the terms in which the target passes through $A$ alone or
 through $B$ alone while the other box receives a maximally mixed dummy
 state, and column $24$ is $\sqrt2$ times the Kraus vector of $\SW_+$.
 
-\emph{The switch weight is invariant under the gauge} (used only in
-the discussion of $f$ in Section~\ref{sec:qubit-certificate}). Let
+\emph{The switch weight is invariant under the gauge.}
+Section~\ref{sec:qubit-certificate} uses this only to discuss $f$. Let
 $EXE^{\top}$ lie in the gauge, and take $U=\sigma_x$, $V=\sigma_z$, for
 which the four operators of~\eqref{eq:four-kraus} are linearly
 independent. The output on $(U,V)$ is
@@ -3767,15 +3792,15 @@ $X_{24,24}=0$.
 
 \subsection{Replaying the computation}
 
-The proof depends on two facts that are computed and not derived by
+Two facts in the proof are computed and not derived by
 hand: the invertibility of $G$ modulo $5$ in
 Section~\ref{sec:support-proof}, and the three identities of
 Section~\ref{sec:functional-proof}. The supplementary
-material~\cite{repo} contains the data for both, and its script
-\texttt{verify\_all.py} rebuilds $E$ and the linear systems from the
-formulas above and checks every identity in exact integer and rational
-arithmetic, using only the Python standard library. The same data are
-checked in the Lean formalization (Appendix~\ref{sec:formal-status}).
+material~\cite{repo} contains the data for both. Its script
+\texttt{verify\_all.py} rebuilds $E$ and the linear systems from their
+definitions and checks every identity in exact integer and rational
+arithmetic, using only the Python standard library. The Lean
+formalization of Appendix~\ref{sec:formal-status} checks the same data.
 
 \section{Formal verification}\label{sec:formal-status}
 
@@ -3785,7 +3810,7 @@ and~\ref{thm:c6} have been formalized in Lean~4, reusing
 Lean-QIT~\cite{leanqit2026}. The formal statements quantify over the
 ordinary strategies of Definition~\ref{def:ordinary}: any mixed input,
 an ancillary quantum memory of any finite dimension, classical
-feed-forward (instruments whose outcomes choose the next box), early
+feed-forward by instruments whose outcomes choose the next box, early
 stopping, and one budget for all calls.
 Theorem~\ref{thm:exact-simulation} is proved for the control input
 $\ket+$ and for arbitrary control inputs.
@@ -3793,34 +3818,39 @@ Theorem~\ref{thm:simulation-summary} is proved with the
 trade-off~\eqref{eq:tradeoff-intro} and its two consequences.
 Theorem~\ref{thm:c6} is proved with its constants: the lower bound
 $d^{1/16}/(1400\,p)$ for $d=2^n$ and $0<p\le1$, and the test with seven
-uses of the switch for every block length at least $3/(2p)$. The
-formalization also contains Proposition~\ref{prop:no-diluted},
-Lemmas~\ref{lem:ordered},
+uses of the switch, with $m$ consecutive uses of the device in each
+slot, for every $m\ge3/(2p)$. The
+formalization also contains Propositions~\ref{prop:no-diluted}
+and~\ref{prop:cache}, Lemmas~\ref{lem:ordered},
 \ref{lem:polarization}, \ref{lem:support}, \ref{lem:exact-obstruction},
-\ref{lem:reverse}, \ref{lem:c6-comparison}
-and~\ref{lem:invariant-label}, the two-call strategy of
-Section~\ref{sec:simulation}, the three-call circuit of
-Remark~\ref{rem:unitary}, and the thresholds of
-Remark~\ref{rem:approx-content}. Lemma~\ref{lem:c6-comparison} is
-derived for the actual boxes: the recording estimate
-of~\cite{mahuang2025} and the Haar moment formulas are proved, not
-assumed, and so are the four structural claims of
-Appendix~\ref{sec:c6-recording}
-(Claims~\ref{appA:support}, \ref{appA:record}, \ref{appA:images}
-and~\ref{appA:histories}).
+\ref{lem:gram}, \ref{lem:reverse}, \ref{lem:c6-comparison},
+\ref{lem:reference-invariant} and~\ref{lem:invariant-label},
+Corollary~\ref{cor:coherence}, Claims~\ref{clm:switch-passes},
+\ref{clm:fresh} and~\ref{clm:pair}, the label cache of
+Definition~\ref{def:cache}, the identities of
+Section~\ref{sec:visibility}, the two-call strategy of
+Section~\ref{sec:simulation}, the three-call simulation for one
+unitary box~\cite[Theorem~1]{bavaresco2025}, and the numerical
+thresholds stated in Sections~\ref{sec:hidden}
+and~\ref{sec:invariant}. Lemma~\ref{lem:c6-comparison} is derived for
+the boxes themselves. The recording estimate of~\cite{mahuang2025} and the
+Haar moment formulas are proved, not assumed. So are
+the four structural Claims~\ref{appA:support}, \ref{appA:record},
+\ref{appA:images} and~\ref{appA:histories} of
+Appendix~\ref{sec:c6-recording}.
 
 \paragraph{The verification record.}
 The formalization uses Lean~4.30.0 with a fixed version of Mathlib. Its
-record reports that all $1659$ source files were compiled from source,
-with no compiled files reused. For $124$ selected theorems, which
-include the three theorems of this paper, the record lists the axioms
-on which the proof depends: these are \texttt{propext},
+record reports that all $1663$ source files were compiled from source.
+For $221$ selected theorems,
+including the three theorems of this paper, the record lists the axioms
+on which the proof depends. They are \texttt{propext},
 \texttt{Classical.choice} and \texttt{Quot.sound}, the standard axioms
 of Lean, and no others. The sources contain no admitted statement. The
-Lean sources, a file that lists for each label of this paper the Lean
-theorems that formalize it, the certificate data of
+Lean sources, a file that lists the Lean theorems that formalize each
+label of this paper, the certificate data of
 Appendix~\ref{sec:certificate}, and the script \texttt{verify\_all.py}
-form the supplementary material of this paper~\cite{repo}.
+form the supplementary material~\cite{repo}.
 
 \begin{thebibliography}{99}
 \small\raggedright\setlength{\itemsep}{2pt}
@@ -3878,12 +3908,12 @@ Quantum circuits with classical versus quantum control of causal order.
 \bibitem{wechs2026} J. Wechs, A. A. Abbott, and C. Branciard.
 All causally separable quantum processes are quantum circuits with classical control of causal order.
 \href{https://arxiv.org/abs/2609.20774v1}{arXiv:2609.20774v1} (2026).
-\bibitem{azado2025} P. C. Azado, R. Wagner, R. S. Barbosa, and E. F. Galv\~ao.
-Measuring unitary invariants with the quantum switch.
-\href{https://arxiv.org/abs/2508.02345v1}{arXiv:2508.02345v1} (2025).
-\bibitem{felce2020} D. Felce and V. Vedral.
-Quantum Refrigeration with Indefinite Causal Order. \emph{Physical Review Letters} 125, 070603 (2020).
-\href{https://arxiv.org/abs/2003.00794v4}{arXiv:2003.00794v4}.
+\bibitem{fowler2012} A. G. Fowler, M. Mariantoni, J. M. Martinis, and A. N. Cleland.
+Surface codes: Towards practical large-scale quantum computation.
+\emph{Physical Review A} 86, 032324 (2012).
+\bibitem{cai2023} Z. Cai, R. Babbush, S. C. Benjamin, S. Endo, W. J. Huggins, Y. Li, J. R. McClean, and T. E. O'Brien.
+Quantum error mitigation.
+\emph{Reviews of Modern Physics} 95, 045005 (2023).
 \bibitem{magesan2011} E. Magesan, J. M. Gambetta, and J. Emerson.
 Scalable and robust randomized benchmarking of quantum processes. \emph{Physical Review Letters} 106, 180504 (2011).
 \href{https://arxiv.org/abs/1009.3639v1}{arXiv:1009.3639v1}.
@@ -3929,6 +3959,12 @@ Strict hierarchy between parallel, sequential, and indefinite-causal-order strat
 \bibitem{zhuwang2026} C. Zhu and X. Wang.
 Quantum Channel Stein Theorem beyond Definite Causal Order.
 \href{https://arxiv.org/abs/2609.30268v1}{arXiv:2609.30268v1} (2026).
+\bibitem{azado2025} P. C. Azado, R. Wagner, R. S. Barbosa, and E. F. Galv\~ao.
+Measuring unitary invariants with the quantum switch.
+\href{https://arxiv.org/abs/2508.02345v1}{arXiv:2508.02345v1} (2025).
+\bibitem{felce2020} D. Felce and V. Vedral.
+Quantum Refrigeration with Indefinite Causal Order. \emph{Physical Review Letters} 125, 070603 (2020).
+\href{https://arxiv.org/abs/2003.00794v4}{arXiv:2003.00794v4}.
 \bibitem{collins2006} B. Collins and P. \'Sniady.
 Integration with respect to the Haar measure on unitary, orthogonal and
 symplectic group. \emph{Communications in Mathematical Physics}
