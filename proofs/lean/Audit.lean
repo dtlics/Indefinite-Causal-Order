@@ -26,6 +26,10 @@ import ICO.Section54Validation
 import ICO.TwoCallCertificate
 import ICO.TwoCallOperational
 import ICO.C6BonusInventory
+import ICO.VisibilityIdentities
+import ICO.C4NamedClaims
+import ICO.ExactQubitNamedLemmas
+import ICO.C6LabelCache
 
 #check ICO.BoundedSwitchObstruction.no_bounded_circuit
 #print axioms ICO.BoundedSwitchObstruction.no_bounded_circuit
@@ -398,3 +402,294 @@ import ICO.C6BonusInventory
 
 #check ICO.TwoCallOperational.two_call_hidden_vs_model_upper_bound
 #print axioms ICO.TwoCallOperational.two_call_hidden_vs_model_upper_bound
+
+#check ICO.Section54Validation.channelPow_map
+#print axioms ICO.Section54Validation.channelPow_map
+
+#check ICO.Section54Validation.dephasingNoiseChannel_pow
+#print axioms ICO.Section54Validation.dephasingNoiseChannel_pow
+
+#check ICO.Section54Validation.depolarizingModelChannel_pow
+#print axioms ICO.Section54Validation.depolarizingModelChannel_pow
+
+#check ICO.Section54Validation.validation_switch_block_power_upper_bound
+#print axioms ICO.Section54Validation.validation_switch_block_power_upper_bound
+
+#check ICO.Section54Validation.dephasing_depolarizing_diamond_le_p
+#print axioms ICO.Section54Validation.dephasing_depolarizing_diamond_le_p
+
+#check ICO.Section54Validation.dephasing_depolarizing_withMemory_diamond_le_p
+#print axioms ICO.Section54Validation.dephasing_depolarizing_withMemory_diamond_le_p
+
+#check ICO.Section54Validation.validation_trivial_single_unitary_query_lower_bound
+#print axioms ICO.Section54Validation.validation_trivial_single_unitary_query_lower_bound
+
+#check ICO.Section54Validation.validation_trivial_query_lower_bound
+#print axioms ICO.Section54Validation.validation_trivial_query_lower_bound
+
+#check ICO.Section54Validation.validation_trivial_balanced_query_lower_bound
+#print axioms ICO.Section54Validation.validation_trivial_balanced_query_lower_bound
+
+#check ICO.VisibilityIdentities.basis_dephasing_visibility
+#print axioms ICO.VisibilityIdentities.basis_dephasing_visibility
+
+#check ICO.VisibilityIdentities.one_sub_interference_eq_commutator_hs
+#print axioms ICO.VisibilityIdentities.one_sub_interference_eq_commutator_hs
+
+#check ICO.VisibilityIdentities.one_sub_interference_eq_commutator_entry_sq
+#print axioms ICO.VisibilityIdentities.one_sub_interference_eq_commutator_entry_sq
+
+#check ICO.VisibilityIdentities.one_sub_interference_eq_commutator_hilbertSchmidtSq
+#print axioms ICO.VisibilityIdentities.one_sub_interference_eq_commutator_hilbertSchmidtSq
+
+#check ICO.VisibilityIdentities.haar_average_dephasing_eq_depolarizing
+#print axioms ICO.VisibilityIdentities.haar_average_dephasing_eq_depolarizing
+
+#check ICO.VisibilityIdentities.haar_average_dephasing_eq_depolarizingChannel
+#print axioms ICO.VisibilityIdentities.haar_average_dephasing_eq_depolarizingChannel
+
+#check ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_1400_lt_one_third_of_le_141
+#print axioms ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_1400_lt_one_third_of_le_141
+
+#check ICO.RemarksUnitaryNumerical.one_third_lt_two_pow_div_sixteen_div_1400_of_ge_142
+#print axioms ICO.RemarksUnitaryNumerical.one_third_lt_two_pow_div_sixteen_div_1400_of_ge_142
+
+#check ICO.RemarksUnitaryNumerical.one_third_lt_two_pow_div_sixteen_div_1400_iff
+#print axioms ICO.RemarksUnitaryNumerical.one_third_lt_two_pow_div_sixteen_div_1400_iff
+
+#check ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_1400_lt_twenty_one_of_le_237
+#print axioms ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_1400_lt_twenty_one_of_le_237
+
+#check ICO.RemarksUnitaryNumerical.twenty_one_lt_two_pow_div_sixteen_div_1400_of_ge_238
+#print axioms ICO.RemarksUnitaryNumerical.twenty_one_lt_two_pow_div_sixteen_div_1400_of_ge_238
+
+#check ICO.RemarksUnitaryNumerical.twenty_one_lt_two_pow_div_sixteen_div_1400_iff
+#print axioms ICO.RemarksUnitaryNumerical.twenty_one_lt_two_pow_div_sixteen_div_1400_iff
+
+#check ICO.RemarksUnitaryNumerical.one_div_three_p_lt_validation_bound_iff
+#print axioms ICO.RemarksUnitaryNumerical.one_div_three_p_lt_validation_bound_iff
+
+#check ICO.RemarksUnitaryNumerical.twenty_one_div_p_lt_validation_bound_iff
+#print axioms ICO.RemarksUnitaryNumerical.twenty_one_div_p_lt_validation_bound_iff
+
+#check ICO.RemarksUnitaryNumerical.switch_test_calls_ge_twenty_one_div_p
+#print axioms ICO.RemarksUnitaryNumerical.switch_test_calls_ge_twenty_one_div_p
+
+#check ICO.RemarksUnitaryNumerical.validation_bound_lt_switch_test_calls_of_le_237
+#print axioms ICO.RemarksUnitaryNumerical.validation_bound_lt_switch_test_calls_of_le_237
+
+#check ICO.RemarksUnitaryNumerical.trivial_query_lower_bound_of_diamond_le
+#print axioms ICO.RemarksUnitaryNumerical.trivial_query_lower_bound_of_diamond_le
+
+#check ICO.RemarksUnitaryNumerical.trivial_balanced_query_lower_bound_of_diamond_le
+#print axioms ICO.RemarksUnitaryNumerical.trivial_balanced_query_lower_bound_of_diamond_le
+
+#check ICO.RemarksUnitaryNumerical.uniform_unitary_mixture_eq_oracleChannel_iff
+#print axioms ICO.RemarksUnitaryNumerical.uniform_unitary_mixture_eq_oracleChannel_iff
+
+#check ICO.RemarksUnitaryNumerical.uniform_haar_mixture_ae_not_ambient_unitary
+#print axioms ICO.RemarksUnitaryNumerical.uniform_haar_mixture_ae_not_ambient_unitary
+
+#check ICO.RemarksUnitaryNumerical.uniform_haar_mixture_ae_not_unitary
+#print axioms ICO.RemarksUnitaryNumerical.uniform_haar_mixture_ae_not_unitary
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_unitary_kraus_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_unitary_kraus_eq
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_unitary_left_channel_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_unitary_left_channel_eq
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullSwitchChannelMap_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullSwitchChannelMap_eq
+
+#check ICO.RemarksUnitaryNumerical.unitarySecondThreeCallTree_unitary_kraus_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitarySecondThreeCallTree_unitary_kraus_eq
+
+#check ICO.RemarksUnitaryNumerical.unitarySecondThreeCallTree_unitary_right_channel_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitarySecondThreeCallTree_unitary_right_channel_eq
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fails_nonunitary
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fails_nonunitary
+
+#check ICO.RemarksUnitaryNumerical.exists_nonunitary_unitaryThreeCallTree_ne_channelSwitch
+#print axioms ICO.RemarksUnitaryNumerical.exists_nonunitary_unitaryThreeCallTree_ne_channelSwitch
+
+#check ICO.RemarksUnitaryNumerical.diluted_unitary_not_unitary
+#print axioms ICO.RemarksUnitaryNumerical.diluted_unitary_not_unitary
+
+#check ICO.C4NamedClaims.lem_gram_near_orthonormality
+#print axioms ICO.C4NamedClaims.lem_gram_near_orthonormality
+
+#check ICO.C4NamedClaims.lem_gram_near_orthonormality_sample
+#print axioms ICO.C4NamedClaims.lem_gram_near_orthonormality_sample
+
+#check ICO.C4NamedClaims.clm_switch_passes
+#print axioms ICO.C4NamedClaims.clm_switch_passes
+
+#check ICO.C4NamedClaims.clm_switch_passes_sample
+#print axioms ICO.C4NamedClaims.clm_switch_passes_sample
+
+#check ICO.C4NamedClaims.reverse_test_trace_mono
+#print axioms ICO.C4NamedClaims.reverse_test_trace_mono
+
+#check ICO.C4NamedClaims.causal_reverse_test_subcomb_bound
+#print axioms ICO.C4NamedClaims.causal_reverse_test_subcomb_bound
+
+#check ICO.C4NamedClaims.lem_reverse_ordered_subcomb
+#print axioms ICO.C4NamedClaims.lem_reverse_ordered_subcomb
+
+#check ICO.C4NamedClaims.cor_coherence_at_most_once
+#print axioms ICO.C4NamedClaims.cor_coherence_at_most_once
+
+#check ICO.C4NamedClaims.cor_coherence_at_most_once_norm
+#print axioms ICO.C4NamedClaims.cor_coherence_at_most_once_norm
+
+#check ICO.C4NamedClaims.cor_coherence_optional_two_query
+#print axioms ICO.C4NamedClaims.cor_coherence_optional_two_query
+
+#check ICO.C4NamedClaims.cor_coherence_two_query
+#print axioms ICO.C4NamedClaims.cor_coherence_two_query
+
+#check ICO.C4NamedClaims.clm_fresh_distance
+#print axioms ICO.C4NamedClaims.clm_fresh_distance
+
+#check ICO.C4NamedClaims.clm_fresh_channel_diamond_distance
+#print axioms ICO.C4NamedClaims.clm_fresh_channel_diamond_distance
+
+#check ICO.C4NamedClaims.clm_fresh_trace_bound
+#print axioms ICO.C4NamedClaims.clm_fresh_trace_bound
+
+#check ICO.C4NamedClaims.clm_pair_fresh_coherence
+#print axioms ICO.C4NamedClaims.clm_pair_fresh_coherence
+
+#check ICO.C4NamedClaims.clm_pair_fresh_coherence_norm
+#print axioms ICO.C4NamedClaims.clm_pair_fresh_coherence_norm
+
+#check ICO.C4NamedClaims.clm_pair_fresh_coherence_sum
+#print axioms ICO.C4NamedClaims.clm_pair_fresh_coherence_sum
+
+#check ICO.C4NamedClaims.eq_R3_fresh_frame_bound
+#print axioms ICO.C4NamedClaims.eq_R3_fresh_frame_bound
+
+#check ICO.PolarizationOrderedArbitraryControl.padAtMostOnce_channel_map
+#print axioms ICO.PolarizationOrderedArbitraryControl.padAtMostOnce_channel_map
+
+#check ICO.PolarizationOrderedArbitraryControl.atMostOnce_ordered_components
+#print axioms ICO.PolarizationOrderedArbitraryControl.atMostOnce_ordered_components
+
+#check ICO.PolarizationOrderedArbitraryControl.atMostOnce_ordered_components_dim_d
+#print axioms ICO.PolarizationOrderedArbitraryControl.atMostOnce_ordered_components_dim_d
+
+#check ICO.PolarizationOrderedArbitraryControl.dilutedPlusSwitchMap_eq_four_terms
+#print axioms ICO.PolarizationOrderedArbitraryControl.dilutedPlusSwitchMap_eq_four_terms
+
+#check ICO.PolarizationOrderedArbitraryControl.one_call_each_diluted_switch_plus
+#print axioms ICO.PolarizationOrderedArbitraryControl.one_call_each_diluted_switch_plus
+
+#check ICO.PolarizationOrderedArbitraryControl.one_call_each_diluted_switch_full
+#print axioms ICO.PolarizationOrderedArbitraryControl.one_call_each_diluted_switch_full
+
+#check ICO.ExactQubitNamedLemmas.universalSupport_eq_range_E
+#print axioms ICO.ExactQubitNamedLemmas.universalSupport_eq_range_E
+
+#check ICO.ExactQubitNamedLemmas.lem_support_part_b
+#print axioms ICO.ExactQubitNamedLemmas.lem_support_part_b
+
+#check ICO.ExactQubitNamedLemmas.ordered_component_kraus_in_support
+#print axioms ICO.ExactQubitNamedLemmas.ordered_component_kraus_in_support
+
+#check ICO.ExactQubitNamedLemmas.ordered_component_kraus_in_range_E
+#print axioms ICO.ExactQubitNamedLemmas.ordered_component_kraus_in_range_E
+
+#check ICO.ExactQubitNamedLemmas.lem_support_part_a_fin4
+#print axioms ICO.ExactQubitNamedLemmas.lem_support_part_a_fin4
+
+#check ICO.ExactQubitNamedLemmas.lem_support_part_a
+#print axioms ICO.ExactQubitNamedLemmas.lem_support_part_a
+
+#check ICO.ExactQubitNamedLemmas.lem_support
+#print axioms ICO.ExactQubitNamedLemmas.lem_support
+
+#check ICO.ExactQubitNamedLemmas.x24_24_in_gauge_row_space
+#print axioms ICO.ExactQubitNamedLemmas.x24_24_in_gauge_row_space
+
+#check ICO.ExactQubitNamedLemmas.x24_24_vanishes_on_gauge
+#print axioms ICO.ExactQubitNamedLemmas.x24_24_vanishes_on_gauge
+
+#check ICO.ExactQubitNamedLemmas.pauli_four_kraus_linearIndependent
+#print axioms ICO.ExactQubitNamedLemmas.pauli_four_kraus_linearIndependent
+
+#check ICO.ExactQubitNamedLemmas.x24_24_vanishes_of_pauli_link
+#print axioms ICO.ExactQubitNamedLemmas.x24_24_vanishes_of_pauli_link
+
+#check ICO.ExactQubitNamedLemmas.functional_eq_x24_24_add_gauge_invariant
+#print axioms ICO.ExactQubitNamedLemmas.functional_eq_x24_24_add_gauge_invariant
+
+#check ICO.ExactQubitNamedLemmas.three_systems_solution_dim_126
+#print axioms ICO.ExactQubitNamedLemmas.three_systems_solution_dim_126
+
+#check ICO.ExactQubitNamedLemmas.admissible_functionals_dim_199
+#print axioms ICO.ExactQubitNamedLemmas.admissible_functionals_dim_199
+
+#check ICO.ExactQubitNamedLemmas.ab_ba_solution_dim_126
+#print axioms ICO.ExactQubitNamedLemmas.ab_ba_solution_dim_126
+
+#check ICO.ExactQubitNamedLemmas.admissible_row_intersection_dim_199
+#print axioms ICO.ExactQubitNamedLemmas.admissible_row_intersection_dim_199
+
+#check ICO.C6LabelCache.polarPairCreator_covariance
+#print axioms ICO.C6LabelCache.polarPairCreator_covariance
+
+#check ICO.C6LabelCache.pairImageProj_commutes
+#print axioms ICO.C6LabelCache.pairImageProj_commutes
+
+#check ICO.C6LabelCache.labelCacheRetrieval_trace
+#print axioms ICO.C6LabelCache.labelCacheRetrieval_trace
+
+#check ICO.C6LabelCache.labelCacheBirth_trace
+#print axioms ICO.C6LabelCache.labelCacheBirth_trace
+
+#check ICO.C6LabelCache.labelCacheCall_eq_gradedQuery
+#print axioms ICO.C6LabelCache.labelCacheCall_eq_gradedQuery
+
+#check ICO.C6LabelCache.uniformRun_eq_labelCache_run
+#print axioms ICO.C6LabelCache.uniformRun_eq_labelCache_run
+
+#check ICO.C6LabelCache.cacheDensity_eq_labelCache_output
+#print axioms ICO.C6LabelCache.cacheDensity_eq_labelCache_output
+
+#check ICO.C6LabelCache.treeLabelCacheDensity_eq_compiled
+#print axioms ICO.C6LabelCache.treeLabelCacheDensity_eq_compiled
+
+#check ICO.C6LabelCache.eps2_eq_Icc
+#print axioms ICO.C6LabelCache.eps2_eq_Icc
+
+#check ICO.C6LabelCache.eps3_eq_formula
+#print axioms ICO.C6LabelCache.eps3_eq_formula
+
+#check ICO.C6LabelCache.eps4_eq_Icc
+#print axioms ICO.C6LabelCache.eps4_eq_Icc
+
+#check ICO.C6LabelCache.prop_cache_protocol_distance
+#print axioms ICO.C6LabelCache.prop_cache_protocol_distance
+
+#check ICO.C6LabelCache.prop_cache_tree_distance
+#print axioms ICO.C6LabelCache.prop_cache_tree_distance
+
+#check ICO.C6LabelCache.reference_cache_step_invariant
+#print axioms ICO.C6LabelCache.reference_cache_step_invariant
+
+#check ICO.C6LabelCache.reference_cache_invariant
+#print axioms ICO.C6LabelCache.reference_cache_invariant
+
+#check ICO.C6LabelCache.reference_cache_decoded_invariant
+#print axioms ICO.C6LabelCache.reference_cache_decoded_invariant
+
+#check ICO.C6LabelCache.reference_cache_tree_invariant
+#print axioms ICO.C6LabelCache.reference_cache_tree_invariant
+
+#check ICO.C6LabelCache.cache_reference_protocol_distance
+#print axioms ICO.C6LabelCache.cache_reference_protocol_distance
+
+#check ICO.C6LabelCache.cache_reference_distance
+#print axioms ICO.C6LabelCache.cache_reference_distance

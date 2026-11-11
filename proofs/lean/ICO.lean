@@ -26,3 +26,7 @@ import ICO.Section54Validation
 import ICO.TwoCallCertificate
 import ICO.TwoCallOperational
 import ICO.C6BonusInventory
+import ICO.VisibilityIdentities
+import ICO.C4NamedClaims
+import ICO.ExactQubitNamedLemmas
+import ICO.C6LabelCache

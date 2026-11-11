@@ -1,9 +1,9 @@
 {
-  "checkedUTC": "2026-11-11T06:59:44.017Z",
+  "checkedUTC": "2026-11-11T20:00:07.099Z",
   "toolchain": "Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)",
   "provenance": "100% clean-from-scratch compilation from .lean source under Lean 4.30.0 (zero pre-existing QIT/ICO .oleans)",
   "kind": "working source and compiled-object provenance; not a substitute for kernel checking",
-  "count": 1659,
+  "count": 1663,
   "findings": [],
   "rows": [
     {
@@ -28917,7 +28917,7 @@
     {
       "module": "ICO.BudgetContinuity",
       "sourceSha256": "492346fd9de89241ba26fd0212f0d56c80aa0e0797cbd68150d43e72f19b6512",
-      "sourceModifiedUTC": "2026-11-11T01:02:22.825Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:51.987Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T03:47:10.954827Z",
@@ -29457,7 +29457,7 @@
     {
       "module": "ICO.BudgetPreparation",
       "sourceSha256": "2bd70d53c5d324a8bb639746490f1ce824d8339b37d1572bcd8584e8bfc32f49",
-      "sourceModifiedUTC": "2026-11-11T01:02:24.440Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:51.989Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T04:57:43.922143Z",
@@ -29505,7 +29505,7 @@
     {
       "module": "ICO.C4FullSwitchTheorem",
       "sourceSha256": "d50ec944a45c087c88740fec0ce3fc54a7537902c99d1f8b8b297cd7ec0df467",
-      "sourceModifiedUTC": "2026-11-11T01:02:26.394Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:51.990Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T05:04:09.827770Z",
@@ -40209,7 +40209,7 @@
     {
       "module": "ICO.C6VisibilityEstimator",
       "sourceSha256": "95caed019ee77e596f66c6e4e30aea1cbae56aead7e145e9cfd85bec44a48997",
-      "sourceModifiedUTC": "2026-11-11T01:23:26.335Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:53.888Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T05:05:42.565515Z",
@@ -40232,32 +40232,32 @@
     },
     {
       "module": "ICO.PolarizationOrderedArbitraryControl",
-      "sourceSha256": "5809c11dfacf3f97defd5163ac9b90e4c1ce07f139046d6f4c402cea07e4695a",
-      "sourceModifiedUTC": "2026-11-11T03:38:45.816Z",
+      "sourceSha256": "be4f990569d09c05e5dd6949b863ee76e9949ea9dd921babd1fb0726b7ae260c",
+      "sourceModifiedUTC": "2026-11-11T16:19:53.145Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
-      "compileStartedUTC": "2026-11-11T06:52:24.296137Z",
-      "compileFinishedUTC": "2026-11-11T06:53:25.669782Z",
-      "compileSeconds": 61.3738,
+      "compileStartedUTC": "2026-11-11T18:14:05.568704Z",
+      "compileFinishedUTC": "2026-11-11T18:15:08.141887Z",
+      "compileSeconds": 62.5734,
       "objects": [
         {
           "suffix": ".olean",
-          "sha256": "cb7529cae3861c21dbc966c8c5e460a5b83cfece687940d5935667c91ca94dd9",
-          "bytes": 3994440,
-          "modifiedUTC": "2026-11-11T06:53:24.485Z"
+          "sha256": "1601125124712cc9dc8991df269bcf17ccf652d55b34aa3bf4d8369c10fbd4cf",
+          "bytes": 5557432,
+          "modifiedUTC": "2026-11-11T18:15:06.544Z"
         },
         {
           "suffix": ".ilean",
-          "sha256": "f5bbf9207be9fcc7307da2deffe1e6bf7d486be28271148d684734a01ee42545",
-          "bytes": 331379,
-          "modifiedUTC": "2026-11-11T06:53:25.281Z"
+          "sha256": "10312f870bd2da91bda366b7ad5b1c55cec0e4992a33982938e6e84dd90713ff",
+          "bytes": 518426,
+          "modifiedUTC": "2026-11-11T18:15:07.756Z"
         }
       ]
     },
     {
       "module": "ICO.Section44TwoCall",
       "sourceSha256": "ad113637494a777fe4b613b18d23f7ad2ee1f10bd375e4c66a468c31ed03fbf2",
-      "sourceModifiedUTC": "2026-11-11T01:41:50.921Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:53.255Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T05:05:52.139803Z",
@@ -40280,56 +40280,56 @@
     },
     {
       "module": "ICO.RemarksUnitaryNumerical",
-      "sourceSha256": "b69c25705b000be5da042c3b1b51c4fd7170a10aac977115c144bea1475377b6",
-      "sourceModifiedUTC": "2026-11-11T01:49:59.059Z",
+      "sourceSha256": "9dfa3ac38c5905b046a9c740a5e03f3869f10ef22259c09dc6066cced9f04fb4",
+      "sourceModifiedUTC": "2026-11-11T19:48:00.672Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
-      "compileStartedUTC": "2026-11-11T05:05:49.492557Z",
-      "compileFinishedUTC": "2026-11-11T05:06:41.117657Z",
-      "compileSeconds": 51.6251,
+      "compileStartedUTC": "2026-11-11T19:56:29.768449Z",
+      "compileFinishedUTC": "2026-11-11T19:57:31.565098Z",
+      "compileSeconds": 61.7968,
       "objects": [
         {
           "suffix": ".olean",
-          "sha256": "5bbab1d66474693375521d4cadc5f72828f81c88593439ca9e357aa218b7764e",
-          "bytes": 2466016,
-          "modifiedUTC": "2026-11-11T05:06:41.117Z"
+          "sha256": "32a417f252e7d293086c364879d6399fadcf0b8b2cf1d501f78cc866bb15f348",
+          "bytes": 7539568,
+          "modifiedUTC": "2026-11-11T19:57:29.769Z"
         },
         {
           "suffix": ".ilean",
-          "sha256": "989621c770979f97fc2c7a8b05d127c2eab4065a28541d495abe09df978a3f9d",
-          "bytes": 114595,
-          "modifiedUTC": "2026-11-11T05:06:41.495Z"
+          "sha256": "a03b7e95bd4c1e7656553f97589bf890892c740a182a510186c0b9128fb096a0",
+          "bytes": 419466,
+          "modifiedUTC": "2026-11-11T19:57:31.177Z"
         }
       ]
     },
     {
       "module": "ICO.Section54Validation",
-      "sourceSha256": "5641dad763265826bc6d325fe2b105d01ae285eef3dacf30ffdfda05e5df4f48",
-      "sourceModifiedUTC": "2026-11-11T03:44:06.562Z",
+      "sourceSha256": "4b02aea3cc391c7a9746510d51f22d6e088e7dbc41f58bdfa5c6a5151278c638",
+      "sourceModifiedUTC": "2026-11-11T16:20:16.016Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
-      "compileStartedUTC": "2026-11-11T06:51:25.718464Z",
-      "compileFinishedUTC": "2026-11-11T06:52:24.283188Z",
-      "compileSeconds": 58.5648,
+      "compileStartedUTC": "2026-11-11T16:20:33.666926Z",
+      "compileFinishedUTC": "2026-11-11T16:21:29.915891Z",
+      "compileSeconds": 56.2491,
       "objects": [
         {
           "suffix": ".olean",
-          "sha256": "4a79219f17433f703fb7597ef19e8c4af81d3195e71a9a87dc9e6ddc3ea5be64",
-          "bytes": 5944592,
-          "modifiedUTC": "2026-11-11T06:52:23.068Z"
+          "sha256": "8f6b0fec2c1ff60c13a824daa738b0528efe437cd769dd27ee82b5d26ad78394",
+          "bytes": 6834584,
+          "modifiedUTC": "2026-11-11T16:21:28.403Z"
         },
         {
           "suffix": ".ilean",
-          "sha256": "9d990af869a7a9162ae10e06c8a458c0218ed2124fe5b999ddb1abde46e2c2a5",
-          "bytes": 343513,
-          "modifiedUTC": "2026-11-11T06:52:23.929Z"
+          "sha256": "b1c8628d0c99f7c8ee6410bde0a63cd3a02c8f7ebb09ef3854bf0b9e131f82fb",
+          "bytes": 460168,
+          "modifiedUTC": "2026-11-11T16:21:29.541Z"
         }
       ]
     },
     {
       "module": "ICO.TwoCallCertificate",
       "sourceSha256": "d5c42f5671438b7cb38f7aa92dc554bd6e4ad2e296881ed5089783248b863c76",
-      "sourceModifiedUTC": "2026-11-11T01:41:33.385Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:54.489Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T06:50:27.924080Z",
@@ -40353,7 +40353,7 @@
     {
       "module": "ICO.TwoCallOperational",
       "sourceSha256": "81251a891d6f751de60188b4e440c26dc30a4bd212b266e2c58f8273de75f719",
-      "sourceModifiedUTC": "2026-11-11T06:31:43.259Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:54.491Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T06:53:25.679143Z",
@@ -40377,7 +40377,7 @@
     {
       "module": "ICO.C6BonusInventory",
       "sourceSha256": "72a4691fec6013ed7c7639109bd6bd85cad6ace6c5e5261392d7ee8c878a3fcf",
-      "sourceModifiedUTC": "2026-11-11T01:23:21.312Z",
+      "sourceModifiedUTC": "2026-11-11T08:35:53.887Z",
       "matchesStagedClosure": true,
       "cleanFromScratch": true,
       "compileStartedUTC": "2026-11-11T05:05:47.880690Z",
@@ -40395,6 +40395,102 @@
           "sha256": "cfd6444b4c08d4afc74772960434f882c372fb65db1b0d79e9a189405c5caf85",
           "bytes": 47435,
           "modifiedUTC": "2026-11-11T05:06:38.436Z"
+        }
+      ]
+    },
+    {
+      "module": "ICO.VisibilityIdentities",
+      "sourceSha256": "919eb13c350d95b31026aef803fa14c7a9bb8c908cc5ebe28f831d2ff96954c7",
+      "sourceModifiedUTC": "2026-11-11T16:04:06.775Z",
+      "matchesStagedClosure": true,
+      "cleanFromScratch": true,
+      "compileStartedUTC": "2026-11-11T16:04:30.208087Z",
+      "compileFinishedUTC": "2026-11-11T16:04:56.304198Z",
+      "compileSeconds": 26.0962,
+      "objects": [
+        {
+          "suffix": ".olean",
+          "sha256": "a2053873f7ca739b79cebff81a2b114d3998b5e39b67ade13372f1278a36e0b1",
+          "bytes": 846136,
+          "modifiedUTC": "2026-11-11T16:04:55.987Z"
+        },
+        {
+          "suffix": ".ilean",
+          "sha256": "0a1d42afe0055f6db54dfb846e1d29d7635b8e832606ff5d94c2293bc96359f8",
+          "bytes": 66248,
+          "modifiedUTC": "2026-11-11T16:04:56.119Z"
+        }
+      ]
+    },
+    {
+      "module": "ICO.C4NamedClaims",
+      "sourceSha256": "6eb0514b4727131d8019170709ef442743f69e97fd2ab3c90f4ca54bb782b4fd",
+      "sourceModifiedUTC": "2026-11-11T16:08:41.710Z",
+      "matchesStagedClosure": true,
+      "cleanFromScratch": true,
+      "compileStartedUTC": "2026-11-11T16:08:55.156678Z",
+      "compileFinishedUTC": "2026-11-11T16:09:21.651281Z",
+      "compileSeconds": 26.4946,
+      "objects": [
+        {
+          "suffix": ".olean",
+          "sha256": "0085f2e70bd8f5ed408a93b5113bee892ce3eae5ab854033b9cb33e80ed65385",
+          "bytes": 1584536,
+          "modifiedUTC": "2026-11-11T16:09:21.030Z"
+        },
+        {
+          "suffix": ".ilean",
+          "sha256": "abba046f787bb0a8d9376a7e55d18dc0c7a3f64acd659fff8506c5ca28176a86",
+          "bytes": 127494,
+          "modifiedUTC": "2026-11-11T16:09:21.310Z"
+        }
+      ]
+    },
+    {
+      "module": "ICO.ExactQubitNamedLemmas",
+      "sourceSha256": "8b94041a9658968d85d7f0201711d9acfb14f02e7fc968e8e8261b71638cf8b3",
+      "sourceModifiedUTC": "2026-11-11T19:25:41.482Z",
+      "matchesStagedClosure": true,
+      "cleanFromScratch": true,
+      "compileStartedUTC": "2026-11-11T19:25:41.753380Z",
+      "compileFinishedUTC": "2026-11-11T19:50:26.004866Z",
+      "compileSeconds": 1484.2559,
+      "objects": [
+        {
+          "suffix": ".olean",
+          "sha256": "3c1b9955a2b13398130e054aaa9ee39782abcd45830ebbe8e24625fe3fee4ec8",
+          "bytes": 29431424,
+          "modifiedUTC": "2026-11-11T19:50:19.379Z"
+        },
+        {
+          "suffix": ".ilean",
+          "sha256": "c52502475e3d525f7fe652c9a0407b4736ddf3611835abcb85729d975a990f1a",
+          "bytes": 1032970,
+          "modifiedUTC": "2026-11-11T19:50:25.336Z"
+        }
+      ]
+    },
+    {
+      "module": "ICO.C6LabelCache",
+      "sourceSha256": "b8b7b769f133481a8f29db7f0ccb14f7cc5832c0b98cb7af7196f1d646bd797f",
+      "sourceModifiedUTC": "2026-11-11T19:44:38.499Z",
+      "matchesStagedClosure": true,
+      "cleanFromScratch": true,
+      "compileStartedUTC": "2026-11-11T19:57:31.578330Z",
+      "compileFinishedUTC": "2026-11-11T19:58:42.352486Z",
+      "compileSeconds": 70.7744,
+      "objects": [
+        {
+          "suffix": ".olean",
+          "sha256": "cef3117ab686b7c02d1a74daf362d1538ce8f9cb73f3e89a0337c84568112644",
+          "bytes": 13624448,
+          "modifiedUTC": "2026-11-11T19:58:40.432Z"
+        },
+        {
+          "suffix": ".ilean",
+          "sha256": "c2d10dfcdea793479205ccd8f38825a636c0356730c795f90867d93af39cb496",
+          "bytes": 606397,
+          "modifiedUTC": "2026-11-11T19:58:41.996Z"
         }
       ]
     }

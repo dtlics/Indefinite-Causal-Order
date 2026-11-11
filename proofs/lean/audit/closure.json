@@ -27,7 +27,11 @@
     "ICO.Section54Validation",
     "ICO.TwoCallCertificate",
     "ICO.TwoCallOperational",
-    "ICO.C6BonusInventory"
+    "ICO.C6BonusInventory",
+    "ICO.VisibilityIdentities",
+    "ICO.C4NamedClaims",
+    "ICO.ExactQubitNamedLemmas",
+    "ICO.C6LabelCache"
   ],
   "order": [
     "QIT.Init",
@@ -1688,7 +1692,11 @@
     "ICO.Section54Validation",
     "ICO.TwoCallCertificate",
     "ICO.TwoCallOperational",
-    "ICO.C6BonusInventory"
+    "ICO.C6BonusInventory",
+    "ICO.VisibilityIdentities",
+    "ICO.C4NamedClaims",
+    "ICO.ExactQubitNamedLemmas",
+    "ICO.C6LabelCache"
   ],
   "modules": [
     {
@@ -16620,13 +16628,14 @@
         "ICO.BoundedSwitchObstruction",
         "ICO.BudgetPreparation",
         "ICO.CircuitPolarization",
+        "ICO.ReducedCircuit",
         "ICO.TwoQueryDilation",
         "ICO.FirstQueryInstrument",
         "ICO.OrderedCombSemantics",
         "Mathlib.GroupTheory.Perm.Fin"
       ],
-      "sha256": "5809c11dfacf3f97defd5163ac9b90e4c1ce07f139046d6f4c402cea07e4695a",
-      "bytes": 89055
+      "sha256": "be4f990569d09c05e5dd6949b863ee76e9949ea9dd921babd1fb0726b7ae260c",
+      "bytes": 139878
     },
     {
       "name": "ICO.Section44TwoCall",
@@ -16640,10 +16649,11 @@
       "name": "ICO.RemarksUnitaryNumerical",
       "imports": [
         "ICO.C4FullSwitchTheorem",
-        "ICO.C6OperationalDecision"
+        "ICO.C6OperationalDecision",
+        "ICO.PolarizationOrderedArbitraryControl"
       ],
-      "sha256": "b69c25705b000be5da042c3b1b51c4fd7170a10aac977115c144bea1475377b6",
-      "bytes": 38883
+      "sha256": "9dfa3ac38c5905b046a9c740a5e03f3869f10ef22259c09dc6066cced9f04fb4",
+      "bytes": 138084
     },
     {
       "name": "ICO.Section54Validation",
@@ -16655,8 +16665,8 @@
         "ICO.DiamondPreprocessing",
         "QIT.States.Purification.Canonical"
       ],
-      "sha256": "5641dad763265826bc6d325fe2b105d01ae285eef3dacf30ffdfda05e5df4f48",
-      "bytes": 122134
+      "sha256": "4b02aea3cc391c7a9746510d51f22d6e088e7dbc41f58bdfa5c6a5151278c638",
+      "bytes": 166003
     },
     {
       "name": "ICO.TwoCallCertificate",
@@ -16694,6 +16704,46 @@
       ],
       "sha256": "72a4691fec6013ed7c7639109bd6bd85cad6ace6c5e5261392d7ee8c878a3fcf",
       "bytes": 17442
+    },
+    {
+      "name": "ICO.VisibilityIdentities",
+      "imports": [
+        "ICO.LudersPromise",
+        "ICO.RecordingDepolarizing"
+      ],
+      "sha256": "919eb13c350d95b31026aef803fa14c7a9bb8c908cc5ebe28f831d2ff96954c7",
+      "bytes": 20935
+    },
+    {
+      "name": "ICO.C4NamedClaims",
+      "imports": [
+        "ICO.C4FullSwitchTheorem"
+      ],
+      "sha256": "6eb0514b4727131d8019170709ef442743f69e97fd2ab3c90f4ca54bb782b4fd",
+      "bytes": 39452
+    },
+    {
+      "name": "ICO.ExactQubitNamedLemmas",
+      "imports": [
+        "ICO.NormalFormQubitObstruction",
+        "ICO.QubitSwitchConvention",
+        "Mathlib.LinearAlgebra.Dimension.Finrank",
+        "Mathlib.LinearAlgebra.Dimension.RankNullity",
+        "Mathlib.LinearAlgebra.Dimension.DivisionRing",
+        "Mathlib.LinearAlgebra.FiniteDimensional.Lemmas",
+        "Mathlib.LinearAlgebra.Matrix.Rank"
+      ],
+      "sha256": "8b94041a9658968d85d7f0201711d9acfb14f02e7fc968e8e8261b71638cf8b3",
+      "bytes": 327799
+    },
+    {
+      "name": "ICO.C6LabelCache",
+      "imports": [
+        "ICO.C6OperationalDecision",
+        "ICO.C6PhysicalCosts"
+      ],
+      "sha256": "b8b7b769f133481a8f29db7f0ccb14f7cc5832c0b98cb7af7196f1d646bd797f",
+      "bytes": 214699
     }
   ],
   "external": [
@@ -16767,6 +16817,10 @@
     "Mathlib.Data.ZMod.Basic",
     "Mathlib.GroupTheory.Perm.Fin",
     "Mathlib.LinearAlgebra.Dimension.Constructions",
+    "Mathlib.LinearAlgebra.Dimension.DivisionRing",
+    "Mathlib.LinearAlgebra.Dimension.Finrank",
+    "Mathlib.LinearAlgebra.Dimension.RankNullity",
+    "Mathlib.LinearAlgebra.FiniteDimensional.Lemmas",
     "Mathlib.LinearAlgebra.Lagrange",
     "Mathlib.LinearAlgebra.Matrix.ConjTranspose",
     "Mathlib.LinearAlgebra.Matrix.FiniteDimensional",

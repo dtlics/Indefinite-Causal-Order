@@ -1,9 +1,9 @@
 {
   "exit_code": 0,
   "toolchain": "Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)",
-  "startedUTC": "2026-11-11T06:59:21.556493Z",
-  "finishedUTC": "2026-11-11T06:59:44.017097Z",
-  "seconds": 22.4606449,
-  "ico_root_seconds": 22.1818588,
+  "startedUTC": "2026-11-11T19:59:44.778294Z",
+  "finishedUTC": "2026-11-11T20:00:07.099651Z",
+  "seconds": 22.3214137,
+  "ico_root_seconds": 21.7117265,
   "command": "lake env lean -t0 -j1 -s524288 -R proofs/lean proofs/lean/Audit.lean"
 }

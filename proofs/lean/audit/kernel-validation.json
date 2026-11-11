@@ -1,15 +1,15 @@
 {
   "exit_code": 0,
   "toolchain": "Lean (version 4.30.0, x86_64-w64-windows-gnu, commit d024af099ca4bf2c86f649261ebf59565dc8c622, Release)",
-  "verifiedUTC": "2026-11-11T06:59:44.017097Z",
-  "declarations": 124,
+  "verifiedUTC": "2026-11-11T20:00:07.099651Z",
+  "declarations": 221,
   "allowed_axioms": [
     "Classical.choice",
     "Quot.sound",
     "propext"
   ],
   "unexpected_axioms": [],
-  "audit_sha256": "3add490bec5917e4d118a62a3cd97f27bbb13d381e0b72898a2bfb813ae64a08",
-  "log_sha256": "1b8ac6bf7580b5b60d0171b79c8fb6954ae9e3a499f918b599a03bfc2b1fbecb",
-  "kernel_seconds": 22.4606449
+  "audit_sha256": "5336975af2cacb935097fb4f576f10f14191de27db69ba640e1e98a47452540a",
+  "log_sha256": "0cad679e317ad05beb023622b2544d59ac3403f3f1eb435370c27a8b479da35f",
+  "kernel_seconds": 22.3214137
 }
