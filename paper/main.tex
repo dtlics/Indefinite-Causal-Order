@@ -466,8 +466,8 @@ At full strength, dephasing in the hidden basis is a measurement in a
 known basis placed between $U^\dagger$ and $U$, where the columns of
 $U$ are the hidden basis, and complete depolarization is two such
 measurements in mutually unbiased bases. The unknown therefore enters
-only through one Haar-random unitary $U$, which every call queries once
-backwards and once forwards. The path-recording theorem of Ma and
+only through one Haar-random unitary $U$, which each of these
+measurements queries once backwards and once forwards. The path-recording theorem of Ma and
 Huang~\cite{mahuang2025} replaces $U$ by a table of the queries made so
 far. The main technical work reduces this table to a
 \emph{label cache} (Proposition~\ref{prop:cache}): at each call the
@@ -705,8 +705,8 @@ $\QC[A,B]$ for all $A,B$, linearly in $A$ and in $B$. The same
 definitions apply to any process whose Kraus operators are bilinear in
 the Kraus operators of the two boxes, such as the switch.
 
-The lemma writes the Choi operator of such a strategy as a sum over the
-two orders. Each term obeys two \emph{comb equations}. For the order
+Lemma~\ref{lem:ordered} below writes the Choi operator of such a
+strategy as a sum over the two orders. Each term obeys two \emph{comb equations}. For the order
 $A$ before $B$ they say that once the output $F$ is discarded, nothing
 depends on what the last box $B$ returns, and that once $B$ is removed
 as well, nothing depends on what $A$ returns.
@@ -911,14 +911,14 @@ for qubits.
 
 \subsection{From many calls to one call each}\label{sec:polarization}
 
-From an exact simulator we build a strategy that calls each box once:
-it keeps one call to $A$ and one call to $B$, chosen at random, and
-replaces every other call by the identity.
-Lemma~\ref{lem:polarization} shows that this strategy implements the
-diluted switch~\eqref{eq:dilution} with $\lambda=1/M$ and $\mu=1/N$.
-The dimension plays no role in this subsection. Let $\QC$ be an
-ordinary strategy that makes exactly $M$ calls to $A$ and exactly $N$
-calls to $B$ on every run. On each run, number the calls to $A$ in the
+Let $\QC$ be an ordinary strategy that makes exactly $M$ calls to $A$
+and exactly $N$ calls to $B$ on every run. From it we build a strategy
+that calls each box once: it keeps one call to $A$ and one call to $B$,
+chosen at random, and replaces every other call by the identity. If
+$\QC$ is an exact simulator, this strategy implements the diluted
+switch~\eqref{eq:dilution} with $\lambda=1/M$ and $\mu=1/N$
+(Lemma~\ref{lem:polarization}). The dimension plays no role in this
+subsection. On each run, number the calls to $A$ in the
 order in which they are made, and likewise the calls to $B$.
 
 \paragraph{Slots.}
@@ -1060,8 +1060,8 @@ discarding the control output of the diluted switch leaves an equal
 mixture of two processes with fixed orders. Hence $C_T$ is itself the
 sum of an operator that obeys the $A$-before-$B$ equations and one that
 obeys the $B$-before-$A$ equations: take for the first any operator
-whose partial trace over $F$ is the first half of the mixture, and for
-the second the remainder. The two operators are not both positive.
+whose partial trace over the control output $F_c$ is the first half of
+the mixture, and for the second the remainder. The two operators are not both positive.
 Positivity is usually brought in through a causal witness, found by
 semidefinite programming for one fixed
 target~\cite{bavaresco2025,araujo2015}. Here the weight $\lambda\mu$ of
@@ -1215,17 +1215,20 @@ linearly independent, such as $U=\sigma_x$ and $V=\sigma_z$, the fourth
 operator appears in the output with coefficient $2X_{24,24}$, and a
 gauge term has zero output (Appendix~\ref{sec:diluted-coordinates}). The two components together must therefore
 carry the switch weight $\lambda\mu/2$ of $X_T$. By parts (a) and (b)
-each can do so only with coherences, $X_{24,24}=-g(X)$. Since neither
+of Lemma~\ref{lem:exact-obstruction} each can do so only with
+coherences, $X_{24,24}=-g(X)$. Since neither
 $f$ nor $X_{24,24}$ changes under the gauge, neither does $g$, and
 $g(X_T)=0$ because $X_T$ is diagonal. So the two ordered components
 would have to carry total switch weight zero. The functional $f$ is not
-unique: the functionals with properties (a)--(c) form a space of
+unique: the functionals with properties (a)--(c) of the lemma form a space of
 dimension $199$ (Appendix~\ref{sec:functional-proof}), and we chose one
 with few small integer coefficients.
 
 \subsection{Where channels were used}\label{sec:where-channels}
 
-Channels that are not unitary entered twice:
+Channels that are not unitary entered in three places. For $d>2$ the
+reduction to qubits evaluates the simulator on the channels
+$A^\uparrow$, which are not unitary even when $A$ is.
 Lemma~\ref{lem:polarization} evaluates the simulator on the diluted
 boxes $xA+(1-x)\id$, and the gauge equation~\eqref{eq:gauge-equation}
 uses its conclusion on all pairs of channels.
@@ -1445,9 +1448,10 @@ sampled unitaries. This is allowed: a lower bound on the distance
 between two channels may use any effect, and $\Theta$ is not a test
 that a strategy would have to carry~out.
 
-The acceptance $\Tr(SS^\dagger\rho)$ splits into a part that rewards
-the right product for each control value and a part that rewards
-coherence between the two. In the basis $\ket0,\ket1$ of the control,
+The quantity $\Tr(SS^\dagger\rho)$, which bounds the acceptance
+probability $\Tr(\Theta\rho)$ from above, splits into a part that
+rewards the right product for each control value and a part that
+rewards coherence between the two. In the basis $\ket0,\ket1$ of the control,
 $SS^\dagger$ is one half of the block matrix with diagonal blocks
 $S_0S_0^\dagger$, $S_1S_1^\dagger$ and off-diagonal block
 $S_0S_1^\dagger$. Hence, for a state $\rho$ with blocks
@@ -1922,13 +1926,13 @@ the other $k-1$ labels, which has probability about $1/d$
 \node[figtitle] at (-.1,3.55) {(a)\; Strength one: two measurements};
 \draw[figpanel] (0,0) rectangle (3.55,3.05);
 \node[figstep,anchor=north] at (1.775,2.98) {dephasing, $\Delta_U$};
-\draw[axA] (1.2,1.25) -- (2.45,1.25); \draw[axA] (1.2,1.25) -- (1.2,2.5);
-\draw[axB] (1.28,1.33) -- (2.53,1.33); \draw[axB] (1.28,1.33) -- (1.28,2.58);
+\draw[axA] (1.2,1.25) -- (2.45,1.25); \draw[axA] (1.2,1.25) -- (1.2,2.35);
+\draw[axB] (1.28,1.33) -- (2.53,1.33); \draw[axB] (1.28,1.33) -- (1.28,2.43);
 \node[figlab] at (1.775,.72) {$\Delta_U\circ\Delta_U=\Delta_U$};
 \node[figlab] at (1.775,.27) {same basis twice};
 \draw[figpanel] (3.85,0) rectangle (7.4,3.05);
 \node[figstep,anchor=north] at (5.625,2.98) {depolarizing, $\Omega$};
-\draw[axA] (5.1,1.3) -- (6.35,1.3); \draw[axA] (5.1,1.3) -- (5.1,2.55);
+\draw[axA] (5.1,1.3) -- (6.35,1.3); \draw[axA] (5.1,1.3) -- (5.1,2.4);
 \draw[axB] (5.1,1.3) -- (5.98,2.18); \draw[axB] (5.1,1.3) -- (4.22,2.18);
 \node[figlab] at (5.625,.72) {$\Delta_{UH}\circ\Delta_U=\Omega$};
 \node[figlab] at (5.625,.27) {two unbiased bases};
@@ -2331,13 +2335,13 @@ Step & Replacement & Why & Cost\\
 2 & a forward query always adds a pair
   & the query was just measured, so it is not entangled with the table and rarely removes a pair
   & $\varepsilon_2$\\\addlinespace
-3 & the operators that add a pair $\to$ their polar isometries ($F_\nu$ for forward queries)
-  & exact covariance~\eqref{eq:covariance}, on which Lemma~\ref{lem:reference-invariant} rests
+3 & the operators that add a pair $\to$ exactly covariant isometries ($F_\nu$ for forward queries)
+    & Lemma~\ref{lem:reference-invariant} rests on the exact covariance~\eqref{eq:covariance}
   & $\varepsilon_3$\\\addlinespace
 4 & inverse query $\to$ retrieval, or birth of a label orthogonal to the earlier outcomes
     & in the cache, retrieval and birth are alternatives; before this step they are two terms of one operator and could interfere later
   & $\varepsilon_4$\\\addlinespace
-5 & births use the operator that adds a pair, not its polar isometry; the list of the inverse queries is discarded; born labels are made maximally mixed
+5 & births add a pair without the normalization that makes the operator an isometry; the list of the inverse queries is discarded; born labels are made maximally mixed
   & no operator then touches an existing pair of that list, so it can be traced out; one list remains, as in Definition~\ref{def:cache}
   & $\varepsilon_5$\\
 \bottomrule
@@ -3130,8 +3134,9 @@ as alternatives, whereas in $\widetilde V^\dagger$ they are two terms
 of one operator, which a strategy with entangled memory could make
 interfere at a later call. Once births are orthogonal to the earlier
 outcomes, each of them leaves in the right list a record that no later
-step alters (Claim~\ref{appA:record}, proved in step~5 after the births
-have been made raw).
+step alters (Claim~\ref{appA:record}, proved in
+Section~\ref{sec:c6-A4} after $F^R$ has been replaced by $E^R$ in the
+births).
 
 \paragraph{The fresh step.}
 For a subspace $\mathcal K$ let $\Theta_{\mathcal K}$ be the projector
