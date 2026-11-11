@@ -1,69 +1,476 @@
 Paper-to-Lean theorem map
-========================
+=========================
 
 Manuscript: Infinite or indefinite: the query cost of simulating the quantum switch.
-Audit: 124 selected endpoints; 1,611 ICO and 48 unchanged QIT source modules (1,659 local modules across 28 root imports, built cleanly from source from an empty QIT/ICO .olean directory under Lean 4.30.0, commit d024af099ca4bf2c86f649261ebf59565dc8c622, on 2026-11-11).
+Audit: 221 selected endpoints; 1,615 ICO and 48 unchanged QIT source modules (1,663 local modules across 32 root imports, elaborated cleanly from .lean source under Lean 4.30.0, commit d024af099ca4bf2c86f649261ebf59565dc8c622, on 2026-11-11).
 
 All names below are fully qualified Lean declaration names. File paths are
-relative to this source package. Paper theorem numbers may change; the LaTeX
-labels are stable cross-references.
+relative to this source package. Paper theorem numbers refer to the current
+manuscript (`paper/main.tex`); the LaTeX labels are stable cross-references.
 
-SAME versus MUB: the main quantum-switch separation (C6)
--------------------------------------------------------
-Paper: thm:c6; sec:model; sec:visibility; eq:visibility; eq:basis-visibility;
-sec:c6-proof; eq:c6-priors; lem:c6-comparison; eq:c6-comparison; eq:c6-cache;
-lem:invariant-label; eq:invariant-label; sec:c6-recording; sec:c6-A1;
-sec:c6-A2; sec:c6-A3; sec:c6-A4.
-Modules: ICO/C6OperationalDecision.lean; ICO/C6SharedPairBound.lean;
+This file is organized into two parts:
+  - Part 1 maps every formalized statement, equation, and structural claim of
+    the current manuscript (`paper/main.tex`), and notes external literature
+    facts cited without new Lean formalization.
+  - Part 2 ("Audited results that do not correspond to a statement of the
+    manuscript") catalogues supplementary audited endpoints retained from
+    earlier drafts and companion research notes.
+
+
+Part 1: Statements of the manuscript
+====================================
+
+1.1 Framework: ordinary strategies, channel visibility, and ordered-comb decomposition
+--------------------------------------------------------------------------------------
+Paper: fig:switch; fig:landscape; sec:overview; sec:related; sec:framework;
+eq:switch; sec:model; def:ordinary; eq:simulation-error; sec:visibility;
+eq:visibility; eq:conjugation; eq:basis-visibility; sec:ordered; eq:vector-link;
+lem:ordered; eq:ordered-comb.
+Modules: ICO/BudgetContinuity.lean; ICO/BudgetPreparation.lean;
+ICO/VisibilityIdentities.lean; ICO/PolarizationOrderedArbitraryControl.lean.
+Selected endpoints:
+  ICO.BudgetQueryTree.Tree.channel_choi_continuous
+  ICO.BudgetQueryTree.uniformChannel_choi_continuous
+  ICO.BudgetQueryTree.Tree.prepare
+  ICO.BudgetQueryTree.Tree.prepare_channel
+  ICO.VisibilityIdentities.basis_dephasing_visibility
+  ICO.VisibilityIdentities.one_sub_interference_eq_commutator_hs
+  ICO.VisibilityIdentities.one_sub_interference_eq_commutator_entry_sq
+  ICO.VisibilityIdentities.one_sub_interference_eq_commutator_hilbertSchmidtSq
+  ICO.VisibilityIdentities.haar_average_dephasing_eq_depolarizing
+  ICO.VisibilityIdentities.haar_average_dephasing_eq_depolarizingChannel
+  ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition
+  ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition_dim_d
+  ICO.PolarizationOrderedArbitraryControl.tree_ordered_components
+  ICO.PolarizationOrderedArbitraryControl.tree_ordered_components_dim_d
+  ICO.PolarizationOrderedArbitraryControl.padAtMostOnce_channel_map
+  ICO.PolarizationOrderedArbitraryControl.atMostOnce_ordered_components
+  ICO.PolarizationOrderedArbitraryControl.atMostOnce_ordered_components_dim_d
+
+Definition 4 (def:ordinary, sec:model) is represented throughout the formal
+development by `ICO.BudgetQueryTree.Tree` (finite total call budget across both
+boxes, arbitrary mixed initial state prepared via `Tree.prepare` and
+`Tree.prepare_channel`, arbitrary finite quantum memory register, classical
+outcome-adaptive box selection, and early stopping), together with the labelled
+per-box budget trees (`ICO.AtMostLabelledQueryTree` and `ICO.LabelledQueryTree`)
+used in the structural decompositions. Simulation error (eq:simulation-error)
+is formalized as `QIT.Channel.diamondTraceDistance` (one half of the diamond
+norm). Continuity of Choi operators along budget trees is proved in
+`Tree.channel_choi_continuous` and `uniformChannel_choi_continuous`.
+
+Section 2.5 ("What the switch measures: the visibility", sec:visibility,
+eq:visibility, eq:conjugation, eq:basis-visibility) is formalized in
+`ICO/VisibilityIdentities.lean`:
+  - `basis_dephasing_visibility` proves the basis-dephasing visibility formula
+    (eq:basis-visibility) for every pair of unitaries U, U' in arbitrary finite
+    dimension d >= 1:
+    v(Delta_U, Delta_{U'}) = (1/d) sum_{j,k} |<j | U^dagger U' | k>|^4.
+  - `one_sub_interference_eq_commutator_hs`,
+    `one_sub_interference_eq_commutator_entry_sq`, and
+    `one_sub_interference_eq_commutator_hilbertSchmidtSq` prove for arbitrary
+    finite complete Kraus families {A_i} and {B_j} that
+    1 - v(A, B) = (1/(2d)) sum_{i,j} ||[A_i, B_j]||_HS^2.
+  - `haar_average_dephasing_eq_depolarizing` and
+    `haar_average_dephasing_eq_depolarizingChannel` prove that averaging
+    nonselective basis dephasing Delta_U over the Haar measure on U(d) yields
+    the matched-fidelity depolarizing channel Lambda = (id + d Omega)/(d + 1)
+    (also invoked in Section 5.1, sec:switch-test).
+
+Lemma 5 (lem:ordered, sec:ordered, eq:vector-link, eq:ordered-comb) is
+formalized in `ICO/PolarizationOrderedArbitraryControl.lean` both for single-use
+normal-form trees (`ordered_components_decomposition`,
+`ordered_components_decomposition_dim_d`, `tree_ordered_components`,
+`tree_ordered_components_dim_d`) and directly for strategies that call each box
+at most once on every run (`padAtMostOnce_channel_map`,
+`atMostOnce_ordered_components`, `atMostOnce_ordered_components_dim_d`),
+decomposing the strategy Choi operator into positive semidefinite ordered
+components C_{AB} + C_{BA} satisfying the causal partial-trace constraints
+(eq:ordered-comb) with weights p_1 + p_2 = 1 and reproducing the output channel
+by Choi/Kraus link contraction.
+
+
+1.2 Exact simulation: no finite number of calls suffices (Theorem 1, Section 3, and Appendix B)
+-----------------------------------------------------------------------------------------------
+Paper: sec:results; thm:exact-simulation; sec:exact; eq:switch-plus; fig:exact;
+eq:dilution; sec:embedding; sec:polarization; lem:polarization;
+sec:qubit-certificate; prop:no-diluted; eq:gauge-equation; eq:four-kraus;
+lem:support; lem:exact-obstruction; sec:where-channels; rem:unitary;
+fig:unitary; sec:certificate; sec:gauge-proof; sec:support-proof;
+sec:functional-proof; sec:diluted-coordinates.
+Modules: ICO/BoundedSwitchObstruction.lean;
+ICO/PolarizationOrderedArbitraryControl.lean;
+ICO/ExactQubitObstruction.lean; ICO/ExactSupportIndependence.lean;
+ICO/ExactSupportRank.lean; ICO/ExactSeparation.lean;
+ICO/ExactQubitNamedLemmas.lean; ICO/RemarksUnitaryNumerical.lean.
+Selected endpoints:
+  ICO.BoundedSwitchObstruction.no_bounded_circuit
+  ICO.PolarizationOrderedArbitraryControl.no_bounded_full_switch_circuit
+  ICO.PolarizationOrderedArbitraryControl.no_bounded_circuit_arbitrary_control
+  ICO.PolarizationOrderedArbitraryControl.no_labelled_full_switch_circuit
+  ICO.PolarizationOrderedArbitraryControl.sum_perm_one_slot
+  ICO.PolarizationOrderedArbitraryControl.sum_perm_two_slot
+  ICO.PolarizationOrderedArbitraryControl.average_perm_two_slot
+  ICO.PolarizationOrderedArbitraryControl.symmetrized_polarization
+  ICO.PolarizationOrderedArbitraryControl.symmetrized_switch_polarization
+  ICO.PolarizationOrderedArbitraryControl.symmetrized_switch_polarization_choi
+  ICO.PolarizationOrderedArbitraryControl.symmetrized_switch_polarization_kraus
+  ICO.PolarizationOrderedArbitraryControl.dilutedPlusSwitchMap_eq_four_terms
+  ICO.PolarizationOrderedArbitraryControl.one_call_each_diluted_switch_plus
+  ICO.PolarizationOrderedArbitraryControl.one_call_each_diluted_switch_full
+  ICO.ExactQubitNamedLemmas.universalSupport_eq_range_E
+  ICO.ExactQubitNamedLemmas.lem_support_part_b
+  ICO.ExactQubitNamedLemmas.ordered_component_kraus_in_support
+  ICO.ExactQubitNamedLemmas.ordered_component_kraus_in_range_E
+  ICO.ExactQubitNamedLemmas.lem_support_part_a_fin4
+  ICO.ExactQubitNamedLemmas.lem_support_part_a
+  ICO.ExactQubitNamedLemmas.lem_support
+  ICO.ExactQubitNamedLemmas.x24_24_in_gauge_row_space
+  ICO.ExactQubitNamedLemmas.x24_24_vanishes_on_gauge
+  ICO.ExactQubitNamedLemmas.pauli_four_kraus_linearIndependent
+  ICO.ExactQubitNamedLemmas.x24_24_vanishes_of_pauli_link
+  ICO.ExactQubitNamedLemmas.functional_eq_x24_24_add_gauge_invariant
+  ICO.ExactQubitNamedLemmas.three_systems_solution_dim_126
+  ICO.ExactQubitNamedLemmas.admissible_functionals_dim_199
+  ICO.ExactQubitNamedLemmas.ab_ba_solution_dim_126
+  ICO.ExactQubitNamedLemmas.admissible_row_intersection_dim_199
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_channel_eq
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullChannel_eq
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_allChannel_eq
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_diamond_zero
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_unitary_kraus_eq
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_unitary_left_channel_eq
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullSwitchChannelMap_eq
+  ICO.RemarksUnitaryNumerical.unitarySecondThreeCallTree_unitary_kraus_eq
+  ICO.RemarksUnitaryNumerical.unitarySecondThreeCallTree_unitary_right_channel_eq
+  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fails_nonunitary
+  ICO.RemarksUnitaryNumerical.exists_nonunitary_unitaryThreeCallTree_ne_channelSwitch
+  ICO.RemarksUnitaryNumerical.diluted_unitary_not_unitary
+
+Theorem 1 (thm:exact-simulation, sec:exact — "Exact simulation: no finite
+number of calls suffices"): for every finite target dimension d >= 2 and every
+finite total call budget q, no ordinary adaptive strategy with arbitrary finite
+quantum memory realizes the quantum switch across all pairs of d-dimensional
+channels (so the worst-case query complexity of exact simulation is infinite).
+`ICO.BoundedSwitchObstruction.no_bounded_circuit` proves impossibility even when
+the control qubit is initialized in |+> and retained at the output
+(eq:switch-plus), using two-dimensional sector embedding (sec:embedding);
+`no_bounded_full_switch_circuit` and `no_bounded_circuit_arbitrary_control`
+prove impossibility for the full control-and-target quantum switch (eq:switch),
+and `no_labelled_full_switch_circuit` proves impossibility under arbitrary
+finite per-box call budgets (M, N).
+
+Lemma 6 (lem:polarization, sec:polarization, eq:dilution):
+`sum_perm_one_slot`, `sum_perm_two_slot`, `average_perm_two_slot`,
+`symmetrized_polarization`, and `symmetrized_switch_polarization*` formalize
+multilinear slot polarization, and `dilutedPlusSwitchMap_eq_four_terms`,
+`one_call_each_diluted_switch_plus`, and `one_call_each_diluted_switch_full`
+prove Lemma 6 directly in the manuscript's diluted-switch form: for a strategy
+with M labelled A-slots and N labelled B-slots matching the switch on all
+channel pairs, averaging uniformly over one active A-slot and one active B-slot
+with identity channels in all remaining slots yields a one-call-each strategy
+for the diluted switch T_{1/M, 1/N}[A, B] (both for fixed |+> control and for
+arbitrary control inputs).
+
+Proposition 7 (prop:no-diluted, sec:qubit-certificate, eq:gauge-equation,
+eq:four-kraus), Lemma 8 (lem:support, sec:support-proof), and Lemma 9
+(lem:exact-obstruction, sec:gauge-proof, sec:functional-proof,
+sec:diluted-coordinates) together with Appendix B (sec:certificate):
+  - Proposition 7 (prop:no-diluted): proved via
+    `ICO.ExactQubitObstruction.no_positive_ordered_switch` (with
+    `ICO.ExactQubitObstruction.no_positive_ordered_target` and
+    `ICO.ExactQubitObstruction.no_positive_matrix_target`).
+  - Lemma 8 (lem:support): `ICO/ExactQubitNamedLemmas.lean` exposes part (a)
+    (`ordered_component_kraus_in_support`, `ordered_component_kraus_in_range_E`,
+    `lem_support_part_a_fin4`, `lem_support_part_a`), part (b)
+    (`universalSupport_eq_range_E`, `lem_support_part_b`, discharging the
+    25 x 128 integer left inverse
+    `ICO.ExactSupportIndependence.integer_left_inverse` and the 128 x 128
+    Gaussian-integer modular inverse mod 5 in
+    `ICO.ExactSupportRank.modular_right_inverse` and
+    `ICO.ExactSupportRank.stacked_complex_injective`), and the combined
+    statement `lem_support`.
+  - Lemma 9 (lem:exact-obstruction) and Appendix B (sec:certificate):
+    `ICO.ExactSeparation.ab_functional_zero`,
+    `ICO.ExactSeparation.ba_functional_zero`,
+    `ICO.ExactSeparation.gauge_functional_zero`,
+    `ICO.ExactSeparation.functional_target`, and
+    `ICO.ExactSeparation.no_supported_decomposition` verify the 325-coordinate
+    separating functional f(X) on AB-causal, BA-causal, gauge, and
+    diluted-switch coordinates. `ICO/ExactQubitNamedLemmas.lean` additionally
+    formalizes the gauge invariance of the switch weight X_{24,24}
+    (`x24_24_in_gauge_row_space`, `x24_24_vanishes_on_gauge`,
+    `pauli_four_kraus_linearIndependent`, `x24_24_vanishes_of_pauli_link`, and
+    `functional_eq_x24_24_add_gauge_invariant` for sec:diluted-coordinates) and
+    the exact dimension counts of Section B.3 (`three_systems_solution_dim_126`,
+    `admissible_functionals_dim_199`, `ab_ba_solution_dim_126`, and
+    `admissible_row_intersection_dim_199` for sec:functional-proof, proving that
+    the solutions of the AB-causal, BA-causal, and gauge linear systems span a
+    space of dimension 126 and that the admissible functionals vanishing on all
+    three have dimension 325 - 126 = 199). In addition,
+    `proofs/lean/certificates/verify_all.py` independently replays the exact
+    integer and rational matrix certificates in Python.
+
+Remark 10 (rem:unitary — "One unitary box is easy", sec:where-channels,
+fig:unitary):
+  - `diluted_unitary_not_unitary` shows that for 0 < x < 1 the diluted Pauli-X
+    box x Ad(sigma_x) + (1 - x) id is not a unitary channel.
+  - When box A is known to be unitary and B is any CPTP channel, the explicit
+    three-call controlled-swap dummy circuit `unitaryThreeCallTree` (fig:unitary,
+    two calls to A and one call to B) simulates the quantum switch with zero
+    error (`unitaryThreeCallTree_unitary_kraus_eq`,
+    `unitaryThreeCallTree_unitary_left_channel_eq`, and the wire-reindexed
+    `Fin 2 x Fin d` equality `unitaryThreeCallTree_fullSwitchChannelMap_eq`;
+    for two unitary boxes, `unitaryThreeCallTree_channel_eq`,
+    `unitaryThreeCallTree_fullChannel_eq`, `unitaryThreeCallTree_allChannel_eq`,
+    and `unitaryThreeCallTree_diamond_zero`).
+  - Symmetrically, when box B is known to be unitary and A is any CPTP channel,
+    the role-exchanged three-call circuit `unitarySecondThreeCallTree` (two calls
+    to B and one call to A) simulates the quantum switch with zero error
+    (`unitarySecondThreeCallTree_unitary_kraus_eq` and
+    `unitarySecondThreeCallTree_unitary_right_channel_eq`).
+  - When the twice-called box A is not unitary, `unitaryThreeCallTree` fails to
+    reproduce the switch (`unitaryThreeCallTree_fails_nonunitary` for qubit
+    dephasing across every initial dummy basis state, and
+    `exists_nonunitary_unitaryThreeCallTree_ne_channelSwitch`).
+
+
+1.3 Approximate universal simulation (Theorem 2 and Section 4)
+--------------------------------------------------------------
+Paper: thm:simulation-summary; eq:tradeoff-intro; sec:approximation; fig:approx;
+eq:R1; eq:R2; eq:R3; sec:witness; eq:effect; eq:block-form; lem:gram; eq:gram;
+clm:switch-passes; sec:reverse; lem:reverse; eq:bd; eq:frame; eq:envelope;
+fig:wiring; cor:coherence; eq:coherence; sec:hidden; clm:fresh; clm:pair;
+rem:approx-content; sec:simulation.
+Modules: ICO/C4FullSwitchTheorem.lean; ICO/ReverseFidelity.lean;
+ICO/AverageCoherence.lean; ICO/C4NamedClaims.lean; ICO/Section44TwoCall.lean;
+ICO/RemarksUnitaryNumerical.lean.
+Selected endpoints:
+  ICO.C4PhysicalEnsemble.exists_full_switch_error_bound
+  ICO.C4PhysicalEnsemble.full_switch_fixed_accuracy_constant
+  ICO.C4PhysicalEnsemble.full_switch_one_over_48
+  ICO.C4NamedClaims.lem_gram_near_orthonormality
+  ICO.C4NamedClaims.lem_gram_near_orthonormality_sample
+  ICO.C4NamedClaims.clm_switch_passes
+  ICO.C4NamedClaims.clm_switch_passes_sample
+  ICO.C4NamedClaims.reverse_test_trace_mono
+  ICO.C4NamedClaims.causal_reverse_test_subcomb_bound
+  ICO.C4NamedClaims.lem_reverse_ordered_subcomb
+  ICO.C4NamedClaims.cor_coherence_at_most_once
+  ICO.C4NamedClaims.cor_coherence_at_most_once_norm
+  ICO.C4NamedClaims.cor_coherence_optional_two_query
+  ICO.C4NamedClaims.cor_coherence_two_query
+  ICO.C4NamedClaims.clm_fresh_distance
+  ICO.C4NamedClaims.clm_fresh_channel_diamond_distance
+  ICO.C4NamedClaims.clm_fresh_trace_bound
+  ICO.C4NamedClaims.clm_pair_fresh_coherence
+  ICO.C4NamedClaims.clm_pair_fresh_coherence_norm
+  ICO.C4NamedClaims.clm_pair_fresh_coherence_sum
+  ICO.C4NamedClaims.eq_R3_fresh_frame_bound
+  ICO.Section44TwoCall.dephaseControl_diamond_id_le_half
+  ICO.Section44TwoCall.twoCallTree_krausChannel_eq
+  ICO.Section44TwoCall.twoCallTree_krausChannel_error_le_half
+  ICO.Section44TwoCall.twoCallTree_fullCircuit_eq
+  ICO.Section44TwoCall.twoCallTree_fullSwitch_error_le_half
+  ICO.RemarksUnitaryNumerical.exists_two_query_switch_error_ge_235
+  ICO.RemarksUnitaryNumerical.two_query_tradeoff_nonpos_of_le_234
+  ICO.RemarksUnitaryNumerical.full_switch_one_over_48_three_queries_of_ge_65536
+  ICO.RemarksUnitaryNumerical.uniform_unitary_mixture_eq_oracleChannel_iff
+  ICO.RemarksUnitaryNumerical.uniform_haar_mixture_ae_not_ambient_unitary
+  ICO.RemarksUnitaryNumerical.uniform_haar_mixture_ae_not_unitary
+
+Theorem 2 (thm:simulation-summary, eq:tradeoff-intro, sec:approximation):
+`ICO.C4PhysicalEnsemble.exists_full_switch_error_bound` proves that for every
+target dimension d >= 2, every budget-q ordinary strategy, and every ensemble
+size r >= 1 (parameterized in `C4PhysicalEnsemble` as `r + 1`), there exist
+mixed-unitary channels A, B (drawn as uniform mixtures of r unitaries) on which
+the strategy's half-diamond simulation error for the full-control quantum switch
+is at least
+
+  1/2 - 13 r^2 / (3 d) - q (q - 1) / (2 r).
+
+`full_switch_fixed_accuracy_constant` derives the Omega_epsilon(d^(1/4)) total
+call lower bound for every fixed error threshold epsilon < 1/2, and
+`full_switch_one_over_48` proves the explicit numerical consequence: if d >= 64
+and uniform simulation error is at most 1/48, then d < 4096 q^4.
+
+Supporting lemmas and claims of Section 4 (`ICO/C4NamedClaims.lean`, building on
+`ICO/CompositionGramAverage.lean`, `ICO/GramWitness.lean`,
+`ICO/ReverseFidelity.lean`, `ICO/AverageCoherence.lean`, and
+`ICO/FreshBudgetCompile.lean`):
+  - Lemma 11 (lem:gram, sec:witness, eq:effect, eq:block-form, eq:gram):
+    `lem_gram_near_orthonormality` (parameterized literally by r : Nat) and
+    `lem_gram_near_orthonormality_sample` prove E ||K^dagger K - I|| <= r^2 / d
+    for all three composed Kraus matrices S_0, S_1, and S.
+  - Claim 12 (clm:switch-passes, eq:R1): `clm_switch_passes` (for 1 <= r) and
+    `clm_switch_passes_sample` prove E Tr(Theta rho_sw) >= 1 - r^2 / d on the
+    Choi input of the quantum switch.
+  - Lemma 13 (lem:reverse, sec:reverse, eq:bd, eq:frame, eq:envelope):
+    `reverse_test_trace_mono`, `causal_reverse_test_subcomb_bound`, and
+    `lem_reverse_ordered_subcomb` combine `ICO.ReverseFidelity.causal_reverse_test_bound`
+    and `ICO.ReverseFidelity.outcome_reverse_test_bound` with subcomb
+    monotonicity for 0 <= C' <= C, giving the exact bound
+    (Tr C / d^3) * (1/d + d/(d^2 - 1))^2.
+  - Corollary 14 (cor:coherence, eq:coherence): `cor_coherence_at_most_once`
+    (with expected-norm strengthening `cor_coherence_at_most_once_norm` and
+    tree variants `cor_coherence_optional_two_query`, `cor_coherence_two_query`)
+    proves as one unified statement that for any strategy calling each of U and
+    V at most once on control input |+> and half of a maximally entangled state,
+    the modulus of the Haar average of <VU | sigma_{01} | UV> is at most
+    1/d + d/(d^2 - 1) (via `ICO.AverageCoherence.average_controlCoherence_bound`).
+  - Claim 15 (clm:fresh, sec:hidden, eq:R2): `clm_fresh_distance`,
+    `clm_fresh_channel_diamond_distance`, and `clm_fresh_trace_bound` prove the
+    fresh-index replacement bound q(q - 1)/(2 r) (with paper r = Lean r + 1)
+    both in normalized probe trace distance, in half-diamond channel distance,
+    and in witness expectation (eq:R2).
+  - Claim 16 (clm:pair, eq:R3): `clm_pair_fresh_coherence`,
+    `clm_pair_fresh_coherence_norm`, `clm_pair_fresh_coherence_sum`, and
+    `eq_R3_fresh_frame_bound` establish the per-pair Haar coherence bound
+    1/d + d/(d^2 - 1) in the fresh-index process, its r^2 sum over index pairs,
+    and the resulting frame expectation bound (eq:R3).
+
+Remark 17 (rem:approx-content):
+`exists_two_query_switch_error_ge_235` and `two_query_tradeoff_nonpos_of_le_234`
+verify that for q = 2 the trade-off eq:tradeoff-intro first becomes positive at
+d = 235 (at paper r = 3, giving 1/6 - 39/d >= 1/1410 > 0), while
+`full_switch_one_over_48_three_queries_of_ge_65536` gives the q = 3 threshold
+d >= 65536 at error 1/48. In addition,
+`uniform_unitary_mixture_eq_oracleChannel_iff`,
+`uniform_haar_mixture_ae_not_ambient_unitary`, and
+`uniform_haar_mixture_ae_not_unitary` prove that for d >= 2 and r >= 2, the
+uniform mixture of r independent Haar unitaries is almost surely not a unitary
+channel.
+
+Section 4.4 (sec:simulation — Upper bounds):
+`ICO/Section44TwoCall.lean` (`dephaseControl_diamond_id_le_half`,
+`twoCallTree_krausChannel_eq`, `twoCallTree_krausChannel_error_le_half`,
+`twoCallTree_fullCircuit_eq`, `twoCallTree_fullSwitch_error_le_half`) constructs
+the explicit two-call strategy that measures the control qubit in the
+computational basis and applies the two boxes in the corresponding definite
+order, proving that it equals the Z-dephased switch and achieves universal
+half-diamond error at most 1/2. The asymptotic O(d^2 / epsilon) upper bound via
+port-based teleportation discussed alongside it in Section 4.4 (sec:simulation)
+is cited from Pirandola et al. (2019) and is not formalized as a Lean theorem.
+
+
+1.4 One bit: does the depolarizing model describe the noise? (Theorem 3, Section 5, and Appendix A)
+---------------------------------------------------------------------------------------------------
+Paper: thm:c6; sec:c6-proof; sec:switch-test; fig:geometry; eq:validation-pair;
+eq:validation-visibility; sec:pair; eq:c6-priors; lem:c6-comparison;
+eq:c6-comparison; sec:validation; sec:cache; def:cache; eq:c6-cache;
+eq:covariance; fig:cache; prop:cache; eq:eps-cache; tab:hybrids; sec:invariant;
+lem:reference-invariant; lem:invariant-label; eq:invariant-label; rem:crossover;
+sec:c6-recording; appA:setting; appA:experiment; appA:hybrid; appA:chain;
+sec:c6-A1; eq:c6-source-creators; eq:c6-recording-V; appA:compression;
+eq:c6-delete-compression; appA:forward; eq:c6-E; appA:fw1; appA:fw2; appA:fw3;
+sec:c6-A2; eq:c6-raw-creators; appA:action; appA:gram; eq:c6-grams;
+appA:projected; eq:c6-delta; eq:c6-polar-W; appA:polar; sec:c6-A3;
+eq:c6-fresh-J; appA:fresh-step; appA:follow; appA:follow-eq; appA:branches;
+appA:support; appA:fresh-cost; eq:c6-right-compression; eq:c6-B; sec:c6-A4;
+appA:raw; eq:c6-raw-fresh-gram; appA:birth-amplitude; appA:record;
+appA:no-cross; appA:weighted; appA:images; eq:c6-mode-product;
+appA:weighted-state; appA:histories.
+Modules: ICO/Section54Validation.lean; ICO/C6OperationalDecision.lean;
+ICO/C6BonusInventory.lean; ICO/C6SharedPairBound.lean; ICO/C6LabelCache.lean;
 ICO/C6RawWeightedEndpoint.lean; ICO/C6BosonicFreshPrefix.lean;
 ICO/C6PermanentFlags.lean; ICO/C6WeightedHistoryBound.lean;
-ICO/C6VisibilityEstimator.lean; ICO/C6BonusInventory.lean.
+ICO/MHHaarRecordingComparison.lean; ICO/MHProtocolHaarRecording.lean;
+ICO/RemarksUnitaryNumerical.lean.
 Selected endpoints:
-  ICO.C6OperationalDecision.same_mub_query_lower_bound
+  ICO.Section54Validation.dephasing_noise_self_visibility
+  ICO.Section54Validation.depolarizing_model_self_visibility
+  ICO.Section54Validation.validation_ordinary_lower_bound
+  ICO.Section54Validation.validation_ordinary_balanced_query_lower_bound
+  ICO.Section54Validation.validation_ordinary_query_lower_bound
+  ICO.Section54Validation.validation_switch_upper_bound
+  ICO.Section54Validation.channelPow_map
+  ICO.Section54Validation.dephasingNoiseChannel_pow
+  ICO.Section54Validation.depolarizingModelChannel_pow
+  ICO.Section54Validation.validation_switch_block_power_upper_bound
+  ICO.Section54Validation.dephasing_depolarizing_diamond_le_p
+  ICO.Section54Validation.dephasing_depolarizing_withMemory_diamond_le_p
+  ICO.Section54Validation.validation_trivial_single_unitary_query_lower_bound
+  ICO.Section54Validation.validation_trivial_query_lower_bound
+  ICO.Section54Validation.validation_trivial_balanced_query_lower_bound
   ICO.C6OperationalDecision.mixed_tree_comparison
   ICO.C6OperationalDecision.adaptive_pair_distance
   ICO.C6OperationalDecision.adaptive_pair_distance_explicit
   ICO.C6OperationalDecision.same_mub_distance
+  ICO.C6BonusInventory.uniformError_le_212
+  ICO.C6BonusInventory.same_mub_distance_212
   ICO.C6SharedPairBound.shared_haar_pair
+  ICO.C6LabelCache.polarPairCreator_covariance
+  ICO.C6LabelCache.pairImageProj_commutes
+  ICO.C6LabelCache.labelCacheRetrieval_trace
+  ICO.C6LabelCache.labelCacheBirth_trace
+  ICO.C6LabelCache.labelCacheCall_eq_gradedQuery
+  ICO.C6LabelCache.uniformRun_eq_labelCache_run
+  ICO.C6LabelCache.cacheDensity_eq_labelCache_output
+  ICO.C6LabelCache.treeLabelCacheDensity_eq_compiled
+  ICO.C6LabelCache.eps2_eq_Icc
+  ICO.C6LabelCache.eps3_eq_formula
+  ICO.C6LabelCache.eps4_eq_Icc
+  ICO.C6LabelCache.prop_cache_protocol_distance
+  ICO.C6LabelCache.prop_cache_tree_distance
+  ICO.C6LabelCache.reference_cache_step_invariant
+  ICO.C6LabelCache.reference_cache_invariant
+  ICO.C6LabelCache.reference_cache_decoded_invariant
+  ICO.C6LabelCache.reference_cache_tree_invariant
+  ICO.C6LabelCache.cache_reference_protocol_distance
+  ICO.C6LabelCache.cache_reference_distance
   ICO.C6RawWeightedEndpoint.rawDensity_weighted
   ICO.C6BosonicFreshPrefix.freshRun_prefix
   ICO.C6PermanentFlags.prefixRun_numbers
   ICO.C6WeightedHistoryBound.weighted_uniform_distance
-  ICO.C6VisibilityEstimator.visibility_bernoulli_error
-  ICO.C6VisibilityEstimator.visibility_failure_le_two_exp_neg_two
-  ICO.C6VisibilityEstimator.visibility_success_ge_one_sub_two_exp_neg_two
-  ICO.C6VisibilityEstimator.switch_visibility_estimation
-  ICO.C6VisibilityEstimator.channel_visibility_estimation
-  ICO.C6VisibilityEstimator.visibility_estimator_gives_decision
-  ICO.C6VisibilityEstimator.visibility_query_lower_bound
-  ICO.C6VisibilityEstimator.visibility_query_lower_bound_of_dephasers
-  ICO.C6VisibilityEstimator.visibility_estimation_query_lower_bound
-  ICO.C6BonusInventory.uniformError_le_212
-  ICO.C6BonusInventory.same_mub_distance_212
+  ICO.MHHaarRecordingComparison.frequency_visible_distance
+  ICO.MHProtocolHaarRecording.protocol_haar_recording
+  ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_1400_lt_one_third_of_le_141
+  ICO.RemarksUnitaryNumerical.one_third_lt_two_pow_div_sixteen_div_1400_of_ge_142
+  ICO.RemarksUnitaryNumerical.one_third_lt_two_pow_div_sixteen_div_1400_iff
+  ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_1400_lt_twenty_one_of_le_237
+  ICO.RemarksUnitaryNumerical.twenty_one_lt_two_pow_div_sixteen_div_1400_of_ge_238
+  ICO.RemarksUnitaryNumerical.twenty_one_lt_two_pow_div_sixteen_div_1400_iff
+  ICO.RemarksUnitaryNumerical.one_div_three_p_lt_validation_bound_iff
+  ICO.RemarksUnitaryNumerical.twenty_one_div_p_lt_validation_bound_iff
+  ICO.RemarksUnitaryNumerical.switch_test_calls_ge_twenty_one_div_p
+  ICO.RemarksUnitaryNumerical.validation_bound_lt_switch_test_calls_of_le_237
+  ICO.RemarksUnitaryNumerical.trivial_query_lower_bound_of_diamond_le
+  ICO.RemarksUnitaryNumerical.trivial_balanced_query_lower_bound_of_diamond_le
 
-For d=2^n, n>=1, every ordinary finite adaptive total-budget strategy correct
-with probability at least 2/3 on every SAME/MUB promised pair requires
-q>d^(1/16)/100. Input states may be mixed, memory may be arbitrarily large and
-entangled, query choices may depend on classical outcomes, and stopping may
-be adaptive. SAME means equality of the two nonselective dephasing channels;
-MUB means their underlying bases are mutually unbiased. The lower endpoint
-only needs correctness on coincident-basis SAME witnesses and all MUB pairs;
-correctness on every promised pair implies these hypotheses.
+Theorem 3 (thm:c6 — "One bit: does the depolarizing model describe the noise?"),
+Section 5 (sec:c6-proof — "A single bit from the switch can already be hard"),
+Section 5.1 (sec:switch-test — "The switch reads the bit", fig:geometry,
+eq:validation-pair, eq:validation-visibility), and Section 5.3
+(sec:validation — "Weak noise: Theorem 3"):
+  - For d = 2^n (n >= 1) and noise rate 0 < p <= 1, the dephasing device
+    E_{p,U} = (1 - p) id + p Delta_U and its matched-fidelity depolarizing
+    counterpart M_p = (1 - p) id + p Lambda (eq:validation-pair) have exact
+    self-visibilities v(E_{p,U}) = 1 and v(M_p) = 1 - p^2 (d - 1)/(d + 1)
+    (eq:validation-visibility, `dephasing_noise_self_visibility` and
+    `depolarizing_model_self_visibility`).
+  - Seven uses of the quantum switch, where each slot is filled by a block of
+    m >= 3/(2p) consecutive uses of the device (14 m device calls total), accept
+    every E_{p,U} with probability 1 and accept M_p with probability < 1/3.
+    `ICO/Section54Validation.lean` proves both `validation_switch_upper_bound`
+    and the direct m-fold composition-power formulation
+    (`channelPow_map`, `dephasingNoiseChannel_pow`,
+    `depolarizingModelChannel_pow`, and
+    `validation_switch_block_power_upper_bound`, feeding the literal m-th
+    channel powers of E_{p,U} and M_p into `switchedStateOfChannels` without
+    assuming any closed-form block formula as a premise).
+  - Conversely, `validation_ordinary_query_lower_bound` and
+    `validation_ordinary_balanced_query_lower_bound` prove unconditionally on
+    arbitrary `BudgetQueryTree.Tree (A x M) O Q B` (via Bernoulli-p coin-tape
+    reduction in Section 5.3, Markov truncation, `same_mub_distance`, and
+    depolarizing hybrid bounds, complementing the arithmetic helper
+    `validation_ordinary_lower_bound`) that any ordinary adaptive strategy
+    deciding between E_{p,U} and M_p with error at most 1/3 requires call budget
+    Q > d^(1/16) / (1400 p).
 
-In addition to the binary decision separation of Theorem 3(a) (thm:c6),
-ICO/C6VisibilityEstimator.lean formalizes the quantitative visibility-estimation
-clauses of Theorem 3(b) (thm:c6): m = ceil(4/epsilon^2) independent quantum-
-switch experiments (2m <= 8/epsilon^2 + 2 elementary channel calls) estimate the
-channel visibility v(A,B) to additive error at most epsilon with success
-probability at least 1 - 2*exp(-2) > 2/3 for arbitrary channels (and for
-dephasing channels), whereas any ordinary adaptive q-call estimator achieving
-additive error epsilon < 1/4 with probability at least 2/3 on all channel pairs
-(or even on dephasing-channel pairs for n >= 2) requires q > d^(1/16)/100.
-
-The comparison uses one fixed Haar unitary U shared by both devices throughout
-the run: (Delta_U,Delta_(U H)). The relative unitary H can be arbitrary. For
-q>=1 and 4q<=d, two such priors have actual normalized output trace distance at
-most
+Lemma 18 (lem:c6-comparison, sec:pair, eq:c6-priors, eq:c6-comparison):
+For one fixed Haar unitary U shared throughout the run and arbitrary relative
+unitary H, `mixed_tree_comparison`, `adaptive_pair_distance`, and
+`adaptive_pair_distance_explicit` bound the normalized output trace distance
+between (Delta_U, Delta_U) and (Delta_U, Delta_{UH}) for q >= 1 and 4q <= d by
 
   18(2q)(2q+1)/d^(1/8) + 2 F(q,d) + 14q delta(2q,d)
     + 2 B(q,d) + 8q(q-1)/d,
@@ -74,314 +481,264 @@ where
   B(q,d) = sum_{i=1}^{q-1}
     [sqrt((2i-1)/(d-i+1)) + sqrt(2i/(d-i))].
 
-The 8q(q-1)/d term includes the proved uniform-sector cache allowance
-6q(q-1)/d. When 1<=q<=d^(1/16)/100, same_mub_distance checks the scalar bound
-215/10000 and ICO.C6BonusInventory.uniformError_le_212 / same_mub_distance_212
-check the sharper manuscript scalar bound 212/10000. Both suffice for the
-stated strict query lower bound.
+When 1 <= q <= d^(1/16)/100, `ICO.C6BonusInventory.uniformError_le_212` and
+`ICO.C6BonusInventory.same_mub_distance_212` establish the manuscript's scalar
+bound 212/10000 (while `ICO.C6OperationalDecision.same_mub_distance` checks the
+slightly looser 215/10000 allowance).
 
-shared_haar_pair proves the physical comparison without a recording-oracle,
-support, covariance, or cache-comparison premise. All four Appendix A
-(sec:c6-recording) structural theorems are in the kernel proof-term DAG of
-shared_haar_pair:
-  - ICO.C6RawWeightedEndpoint.rawDensity_weighted (exact semantic bridge from
-    raw recording trajectories to the weighted cache):
-    shared_haar_pair -> shared_haar_uniform_distance -> raw_uniform_distance
-    -> rawDensity_weighted.
-  - ICO.C6BosonicFreshPrefix.freshRun_prefix (exact bosonic fresh-step recursion):
-    shared_haar_pair -> shared_haar_uniform_distance -> raw_uniform_distance
-    -> raw_weighted_endpoint -> freshRun_prefix.
-  - ICO.C6PermanentFlags.prefixRun_numbers (permanent-flag invariance of
-    occupation numbers along prefix runs):
-    shared_haar_pair -> shared_haar_uniform_distance -> raw_uniform_distance
-    -> raw_weighted_endpoint -> weightedRun_prefix -> prefixRun_numbers.
-  - ICO.C6WeightedHistoryBound.weighted_uniform_distance (trace-distance bound
-    between the weighted-cache trajectory and the H-independent uniform cache):
-    shared_haar_pair -> shared_haar_uniform_distance -> raw_uniform_distance
-    -> weighted_uniform_distance.
+`ICO.C6SharedPairBound.shared_haar_pair` proves the physical shared-Haar pair
+comparison without any recording-oracle, support, covariance, or cache-comparison
+premise. All four Appendix A (sec:c6-recording) structural claims
+are used in the proof of `ICO.C6SharedPairBound.shared_haar_pair`:
+  - `ICO.C6RawWeightedEndpoint.rawDensity_weighted` (Claim appA:images, exact
+    erasure of right-list images to the weighted process):
+    `ICO.C6SharedPairBound.shared_haar_pair`
+    -> `ICO.C6SharedPairBound.raw_pair`
+    -> `ICO.C6RawWeightedEndpoint.rawDensity_weighted`.
+  - `ICO.C6BosonicFreshPrefix.freshRun_prefix` (Claim appA:support, invariance of
+    the history-span label support along fresh runs):
+    `ICO.C6SharedPairBound.shared_haar_pair`
+    -> `ICO.C6PhysicalPairCost.haar_pair_of_raw_bound`
+    -> `ICO.C6PhysicalFresh.shared_haar_fresh`
+    -> `ICO.C6PhysicalFresh.polar_fresh_distance`
+    -> `ICO.C6BosonicFreshPrefix.freshRun_prefix`.
+  - `ICO.C6PermanentFlags.prefixRun_numbers` (Claim appA:record, permanent
+    occupation-number record of births along prefix runs):
+    `ICO.C6SharedPairBound.shared_haar_pair`
+    -> `ICO.C6PhysicalPairCost.haar_pair_of_raw_bound`
+    -> `ICO.C6FreshRawEndpoint.fresh_raw_distance`
+    -> `ICO.C6HistoryVisible.visible_fresh_flags`
+    -> `ICO.C6ActualFlagErasure.outcome_flag_erasure`
+    -> `ICO.C6PermanentFlags.prefixRun_numbers`.
+  - `ICO.C6WeightedHistoryBound.weighted_uniform_distance` (Claim appA:histories,
+    trace-distance bound between the weighted process and the uniform label
+    cache across all histories):
+    `ICO.C6SharedPairBound.shared_haar_pair`
+    -> `ICO.C6SharedPairBound.raw_pair`
+    -> `ICO.C6WeightedHistoryOutput.unit_mass_pair_distance`
+    -> `ICO.C6WeightedHistoryOutput.unit_mass_uniform_distance`
+    -> `ICO.C6WeightedHistoryOutput.uniform_distance`
+    -> `ICO.C6WeightedHistoryBound.weighted_uniform_distance`.
 
-Four-use quantum-switch upper bound
------------------------------------
-Paper: thm:c6; sec:switch-test; eq:basis-visibility.
-Modules: ICO/C6SwitchTest.lean; ICO/C6SwitchSameChannel.lean.
-Endpoints:
+Definition 19 (def:cache, sec:cache, eq:c6-cache, eq:covariance), Proposition 20
+(prop:cache, eq:eps-cache, tab:hybrids), Lemma 21 (lem:reference-invariant,
+sec:invariant), and Lemma 22 (lem:invariant-label, eq:invariant-label):
+  - `ICO/C6LabelCache.lean` (`polarPairCreator_covariance`,
+    `pairImageProj_commutes`, `labelCacheRetrieval_trace`,
+    `labelCacheBirth_trace`, `labelCacheCall_eq_gradedQuery`,
+    `uniformRun_eq_labelCache_run`, `cacheDensity_eq_labelCache_output`,
+    `treeLabelCacheDensity_eq_compiled`) defines the explicit one-call
+    label-cache map of Definition 19 (eq:c6-cache, eq:covariance) and proves
+    that `ICO.C6RawWeightedEndpoint.cacheDensity` and its budget-tree
+    counterpart equal the strategy output when run against that label cache.
+  - `eps2_eq_Icc`, `eps3_eq_formula`, `eps4_eq_Icc`,
+    `prop_cache_protocol_distance`, and `prop_cache_tree_distance` formalize
+    Proposition 20 (prop:cache, eq:eps-cache) as a standalone single-experiment
+    comparison both at the purified protocol level and for arbitrary
+    `BudgetQueryTree.Tree`, bounding the normalized trace distance between the
+    physical Haar-averaged output and the label-cache output by
+    epsilon_rec + epsilon_2 + epsilon_3 + epsilon_4 + epsilon_5.
+  - Lemma 21 (lem:reference-invariant) and Lemma 22 (lem:invariant-label,
+    eq:invariant-label) are formalized by `reference_cache_step_invariant`,
+    `reference_cache_invariant`, `reference_cache_decoded_invariant`,
+    `reference_cache_tree_invariant`, `cache_reference_protocol_distance`, and
+    `cache_reference_distance` in `ICO/C6LabelCache.lean`, together with
+    `ICO.C6BasisInvariant.depolarizing_invariant`,
+    `ICO.C6BasisInvariant.invariant_basis_bound`, and
+    `ICO.C6CacheOutputComparisonAfter.density_reference_distance` (replacing
+    completely depolarizing retrievals Omega by Delta one call at a time at cost
+    3(q - 1)/d per call, giving 3q(q - 1)/d to the reference cache and
+    6q(q - 1)/d between the two priors in
+    `ICO.C6CacheOutputComparisonAfter.unit_mass_pair_distance`).
+
+Remark 23 (rem:crossover):
+`ICO/Section54Validation.lean` and `ICO/RemarksUnitaryNumerical.lean` prove:
+  - The elementary half-diamond bound (1/2)||E_{p,U} - M_p||_diamond <= p
+    (`dephasing_depolarizing_diamond_le_p`,
+    `dephasing_depolarizing_withMemory_diamond_le_p`) and resulting query lower
+    bound Q >= 1/(3p) for every ordinary strategy with error at most 1/3
+    (`validation_trivial_single_unitary_query_lower_bound`,
+    `validation_trivial_query_lower_bound`,
+    `validation_trivial_balanced_query_lower_bound`,
+    `trivial_query_lower_bound_of_diamond_le`,
+    `trivial_balanced_query_lower_bound_of_diamond_le`).
+  - The switch call-count inequality 14 ceil(3/(2p)) >= 21/p for all p > 0
+    (`switch_test_calls_ge_twenty_one_div_p` and
+    `validation_bound_lt_switch_test_calls_of_le_237`).
+  - The exact dyadic crossover equivalences for d = 2^n and p > 0:
+    d^(1/16)/(1400 p) > 1/(3p) iff n >= 142
+    (`two_pow_div_sixteen_div_1400_lt_one_third_of_le_141`,
+    `one_third_lt_two_pow_div_sixteen_div_1400_of_ge_142`,
+    `one_third_lt_two_pow_div_sixteen_div_1400_iff`,
+    `one_div_three_p_lt_validation_bound_iff`) and
+    d^(1/16)/(1400 p) > 21/p iff n >= 238
+    (`two_pow_div_sixteen_div_1400_lt_twenty_one_of_le_237`,
+    `twenty_one_lt_two_pow_div_sixteen_div_1400_of_ge_238`,
+    `twenty_one_lt_two_pow_div_sixteen_div_1400_iff`,
+    `twenty_one_div_p_lt_validation_bound_iff`).
+
+Appendix A (sec:c6-recording) step-by-step correspondence:
+  - Step 1 (Ma-Huang Haar-to-recording replacement, sec:c6-A1):
+    `ICO.MHHaarRecordingComparison.frequency_visible_distance` proves the
+    signed-query Haar recording bound <= 9t(t+1)/R for d = R^8, and
+    `ICO.MHProtocolHaarRecording.protocol_haar_recording` specializes it to the
+    2q-query U^dagger/copy/U protocol (giving epsilon_rec = 9(2q)(2q+1)/d^(1/8)).
+  - Lemma 24 (appA:hybrid): `ICO.PureHybrid.vector_hybrid`,
+    `ICO.PureHybrid.vector_hybrid_upto`,
+    `ICO.PureHybrid.partial_trace_pure_distance_le`,
+    `ICO.PureHybrid.subnormalized_pure_distance_le`,
+    `ICO.C6MatrixTrajectory.run_distance`, and
+    `ICO.C6MatrixLocalHybrid.run_distance_upto` (contraction telescoping and
+    vector-to-density partial-trace distance bounds).
+  - Lemma 25 (appA:compression, eq:c6-delete-compression) and Lemma 26
+    (appA:forward, eq:c6-E, appA:fw1, appA:fw2, appA:fw3):
+    `ICO.C6FockCutoff.right_fock_low_compression`,
+    `ICO.C6LocalDeletion.deletion_norm`,
+    `ICO.C6LocalDeletion.private_deletion_norm`,
+    `ICO.C6LocalDeletion.normalized_private_deletion`, and
+    `ICO.C6PhysicalCosts.deletionCost_sum` (Step 2 cost epsilon_2).
+  - Lemma 27 (appA:gram, sec:c6-A2, eq:c6-grams, appA:projected) and Lemma 28
+    (appA:polar, eq:c6-delta, eq:c6-polar-W):
+    `ICO.C6BosonicGram.occupationLeftCreator_gram`,
+    `ICO.C6BosonicGram.normalGram_compression`,
+    `ICO.C6BosonicGram.normalGram_norm_le`,
+    `ICO.C6BosonicCompression.compressedCreator_succ_gram`,
+    `ICO.C6BosonicCompression.normalCompression_eq`,
+    `ICO.C6BosonicCompression.normalCompression_norm`,
+    `ICO.C6BosonicBounds.symmetricInsertion_succ_defect`,
+    `ICO.C6BosonicBounds.symmetricInsertion_gram_defect`,
+    `ICO.C6PolarFockBounds.left_polar_distance`,
+    `ICO.C6PolarFockBounds.right_polar_distance`, and
+    `ICO.C6PolarFockBounds.oracle_polar_distance` (Step 3 cost epsilon_3).
+  - Lemma 29 (appA:follow, sec:c6-A3, appA:follow-eq), Claim 30 (appA:support,
+    appA:branches), and Lemma 31 (appA:fresh-cost, eq:c6-right-compression,
+    eq:c6-B): `ICO.C6BosonicGeometricCreation.geometric_left_support`,
+    `ICO.C6BosonicHistoryClosure.geometric_retrieval_support`,
+    `ICO.C6BosonicHistoryClosure.geometric_image_support`,
+    `ICO.C6BosonicHistoryClosure.geometric_fresh_support`,
+    `ICO.C6BosonicFreshContraction.freshInverse_vector_contraction`,
+    `ICO.C6BosonicFreshContraction.freshInverse_supported_norm`,
+    `ICO.C6BosonicFreshPrefix.freshRun_prefix`,
+    `ICO.C6FockCompressionSharp.right_compression_norm`,
+    `ICO.C6BosonicLocalInverse.local_inverse_succ`,
+    `ICO.C6BosonicLocalInverse.local_inverse_zero`, and
+    `ICO.C6HistoryControlled.inverseBlock_error` (Step 4 cost epsilon_4).
+  - Lemma 32 (appA:raw, sec:c6-A4, eq:c6-raw-fresh-gram), Claim 33 (appA:record,
+    appA:no-cross), Claim 34 (appA:images, eq:c6-mode-product, appA:weighted,
+    appA:weighted-state), and Claim 35 (appA:histories):
+    `ICO.C6RawHybrid.flag_raw_distance`,
+    `ICO.C6FreshRawEndpoint.fresh_raw_distance`,
+    `ICO.C6PermanentFlags.prefixRun_numbers`,
+    `ICO.C6ActualFlagErasure.outcome_flag_erasure`,
+    `ICO.C6RawWeightedEndpoint.rawDensity_weighted`,
+    `ICO.C6WeightedHistoryBound.branches_deficit_cp`,
+    `ICO.C6WeightedHistoryBound.branches_deficit_mass`, and
+    `ICO.C6WeightedHistoryBound.weighted_uniform_distance` (Step 5 cost epsilon_5).
+    Note on step order relative to Section A.4 (sec:c6-A4): the Lean
+    formalization orders two substeps of Step 5 in reverse relative to Section
+    A.4: Lean establishes the permanent birth record
+    (`ICO.C6PermanentFlags.prefixRun_numbers` and
+    `ICO.C6ActualFlagErasure.outcome_flag_erasure`) while births are still
+    performed by the polar isometries F^R using an explicit flag register, and
+    passes to the raw birth operators E^R afterwards
+    (`ICO.C6RawHybrid.flag_raw_distance` and
+    `ICO.C6FreshRawEndpoint.fresh_raw_distance`), whereas Section A.4 passes to
+    E^R first and proves Claim appA:record directly for raw births without a flag
+    register.
+
+
+1.5 Discussion and formal verification overview (Section 6 and Appendix C)
+--------------------------------------------------------------------------
+Paper: sec:discussion; sec:where; sec:open; sec:concurrent; sec:formal-status.
+
+Section 6 ("Discussion", sec:discussion) comprises Section 6.1 ("An example in
+quantum computing, and an invitation", carrying labels sec:where and sec:open)
+and Section 6.2 ("Concurrent and independent work", sec:concurrent); Appendix C
+("Formal verification", sec:formal-status) summarizes the Lean 4.30.0
+formalization and verification record. Mathematical statements referenced there
+are mapped in Sections 1.1–1.4 above (Definition 4 def:ordinary, Theorems 1–3
+thm:exact-simulation, thm:simulation-summary, thm:c6, Lemmas 5, 6, 8, 9, 13, 18,
+and 22, Proposition 7, Remark 10 rem:unitary, Corollary 14 cor:coherence, Claims
+15–16 clm:fresh and clm:pair, Remark 17 rem:approx-content, Remark 23
+rem:crossover, Section 4.4 sec:simulation, and Appendix A Claims 30, 33, 34, and
+35). Discussion remarks on announced-outcome measurements (citing Gao et al.
+2023), open exponent and unbounded-budget/heralded questions, and literature
+comparisons in Section 6.2 are expository and not separate Lean theorems.
+
+
+Audited results that do not correspond to a statement of the manuscript
+=======================================================================
+
+The endpoints below belong to the same trust-level-zero Lean 4.30.0 closure and
+formalize companion or earlier-draft results that are not numbered statements in
+the current manuscript (`paper/main.tex`).
+
+2.1 SAME versus MUB decision theorem and four-use quantum-switch test
+---------------------------------------------------------------------
+Modules: ICO/C6OperationalDecision.lean; ICO/C6SwitchTest.lean;
+ICO/C6SwitchSameChannel.lean.
+Selected endpoints:
+  ICO.C6OperationalDecision.same_mub_query_lower_bound
   ICO.C6SwitchTest.four_mub_error
   ICO.C6SwitchSameChannel.same_channel_four_accepts
 
-Four independent switch uses, each with one call to each channel, accept SAME
-with probability one, including different basis descriptions of the same
-channel. They accept MUB with probability at most 81/256<1/3 for d>=2. Thus the
-cost is four switch uses, or eight elementary channel calls. The actual Born
-experiment and product distribution are checked. This is a specialization of
-the known switched-interference experiment, not a new switching architecture.
+For d = 2^n (n >= 1), `same_mub_query_lower_bound` proves directly from Lemma 18
+(`same_mub_distance`) that any ordinary adaptive strategy deciding with success
+probability at least 2/3 whether two hidden-basis dephasing channels coincide
+(SAME) or dephase in mutually unbiased bases (MUB) requires q > d^(1/16)/100.
+Conversely, four independent uses of the quantum switch (8 elementary calls)
+accept every SAME pair with probability 1 (`same_channel_four_accepts`) and
+accept every MUB pair with probability at most 81/256 < 1/3 for d >= 2
+(`four_mub_error`).
 
-Phase-averaged OTOC and channel commutation
-------------------------------------------
-Paper: sec:connections; eq:otoc; cor:otoc; sec:visibility; eq:visibility;
-eq:basis-visibility.
-Modules: ICO/C6OTOC.lean; ICO/C6OTOCCommutator.lean;
-ICO/C6OTOCChannelBoundary.lean; ICO/C6OTOCEstimator.lean;
-ICO/C6OperationalDecision.lean; ICO/C6BonusInventory.lean.
-Endpoints:
-  ICO.C6OTOC.phaseOTOC_eq_interference
-  ICO.C6OTOC.phaseOTOC_born
-  ICO.C6OTOCCommutator.phaseOTOC_complement
-  ICO.C6OTOCChannelBoundary.mub_channels_commute
-  ICO.C6OTOCChannelBoundary.same_channels_commute
-  ICO.C6OTOCEstimator.switch_estimation
-  ICO.C6OTOCEstimator.call_count
-  ICO.C6OperationalDecision.otoc_query_lower_bound
-  ICO.C6BonusInventory.zanardi_swap_same
-  ICO.C6BonusInventory.zanardi_swap_mub
-  ICO.C6BonusInventory.switch_depolarizing_oracle
+2.2 General-channel visibility estimation
+-----------------------------------------
+Module: ICO/C6VisibilityEstimator.lean.
+Selected endpoints:
+  ICO.C6VisibilityEstimator.visibility_bernoulli_error
+  ICO.C6VisibilityEstimator.visibility_failure_le_two_exp_neg_two
+  ICO.C6VisibilityEstimator.visibility_success_ge_one_sub_two_exp_neg_two
+  ICO.C6VisibilityEstimator.switch_visibility_estimation
+  ICO.C6VisibilityEstimator.channel_visibility_estimation
+  ICO.C6VisibilityEstimator.visibility_estimator_gives_decision
+  ICO.C6VisibilityEstimator.visibility_query_lower_bound
+  ICO.C6VisibilityEstimator.visibility_query_lower_bound_of_dephasers
+  ICO.C6VisibilityEstimator.visibility_estimation_query_lower_bound
 
-For the explicit finite clock-phase ensemble indexed by ZMod d, averaging the
-normalized real unitary commutator OTOC equals the channel interference value.
-The clock twirl itself is proved to implement the literal dephasing channel;
-the overlap identity is not assumed. One minus this value equals the ensemble
-mean squared Hilbert-Schmidt commutator divided by 2d. MUB channel compositions
-both equal the depolarizing map, and SAME channel compositions also commute.
-In addition, ICO/C6BonusInventory.lean formalizes the Zanardi bipartite-swap
-trace identities (Tr(S(Delta_B tensor Delta_{B'})S(Delta_B tensor Delta_{B'}))
-equals d for B=B' and 1 for MUB bases) and the depolarizing-oracle switch
-measurement identity (switching two completely depolarizing channels yields X
-expectation 1/d^2 and |+> probability (1 + 1/d^2)/2).
+m = ceil(4/epsilon^2) independent quantum-switch runs (2m <= 8/epsilon^2 + 2
+elementary channel calls) estimate the channel visibility v(A, B) to additive
+error at most epsilon with success probability at least 1 - 2 exp(-2) > 2/3 for
+arbitrary channels (`switch_visibility_estimation`,
+`channel_visibility_estimation`), whereas any ordinary adaptive q-call estimator
+achieving additive error epsilon < 1/4 with probability at least 2/3 on all
+channel pairs (or on dephasing pairs for n >= 2) requires q > d^(1/16)/100
+(`visibility_query_lower_bound`, `visibility_query_lower_bound_of_dephasers`,
+`visibility_estimation_query_lower_bound`).
 
-The actual switch estimator uses ceil(4/epsilon^2) repetitions and estimates
-the OTOC to additive epsilon>0 with error probability <1/3; its elementary
-channel-call count is <8/epsilon^2+2. For any fixed 0<epsilon<1/4, ordinary
-channel-access estimation with success >=2/3 on the promise requires
-q>d^(1/16)/100 for d=2^n, n>=1. The formal lower endpoint allows arbitrary finite
-POVM output and real-valued estimates, arbitrary mixed input, and adaptive
-quantum memory. No hidden U or U-dagger oracle is supplied to the estimator.
-
-Conditional keyed-family transfer
----------------------------------
-Paper: sec:connections; eq:pru; sec:keyed-capacity; cor:keyed-capacity.
-Module: ICO/C6OperationalDecision.lean.
-Endpoints:
-  ICO.C6OperationalDecision.keyed_relation_advantage
-  ICO.C6OperationalDecision.keyed_zero_advantage
-
-The finite keyed theorem assumes exactly two explicit differences between
-actual keyed and Haar acceptance probabilities, bounded by epsilon_0 and
-epsilon_1. For q>=1 and 4q<=d, the keyed SAME/MUB acceptance gap is bounded by
-epsilon_0 + uniformError(q,d,d^(1/16)) + epsilon_1. The Haar term is proved,
-not a premise. With zero queries the keyed acceptance gap is exactly zero.
-No pseudorandom-unitary existence, efficiency, or asymptotic security claim is
-postulated as an axiom. Obtaining negligible epsilon_i from an inverse-secure
-unitary-oracle PRU uses the explicit efficient U-dagger/copy/U implementation,
-with two hidden-unitary calls per channel query and known relative-basis gates.
-Those computational assumptions remain external and are stated in the paper.
-Quantum-switch access is a different resource from ordinary U,U-dagger access;
-the transfer is not a break of standard PRU security.
-
-Exact universal simulation (P3)
-------------------------------
-Paper: thm:exact-simulation; sec:ordered; lem:ordered; eq:ordered-comb;
-sec:exact; sec:polarization; lem:polarization; eq:polarization; eq:dilution;
-sec:qubit-certificate; eq:vector-link; lem:exact-obstruction; rem:exact-scope;
-sec:certificate.
-Modules: ICO/BoundedSwitchObstruction.lean;
-ICO/PolarizationOrderedArbitraryControl.lean.
-Endpoints:
-  ICO.BoundedSwitchObstruction.no_bounded_circuit
-  ICO.PolarizationOrderedArbitraryControl.no_bounded_full_switch_circuit
-  ICO.PolarizationOrderedArbitraryControl.no_bounded_circuit_arbitrary_control
-  ICO.PolarizationOrderedArbitraryControl.no_labelled_full_switch_circuit
-  ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition
-  ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition_dim_d
-  ICO.PolarizationOrderedArbitraryControl.tree_ordered_components
-  ICO.PolarizationOrderedArbitraryControl.tree_ordered_components_dim_d
-  ICO.PolarizationOrderedArbitraryControl.sum_perm_one_slot
-  ICO.PolarizationOrderedArbitraryControl.sum_perm_two_slot
-  ICO.PolarizationOrderedArbitraryControl.average_perm_two_slot
-  ICO.PolarizationOrderedArbitraryControl.symmetrized_polarization
-  ICO.PolarizationOrderedArbitraryControl.symmetrized_switch_polarization
-  ICO.PolarizationOrderedArbitraryControl.symmetrized_switch_polarization_choi
-  ICO.PolarizationOrderedArbitraryControl.symmetrized_switch_polarization_kraus
-
-For d>=2, every finite adaptive BudgetQueryTree with one total finite call budget
-fails to realize the universal switch on all pairs of d-dimensional channels.
-The statement includes arbitrary finite nonempty private memory. RealizesSwitch
-is equality of actual channel maps on all finite complete Kraus families.
-no_bounded_circuit forbids exact simulation with input control fixed to |+> and
-retained at output; ICO/PolarizationOrderedArbitraryControl.lean further proves
-no_bounded_full_switch_circuit (and its alias no_bounded_circuit_arbitrary_control,
-showing that no q-query adaptive circuit matches fullControlSwitchMap across all
-control-and-target inputs and all channel pairs in dimension d >= 2, obtained by
-precomposing with plusControlChannel d), no_labelled_full_switch_circuit (exact
-impossibility for arbitrary finite call schedule labels), the ordered-component
-decomposition of Lemma lem:ordered both for normal-form combs
-(ordered_components_decomposition, ordered_components_decomposition_dim_d) and
-directly from tree.normalForm of an arbitrary QueryTree with causal PSD combs
-and orderStateProb summing to 1 (tree_ordered_components,
-tree_ordered_components_dim_d), and the full polarization identities of Lemma
-lem:polarization both in general bilinear form (sum_perm_one_slot,
-sum_perm_two_slot, average_perm_two_slot, symmetrized_polarization) and
-specialized directly to RealizesLabelledFullControlSwitch tree
-(symmetrized_switch_polarization, symmetrized_switch_polarization_choi,
-symmetrized_switch_polarization_kraus). In addition,
-proofs/lean/certificates/verify_all.py independently checks the standalone
-exact rational dual certificates for the qubit causal-support obstruction
-(sec:certificate).
-
-Approximate universal simulation (C4)
-------------------------------------
-Paper: thm:simulation-summary; sec:approximation; eq:tradeoff-intro;
-sec:reverse; lem:reverse; eq:bd; eq:frame; eq:envelope; cor:coherence;
-eq:coherence; eq:effect; eq:gram.
-Modules: ICO/C4FullSwitchTheorem.lean; ICO/BudgetContinuity.lean;
-ICO/BudgetPreparation.lean.
-Endpoints:
-  ICO.C4PhysicalEnsemble.exists_full_switch_error_bound
-  ICO.C4PhysicalEnsemble.full_switch_fixed_accuracy_constant
-  ICO.C4PhysicalEnsemble.full_switch_one_over_48
-  ICO.BudgetQueryTree.Tree.channel_choi_continuous
-  ICO.BudgetQueryTree.uniformChannel_choi_continuous
-  ICO.BudgetQueryTree.Tree.prepare
-  ICO.BudgetQueryTree.Tree.prepare_channel
-
-The first theorem supplies actual uniform-unitary-mixture channels on which a
-given q-total-query finite adaptive circuit's error for the standard full-control
-switch is at least 1/2 - 13r^2/(3d) - q(q-1)/(2r), with paper r=Lean r+1.
-The metric is half the diamond norm (Channel.diamondTraceDistance).
-The second proves Omega_epsilon(d^(1/4)) total calls for every fixed epsilon<1/2.
-The third gives the explicit paper consequence: d>=64 and uniform error<=1/48
-imply d<4096 q^4. The proof includes actual normalized Choi witnesses, Haar
-moments, adaptive selected-pair extraction, the total-query collision bound,
-continuity of tree Choi matrices (Tree.channel_choi_continuous,
-uniformChannel_choi_continuous), and initial-state tree preparation
-(Tree.prepare, Tree.prepare_channel).
-
-Two-call classical-control approximation and simulation remarks
---------------------------------------------------------------
-Paper: sec:simulation; rem:unitary; rem:approx-content; rem:crossover.
-Modules: ICO/Section44TwoCall.lean; ICO/RemarksUnitaryNumerical.lean.
-Endpoints:
-  ICO.Section44TwoCall.dephaseControl_diamond_id_le_half
-  ICO.Section44TwoCall.twoCallTree_krausChannel_eq
-  ICO.Section44TwoCall.twoCallTree_krausChannel_error_le_half
-  ICO.Section44TwoCall.twoCallTree_fullCircuit_eq
-  ICO.Section44TwoCall.twoCallTree_fullSwitch_error_le_half
-  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_channel_eq
-  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullChannel_eq
-  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_allChannel_eq
-  ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_diamond_zero
-  ICO.RemarksUnitaryNumerical.exists_two_query_switch_error_ge_235
-  ICO.RemarksUnitaryNumerical.two_query_tradeoff_nonpos_of_le_234
-  ICO.RemarksUnitaryNumerical.full_switch_one_over_48_three_queries_of_ge_65536
-  ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_one_of_le_106
-  ICO.RemarksUnitaryNumerical.one_lt_two_pow_div_sixteen_div_100_of_ge_107
-  ICO.RemarksUnitaryNumerical.same_mub_at_least_two_queries_of_ge_107
-  ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_eight_of_le_154
-  ICO.RemarksUnitaryNumerical.eight_lt_two_pow_div_sixteen_div_100_of_ge_155
-  ICO.RemarksUnitaryNumerical.same_mub_exceeds_eight_queries_of_ge_155
-
-ICO/Section44TwoCall.lean constructs the explicit two-call classical-control
-measurement tree of Section 4.4 (sec:simulation): measuring the control qubit in
-the computational basis and applying B after A on branch 0 or A after B on
-branch 1 equals the Z-dephased quantum switch on all inputs and achieves
-universal half-diamond approximation error at most 1/2 (matching the leading 1/2
-constant in Theorem thm:simulation-summary).
-
-ICO/RemarksUnitaryNumerical.lean formalizes Remark rem:unitary (the three-call
-exact unitary quantum-switch circuit achieving error 0 on all unitary channels),
-Remark rem:approx-content (the two-query tradeoff threshold d >= 235 vs d <= 234
-at paper r=3, i.e. Lean r=2 with r+1=3, giving 1/6 - 39/d >= 1/1410 > 0, and the
-3-query threshold d >= 65536 for error <= 1/48), and Remark rem:crossover (the
-exact dyadic exponent thresholds n = 107 where 2^(n/16)/100 first exceeds 1 and
-n = 155 where 2^(n/16)/100 first exceeds the 8-call quantum-switch cost).
-
-Dimension-independent switched testing upper bound (prior-work protocol)
------------------------------------------------------------------------
-Paper: thm:testing; sec:robust (the known interference test).
-Module: ICO/SwitchExperiment.lean
-Endpoints:
+2.3 Constant-gap interference testing
+-------------------------------------
+Modules: ICO/SwitchExperiment.lean; ICO/C5Decision.lean;
+ICO/C6BonusInventory.lean.
+Selected endpoints:
   ICO.SwitchExperiment.switch_eighty_high_error
   ICO.SwitchExperiment.switch_eighty_low_error
-
-For any two finite complete Kraus families, the actual switched mixed-input state
-and actual X-control measurement have plus probability (1+interference)/2.
-Eighty independent experiments, accepting high when at least 60 plus outcomes
-occur, have error <1/3 for interference>=2/3 or interference<=1/3 respectively.
-This checks the physical experiment and the sampling rule, not just an abstract
-Bernoulli estimate. The manuscript credits the estimator to prior work.
-
-Haar recording comparison used by C5
-------------------------------------
-Modules: ICO/MHHaarRecordingComparison.lean; ICO/MHProtocolHaarRecording.lean
-Endpoints:
-  ICO.MHHaarRecordingComparison.frequency_visible_distance
-  ICO.MHProtocolHaarRecording.protocol_haar_recording
-
-The generic signed protocol comparison has actual normalized trace distance
-<=9t(t+1)/R between the product-Haar-averaged physical frequency oracle output and
-the literal recording oracle's visible output, where d=R^8, R>=1, 2t<=d, t<d.
-Known isometries may be rectangular, and public/private-copy memory varies at
-every step. All moment, domain, inverse-query, support, covariance, norm-loss,
-continuity, and overlap estimates are discharged in the theorem.
-
-The protocol specialization uses the literal hidden-outcome rank-one measurement
-implementation U^dagger/copy/U, two unitary queries per measurement-channel call.
-For n channel calls and 4n<=d it gives 9(2n)(2n+1)/d^(1/8), comparing the actual
-Haar-basis protocol density with the literal recording trajectory. The hidden
-measurement label is private throughout, and final erasure is proved explicitly.
-
-C5 adaptive fixed-basis indistinguishability
--------------------------------------------
-Archival C5 comparison retained in the proof package. The former labels
-thm:basis, sec:hidden-basis and eq:distance refer to the earlier manuscript,
-not sections or numbered statements in the current C6-led paper.
-Module: ICO/OrdinaryHaarStates.lean
-Endpoints:
-  ICO.OrdinaryHaarStates.adaptive_haar_distance
-  ICO.OrdinaryHaarIndistinguishability.protocol_haar_recording_full
-  ICO.OrdinaryHaarIndistinguishability.circuit_haar_bound
-
-For arbitrary mixed input State, actual finite adaptive total-query-budget tree,
-q>=1 and 2q<d, the actual output averaged over one fixed hidden Haar basis is
-within normalized trace distance
-
-  18(2q)(2q+1)/d^(1/8) + 4q/sqrt(d-2q) + q^2/d
-
-of the same circuit with each call replaced by the depolarizing channel. There
-is no supplied transcript, overlap, or recording comparison premise. The exact
-fractional-power denominators agree with the archival C5 statement; this is not
-only a version conditional on an auxiliary eighth- or sixteenth-root parameter.
-The physical Haar-recording estimate also has a separately proved full-range
-trivial branch.
-
-C5 ordinary-query testing lower bound
--------------------------------------
-Paper: thm:testing; sec:robust (constant-gap interference testing).
-Modules: ICO/C5Decision.lean; ICO/C6BonusInventory.lean.
-Endpoints:
   ICO.C5Decision.main_lower_bound
   ICO.C5Decision.measurement_only_lower_bound
   ICO.C6BonusInventory.all_channels_constant_gap_lower_bound
   ICO.C6BonusInventory.measurement_only_constant_gap_lower_bound
   ICO.C6BonusInventory.constant_gap_interference_testing
 
-For an arbitrary actual BinaryHypothesisTest applied to the output of an actual
-q-total-query adaptive tree on an arbitrary mixed State input, correctness on
-the hard promised families implies q > d^(1/16)/100. The main witness family
-uses coincident hidden-basis measurement channels versus depolarizing channels.
-The measurement-only lower bound applies to any algorithm correct on every
-promised pair of rank-one nonselective measurements, for d>=4. The formal
-endpoint needs correctness on all coincident-basis high witnesses and every
-measurement pair with interference<=1/3; correctness on all promised pairs
-implies those premises. In addition, ICO/C6BonusInventory.lean generalizes both
-lower bounds and the combined switched-versus-ordinary separation to any
-constant promise gap in (0, 1/3] around 1/2 (i.e., V >= 1/2 + gap versus
-V <= 1/2 - gap whenever 1/d <= 1/2 - gap).
+Eighty independent quantum-switch experiments accepting when at least 60 |+>
+control outcomes occur distinguish visibility >= 2/3 from visibility <= 1/3 with
+error < 1/3 (`switch_eighty_high_error`, `switch_eighty_low_error`), whereas any
+ordinary adaptive strategy requires q > d^(1/16)/100 (`main_lower_bound`,
+`measurement_only_lower_bound`). `ICO/C6BonusInventory.lean` generalizes this
+separation to any constant gap in (0, 1/3] around 1/2 whenever 1/d <= 1/2 - gap.
 
-Model-validation separation under dephasing versus depolarizing noise
---------------------------------------------------------------------
-Paper: sec:validation; prop:mismatch; eq:validation-pair;
-eq:validation-visibility; cor:validation.
+2.4 Diamond-norm model mismatch and slotwise switch contractivity
+-----------------------------------------------------------------
 Module: ICO/Section54Validation.lean.
-Endpoints:
+Selected endpoints:
   ICO.Section54Validation.ancillaTraceDistanceBound_diamond
   ICO.Section54Validation.switch_slot_left_diamond_le
   ICO.Section54Validation.switch_slot_left_diamond_le_diamond
@@ -389,43 +746,15 @@ Endpoints:
   ICO.Section54Validation.switch_slot_right_diamond_le_diamond
   ICO.Section54Validation.model_mismatch_bound
   ICO.Section54Validation.model_mismatch_diamond_bound
-  ICO.Section54Validation.dephasing_noise_self_visibility
-  ICO.Section54Validation.depolarizing_model_self_visibility
-  ICO.Section54Validation.validation_ordinary_lower_bound
-  ICO.Section54Validation.validation_ordinary_balanced_query_lower_bound
-  ICO.Section54Validation.validation_ordinary_query_lower_bound
-  ICO.Section54Validation.validation_switch_upper_bound
 
-ICO/Section54Validation.lean formalizes the Section 5.4 (sec:validation)
-model-validation results between dephasing noise E_{p,U} = (1-p) id + p Delta_U
-and its matched-fidelity depolarizing model M_p = (1-p) id + p Lambda:
-  - ancillaTraceDistanceBound_diamond, switch_slot_left_diamond_le_diamond,
-    switch_slot_right_diamond_le_diamond, and model_mismatch_diamond_bound (along
-    with their ancilla-specific helpers switch_slot_left_diamond_le,
-    switch_slot_right_diamond_le, model_mismatch_bound) prove Proposition
-    prop:mismatch directly in terms of Channel.diamondTraceDistance: the quantum
-    switch is contractive in the diamond norm in each slot, and for any channels
-    E, M, (1/2) ||E - M||_diamond >= (1/4) |v(E) - v(M)|.
-  - dephasing_noise_self_visibility and depolarizing_model_self_visibility prove
-    the exact self-visibility formulas eq:validation-visibility:
-    v(E_{p,U}) = 1 and v(M_p) = 1 - p^2 (d - 1)/(d + 1).
-  - validation_ordinary_query_lower_bound,
-    validation_ordinary_balanced_query_lower_bound (unconditional operational
-    theorems on arbitrary BudgetQueryTree.Tree (A x M) O Q B via Bernoulli-p
-    coin-tape expansion, Markov truncation, same_mub_distance, and depolarizing
-    hybrid bounds, with zero artificial scalar premises, complementing the
-    arithmetic helper validation_ordinary_lower_bound), and
-    validation_switch_upper_bound establish Corollary cor:validation: for d = 2^n
-    and 0 < p <= 1, any ordinary adaptive strategy deciding between M_p and
-    E_{p,U} with success probability >= 2/3 requires budget Q > d^(1/16)/(1400 p),
-    whereas 7 uses of the quantum switch with k = ceil(3/(2p)) consecutive uses
-    per slot (14k = O(1/p) calls) achieve one-sided error < 1/3.
+The quantum switch is contractive in `Channel.diamondTraceDistance` in each slot,
+and for any two channels E and M their half-diamond distance satisfies
+(1/2) ||E - M||_diamond >= (1/4) |v(E) - v(M)| (`model_mismatch_diamond_bound`).
 
-Exact two-call two-qubit separation certificate and operational bound
----------------------------------------------------------------------
-Paper: sec:validation; prop:two-call.
+2.5 Exact two-call two-qubit (`d = 4`) separation certificate and operational bound
+-----------------------------------------------------------------------------------
 Modules: ICO/TwoCallCertificate.lean; ICO/TwoCallOperational.lean.
-Endpoints:
+Selected endpoints:
   ICO.TwoCallCertificate.weingarten_gram_identity
   ICO.TwoCallCertificate.delta_orbit_table_correct
   ICO.TwoCallCertificate.delta_output_partial_trace_zero
@@ -449,61 +778,74 @@ Endpoints:
   ICO.TwoCallOperational.two_call_haar_vs_model_upper_bound
   ICO.TwoCallOperational.two_call_hidden_vs_model_upper_bound
 
-ICO/TwoCallCertificate.lean and ICO/TwoCallOperational.lean formalize Proposition
-prop:two-call in Section 5.4 (sec:validation), establishing the complete,
-unconditional end-to-end two-call, two-qubit (d=4) separation between
-Haar-random hidden-basis dephasing Delta_U and the matched-fidelity depolarizing
-channel Lambda = (id + 4 Omega)/5 under a balanced prior:
-  - One use of the quantum switch (2 channel calls) has self-visibility 1 on
-    Delta_U and 2/5 on Lambda (visibility gap 3/5), achieving balanced-prior
-    success probability 13/20 = 0.65 (and 1/2 + (3/20) p^2 at noise rate p).
-  - ICO/TwoCallCertificate.lean kernel-checks the exact rational dual certificate
-    Z (lambda = 4/25), Weingarten Gram matrix, orbit tables, causal partial
-    traces, and Bareiss pivots across six orthogonal parity/charge subblocks.
-  - ICO/TwoCallOperational.lean discharges all matrix-positivity, fourth-moment
-    Haar integration, and causal-tester comb links directly on CMatrix and
-    BudgetQueryTree.Tree (Fin 4 x M) O 2 B (zMatrix_posSemidef,
-    zMatrix_sub_deltaMatrix_posSemidef, unitaryTwirl_diagK_eq_wCand,
-    integral_choiTwoCopy_dephasing, integral_choiTwoCopy_noisy_diff,
-    trace_deltaMatrix_testerAccept_abs_le), proving unconditionally (with zero
-    scalar real premises) that every two-call ordinary adaptive strategy has
-    balanced-prior success probability at most 29/50 = 0.58 < 13/20
-    (two_call_haar_vs_model_upper_bound, two_call_hidden_vs_model_upper_bound)
-    and at most 1/2 + (2/25) p^2 < 1/2 + (3/20) p^2 for 0 < p <= 1 at noise rate
-    p (two_call_noisy_haar_vs_model_upper_bound).
+Unconditional two-call separation in dimension d = 4 between Haar-random
+hidden-basis dephasing Delta_U and matched-fidelity depolarizing noise
+Lambda = (id + 4 Omega)/5 under a balanced prior: one quantum-switch use (2
+calls) achieves success probability 13/20 = 0.65 (and 1/2 + (3/20) p^2 at noise
+rate p), while every two-call ordinary adaptive strategy (`BudgetQueryTree.Tree
+(Fin 4 x M) O 2 B`) has success probability at most 29/50 = 0.58 (and at most
+1/2 + (2/25) p^2 for 0 < p <= 1), proved via an exact rational Bareiss/SDP dual
+certificate in `ICO/TwoCallCertificate.lean` and fourth-moment Haar integration
+in `ICO/TwoCallOperational.lean`.
 
-Inherited SAME/MUB bound for capacity-qualified communication
--------------------------------------------------------------
-Paper: sec:capacity-qualification; cor:capacity-qualification;
-eq:capacity-c6-output-bound; cor:capacity-blocklength.
-Module: ICO/C6BonusInventory.lean.
-Endpoint:
+2.6 Phase-averaged OTOC, Zanardi-swap, channel commutation, keyed-family transfer, and capacity-inherited distance
+------------------------------------------------------------------------------------------------------------------
+Modules: ICO/C6OTOC.lean; ICO/C6OTOCCommutator.lean;
+ICO/C6OTOCChannelBoundary.lean; ICO/C6OTOCEstimator.lean;
+ICO/C6OperationalDecision.lean; ICO/C6BonusInventory.lean.
+Selected endpoints:
+  ICO.C6OTOC.phaseOTOC_eq_interference
+  ICO.C6OTOC.phaseOTOC_born
+  ICO.C6OTOCCommutator.phaseOTOC_complement
+  ICO.C6OTOCChannelBoundary.mub_channels_commute
+  ICO.C6OTOCChannelBoundary.same_channels_commute
+  ICO.C6OTOCEstimator.switch_estimation
+  ICO.C6OTOCEstimator.call_count
+  ICO.C6OperationalDecision.otoc_query_lower_bound
+  ICO.C6BonusInventory.zanardi_swap_same
+  ICO.C6BonusInventory.zanardi_swap_mub
+  ICO.C6BonusInventory.switch_depolarizing_oracle
+  ICO.C6OperationalDecision.keyed_relation_advantage
+  ICO.C6OperationalDecision.keyed_zero_advantage
   ICO.C6BonusInventory.capacity_inherited_same_mub_distance
 
-For d=2^n, n>=1 and 1 <= q <= d^(1/16)/100, any q-query adaptive ordinary
-strategy attempting to distinguish the SAME dephasing pair from the MUB
-dephasing pair has normalized output trace distance at most 212/10000
-(formalizing the C6 output-distance input eq:capacity-c6-output-bound used in
-Appendix sec:capacity-qualification).
+Formalizes the ZMod d clock-phase OTOC equivalence with channel visibility and
+its switch estimator / ordinary query lower bound (`ICO/C6OTOC*`,
+`otoc_query_lower_bound`), commutation of SAME and MUB dephasing channel
+compositions (`same_channels_commute`, `mub_channels_commute`), Zanardi
+bipartite-swap trace identities and the completely depolarizing switch observable
+(`zanardi_swap_same`, `zanardi_swap_mub`, `switch_depolarizing_oracle`), the
+finite conditional keyed-family acceptance transfer with two explicit security
+error terms (`keyed_relation_advantage`, `keyed_zero_advantage`), and the
+212/10000 SAME/MUB output-distance bound packaged for compound-channel
+qualification (`capacity_inherited_same_mub_distance`, used analytically in
+`research/topics/`).
 
-External and analytic paper statements not formalized as Lean theorems
----------------------------------------------------------------------
-The following auxiliary or external discussions in the manuscript are treated
-analytically in the paper text rather than as additional Lean endpoints:
-  - Port-based teleportation (PBT) upper bound in Section 4.4 (sec:simulation):
-    cites the standard asymptotic PBT diamond-norm simulation upper bound to
-    place the Omega(d^(1/4)) lower bound alongside known upper constructions.
-  - Asymptotic quantum capacity and compound-channel coding steps in Appendix D
-    (sec:capacity-qualification, cor:capacity-qualification,
-    cor:capacity-blocklength) and their keyed Clifford/PRU specialization
-    (sec:keyed-capacity, cor:keyed-capacity): the underlying q-query adaptive
-    distinguishability bound eq:capacity-c6-output-bound and finite keyed
-    reduction eq:pru are formalized in Lean, while the compound-channel capacity
-    theorem and computational PRU/Clifford security premises remain analytic.
-  - Asymptotic polynomial-security wrapper around eq:pru in Appendix C
-    (sec:connections): the finite probability bound is formalized in
-    keyed_relation_advantage and keyed_zero_advantage, while asymptotic
-    pseudorandom-unitary security definitions remain external.
-  - Direct-test versus gate-set tomography prose remark (rem:direct-test) and
-    the structured-basis / replayability discussion in Section 5.4 and Section 6
-    (sec:validation, sec:where).
+2.7 Earlier SAME/MUB crossover thresholds (`n = 107` and `n = 155`)
+-------------------------------------------------------------------
+Module: ICO/RemarksUnitaryNumerical.lean.
+Selected endpoints:
+  ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_one_of_le_106
+  ICO.RemarksUnitaryNumerical.one_lt_two_pow_div_sixteen_div_100_of_ge_107
+  ICO.RemarksUnitaryNumerical.same_mub_at_least_two_queries_of_ge_107
+  ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_eight_of_le_154
+  ICO.RemarksUnitaryNumerical.eight_lt_two_pow_div_sixteen_div_100_of_ge_155
+  ICO.RemarksUnitaryNumerical.same_mub_exceeds_eight_queries_of_ge_155
+
+Exact dyadic crossover thresholds for the SAME/MUB lower bound 2^(n/16)/100
+exceeding 1 (at n = 107) and exceeding the 8-call four-switch-use cost (at
+n = 155).
+
+2.8 Archival fixed-basis indistinguishability comparison (C5)
+-------------------------------------------------------------
+Modules: ICO/OrdinaryHaarStates.lean; ICO/OrdinaryHaarIndistinguishability.lean.
+Selected endpoints:
+  ICO.OrdinaryHaarStates.adaptive_haar_distance
+  ICO.OrdinaryHaarIndistinguishability.protocol_haar_recording_full
+  ICO.OrdinaryHaarIndistinguishability.circuit_haar_bound
+
+Bounds the normalized output trace distance between an ordinary q-call adaptive
+strategy querying a single hidden Haar-random basis-dephasing channel and the
+same circuit querying the completely depolarizing channel by
+18(2q)(2q+1)/d^(1/8) + 4q/sqrt(d - 2q) + q^2/d for 1 <= q and 2q < d, together
+with the full-range recording bound `protocol_haar_recording_full`.

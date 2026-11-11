@@ -1,5 +1,5 @@
-Pinned proof environment — C6 integrated release, 3 October 2026
-==============================================================
+Pinned proof environment — Lean 4.30.0 clean-from-scratch audit, 11 November 2026
+=================================================================================
 
 Lean: leanprover/lean4:v4.30.0
 Compiler source commit: d024af099ca4bf2c86f649261ebf59565dc8c622
@@ -21,11 +21,12 @@ There are no local compatibility patches to Lean-QIT or Mathlib.
 All additional Mathlib package revisions are locked in lake-manifest.json:
 plausible, LeanSearchClient, importGraph, proofwidgets, aesop, Qq, batteries, Cli.
 The rebuild scripts reuse the exact pinned Mathlib/package caches and compile
-every included ICO and QIT source. The delivered evidence is individual source
-compilation plus the combined trust-zero kernel audit; a second complete fresh
-1,651-source rebuild was not run. The archive contains neither dependency
-caches nor executable binaries. The selected closure has 1,603 ICO and 48
-unchanged QIT source modules, with 32 audited endpoint declarations.
+every included ICO and QIT source cleanly from `.lean` source on Windows before
+running the single-threaded trust-level-zero (`-t0 -j1 -s524288`) kernel audit
+of `ICO.lean` and `Audit.lean` (a separate Unix build was not run). The
+repository contains neither dependency caches nor executable binaries. The
+selected closure has 1,615 ICO and 48 unchanged QIT source modules (1,663 local
+modules across 32 root imports), with 221 audited endpoint declarations.
 
 The paper-specific source initially developed against Lean 4.19 was ported into
 the ICO namespace under the above single Lean 4.30 environment. Those portability

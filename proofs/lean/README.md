@@ -5,8 +5,8 @@ This is the canonical source tree for the formal results accompanying the
 statements, hypotheses, metric conventions, and stable paper labels.
 [DEPENDENCIES.txt](DEPENDENCIES.txt) records upstream versions and provenance.
 
-The selected proof closure contains 1,611 project modules in `ICO/` and 48
-unchanged Lean-QIT modules in `vendor/Lean-QIT/QIT/` (1,659 local modules total across 28 root imports). `ICO.lean` selects the
+The selected proof closure contains 1,615 project modules in `ICO/` and 48
+unchanged Lean-QIT modules in `vendor/Lean-QIT/QIT/` (1,663 local modules total across 32 root imports). `ICO.lean` selects the
 endpoints; `Audit.lean` prints their types and transitive axiom dependencies.
 The independent finite-arithmetic companion is kept once, in
 [certificates/](certificates/README.md).
@@ -68,26 +68,40 @@ lake env lean -t0 -j1 -s524288 Audit.lean
 ## What the evidence establishes
 
 The [recorded audit](audit/README.md) reports a
-successful trust-level-zero kernel check of 124 selected endpoints, after
-cleanly elaborating all 1,659 local proof modules (`1,611` `ICO` and `48` `QIT`)
-from `.lean` source from an empty `QIT`/`ICO` `.olean` directory on Windows
-under Lean 4.30.0 (`commit d024af099ca4bf2c86f649261ebf59565dc8c622`) before
-running the single-threaded `-t0` kernel audit of `ICO.lean` and `Audit.lean`.
-It reports only `propext`, `Classical.choice`, and `Quot.sound` as transitive
-axioms. The exact output is [final-kernel-audit.log](audit/final-kernel-audit.log).
+successful trust-level-zero kernel check of 221 selected endpoints, after
+cleanly elaborating all 1,663 local proof modules (`1,615` `ICO` and `48` `QIT`)
+from `.lean` source under Lean 4.30.0 (`commit d024af099ca4bf2c86f649261ebf59565dc8c622`)
+on Windows before running the single-threaded `-t0` kernel audit of `ICO.lean`
+and `Audit.lean`. It reports only `propext`, `Classical.choice`, and
+`Quot.sound` as transitive axioms. The exact output is
+[final-kernel-audit.log](audit/final-kernel-audit.log).
 
-Windows was exercised for the complete clean build from scratch and single-threaded
+Windows was exercised for the complete clean build from source and single-threaded
 `-t0` kernel audit; a separate Unix build was not run. A source hash match or
 successful Python replay does not replace the Lean kernel audit.
 
-The keyed-family transfer retains two explicit security assumptions. It does
-not formalize an efficient PRU construction or asymptotic cryptographic security.
-Both the fixed-plus-control exact impossibility endpoint and the arbitrary-control
-full-switch theorems (`ICO/PolarizationOrderedArbitraryControl.lean`), both the
-`215/10000` and `212/10000` C6 scalar bounds (`ICO/C6BonusInventory.lean`), and
-both the kernel-checked `d=4` rational dual certificate (`ICO/TwoCallCertificate.lean`)
-and its unconditional operational two-call strategy bound (`ICO/TwoCallOperational.lean`)
-are included in the audited closure.
+Part 1 of [THEOREMS.txt](THEOREMS.txt) maps the statements of the current
+manuscript ([paper/main.tex](../../paper/main.tex)), including both the
+fixed-plus-control and arbitrary-control exact impossibility theorems, exact
+qubit support/functional lemmas, and the three-call simulation when one box is
+unitary (`ICO/BoundedSwitchObstruction.lean`,
+`ICO/PolarizationOrderedArbitraryControl.lean`,
+`ICO/ExactQubitNamedLemmas.lean`, `ICO/RemarksUnitaryNumerical.lean`), the
+universal approximate simulation trade-off and its named supporting claims
+(`ICO/C4FullSwitchTheorem.lean`, `ICO/C4NamedClaims.lean`), the
+dephasing-versus-depolarizing separation with explicit `m`-th power switch-test
+blocks, visibility identities, label-cache bridge, and crossover thresholds
+(`ICO/Section54Validation.lean`, `ICO/VisibilityIdentities.lean`,
+`ICO/C6LabelCache.lean`, `ICO/RemarksUnitaryNumerical.lean`), and both the
+`215/10000` and `212/10000` C6 scalar bounds (`ICO/C6OperationalDecision.lean`,
+`ICO/C6BonusInventory.lean`).
+Supplementary endpoints retained from earlier drafts—including SAME/MUB
+decision, general-channel visibility and phase-OTOC estimation, diamond-norm
+model mismatch, the conditional keyed-family transfer (which retains its two
+explicit security assumptions without postulating PRU existence or asymptotic
+security), and the kernel-checked `d=4` two-call certificate and operational
+bound (`ICO/TwoCallCertificate.lean`, `ICO/TwoCallOperational.lean`)—remain in
+the audited closure and are catalogued in Part 2 of [THEOREMS.txt](THEOREMS.txt).
 
 ## Updating in place
 
