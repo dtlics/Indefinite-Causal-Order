@@ -1,6 +1,6 @@
 # Paper
 
-[main.tex](main.tex) is the only editable manuscript: **Infinite or indefinite: the query cost of simulating the quantum switch**. It contains its bibliography and TikZ figures. It proves the exact and approximate query lower bounds for simulating the quantum switch by classically adaptive quantum circuits, the exponential query separation for commuting hidden-dephasing channels and channel-visibility estimation, the model-validation and two-call separation results, and the capacity-qualification and keyed-device appendices ([NR-R22](../research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22) and [NR-R22-KEYED](../research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22-keyed)). Compilation and review scope are recorded in [validation](../docs/VALIDATION.md).
+[main.tex](main.tex) is the only editable manuscript: **Infinite or indefinite: the query cost of simulating the quantum switch**. It contains its bibliography and TikZ figures. It proves three results on the query cost of simulating the quantum switch by ordinary strategies, that is, quantum circuits that call the boxes in a definite, classically adaptive order: exact simulation is impossible with any bounded number of calls; approximate simulation to a fixed error below 1/2 needs Ω(d^{1/4}) calls; and one bit that the switch reads off its control qubit, whether a noisy device dephases in a hidden basis or depolarizes, needs more than d^{1/16}/(1400p) ordinary calls. Compilation and review scope are recorded in [validation](../docs/VALIDATION.md).
 
 ## Overleaf
 
