@@ -262,3 +262,771 @@ ICO.C6OTOCChannelBoundary.same_channels_commute.{u_1} {A : Type u_1} [Fintype A]
     (QIT.MatrixMap.ofKraus (ICO.SwitchObservable.basisProjection ↑V))
       ((QIT.MatrixMap.ofKraus (ICO.SwitchObservable.basisProjection ↑U)) X)
 'ICO.C6OTOCChannelBoundary.same_channels_commute' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BosonicFreshPrefix.freshRun_prefix {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A] {μ : ℕ → Type}
+  [(i : ℕ) → Fintype (μ i)] [(i : ℕ) → DecidableEq (μ i)] {t T : ℕ} (h : t + 1 ≤ T) (ht : t < Fintype.card A)
+  (H : ↥(Matrix.unitaryGroup A ℂ)) (K : (i : ℕ) → Matrix ((A × Bool) × μ (i + 1)) ((A × Bool) × μ i) ℂ)
+  (z : A × ICO.C6PairedTrajectory.Public μ 0 → ℂ) (i : ℕ) :
+  (ICO.MHRectangularAction.rectAct (ICO.C6RetainedHistory.controlled (ICO.C6HistoryControlled.prefixMask H i T)))
+      (ICO.C6MatrixTrajectory.run (ICO.C6RetainedHistory.freshStage h H K)
+        (WithLp.toLp 2 (ICO.MHFockTrajectory.initial T z)) i) =
+    ICO.C6MatrixTrajectory.run (ICO.C6RetainedHistory.freshStage h H K)
+      (WithLp.toLp 2 (ICO.MHFockTrajectory.initial T z)) i
+'ICO.C6BosonicFreshPrefix.freshRun_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6PermanentFlags.prefixRun_numbers {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A] {μ : ℕ → Type}
+  [(i : ℕ) → Fintype (μ i)] [(i : ℕ) → DecidableEq (μ i)] {q t T : ℕ} (h : t + 1 ≤ T) (ht : t < Fintype.card A)
+  (H : ↥(Matrix.unitaryGroup A ℂ)) (K : (i : ℕ) → Matrix ((A × Bool) × μ (i + 1)) ((A × Bool) × μ i) ℂ)
+  (z : EuclideanSpace ℂ (ICO.MHBoundedRecording.InputCutoff T × ICO.C6PairedTrajectory.Public μ 0))
+  (η : ICO.RecordingPurifiedProtocol.History (A × Bool) q) (U : ↥(Matrix.unitaryGroup A ℂ))
+  (labels : ICO.C6ResidualModes.Active (ICO.C6RetainedHistory.vectors H q η) → A) (hinj : Function.Injective labels)
+  (hcol :
+    ∀ (i : ICO.C6ResidualModes.Active (ICO.C6RetainedHistory.vectors H q η)),
+      ICO.C6CacheHistorySpan.column U (labels i) = ICO.C6ResidualModes.mode (ICO.C6RetainedHistory.vectors H q η) ↑i)
+  (hP :
+    ∀ (n : ℕ) (hn : n ≤ q),
+      ICO.C6CacheSpanProjection.historyProjection
+          (ICO.C6RetainedHistory.vectors H n (ICO.C6HistoryCoordinates.prefixHistory η n hn)) =
+        ICO.C6CacheSpanProjection.spanProjection U
+          (ICO.C6ResidualSpan.activeIndices (ICO.C6RetainedHistory.vectors H q η) labels n))
+  (hz :
+    ∀ (s : ICO.C6ResidualModes.Active (ICO.C6RetainedHistory.vectors H q η)),
+      (ICO.MHRectangularAction.rectAct
+            (Matrix.kronecker (ICO.C6NumberRotationAlgebra.rotatedNumber U {labels s} 0 T) 1))
+          (ICO.C6FlagSlices.slice (ICO.C6HistoryCoordinates.prefixHistory η 0 ⋯) z) =
+        ICO.C6FlagSlices.slice (ICO.C6HistoryCoordinates.prefixHistory η 0 ⋯) z)
+  (n : ℕ) (hn : n ≤ q) (κ : ICO.RecordingPurifiedProtocol.History Bool n)
+  (s : ICO.C6ResidualModes.Active (ICO.C6RetainedHistory.vectors H q η)) :
+  (ICO.MHRectangularAction.rectAct
+        (Matrix.kronecker
+          (ICO.C6NumberRotationAlgebra.rotatedNumber U {labels s}
+            (if ICO.C6HistoryPrefixSteps.pastFlag κ ↑↑s = true then 1 else 0) T)
+          1))
+      (ICO.C6FlagPrefixRun.prefixRun h H K z η n hn κ) =
+    ICO.C6FlagPrefixRun.prefixRun h H K z η n hn κ
+'ICO.C6PermanentFlags.prefixRun_numbers' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6WeightedHistoryBound.weighted_uniform_distance {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  {μ : ℕ → Type} [(i : ℕ) → Fintype (μ i)] [(i : ℕ) → DecidableEq (μ i)] (Q : ℕ) (hpos : 0 < Q)
+  (hQ : Q < Fintype.card A) (H : ↥(Matrix.unitaryGroup A ℂ))
+  (K : (i : ℕ) → Matrix (A × Bool × μ (i + 1)) (A × Bool × μ i) ℂ) (hK : ∀ (i : ℕ), (K i).conjTranspose * K i = 1)
+  (X : QIT.CMatrix (ICO.C6CacheDecode.Cache 0)) (hX : Matrix.PosSemidef X) (n : ℕ) :
+  QIT.traceNorm
+      (ICO.C6ClassicalHistoryRun.erase n (ICO.C6WeightedHistory.uniformRun Q hpos hQ H K X n) -
+        ICO.C6ClassicalHistoryRun.erase n (ICO.C6WeightedHistory.weightedRun Q hpos hQ H K X n)) ≤
+    (∑ i ∈ Finset.range n, ↑i / ↑(Fintype.card A)) * (Matrix.trace X).re
+'ICO.C6WeightedHistoryBound.weighted_uniform_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.BudgetQueryTree.Tree.channel_choi_continuous {H O B Ω : Type} [Fintype H] [DecidableEq H] [Fintype O]
+  [DecidableEq O] [Fintype B] [DecidableEq B] [TopologicalSpace Ω] {q : ℕ} (tree : ICO.BudgetQueryTree.Tree H O q B)
+  (first second : Ω → QIT.Channel H H) (hfirst : Continuous fun ω => (first ω).map.choi)
+  (hsecond : Continuous fun ω => (second ω).map.choi) : Continuous fun ω => (tree.channel (first ω) (second ω)).map.choi
+'ICO.BudgetQueryTree.Tree.channel_choi_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.BudgetQueryTree.uniformChannel_choi_continuous {H Ω : Type} [Fintype H] [DecidableEq H] [TopologicalSpace Ω] {r : ℕ}
+  [NeZero r] (oracles : Ω → Fin r → QIT.Channel H H)
+  (horacles : ∀ (i : Fin r), Continuous fun ω => (oracles ω i).map.choi) :
+  Continuous fun ω => (ICO.SamplingOrdinary.uniformChannel (oracles ω)).map.choi
+'ICO.BudgetQueryTree.uniformChannel_choi_continuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.BudgetQueryTree.Tree.prepare.{u} {H O B C : Type u} [Fintype H] [DecidableEq H] [Fintype O] [DecidableEq O]
+  [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C] {q : ℕ} (tree : ICO.BudgetQueryTree.Tree H O q B)
+  (W : Matrix B C ℂ) (hW : W.conjTranspose * W = 1) : ICO.BudgetQueryTree.Tree H O q C
+'ICO.BudgetQueryTree.Tree.prepare' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.BudgetQueryTree.Tree.prepare_channel.{u} {H O B C : Type u} [Fintype H] [DecidableEq H] [Fintype O] [DecidableEq O]
+  [Fintype B] [DecidableEq B] [Fintype C] [DecidableEq C] {q : ℕ} (tree : ICO.BudgetQueryTree.Tree H O q B)
+  (W : Matrix B C ℂ) (hW : W.conjTranspose * W = 1) (first second : QIT.Channel H H) :
+  (tree.prepare W hW).channel first second =
+    (tree.channel first second).comp (ICO.ClassicalDilation.isometryChannel W hW)
+'ICO.BudgetQueryTree.Tree.prepare_channel' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6VisibilityEstimator.visibility_bernoulli_error.{u_1, u_2, u_3} {n : Type u_1} {ι : Type u_2} {κ : Type u_3}
+  [Fintype n] [DecidableEq n] [Nonempty n] [Fintype ι] [Fintype κ] {m : ℕ} (hm : 0 < m) (A : ι → Matrix n n ℂ)
+  (B : κ → Matrix n n ℂ) (hA : ∑ i, (A i).conjTranspose * A i = 1) (hB : ∑ j, (B j).conjTranspose * B j = 1) (ε : ℝ)
+  (hε : 0 ≤ ε) :
+  (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+      {ω | ε < |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B|} ≤
+    2 * Real.exp (-↑m * ε ^ 2 / 2)
+'ICO.C6VisibilityEstimator.visibility_bernoulli_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6VisibilityEstimator.visibility_failure_le_two_exp_neg_two.{u_1, u_2, u_3} {n : Type u_1} {ι : Type u_2}
+  {κ : Type u_3} [Fintype n] [DecidableEq n] [Nonempty n] [Fintype ι] [Fintype κ] {m : ℕ} (hm : 0 < m)
+  (A : ι → Matrix n n ℂ) (B : κ → Matrix n n ℂ) (hA : ∑ i, (A i).conjTranspose * A i = 1)
+  (hB : ∑ j, (B j).conjTranspose * B j = 1) (ε : ℝ) (hε : 0 < ε) (hs : 4 / ε ^ 2 ≤ ↑m) :
+  (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+      {ω | ε < |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B|} ≤
+    2 * Real.exp (-2)
+'ICO.C6VisibilityEstimator.visibility_failure_le_two_exp_neg_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.C6VisibilityEstimator.visibility_success_ge_one_sub_two_exp_neg_two.{u_1, u_2, u_3} {n : Type u_1} {ι : Type u_2}
+  {κ : Type u_3} [Fintype n] [DecidableEq n] [Nonempty n] [Fintype ι] [Fintype κ] {m : ℕ} (hm : 0 < m)
+  (A : ι → Matrix n n ℂ) (B : κ → Matrix n n ℂ) (hA : ∑ i, (A i).conjTranspose * A i = 1)
+  (hB : ∑ j, (B j).conjTranspose * B j = 1) (ε : ℝ) (hε : 0 < ε) (hs : 4 / ε ^ 2 ≤ ↑m) :
+  1 - 2 * Real.exp (-2) ≤
+      (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+        {ω | |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B| ≤ ε} ∧
+    2 / 3 <
+      (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+        {ω | |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B| ≤ ε}
+'ICO.C6VisibilityEstimator.visibility_success_ge_one_sub_two_exp_neg_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.C6VisibilityEstimator.switch_visibility_estimation.{u_1, u_2, u_3} {n : Type u_1} {ι : Type u_2} {κ : Type u_3}
+  [Fintype n] [DecidableEq n] [Nonempty n] [Fintype ι] [Fintype κ] (A : ι → Matrix n n ℂ) (B : κ → Matrix n n ℂ)
+  (hA : ∑ i, (A i).conjTranspose * A i = 1) (hB : ∑ j, (B j).conjTranspose * B j = 1) (ε : ℝ) (hε : 0 < ε) :
+  have m := ⌈4 / ε ^ 2⌉₊;
+  (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+        {ω | ε < |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B|} ≤
+      2 * Real.exp (-2) ∧
+    (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+          {ω | ε < |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B|} <
+        1 / 3 ∧
+      1 - 2 * Real.exp (-2) ≤
+          (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+            {ω | |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B| ≤ ε} ∧
+        2 / 3 <
+          (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+            {ω | |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B| ≤ ε}
+'ICO.C6VisibilityEstimator.switch_visibility_estimation' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6VisibilityEstimator.channel_visibility_estimation.{u_1, u_2, u_3} {n : Type u_1} {ι : Type u_2} {κ : Type u_3}
+  [Fintype n] [DecidableEq n] [Nonempty n] [Fintype ι] [Fintype κ] (A : ι → Matrix n n ℂ) (B : κ → Matrix n n ℂ)
+  (hA : ∑ i, (A i).conjTranspose * A i = 1) (hB : ∑ j, (B j).conjTranspose * B j = 1) (ε : ℝ) (hε : 0 < ε) :
+  have m := ⌈4 / ε ^ 2⌉₊;
+  (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+        {ω | ε < |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B|} ≤
+      2 * Real.exp (-2) ∧
+    (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+          {ω | ε < |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B|} <
+        1 / 3 ∧
+      1 - 2 * Real.exp (-2) ≤
+          (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+            {ω | |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B| ≤ ε} ∧
+        2 / 3 <
+          (ICO.C6VisibilityEstimator.switchRepetitions m A B hA hB).real
+            {ω | |ICO.C6OTOCEstimator.estimate m ω - ICO.SwitchObservable.interference A B| ≤ ε}
+'ICO.C6VisibilityEstimator.channel_visibility_estimation' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6VisibilityEstimator.visibility_estimator_gives_decision {A M O B R : Type} [Fintype A] [DecidableEq A]
+  [Nonempty A] [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B] [Fintype R]
+  [DecidableEq R] {q : ℕ} (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B) (E : QIT.POVM R O)
+  (value : R → ℝ) {ε : ℝ} (hε : ε < 1 / 4) (hd : 2 ≤ Fintype.card A)
+  (hc : ICO.C6VisibilityEstimator.AccurateVisibilityOnPromise tree ρ E value ε) :
+  (∀ (U : ↥(Matrix.unitaryGroup A ℂ)),
+      2 / 3 ≤
+        ICO.BudgetTesting.acceptance (ICO.FinitePOVMEvent.test E (ICO.C6OTOCDecision.high value)) tree ρ
+          (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden U)) ∧
+    ∀ (U V : ↥(Matrix.unitaryGroup A ℂ)),
+      ICO.C6SwitchTest.MutuallyUnbiased U V →
+        ICO.BudgetTesting.acceptance (ICO.FinitePOVMEvent.test E (ICO.C6OTOCDecision.high value)) tree ρ
+            (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden V) ≤
+          1 / 3
+'ICO.C6VisibilityEstimator.visibility_estimator_gives_decision' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.C6VisibilityEstimator.visibility_query_lower_bound {A M O B R : Type} [Fintype A] [DecidableEq A] [Nonempty A]
+  [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
+  {q : ℕ} (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B) (E : QIT.POVM R O) (value : R → ℝ) {ε : ℝ}
+  (hε : ε < 1 / 4) (n : ℕ) (hn : 1 ≤ n) (hd : Fintype.card A = 2 ^ n)
+  (hc : ICO.C6VisibilityEstimator.AccurateVisibilityOnPromise tree ρ E value ε) :
+  ↑(Fintype.card A) ^ (1 / 16) / 100 < ↑q
+'ICO.C6VisibilityEstimator.visibility_query_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6VisibilityEstimator.visibility_query_lower_bound_of_dephasers {A M O B R : Type} [Fintype A] [DecidableEq A]
+  [Nonempty A] [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B] [Fintype R]
+  [DecidableEq R] {q : ℕ} (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B) (E : QIT.POVM R O)
+  (value : R → ℝ) {ε : ℝ} (hε : ε < 1 / 4) (n : ℕ) (hn : 1 ≤ n) (hd : Fintype.card A = 2 ^ n)
+  (hc : ICO.C6VisibilityEstimator.AccurateVisibilityOnDephasers tree ρ E value ε) :
+  ↑(Fintype.card A) ^ (1 / 16) / 100 < ↑q
+'ICO.C6VisibilityEstimator.visibility_query_lower_bound_of_dephasers' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.C6VisibilityEstimator.visibility_estimation_query_lower_bound {A M O B R : Type} [Fintype A] [DecidableEq A]
+  [Nonempty A] [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B] [Fintype R]
+  [DecidableEq R] {q : ℕ} (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B) (E : QIT.POVM R O)
+  (value : R → ℝ) {ε : ℝ} (hε : ε < 1 / 4) (n : ℕ) (hn : 1 ≤ n) (hd : Fintype.card A = 2 ^ n)
+  (hc : ICO.C6VisibilityEstimator.AccurateVisibilityOnPromise tree ρ E value ε) :
+  ↑(Fintype.card A) ^ (1 / 16) / 100 < ↑q
+'ICO.C6VisibilityEstimator.visibility_estimation_query_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.no_bounded_full_switch_circuit {M : Type} [Fintype M] [DecidableEq M]
+  [Nonempty M] {d q : ℕ} (hd : 2 ≤ d) (tree : ICO.BudgetQueryTree.Tree (Fin d × M) (Fin 2 × Fin d) q (Fin 2 × Fin d)) :
+  ¬ICO.PolarizationOrderedArbitraryControl.RealizesFullControlSwitch tree
+'ICO.PolarizationOrderedArbitraryControl.no_bounded_full_switch_circuit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.no_bounded_circuit_arbitrary_control {M : Type} [Fintype M] [DecidableEq M]
+  [Nonempty M] {d q : ℕ} (hd : 2 ≤ d) (tree : ICO.BudgetQueryTree.Tree (Fin d × M) (Fin 2 × Fin d) q (Fin 2 × Fin d)) :
+  ¬ICO.PolarizationOrderedArbitraryControl.RealizesFullControlSwitch tree
+'ICO.PolarizationOrderedArbitraryControl.no_bounded_circuit_arbitrary_control' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.no_labelled_full_switch_circuit {M : Type} [Fintype M] [DecidableEq M]
+  {d m n : ℕ} (hd : 2 ≤ d)
+  (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) (Fin d × M) (Fin 2 × Fin d) Finset.univ (Fin 2 × Fin d)) :
+  ¬ICO.PolarizationOrderedArbitraryControl.RealizesLabelledFullControlSwitch tree
+'ICO.PolarizationOrderedArbitraryControl.no_labelled_full_switch_circuit' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition {P A F : Type} [Fintype P] [Fintype A]
+  [Fintype F] [DecidableEq P] [DecidableEq A] [DecidableEq F] {J₁ J₂ : Type} [Fintype J₁] [Fintype J₂] [Nonempty P]
+  {M I T : Type} [Fintype M] [DecidableEq M] [Fintype I] [DecidableEq I] [Fintype T] [DecidableEq T]
+  (tree : ICO.TwoQueryTree.QueryTree (A × M) F P) (U : I → QIT.CMatrix A) (V : T → QIT.CMatrix A)
+  (hU : ∑ i, Matrix.conjTranspose (U i) * U i = 1) (hV : ∑ j, Matrix.conjTranspose (V j) * V j = 1) (X : QIT.CMatrix P)
+  (bAB : J₁ → ICO.PolarizationOrderedArbitraryControl.OrderedBranch P A F)
+  (bBA : J₂ → ICO.PolarizationOrderedArbitraryControl.OrderedBranch P A F) :
+  (tree.channel (ICO.AllChannelDilation.oracleChannel U hU) (ICO.AllChannelDilation.oracleChannel V hV)).map X =
+      ∑ b, ∑ i, ∑ j, (ICO.TwoQueryDilation.branchMap tree.normalForm b (U i) (V j)) X ∧
+    (0 ≤
+          ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+            ICO.TwoQueryTree.Order.firstThenSecond ∧
+        0 ≤
+            ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+              ICO.TwoQueryTree.Order.secondThenFirst ∧
+          ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+                ICO.TwoQueryTree.Order.firstThenSecond +
+              ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+                ICO.TwoQueryTree.Order.secondThenFirst =
+            1) ∧
+      (ICO.PolarizationOrderedArbitraryControl.familyCombAB bAB).PosSemidef ∧
+        (ICO.PolarizationOrderedArbitraryControl.familyCombBA bBA).PosSemidef ∧
+          (ICO.OrderedCombSemantics.partialTrace (ICO.PolarizationOrderedArbitraryControl.familyCombAB bAB) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₂AB bAB).kronecker 1 ∧
+              ICO.OrderedCombSemantics.partialTrace (ICO.PolarizationOrderedArbitraryControl.familyComb₂AB bAB) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₁AB bAB).kronecker 1) ∧
+            (ICO.OrderedCombSemantics.partialTrace fun x y =>
+                  ICO.PolarizationOrderedArbitraryControl.familyCombBA bBA
+                    (ICO.PolarizationOrderedArbitraryControl.swapSixWires x)
+                    (ICO.PolarizationOrderedArbitraryControl.swapSixWires y)) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₂BA bBA).kronecker 1 ∧
+              ICO.OrderedCombSemantics.partialTrace (ICO.PolarizationOrderedArbitraryControl.familyComb₂BA bBA) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₁BA bBA).kronecker 1
+'ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition_dim_d {P F : Type} [Fintype P] [Fintype F]
+  [DecidableEq P] [DecidableEq F] {J₁ J₂ : Type} [Fintype J₁] [Fintype J₂] (d : ℕ) [Nonempty P] {M I T : Type}
+  [Fintype M] [DecidableEq M] [Fintype I] [DecidableEq I] [Fintype T] [DecidableEq T]
+  (tree : ICO.TwoQueryTree.QueryTree (Fin d × M) F P) (U : I → QIT.CMatrix (Fin d)) (V : T → QIT.CMatrix (Fin d))
+  (hU : ∑ i, Matrix.conjTranspose (U i) * U i = 1) (hV : ∑ j, Matrix.conjTranspose (V j) * V j = 1) (X : QIT.CMatrix P)
+  (bAB : J₁ → ICO.PolarizationOrderedArbitraryControl.OrderedBranch P (Fin d) F)
+  (bBA : J₂ → ICO.PolarizationOrderedArbitraryControl.OrderedBranch P (Fin d) F) :
+  (tree.channel (ICO.AllChannelDilation.oracleChannel U hU) (ICO.AllChannelDilation.oracleChannel V hV)).map X =
+      ∑ b, ∑ i, ∑ j, (ICO.TwoQueryDilation.branchMap tree.normalForm b (U i) (V j)) X ∧
+    (0 ≤
+          ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+            ICO.TwoQueryTree.Order.firstThenSecond ∧
+        0 ≤
+            ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+              ICO.TwoQueryTree.Order.secondThenFirst ∧
+          ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+                ICO.TwoQueryTree.Order.firstThenSecond +
+              ICO.PolarizationOrderedArbitraryControl.orderBranchWeight tree.normalForm
+                ICO.TwoQueryTree.Order.secondThenFirst =
+            1) ∧
+      (ICO.PolarizationOrderedArbitraryControl.familyCombAB bAB).PosSemidef ∧
+        (ICO.PolarizationOrderedArbitraryControl.familyCombBA bBA).PosSemidef ∧
+          (ICO.OrderedCombSemantics.partialTrace (ICO.PolarizationOrderedArbitraryControl.familyCombAB bAB) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₂AB bAB).kronecker 1 ∧
+              ICO.OrderedCombSemantics.partialTrace (ICO.PolarizationOrderedArbitraryControl.familyComb₂AB bAB) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₁AB bAB).kronecker 1) ∧
+            (ICO.OrderedCombSemantics.partialTrace fun x y =>
+                  ICO.PolarizationOrderedArbitraryControl.familyCombBA bBA
+                    (ICO.PolarizationOrderedArbitraryControl.swapSixWires x)
+                    (ICO.PolarizationOrderedArbitraryControl.swapSixWires y)) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₂BA bBA).kronecker 1 ∧
+              ICO.OrderedCombSemantics.partialTrace (ICO.PolarizationOrderedArbitraryControl.familyComb₂BA bBA) =
+                (ICO.PolarizationOrderedArbitraryControl.familyComb₁BA bBA).kronecker 1
+'ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition_dim_d' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.sum_perm_one_slot.{u_1, u_2} {E : Type u_1} {F : Type u_2}
+  [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {C : Set E}
+  (hC : ∀ x ∈ C, ∀ y ∈ C, ∀ t ∈ Set.Icc 0 1, x + t • (y - x) ∈ C) {m : ℕ} :
+  0 < m →
+    ∀ (f : ContinuousMultilinearMap ℝ (fun x => E) F) (L : E → F),
+      (∀ x ∈ C, ∀ y ∈ C, ∀ t ∈ Set.Icc 0 1, L (x + t • (y - x)) = L x + t • (L y - L x)) →
+        (∀ x ∈ C, (f fun x_1 => x) = L x) →
+          ∀ (a : Fin m → E), (∀ (i : Fin m), a i ∈ C) → ∑ π, f (a ∘ ⇑π) = (m - 1).factorial • ∑ i, L (a i)
+'ICO.PolarizationOrderedArbitraryControl.sum_perm_one_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.sum_perm_two_slot.{u_1, u_2} {E : Type u_1} {F : Type u_2}
+  [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {CA CB : Set E}
+  (hCA : ∀ x ∈ CA, ∀ y ∈ CA, ∀ t ∈ Set.Icc 0 1, x + t • (y - x) ∈ CA)
+  (hCB : ∀ x ∈ CB, ∀ y ∈ CB, ∀ s ∈ Set.Icc 0 1, x + s • (y - x) ∈ CB) {m n : ℕ} (hm : 0 < m) (hn : 0 < n)
+  (f : ContinuousMultilinearMap ℝ (fun x => E) F) (S : E → E → F)
+  (hSA : ∀ y ∈ CB, ∀ x₁ ∈ CA, ∀ x₂ ∈ CA, ∀ t ∈ Set.Icc 0 1, S (x₁ + t • (x₂ - x₁)) y = S x₁ y + t • (S x₂ y - S x₁ y))
+  (hSB : ∀ x ∈ CA, ∀ y₁ ∈ CB, ∀ y₂ ∈ CB, ∀ s ∈ Set.Icc 0 1, S x (y₁ + s • (y₂ - y₁)) = S x y₁ + s • (S x y₂ - S x y₁))
+  (hf : ∀ x ∈ CA, ∀ y ∈ CB, f (Sum.elim (fun x_1 => x) fun x => y) = S x y) (a : Fin m → E)
+  (ha : ∀ (i : Fin m), a i ∈ CA) (b : Fin n → E) (hb : ∀ (j : Fin n), b j ∈ CB) :
+  ∑ π, ∑ σ, f (Sum.elim (a ∘ ⇑π) (b ∘ ⇑σ)) = ((m - 1).factorial * (n - 1).factorial) • ∑ i, ∑ j, S (a i) (b j)
+'ICO.PolarizationOrderedArbitraryControl.sum_perm_two_slot' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.average_perm_two_slot.{u_1, u_2} {E : Type u_1} {F : Type u_2}
+  [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup F] [NormedSpace ℝ F] {CA CB : Set E}
+  (hCA : ∀ x ∈ CA, ∀ y ∈ CA, ∀ t ∈ Set.Icc 0 1, x + t • (y - x) ∈ CA)
+  (hCB : ∀ x ∈ CB, ∀ y ∈ CB, ∀ s ∈ Set.Icc 0 1, x + s • (y - x) ∈ CB) {m n : ℕ} (hm : 0 < m) (hn : 0 < n)
+  (f : ContinuousMultilinearMap ℝ (fun x => E) F) (S : E → E → F)
+  (hSA : ∀ y ∈ CB, ∀ x₁ ∈ CA, ∀ x₂ ∈ CA, ∀ t ∈ Set.Icc 0 1, S (x₁ + t • (x₂ - x₁)) y = S x₁ y + t • (S x₂ y - S x₁ y))
+  (hSB : ∀ x ∈ CA, ∀ y₁ ∈ CB, ∀ y₂ ∈ CB, ∀ s ∈ Set.Icc 0 1, S x (y₁ + s • (y₂ - y₁)) = S x y₁ + s • (S x y₂ - S x y₁))
+  (hf : ∀ x ∈ CA, ∀ y ∈ CB, f (Sum.elim (fun x_1 => x) fun x => y) = S x y) (a : Fin m → E)
+  (ha : ∀ (i : Fin m), a i ∈ CA) (b : Fin n → E) (hb : ∀ (j : Fin n), b j ∈ CB) :
+  (1 / (↑m.factorial * ↑n.factorial)) • ∑ π, ∑ σ, f (Sum.elim (a ∘ ⇑π) (b ∘ ⇑σ)) =
+    (1 / (↑m * ↑n)) • ∑ i, ∑ j, S (a i) (b j)
+'ICO.PolarizationOrderedArbitraryControl.average_perm_two_slot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.PolarizationOrderedArbitraryControl.symmetrized_polarization {H O A : Type} [Fintype H] [Fintype O] [Fintype A]
+  [DecidableEq H] [DecidableEq O] [DecidableEq A] {CA CB : Set (QIT.CMatrix (H × H))}
+  (hCA : ∀ x ∈ CA, ∀ y ∈ CA, ∀ t ∈ Set.Icc 0 1, x + t • (y - x) ∈ CA)
+  (hCB : ∀ x ∈ CB, ∀ y ∈ CB, ∀ s ∈ Set.Icc 0 1, x + s • (y - x) ∈ CB) {m n : ℕ} (hm : 0 < m) (hn : 0 < n)
+  (tree : ICO.LabelledQueryTree.Tree (Fin m ⊕ Fin n) H O Finset.univ A)
+  (S : QIT.CMatrix (H × H) → QIT.CMatrix (H × H) → QIT.CMatrix (A × O))
+  (hSA : ∀ y ∈ CB, ∀ x₁ ∈ CA, ∀ x₂ ∈ CA, ∀ t ∈ Set.Icc 0 1, S (x₁ + t • (x₂ - x₁)) y = S x₁ y + t • (S x₂ y - S x₁ y))
+  (hSB : ∀ x ∈ CA, ∀ y₁ ∈ CB, ∀ y₂ ∈ CB, ∀ s ∈ Set.Icc 0 1, S x (y₁ + s • (y₂ - y₁)) = S x y₁ + s • (S x y₂ - S x y₁))
+  (hf :
+    ∀ x ∈ CA,
+      ∀ y ∈ CB,
+        (tree.map (Sum.elim (fun x_1 => QIT.MatrixMap.ofChoiMatrix x) fun x => QIT.MatrixMap.ofChoiMatrix y)).choi =
+          S x y)
+  (a : Fin m → QIT.MatrixMap H H) (ha : ∀ (i : Fin m), (a i).choi ∈ CA) (b : Fin n → QIT.MatrixMap H H)
+  (hb : ∀ (j : Fin n), (b j).choi ∈ CB) :
+  (1 / (↑m.factorial * ↑n.factorial)) • ∑ π, ∑ σ, (tree.map (Sum.elim (a ∘ ⇑π) (b ∘ ⇑σ))).choi =
+    (1 / (↑m * ↑n)) • ∑ i, ∑ j, S (a i).choi (b j).choi
+'ICO.PolarizationOrderedArbitraryControl.symmetrized_polarization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.Section44TwoCall.dephaseControl_diamond_id_le_half {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A] :
+  ICO.Section44TwoCall.dephaseControl.diamondTraceDistance (QIT.Channel.idChannel (A × Bool)) ≤ 1 / 2
+'ICO.Section44TwoCall.dephaseControl_diamond_id_le_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section44TwoCall.twoCallTree_krausChannel_eq {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A] {r s : ℕ}
+  (E : Fin r → QIT.CMatrix A) (F : Fin s → QIT.CMatrix A) (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1)
+  (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1) :
+  ICO.Section44TwoCall.twoCallTree.channel (ICO.AllChannelDilation.oracleChannel E hE)
+      (ICO.AllChannelDilation.oracleChannel F hF) =
+    ICO.Section44TwoCall.dephaseControl.comp (ICO.Section44TwoCall.krausFullChannel E F hE hF)
+'ICO.Section44TwoCall.twoCallTree_krausChannel_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section44TwoCall.twoCallTree_krausChannel_error_le_half {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  {r s : ℕ} (E : Fin r → QIT.CMatrix A) (F : Fin s → QIT.CMatrix A) (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1)
+  (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1) :
+  (ICO.Section44TwoCall.twoCallTree.channel (ICO.AllChannelDilation.oracleChannel E hE)
+          (ICO.AllChannelDilation.oracleChannel F hF)).diamondTraceDistance
+      (ICO.Section44TwoCall.krausFullChannel E F hE hF) ≤
+    1 / 2
+'ICO.Section44TwoCall.twoCallTree_krausChannel_error_le_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section44TwoCall.twoCallTree_fullCircuit_eq {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A] {r : ℕ}
+  (UV : ICO.C4PhysicalEnsemble.Sample A r) :
+  ICO.C4PhysicalEnsemble.fullCircuit ICO.Section44TwoCall.twoCallTree UV =
+    ICO.Section44TwoCall.dephaseControl.comp (ICO.C4PhysicalEnsemble.fullSwitch UV)
+'ICO.Section44TwoCall.twoCallTree_fullCircuit_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section44TwoCall.twoCallTree_fullSwitch_error_le_half {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A] {r : ℕ}
+  (UV : ICO.C4PhysicalEnsemble.Sample A r) :
+  (ICO.C4PhysicalEnsemble.fullSwitch UV).diamondTraceDistance
+      (ICO.C4PhysicalEnsemble.fullCircuit ICO.Section44TwoCall.twoCallTree UV) ≤
+    1 / 2
+'ICO.Section44TwoCall.twoCallTree_fullSwitch_error_le_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_channel_eq {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  (a₀ : A) (U V : ↥(Matrix.unitaryGroup A ℂ)) :
+  (ICO.RemarksUnitaryNumerical.unitaryThreeCallTree a₀).channel (ICO.ClassicalDilation.oracleChannel U)
+      (ICO.ClassicalDilation.oracleChannel V) =
+    ICO.RemarksUnitaryNumerical.unitarySwitchChannel U V
+'ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_channel_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullChannel_eq {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  (a₀ : A) (U V : ↥(Matrix.unitaryGroup A ℂ)) :
+  (ICO.RemarksUnitaryNumerical.unitaryThreeCallTree a₀).channel (ICO.ClassicalDilation.oracleChannel U)
+      (ICO.ClassicalDilation.oracleChannel V) =
+    ICO.FullSwitchChannel.fullChannel ⋯ ⋯ (fun x => U) fun x => V
+'ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullChannel_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_allChannel_eq {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  (a₀ : A) (U V : ↥(Matrix.unitaryGroup A ℂ)) :
+  (ICO.RemarksUnitaryNumerical.unitaryThreeCallTree a₀).channel (ICO.AllChannelDilation.oracleChannel (fun x => ↑U) ⋯)
+      (ICO.AllChannelDilation.oracleChannel (fun x => ↑V) ⋯) =
+    ICO.RemarksUnitaryNumerical.unitarySwitchChannel U V
+'ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_allChannel_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_diamond_zero {A : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  (a₀ : A) (U V : ↥(Matrix.unitaryGroup A ℂ)) :
+  ((ICO.RemarksUnitaryNumerical.unitaryThreeCallTree a₀).channel (ICO.ClassicalDilation.oracleChannel U)
+          (ICO.ClassicalDilation.oracleChannel V)).diamondTraceDistance
+      (ICO.RemarksUnitaryNumerical.unitarySwitchChannel U V) ≤
+    0
+'ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_diamond_zero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.exists_two_query_switch_error_ge_235 {A M : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  [Fintype M] [DecidableEq M] [Nontrivial A] [Nonempty M] (hd : 235 ≤ Fintype.card A)
+  (tree : ICO.BudgetQueryTree.Tree (A × M) (A × Bool) 2 (A × Bool)) :
+  ∃ UV,
+    1 / 6 - 39 / ↑(Fintype.card A) ≤
+        (ICO.C4PhysicalEnsemble.fullSwitch UV).diamondTraceDistance (ICO.C4PhysicalEnsemble.fullCircuit tree UV) ∧
+      1 / 1410 ≤
+        (ICO.C4PhysicalEnsemble.fullSwitch UV).diamondTraceDistance (ICO.C4PhysicalEnsemble.fullCircuit tree UV)
+'ICO.RemarksUnitaryNumerical.exists_two_query_switch_error_ge_235' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.two_query_tradeoff_nonpos_of_le_234 (d r : ℕ) (hd1 : 1 ≤ d) (hd : d ≤ 234) :
+  1 / 2 - 13 * ↑((r + 1) * (r + 1)) / (3 * ↑d) - ↑2 * (↑2 - 1) / (2 * (↑r + 1)) ≤ 0
+'ICO.RemarksUnitaryNumerical.two_query_tradeoff_nonpos_of_le_234' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.full_switch_one_over_48_three_queries_of_ge_65536 {A M : Type} [Fintype A] [DecidableEq A]
+  [Nontrivial A] [Fintype M] [DecidableEq M] [Nontrivial A] [Nonempty M] {q : ℕ} (hd : 65536 ≤ Fintype.card A)
+  (tree : ICO.BudgetQueryTree.Tree (A × M) (A × Bool) q (A × Bool))
+  (haccurate :
+    ∀ (r : ℕ) (UV : ICO.C4PhysicalEnsemble.Sample A r),
+      (ICO.C4PhysicalEnsemble.fullSwitch UV).diamondTraceDistance (ICO.C4PhysicalEnsemble.fullCircuit tree UV) ≤
+        1 / 48) :
+  3 ≤ q
+'ICO.RemarksUnitaryNumerical.full_switch_one_over_48_three_queries_of_ge_65536' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_one_of_le_106 {n : ℕ} (hn : n ≤ 106) :
+  ↑(2 ^ n) ^ (1 / 16) / 100 < 1
+'ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_one_of_le_106' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.one_lt_two_pow_div_sixteen_div_100_of_ge_107 {n : ℕ} (hn : 107 ≤ n) :
+  1 < ↑(2 ^ n) ^ (1 / 16) / 100
+'ICO.RemarksUnitaryNumerical.one_lt_two_pow_div_sixteen_div_100_of_ge_107' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.same_mub_at_least_two_queries_of_ge_107 {A M O B : Type} [Fintype A] [DecidableEq A]
+  [Nontrivial A] [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B] {n q : ℕ}
+  [Nontrivial A] [Nonempty M] (T : QIT.BinaryHypothesisTest O) (tree : ICO.BudgetQueryTree.Tree (A × M) O q B)
+  (ρ : QIT.State B) (hd : Fintype.card A = 2 ^ n) (hn : 107 ≤ n)
+  (hhigh :
+    ∀ (U : ↥(Matrix.unitaryGroup A ℂ)),
+      2 / 3 ≤ ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden U))
+  (hlow :
+    ∀ (U V : ↥(Matrix.unitaryGroup A ℂ)),
+      ICO.C6SwitchTest.MutuallyUnbiased U V →
+        ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden V) ≤ 1 / 3) :
+  2 ≤ q
+'ICO.RemarksUnitaryNumerical.same_mub_at_least_two_queries_of_ge_107' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_eight_of_le_154 {n : ℕ} (hn : n ≤ 154) :
+  ↑(2 ^ n) ^ (1 / 16) / 100 < 8
+'ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_eight_of_le_154' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.eight_lt_two_pow_div_sixteen_div_100_of_ge_155 {n : ℕ} (hn : 155 ≤ n) :
+  8 < ↑(2 ^ n) ^ (1 / 16) / 100
+'ICO.RemarksUnitaryNumerical.eight_lt_two_pow_div_sixteen_div_100_of_ge_155' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.RemarksUnitaryNumerical.same_mub_exceeds_eight_queries_of_ge_155 {A M O B : Type} [Fintype A] [DecidableEq A]
+  [Nontrivial A] [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B] {n q : ℕ}
+  [Nontrivial A] [Nonempty M] (T : QIT.BinaryHypothesisTest O) (tree : ICO.BudgetQueryTree.Tree (A × M) O q B)
+  (ρ : QIT.State B) (hd : Fintype.card A = 2 ^ n) (hn : 155 ≤ n)
+  (hhigh :
+    ∀ (U : ↥(Matrix.unitaryGroup A ℂ)),
+      2 / 3 ≤ ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden U))
+  (hlow :
+    ∀ (U V : ↥(Matrix.unitaryGroup A ℂ)),
+      ICO.C6SwitchTest.MutuallyUnbiased U V →
+        ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden V) ≤ 1 / 3) :
+  9 ≤ q
+'ICO.RemarksUnitaryNumerical.same_mub_exceeds_eight_queries_of_ge_155' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.Section54Validation.switch_slot_left_diamond_le {A : Type} [Fintype A] [DecidableEq A] [Nonempty A] {ι ι' κ : Type}
+  [Fintype ι] [Fintype ι'] [Fintype κ] [DecidableEq κ] (E : ι → QIT.CMatrix A) (E' : ι' → QIT.CMatrix A)
+  (F : κ → QIT.CMatrix A) (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1)
+  (hE' : ∑ i, Matrix.conjTranspose (E' i) * E' i = 1) (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1) {ε : ℝ}
+  (hEM :
+    (ICO.Section54Validation.krausChannel E hE).AncillaTraceDistanceBound (ICO.Section54Validation.krausChannel E' hE')
+      ε) :
+  (ICO.Section54Validation.switchChannel E F hE hF).diamondTraceDistance
+      (ICO.Section54Validation.switchChannel E' F hE' hF) ≤
+    ε
+'ICO.Section54Validation.switch_slot_left_diamond_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section54Validation.switch_slot_right_diamond_le {A : Type} [Fintype A] [DecidableEq A] [Nonempty A] {ι κ κ' : Type}
+  [Fintype ι] [DecidableEq ι] [Fintype κ] [Fintype κ'] (F : ι → QIT.CMatrix A) (E : κ → QIT.CMatrix A)
+  (E' : κ' → QIT.CMatrix A) (hF : ∑ i, Matrix.conjTranspose (F i) * F i = 1)
+  (hE : ∑ j, Matrix.conjTranspose (E j) * E j = 1) (hE' : ∑ j, Matrix.conjTranspose (E' j) * E' j = 1) {ε : ℝ}
+  (hEM :
+    (ICO.Section54Validation.krausChannel E hE).AncillaTraceDistanceBound (ICO.Section54Validation.krausChannel E' hE')
+      ε) :
+  (ICO.Section54Validation.switchChannel F E hF hE).diamondTraceDistance
+      (ICO.Section54Validation.switchChannel F E' hF hE') ≤
+    ε
+'ICO.Section54Validation.switch_slot_right_diamond_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section54Validation.model_mismatch_bound {A : Type} [Fintype A] [DecidableEq A] [Nonempty A] {ι κ : Type}
+  [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ] (E : ι → QIT.CMatrix A) (M : κ → QIT.CMatrix A)
+  (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1) (hM : ∑ j, Matrix.conjTranspose (M j) * M j = 1) {ε : ℝ}
+  (hEM_left :
+    (ICO.Section54Validation.krausChannel E hE).AncillaTraceDistanceBound (ICO.Section54Validation.krausChannel M hM) ε)
+  (hEM_right :
+    (ICO.Section54Validation.krausChannel E hE).AncillaTraceDistanceBound (ICO.Section54Validation.krausChannel M hM)
+      ε) :
+  1 / 2 *
+        |↑(ICO.SwitchExperiment.controlMeasurement.prob
+                (ICO.SwitchExperiment.switchedState E E hE hE ICO.SwitchExperiment.mixedState) true) -
+            ↑(ICO.SwitchExperiment.controlMeasurement.prob
+                (ICO.SwitchExperiment.switchedState M M hM hM ICO.SwitchExperiment.mixedState) true)| =
+      1 / 4 * |ICO.SwitchObservable.interference E E - ICO.SwitchObservable.interference M M| ∧
+    1 / 4 * |ICO.SwitchObservable.interference E E - ICO.SwitchObservable.interference M M| ≤ ε
+'ICO.Section54Validation.model_mismatch_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section54Validation.dephasing_noise_self_visibility {A : Type} [Fintype A] [DecidableEq A] [Nonempty A] {p : ℝ}
+  (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (U : ↥(Matrix.unitaryGroup A ℂ)) :
+  ICO.SwitchObservable.interference (ICO.Section54Validation.dephasingNoiseKraus p U)
+        (ICO.Section54Validation.dephasingNoiseKraus p U) =
+      1 ∧
+    ↑(ICO.SwitchExperiment.controlMeasurement.prob
+          (ICO.SwitchExperiment.switchedState (ICO.Section54Validation.dephasingNoiseKraus p U)
+            (ICO.Section54Validation.dephasingNoiseKraus p U) ⋯ ⋯ ICO.SwitchExperiment.mixedState)
+          true) =
+      1
+'ICO.Section54Validation.dephasing_noise_self_visibility' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section54Validation.depolarizing_model_self_visibility {A : Type} [Fintype A] [DecidableEq A] [Nonempty A] {p : ℝ}
+  (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+  have d := ↑(Fintype.card A);
+  have α := 1 - p * d / (d + 1);
+  0 ≤ α ∧
+    α ≤ 1 ∧
+      ICO.SwitchObservable.interference (ICO.Section54Validation.depolarizingModelKraus α)
+          (ICO.Section54Validation.depolarizingModelKraus α) =
+        1 - p ^ 2 * (d - 1) / (d + 1)
+'ICO.Section54Validation.depolarizing_model_self_visibility' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section54Validation.validation_ordinary_lower_bound {A : Type} [Fintype A] [DecidableEq A] [Nonempty A]
+  {M O B : Type} [Fintype M] [DecidableEq M] [Fintype O] [DecidableEq O] [Fintype B] [DecidableEq B] {L : ℕ}
+  (tree : ICO.BudgetQueryTree.Tree (A × M) O (2 * L) B) (ρ : QIT.State B) (H : ↥(Matrix.unitaryGroup A ℂ)) (hL1 : 1 ≤ L)
+  (hLd : ↑L ≤ ↑(Fintype.card A) ^ (1 / 16) / 200) (hL_floor : ↑(Fintype.card A) ^ (1 / 16) / 200 < ↑L + 1) {p Q : ℝ}
+  (hp : 0 < p)
+  (hsucc :
+    2 / 3 ≤
+      1 / 2 +
+          1 / 2 *
+            (QIT.normalizedTraceDistance (ICO.C6Decision.sameDensity tree ρ) (ICO.C6Decision.mubDensity tree ρ H) +
+              ↑L / (↑(Fintype.card A) + 1)) +
+        p * Q / (↑L + 1)) :
+  QIT.normalizedTraceDistance (ICO.C6Decision.sameDensity tree ρ) (ICO.C6Decision.mubDensity tree ρ H) ≤ 215 / 10000 ∧
+    QIT.normalizedTraceDistance (ICO.C6Decision.sameDensity tree ρ) (ICO.C6Decision.mubDensity tree ρ H) +
+          ↑L / (↑(Fintype.card A) + 1) ≤
+        53 / 2000 ∧
+      1 / 2 +
+            1 / 2 *
+              (QIT.normalizedTraceDistance (ICO.C6Decision.sameDensity tree ρ) (ICO.C6Decision.mubDensity tree ρ H) +
+                ↑L / (↑(Fintype.card A) + 1)) ≤
+          2053 / 4000 ∧
+        ↑(Fintype.card A) ^ (1 / 16) / (1400 * p) < Q
+'ICO.Section54Validation.validation_ordinary_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.Section54Validation.validation_switch_upper_bound {A : Type} [Fintype A] [DecidableEq A] [Nonempty A]
+  (hd : 2 ≤ Fintype.card A) (U : ↥(Matrix.unitaryGroup A ℂ)) {p : ℝ} (hp0 : 0 < p) (hp1 : p ≤ 1) {k : ℕ}
+  (hk : 3 / (2 * p) ≤ ↑k) :
+  have d := ↑(Fintype.card A);
+  have pk := 1 - (1 - p) ^ k;
+  have α := 1 - p * d / (d + 1);
+  have αk := α ^ k;
+  ∃ (hpk0 : 0 ≤ pk) (hpk1 : pk ≤ 1) (hαk0 : 0 ≤ αk) (hαk1 : αk ≤ 1),
+    have stateE :=
+      ICO.SwitchExperiment.switchedState (ICO.Section54Validation.dephasingNoiseKraus pk U)
+        (ICO.Section54Validation.dephasingNoiseKraus pk U) ⋯ ⋯ ICO.SwitchExperiment.mixedState;
+    have stateM :=
+      ICO.SwitchExperiment.switchedState (ICO.Section54Validation.depolarizingModelKraus αk)
+        (ICO.Section54Validation.depolarizingModelKraus αk) ⋯ ⋯ ICO.SwitchExperiment.mixedState;
+    (ICO.SwitchSampling.repetitions 7 (ICO.SwitchExperiment.controlMeasurement.prob stateE true) ⋯).real
+          {ω | ∀ (i : Fin 7), ω i = true} =
+        1 ∧
+      αk ≤ Real.exp (-1) ∧
+        (ICO.SwitchSampling.repetitions 7 (ICO.SwitchExperiment.controlMeasurement.prob stateM true) ⋯).real
+              {ω | ∀ (i : Fin 7), ω i = true} <
+            1 / 3 ∧
+          7 * (2 * k) = 14 * k
+'ICO.Section54Validation.validation_switch_upper_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.TwoCallCertificate.weingarten_gram_identity : ICO.TwoCallCertificate.checkWeingartenGram = true
+'ICO.TwoCallCertificate.weingarten_gram_identity' depends on axioms: [propext]
+ICO.TwoCallCertificate.delta_orbit_table_correct : ICO.TwoCallCertificate.checkDeltaOrbits = true
+'ICO.TwoCallCertificate.delta_orbit_table_correct' depends on axioms: [propext]
+ICO.TwoCallCertificate.delta_output_partial_trace_zero : ICO.TwoCallCertificate.checkDeltaOutputTrace = true
+'ICO.TwoCallCertificate.delta_output_partial_trace_zero' depends on axioms: [propext]
+ICO.TwoCallCertificate.switch_visibility_gap_identity : ICO.TwoCallCertificate.checkSwitchVisibilityGap = true
+'ICO.TwoCallCertificate.switch_visibility_gap_identity' depends on axioms: [propext]
+ICO.TwoCallCertificate.z_causal_trace_one : ICO.TwoCallCertificate.checkZCausalTraceOne = true
+'ICO.TwoCallCertificate.z_causal_trace_one' depends on axioms: [propext]
+ICO.TwoCallCertificate.z_causal_trace_two : ICO.TwoCallCertificate.checkZCausalTraceTwo = true
+'ICO.TwoCallCertificate.z_causal_trace_two' depends on axioms: [propext]
+ICO.TwoCallCertificate.subblock_orthogonality : ICO.TwoCallCertificate.checkSubblockOrthogonality = true
+'ICO.TwoCallCertificate.subblock_orthogonality' depends on axioms: [propext]
+ICO.TwoCallCertificate.z_subblocks_bareiss_spd :
+  ICO.TwoCallCertificate.checkAllSubblocksBareiss ICO.TwoCallCertificate.zScaled
+      ICO.TwoCallCertificate.zBareissChains10 =
+    true
+'ICO.TwoCallCertificate.z_subblocks_bareiss_spd' depends on axioms: [propext]
+ICO.TwoCallCertificate.z_minus_delta_subblocks_bareiss_spd :
+  ICO.TwoCallCertificate.checkAllSubblocksBareiss ICO.TwoCallCertificate.zdScaled
+      ICO.TwoCallCertificate.zdBareissChains10 =
+    true
+'ICO.TwoCallCertificate.z_minus_delta_subblocks_bareiss_spd' depends on axioms: [propext]
+ICO.TwoCallCertificate.two_call_certificate_verified :
+  ICO.TwoCallCertificate.checkWeingartenGram = true ∧
+    ICO.TwoCallCertificate.checkDeltaOrbits = true ∧
+      ICO.TwoCallCertificate.checkDeltaOutputTrace = true ∧
+        ICO.TwoCallCertificate.checkSwitchVisibilityGap = true ∧
+          ICO.TwoCallCertificate.checkZCausalTraceOne = true ∧
+            ICO.TwoCallCertificate.checkZCausalTraceTwo = true ∧
+              ICO.TwoCallCertificate.checkSubblockOrthogonality = true ∧
+                ICO.TwoCallCertificate.checkAllSubblocksBareiss ICO.TwoCallCertificate.zScaled
+                      ICO.TwoCallCertificate.zBareissChains10 =
+                    true ∧
+                  ICO.TwoCallCertificate.checkAllSubblocksBareiss ICO.TwoCallCertificate.zdScaled
+                      ICO.TwoCallCertificate.zdBareissChains10 =
+                    true
+'ICO.TwoCallCertificate.two_call_certificate_verified' depends on axioms: [propext]
+ICO.TwoCallCertificate.causal_dual_trace_collapse.{u_1} {α : Type u_1} [Fintype α] [DecidableEq α]
+  (trBO_Z : α → α → α → α → α → α → ℝ) (Y : α → α → α → α → ℝ) (Ξ : α → α → α → α → α → α → ℝ) (ρ : α → α → ℝ) (lam : ℝ)
+  (hZ1 : ∀ (ai ao bi ai' ao' bi' : α), trBO_Z ai ao bi ai' ao' bi' = if bi = bi' then Y ai ao ai' ao' else 0)
+  (hZ2 : ∀ (ai ai' : α), ∑ ao, Y ai ao ai' ao = if ai = ai' then lam else 0)
+  (hΞ : ∀ (ai ao ai' ao' : α), ∑ bi, Ξ ai ao bi ai' ao' bi = if ao = ao' then ρ ai ai' else 0)
+  (hρ : ∑ ai, ρ ai ai = 1) :
+  ∑ ai, ∑ ao, ∑ bi, ∑ ai', ∑ ao', ∑ bi', trBO_Z ai ao bi ai' ao' bi' * Ξ ai' ao' bi' ai ao bi = lam
+'ICO.TwoCallCertificate.causal_dual_trace_collapse' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.TwoCallCertificate.two_call_switch_success {A : Type} [Fintype A] [DecidableEq A] [Nonempty A]
+  (U : ↥(Matrix.unitaryGroup A ℂ)) (p : ℝ) :
+  ICO.TwoCallCertificate.checkSwitchVisibilityGap = true ∧
+    ↑(ICO.SwitchExperiment.controlMeasurement.prob
+            (ICO.SwitchExperiment.switchedState (ICO.SwitchObservable.basisProjection ↑U)
+              (ICO.SwitchObservable.basisProjection ↑U) ⋯ ⋯ ICO.SwitchExperiment.mixedState)
+            true) =
+        1 ∧
+      1 - (4 - 1) / (4 + 1) = 2 / 5 ∧
+        1 / 2 * 1 + 1 / 2 * ((1 - 2 / 5) / 2 + (1 + 2 / 5) / 2 * 0) = 13 / 20 ∧
+          1 / 2 + 1 / 4 * (1 - 2 / 5) = 13 / 20 ∧ 1 / 2 + 1 / 4 * (p ^ 2 * (3 / 5)) = 1 / 2 + 3 / 20 * p ^ 2
+'ICO.TwoCallCertificate.two_call_switch_success' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.TwoCallCertificate.two_call_ordinary_upper_bound (trDeltaT0 trZT0 trZT1 p : ℝ) (hZ_minus_Delta : trDeltaT0 ≤ trZT0)
+  (hZ_T1 : 0 ≤ trZT1) (hCausal : trZT0 + trZT1 = 4 / 25) :
+  (ICO.TwoCallCertificate.checkWeingartenGram = true ∧
+      ICO.TwoCallCertificate.checkDeltaOrbits = true ∧
+        ICO.TwoCallCertificate.checkDeltaOutputTrace = true ∧
+          ICO.TwoCallCertificate.checkSwitchVisibilityGap = true ∧
+            ICO.TwoCallCertificate.checkZCausalTraceOne = true ∧
+              ICO.TwoCallCertificate.checkZCausalTraceTwo = true ∧
+                ICO.TwoCallCertificate.checkSubblockOrthogonality = true ∧
+                  ICO.TwoCallCertificate.checkAllSubblocksBareiss ICO.TwoCallCertificate.zScaled
+                        ICO.TwoCallCertificate.zBareissChains10 =
+                      true ∧
+                    ICO.TwoCallCertificate.checkAllSubblocksBareiss ICO.TwoCallCertificate.zdScaled
+                        ICO.TwoCallCertificate.zdBareissChains10 =
+                      true) ∧
+    1 / 2 + 1 / 2 * trDeltaT0 ≤ 29 / 50 ∧
+      29 / 50 < 13 / 20 ∧
+        13 / 20 - 29 / 50 = 7 / 100 ∧
+          1 / 2 + 1 / 2 * (p ^ 2 * trDeltaT0) ≤ 1 / 2 + 2 / 25 * p ^ 2 ∧ 1 / 2 + 2 / 25 * p ^ 2 ≤ 1 / 2 + 3 / 20 * p ^ 2
+'ICO.TwoCallCertificate.two_call_ordinary_upper_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.uniformError_le_212 {q : ℕ} {r : ℝ} (hq : 1 ≤ q) (hqr : ↑q ≤ r / 100) :
+  ICO.C6UniformBounds.uniformError q (r ^ 16) r ≤ 212 / 10000
+'ICO.C6BonusInventory.uniformError_le_212' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.same_mub_distance_212 {A M O B : Type} [Fintype A] [DecidableEq A] [Nonempty A] [Fintype M]
+  [DecidableEq M] [Nonempty M] [Fintype O] [DecidableEq O] [Nonempty O] [Fintype B] [DecidableEq B] {q : ℕ}
+  (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B) (H : ↥(Matrix.unitaryGroup A ℂ)) (hq : 1 ≤ q)
+  (hqr : ↑q ≤ ↑(Fintype.card A) ^ (1 / 16) / 100) :
+  have r := ↑(Fintype.card A) ^ (1 / 16);
+  QIT.normalizedTraceDistance (ICO.C6Decision.sameDensity tree ρ) (ICO.C6Decision.mubDensity tree ρ H) ≤
+      ICO.C6UniformBounds.uniformError q (↑(Fintype.card A)) r ∧
+    ICO.C6UniformBounds.uniformError q (↑(Fintype.card A)) r ≤ 212 / 10000 ∧
+      ICO.C6UniformBounds.uniformError q (↑(Fintype.card A)) r < 1 / 3
+'ICO.C6BonusInventory.same_mub_distance_212' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.zanardi_swap_same.{u_1} {A : Type u_1} [Fintype A] [DecidableEq A] [Nonempty A]
+  (U : ↥(Matrix.unitaryGroup A ℂ)) : ICO.C6BonusInventory.zanardiSwapExpectation ↑U ↑U = 1 / ↑(Fintype.card A)
+'ICO.C6BonusInventory.zanardi_swap_same' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.zanardi_swap_mub.{u_1} {A : Type u_1} [Fintype A] [DecidableEq A] [Nonempty A]
+  (U V : ↥(Matrix.unitaryGroup A ℂ)) (h : ICO.C6SwitchTest.MutuallyUnbiased U V) :
+  ICO.C6BonusInventory.zanardiSwapExpectation ↑U ↑V = 1 / ↑(Fintype.card A) ^ 2
+'ICO.C6BonusInventory.zanardi_swap_mub' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.switch_depolarizing_oracle {A M : Type} [Fintype A] [DecidableEq A] [Nonempty A] [Fintype M]
+  [DecidableEq M] :
+  ICO.AllChannelDilation.oracleChannel ICO.SwitchObservable.depolarizingKraus ⋯ = ICO.RecordingDepolarizing.withMemory
+'ICO.C6BonusInventory.switch_depolarizing_oracle' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.all_channels_constant_gap_lower_bound {A M O B : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  [Fintype M] [DecidableEq M] [Nonempty M] [Fintype O] [DecidableEq O] [Nonempty O] [Fintype B] [DecidableEq B] {q : ℕ}
+  (T : QIT.BinaryHypothesisTest O) (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B)
+  (hhigh :
+    ∀ (ι κ : Type) [inst : Fintype ι] [inst_1 : DecidableEq ι] [inst_2 : Fintype κ] [inst_3 : DecidableEq κ]
+      (E : ι → QIT.CMatrix A) (F : κ → QIT.CMatrix A) (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1)
+      (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1),
+      2 / 3 ≤ ICO.SwitchObservable.interference E F →
+        2 / 3 ≤
+          ICO.BudgetTesting.acceptance T tree ρ (ICO.AllChannelDilation.oracleChannel E hE)
+            (ICO.AllChannelDilation.oracleChannel F hF))
+  (hlow :
+    ∀ (ι κ : Type) [inst : Fintype ι] [inst_1 : DecidableEq ι] [inst_2 : Fintype κ] [inst_3 : DecidableEq κ]
+      (E : ι → QIT.CMatrix A) (F : κ → QIT.CMatrix A) (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1)
+      (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1),
+      ICO.SwitchObservable.interference E F ≤ 1 / 3 →
+        ICO.BudgetTesting.acceptance T tree ρ (ICO.AllChannelDilation.oracleChannel E hE)
+            (ICO.AllChannelDilation.oracleChannel F hF) ≤
+          1 / 3) :
+  ↑(Fintype.card A) ^ (1 / 16) / 100 < ↑q
+'ICO.C6BonusInventory.all_channels_constant_gap_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.measurement_only_constant_gap_lower_bound {A M O B : Type} [Fintype A] [DecidableEq A]
+  [Nontrivial A] [Fintype M] [DecidableEq M] [Nonempty M] [Fintype O] [DecidableEq O] [Nonempty O] [Fintype B]
+  [DecidableEq B] {q : ℕ} (T : QIT.BinaryHypothesisTest O) (tree : ICO.BudgetQueryTree.Tree (A × M) O q B)
+  (ρ : QIT.State B) (hdim : 4 ≤ Fintype.card A)
+  (hhigh :
+    ∀ (U V : ↥(Matrix.unitaryGroup A ℂ)),
+      2 / 3 ≤
+          ICO.SwitchObservable.interference (ICO.SwitchObservable.basisProjection ↑U)
+            (ICO.SwitchObservable.basisProjection ↑V) →
+        2 / 3 ≤ ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden V))
+  (hlow :
+    ∀ (U V : ↥(Matrix.unitaryGroup A ℂ)),
+      ICO.SwitchObservable.interference (ICO.SwitchObservable.basisProjection ↑U)
+            (ICO.SwitchObservable.basisProjection ↑V) ≤
+          1 / 3 →
+        ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U) (ICO.BudgetContinuity.hidden V) ≤ 1 / 3) :
+  ↑(Fintype.card A) ^ (1 / 16) / 100 < ↑q
+'ICO.C6BonusInventory.measurement_only_constant_gap_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+ICO.C6BonusInventory.constant_gap_interference_testing {A M O B : Type} [Fintype A] [DecidableEq A] [Nontrivial A]
+  [Fintype M] [DecidableEq M] [Nonempty M] [Fintype O] [DecidableEq O] [Nonempty O] [Fintype B] [DecidableEq B] :
+  (∀ {q : ℕ} (T : QIT.BinaryHypothesisTest O) (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B),
+      (∀ (ι κ : Type) [inst : Fintype ι] [inst_1 : DecidableEq ι] [inst_2 : Fintype κ] [inst_3 : DecidableEq κ]
+          (E : ι → QIT.CMatrix A) (F : κ → QIT.CMatrix A) (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1)
+          (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1),
+          2 / 3 ≤ ICO.SwitchObservable.interference E F →
+            2 / 3 ≤
+              ICO.BudgetTesting.acceptance T tree ρ (ICO.AllChannelDilation.oracleChannel E hE)
+                (ICO.AllChannelDilation.oracleChannel F hF)) →
+        (∀ (ι κ : Type) [inst : Fintype ι] [inst_1 : DecidableEq ι] [inst_2 : Fintype κ] [inst_3 : DecidableEq κ]
+            (E : ι → QIT.CMatrix A) (F : κ → QIT.CMatrix A) (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1)
+            (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1),
+            ICO.SwitchObservable.interference E F ≤ 1 / 3 →
+              ICO.BudgetTesting.acceptance T tree ρ (ICO.AllChannelDilation.oracleChannel E hE)
+                  (ICO.AllChannelDilation.oracleChannel F hF) ≤
+                1 / 3) →
+          ↑(Fintype.card A) ^ (1 / 16) / 100 < ↑q) ∧
+    (∀ {ι κ : Type} [inst : Fintype ι] [inst_1 : Fintype κ] (E : ι → QIT.CMatrix A) (F : κ → QIT.CMatrix A)
+        (hE : ∑ i, Matrix.conjTranspose (E i) * E i = 1) (hF : ∑ j, Matrix.conjTranspose (F j) * F j = 1),
+        (2 / 3 ≤ ICO.SwitchObservable.interference E F →
+            (ICO.SwitchSampling.repetitions 80
+                    (ICO.SwitchExperiment.controlMeasurement.prob
+                      (ICO.SwitchExperiment.switchedState E F hE hF ICO.SwitchExperiment.mixedState) true)
+                    ⋯).real
+                {ω | ∑ i, ICO.SwitchSampling.outcome i ω < 60} <
+              1 / 3) ∧
+          (ICO.SwitchObservable.interference E F ≤ 1 / 3 →
+            (ICO.SwitchSampling.repetitions 80
+                    (ICO.SwitchExperiment.controlMeasurement.prob
+                      (ICO.SwitchExperiment.switchedState E F hE hF ICO.SwitchExperiment.mixedState) true)
+                    ⋯).real
+                {ω | 60 ≤ ∑ i, ICO.SwitchSampling.outcome i ω} <
+              1 / 3)) ∧
+      (4 ≤ Fintype.card A →
+        ∀ {q : ℕ} (T : QIT.BinaryHypothesisTest O) (tree : ICO.BudgetQueryTree.Tree (A × M) O q B) (ρ : QIT.State B),
+          (∀ (U V : ↥(Matrix.unitaryGroup A ℂ)),
+              2 / 3 ≤
+                  ICO.SwitchObservable.interference (ICO.SwitchObservable.basisProjection ↑U)
+                    (ICO.SwitchObservable.basisProjection ↑V) →
+                2 / 3 ≤
+                  ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U)
+                    (ICO.BudgetContinuity.hidden V)) →
+            (∀ (U V : ↥(Matrix.unitaryGroup A ℂ)),
+                ICO.SwitchObservable.interference (ICO.SwitchObservable.basisProjection ↑U)
+                      (ICO.SwitchObservable.basisProjection ↑V) ≤
+                    1 / 3 →
+                  ICO.BudgetTesting.acceptance T tree ρ (ICO.BudgetContinuity.hidden U)
+                      (ICO.BudgetContinuity.hidden V) ≤
+                    1 / 3) →
+              ↑(Fintype.card A) ^ (1 / 16) / 100 < ↑q)
+'ICO.C6BonusInventory.constant_gap_interference_testing' depends on axioms: [propext, Classical.choice, Quot.sound]
+ICO.C6BonusInventory.capacity_inherited_same_mub_distance {A M O B : Type} [Fintype A] [DecidableEq A] [Nonempty A]
+  [Fintype M] [DecidableEq M] [Nonempty M] [Fintype O] [DecidableEq O] [Nonempty O] [Fintype B] [DecidableEq B] {q : ℕ}
+  (tree : ICO.BudgetQueryTree.Tree (A × M) O (2 * q) B) (ρ : QIT.State B) (H : ↥(Matrix.unitaryGroup A ℂ)) (hq : 1 ≤ q)
+  (hqr : ↑q ≤ ↑(Fintype.card A) ^ (1 / 16) / 200) :
+  QIT.normalizedTraceDistance (ICO.C6Decision.sameDensity tree ρ) (ICO.C6Decision.mubDensity tree ρ H) ≤ 215 / 10000 ∧
+    215 / 10000 + ↑q * (3 / 4) / (↑(Fintype.card A) + 1) ≤ 101 / 4000 ∧ 101 / 4000 < 1 / 3
+'ICO.C6BonusInventory.capacity_inherited_same_mub_distance' depends on axioms: [propext, Classical.choice, Quot.sound]

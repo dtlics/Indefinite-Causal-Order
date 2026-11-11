@@ -5,8 +5,8 @@ This is the canonical source tree for the formal results accompanying the
 statements, hypotheses, metric conventions, and stable paper labels.
 [DEPENDENCIES.txt](DEPENDENCIES.txt) records upstream versions and provenance.
 
-The selected proof closure contains 1,603 project modules in `ICO/` and 48
-unchanged Lean-QIT modules in `vendor/Lean-QIT/QIT/`. `ICO.lean` selects the
+The selected proof closure contains 1,610 project modules in `ICO/` and 48
+unchanged Lean-QIT modules in `vendor/Lean-QIT/QIT/` (1,658 local modules total). `ICO.lean` selects the
 endpoints; `Audit.lean` prints their types and transitive axiom dependencies.
 The independent finite-arithmetic companion is kept once, in
 [certificates/](certificates/README.md).
@@ -67,16 +67,15 @@ lake env lean -t0 -j1 -s524288 Audit.lean
 
 ## What the evidence establishes
 
-The [recorded audit](audit/README.md), dated 3 October 2026, reports a
-successful trust-level-zero kernel check of 32 selected endpoints, using the
+The [recorded audit](audit/README.md) reports a
+successful trust-level-zero kernel check of 104 selected endpoints, using the
 working project's compiled objects matched to these sources. It reports only
-`propext`, `Classical.choice`, and `Quot.sound` as transitive axioms. These are
-imported results, not a new Lean run performed during repository organization.
+`propext`, `Classical.choice`, and `Quot.sound` as transitive axioms.
 The exact output is [final-kernel-audit.log](audit/final-kernel-audit.log).
 
 The release separately records individual source elaborations and a 16-module
 isolated-layout check. It explicitly does **not** claim a second clean build of
-all 1,651 modules. Windows was exercised; a complete Unix build was not. A source
+all 1,658 modules. Windows was exercised; a complete Unix build was not. A source
 hash match or successful Python replay does not replace the Lean kernel audit.
 
 The keyed-family transfer retains two explicit security assumptions. It does

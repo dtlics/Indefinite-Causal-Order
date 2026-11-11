@@ -1,7 +1,7 @@
 {
   "exit_code": 0,
-  "startedUTC": "2026-10-03T07:57:26.2518445Z",
-  "finishedUTC": "2026-10-03T07:58:15.6741268Z",
-  "seconds": 49.4222823,
-  "command": "lake env lean -t0 -j1 -s524288 -R ../release/stage ../release/stage/Audit.lean"
+  "startedUTC": "2026-11-11T02:29:51.657769Z",
+  "finishedUTC": "2026-11-11T02:30:19.146587Z",
+  "seconds": 27.4888671,
+  "command": "lake env lean -t0 -j1 -s524288 -R proofs/lean proofs/lean/Audit.lean"
 }

@@ -15,6 +15,16 @@ import ICO.C6OTOC
 import ICO.C6OTOCCommutator
 import ICO.C6OTOCEstimator
 import ICO.C6OTOCChannelBoundary
+import ICO.C6BosonicFreshPrefix
+import ICO.C6PermanentFlags
+import ICO.C6WeightedHistoryBound
+import ICO.C6VisibilityEstimator
+import ICO.PolarizationOrderedArbitraryControl
+import ICO.Section44TwoCall
+import ICO.RemarksUnitaryNumerical
+import ICO.Section54Validation
+import ICO.TwoCallCertificate
+import ICO.C6BonusInventory
 
 #check ICO.BoundedSwitchObstruction.no_bounded_circuit
 #print axioms ICO.BoundedSwitchObstruction.no_bounded_circuit
@@ -111,3 +121,219 @@ import ICO.C6OTOCChannelBoundary
 
 #check ICO.C6OTOCChannelBoundary.same_channels_commute
 #print axioms ICO.C6OTOCChannelBoundary.same_channels_commute
+
+#check ICO.C6BosonicFreshPrefix.freshRun_prefix
+#print axioms ICO.C6BosonicFreshPrefix.freshRun_prefix
+
+#check ICO.C6PermanentFlags.prefixRun_numbers
+#print axioms ICO.C6PermanentFlags.prefixRun_numbers
+
+#check ICO.C6WeightedHistoryBound.weighted_uniform_distance
+#print axioms ICO.C6WeightedHistoryBound.weighted_uniform_distance
+
+#check ICO.BudgetQueryTree.Tree.channel_choi_continuous
+#print axioms ICO.BudgetQueryTree.Tree.channel_choi_continuous
+
+#check ICO.BudgetQueryTree.uniformChannel_choi_continuous
+#print axioms ICO.BudgetQueryTree.uniformChannel_choi_continuous
+
+#check ICO.BudgetQueryTree.Tree.prepare
+#print axioms ICO.BudgetQueryTree.Tree.prepare
+
+#check ICO.BudgetQueryTree.Tree.prepare_channel
+#print axioms ICO.BudgetQueryTree.Tree.prepare_channel
+
+#check ICO.C6VisibilityEstimator.visibility_bernoulli_error
+#print axioms ICO.C6VisibilityEstimator.visibility_bernoulli_error
+
+#check ICO.C6VisibilityEstimator.visibility_failure_le_two_exp_neg_two
+#print axioms ICO.C6VisibilityEstimator.visibility_failure_le_two_exp_neg_two
+
+#check ICO.C6VisibilityEstimator.visibility_success_ge_one_sub_two_exp_neg_two
+#print axioms ICO.C6VisibilityEstimator.visibility_success_ge_one_sub_two_exp_neg_two
+
+#check ICO.C6VisibilityEstimator.switch_visibility_estimation
+#print axioms ICO.C6VisibilityEstimator.switch_visibility_estimation
+
+#check ICO.C6VisibilityEstimator.channel_visibility_estimation
+#print axioms ICO.C6VisibilityEstimator.channel_visibility_estimation
+
+#check ICO.C6VisibilityEstimator.visibility_estimator_gives_decision
+#print axioms ICO.C6VisibilityEstimator.visibility_estimator_gives_decision
+
+#check ICO.C6VisibilityEstimator.visibility_query_lower_bound
+#print axioms ICO.C6VisibilityEstimator.visibility_query_lower_bound
+
+#check ICO.C6VisibilityEstimator.visibility_query_lower_bound_of_dephasers
+#print axioms ICO.C6VisibilityEstimator.visibility_query_lower_bound_of_dephasers
+
+#check ICO.C6VisibilityEstimator.visibility_estimation_query_lower_bound
+#print axioms ICO.C6VisibilityEstimator.visibility_estimation_query_lower_bound
+
+#check ICO.PolarizationOrderedArbitraryControl.no_bounded_full_switch_circuit
+#print axioms ICO.PolarizationOrderedArbitraryControl.no_bounded_full_switch_circuit
+
+#check ICO.PolarizationOrderedArbitraryControl.no_bounded_circuit_arbitrary_control
+#print axioms ICO.PolarizationOrderedArbitraryControl.no_bounded_circuit_arbitrary_control
+
+#check ICO.PolarizationOrderedArbitraryControl.no_labelled_full_switch_circuit
+#print axioms ICO.PolarizationOrderedArbitraryControl.no_labelled_full_switch_circuit
+
+#check ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition
+#print axioms ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition
+
+#check ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition_dim_d
+#print axioms ICO.PolarizationOrderedArbitraryControl.ordered_components_decomposition_dim_d
+
+#check ICO.PolarizationOrderedArbitraryControl.sum_perm_one_slot
+#print axioms ICO.PolarizationOrderedArbitraryControl.sum_perm_one_slot
+
+#check ICO.PolarizationOrderedArbitraryControl.sum_perm_two_slot
+#print axioms ICO.PolarizationOrderedArbitraryControl.sum_perm_two_slot
+
+#check ICO.PolarizationOrderedArbitraryControl.average_perm_two_slot
+#print axioms ICO.PolarizationOrderedArbitraryControl.average_perm_two_slot
+
+#check ICO.PolarizationOrderedArbitraryControl.symmetrized_polarization
+#print axioms ICO.PolarizationOrderedArbitraryControl.symmetrized_polarization
+
+#check ICO.Section44TwoCall.dephaseControl_diamond_id_le_half
+#print axioms ICO.Section44TwoCall.dephaseControl_diamond_id_le_half
+
+#check ICO.Section44TwoCall.twoCallTree_krausChannel_eq
+#print axioms ICO.Section44TwoCall.twoCallTree_krausChannel_eq
+
+#check ICO.Section44TwoCall.twoCallTree_krausChannel_error_le_half
+#print axioms ICO.Section44TwoCall.twoCallTree_krausChannel_error_le_half
+
+#check ICO.Section44TwoCall.twoCallTree_fullCircuit_eq
+#print axioms ICO.Section44TwoCall.twoCallTree_fullCircuit_eq
+
+#check ICO.Section44TwoCall.twoCallTree_fullSwitch_error_le_half
+#print axioms ICO.Section44TwoCall.twoCallTree_fullSwitch_error_le_half
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_channel_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_channel_eq
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullChannel_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_fullChannel_eq
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_allChannel_eq
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_allChannel_eq
+
+#check ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_diamond_zero
+#print axioms ICO.RemarksUnitaryNumerical.unitaryThreeCallTree_diamond_zero
+
+#check ICO.RemarksUnitaryNumerical.exists_two_query_switch_error_ge_235
+#print axioms ICO.RemarksUnitaryNumerical.exists_two_query_switch_error_ge_235
+
+#check ICO.RemarksUnitaryNumerical.two_query_tradeoff_nonpos_of_le_234
+#print axioms ICO.RemarksUnitaryNumerical.two_query_tradeoff_nonpos_of_le_234
+
+#check ICO.RemarksUnitaryNumerical.full_switch_one_over_48_three_queries_of_ge_65536
+#print axioms ICO.RemarksUnitaryNumerical.full_switch_one_over_48_three_queries_of_ge_65536
+
+#check ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_one_of_le_106
+#print axioms ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_one_of_le_106
+
+#check ICO.RemarksUnitaryNumerical.one_lt_two_pow_div_sixteen_div_100_of_ge_107
+#print axioms ICO.RemarksUnitaryNumerical.one_lt_two_pow_div_sixteen_div_100_of_ge_107
+
+#check ICO.RemarksUnitaryNumerical.same_mub_at_least_two_queries_of_ge_107
+#print axioms ICO.RemarksUnitaryNumerical.same_mub_at_least_two_queries_of_ge_107
+
+#check ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_eight_of_le_154
+#print axioms ICO.RemarksUnitaryNumerical.two_pow_div_sixteen_div_100_lt_eight_of_le_154
+
+#check ICO.RemarksUnitaryNumerical.eight_lt_two_pow_div_sixteen_div_100_of_ge_155
+#print axioms ICO.RemarksUnitaryNumerical.eight_lt_two_pow_div_sixteen_div_100_of_ge_155
+
+#check ICO.RemarksUnitaryNumerical.same_mub_exceeds_eight_queries_of_ge_155
+#print axioms ICO.RemarksUnitaryNumerical.same_mub_exceeds_eight_queries_of_ge_155
+
+#check ICO.Section54Validation.switch_slot_left_diamond_le
+#print axioms ICO.Section54Validation.switch_slot_left_diamond_le
+
+#check ICO.Section54Validation.switch_slot_right_diamond_le
+#print axioms ICO.Section54Validation.switch_slot_right_diamond_le
+
+#check ICO.Section54Validation.model_mismatch_bound
+#print axioms ICO.Section54Validation.model_mismatch_bound
+
+#check ICO.Section54Validation.dephasing_noise_self_visibility
+#print axioms ICO.Section54Validation.dephasing_noise_self_visibility
+
+#check ICO.Section54Validation.depolarizing_model_self_visibility
+#print axioms ICO.Section54Validation.depolarizing_model_self_visibility
+
+#check ICO.Section54Validation.validation_ordinary_lower_bound
+#print axioms ICO.Section54Validation.validation_ordinary_lower_bound
+
+#check ICO.Section54Validation.validation_switch_upper_bound
+#print axioms ICO.Section54Validation.validation_switch_upper_bound
+
+#check ICO.TwoCallCertificate.weingarten_gram_identity
+#print axioms ICO.TwoCallCertificate.weingarten_gram_identity
+
+#check ICO.TwoCallCertificate.delta_orbit_table_correct
+#print axioms ICO.TwoCallCertificate.delta_orbit_table_correct
+
+#check ICO.TwoCallCertificate.delta_output_partial_trace_zero
+#print axioms ICO.TwoCallCertificate.delta_output_partial_trace_zero
+
+#check ICO.TwoCallCertificate.switch_visibility_gap_identity
+#print axioms ICO.TwoCallCertificate.switch_visibility_gap_identity
+
+#check ICO.TwoCallCertificate.z_causal_trace_one
+#print axioms ICO.TwoCallCertificate.z_causal_trace_one
+
+#check ICO.TwoCallCertificate.z_causal_trace_two
+#print axioms ICO.TwoCallCertificate.z_causal_trace_two
+
+#check ICO.TwoCallCertificate.subblock_orthogonality
+#print axioms ICO.TwoCallCertificate.subblock_orthogonality
+
+#check ICO.TwoCallCertificate.z_subblocks_bareiss_spd
+#print axioms ICO.TwoCallCertificate.z_subblocks_bareiss_spd
+
+#check ICO.TwoCallCertificate.z_minus_delta_subblocks_bareiss_spd
+#print axioms ICO.TwoCallCertificate.z_minus_delta_subblocks_bareiss_spd
+
+#check ICO.TwoCallCertificate.two_call_certificate_verified
+#print axioms ICO.TwoCallCertificate.two_call_certificate_verified
+
+#check ICO.TwoCallCertificate.causal_dual_trace_collapse
+#print axioms ICO.TwoCallCertificate.causal_dual_trace_collapse
+
+#check ICO.TwoCallCertificate.two_call_switch_success
+#print axioms ICO.TwoCallCertificate.two_call_switch_success
+
+#check ICO.TwoCallCertificate.two_call_ordinary_upper_bound
+#print axioms ICO.TwoCallCertificate.two_call_ordinary_upper_bound
+
+#check ICO.C6BonusInventory.uniformError_le_212
+#print axioms ICO.C6BonusInventory.uniformError_le_212
+
+#check ICO.C6BonusInventory.same_mub_distance_212
+#print axioms ICO.C6BonusInventory.same_mub_distance_212
+
+#check ICO.C6BonusInventory.zanardi_swap_same
+#print axioms ICO.C6BonusInventory.zanardi_swap_same
+
+#check ICO.C6BonusInventory.zanardi_swap_mub
+#print axioms ICO.C6BonusInventory.zanardi_swap_mub
+
+#check ICO.C6BonusInventory.switch_depolarizing_oracle
+#print axioms ICO.C6BonusInventory.switch_depolarizing_oracle
+
+#check ICO.C6BonusInventory.all_channels_constant_gap_lower_bound
+#print axioms ICO.C6BonusInventory.all_channels_constant_gap_lower_bound
+
+#check ICO.C6BonusInventory.measurement_only_constant_gap_lower_bound
+#print axioms ICO.C6BonusInventory.measurement_only_constant_gap_lower_bound
+
+#check ICO.C6BonusInventory.constant_gap_interference_testing
+#print axioms ICO.C6BonusInventory.constant_gap_interference_testing
+
+#check ICO.C6BonusInventory.capacity_inherited_same_mub_distance
+#print axioms ICO.C6BonusInventory.capacity_inherited_same_mub_distance

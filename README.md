@@ -4,7 +4,7 @@
 
 The [current application investigation](research/topics/nr-noisy-recovery/application-search/README.md) organizes the model-validation results, ordinary baselines, exact certificates and secondary recovery/order-geometry work. The original goal remains a substantial advantage in a natural black-box quantum-computing or QEC workload; that application is not claimed complete. See the handoff before resuming exploration.
 
-The current research on quantum-switch advantages, causal structure, and the limits of ordinary quantum queries. The repository contains the paper **An exponential quantum-switch advantage for commuting channels**, its proof code, and the results, limitations, and open problems from eight research directions.
+The current research on quantum-switch advantages, causal structure, and the limits of ordinary quantum queries. The repository contains the paper **Infinite or indefinite: the query cost of simulating the quantum switch**, its proof code, and the results, limitations, and open problems from eight research directions.
 
 | Read or change… | Canonical location |
 | --- | --- |
