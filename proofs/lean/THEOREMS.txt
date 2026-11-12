@@ -5,13 +5,33 @@ Manuscript: Infinite or indefinite: the query cost of simulating the quantum swi
 Audit: 221 selected endpoints; 1,615 ICO and 48 unchanged QIT source modules (1,663 local modules across 32 root imports, elaborated cleanly from .lean source under Lean 4.30.0, commit d024af099ca4bf2c86f649261ebf59565dc8c622, on 2026-11-11).
 
 All names below are fully qualified Lean declaration names. File paths are
-relative to this source package. Paper theorem numbers refer to the current
-manuscript (`paper/main.tex`); the LaTeX labels are stable cross-references.
+relative to this source package (`proofs/lean/`). Statement and section numbers
+refer to the arXiv version of the paper (November 2026); the LaTeX labels are
+those of its source and are stable cross-references.
+
+How the paper states the results. The arXiv version states Theorems 2 and 3 and
+several lemmas asymptotically. The Lean theorems are the explicit statements
+listed below: the trade-off eq:tradeoff-intro with its consequence at error
+1/48, the lower bound d^(1/16)/(1400 p), the constant 212/10000, and the switch
+test with seven uses of the switch and blocks of m >= 3/(2p) device calls.
+Each implies the corresponding statement of the paper. In Section 5.1 the paper
+uses blocks of ceil(1/p) calls and a constant number of repetitions; the Lean
+theorem uses blocks of m >= 3/(2p) calls and seven repetitions; both give
+O(1/p) device calls.
+
+Labels marked "earlier drafts" (appA:chain, appA:fw1, appA:fw2, appA:fw3,
+clm:switch-passes, eq:R2, eq:R3, eq:basis-visibility, fig:approx, fig:unitary,
+rem:approx-content, rem:crossover, rem:unitary, sec:formal-status, sec:related,
+sec:where-channels, tab:hybrids) belong to remarks, figures, tables, equations
+or sections of earlier drafts. The arXiv version states their content without a
+number or omits it; the Lean theorems attached to them are unchanged. Docstrings
+in the Lean sources that mention `paper/main.tex`, or statement numbers of an
+earlier draft, refer to those drafts; this file gives the current numbers.
 
 This file is organized into two parts:
   - Part 1 maps every formalized statement, equation, and structural claim of
-    the current manuscript (`paper/main.tex`), and notes external literature
-    facts cited without new Lean formalization.
+    the paper, and notes external literature facts cited without new Lean
+    formalization.
   - Part 2 ("Audited results that do not correspond to a statement of the
     manuscript") catalogues supplementary audited endpoints retained from
     earlier drafts and companion research notes.
@@ -58,8 +78,9 @@ is formalized as `QIT.Channel.diamondTraceDistance` (one half of the diamond
 norm). Continuity of Choi operators along budget trees is proved in
 `Tree.channel_choi_continuous` and `uniformChannel_choi_continuous`.
 
-Section 2.5 ("What the switch measures: the visibility", sec:visibility,
-eq:visibility, eq:conjugation, eq:basis-visibility) is formalized in
+Section 2.3 ("Simulation error and visibility", sec:visibility, eq:visibility;
+eq:conjugation, now in Section 5; eq:basis-visibility, earlier drafts) is
+formalized in
 `ICO/VisibilityIdentities.lean`:
   - `basis_dephasing_visibility` proves the basis-dephasing visibility formula
     (eq:basis-visibility) for every pair of unitaries U, U' in arbitrary finite
@@ -210,8 +231,8 @@ sec:diluted-coordinates) together with Appendix B (sec:certificate):
     `proofs/lean/certificates/verify_all.py` independently replays the exact
     integer and rational matrix certificates in Python.
 
-Remark 10 (rem:unitary — "One unitary box is easy", sec:where-channels,
-fig:unitary):
+The unitary case (stated in Sections 1 and 3.1 of the paper; rem:unitary,
+sec:where-channels and fig:unitary in earlier drafts):
   - `diluted_unitary_not_unitary` shows that for 0 < x < 1 the diluted Pauli-X
     box x Ad(sigma_x) + (1 - x) id is not a unitary channel.
   - When box A is known to be unitary and B is any CPTP channel, the explicit
@@ -297,38 +318,40 @@ Supporting lemmas and claims of Section 4 (`ICO/C4NamedClaims.lean`, building on
 `ICO/CompositionGramAverage.lean`, `ICO/GramWitness.lean`,
 `ICO/ReverseFidelity.lean`, `ICO/AverageCoherence.lean`, and
 `ICO/FreshBudgetCompile.lean`):
-  - Lemma 11 (lem:gram, sec:witness, eq:effect, eq:block-form, eq:gram):
+  - Lemma 10 (lem:gram, sec:witness, eq:effect, eq:block-form, eq:gram):
     `lem_gram_near_orthonormality` (parameterized literally by r : Nat) and
     `lem_gram_near_orthonormality_sample` prove E ||K^dagger K - I|| <= r^2 / d
     for all three composed Kraus matrices S_0, S_1, and S.
-  - Claim 12 (clm:switch-passes, eq:R1): `clm_switch_passes` (for 1 <= r) and
+  - Lemma 10, second part (acceptance of the switch; clm:switch-passes and eq:R1
+    in earlier drafts): `clm_switch_passes` (for 1 <= r) and
     `clm_switch_passes_sample` prove E Tr(Theta rho_sw) >= 1 - r^2 / d on the
     Choi input of the quantum switch.
-  - Lemma 13 (lem:reverse, sec:reverse, eq:bd, eq:frame, eq:envelope):
+  - Lemma 11 (lem:reverse, sec:reverse, eq:bd, eq:frame, eq:envelope):
     `reverse_test_trace_mono`, `causal_reverse_test_subcomb_bound`, and
     `lem_reverse_ordered_subcomb` combine `ICO.ReverseFidelity.causal_reverse_test_bound`
     and `ICO.ReverseFidelity.outcome_reverse_test_bound` with subcomb
     monotonicity for 0 <= C' <= C, giving the exact bound
     (Tr C / d^3) * (1/d + d/(d^2 - 1))^2.
-  - Corollary 14 (cor:coherence, eq:coherence): `cor_coherence_at_most_once`
+  - Corollary 12 (cor:coherence, eq:coherence): `cor_coherence_at_most_once`
     (with expected-norm strengthening `cor_coherence_at_most_once_norm` and
     tree variants `cor_coherence_optional_two_query`, `cor_coherence_two_query`)
     proves as one unified statement that for any strategy calling each of U and
     V at most once on control input |+> and half of a maximally entangled state,
     the modulus of the Haar average of <VU | sigma_{01} | UV> is at most
     1/d + d/(d^2 - 1) (via `ICO.AverageCoherence.average_controlCoherence_bound`).
-  - Claim 15 (clm:fresh, sec:hidden, eq:R2): `clm_fresh_distance`,
+  - Claim 13 (clm:fresh, sec:hidden; eq:R2 in earlier drafts): `clm_fresh_distance`,
     `clm_fresh_channel_diamond_distance`, and `clm_fresh_trace_bound` prove the
     fresh-index replacement bound q(q - 1)/(2 r) (with paper r = Lean r + 1)
     both in normalized probe trace distance, in half-diamond channel distance,
     and in witness expectation (eq:R2).
-  - Claim 16 (clm:pair, eq:R3): `clm_pair_fresh_coherence`,
+  - Claim 14 (clm:pair; eq:R3 in earlier drafts): `clm_pair_fresh_coherence`,
     `clm_pair_fresh_coherence_norm`, `clm_pair_fresh_coherence_sum`, and
     `eq_R3_fresh_frame_bound` establish the per-pair Haar coherence bound
     1/d + d/(d^2 - 1) in the fresh-index process, its r^2 sum over index pairs,
     and the resulting frame expectation bound (eq:R3).
 
-Remark 17 (rem:approx-content):
+Explicit consequences of the trade-off (rem:approx-content in earlier drafts; the
+arXiv version states the asymptotic form):
 `exists_two_query_switch_error_ge_235` and `two_query_tradeoff_nonpos_of_le_234`
 verify that for q = 2 the trade-off eq:tradeoff-intro first becomes positive at
 d = 235 (at paper r = 3, giving 1/6 - 39/d >= 1/1410 > 0), while
@@ -436,11 +459,12 @@ Selected endpoints:
   ICO.RemarksUnitaryNumerical.trivial_query_lower_bound_of_diamond_le
   ICO.RemarksUnitaryNumerical.trivial_balanced_query_lower_bound_of_diamond_le
 
-Theorem 3 (thm:c6 — "One bit: does the depolarizing model describe the noise?"),
-Section 5 (sec:c6-proof — "A single bit from the switch can already be hard"),
-Section 5.1 (sec:switch-test — "The switch reads the bit", fig:geometry,
-eq:validation-pair, eq:validation-visibility), and Section 5.3
-(sec:validation — "Weak noise: Theorem 3"):
+Theorem 3 (thm:c6), Section 5 (sec:c6-proof — "Distinguishing dephasing from
+depolarizing noise"), Section 5.1 (sec:switch-test — "A test using the quantum
+switch", fig:geometry, eq:validation-pair, eq:validation-visibility), and
+Section 5.3 (sec:validation — "Reduction from weak noise to full-strength
+noise"). The paper states Theorem 3 asymptotically; the Lean statements are
+explicit:
   - For d = 2^n (n >= 1) and noise rate 0 < p <= 1, the dephasing device
     E_{p,U} = (1 - p) id + p Delta_U and its matched-fidelity depolarizing
     counterpart M_p = (1 - p) id + p Lambda (eq:validation-pair) have exact
@@ -466,7 +490,8 @@ eq:validation-pair, eq:validation-visibility), and Section 5.3
     deciding between E_{p,U} and M_p with error at most 1/3 requires call budget
     Q > d^(1/16) / (1400 p).
 
-Lemma 18 (lem:c6-comparison, sec:pair, eq:c6-priors, eq:c6-comparison):
+Lemma 15 (lem:c6-comparison, sec:pair, eq:c6-priors, eq:c6-comparison; the paper
+states the bound with an absolute constant C, Lean proves the explicit form):
 For one fixed Haar unitary U shared throughout the run and arbitrary relative
 unitary H, `mixed_tree_comparison`, `adaptive_pair_distance`, and
 `adaptive_pair_distance_explicit` bound the normalized output trace distance
@@ -520,25 +545,26 @@ are used in the proof of `ICO.C6SharedPairBound.shared_haar_pair`:
     -> `ICO.C6WeightedHistoryOutput.uniform_distance`
     -> `ICO.C6WeightedHistoryBound.weighted_uniform_distance`.
 
-Definition 19 (def:cache, sec:cache, eq:c6-cache, eq:covariance), Proposition 20
-(prop:cache, eq:eps-cache, tab:hybrids), Lemma 21 (lem:reference-invariant,
-sec:invariant), and Lemma 22 (lem:invariant-label, eq:invariant-label):
+Definition 16 (def:cache, sec:cache, eq:c6-cache, eq:covariance), Proposition 17
+(prop:cache, eq:eps-cache; tab:hybrids in earlier drafts), Lemma 18
+(lem:reference-invariant, sec:invariant), and Lemma 19 (lem:invariant-label,
+eq:invariant-label):
   - `ICO/C6LabelCache.lean` (`polarPairCreator_covariance`,
     `pairImageProj_commutes`, `labelCacheRetrieval_trace`,
     `labelCacheBirth_trace`, `labelCacheCall_eq_gradedQuery`,
     `uniformRun_eq_labelCache_run`, `cacheDensity_eq_labelCache_output`,
     `treeLabelCacheDensity_eq_compiled`) defines the explicit one-call
-    label-cache map of Definition 19 (eq:c6-cache, eq:covariance) and proves
+    label-cache map of Definition 16 (eq:c6-cache, eq:covariance) and proves
     that `ICO.C6RawWeightedEndpoint.cacheDensity` and its budget-tree
     counterpart equal the strategy output when run against that label cache.
   - `eps2_eq_Icc`, `eps3_eq_formula`, `eps4_eq_Icc`,
     `prop_cache_protocol_distance`, and `prop_cache_tree_distance` formalize
-    Proposition 20 (prop:cache, eq:eps-cache) as a standalone single-experiment
+    Proposition 17 (prop:cache, eq:eps-cache) as a standalone single-experiment
     comparison both at the purified protocol level and for arbitrary
     `BudgetQueryTree.Tree`, bounding the normalized trace distance between the
     physical Haar-averaged output and the label-cache output by
     epsilon_rec + epsilon_2 + epsilon_3 + epsilon_4 + epsilon_5.
-  - Lemma 21 (lem:reference-invariant) and Lemma 22 (lem:invariant-label,
+  - Lemma 18 (lem:reference-invariant) and Lemma 19 (lem:invariant-label,
     eq:invariant-label) are formalized by `reference_cache_step_invariant`,
     `reference_cache_invariant`, `reference_cache_decoded_invariant`,
     `reference_cache_tree_invariant`, `cache_reference_protocol_distance`, and
@@ -551,7 +577,8 @@ sec:invariant), and Lemma 22 (lem:invariant-label, eq:invariant-label):
     6q(q - 1)/d between the two priors in
     `ICO.C6CacheOutputComparisonAfter.unit_mass_pair_distance`).
 
-Remark 23 (rem:crossover):
+Query costs and numerical thresholds (rem:crossover in earlier drafts; not stated
+in the arXiv version):
 `ICO/Section54Validation.lean` and `ICO/RemarksUnitaryNumerical.lean` prove:
   - The elementary half-diamond bound (1/2)||E_{p,U} - M_p||_diamond <= p
     (`dephasing_depolarizing_diamond_le_p`,
@@ -583,21 +610,21 @@ Appendix A (sec:c6-recording) step-by-step correspondence:
     signed-query Haar recording bound <= 9t(t+1)/R for d = R^8, and
     `ICO.MHProtocolHaarRecording.protocol_haar_recording` specializes it to the
     2q-query U^dagger/copy/U protocol (giving epsilon_rec = 9(2q)(2q+1)/d^(1/8)).
-  - Lemma 24 (appA:hybrid): `ICO.PureHybrid.vector_hybrid`,
+  - Lemma 20 (appA:hybrid): `ICO.PureHybrid.vector_hybrid`,
     `ICO.PureHybrid.vector_hybrid_upto`,
     `ICO.PureHybrid.partial_trace_pure_distance_le`,
     `ICO.PureHybrid.subnormalized_pure_distance_le`,
     `ICO.C6MatrixTrajectory.run_distance`, and
     `ICO.C6MatrixLocalHybrid.run_distance_upto` (contraction telescoping and
     vector-to-density partial-trace distance bounds).
-  - Lemma 25 (appA:compression, eq:c6-delete-compression) and Lemma 26
+  - Lemma 21 (appA:compression, eq:c6-delete-compression) and Lemma 22
     (appA:forward, eq:c6-E, appA:fw1, appA:fw2, appA:fw3):
     `ICO.C6FockCutoff.right_fock_low_compression`,
     `ICO.C6LocalDeletion.deletion_norm`,
     `ICO.C6LocalDeletion.private_deletion_norm`,
     `ICO.C6LocalDeletion.normalized_private_deletion`, and
     `ICO.C6PhysicalCosts.deletionCost_sum` (Step 2 cost epsilon_2).
-  - Lemma 27 (appA:gram, sec:c6-A2, eq:c6-grams, appA:projected) and Lemma 28
+  - Lemma 23 (appA:gram, sec:c6-A2, eq:c6-grams, appA:projected) and Lemma 24
     (appA:polar, eq:c6-delta, eq:c6-polar-W):
     `ICO.C6BosonicGram.occupationLeftCreator_gram`,
     `ICO.C6BosonicGram.normalGram_compression`,
@@ -610,8 +637,8 @@ Appendix A (sec:c6-recording) step-by-step correspondence:
     `ICO.C6PolarFockBounds.left_polar_distance`,
     `ICO.C6PolarFockBounds.right_polar_distance`, and
     `ICO.C6PolarFockBounds.oracle_polar_distance` (Step 3 cost epsilon_3).
-  - Lemma 29 (appA:follow, sec:c6-A3, appA:follow-eq), Claim 30 (appA:support,
-    appA:branches), and Lemma 31 (appA:fresh-cost, eq:c6-right-compression,
+  - Lemma 25 (appA:follow, sec:c6-A3, appA:follow-eq), Claim 26 (appA:support,
+    appA:branches), and Lemma 27 (appA:fresh-cost, eq:c6-right-compression,
     eq:c6-B): `ICO.C6BosonicGeometricCreation.geometric_left_support`,
     `ICO.C6BosonicHistoryClosure.geometric_retrieval_support`,
     `ICO.C6BosonicHistoryClosure.geometric_image_support`,
@@ -623,9 +650,9 @@ Appendix A (sec:c6-recording) step-by-step correspondence:
     `ICO.C6BosonicLocalInverse.local_inverse_succ`,
     `ICO.C6BosonicLocalInverse.local_inverse_zero`, and
     `ICO.C6HistoryControlled.inverseBlock_error` (Step 4 cost epsilon_4).
-  - Lemma 32 (appA:raw, sec:c6-A4, eq:c6-raw-fresh-gram), Claim 33 (appA:record,
-    appA:no-cross), Claim 34 (appA:images, eq:c6-mode-product, appA:weighted,
-    appA:weighted-state), and Claim 35 (appA:histories):
+  - Lemma 28 (appA:raw, sec:c6-A4, eq:c6-raw-fresh-gram), Claim 29 (appA:record,
+    appA:no-cross), Claim 30 (appA:images, eq:c6-mode-product, appA:weighted,
+    appA:weighted-state), and Claim 31 (appA:histories):
     `ICO.C6RawHybrid.flag_raw_distance`,
     `ICO.C6FreshRawEndpoint.fresh_raw_distance`,
     `ICO.C6PermanentFlags.prefixRun_numbers`,
@@ -647,23 +674,17 @@ Appendix A (sec:c6-recording) step-by-step correspondence:
     register.
 
 
-1.5 Discussion and formal verification overview (Section 6 and Appendix C)
---------------------------------------------------------------------------
-Paper: sec:discussion; sec:where; sec:open; sec:concurrent; sec:formal-status.
+1.5 Discussion (Section 6)
+--------------------------
+Paper: sec:discussion; sec:where; sec:open; sec:concurrent.
 
-Section 6 ("Discussion", sec:discussion) comprises Section 6.1 ("An example in
-quantum computing, and an invitation", carrying labels sec:where and sec:open)
-and Section 6.2 ("Concurrent and independent work", sec:concurrent); Appendix C
-("Formal verification", sec:formal-status) summarizes the Lean 4.30.0
-formalization and verification record. Mathematical statements referenced there
-are mapped in Sections 1.1–1.4 above (Definition 4 def:ordinary, Theorems 1–3
-thm:exact-simulation, thm:simulation-summary, thm:c6, Lemmas 5, 6, 8, 9, 13, 18,
-and 22, Proposition 7, Remark 10 rem:unitary, Corollary 14 cor:coherence, Claims
-15–16 clm:fresh and clm:pair, Remark 17 rem:approx-content, Remark 23
-rem:crossover, Section 4.4 sec:simulation, and Appendix A Claims 30, 33, 34, and
-35). Discussion remarks on announced-outcome measurements (citing Gao et al.
-2023), open exponent and unbounded-budget/heralded questions, and literature
-comparisons in Section 6.2 are expository and not separate Lean theorems.
+Section 6 ("Discussion", sec:discussion) ends with the paragraphs "Concurrent
+and independent work" (sec:concurrent) and "Use of AI". Earlier drafts had an
+appendix "Formal verification" (sec:formal-status); its content is this file and
+README.md. Mathematical statements referenced in the Discussion are mapped in
+Sections 1.1–1.4 above. The remarks on reported measurement outcomes (citing
+Gao et al. 2023), on the exponents, and the comparison with concurrent work are
+expository and not separate Lean theorems.
 
 
 Audited results that do not correspond to a statement of the manuscript
@@ -671,7 +692,7 @@ Audited results that do not correspond to a statement of the manuscript
 
 The endpoints below belong to the same trust-level-zero Lean 4.30.0 closure and
 formalize companion or earlier-draft results that are not numbered statements in
-the current manuscript (`paper/main.tex`).
+the arXiv version of the paper.
 
 2.1 SAME versus MUB decision theorem and four-use quantum-switch test
 ---------------------------------------------------------------------
@@ -682,7 +703,7 @@ Selected endpoints:
   ICO.C6SwitchTest.four_mub_error
   ICO.C6SwitchSameChannel.same_channel_four_accepts
 
-For d = 2^n (n >= 1), `same_mub_query_lower_bound` proves directly from Lemma 18
+For d = 2^n (n >= 1), `same_mub_query_lower_bound` proves directly from Lemma 15
 (`same_mub_distance`) that any ordinary adaptive strategy deciding with success
 probability at least 2/3 whether two hidden-basis dephasing channels coincide
 (SAME) or dephase in mutually unbiased bases (MUB) requires q > d^(1/16)/100.

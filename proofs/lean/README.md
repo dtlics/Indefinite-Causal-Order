@@ -1,7 +1,7 @@
 # Lean proofs
 
-This is the canonical source tree for the formal results accompanying the
-[paper](../../paper/main.tex). Start with [THEOREMS.txt](THEOREMS.txt) for precise
+This is the source tree for the formal results accompanying the paper
+*Infinite or indefinite: the query cost of simulating the quantum switch*. Start with [THEOREMS.txt](THEOREMS.txt) for precise
 statements, hypotheses, metric conventions, and stable paper labels.
 [DEPENDENCIES.txt](DEPENDENCIES.txt) records upstream versions and provenance.
 
@@ -80,8 +80,8 @@ Windows was exercised for the complete clean build from source and single-thread
 `-t0` kernel audit; a separate Unix build was not run. A source hash match or
 successful Python replay does not replace the Lean kernel audit.
 
-Part 1 of [THEOREMS.txt](THEOREMS.txt) maps the statements of the current
-manuscript ([paper/main.tex](../../paper/main.tex)), including both the
+Part 1 of [THEOREMS.txt](THEOREMS.txt) maps the statements of the paper
+(arXiv version, November 2026), including both the
 fixed-plus-control and arbitrary-control exact impossibility theorems, exact
 qubit support/functional lemmas, and the three-call simulation when one box is
 unitary (`ICO/BoundedSwitchObstruction.lean`,
@@ -122,5 +122,5 @@ generation alone is not proof verification.
 
 Lean-QIT's license and citation are retained under `vendor/Lean-QIT/`; upstream
 Lean and Mathlib licenses are under `licenses/`. Those notices apply to the
-respective dependencies. The imported handoff did not select a license for the
-new ICO research sources.
+respective dependencies. The ICO sources are released under the Apache License 2.0;
+see `LICENSE` and `NOTICE` at the repository root.

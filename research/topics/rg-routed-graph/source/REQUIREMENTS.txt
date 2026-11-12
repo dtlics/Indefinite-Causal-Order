@@ -1,4 +1,0 @@
-Python >=3.10
-sympy
-numpy
-scipy

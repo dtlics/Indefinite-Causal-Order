@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this formalization, please cite the paper."
+title: "Indefinite causal order: proofs, Lean formalization and certificates"
+type: software
+authors:
+  - family-names: Li
+    given-names: Dantong
+    affiliation: "Department of Computer Science, Yale University"
+license: Apache-2.0
+repository-code: "https://github.com/dtlics/Indefinite-Causal-Order"
+preferred-citation:
+  type: article
+  title: "Infinite or indefinite: the query cost of simulating the quantum switch"
+  authors:
+    - family-names: Li
+      given-names: Dantong
+  year: 2026

@@ -1,66 +1,106 @@
-# Indefinite causal order
+# Infinite or indefinite: the query cost of simulating the quantum switch
 
-## Natural-black-box application-search handoff
+Lean 4 formalization and exact certificates for the paper
 
-The [current application investigation](research/topics/nr-noisy-recovery/application-search/README.md) organizes the model-validation results, ordinary baselines, exact certificates and secondary recovery/order-geometry work. The original goal remains a substantial advantage in a natural black-box quantum-computing or QEC workload; that application is not claimed complete. See the handoff before resuming exploration.
+> Dantong Li, *Infinite or indefinite: the query cost of simulating the quantum switch* (2026).
 
-The current research on quantum-switch advantages, causal structure, and the limits of ordinary quantum queries. The repository contains the paper **Infinite or indefinite: the query cost of simulating the quantum switch**, its proof code, and the results, limitations, and open problems from eight research directions.
+The quantum switch applies two black-box operations in a superposition of the
+two orders, using each once. The paper asks how many calls to the boxes an
+ordinary quantum circuit needs to do the same, where an ordinary circuit calls
+the boxes in a definite order and may use classical feed-forward and an
+ancillary quantum memory of any size. This repository contains the
+machine-checked proofs.
 
-| Read or change… | Canonical location |
+## What is proved
+
+All statements are for general quantum channels. "Ordinary strategy" is the
+adaptive circuit model of Definition 4 of the paper; a strategy has budget `q`
+if it makes at most `q` calls in total on every run.
+
+| Result of the paper | Lean theorem (explicit form) |
 | --- | --- |
-| Paper and Overleaf export | [paper/](paper/README.md) |
-| Research directions and current status | [Research map](research/README.md) |
-| A particular result, obstruction, or conditional theorem | [Result index](research/RESULTS.md) |
-| Noisy physical recovery and its expected-query comparison | [Recovery topic](research/topics/nr-noisy-recovery/README.md) |
-| Architecture applications, strongest ordinary baselines, and next tests | [Application assessment](research/topics/nr-noisy-recovery/architecture.md) |
-| Persistent versus refreshed noise, universal capacity and finite-block obstruction | [Temporal-noise qualification](research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22) |
-| Memory-capacity qualification, hidden-basis query separation and channel-entropy certificates | [Memory qualification](research/topics/nr-noisy-recovery/memory-qualification.md) |
-| Communication cuts, optical loss and control-resource bounds | [Communication results](research/topics/nr-noisy-recovery/communication.md) |
-| Coherent dispatch, ordinary recovery and microscopic temporal models | [Dispatch result](research/topics/nr-noisy-recovery/dispatch.md) |
-| Bath backaction, calibration transfer and ordinary memory controls | [Shared-bath screen](research/topics/nr-noisy-recovery/backaction.md) |
-| Unknown odd couplers, exact correction and expected-query fidelity limits | [Coupler benchmark](research/topics/nr-noisy-recovery/backaction.md#nr-r19) |
-| Noisy phase calibration, finite-query precision and native memory costs | [Metrology benchmark](research/topics/nr-noisy-recovery/metrology.md) |
-| Displacement calibration, energy bookkeeping and ordinary optical loops | [Geometric calibration](research/topics/nr-noisy-recovery/geometric-calibration.md) |
-| Braided magic and physical coherent-trajectory resources | [Braided-magic screen](research/topics/nr-noisy-recovery/braided-magic.md) |
-| Unknown anticommuting pulse gates, adaptive exact-call bound and ordinary timing | [Pulse-gate comparison](research/topics/nr-noisy-recovery/unknown-pulse-gates.md) |
-| Drifting measurement alignment, exact two-query limits and calibrated reuse | [Alignment benchmark](research/topics/nr-noisy-recovery/alignment.md) |
-| Selected formal theorem statements and hypotheses | [Theorem map](proofs/lean/THEOREMS.txt) |
-| Lean proofs and exact finite certificates | [Proof project](proofs/lean/README.md) |
-| Literature context and access-model distinctions | [References](references/README.md) |
-| Verification scope | [Validation](docs/VALIDATION.md) |
-| Where future edits belong | [Contribution guide](CONTRIBUTING.md) |
+| **Theorem 1.** For every dimension `d >= 2` and every finite budget, no ordinary strategy simulates the switch exactly on all pairs of channels. | `ICO.BoundedSwitchObstruction.no_bounded_circuit` (control input fixed to `\|+>`), `ICO.PolarizationOrderedArbitraryControl.no_bounded_full_switch_circuit` (arbitrary control inputs) |
+| **Theorem 2.** Simulation to any fixed error below 1/2, in half the diamond norm, needs `Omega(d^(1/4))` calls. | `ICO.C4PhysicalEnsemble.exists_full_switch_error_bound`: error at least `1/2 - 13 r^2/(3d) - q(q-1)/(2r)` on some pair of mixtures of `r` unitaries; `full_switch_fixed_accuracy_constant` (the asymptotic form); `full_switch_one_over_48` (error at most 1/48 and `d >= 64` force `d < 4096 q^4`) |
+| **Theorem 3.** Deciding whether a device with dephasing noise of strength `p` in an unknown basis is described by its depolarizing model needs `Omega(d^(1/16)/p)` ordinary calls for `d = 2^n`, and `O(1/p)` calls with the switch. | `ICO.Section54Validation.validation_ordinary_query_lower_bound` (budget greater than `d^(1/16)/(1400 p)`), `ICO.Section54Validation.validation_switch_block_power_upper_bound` (seven uses of the switch, each slot filled by `m >= 3/(2p)` consecutive uses of the device) |
 
-## Organization
+The paper states Theorems 2 and 3 asymptotically; the Lean theorems carry
+explicit constants and imply them. [`proofs/lean/THEOREMS.txt`](proofs/lean/THEOREMS.txt)
+maps every numbered statement of the paper, by number and LaTeX label, to its
+Lean declarations and lists the hypotheses of each. Its second part lists
+audited results that are not statements of the paper.
 
-```text
-paper/          The single editable manuscript
-research/       Current results, scoped negative findings, and open questions
-proofs/lean/    Selected formal proof source, certificates, and verification evidence
-references/     Literature context; paper citations remain in the manuscript
-docs/           Structure, validation scope, and attribution
-scripts/        Consistency checks and generated indexes/exports
+## Verification record
+
+- Lean 4.30.0 with a pinned Mathlib; 1,663 source modules (1,615 in `ICO/`, 48
+  vendored from [Lean-QIT](https://github.com/QuAIR/Lean-QIT)), compiled from
+  source.
+- A kernel audit of 221 selected theorems, including the ones above, reports
+  the axioms each proof depends on: `propext`, `Classical.choice` and
+  `Quot.sound`, the standard axioms of Lean, and no others. The sources contain
+  no `sorry`.
+- The record is in [`proofs/lean/audit/`](proofs/lean/audit/README.md). The
+  build was run on Windows; a separate Unix build was not run.
+
+## Layout
+
+```
+proofs/lean/
+  ICO/              the formalization (entry file ICO.lean)
+  vendor/Lean-QIT/  the part of Lean-QIT that the proofs import, unchanged
+  Audit.lean        prints the type and axioms of each selected theorem
+  THEOREMS.txt      paper statement -> Lean declaration
+  DEPENDENCIES.txt  pinned versions of Lean, Mathlib and Lean-QIT
+  audit/            recorded verification state (hashes, kernel audit log)
+  certificates/     exact data for Appendix B of the paper and verify_all.py
+  verify.sh, verify.ps1, verify_integrity.py, prepare_verification.py
 ```
 
-Each result has one canonical owner. The result index and topic READMEs provide navigation; they do not maintain alternate theorem statements. Stronger results incorporate superseded checkpoints where their assumptions permit it. Distinct restrictions, counterexamples, conditional criteria, and unresolved gaps remain explicit. The same result's manuscript exposition, formal implementation, and certificate are linked as representations of that result.
+## Reproducing
 
-The manuscript also connects its query lower bound to theoretical noise characterization and QEC: a constant-query switch diagnostic distinguishes positive from zero unassisted quantum capacity in an explicit hidden-memory promise. The positive-capacity model has a basis-independent code sequence; the same lower bound forces a long code block. The canonical application is [NR-R22](research/topics/nr-noisy-recovery/noise-model-selection.md#nr-r22).
-
-The recovery topic contains an analytic physical-output theorem, its exact replay dependencies, and scoped obstructions. It is separate from the manuscript's existing simulation and decision results and has not been formalized in Lean.
-
-Its architecture assessment distinguishes fresh-oracle theorems from persistent calibration and real device interfaces. Memory qualification connects the hidden-dephasing lower bound to positive quantum capacity and gives a Choi-entropy certificate for all unital channels, with an explicit nonunitality correction for general channels. Separate proofs bound unitary-error realization entropy and decoder-bootstrap costs. Local probes, structural calibration and native control/noise screens delimit that application. The unknown-coupler benchmark includes certified expected-query fidelity limits; calibrated Pauli/qutrit recovery, finite-energy bosonic controls, spin-loss and entanglement-first comparisons, measurement records and device reuse supply strong ordinary baselines. A [charged noisy H/S magic source](research/topics/nr-noisy-recovery/braided-magic.md#nr-r17-noisy-factory) now supplies standard distillation inputs in a declared regime where the specified ordinary noisy-T supply cannot generate magic. Its exact ordinary noisy-CS boundary is explicit. The [measured Trotter-depth certificate](research/topics/nr-noisy-recovery/methods/workload-commutators.md#nr-r06-average-case-trotter) is a direct scalar-meter use case in average-case Hamiltonian simulation, with explicit calibration costs and ordinary/classical alternatives. A [restricted one-step accuracy decision](research/topics/nr-noisy-recovery/methods/workload-commutators.md#nr-r06-trotter-query-advantage) has a theoretical two-versus-three exact-contact advantage under its stated opaque-generator interfaces. Substantial matched-device advantages and optimal general simulation remain open.
-
-Checkpoint collections, repeated reviews, old drafts, and packaging history are not part of the repository. Revisions belong in ordinary Git commits to the canonical files.
-
-## Use
-
-Python 3.10+ is sufficient for repository checks, packaging, and the standalone exact-certificate replay. Lean, LaTeX, and topic-specific computations have their own documented requirements.
+The finite certificate of Appendix B (integer and rational arithmetic, Python
+standard library only, a few seconds):
 
 ```sh
-python scripts/validate_repo.py
-python -S research/topics/nr-noisy-recovery/checks/run_all.py
-python scripts/package_overleaf.py
+python proofs/lean/certificates/verify_all.py
 ```
 
-Upload generated `dist/overleaf.zip` to Overleaf and compile `main.tex` with pdfLaTeX. GitHub Actions also saves an `overleaf` download from each successful check run. Generated files stay under ignored `_build/` or `dist/`.
+Source identity against the recorded verification state (no Lean needed):
 
-The scientific statuses reflect the supplied research and its verification record. Repository checks do not constitute a new proof of every mathematical assertion. See [validation scope](docs/VALIDATION.md) and [rights and attribution](docs/RIGHTS.md).
+```sh
+python proofs/lean/verify_integrity.py
+```
+
+The full Lean build and kernel audit (install
+[elan](https://github.com/leanprover/elan); the build is long):
+
+```sh
+cd proofs/lean
+lake exe cache get
+sh verify.sh          # Windows: powershell -ExecutionPolicy Bypass -File verify.ps1
+```
+
+Details are in [`proofs/lean/README.md`](proofs/lean/README.md).
+
+## History of this repository
+
+The default branch contains the release. Earlier commits and other branches
+hold working notes and drafts, on this paper and on other topics. They are kept
+for the record, are not maintained, and are not part of the release.
+
+## Use of AI
+
+The formalization was developed with AI systems under the author's direction;
+see the statement on the use of AI in the paper. Correctness rests on the Lean
+kernel check described above.
+
+## Citing
+
+Please cite the paper; see [`CITATION.cff`](CITATION.cff). The formalization
+builds on Lean-QIT (C. Zhu et al., arXiv:2607.09632).
+
+## License
+
+The sources of this repository are released under the Apache License 2.0; see
+[`LICENSE`](LICENSE) and [`NOTICE`](NOTICE). The vendored Lean-QIT files keep
+their own Apache-2.0 license and notices under `proofs/lean/vendor/Lean-QIT/`;
+the licenses of Lean and Mathlib are reproduced under `proofs/lean/licenses/`.

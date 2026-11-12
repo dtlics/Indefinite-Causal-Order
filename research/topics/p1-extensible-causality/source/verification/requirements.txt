@@ -1,4 +1,0 @@
-# Tested with Python 3.12.14. The exact matrix generator needs only the standard library.
-numpy==2.3.5
-scipy==1.17.0
-sympy==1.14.0

@@ -1,0 +1,12 @@
+Indefinite-Causal-Order
+Copyright 2026 Dantong Li
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This repository includes, unchanged, part of Lean-QIT
+(https://github.com/QuAIR/Lean-QIT, commit c1d59b133b56e3d79efb11ee46a728d290f761f5),
+licensed under the Apache License, Version 2.0. Its license and citation file
+are in proofs/lean/vendor/Lean-QIT/.
+
+The proofs depend on Lean 4 and Mathlib, which are not included. Their licenses
+are reproduced in proofs/lean/licenses/.
