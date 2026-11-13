@@ -15,3 +15,10 @@ preferred-citation:
     - family-names: Li
       given-names: Dantong
   year: 2026
+  month: 11
+  doi: "10.48550/arXiv.2611.16229"
+  url: "https://arxiv.org/abs/2611.16229"
+  identifiers:
+    - type: other
+      value: "arXiv:2611.16229"
+      description: "arXiv preprint"

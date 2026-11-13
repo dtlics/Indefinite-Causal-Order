@@ -81,7 +81,7 @@ Windows was exercised for the complete clean build from source and single-thread
 successful Python replay does not replace the Lean kernel audit.
 
 Part 1 of [THEOREMS.txt](THEOREMS.txt) maps the statements of the paper
-(arXiv version, November 2026), including both the
+(arXiv:2611.16229), including both the
 fixed-plus-control and arbitrary-control exact impossibility theorems, exact
 qubit support/functional lemmas, and the three-call simulation when one box is
 unitary (`ICO/BoundedSwitchObstruction.lean`,

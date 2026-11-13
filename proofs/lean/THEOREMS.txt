@@ -6,7 +6,7 @@ Audit: 221 selected endpoints; 1,615 ICO and 48 unchanged QIT source modules (1,
 
 All names below are fully qualified Lean declaration names. File paths are
 relative to this source package (`proofs/lean/`). Statement and section numbers
-refer to the arXiv version of the paper (November 2026); the LaTeX labels are
+refer to the arXiv version of the paper (arXiv:2611.16229v1); the LaTeX labels are
 those of its source and are stable cross-references.
 
 How the paper states the results. The arXiv version states Theorems 2 and 3 and

@@ -2,7 +2,8 @@
 
 Lean 4 formalization and exact certificates for the paper
 
-> Dantong Li, *Infinite or indefinite: the query cost of simulating the quantum switch* (2026).
+> Dantong Li, *Infinite or indefinite: the query cost of simulating the quantum switch*,
+> [arXiv:2611.16229](https://arxiv.org/abs/2611.16229) (2026).
 
 The quantum switch applies two black-box operations in a superposition of the
 two orders, using each once. The paper asks how many calls to the boxes an
@@ -95,8 +96,20 @@ kernel check described above.
 
 ## Citing
 
-Please cite the paper; see [`CITATION.cff`](CITATION.cff). The formalization
-builds on Lean-QIT (C. Zhu et al., arXiv:2607.09632).
+Please cite the paper; see also [`CITATION.cff`](CITATION.cff).
+
+```bibtex
+@misc{li2026infinite,
+  author        = {Li, Dantong},
+  title         = {Infinite or indefinite: the query cost of simulating the quantum switch},
+  year          = {2026},
+  eprint        = {2611.16229},
+  archivePrefix = {arXiv},
+  doi           = {10.48550/arXiv.2611.16229}
+}
+```
+
+The formalization builds on Lean-QIT (C. Zhu et al., arXiv:2607.09632).
 
 ## License
 
