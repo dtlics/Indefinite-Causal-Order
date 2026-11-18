@@ -1,0 +1,8 @@
+{
+  "trials": 30,
+  "max_error": 1.1102230246251565e-16,
+  "p_minus_on_code": 0.0,
+  "p_minus_maximally_mixed": 0.375,
+  "different_decoder_verified": true,
+  "formula": "p_minus(rho)=(1-Tr(P_code rho))/2, independent of the correction unitaries in the two ideal policies"
+}

@@ -1,0 +1,302 @@
+[
+  {
+    "name": "identity",
+    "category": "known-control",
+    "access": "known unitary",
+    "d": 2
+  },
+  {
+    "name": "Rx_031",
+    "category": "coherent-error",
+    "access": "unknown physical rotation; unitary promise",
+    "d": 2
+  },
+  {
+    "name": "Rz_027",
+    "category": "coherent-error",
+    "access": "unknown physical rotation; unitary promise",
+    "d": 2
+  },
+  {
+    "name": "Hadamard",
+    "category": "known-control",
+    "access": "known unitary",
+    "d": 2
+  },
+  {
+    "name": "projective_Z",
+    "category": "unread-measurement",
+    "access": "hidden labels; L\u00fcders",
+    "d": 2
+  },
+  {
+    "name": "weak_luders_Z",
+    "category": "weak-measurement",
+    "access": "outcome labels optionally readable; not projective",
+    "d": 2
+  },
+  {
+    "name": "projective_X",
+    "category": "unread-measurement",
+    "access": "hidden labels; L\u00fcders",
+    "d": 2
+  },
+  {
+    "name": "weak_luders_X",
+    "category": "weak-measurement",
+    "access": "outcome labels optionally readable; not projective",
+    "d": 2
+  },
+  {
+    "name": "projective_tilted",
+    "category": "unread-measurement",
+    "access": "hidden labels; L\u00fcders",
+    "d": 2
+  },
+  {
+    "name": "weak_luders_tilted",
+    "category": "weak-measurement",
+    "access": "outcome labels optionally readable; not projective",
+    "d": 2
+  },
+  {
+    "name": "phase_Z_0.01",
+    "category": "Pauli-noise",
+    "access": "known Pauli error basis, unknown rates",
+    "d": 2
+  },
+  {
+    "name": "phase_Z_0.2",
+    "category": "Pauli-noise",
+    "access": "known Pauli error basis, unknown rates",
+    "d": 2
+  },
+  {
+    "name": "phase_X_0.01",
+    "category": "Pauli-noise",
+    "access": "known Pauli error basis, unknown rates",
+    "d": 2
+  },
+  {
+    "name": "phase_X_0.2",
+    "category": "Pauli-noise",
+    "access": "known Pauli error basis, unknown rates",
+    "d": 2
+  },
+  {
+    "name": "depol_0.03",
+    "category": "Pauli-noise",
+    "access": "unknown strength; known Pauli basis",
+    "d": 2
+  },
+  {
+    "name": "depol_0.6",
+    "category": "Pauli-noise",
+    "access": "unknown strength; known Pauli basis",
+    "d": 2
+  },
+  {
+    "name": "depol_1.0",
+    "category": "Pauli-noise",
+    "access": "unknown strength; known Pauli basis",
+    "d": 2
+  },
+  {
+    "name": "biased_pauli",
+    "category": "biased-noise",
+    "access": "unknown rates; known Pauli basis",
+    "d": 2
+  },
+  {
+    "name": "damping_0.03",
+    "category": "T1-noise",
+    "access": "hidden jump labels",
+    "d": 2
+  },
+  {
+    "name": "heating_0.03",
+    "category": "thermal-noise",
+    "access": "hidden jump labels",
+    "d": 2
+  },
+  {
+    "name": "damping_0.5",
+    "category": "T1-noise",
+    "access": "hidden jump labels",
+    "d": 2
+  },
+  {
+    "name": "heating_0.5",
+    "category": "thermal-noise",
+    "access": "hidden jump labels",
+    "d": 2
+  },
+  {
+    "name": "thermal_02_01",
+    "category": "thermal-noise",
+    "access": "hidden jump labels",
+    "d": 2
+  },
+  {
+    "name": "thermal_08_03",
+    "category": "thermal-noise",
+    "access": "hidden jump labels",
+    "d": 2
+  },
+  {
+    "name": "reset_0",
+    "category": "active-reset",
+    "access": "quantum output available; reset record optional",
+    "d": 2
+  },
+  {
+    "name": "reset_1",
+    "category": "active-reset",
+    "access": "quantum output available; reset record optional",
+    "d": 2
+  },
+  {
+    "name": "reset_mixed",
+    "category": "active-reset",
+    "access": "quantum output available; reset record optional",
+    "d": 2
+  },
+  {
+    "name": "Z_then_H",
+    "category": "feedback-measurement",
+    "access": "same POVM as Z; non-L\u00fcders state update",
+    "d": 2
+  },
+  {
+    "name": "noisy_drive",
+    "category": "noisy-native-gate",
+    "access": "actual channel unknown; ideal drive known",
+    "d": 2
+  },
+  {
+    "name": "random_rotations",
+    "category": "nonPauli-random-unitary",
+    "access": "private, non-replayable random trajectory",
+    "d": 2
+  },
+  {
+    "name": "qutrit_identity",
+    "category": "leakage-control",
+    "access": "known unitary",
+    "d": 3
+  },
+  {
+    "name": "leak12_0.05",
+    "category": "leakage",
+    "access": "qutrit quantum output; hidden jump",
+    "d": 3
+  },
+  {
+    "name": "leak12_0.5",
+    "category": "leakage",
+    "access": "qutrit quantum output; hidden jump",
+    "d": 3
+  },
+  {
+    "name": "repump21_0.1",
+    "category": "leakage-reduction",
+    "access": "hidden jump",
+    "d": 3
+  },
+  {
+    "name": "repump21_0.8",
+    "category": "leakage-reduction",
+    "access": "hidden jump",
+    "d": 3
+  },
+  {
+    "name": "repump21_1.0",
+    "category": "leakage-reduction",
+    "access": "hidden jump",
+    "d": 3
+  },
+  {
+    "name": "leak02_01",
+    "category": "leakage",
+    "access": "hidden jump",
+    "d": 3
+  },
+  {
+    "name": "measure_leakage",
+    "category": "leakage-detection",
+    "access": "readable projective flag optionally available",
+    "d": 3
+  },
+  {
+    "name": "qutrit_dephase",
+    "category": "three-level-readout",
+    "access": "hidden/readable full outcome",
+    "d": 3
+  },
+  {
+    "name": "qutrit_reset",
+    "category": "thermal-reset",
+    "access": "output accessible",
+    "d": 3
+  },
+  {
+    "name": "twoq_ZI",
+    "category": "correlated-Pauli-noise",
+    "access": "unknown rate; known Pauli basis",
+    "d": 4
+  },
+  {
+    "name": "twoq_IZ",
+    "category": "correlated-Pauli-noise",
+    "access": "unknown rate; known Pauli basis",
+    "d": 4
+  },
+  {
+    "name": "twoq_ZZ",
+    "category": "correlated-Pauli-noise",
+    "access": "unknown rate; known Pauli basis",
+    "d": 4
+  },
+  {
+    "name": "twoq_XX",
+    "category": "correlated-Pauli-noise",
+    "access": "unknown rate; known Pauli basis",
+    "d": 4
+  },
+  {
+    "name": "twoq_XI",
+    "category": "correlated-Pauli-noise",
+    "access": "unknown rate; known Pauli basis",
+    "d": 4
+  },
+  {
+    "name": "local_ZZ",
+    "category": "product-local-noise",
+    "access": "known support; unknown rates",
+    "d": 4
+  },
+  {
+    "name": "local_depol",
+    "category": "product-local-noise",
+    "access": "known local Pauli basis",
+    "d": 4
+  },
+  {
+    "name": "reset_ancilla",
+    "category": "syndrome-reset",
+    "access": "data returned; ancilla reset",
+    "d": 4
+  },
+  {
+    "name": "Bell_measurement",
+    "category": "parity-readout",
+    "access": "joint projective outcomes optionally readable",
+    "d": 4
+  },
+  {
+    "name": "ZZ_rotation",
+    "category": "coherent-crosstalk",
+    "access": "unitary promise",
+    "d": 4
+  }
+]

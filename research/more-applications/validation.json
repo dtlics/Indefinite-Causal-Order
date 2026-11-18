@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "checked_utc": "2026-11-18T03:20:40.868099+00:00",
+  "status": "passed",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "packages": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sympy": "1.14.0",
+    "mpmath": "1.3.0"
+  },
+  "command": "python research/more-applications/reproduce.py",
+  "reproduction_driver_sha256": "00dc35e07e27859395cc892c7d332831a7c136c27c606341680da480c8de228c",
+  "studies": {
+    "screening": {
+      "status": "passed",
+      "seconds": 16.012,
+      "runs": [
+        {
+          "script": "explore.py",
+          "returncode": 0,
+          "seconds": 1.02
+        },
+        {
+          "script": "derived_checks.py",
+          "returncode": 0,
+          "seconds": 1.318
+        },
+        {
+          "script": "physics_extensions.py",
+          "returncode": 0,
+          "seconds": 0.466
+        },
+        {
+          "script": "ordinary_compilation.py",
+          "returncode": 0,
+          "seconds": 2.423
+        },
+        {
+          "script": "rare_fault_baseline.py",
+          "returncode": 0,
+          "seconds": 1.219
+        },
+        {
+          "script": "qec.py",
+          "returncode": 0,
+          "seconds": 0.917
+        },
+        {
+          "script": "qec_polynomials.py",
+          "returncode": 0,
+          "seconds": 1.721
+        },
+        {
+          "script": "recovery_policy.py",
+          "returncode": 0,
+          "seconds": 0.416
+        },
+        {
+          "script": "magic_scan.py",
+          "returncode": 0,
+          "seconds": 0.566
+        },
+        {
+          "script": "reset_factory.py",
+          "returncode": 0,
+          "seconds": 1.02
+        },
+        {
+          "script": "gkp_flag.py",
+          "returncode": 0,
+          "seconds": 4.499
+        }
+      ],
+      "scope": "Rational/symbolic identities, finite Pauli-history enumeration, and seeded numerical regressions. Not an external proof audit, an optimal-strategy theorem beyond stated analytical constructions, a physical switch validation, or a circuit-level fault-tolerance threshold.",
+      "source_sha256": {
+        "screening/experiments/derived_checks.py": "04131e37e9764baba4bc6258fa14815bcddc11dc7118b0c73f9a5043348c5481",
+        "screening/experiments/explore.py": "5fdd56db8374f1b1f02cb65153171f34d4ac554c80c2b8e295558525d3cf92e7",
+        "screening/experiments/gkp_flag.py": "5c65c4799d250d5808eacf3030f4583d1b431e5766fb81dc1db55ed80d02be78",
+        "screening/experiments/magic_scan.py": "fc4247912de37ca640c8403068ab6a3371da9494f02a2566ad2a23f943918d8e",
+        "screening/experiments/ordinary_compilation.py": "1a8bb341dd90f315dae834aef04a622172230c6ade3f9d428ccdf00370cfe4bd",
+        "screening/experiments/physics_extensions.py": "798a49cec8519f863e9451cc40a75a56075fa824008196ecd3415231a7b616c5",
+        "screening/experiments/qec.py": "5c48c1e07823a9d6490423c1a7e4a86726f16601a4959634dc1867d1cecb49d3",
+        "screening/experiments/qec_polynomials.py": "394e1437dd71821801ac585400beccfd000f6435c2cf3bae09074afa999fd2d7",
+        "screening/experiments/rare_fault_baseline.py": "008de84d6b697ab893714a697c9ccff616cb6c35d997f2d5db079c294319571e",
+        "screening/experiments/recovery_policy.py": "3b4067c19f81972a030c1c2233166733c7f9880fdea2cb88324c938f5a423ef3",
+        "screening/experiments/reset_factory.py": "aa5b56c00ff6cf0db90e0ea8384a27d0d9fefc27e669a45407919342ed4213af",
+        "screening/experiments/run_all.py": "0db2d987eaf154b128e0b796f9216a1383473015860beeafb2b2893311658ac9",
+        "common/core.py": "32ccbb884b0bebdcdb822a8ac15e575cb7349f7d913d1c99531dc91a8584c21f"
+      },
+      "evidence_sha256": {
+        "screening/evidence/channel_sweep.csv": "90dbb5a3f50b09501a9a4f29b7bc6465385cfc1a71596167a8b9e2c12787cef1",
+        "screening/evidence/derived_checks.json": "bf37aa308e9e25d79f068df4d23ffeaf759fca765b8a5b1d58cc4f65e9769311",
+        "screening/evidence/gkp_flag.json": "013e05800399cef8979630cc806d667a5f378401321ecc22ea84d71ecc4ff6ff",
+        "screening/evidence/magic_scan.json": "2e0a7ef47824e2287d9faec02c694dc49956c49cfad896c36b23f9c2dbc2359d",
+        "screening/evidence/model_catalog.json": "2313d8bc669cbbc1dbc5eba5bf2eabe76dbdb93c382a118d92fdebc20676aa22",
+        "screening/evidence/ordinary_compilation.json": "247075deb1383a163f3729bad160892c44a3b854ddb3687e537969d06511659c",
+        "screening/evidence/physics_extensions.json": "f0f08508e6bc56be4b03f35f3d8fcde49ff27dba000a8f87d9b9b9a1f29ced46",
+        "screening/evidence/qec_polynomials.json": "8a0669f1ce0ac24d1b16fc0884dc587eb08dd346cd6ee7b2bdf57c2bcb202fe8",
+        "screening/evidence/qec_results.json": "17aacdedbe66005882b4392e732d8c2df51fdd7da257d6a1ade743a2196d4a0e",
+        "screening/evidence/rare_fault_baseline.json": "997f732c6df4dda21e86a674358e04393f1597a7f32677476ab9b5212330aca1",
+        "screening/evidence/recovery_policy.json": "eec43ec61c983c6c64f989494c73bf8a04a06db12c917855f140cd8097ba3318",
+        "screening/evidence/reset_factory.json": "9e977a3128f4d84a069d0cbdc1577479c03b5b1ed3c3330c739c4a5056973f40",
+        "screening/evidence/sweep_summary.json": "475fe103e3c0d994c7a14b9992524193170e766e109745fdaa2dea2c7a8b78ec"
+      }
+    },
+    "code-aware": {
+      "status": "passed",
+      "seconds": 21.495,
+      "runs": [
+        {
+          "script": "retraction_tests.py",
+          "scope": "floating-point full-channel regression; analytical proof in note",
+          "returncode": 0,
+          "seconds": 4.309
+        },
+        {
+          "script": "structured_bounds.py",
+          "scope": "exact integer support counts and numerical overlap identities",
+          "returncode": 0,
+          "seconds": 0.507
+        },
+        {
+          "script": "nonpauli_qec.py",
+          "scope": "numerical noise-adapted QEC screening",
+          "returncode": 0,
+          "seconds": 11.319
+        },
+        {
+          "script": "bosonic_screen.py",
+          "scope": "numerical finite-level oscillator screening, not an infinite-dimensional bound",
+          "returncode": 0,
+          "seconds": 0.712
+        },
+        {
+          "script": "decoder_screen.py",
+          "scope": "numerical SDP primal/dual feasibility and exact-algebra DFS regression",
+          "returncode": 0,
+          "seconds": 3.382
+        },
+        {
+          "script": "program_and_code.py",
+          "scope": "full-channel program/compiler and code-algebra regression",
+          "returncode": 0,
+          "seconds": 0.576
+        },
+        {
+          "script": "self_switch_bound.py",
+          "scope": "analytical identity regression and numeric comparisons",
+          "returncode": 0,
+          "seconds": 0.528
+        },
+        {
+          "script": "summarize.py",
+          "scope": "published recovery inequality applied to numerical fidelities",
+          "returncode": 0,
+          "seconds": 0.029
+        }
+      ],
+      "scope": "Finite regression/optimization evidence. Not an independent proof audit, literature-priority check, physical interface verification, or fault-tolerance threshold.",
+      "source_sha256": {
+        "code-aware/experiments/bosonic_screen.py": "3b6e19784987de29bbb457a8bc0f0d6975fa12edbff91bbeaed21e4559f3688c",
+        "code-aware/experiments/decoder_opt.py": "e26092afe19269167d6c83e596a95dad5d76ef6bcd5b87761c308ee87e347eb1",
+        "code-aware/experiments/decoder_screen.py": "b0b55ae05a3c0d534079f42707248c387d9a50029fa283d6b4bdf93b70db2961",
+        "code-aware/experiments/nonpauli_qec.py": "f09d55b7f96c8c150d07f2691a5b955bd77d108dc48e5613e541e281600a9aed",
+        "code-aware/experiments/program_and_code.py": "993103d48e30ff5e94623d0601e6122ba39a6e177419cd8298de2ba18c5645d5",
+        "code-aware/experiments/retraction_tests.py": "b34b9183e877886e8d5f452dadbd608b16b10b24bbc822b0aca7605d3545e499",
+        "code-aware/experiments/run_all.py": "f3bc25969d2c8b176d153bbd0a63c30e4dcbf8c8b46e6c2c8d14c03eedc04bff",
+        "code-aware/experiments/self_switch_bound.py": "c24607f26140433936e49fd5fc05387ea1632f7dccf74b696523eb104fdacb59",
+        "code-aware/experiments/structured_bounds.py": "951760865416ad3afd81471036602ccdf1cb5c0593ba1304d53e4a1d31b6ef2c",
+        "code-aware/experiments/summarize.py": "d32683a3a9bb0c564a48b717119ce8d1c6c5a40082c633ab575da40851d8c493",
+        "common/core.py": "32ccbb884b0bebdcdb822a8ac15e575cb7349f7d913d1c99531dc91a8584c21f"
+      },
+      "evidence_sha256": {
+        "code-aware/evidence/bosonic_results.json": "bbb4f3fc56e088f0a7e00cde3c2bad511c656ae1c843c908ba03be13b5d74de7",
+        "code-aware/evidence/collective_dfs.json": "e147bb681bddc332bf74fb4ac5b0b0a19d6baad90fc68f40ac3df346d7ba0e8b",
+        "code-aware/evidence/decoder_optimized_results.json": "2eb72e5d4b68933104983714e60bb55b8736702d48ce91a9cab42a3ef6fa3e74",
+        "code-aware/evidence/near_optimality_eliminations.json": "8979689bea81ee7be991c91049f8a69dbdfe1627998525603df9a66162f4f215",
+        "code-aware/evidence/nonpauli_qec_results.json": "9444c06be9f9f79795024626a821ac4a2e8797baf066789600a0ccfb40de6f42",
+        "code-aware/evidence/program_and_code_results.json": "cb2aed343e0536e7befc10590ad4d5f5e76e0294a7e92fabf0548403e23d844e",
+        "code-aware/evidence/retraction_results.json": "8fde066c0490894926bf5e0f9b4c97546be03e34d2bb99decbf005de28403506",
+        "code-aware/evidence/self_switch_bound_results.json": "04bec53e66f347926c0414ded7b3b2c98b91ab04cbe3dfaf4fa5cbd96a3a5cea",
+        "code-aware/evidence/structured_bounds.json": "ab953971146cc0258793060dc1a3699a151243327e6a9d3d8af3be22a2b9796a"
+      }
+    }
+  },
+  "scope": "Clean replay of finite symbolic, combinatorial, matrix, quadrature and numerical SDP experiments. Analytical proofs are in the reports; numerical regressions do not replace them. No new Lean audit, exact SDP certificate, literature-priority certification, hardware validation, or unrestricted practitioner application separation is claimed.",
+  "integration_checks": {
+    "checked_utc": "2026-11-18T03:24:05.731032+00:00",
+    "status": "passed",
+    "python_files_parsed": 25,
+    "local_links_checked": 114,
+    "import_entries_checked": 54,
+    "SDP_brackets_with_recorded_feasibility_fields": 24,
+    "flagged_SDP_brackets": 8,
+    "max_SDP_gap": 1.999999855617496e-06,
+    "max_SDP_TP_residual": 6.2323046278057336e-15,
+    "min_SDP_dual_eigenvalue": 6.249818275152872e-08,
+    "scope": "Integrity, links, syntax and floating-point residual checks; not a mathematical proof or exact SDP certificate."
+  },
+  "package_sha256": {
+    ".gitattributes": "7c5dce45704ef268b5277d4600ad41005a72e771f9248bd31a19c67784402b05",
+    "README.md": "98add7012fa4c6cb4150457eb993f88dc35fbb9655bb733d08bbf9822e4ca1af",
+    "RESULTS.md": "f9f6212677cfcd305eeaae9fe7cdd866af7e555ccc57a59357e5f02b25a666ff",
+    "SOURCES.md": "78c1fbe6698ae0b3282522c2f2ea927ab13617a0744abda191c6e4e37943ca1b",
+    "code-aware/candidates.md": "7fd5ac7b8e59fe1e464eedcec6619d5f3ff28d0bc37a6b53aa9cd84abf511b88",
+    "code-aware/evidence/bosonic_results.json": "bbb4f3fc56e088f0a7e00cde3c2bad511c656ae1c843c908ba03be13b5d74de7",
+    "code-aware/evidence/collective_dfs.json": "e147bb681bddc332bf74fb4ac5b0b0a19d6baad90fc68f40ac3df346d7ba0e8b",
+    "code-aware/evidence/decoder_optimized_results.json": "2eb72e5d4b68933104983714e60bb55b8736702d48ce91a9cab42a3ef6fa3e74",
+    "code-aware/evidence/near_optimality_eliminations.json": "8979689bea81ee7be991c91049f8a69dbdfe1627998525603df9a66162f4f215",
+    "code-aware/evidence/nonpauli_qec_results.json": "9444c06be9f9f79795024626a821ac4a2e8797baf066789600a0ccfb40de6f42",
+    "code-aware/evidence/program_and_code_results.json": "cb2aed343e0536e7befc10590ad4d5f5e76e0294a7e92fabf0548403e23d844e",
+    "code-aware/evidence/retraction_results.json": "8fde066c0490894926bf5e0f9b4c97546be03e34d2bb99decbf005de28403506",
+    "code-aware/evidence/self_switch_bound_results.json": "04bec53e66f347926c0414ded7b3b2c98b91ab04cbe3dfaf4fa5cbd96a3a5cea",
+    "code-aware/evidence/structured_bounds.json": "ab953971146cc0258793060dc1a3699a151243327e6a9d3d8af3be22a2b9796a",
+    "code-aware/experiments/bosonic_screen.py": "3b6e19784987de29bbb457a8bc0f0d6975fa12edbff91bbeaed21e4559f3688c",
+    "code-aware/experiments/decoder_opt.py": "e26092afe19269167d6c83e596a95dad5d76ef6bcd5b87761c308ee87e347eb1",
+    "code-aware/experiments/decoder_screen.py": "b0b55ae05a3c0d534079f42707248c387d9a50029fa283d6b4bdf93b70db2961",
+    "code-aware/experiments/nonpauli_qec.py": "f09d55b7f96c8c150d07f2691a5b955bd77d108dc48e5613e541e281600a9aed",
+    "code-aware/experiments/program_and_code.py": "993103d48e30ff5e94623d0601e6122ba39a6e177419cd8298de2ba18c5645d5",
+    "code-aware/experiments/retraction_tests.py": "b34b9183e877886e8d5f452dadbd608b16b10b24bbc822b0aca7605d3545e499",
+    "code-aware/experiments/run_all.py": "f3bc25969d2c8b176d153bbd0a63c30e4dcbf8c8b46e6c2c8d14c03eedc04bff",
+    "code-aware/experiments/self_switch_bound.py": "c24607f26140433936e49fd5fc05387ea1632f7dccf74b696523eb104fdacb59",
+    "code-aware/experiments/structured_bounds.py": "951760865416ad3afd81471036602ccdf1cb5c0593ba1304d53e4a1d31b6ef2c",
+    "code-aware/experiments/summarize.py": "d32683a3a9bb0c564a48b717119ce8d1c6c5a40082c633ab575da40851d8c493",
+    "code-aware/report.md": "0784f1289bae65c97235703eb768ea8c868d371102a8cb6bf8fcb83d5e8558dd",
+    "common/core.py": "32ccbb884b0bebdcdb822a8ac15e575cb7349f7d913d1c99531dc91a8584c21f",
+    "provenance.json": "fd8ccc21904da4496a39e3903ee61a53ba245871b8dc076504d2f6d561421f6b",
+    "reproduce.py": "00dc35e07e27859395cc892c7d332831a7c136c27c606341680da480c8de228c",
+    "requirements.txt": "2d05ef995d42302be6501c41b29534e77b41872f9c3dab9a142c14ef3a1bd4b4",
+    "screening/candidates.md": "bd8cef4c973ac800fc264e6cc8f1f17a65895cd2f934b2d8eaf606e81de4daf7",
+    "screening/evidence/channel_sweep.csv": "90dbb5a3f50b09501a9a4f29b7bc6465385cfc1a71596167a8b9e2c12787cef1",
+    "screening/evidence/derived_checks.json": "bf37aa308e9e25d79f068df4d23ffeaf759fca765b8a5b1d58cc4f65e9769311",
+    "screening/evidence/gkp_flag.json": "013e05800399cef8979630cc806d667a5f378401321ecc22ea84d71ecc4ff6ff",
+    "screening/evidence/magic_scan.json": "2e0a7ef47824e2287d9faec02c694dc49956c49cfad896c36b23f9c2dbc2359d",
+    "screening/evidence/model_catalog.json": "2313d8bc669cbbc1dbc5eba5bf2eabe76dbdb93c382a118d92fdebc20676aa22",
+    "screening/evidence/ordinary_compilation.json": "247075deb1383a163f3729bad160892c44a3b854ddb3687e537969d06511659c",
+    "screening/evidence/physics_extensions.json": "f0f08508e6bc56be4b03f35f3d8fcde49ff27dba000a8f87d9b9b9a1f29ced46",
+    "screening/evidence/qec_polynomials.json": "8a0669f1ce0ac24d1b16fc0884dc587eb08dd346cd6ee7b2bdf57c2bcb202fe8",
+    "screening/evidence/qec_results.json": "17aacdedbe66005882b4392e732d8c2df51fdd7da257d6a1ade743a2196d4a0e",
+    "screening/evidence/rare_fault_baseline.json": "997f732c6df4dda21e86a674358e04393f1597a7f32677476ab9b5212330aca1",
+    "screening/evidence/recovery_policy.json": "eec43ec61c983c6c64f989494c73bf8a04a06db12c917855f140cd8097ba3318",
+    "screening/evidence/reset_factory.json": "9e977a3128f4d84a069d0cbdc1577479c03b5b1ed3c3330c739c4a5056973f40",
+    "screening/evidence/sweep_summary.json": "475fe103e3c0d994c7a14b9992524193170e766e109745fdaa2dea2c7a8b78ec",
+    "screening/experiments/derived_checks.py": "04131e37e9764baba4bc6258fa14815bcddc11dc7118b0c73f9a5043348c5481",
+    "screening/experiments/explore.py": "5fdd56db8374f1b1f02cb65153171f34d4ac554c80c2b8e295558525d3cf92e7",
+    "screening/experiments/gkp_flag.py": "5c65c4799d250d5808eacf3030f4583d1b431e5766fb81dc1db55ed80d02be78",
+    "screening/experiments/magic_scan.py": "fc4247912de37ca640c8403068ab6a3371da9494f02a2566ad2a23f943918d8e",
+    "screening/experiments/ordinary_compilation.py": "1a8bb341dd90f315dae834aef04a622172230c6ade3f9d428ccdf00370cfe4bd",
+    "screening/experiments/physics_extensions.py": "798a49cec8519f863e9451cc40a75a56075fa824008196ecd3415231a7b616c5",
+    "screening/experiments/qec.py": "5c48c1e07823a9d6490423c1a7e4a86726f16601a4959634dc1867d1cecb49d3",
+    "screening/experiments/qec_polynomials.py": "394e1437dd71821801ac585400beccfd000f6435c2cf3bae09074afa999fd2d7",
+    "screening/experiments/rare_fault_baseline.py": "008de84d6b697ab893714a697c9ccff616cb6c35d997f2d5db079c294319571e",
+    "screening/experiments/recovery_policy.py": "3b4067c19f81972a030c1c2233166733c7f9880fdea2cb88324c938f5a423ef3",
+    "screening/experiments/reset_factory.py": "aa5b56c00ff6cf0db90e0ea8384a27d0d9fefc27e669a45407919342ed4213af",
+    "screening/experiments/run_all.py": "0db2d987eaf154b128e0b796f9216a1383473015860beeafb2b2893311658ac9",
+    "screening/report.md": "0ba4e83d6a1654e060c173169b82e5ce04acbb40d46b121d347f21e0efd33b61",
+    "verify_package.py": "3587b6b2ca58d1adddf3b2e095718abf307f57892a8b3ce70e36685e0791db63"
+  }
+}

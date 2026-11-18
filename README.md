@@ -82,6 +82,14 @@ sh verify.sh          # Windows: powershell -ExecutionPolicy Bypass -File verify
 
 Details are in [`proofs/lean/README.md`](proofs/lean/README.md).
 
+## Application research on this branch
+
+The `more-applications` branch also contains [two QEC and error-channel
+application investigations](research/more-applications/README.md), with complete
+reports, ordinary baselines, executable checks, current evidence and primary
+references. These exploratory results are separate from the paper and the Lean
+verification record above. Start with the [result-to-evidence index](research/more-applications/RESULTS.md).
+
 ## History of this repository
 
 The default branch contains the release. Earlier commits and other branches

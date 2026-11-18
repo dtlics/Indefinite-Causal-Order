@@ -1,0 +1,50 @@
+[
+  {
+    "noise": "depol_depol",
+    "F_final": "-131072*p**10/6561 + 327680*p**9/2187 - 40960*p**8/81 + 81920*p**7/81 - 320000*p**6/243 + 30976*p**5/27 - 5920*p**4/9 + 2080*p**3/9 - 40*p**2 + 1",
+    "F_flag": "-138752*p**10/19683 + 200960*p**9/2187 - 864640*p**8/2187 + 654080*p**7/729 - 910720*p**6/729 + 91168*p**5/81 - 17680*p**4/27 + 2080*p**3/9 - 40*p**2 + 1",
+    "F_intermediate": "65536*p**10/2187 - 163840*p**9/729 + 512000*p**8/729 - 286720*p**7/243 + 275200*p**6/243 - 5248*p**5/9 + 880*p**4/9 + 400*p**3/9 - 20*p**2 + 1",
+    "error_final_series": "40*p**2 - 2080*p**3/9 + 5920*p**4/9 - 30976*p**5/27 + O(p**6)",
+    "error_flag_series": "40*p**2 - 2080*p**3/9 + 17680*p**4/27 - 91168*p**5/81 + O(p**6)",
+    "flag_gain_series": "80*p**4/27 - 1760*p**5/81 + 49280*p**6/729 + O(p**7)",
+    "error_intermediate_series": "20*p**2 - 400*p**3/9 - 880*p**4/9 + 5248*p**5/9 + O(p**6)",
+    "values_at_0.01": {
+      "final": 0.003775353247550007,
+      "flag": 0.0037753257242907467,
+      "intermediate": 0.001954634968107769
+    },
+    "scope": "Exact fixed decoder polynomials; selected by small-p lexicographic maximum-likelihood rule. Numerical comparisons at p=.01 verified independently."
+  },
+  {
+    "noise": "X_Z",
+    "F_final": "-64*p**10 + 320*p**9 - 720*p**8 + 1000*p**7 - 1000*p**6 + 778*p**5 - 460*p**4 + 180*p**3 - 35*p**2 + 1",
+    "F_flag": "-48*p**10 + 320*p**9 - 840*p**8 + 1240*p**7 - 1210*p**6 + 858*p**5 - 450*p**4 + 160*p**3 - 30*p**2 + 1",
+    "F_intermediate": "36*p**10 - 180*p**9 + 345*p**8 - 300*p**7 + 100*p**6 - 12*p**5 + 30*p**4 - 20*p**3 + 1",
+    "error_final_series": "35*p**2 - 180*p**3 + 460*p**4 - 778*p**5 + O(p**6)",
+    "error_flag_series": "30*p**2 - 160*p**3 + 450*p**4 - 858*p**5 + O(p**6)",
+    "flag_gain_series": "5*p**2 - 20*p**3 + 10*p**4 + 80*p**5 - 210*p**6 + O(p**7)",
+    "error_intermediate_series": "20*p**3 - 30*p**4 + 12*p**5 + O(p**6)",
+    "values_at_0.01": {
+      "final": 0.003324523190071681,
+      "flag": 0.0028444153976836806,
+      "intermediate": 1.970110296567964e-05
+    },
+    "scope": "Exact fixed decoder polynomials; selected by small-p lexicographic maximum-likelihood rule. Numerical comparisons at p=.01 verified independently."
+  },
+  {
+    "noise": "X_X",
+    "F_final": "192*p**10 - 960*p**9 + 2160*p**8 - 2880*p**7 + 2480*p**6 - 1392*p**5 + 480*p**4 - 80*p**3 + 1",
+    "F_flag": "192*p**10 - 960*p**9 + 2160*p**8 - 2880*p**7 + 2480*p**6 - 1392*p**5 + 480*p**4 - 80*p**3 + 1",
+    "F_intermediate": "72*p**10 - 360*p**9 + 690*p**8 - 600*p**7 + 200*p**6 - 12*p**5 + 30*p**4 - 20*p**3 + 1",
+    "error_final_series": "80*p**3 - 480*p**4 + 1392*p**5 + O(p**6)",
+    "error_flag_series": "80*p**3 - 480*p**4 + 1392*p**5 + O(p**6)",
+    "flag_gain_series": "0",
+    "error_intermediate_series": "20*p**3 - 30*p**4 + 12*p**5 + O(p**6)",
+    "values_at_0.01": {
+      "final": 7.533674858495808e-05,
+      "flag": 7.533674858495808e-05,
+      "intermediate": 1.970100593135928e-05
+    },
+    "scope": "Exact fixed decoder polynomials; selected by small-p lexicographic maximum-likelihood rule. Numerical comparisons at p=.01 verified independently."
+  }
+]

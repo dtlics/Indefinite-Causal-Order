@@ -1,0 +1,275 @@
+{
+  "lindblad": [
+    {
+      "name": "dephasing",
+      "leading_t2_coefficient": 0.0,
+      "values": [
+        {
+          "t": 0.04,
+          "p_minus": 0.0,
+          "p_over_t2": 0.0
+        },
+        {
+          "t": 0.02,
+          "p_minus": 0.0,
+          "p_over_t2": 0.0
+        },
+        {
+          "t": 0.01,
+          "p_minus": 1.7016982781093602e-34,
+          "p_over_t2": 1.70169827810936e-30
+        },
+        {
+          "t": 0.005,
+          "p_minus": 0.0,
+          "p_over_t2": 0.0
+        }
+      ]
+    },
+    {
+      "name": "two_Pauli_jumps",
+      "leading_t2_coefficient": 0.41999999999999993,
+      "values": [
+        {
+          "t": 0.04,
+          "p_minus": 0.0006455418723954657,
+          "p_over_t2": 0.403463670247166
+        },
+        {
+          "t": 0.02,
+          "p_minus": 0.00016466618486375267,
+          "p_over_t2": 0.41166546215938166
+        },
+        {
+          "t": 0.01,
+          "p_minus": 4.158163042712238e-05,
+          "p_over_t2": 0.41581630427122374
+        },
+        {
+          "t": 0.005,
+          "p_minus": 1.0447601703225124e-05,
+          "p_over_t2": 0.41790406812900494
+        }
+      ]
+    },
+    {
+      "name": "amplitude_damping",
+      "leading_t2_coefficient": 0.0,
+      "values": [
+        {
+          "t": 0.04,
+          "p_minus": 1.3341822122577855e-06,
+          "p_over_t2": 0.0008338638826611159
+        },
+        {
+          "t": 0.02,
+          "p_minus": 1.6911780051890814e-07,
+          "p_over_t2": 0.00042279450129727034
+        },
+        {
+          "t": 0.01,
+          "p_minus": 2.1288026689844166e-08,
+          "p_over_t2": 0.00021288026689844164
+        },
+        {
+          "t": 0.005,
+          "p_minus": 2.670327032171686e-09,
+          "p_over_t2": 0.00010681308128686742
+        }
+      ]
+    },
+    {
+      "name": "thermal_jumps",
+      "leading_t2_coefficient": 0.10499999999999998,
+      "values": [
+        {
+          "t": 0.04,
+          "p_minus": 0.0001652776906966408,
+          "p_over_t2": 0.1032985566854005
+        },
+        {
+          "t": 0.02,
+          "p_minus": 4.165982816458204e-05,
+          "p_over_t2": 0.10414957041145509
+        },
+        {
+          "t": 0.01,
+          "p_minus": 1.0457488385362738e-05,
+          "p_over_t2": 0.10457488385362738
+        },
+        {
+          "t": 0.005,
+          "p_minus": 2.6196867464998406e-06,
+          "p_over_t2": 0.10478746985999361
+        }
+      ]
+    },
+    {
+      "name": "drive_and_dephasing",
+      "leading_t2_coefficient": 0.0,
+      "values": [
+        {
+          "t": 0.04,
+          "p_minus": 1.3684159778925337e-05,
+          "p_over_t2": 0.008552599861828335
+        },
+        {
+          "t": 0.02,
+          "p_minus": 1.7507285327771747e-06,
+          "p_over_t2": 0.004376821331942937
+        },
+        {
+          "t": 0.01,
+          "p_minus": 2.2140368232233423e-07,
+          "p_over_t2": 0.0022140368232233423
+        },
+        {
+          "t": 0.005,
+          "p_minus": 2.7837199700368627e-08,
+          "p_over_t2": 0.0011134879880147451
+        }
+      ]
+    },
+    {
+      "name": "correlated_jump",
+      "leading_t2_coefficient": 0.0,
+      "values": [
+        {
+          "t": 0.04,
+          "p_minus": 2.6497454685507455e-06,
+          "p_over_t2": 0.0016560909178442158
+        },
+        {
+          "t": 0.02,
+          "p_minus": 3.355780369744514e-07,
+          "p_over_t2": 0.0008389450924361284
+        },
+        {
+          "t": 0.01,
+          "p_minus": 4.222264946839211e-08,
+          "p_over_t2": 0.0004222264946839211
+        },
+        {
+          "t": 0.005,
+          "p_minus": 5.295134917689518e-09,
+          "p_over_t2": 0.00021180539670758074
+        }
+      ]
+    }
+  ],
+  "exact_commutator_operator": [
+    {
+      "dimension": 2,
+      "CCdagger_identity": true,
+      "rank": 3
+    },
+    {
+      "dimension": 3,
+      "CCdagger_identity": true,
+      "rank": 8
+    }
+  ],
+  "single_site_error_spans": [
+    {
+      "n": 1,
+      "basis_size": 4,
+      "norm_squared": 2.0
+    },
+    {
+      "n": 2,
+      "basis_size": 7,
+      "norm_squared": 2.0
+    },
+    {
+      "n": 3,
+      "basis_size": 10,
+      "norm_squared": 2.000000000000001
+    },
+    {
+      "n": 4,
+      "basis_size": 13,
+      "norm_squared": 2.0000000000000013
+    }
+  ],
+  "max_PCS_identity_residual": 0.0,
+  "max_entanglement_fidelity_weight_identity_error": 5.551115123125783e-17,
+  "max_one_visible_projector_ABA_error": 1.7763568394002505e-15,
+  "leakage": [
+    {
+      "leakage": 0.05,
+      "repump": 0.8,
+      "p_minus_given_logical_one": 0.013819660112501051,
+      "p_minus_given_logical_zero": 0,
+      "minus_EB_on_code": true
+    },
+    {
+      "leakage": 0.5,
+      "repump": 1,
+      "p_minus_given_logical_one": 0.25000000000000006,
+      "p_minus_given_logical_zero": 0,
+      "minus_EB_on_code": true
+    },
+    {
+      "leakage": 0.01,
+      "repump": 0.01,
+      "p_minus_given_logical_one": 2.506281446690024e-05,
+      "p_minus_given_logical_zero": 0,
+      "minus_EB_on_code": true
+    }
+  ],
+  "bias_signatures": [
+    {
+      "distribution": [
+        0.97,
+        0.01,
+        0.01,
+        0.01
+      ],
+      "p_minus": 0.0006000000000000003,
+      "normalized_error_diversity": 0.6666666666666657
+    },
+    {
+      "distribution": [
+        0.97,
+        0.001,
+        0.001,
+        0.028
+      ],
+      "p_minus": 0.00011399999999999997,
+      "normalized_error_diversity": 0.1266666666666664
+    },
+    {
+      "distribution": [
+        0.97,
+        0,
+        0,
+        0.03
+      ],
+      "p_minus": 0.0,
+      "normalized_error_diversity": 0.0
+    }
+  ],
+  "Gaussian_kicks": [
+    {
+      "sigma_x": 0.1,
+      "sigma_p": 0.2,
+      "analytic_visibility": 0.9998000599800071,
+      "monte_carlo_visibility": 0.9997998779566216,
+      "N": 1000000
+    },
+    {
+      "sigma_x": 0.5,
+      "sigma_p": 0.7,
+      "analytic_visibility": 0.9438583563660174,
+      "monte_carlo_visibility": 0.9438740635979385,
+      "N": 1000000
+    },
+    {
+      "sigma_x": 1.0,
+      "sigma_p": 1.5,
+      "analytic_visibility": 0.5547001962252291,
+      "monte_carlo_visibility": 0.5554484658083461,
+      "N": 1000000
+    }
+  ]
+}

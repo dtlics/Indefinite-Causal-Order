@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "purpose": "Structured import of the last two QEC and error-channel application investigations. Prior research artifacts are not part of the published Lean proof audit.",
+  "base_commit": "0b58427278cc9d64659b5f30079412a561844deb",
+  "branch": "more-applications",
+  "source_archives": [
+    {
+      "study": "screening",
+      "name": "switch_qec_application_screen.zip",
+      "sha256": "614cd851c8be8b96b2cdca0dccf94b7a9f84640d445f7287bd5642f0f96ac8f7",
+      "size_bytes": 89273
+    },
+    {
+      "study": "code-aware",
+      "name": "switch_qec_deepening.zip",
+      "sha256": "450b2d340bc82fd466175db4c09280d37bcdab40081a4c46635f1c04239c5f36",
+      "size_bytes": 53660
+    }
+  ],
+  "files": [
+    {
+      "study": "screening",
+      "original_name": "CANDIDATE_CATALOG.md",
+      "original_sha256": "c0a14711c963291d7d1ad985e32b91d83ac83ae7e225bf9207289bb033030e63",
+      "disposition": "Candidate index; links and identified numerical typo corrected",
+      "destination": "screening/candidates.md"
+    },
+    {
+      "study": "screening",
+      "original_name": "README.md",
+      "original_sha256": "a32ef4aeb396f1b44371cf80963c9a21955eebdbae01b28ddef0a01e0df91cc2",
+      "disposition": "Navigation consolidated into top-level README and RESULTS",
+      "destination": null
+    },
+    {
+      "study": "screening",
+      "original_name": "RESEARCH_REPORT.md",
+      "original_sha256": "421e9d83864f016f40de1dc927b3304071a9af22a2a112067a91c79d2d1fd26b",
+      "disposition": "Canonical report; links and scope edited for repository integration",
+      "destination": "screening/report.md"
+    },
+    {
+      "study": "screening",
+      "original_name": "channel_sweep.csv",
+      "original_sha256": "90dbb5a3f50b09501a9a4f29b7bc6465385cfc1a71596167a8b9e2c12787cef1",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/channel_sweep.csv"
+    },
+    {
+      "study": "screening",
+      "original_name": "core.py",
+      "original_sha256": "32ccbb884b0bebdcdb822a8ac15e575cb7349f7d913d1c99531dc91a8584c21f",
+      "disposition": "Deduplicated identical channel-algebra utility",
+      "destination": "common/core.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "derived_checks.json",
+      "original_sha256": "bf37aa308e9e25d79f068df4d23ffeaf759fca765b8a5b1d58cc4f65e9769311",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/derived_checks.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "derived_checks.py",
+      "original_sha256": "04131e37e9764baba4bc6258fa14815bcddc11dc7118b0c73f9a5043348c5481",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/derived_checks.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "explore.py",
+      "original_sha256": "5fdd56db8374f1b1f02cb65153171f34d4ac554c80c2b8e295558525d3cf92e7",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/explore.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "gkp_flag.json",
+      "original_sha256": "013e05800399cef8979630cc806d667a5f378401321ecc22ea84d71ecc4ff6ff",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/gkp_flag.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "gkp_flag.py",
+      "original_sha256": "5c65c4799d250d5808eacf3030f4583d1b431e5766fb81dc1db55ed80d02be78",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/gkp_flag.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "magic_scan.json",
+      "original_sha256": "2e0a7ef47824e2287d9faec02c694dc49956c49cfad896c36b23f9c2dbc2359d",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/magic_scan.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "magic_scan.py",
+      "original_sha256": "fc4247912de37ca640c8403068ab6a3371da9494f02a2566ad2a23f943918d8e",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/magic_scan.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "model_catalog.json",
+      "original_sha256": "2313d8bc669cbbc1dbc5eba5bf2eabe76dbdb93c382a118d92fdebc20676aa22",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/model_catalog.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "ordinary_compilation.json",
+      "original_sha256": "247075deb1383a163f3729bad160892c44a3b854ddb3687e537969d06511659c",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/ordinary_compilation.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "ordinary_compilation.py",
+      "original_sha256": "1a8bb341dd90f315dae834aef04a622172230c6ade3f9d428ccdf00370cfe4bd",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/ordinary_compilation.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "physics_extensions.json",
+      "original_sha256": "f0f08508e6bc56be4b03f35f3d8fcde49ff27dba000a8f87d9b9b9a1f29ced46",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/physics_extensions.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "physics_extensions.py",
+      "original_sha256": "798a49cec8519f863e9451cc40a75a56075fa824008196ecd3415231a7b616c5",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/physics_extensions.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "qec.py",
+      "original_sha256": "5c48c1e07823a9d6490423c1a7e4a86726f16601a4959634dc1867d1cecb49d3",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/qec.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "qec_polynomials.json",
+      "original_sha256": "8a0669f1ce0ac24d1b16fc0884dc587eb08dd346cd6ee7b2bdf57c2bcb202fe8",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/qec_polynomials.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "qec_polynomials.py",
+      "original_sha256": "394e1437dd71821801ac585400beccfd000f6435c2cf3bae09074afa999fd2d7",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/qec_polynomials.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "qec_results.json",
+      "original_sha256": "17aacdedbe66005882b4392e732d8c2df51fdd7da257d6a1ade743a2196d4a0e",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/qec_results.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "rare_fault_baseline.json",
+      "original_sha256": "997f732c6df4dda21e86a674358e04393f1597a7f32677476ab9b5212330aca1",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/rare_fault_baseline.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "rare_fault_baseline.py",
+      "original_sha256": "008de84d6b697ab893714a697c9ccff616cb6c35d997f2d5db079c294319571e",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/rare_fault_baseline.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "recovery_policy.json",
+      "original_sha256": "eec43ec61c983c6c64f989494c73bf8a04a06db12c917855f140cd8097ba3318",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/recovery_policy.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "recovery_policy.py",
+      "original_sha256": "3b4067c19f81972a030c1c2233166733c7f9880fdea2cb88324c938f5a423ef3",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/recovery_policy.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "reset_factory.json",
+      "original_sha256": "9e977a3128f4d84a069d0cbdc1577479c03b5b1ed3c3330c739c4a5056973f40",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/reset_factory.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "reset_factory.py",
+      "original_sha256": "aa5b56c00ff6cf0db90e0ea8384a27d0d9fefc27e669a45407919342ed4213af",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/reset_factory.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "run_all.py",
+      "original_sha256": "0db2d987eaf154b128e0b796f9216a1383473015860beeafb2b2893311658ac9",
+      "disposition": "Imported executable source",
+      "destination": "screening/experiments/run_all.py"
+    },
+    {
+      "study": "screening",
+      "original_name": "sweep_summary.json",
+      "original_sha256": "475fe103e3c0d994c7a14b9992524193170e766e109745fdaa2dea2c7a8b78ec",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "screening/evidence/sweep_summary.json"
+    },
+    {
+      "study": "screening",
+      "original_name": "validation.json",
+      "original_sha256": "844d9a7036d75b497b6bda2b48c06b323d10d4d7f0d18c20000df77a5c0d15fc",
+      "disposition": "Superseded by the single fresh top-level validation.json; historical record retained in original source archive",
+      "destination": null
+    },
+    {
+      "study": "code-aware",
+      "original_name": "CANDIDATE_MAP.md",
+      "original_sha256": "0e2b9c751573c8cc19108215f9af1c9210c20aad11a57c9aa30b5785d33219d7",
+      "disposition": "Candidate index; links and identified numerical typo corrected",
+      "destination": "code-aware/candidates.md"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "README.md",
+      "original_sha256": "1e72e6f8ee97fe619a07fda0cb1db8b604b72e8f29d2ddadc21c7731830fa728",
+      "disposition": "Navigation consolidated into top-level README and RESULTS",
+      "destination": null
+    },
+    {
+      "study": "code-aware",
+      "original_name": "RESEARCH_NOTE.md",
+      "original_sha256": "ac6a64dae55f30e22dedc20f63c36fad419af966498528a7ae46c1c8c92537bf",
+      "disposition": "Canonical report; links and scope edited for repository integration",
+      "destination": "code-aware/report.md"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "bosonic_results.json",
+      "original_sha256": "bbb4f3fc56e088f0a7e00cde3c2bad511c656ae1c843c908ba03be13b5d74de7",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/bosonic_results.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "bosonic_screen.py",
+      "original_sha256": "3b6e19784987de29bbb457a8bc0f0d6975fa12edbff91bbeaed21e4559f3688c",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/bosonic_screen.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "collective_dfs.json",
+      "original_sha256": "e147bb681bddc332bf74fb4ac5b0b0a19d6baad90fc68f40ac3df346d7ba0e8b",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/collective_dfs.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "core.py",
+      "original_sha256": "32ccbb884b0bebdcdb822a8ac15e575cb7349f7d913d1c99531dc91a8584c21f",
+      "disposition": "Deduplicated identical channel-algebra utility",
+      "destination": "common/core.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "decoder_opt.py",
+      "original_sha256": "e26092afe19269167d6c83e596a95dad5d76ef6bcd5b87761c308ee87e347eb1",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/decoder_opt.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "decoder_optimized_results.json",
+      "original_sha256": "2eb72e5d4b68933104983714e60bb55b8736702d48ce91a9cab42a3ef6fa3e74",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/decoder_optimized_results.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "decoder_screen.py",
+      "original_sha256": "b0b55ae05a3c0d534079f42707248c387d9a50029fa283d6b4bdf93b70db2961",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/decoder_screen.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "near_optimality_eliminations.json",
+      "original_sha256": "8979689bea81ee7be991c91049f8a69dbdfe1627998525603df9a66162f4f215",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/near_optimality_eliminations.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "nonpauli_qec.py",
+      "original_sha256": "f09d55b7f96c8c150d07f2691a5b955bd77d108dc48e5613e541e281600a9aed",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/nonpauli_qec.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "nonpauli_qec_results.json",
+      "original_sha256": "9444c06be9f9f79795024626a821ac4a2e8797baf066789600a0ccfb40de6f42",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/nonpauli_qec_results.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "program_and_code.py",
+      "original_sha256": "993103d48e30ff5e94623d0601e6122ba39a6e177419cd8298de2ba18c5645d5",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/program_and_code.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "program_and_code_results.json",
+      "original_sha256": "cb2aed343e0536e7befc10590ad4d5f5e76e0294a7e92fabf0548403e23d844e",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/program_and_code_results.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "retraction_results.json",
+      "original_sha256": "8fde066c0490894926bf5e0f9b4c97546be03e34d2bb99decbf005de28403506",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/retraction_results.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "retraction_tests.py",
+      "original_sha256": "b34b9183e877886e8d5f452dadbd608b16b10b24bbc822b0aca7605d3545e499",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/retraction_tests.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "run_all.py",
+      "original_sha256": "f3bc25969d2c8b176d153bbd0a63c30e4dcbf8c8b46e6c2c8d14c03eedc04bff",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/run_all.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "self_switch_bound.py",
+      "original_sha256": "c24607f26140433936e49fd5fc05387ea1632f7dccf74b696523eb104fdacb59",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/self_switch_bound.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "self_switch_bound_results.json",
+      "original_sha256": "04bec53e66f347926c0414ded7b3b2c98b91ab04cbe3dfaf4fa5cbd96a3a5cea",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/self_switch_bound_results.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "structured_bounds.json",
+      "original_sha256": "ab953971146cc0258793060dc1a3699a151243327e6a9d3d8af3be22a2b9796a",
+      "disposition": "Delivered evidence; will be replaced by fresh replay outputs",
+      "destination": "code-aware/evidence/structured_bounds.json"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "structured_bounds.py",
+      "original_sha256": "951760865416ad3afd81471036602ccdf1cb5c0593ba1304d53e4a1d31b6ef2c",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/structured_bounds.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "summarize.py",
+      "original_sha256": "d32683a3a9bb0c564a48b717119ce8d1c6c5a40082c633ab575da40851d8c493",
+      "disposition": "Imported executable source",
+      "destination": "code-aware/experiments/summarize.py"
+    },
+    {
+      "study": "code-aware",
+      "original_name": "validation.json",
+      "original_sha256": "34614bd7e7b10a31cf4ab746c1cc7c16c6808db6482bc987108c06a024c6f101",
+      "disposition": "Superseded by the single fresh top-level validation.json; historical record retained in original source archive",
+      "destination": null
+    }
+  ]
+}

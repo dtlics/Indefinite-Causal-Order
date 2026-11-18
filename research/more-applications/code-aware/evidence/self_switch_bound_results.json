@@ -1,0 +1,464 @@
+{
+  "random_cases": [
+    {
+      "d": 2,
+      "rank": 2,
+      "decomposition_residual": 1.0754411899229205e-16,
+      "pmax": 0.09519418436848207,
+      "attained_distance": 0.09519418436848211
+    },
+    {
+      "d": 2,
+      "rank": 2,
+      "decomposition_residual": 7.714591808805464e-17,
+      "pmax": 0.12479845676303006,
+      "attained_distance": 0.12479845676303011
+    },
+    {
+      "d": 2,
+      "rank": 2,
+      "decomposition_residual": 8.581887741045295e-17,
+      "pmax": 0.5425827303075081,
+      "attained_distance": 0.5425827303075084
+    },
+    {
+      "d": 2,
+      "rank": 2,
+      "decomposition_residual": 8.161429813403076e-17,
+      "pmax": 0.35390032413976963,
+      "attained_distance": 0.35390032413976946
+    },
+    {
+      "d": 2,
+      "rank": 2,
+      "decomposition_residual": 1.0531687288192356e-16,
+      "pmax": 0.37451763259988174,
+      "attained_distance": 0.3745176325998817
+    },
+    {
+      "d": 2,
+      "rank": 2,
+      "decomposition_residual": 7.114027218859442e-17,
+      "pmax": 0.2428106401935336,
+      "attained_distance": 0.24281064019353357
+    },
+    {
+      "d": 2,
+      "rank": 3,
+      "decomposition_residual": 1.1938426593760835e-16,
+      "pmax": 0.6277247645675088,
+      "attained_distance": 0.6277247645675085
+    },
+    {
+      "d": 2,
+      "rank": 3,
+      "decomposition_residual": 1.4845929052317724e-16,
+      "pmax": 0.33902354822223274,
+      "attained_distance": 0.3390235482222328
+    },
+    {
+      "d": 2,
+      "rank": 3,
+      "decomposition_residual": 1.56797928882937e-16,
+      "pmax": 0.34534764395613626,
+      "attained_distance": 0.3453476439561361
+    },
+    {
+      "d": 2,
+      "rank": 3,
+      "decomposition_residual": 9.258348238730692e-17,
+      "pmax": 0.17677877414357343,
+      "attained_distance": 0.17677877414357335
+    },
+    {
+      "d": 2,
+      "rank": 3,
+      "decomposition_residual": 1.0219347717759144e-16,
+      "pmax": 0.30332565647515825,
+      "attained_distance": 0.3033256564751581
+    },
+    {
+      "d": 2,
+      "rank": 3,
+      "decomposition_residual": 9.508872012862093e-17,
+      "pmax": 0.48883884174228376,
+      "attained_distance": 0.48883884174228376
+    },
+    {
+      "d": 2,
+      "rank": 4,
+      "decomposition_residual": 1.3303926663459464e-16,
+      "pmax": 0.3749669389374545,
+      "attained_distance": 0.3749669389374545
+    },
+    {
+      "d": 2,
+      "rank": 4,
+      "decomposition_residual": 1.1687388084389468e-16,
+      "pmax": 0.3962268003615864,
+      "attained_distance": 0.39622680036158636
+    },
+    {
+      "d": 2,
+      "rank": 4,
+      "decomposition_residual": 1.764660450470501e-16,
+      "pmax": 0.24286483621988067,
+      "attained_distance": 0.2428648362198807
+    },
+    {
+      "d": 2,
+      "rank": 4,
+      "decomposition_residual": 2.0353173865809835e-16,
+      "pmax": 0.25089795188012426,
+      "attained_distance": 0.25089795188012426
+    },
+    {
+      "d": 2,
+      "rank": 4,
+      "decomposition_residual": 1.2666787833809693e-16,
+      "pmax": 0.30556154320077533,
+      "attained_distance": 0.3055615432007752
+    },
+    {
+      "d": 2,
+      "rank": 4,
+      "decomposition_residual": 1.2118982093075705e-16,
+      "pmax": 0.4407297215124582,
+      "attained_distance": 0.4407297215124584
+    },
+    {
+      "d": 3,
+      "rank": 2,
+      "decomposition_residual": 9.035471659274271e-17,
+      "pmax": 0.3526889301836952,
+      "attained_distance": 0.35268893018369496
+    },
+    {
+      "d": 3,
+      "rank": 2,
+      "decomposition_residual": 8.727415915653492e-17,
+      "pmax": 0.4675221927343776,
+      "attained_distance": 0.46752219273437745
+    },
+    {
+      "d": 3,
+      "rank": 2,
+      "decomposition_residual": 8.029999348088935e-17,
+      "pmax": 0.4826922442789502,
+      "attained_distance": 0.48269224427895024
+    },
+    {
+      "d": 3,
+      "rank": 2,
+      "decomposition_residual": 9.301908787819817e-17,
+      "pmax": 0.6759842564168891,
+      "attained_distance": 0.6759842564168891
+    },
+    {
+      "d": 3,
+      "rank": 2,
+      "decomposition_residual": 7.313994539602097e-17,
+      "pmax": 0.45538614518976595,
+      "attained_distance": 0.455386145189766
+    },
+    {
+      "d": 3,
+      "rank": 2,
+      "decomposition_residual": 8.970145939945086e-17,
+      "pmax": 0.2235371028109191,
+      "attained_distance": 0.22353710281091915
+    },
+    {
+      "d": 3,
+      "rank": 3,
+      "decomposition_residual": 8.906853525968342e-17,
+      "pmax": 0.5136282959244277,
+      "attained_distance": 0.5136282959244273
+    },
+    {
+      "d": 3,
+      "rank": 3,
+      "decomposition_residual": 8.537417580284187e-17,
+      "pmax": 0.3728562037010845,
+      "attained_distance": 0.3728562037010845
+    },
+    {
+      "d": 3,
+      "rank": 3,
+      "decomposition_residual": 9.502033797884793e-17,
+      "pmax": 0.5802740669599922,
+      "attained_distance": 0.5802740669599926
+    },
+    {
+      "d": 3,
+      "rank": 3,
+      "decomposition_residual": 1.1012118063017796e-16,
+      "pmax": 0.20414093561363128,
+      "attained_distance": 0.20414093561363128
+    },
+    {
+      "d": 3,
+      "rank": 3,
+      "decomposition_residual": 8.371277811533106e-17,
+      "pmax": 0.5011079623994106,
+      "attained_distance": 0.5011079623994106
+    },
+    {
+      "d": 3,
+      "rank": 3,
+      "decomposition_residual": 7.35349951268844e-17,
+      "pmax": 0.4911112568421735,
+      "attained_distance": 0.4911112568421734
+    },
+    {
+      "d": 3,
+      "rank": 4,
+      "decomposition_residual": 1.494328346401874e-16,
+      "pmax": 0.461737478380865,
+      "attained_distance": 0.4617374783808652
+    },
+    {
+      "d": 3,
+      "rank": 4,
+      "decomposition_residual": 1.148809935351075e-16,
+      "pmax": 0.5056971586761821,
+      "attained_distance": 0.5056971586761819
+    },
+    {
+      "d": 3,
+      "rank": 4,
+      "decomposition_residual": 1.056924383559246e-16,
+      "pmax": 0.5043428700491639,
+      "attained_distance": 0.5043428700491637
+    },
+    {
+      "d": 3,
+      "rank": 4,
+      "decomposition_residual": 1.0672576616632478e-16,
+      "pmax": 0.5485499404204919,
+      "attained_distance": 0.5485499404204913
+    },
+    {
+      "d": 3,
+      "rank": 4,
+      "decomposition_residual": 1.141959717163459e-16,
+      "pmax": 0.47047391036855796,
+      "attained_distance": 0.47047391036855796
+    },
+    {
+      "d": 3,
+      "rank": 4,
+      "decomposition_residual": 8.710293664579352e-17,
+      "pmax": 0.5076762574641587,
+      "attained_distance": 0.5076762574641589
+    },
+    {
+      "d": 4,
+      "rank": 2,
+      "decomposition_residual": 7.554416592020986e-17,
+      "pmax": 0.5196878212252853,
+      "attained_distance": 0.5196878212252853
+    },
+    {
+      "d": 4,
+      "rank": 2,
+      "decomposition_residual": 7.115249006313202e-17,
+      "pmax": 0.42489844806329713,
+      "attained_distance": 0.4248984480632969
+    },
+    {
+      "d": 4,
+      "rank": 2,
+      "decomposition_residual": 7.865864621691722e-17,
+      "pmax": 0.4793435406486074,
+      "attained_distance": 0.47934354064860735
+    },
+    {
+      "d": 4,
+      "rank": 2,
+      "decomposition_residual": 8.12759065027481e-17,
+      "pmax": 0.4662866269245652,
+      "attained_distance": 0.466286626924565
+    },
+    {
+      "d": 4,
+      "rank": 2,
+      "decomposition_residual": 7.308170338305445e-17,
+      "pmax": 0.4872290375185834,
+      "attained_distance": 0.48722903751858315
+    },
+    {
+      "d": 4,
+      "rank": 2,
+      "decomposition_residual": 7.68826348504944e-17,
+      "pmax": 0.5723188564460095,
+      "attained_distance": 0.5723188564460093
+    },
+    {
+      "d": 4,
+      "rank": 3,
+      "decomposition_residual": 8.26732233363061e-17,
+      "pmax": 0.6049580606688483,
+      "attained_distance": 0.6049580606688479
+    },
+    {
+      "d": 4,
+      "rank": 3,
+      "decomposition_residual": 8.58245003104963e-17,
+      "pmax": 0.581382611052164,
+      "attained_distance": 0.5813826110521638
+    },
+    {
+      "d": 4,
+      "rank": 3,
+      "decomposition_residual": 8.250398404428729e-17,
+      "pmax": 0.5590410711905646,
+      "attained_distance": 0.5590410711905649
+    },
+    {
+      "d": 4,
+      "rank": 3,
+      "decomposition_residual": 8.991130409513958e-17,
+      "pmax": 0.4265808171978086,
+      "attained_distance": 0.42658081719780816
+    },
+    {
+      "d": 4,
+      "rank": 3,
+      "decomposition_residual": 7.338748605816429e-17,
+      "pmax": 0.6155073104889903,
+      "attained_distance": 0.6155073104889897
+    },
+    {
+      "d": 4,
+      "rank": 3,
+      "decomposition_residual": 7.717457340626083e-17,
+      "pmax": 0.5811299551914086,
+      "attained_distance": 0.5811299551914082
+    },
+    {
+      "d": 4,
+      "rank": 4,
+      "decomposition_residual": 7.666482906108222e-17,
+      "pmax": 0.5231690363416747,
+      "attained_distance": 0.523169036341675
+    },
+    {
+      "d": 4,
+      "rank": 4,
+      "decomposition_residual": 1.0283351271114034e-16,
+      "pmax": 0.5983216954458004,
+      "attained_distance": 0.5983216954457999
+    },
+    {
+      "d": 4,
+      "rank": 4,
+      "decomposition_residual": 9.725914061890102e-17,
+      "pmax": 0.5054898806817038,
+      "attained_distance": 0.5054898806817034
+    },
+    {
+      "d": 4,
+      "rank": 4,
+      "decomposition_residual": 8.373767253806163e-17,
+      "pmax": 0.5143931018369655,
+      "attained_distance": 0.5143931018369654
+    },
+    {
+      "d": 4,
+      "rank": 4,
+      "decomposition_residual": 9.656677292181657e-17,
+      "pmax": 0.4322172408495938,
+      "attained_distance": 0.4322172408495937
+    },
+    {
+      "d": 4,
+      "rank": 4,
+      "decomposition_residual": 9.035724542409841e-17,
+      "pmax": 0.6185296584319544,
+      "attained_distance": 0.6185296584319544
+    }
+  ],
+  "AD_code_cases": [
+    {
+      "gamma": 0.001,
+      "flag_probability_Bell": 2.501250781171119e-10,
+      "formula": 2.5012503179766554e-10,
+      "leading_gamma3_over4": 2.5e-10
+    },
+    {
+      "gamma": 0.003,
+      "flag_probability_Bell": 6.760143978632668e-09,
+      "formula": 6.7601440001396895e-09,
+      "leading_gamma3_over4": 6.75e-09
+    },
+    {
+      "gamma": 0.01,
+      "flag_probability_Bell": 2.512578044703991e-07,
+      "formula": 2.5125780447887713e-07,
+      "leading_gamma3_over4": 2.5000000000000004e-07
+    },
+    {
+      "gamma": 0.03,
+      "flag_probability_Bell": 6.853142257330119e-06,
+      "formula": 6.85314225729039e-06,
+      "leading_gamma3_over4": 6.749999999999999e-06
+    },
+    {
+      "gamma": 0.1,
+      "flag_probability_Bell": 0.0002632710508667738,
+      "formula": 0.0002632710508668201,
+      "leading_gamma3_over4": 0.00025000000000000006
+    }
+  ],
+  "encoding_checks": [
+    {
+      "g": 0.01,
+      "family": "cool_heat",
+      "ordinary_one_physical_qubit_fidelity": 0.990025,
+      "best_fixed_dualrail_switch_upper": 0.9851257509186538
+    },
+    {
+      "g": 0.01,
+      "family": "orthogonal_cool",
+      "ordinary_one_physical_qubit_fidelity": 0.9900187813677769,
+      "best_fixed_dualrail_switch_upper": 0.9851095445292188
+    },
+    {
+      "g": 0.1,
+      "family": "cool_heat",
+      "ordinary_one_physical_qubit_fidelity": 0.9025,
+      "best_fixed_dualrail_switch_upper": 0.8620012499738093
+    },
+    {
+      "g": 0.1,
+      "family": "orthogonal_cool",
+      "ordinary_one_physical_qubit_fidelity": 0.9019074841227313,
+      "best_fixed_dualrail_switch_upper": 0.8605465840898782
+    },
+    {
+      "g": 0.3,
+      "family": "cool_heat",
+      "ordinary_one_physical_qubit_fidelity": 0.7224999999999999,
+      "best_fixed_dualrail_switch_upper": 0.6490012499647742
+    },
+    {
+      "g": 0.3,
+      "family": "orthogonal_cool",
+      "ordinary_one_physical_qubit_fidelity": 0.7178310092869264,
+      "best_fixed_dualrail_switch_upper": 0.6385248823064013
+    },
+    {
+      "g": 0.6,
+      "family": "cool_heat",
+      "ordinary_one_physical_qubit_fidelity": 0.49,
+      "best_fixed_dualrail_switch_upper": 0.44200124996409607
+    },
+    {
+      "g": 0.6,
+      "family": "orthogonal_cool",
+      "ordinary_one_physical_qubit_fidelity": 0.4764911064067352,
+      "best_fixed_dualrail_switch_upper": 0.41745530650260465
+    }
+  ]
+}

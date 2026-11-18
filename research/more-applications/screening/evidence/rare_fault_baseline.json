@@ -1,0 +1,23 @@
+{
+  "known_Pauli_example": {
+    "r": 0.01,
+    "required_error": 0.01,
+    "native_switch_trials": 92102,
+    "native_switch_calls": 184204,
+    "ordinary_single_call_Bell_tests": 919,
+    "scope": "these explicit tests, not optimal switched/ordinary complexities"
+  },
+  "unknown_axis_example": {
+    "fault_rate": 0.01,
+    "retained_error_copies": 24,
+    "mean_calls_to_collect": 2400.0,
+    "hard_cap_calls": 4045,
+    "acquisition_failure": 0.001999670758367593,
+    "conditional_model_miss": 0.007707346629258934,
+    "total_error_upper_bound": 0.009707017387626526,
+    "switch_minus_model": 6.666666666666667e-05,
+    "switch_trials_for_1pct": 69076
+  },
+  "general_error_sector_identity_trials": 50,
+  "max_formula_error": 1.6653345369377348e-16
+}

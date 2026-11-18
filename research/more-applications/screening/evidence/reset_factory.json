@@ -1,0 +1,282 @@
+{
+  "verification_trials": 100,
+  "max_formula_residual": 3.9166352915537505e-16,
+  "symbolic_formula": true,
+  "source_cases": [
+    {
+      "source": {
+        "a": 1,
+        "b": 1,
+        "kappa": 1,
+        "p_plus": 0.75,
+        "x": 0.6666666666666666,
+        "z": 0.6666666666666666,
+        "magic_l1": 1.3333333333333333,
+        "twirled_H_coordinate": 0.6666666666666666,
+        "magic_state_error": 0.028595479208968322
+      },
+      "distillation": [
+        {
+          "level": 0,
+          "error": 0.028595479208968322,
+          "expected_reset_calls": 2.6666666666666665
+        },
+        {
+          "level": 1,
+          "error": 0.0008956597613490718,
+          "batch_acceptance": 0.6477766346593506,
+          "expected_reset_calls": 61.749680151762476
+        },
+        {
+          "level": 2,
+          "error": 2.5215429042104055e-08,
+          "batch_acceptance": 0.9866490341556788,
+          "expected_reset_calls": 938.7788060514021
+        },
+        {
+          "level": 3,
+          "error": 5.6113474865500975e-22,
+          "batch_acceptance": 0.9999996217686311,
+          "expected_reset_calls": 14081.68741690694
+        },
+        {
+          "level": 4,
+          "error": 6.18400077166298e-63,
+          "batch_acceptance": 1.0,
+          "expected_reset_calls": 211225.31125360407
+        }
+      ]
+    },
+    {
+      "source": {
+        "a": 0.9,
+        "b": 0.9,
+        "kappa": 0.98,
+        "p_plus": 0.73275,
+        "x": 0.6247014670760832,
+        "z": 0.5929375639713408,
+        "magic_l1": 1.2176390310474239,
+        "twirled_H_coordinate": 0.6088195155237119,
+        "magic_state_error": 0.0694995920544747
+      },
+      "distillation": [
+        {
+          "level": 0,
+          "error": 0.0694995920544747,
+          "expected_reset_calls": 2.7294438758103037
+        },
+        {
+          "level": 1,
+          "error": 0.014710633843268353,
+          "batch_acceptance": 0.3456390563833295,
+          "expected_reset_calls": 118.45205968780446
+        },
+        {
+          "level": 2,
+          "error": 0.00011659572154266305,
+          "batch_acceptance": 0.800773775016469,
+          "expected_reset_calls": 2218.8300250973193
+        },
+        {
+          "level": 3,
+          "error": 5.549678635979806e-11,
+          "batch_acceptance": 0.9982524909403652,
+          "expected_reset_calls": 33340.71357548764
+        },
+        {
+          "level": 4,
+          "error": 5.9823463105788876e-30,
+          "batch_acceptance": 0.9999999991675482,
+          "expected_reset_calls": 500110.7040486327
+        }
+      ]
+    },
+    {
+      "source": {
+        "a": 0.8,
+        "b": 0.8,
+        "kappa": 0.9,
+        "p_plus": 0.7025,
+        "x": 0.5729537366548043,
+        "z": 0.5153024911032029,
+        "magic_l1": 1.0882562277580072,
+        "twirled_H_coordinate": 0.5441281138790036,
+        "magic_state_error": 0.11524332084191052
+      },
+      "distillation": [
+        {
+          "level": 0,
+          "error": 0.11524332084191052,
+          "expected_reset_calls": 2.8469750889679717
+        },
+        {
+          "level": 1,
+          "error": 0.07523238119147749,
+          "batch_acceptance": 0.1777658303308961,
+          "expected_reset_calls": 240.22966761963485
+        },
+        {
+          "level": 2,
+          "error": 0.018995011864753424,
+          "batch_acceptance": 0.3168445620792132,
+          "expected_reset_calls": 11372.911028195707
+        },
+        {
+          "level": 3,
+          "error": 0.0002544706941007857,
+          "batch_acceptance": 0.7502140273700808,
+          "expected_reset_calls": 227393.3293689025
+        },
+        {
+          "level": 4,
+          "error": 5.771824139657648e-10,
+          "batch_acceptance": 0.996189731982075,
+          "expected_reset_calls": 3423946.0928261317
+        }
+      ]
+    },
+    {
+      "source": {
+        "a": 0.75,
+        "b": 0.75,
+        "kappa": 1,
+        "p_plus": 0.71875,
+        "x": 0.5652173913043478,
+        "z": 0.4891304347826087,
+        "magic_l1": 1.0543478260869565,
+        "twirled_H_coordinate": 0.5271739130434783,
+        "magic_state_error": 0.12723175122230918
+      },
+      "distillation": [
+        {
+          "level": 0,
+          "error": 0.12723175122230918,
+          "expected_reset_calls": 2.782608695652174
+        },
+        {
+          "level": 1,
+          "error": 0.10263110333328604,
+          "batch_acceptance": 0.1519792940608472,
+          "expected_reset_calls": 274.6369542818887
+        },
+        {
+          "level": 2,
+          "error": 0.051899347913529494,
+          "batch_acceptance": 0.21169772659449082,
+          "expected_reset_calls": 19459.605828074757
+        },
+        {
+          "level": 3,
+          "error": 0.005785062795623297,
+          "batch_acceptance": 0.4526358401665978,
+          "expected_reset_calls": 644876.2150908916
+        },
+        {
+          "level": 4,
+          "error": 6.896344666866832e-06,
+          "batch_acceptance": 0.9166579376594071,
+          "expected_reset_calls": 10552620.37119622
+        }
+      ]
+    }
+  ],
+  "ideal_visible_record_branches": [
+    {
+      "i": 0,
+      "j": 0,
+      "sign": 1,
+      "p": 0.31249999999999983,
+      "bloch": [
+        0.6,
+        0.0,
+        0.7999999999999999
+      ],
+      "magic": true
+    },
+    {
+      "i": 0,
+      "j": 0,
+      "sign": -1,
+      "p": 0.06249999999999997,
+      "bloch": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "magic": false
+    },
+    {
+      "i": 0,
+      "j": 1,
+      "sign": 1,
+      "p": 0.06249999999999997,
+      "bloch": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magic": false
+    },
+    {
+      "i": 0,
+      "j": 1,
+      "sign": -1,
+      "p": 0.06249999999999997,
+      "bloch": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magic": false
+    },
+    {
+      "i": 1,
+      "j": 0,
+      "sign": 1,
+      "p": 0.31249999999999983,
+      "bloch": [
+        0.6,
+        0.0,
+        0.7999999999999999
+      ],
+      "magic": true
+    },
+    {
+      "i": 1,
+      "j": 0,
+      "sign": -1,
+      "p": 0.06249999999999997,
+      "bloch": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "magic": false
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "sign": 1,
+      "p": 0.06249999999999997,
+      "bloch": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magic": false
+    },
+    {
+      "i": 1,
+      "j": 1,
+      "sign": -1,
+      "p": 0.06249999999999997,
+      "bloch": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "magic": false
+    }
+  ],
+  "resource_scope": "Strict improvement against any stabilizer-only protocol with the same reset channels and no magic input. A generic known-dilation compiler uses non-Clifford control and must be priced. Not a black-box query separation against arbitrary ordinary processing."
+}

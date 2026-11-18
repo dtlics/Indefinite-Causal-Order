@@ -1,0 +1,2 @@
+# Python csv.writer emits standard CRLF; preserve the replay bytes.
+screening/evidence/*.csv whitespace=cr-at-eol

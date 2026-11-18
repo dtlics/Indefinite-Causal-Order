@@ -1,0 +1,27 @@
+{
+  "claim": "one known orthogonal-unitary-mixture arm, unknown weights, other arm arbitrary unknown CPTP: one ordinary query to each suffices for exact ideal-circuit full-switch simulation",
+  "checks": [
+    {
+      "n": 1,
+      "dimension": 2,
+      "pairs": 10,
+      "max_Bell_sampling_error": 3.3306690738754696e-16,
+      "max_full_switch_Choi_error": 1.0001871697809537e-16
+    },
+    {
+      "n": 2,
+      "dimension": 4,
+      "pairs": 10,
+      "max_Bell_sampling_error": 1.6653345369377348e-16,
+      "max_full_switch_Choi_error": 7.099971774031951e-17
+    },
+    {
+      "n": 3,
+      "dimension": 8,
+      "pairs": 10,
+      "max_Bell_sampling_error": 6.938893903907228e-17,
+      "max_full_switch_Choi_error": 4.590293676901726e-17
+    }
+  ],
+  "scope": "Independent memoryless channel uses; entangled probes and known controls allowed. Full output channel simulated, not just scalar. Physical mandatory-noise or resource-restricted architectures need separate access/cost accounting."
+}
